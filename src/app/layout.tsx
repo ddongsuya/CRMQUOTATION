@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import AppChrome from '@/components/AppChrome';
 import Providers from '@/components/Providers';
 import Toaster from '@/components/Toaster';
+import { loadData } from '@/lib/data';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -10,11 +11,16 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const { testItems, presets, blocks } = loadData();
+  const modalities = new Set<string>();
+  for (const it of testItems) for (const m of it.modalityPool) modalities.add(m);
+  const stats = { items: testItems.length, presets: presets.length, blocks: blocks.length, modalities: modalities.size };
+
   return (
     <html lang="ko">
-      <body className="min-h-screen antialiased bg-slate-50/60 text-ink">
+      <body className="antialiased bg-slate-50 text-ink">
         <Providers>
-          <AppChrome>{children}</AppChrome>
+          <AppChrome stats={stats}>{children}</AppChrome>
           <Toaster />
         </Providers>
       </body>
