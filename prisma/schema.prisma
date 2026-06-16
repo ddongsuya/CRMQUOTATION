@@ -1,4 +1,4 @@
-// Chemon Quotation — Prisma schema (SQLite for development)
+// Chemon Quotation — Prisma schema (PostgreSQL — Neon, 로컬·배포 공용)
 //
 // Catalog data (TestItem / GuidelineBlock / ModalityPreset) stays in JSON files
 // under data/. The DB persists only operational data: users + quotes.
@@ -8,7 +8,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
