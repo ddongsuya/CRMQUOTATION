@@ -1,0 +1,592 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/S3A_Guideline.pdf
+[CHARS] 34873
+
+INTERNATIONAL 	CONFERENCE 	ON 	HARMONISATION 	OF 	TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN
+USE
+ICH HARMONISED TRIPARTITE G UIDELINE
+NOTE FOR GUIDANCE ON TOXICOKINETICS:
+THE A SSESSMENT OF SYSTEMIC E XPOSURE IN TOXICITY STUDIES
+S3A
+Current Step 4 version
+dated 27 October 1994
+This Guideline has been developed by the appropriate ICH Expert Working Group and
+has been subject to consultation by the regulatory parties, in accordance with the ICH
+Process. 	At Step 4 of the Process the final draft is recommended for adoption to the
+regulatory bodies of the European Union, Japan and USA.
+
+-- 1 of 15 --
+
+S3A
+Document History
+First
+Codification History 	Date
+New
+Codification
+November
+2005
+S3A 	Approval by the Steering Committee under Step 2 and
+release for public consultation.
+27
+October
+1993
+S3A
+Current Step 4 version
+S3A 	Approval by the Steering Committee under Step 4 and
+recommendation 	for 	adoption 	to 	the 	three 	ICH
+regulatory bodies.
+27
+October
+1994
+S3A
+
+-- 2 of 15 --
+
+NOTE FOR GUIDANCE ON TOXICOKINETICS:
+THE A SSESSMENT OF SYSTEMIC E XPOSURE IN TOXICITY STUDIES
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting on
+27 October 1994, this guideline is recommended for adoption
+to the three regulatory parties to ICH
+TABLE OF C ONTENTS
+1. 	Introduction.............................................................................................................1
+2. 	The objectives of toxicokinetics and the parameters which may be
+determined ...............................................................................................................2
+3. 	General principles to be considered ..................................................................2
+3.1 	Introduction ..........................................................................................................2
+3.2 	Quantification of exposure ...................................................................................2
+3.3 	Justification of time points for sampling ............................................................3
+3.4 	Contribution to the setting of dose levels in order to produce adequate
+exposure ..........................................................................................................................3
+3.5 	Extent of exposure assessment in toxicity studies .............................................4
+3.6 	Complicating factors in exposure interpretation ................................................4
+3.7 	Route of administration .......................................................................................4
+3.8 	Determination of metabolites ..............................................................................5
+3.9 	Statistical evaluation of data...............................................................................5
+3.10 	Analytical methods...............................................................................................5
+3.11 	Reporting ..............................................................................................................6
+4. 	Toxicokinetics in the various areas of toxicity testing
+- specific aspects .....................................................................................................6
+4.1 	Introduction ..........................................................................................................6
+4.2 	Single-dose toxicity studies..................................................................................6
+4.3 	Repeated-dose toxicity studies.............................................................................7
+4.4 	Genotoxicity studies .............................................................................................7
+4.5 	Carcinogenicity (oncogenicity) studies1 ..............................................................7
+4.6 	Reproductive toxicity studies2.............................................................................8
+5. 	Supplementary Notes.............................................................................................9
+6. 	References (other ICH Guidance).....................................................................11
+i
+
+-- 3 of 15 --
+
+
+
+-- 4 of 15 --
+
+NOTE FOR GUIDANCE ON TOXICOKINETICS:
+THE A SSESSMENT OF SYSTEMIC E XPOSURE IN TOXICITY STUDIES
+1. 	Introduction
+This 	Note 	for 	Guidance 	concerns 	toxicokinetics 	only 	with 	respect 	to 	the
+development of pharmaceutical products intended for use in human subjects.
+In this context, toxicokinetics is defined as the generation of pharmacokinetic
+data, either as an integral component in the conduct of non-clinical toxicity
+studies or in specially designed supportive studies, in order to assess systemic
+exposure. These data may be used in the interpretation of toxicology findings and
+their relevance to clinical safety issues (see Note 1 for definitions of other terms
+used in this document).
+The Note for Guidance has been developed in order to provide an understanding
+of the meaning and application of toxicokinetics and to provide guidance on
+developing test strategies in toxicokinetics. 	The guidance highlights the need to
+integrate 	pharmacokinetics 	into 	toxicity 	testing, 	which 	should 	aid 	in 	the
+interpretation of the toxicology findings and promote rational study design
+development.
+Toxicokinetic measurements are normally integrated within the toxicity studies
+and as such are described in this document as 'concomitant toxicokinetics' (Note
+1). Alternatively, data may be generated in other supportive studies conducted by
+mimicking the conditions of the toxicity studies.
+Toxicokinetic 	procedures 	may 	provide 	a 	means 	of 	obtaining 	multiple 	dose
+pharmacokinetic 	data 	in 	the 	test 	species, 	if 	appropriate 	parameters 	are
+monitored, 	thus 	avoiding 	duplication 	of 	such 	studies; 	optimum 	design 	in
+gathering the data will reduce the number of animals required.
+Various components of the total non-clinical pharmacokinetics and metabolism
+programme may be of value in contributing to the interpretation of toxicology
+findings. 	However, the toxicokinetic data focus on the kinetics of a new
+therapeutic agent under the conditions of the toxicity studies themselves.
+Toxicokinetics is thus an integral part of the non-clinical testing programme; it
+should enhance the value of the toxicological data generated, both in terms of
+understanding the toxicity tests and in comparison with clinical data as part of
+the assessment of risk and safety in humans. Due to its integration into toxicity
+testing and its bridging character between non-clinical and clinical studies, the
+focus is primarily on the interpretation of toxicity tests and not on characterising
+the basic pharmacokinetic parameters of the substance studied.
+As the development of a pharmaceutical product is a dynamic process which
+involves continuous feed-back between non-clinical and clinical studies, no rigid
+detailed procedures for the application of toxicokinetics are recommended. It may
+not be necessary for toxicokinetic data to be collected in all studies and scientific
+judgement 	should 	dictate 	when 	such 	data 	may 	be 	useful. 	The 	need 	for
+toxicokinetic data and the extent of exposure assessment in individual toxicity
+studies should be based on a flexible step-by-step approach and a case-by-case
+decision making process to provide sufficient information for a risk and safety
+assessment.
+1
+
+-- 5 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+2. 	The 	objectives 	of 	toxicokinetics 	and 	the parameters which may be
+determined
+The primary objective of toxicokinetics is:
+- 	to describe the systemic exposure achieved in animals and its relationship to
+dose level and the time course of the toxicity study.
+Secondary objectives are:
+- 	to relate the exposure achieved in toxicity studies to toxicological findings
+andcontribute to the assessment of the relevance of these findings to clinical
+safety.
+- 	to support (Note 1) the choice of species and treatment regimen in non-
+clinical toxicity studies.
+- 	to provide information which, in conjunction with the toxicity findings,
+contributes to the design of subsequent non-clinical toxicity studies.
+These objectives may be achieved by the derivation of one or more pharmacokinetic
+parameters (Note 2) from measurements made at appropriate time points during the
+course of the individual studies. 	These measurements usually consist of plasma (or
+whole blood or serum) concentrations for the parent compound and/or metabolite(s)
+and should be selected on a case-by-case basis. 	Plasma (or whole blood or serum)
+AUC, Cmax and C(time) (Note 2) are the most commonly used parameters in assessing
+exposure in toxicokinetics studies. For some compounds it will be more appropriate to
+calculate exposure based on the (plasma protein) unbound concentration.
+These data may be obtained from all animals on a toxicity study, in representative
+subgroups, in satellite groups (see 3.5 and Note 1) or in separate studies.
+Toxicity studies which may be usefully supported by toxicokinetic information include
+single 	and 	repeated-dose 	toxicity 	studies, 	reproductive, 	genotoxicity 	and
+carcinogenicity studies. 	Toxicokinetic information may also be of value in assessing
+the implications of a proposed change in the clinical route of administration.
+3. 	General principles to be considered
+3.1 Introduction
+In the following paragraphs some general principles are set out which should be
+taken into consideration in the design of individual studies.
+It should be noted that for those toxicity studies whose performance is subject to
+Good Laboratory Practice (GLP) the concomitant toxicokinetics must also conform
+to GLP. Toxicokinetic studies retrospectively designed to generate specific sets of
+data under conditions which closely mimic those of the toxicity studies should also
+conform to GLP when they are necessary for the evaluation of safety.
+3.2 Quantification of exposure
+The quantification of systemic exposure provides an assessment of the burden on
+the test species and assists in the interpretation of similarities and differences in
+toxicity 	across 	species, 	dose 	groups 	and 	sexes. 	The 	exposure 	might 	be
+represented by plasma (serum or blood) concentrations or the AUCs of parent
+compound and/or metabolite(s). In some circumstances, studies may be designed
+to investigate tissue concentrations. 	When designing the toxicity studies, the
+2
+
+-- 6 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+exposure and dose-dependence in humans at therapeutic dose levels (either
+expected or established), should be considered in order to achieve relevant
+exposure at various dose levels in the animal toxicity studies. The possibility that
+there may be species differences in the pharmacodynamics of the substance
+(either qualitative or quantitative) should also be taken into consideration.
+Pharmacodynamic effects or toxicity might also give supporting evidence of
+exposure or even replace pharmacokinetic parameters in some circumstances.
+Toxicokinetic monitoring or profiling of toxicity studies should establish what
+level of exposure has been achieved during the course of the study and may also
+serve to alert the toxicologist to non-linear, dose-related changes in exposure
+(Note 3) which may have occurred. 	Toxicokinetic information may allow better
+interspecies 	comparisons 	than 	simple 	dose/body 	weight 	(or 	surface 	area)
+comparisons.
+3.3 Justification of time points for sampling
+The time points for collecting body fluids in concomitant toxicokinetic studies
+should be as frequent as is necessary, but not so frequent as to interfere with the
+normal conduct of the study or to cause undue physiological stress to the animals
+(Note 4). In each study, the number of time points should be justified on the basis
+that they are adequate to estimate exposure (see 3.2). The justification should be
+based on kinetic data gathered from earlier toxicity studies, from pilot or dose
+range-finding studies, from separate studies in the same animal model or in other
+models allowing reliable extrapolation.
+3.4 Contribution to the setting of dose levels in order to produce adequate
+exposure
+The setting of dose levels in toxicity studies is largely governed by the toxicology
+findings and the pharmacodynamic responses of the test species. 	However, the
+following toxicokinetic principles may contribute to the setting of the dose levels.
+3.4.1 	Low dose levels
+At the low dose, preferably a no-toxic-effect dose level (Note 5), the exposure
+in the animals of any toxicity study should ideally equal or just exceed the
+maximum expected (or known to be attained) in patients. 	It is recognised
+that this ideal is not always achievable and that low doses will often need to
+be 	determined 	by 	considerations 	of 	toxicology; 	nevertheless, 	systemic
+exposure should be determined.
+3.4.2 	Intermediate dose levels
+Exposure 	at 	intermediate 	dose 	levels 	should 	normally 	represent 	an
+appropriate multiple (or fraction) of the exposure at lower (or higher) dose
+levels dependent upon the objectives of the toxicity study.
+3.4.3 	High dose levels
+The high dose levels in toxicity studies will normally be determined by
+toxicological considerations. 	However, the exposure achieved at the dose
+levels used should be assessed.
+3
+
+-- 7 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+Where toxicokinetic data indicate that absorption of a compound limits
+exposure to parent compound and/or metabolite(s) (Note 6), the lowest dose
+level of the substance producing the maximum exposure should be accepted
+as the top dose level to be used (when no other dose-limiting constraint
+applies, Note 7).
+Very careful attention should be paid to the interpretation of toxicological
+findings in toxicity studies (of all kinds) when the dose levels chosen result in
+non-linear 	kinetics 	(Note 	3). 	However, 	non-linear 	kinetics 	should 	not
+necessarily result in dose limitations in toxicity studies or invalidate the
+findings; toxicokinetics can be very helpful in assessing the relationship
+between dose and exposure in this situation.
+3.5 Extent of exposure assessment in toxicity studies
+In toxicity studies, systemic exposure should be estimated in an appropriate
+number 	of 	animals 	and 	dose 	groups 	(Note 	8) 	to 	provide 	a 	basis 	for 	risk
+assessment.
+Concomitant toxicokinetics may be performed either in all or a representative
+proportion of the animals used in the main study or in special satellite groups
+(Notes 1 and 5). 	Normally, samples for the generation of toxicokinetic data may
+be collected from main study animals, where large animals are involved, but
+satellite groups may be required for the smaller (rodent) species.
+The number of animals to be used should be the minimum consistent with
+generating adequate toxicokinetic data. Where both male and female animals are
+utilised in the main study it is normal to estimate exposure in animals of both
+sexes unless some justification can be made for not so doing.
+Toxicokinetic data are not necessarily required from studies of different duration
+if the dosing regimen is essentially unchanged (see also 4.3).
+3.6 Complicating factors in exposure interpretation
+Although estimating exposure as described above may aid in the interpretation of
+toxicity studies and in the comparison with human exposure, a few caveats should
+be noted.
+Species differences in protein binding, tissue uptake, receptor properties and
+metabolic profile should be considered. For example, it may be more appropriate
+for highly protein bound compounds to have exposure expressed as the free
+(unbound) 	concentrations. 	In 	addition, 	the 	pharmacological 	activity 	of
+metabolites, 	the 	toxicology 	of 	metabolites 	and 	antigenicity 	of 	biotechnology
+products may be complicating factors. Furthermore, it should be noted that even
+at relatively low plasma concentrations, high levels of the administered compound
+and/or metabolite(s) may occur in specific organs or tissues.
+3.7 Route of administration
+The toxicokinetic strategy to be adopted for the use of alternative routes of
+administration, for example by inhalation, topical or parenteral delivery, should
+be based on the pharmacokinetic properties of the substance administered by the
+intended route.
+4
+
+-- 8 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+It sometimes happens that a proposal is made to adopt a new clinical route of
+administration for a pharmaceutical product; for example, a product initially
+developed as an oral formulation may subsequently be developed for intravenous
+administration. 	In this context, it will be necessary to ascertain whether
+changing the clinical route will significantly reduce the safety margin.
+This process may include a comparison of the systemic exposure to the compound
+and/or its relevant metabolite(s) (AUC and Cmax) in humans generated by the
+existing and proposed routes of administration. 	If the new route results in
+increased AUC and/or Cmax, or a change in metabolic route, the continuing
+assurance of safety from animal toxicology and kinetics should be reconsidered. If
+exposure is not substantially greater, or different, by the proposed new route
+compared to that for the existing route(s) then additional non-clinical toxicity
+studies may focus on local toxicity.
+3.8 Determination of metabolites
+A primary objective of toxicokinetics is to describe the systemic exposure to the
+administered compound achieved in the toxicology species. 	However, there may
+be circumstances when measurement of metabolite concentrations in plasma or
+other body fluids is especially important in the conduct of toxicokinetics (Note 9).
+- 	When the administered compound acts as a 'pro-drug' and the delivered
+metabolite is acknowledged to be the primary active entity.
+- 	When the compound is metabolised to one or more pharmacologically or
+toxicologically active metabolites which could make a significant contribution
+to tissue/organ responses.
+- 	When the administered compound is very extensively metabolised and the
+measurement of plasma or tissue concentrations of a major metabolite is the
+only practical means of estimating exposure following administration of the
+compound in toxicity studies (Note 10).
+3.9 Statistical evaluation of data
+The data should allow a representative assessment of the exposure. 	However,
+because large intra- and inter-individual variation of kinetic parameters may
+occur and small numbers of animals are involved in generating toxicokinetic data,
+a 	high 	level 	of 	precision 	in 	terms 	of 	statistics 	is 	not 	normally 	needed.
+Consideration should be given to the calculation of mean or median values and
+estimates of variability, but in some cases the data of individual animals may be
+more important than a refined statistical analysis of group data.
+If data transformation (e.g. logarithmic) is performed, a rationale should be
+provided.
+3.10 Analytical methods
+Integration of pharmacokinetics into toxicity testing implies early development of
+analytical methods for which the choice of analytes and matrices should be
+continually reviewed as information is gathered on metabolism and species
+differences.
+5
+
+-- 9 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+The analytical methods to be used in toxicokinetic studies should be specific for
+the entity to be measured and of an adequate accuracy and precision. The limit of
+quantification 	should 	be 	adequate 	for 	the 	measurement 	of 	the 	range 	of
+concentrations anticipated to occur in the generation of the toxicokinetic data.
+The choice of analyte and the matrix to be assayed (biological fluids or tissue)
+should be stated and possible interference by endogenous components in each
+type of sample (from each species) should be investigated. 	Plasma, serum or
+whole blood are normally the matrices of choice for toxicokinetic studies.
+If the drug substance is a racemate or some other mixture of enantiomers,
+additional justification should be made for the choice of the analyte [racemate or
+enantiomer(s)].
+The analyte and matrix assayed in non-clinical studies should ideally be the same
+as in clinical studies. 	If different assay methods are used in non-clinical and
+clinical studies they should all be suitably validated.
+3.11 Reporting
+A comprehensive account of the toxicokinetic data generated, together with an
+evaluation of the results and of the implications for the interpretation of the
+toxicology findings should be given.
+An outline of the analytical method should be reported or referenced. In addition,
+a rationale for the choice of the matrix analysed and the analyte measured (see
+3.8 and 3.10) should be given.
+The positioning of the report within the application will depend upon whether the
+data are specific to any one toxicity study or are supportive of all toxicity testing.
+4. 	Toxicokinetics in the various areas of toxicity testing - specific aspects
+4.1 Introduction
+Based on the principles of toxicokinetics outlined above the following specific
+considerations refer to individual areas of toxicity testing. 	The frequency of
+exposure monitoring or profiling may be extended or reduced where necessary.
+It may be appropriate to take samples from some individual animals only, where
+this may help in the interpretation of the toxicology findings for these animals.
+4.2 Single-dose toxicity studies
+These studies are often performed in a very early phase of development before a
+bioanalytical method has been developed and toxicokinetic monitoring of these
+studies is therefore not normally possible. Plasma samples may be taken in such
+studies and stored for later analysis, if necessary; appropriate stability data for
+the analyte in the matrix sampled would then be required.
+Alternatively, additional toxicokinetic studies may be carried out after completion
+of a single-dose toxicity study in order to respond to specific questions which may
+arise from the study.
+Results from single-dose kinetic studies may help in the choice of formulation and
+in the prediction of rate and duration of exposure during a dosing interval. This
+may assist in the selection of appropriate dose levels for use in later studies.
+6
+
+-- 10 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+4.3 Repeated-dose toxicity studies
+The treatment regimen (Note 11) and species should be selected whenever
+possible with regard to pharmacodynamic and pharmacokinetic principles. 	This
+may not be achievable for the very first studies, at a time when neither animal
+nor human pharmacokinetic data are normally available.
+Toxicokinetics should be incorporated appropriately into the design of the studies.
+It may consist of exposure profiling or monitoring (Note 1) at appropriate dose
+levels at the start and towards the end of the treatment period of the first repeat
+dose study (Note 12). The procedure adopted for later studies will depend on the
+results from the first study and on any changes in the proposed treatment
+regimen. 	Monitoring or profiling may be extended, reduced or modified for
+specific compounds where problems have arisen in the interpretation of earlier
+toxicity studies.
+4.4 Genotoxicity studies
+For negative results of in vivo genotoxicity studies, it may be appropriate to have
+demonstrated systemic exposure in the species used or to have characterised
+exposure in the indicator tissue.
+4.5 Carcinogenicity (oncogenicity) studies1
+4.5.1 	Sighting or dose-ranging studies
+Appropriate monitoring or profiling of these studies should be undertaken in
+order to generate toxicokinetic data which may assist in the design of the
+main studies (see 4.5.2.). 	Particular attention should be paid to species and
+strains which have not been included in earlier toxicity studies and to the use
+of routes or methods of administration which are being used for the first time.
+Particular attention should be paid to the establishment of appropriate
+toxicokinetic data when administration is to be in the diet (Note 13).
+Toxicokinetic data may assist in the selection of dose levels in the light of
+information about clinical exposure and in the event that non-linear kinetics
+(Note 3) may complicate the interpretation of the study.
+In 	principle, 	the 	ideal 	study 	design 	would 	ensure 	that 	dose 	levels 	in
+oncogenicity studies generate a range of systemic exposure values that exceed
+the 	maximum 	therapeutic 	exposure 	for 	humans 	by 	varying 	multiples.
+However, it is recognised that this idealised selection of dose levels may be
+confounded by unavoidable species-specific problems. 	Thus, the emphasis of
+this guidance is on the need to estimate systemic exposure, to parent
+compound and/or metabolite(s) at appropriate dose levels and at various
+stages of an oncogenicity study, so that the findings of the study may be
+considered in the perspective of comparative exposure for the animal model
+and humans.
+A highest dose based on knowledge of probable systemic exposure in the test
+species and in humans may be an acceptable end-point in testing for
+carcinogenic potential. Historically, a toxicity end-point1 has been often used
+to select the top dose level.
+7
+
+-- 11 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+4.5.2 	The main studies
+The treatment regimen, species and strain selection should, as far as is
+feasible, be determined with regard to the available pharmacokinetic and
+toxicokinetic information. 	In practice, the vast majority of these studies is
+conducted in the rat and mouse.
+As mentioned in the Introduction to this section, it is recommended that
+reassurance be sought from monitoring that the exposure in the main study
+is consistent with profiles of kinetics established in free-standing or specific
+dose-ranging studies. Such monitoring will be appropriate on a few occasions
+during the study, but it is not considered essential to continue beyond six
+months.
+4.6 Reproductive toxicity studies2
+4.6.1 	Introduction
+It 	is 	preferable 	to 	have 	some 	information 	on 	pharmacokinetics 	before
+initiating reproduction studies since this may suggest the need to adjust the
+choice of species, study design and dosing schedules. At this time the
+information need not be sophisticated or derived from pregnant or lactating
+animals. 	At 	the 	time 	of 	study 	evaluation 	further 	information 	on
+pharmacokinetics 	in 	pregnant 	or 	lactating 	animals 	may 	be 	required
+depending on the results obtained.
+The limitation of exposure in reproductive toxicity is usually governed by
+maternal toxicity. 	Thus, while toxicokinetic monitoring in reproductive
+toxicity 	studies 	may 	be 	valuable 	in 	some 	instances, 	especially 	with
+compounds with low toxicity, such data are not generally needed for all
+compounds.
+Where adequate systemic exposure might be questioned because of absence of
+pharmacological 	response 	or 	toxic 	effects, 	toxicokinetic 	principles 	could
+usefully be applied to determine the exposures achieved by dosing at different
+stages of the reproductive process.
+A satellite group of female animals may be used to collect the toxicokinetic
+data.
+4.6.2 	Fertility studies
+The general principles for repeated-dose toxicity studies apply (see 4.3). The
+need to monitor these studies will depend on the dosing regimen used and the
+information already available from earlier studies in the selected species.
+4.6.3 	Studies in pregnant and lactating animals
+The treatment regimen during the exposure period should be selected on the
+basis of the toxicological findings and on pharmacokinetic and toxicokinetic
+principles.
+Consideration should be given to the possibility that the kinetics will differ in
+pregnant and non-pregnant animals.
+8
+
+-- 12 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+Toxicokinetics may involve exposure assessment of dams, embryos, foetuses
+or newborn at specified days (Note 14). Secretion in milk may be assessed to
+define its role in the exposure of newborns. 	In some situations, additional
+studies may be necessary or appropriate in order to study embryo/foetal
+transfer and secretion in milk.
+Consideration should be given to the interpretation of reproductive toxicity
+tests in species in which placental transfer of the substance cannot be
+demonstrated.
+5. 	Supplementary Notes
+Note 1 	Definitions of expressions appearing in this "Note for Guidance":
+Analyte: 	the chemical entity assayed in biological samples.
+Matrix : 	blood, plasma, urine, serum or other fluid or tissue selected for assay.
+Concomitant toxicokinetics:
+toxicokinetic measurements performed in the toxicity study, either in
+all animals or in representative subgroups or in satellite groups.
+Exposure: 	exposure 	is 	represented 	by 	pharmacokinetic 	parameters
+demonstrating the local and systemic burden on the test species with
+the test compound and/or its metabolites. The area under the matrix
+level concentration-time curve (AUC) and/or the measurement of
+matrix concentrations at the expected peak-concentration time Cmax,
+or at some other selected time C(time),are the most commonly used
+parameters. 	Other 	parameters 	might 	be 	more 	appropriate 	in
+particular cases.
+Monitor: 	to take a small number of matrix samples (e.g. 1-3) during a dosing
+interval to estimate C(time) or Cmax.
+Profile: 	to take (e.g. 4-8) matrix samples during a dosing interval to make an
+estimate of Cmax and/or C(time) and area under matrix concentration-
+time curve (AUC).
+Satellite groups :
+groups of animals included in the design and conduct of a toxicity
+study, treated and housed under conditions identical to those of the
+main study animals, but used primarily for toxicokinetics.
+Support: 	in the context of a toxicity study - to ratify or confirm the design of a
+toxicity 	study 	with 	respect 	to 	pharmacokinetic 	and 	metabolic
+principles. This process may include 2 separate steps:
+a) 	confirmation using toxicokinetic principles that the animals on a
+study 	were 	exposed 	to 	appropriate 	systemic 	levels 	of 	the
+administered compound (see 3.4) and/or its metabolite(s).
+b) 	confirmation that the metabolic profile in the species used was
+acceptable; data to support this will normally be derived from
+metabolism studies in animals and in humans.
+9
+
+-- 13 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+Validate: 	in the context of an analytical method - to establish the accuracy,
+precision, reproducibility, response function and the specificity of the
+analytical method with reference to the biological matrix to be
+examined and the analyte to be quantified.
+Note 2 	Symbols and definitions according to "Manual of Symbols, Equations
+and 	Definitions 	in 	Pharmacokinetics", 	Committee 	for
+Pharmacokinetic Nomenclature of the American College of Clinical
+Pharmacology, Philadelphia, PA, May 1982:
+Cmax 	Maximum (peak) concentration.
+C(time) 	Maximum concentration at a specified time after administration of a
+given dose.
+tmax 	Time 	to 	reach 	peak 	or 	maximum 	concentration 	following
+administration.
+AUC(0-t) 	Area under concentration-time curve from zero to time t. It should be
+noted that AUC(0-infinity) is a special case of AUC(0-t).
+Other measurements, for example urinary excretion, may be more appropriate for
+some compounds. Other derived parameters, for example bioavailability, half-life,
+fraction 	of 	unbound 	drug 	and 	volume 	of 	distribution 	may 	be 	of 	value 	in
+interpreting toxicokinetic data. Thus, the selection of parameters and time points
+has to be made on a case-by-case basis considering the general principles as
+outlined in Section 3.
+Note 3 	Increases in exposure may arise unexpectedly as a result of non-
+linear kinetics due to saturation of a clearance process. 	Increasing
+exposure may also occur during the course of a study for those
+compounds which have a particularly long plasma half-life. 	Careful
+attention should also be paid to compounds which achieve high Cmax
+values over comparatively short time periods within the dosing
+interval. Conversely, unexpectedly low exposure may occur during a
+study as a result of auto-induction of metabolising enzymes.
+Note 4 	If 	samples 	are 	taken 	from 	main 	study 	animals 	it 	should 	be
+considered whether samples should be taken from all the dosed
+animals and the controls in order to treat all animals on the study in
+the 	same 	way, 	or 	whether 	samples 	should 	be 	taken 	from
+representative subgroups of the same size.
+Note 5 	In this context, a 'no-toxic-effect dose level' (deemed to be the same as
+'no-observed-adverse-effect dose level') is defined as a dose level at
+which some pharmacological response may be observed, but at which
+no adverse effect is found.
+Note 6 	In these circumstances it should be established that absorption is the
+rate 	limiting 	step 	and 	that 	limitations 	in 	exposure 	to 	the
+administered substance are not due to an increased clearance.
+Note 7 	The limits placed on acceptable volumes which can be administered
+orally 	to animals may constrain the dose levels achievable for
+comparatively non-toxic compounds administered as solutions or
+suspensions.
+10
+
+-- 14 of 15 --
+
+Toxicokinetics: Assessment of Systemic Exposure
+Note 8 	It is often considered unnecessary to assay samples from control
+groups. Samples may be collected and then assayed if it is deemed
+that this may help in the interpretation of the toxicity findings, or in
+the validation of the assay method.
+Note 9 	Measurement 	of 	metabolite 	concentrations 	may 	be 	especially
+important when documentation of exposure to human metabolite(s)
+is needed in the non-clinical toxicity studies in order to demonstrate
+adequate toxicity testing of these metabolites.
+Note 10 	It is recognised that measurement of metabolite(s) as a part of
+toxicokinetic evaluation serves only to assess exposure and cannot
+account for possible reactive intermediate metabolites.
+Note 11 	Treatment 	regimen 	encompasses 	dosage, 	formulation, 	route 	of
+administration and dosing frequency.
+Note 12 	The first repeat dose study incorporating toxicokinetic data for each
+species is normally of 14 days duration or longer.
+Note 13 	Additional studies may be required in order to compare exposure to
+the compound administered in diet and by gavage or by routes
+different from the intended clinical route.
+Note 14 	It should be noted that while it is important to consider the transfer
+of 	substances 	entering 	the 	embryo-foetal 	compartment, 	foetal
+exposure is the parameter which is most often assessed in practice in
+separate studies and expressed as 'placental transfer'.
+6. 	References (other ICH Guidance)
+1. 	Code S 1C Carcinogenicity : Dose Selection for Carcinogenicity Studies of
+Pharmaceuticals.
+2. 	Code S 5A Detection of Toxicity to Reproduction for Medicinal Products.
+11
+
+-- 15 of 15 --
+

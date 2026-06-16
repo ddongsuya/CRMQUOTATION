@@ -1,0 +1,645 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/06/test-no-451-carcinogenicity-studies_g1gh2955/9789264071186-en.pdf
+[CHARS] 44808
+
+OECD/OCDE 451
+Adopted:
+25 June 2018
+© OECD, (2018)
+You are free to use this material subject to the terms and conditions available at http://www.oecd.org/termsandconditions/.
+In accordance with the Decision of the Council on a Delegation of Authority to amend Annex I of the Decision of the Council on the Mutual
+Acceptance of Data in the Assessment of Chemicals [C(2018)49], this Guideline was amended by the OECD’s Joint Meeting of the Chemicals
+Committee and the Working Party on Chemicals, Pesticides and Biotechnology by written procedure on 25 June 2018.
+OECD GUIDELINE FOR THE TESTING OF CHEMICALS:
+CARCINOGENICITY STUDIES
+INTRODUCTION
+1. OECD Guidelines for the Testing of Chemicals (TGs) are periodically reviewed in the light of
+scientific progress, changing assessment practices and animal welfare considerations. The original Test
+Guideline 451 on Carcinogenicity Studies was adopted in 1981. Development of a revised TG 451 was
+considered necessary, in order to reflect recent developments in the field of animal welfare and
+regulatory requirements (1) (2) (3) (4) (5). The updating of TG 451 has been carried out in parallel with
+revisions of the Test Guidelines 452, Chronic Toxicity Studies, and 453, Combined Chronic
+Toxicity\Carcinogenicity Studies, and with the objective of obtaining additional information from the
+animals used in the study and providing further detail on dose selection. This Test Guideline is designed
+to be used in the testing of a broad range of chemicals, including pesticides and industrial chemicals. It
+should be noted however that some details and requirements may differ for pharmaceuticals (see
+International Conference on Harmonisation (ICH) Guidance S1B on Testing for Carcinogenicity of
+Pharmaceuticals).
+2. The majority of carcinogenicity studies are carried out in rodent species, and this Test
+Guideline is intended therefore to apply primarily to studies carried out in these species. Should such
+studies be required in non-rodent species, the principles and procedures outlined in this Guideline
+together with those outlined in OECD TG 409, Repeated Dose 90-day Oral Toxicity Study in
+Non-Rodents (6) should be applied, with appropriate modifications. Further guidance is available in the
+OECD Guidance Document No. 116 on the Design and Conduct of Chronic Toxicity and
+Carcinogenicity Studies (7).
+3. The three main routes of administration used in carcinogenicity studies are oral, dermal and
+inhalation. The choice of the route of administration depends on the physical and chemical characteristics
+of the test chemical and the predominant route of exposure of humans. Additional information on choice
+of route of exposure is provided in Guidance Document No. 116 (7).
+4. This Guideline focuses on exposure via the oral route, the route most commonly used in
+carcinogenicity studies. While carcinogenicity studies involving exposure via the dermal or inhalation
+routes may also be necessary for human health risk assessment and/or may be required under certain
+regulatory regimes, both routes of exposure involve considerable technical complexity. Such studies will
+need to be designed on a case-by-case basis, although the Guideline outlined here for the assessment and
+
+-- 1 of 15 --
+
+2 │ 451 OECD/OCDE
+© OECD 2018
+evaluation of carcinogenicity by oral administration could form the basis of a protocol for inhalation
+and/or dermal studies, with respect to recommendations for treatment periods, clinical and pathology
+parameters, etc. OECD Guidance is available on the administration of test chemicals by the dermal (7),
+and inhalation routes (7) (8). TG 412 (9) and TG 413 (10), together with the associated OECD Guidance
+Document on acute inhalation testing (8), should be specifically consulted in the design of longer term
+studies involving exposure via the inhalation route. TG 410 (11) should be consulted in the case of
+testing carried out by the dermal route.
+5. The carcinogenicity study provides information on the possible health hazards likely to arise
+from repeated exposure for a period lasting up to the entire lifespan of the species used. The study will
+provide information on the toxic effects of the substance including potential carcinogenicity, and may
+indicate target organs and the possibility of accumulation. It can provide an estimate of the
+no-observed-adverse effect level for toxic effects and, in the case of non-genotoxic carcinogens, for
+tumour responses, which can be used for establishing safety criteria for human exposure. The need for
+careful clinical observations of the animals, so as to obtain as much information as possible, is also
+stressed.
+6. The objectives of carcinogenicity studies covered by this test guideline include:
+ The identification of the carcinogenic properties of a chemical, resulting in an increased
+incidence of neoplasms, increased proportion of malignant neoplasms or a reduction in the time
+to appearance of neoplasms, compared with concurrent control groups,
+ The identification of target organ(s) of carcinogenicity;
+ The identification of the time to appearance of neoplasms;
+ Characterisation of the tumour dose-response relationship;
+ Identification of a no-observed-adverse-effect level (NOAEL) or point of departure for
+establishment of a Benchmark Dose (BMD);
+ Extrapolation of carcinogenic effects to low dose human exposure levels;
+ Provision of data to test hypotheses regarding mode of action (2) (7) (12) (13) (14) (15).
+INITIAL CONSIDERATIONS
+7. In the assessment and evaluation of the potential carcinogenicity of a chemical, all available
+information on the test chemical should be considered by the testing laboratory prior to conducting the
+study, in order to focus the design of the study to more efficiently test for carcinogenic potential and to
+minimize animal usage. Information on, and consideration of, the mode of action of a suspected
+carcinogen (2) (7) (12) (13) (14) (15) is particularly important, since the optimal design may differ
+depending on whether the substance is a known or suspected genotoxic carcinogen. Further guidance on
+mode of action considerations can be found in Guidance Document No.116 (7).
+8. Information that will assist in the study design includes the identity, chemical structure, and
+physico-chemical properties of the test chemical; results of any in vitro or in vivo toxicity tests including
+genotoxicity tests; anticipated use(s) and potential for human exposure; available (Q)SAR data,
+mutagenicity/genotoxicity, carcinogenicity and other toxicological data on structurally-related
+substances; available toxicokinetic data (single dose and also repeat dose kinetics where available) and
+data derived from other repeated exposure studies. Assessment of carcinogenicity should be carried out
+after initial information on toxicity has been obtained from repeated dose 28-day and/or 90-day toxicity
+tests. Short-term cancer initiation-promotion tests could also provide useful information. A phased
+
+-- 2 of 15 --
+
+OECD/OCDE 451 │ 3
+© OECD 2018
+testing approach to carcinogenicity testing should be considered as part of the overall assessment of the
+potential adverse health effects of a particular chemical (16) (17) (18) (19).
+9. The statistical methods most appropriate for the analysis of results, given the experimental
+design and objectives, should be established before commencing the study. Issues to consider include
+whether the statistics should include adjustment for survival, analysis of cumulative tumour risks relative
+to survival duration, analysis of the time to tumour and analysis in the event of premature termination of
+one or more groups. Guidance on the appropriate statistical analyses and key references to internationally
+accepted statistical methods are given in Guidance Document No.116 (7), and also in Guidance
+Document No. 35 on the analysis and evaluation of chronic toxicity and carcinogenicity studies (20).
+10. In conducting a carcinogenicity study, the guiding principles and considerations outlined in the
+OECD Guidance Document No. 19 on the recognition, assessment, and use of clinical signs as humane
+endpoints for experimental animals used in safety evaluation (21), in particular paragraph 62 thereof,
+should always be followed. This paragraph states that “In studies involving repeated dosing, when an
+animal shows clinical signs that are progressive, leading to further deterioration in condition, an
+informed decision as to whether or not to humanely kill the animal should be made. The decision should
+include consideration as to the value of the information to be gained from the continued maintenance of
+that animal on study relative to its overall condition. If a decision is made to leave the animal on test, the
+frequency of observations should be increased, as needed. It may also be possible, without adversely
+affecting the purpose of the test, to temporarily stop dosing if it will relieve the pain or distress, or
+reduce the test dose.”
+11. Detailed guidance on and discussion of the principles of dose selection for chronic toxicity and
+carcinogenicity studies can be found in Guidance Document No.116 (7) as well as two International Life
+Sciences Institute publications (22) (23). The core dose selection strategy is dependent on the primary
+objective or objectives of the study (paragraph 6). In selecting appropriate dose levels, a balance should
+be achieved between hazard screening on the one hand and characterization of low-dose responses and
+their relevance on the other. This is particularly relevant in the situation where a combined chronic
+toxicity and carcinogenicity study (TG 453) is to be carried out (paragraph 12).
+12. Consideration should be given to carrying out a combined chronic toxicity and carcinogenicity
+study (TG 453), rather than separate execution of a chronic toxicity study (TG 452) and carcinogenicity
+study (TG 451). The combined test provides greater efficiency in terms of time and cost compared to
+conducting two separate studies, without compromising the quality of the data in either the chronic phase
+or the carcinogenicity phase. Careful consideration should however be given to the principles of dose
+selection (paragraphs 11 and 22-25) when undertaking a combined chronic toxicity and carcinogenicity
+study (TG 453), and it is also recognised that separate studies may be required under certain regulatory
+frameworks.
+13. Definitions used in the context of this Test Guideline can be found in Guidance Document No.
+116 (7).
+PRINCIPLE OF THE TEST
+14. The test chemical is administered daily in graduated doses to several groups of test animals for
+the majority of their life span, normally by the oral route. Testing by the inhalation or dermal route may
+also be appropriate. The animals are observed closely for signs of toxicity and for the development of
+neoplastic lesions. Animals which die or are killed during the test are necropsied and, at the conclusion
+of the test, surviving animals are killed and necropsied.
+
+-- 3 of 15 --
+
+4 │ 451 OECD/OCDE
+© OECD 2018
+DESCRIPTION OF METHOD
+Selection of animal species
+15. This Guideline primarily covers assessment and evaluation of carcinogenicity in rodents
+(paragraph 2). The use of non-rodent species may be considered when available data suggest that they
+are more relevant for the prediction of health effects in humans. The choice of species should be
+justified. The preferred rodent species is the rat, although other rodent species, e.g., the mouse, may be
+used. Although the use of the mouse in carcinogenicity testing may have limited utility (24) (25) (26),
+under some current regulatory programmes carcinogenicity testing in the mouse is still required. Rats and
+mice have been preferred experimental models because of their relatively short life span, their
+widespread use in pharmacological and toxicological studies, their susceptibility to tumour induction,
+and the availability of sufficiently characterised strains. As a consequence of these characteristics, a large
+amount of information is available on their physiology and pathology. Additional information on choice
+of species and strain is provided in Guidance Document No.116 (7).
+16. Young healthy adult animals of commonly used laboratory strains should be employed. The
+carcinogenicity study should preferably be carried out in animals from the same strain and source as
+those used in preliminary toxicity study(ies) of shorter duration although, if animals from this strain and
+source are known to present problems in achieving the normally accepted criteria of survival for long-
+term studies (see Guidance Document No. 116 (7)), consideration should be given to using a strain of
+animal that has an acceptable survival rate for the long-term study. The females should be nulliparous
+and non-pregnant.
+Housing and feeding
+17. Animals may be housed individually, or be caged in small groups of the same sex; individual
+housing should be considered only if scientifically justified (27) (28) (29). Cages should be arranged in
+such a way that possible effects due to cage placement are minimised. The temperature in the
+experimental animal room should be 22C (± 3C). Although the relative humidity should be at least
+30% and preferably not exceed 70% other than during room cleaning, the aim should be 50-60%.
+Lighting should be artificial, the sequence being 12 hours light, 12 hours dark. For feeding, conventional
+laboratory diets may be used with an unlimited supply of drinking water. The diet should meet all the
+nutritional requirements of the species tested and the content of dietary contaminants, including but not
+limited to pesticide residues, persistent organic pollutants, phytoestrogens, heavy metals and mycotoxins,
+that might influence the outcome of the test, should be as low as possible. Analytical information on the
+nutrient and dietary contaminant levels should be generated periodically, at least at the beginning of the
+study and when there is a change in the batch used, and should be included in the final report. Analytical
+information on the drinking water used in the study should similarly be provided. The choice of diet may
+be influenced by the need to ensure a suitable admixture of a test chemical and to meet the nutritional
+requirements of the animals when the test chemical is administered by the dietary route.
+Preparation of animals
+18. Healthy animals, which have been acclimated to laboratory conditions for at least 7 days and
+have not been subjected to previous experimental procedures, should be used. In the case of rodents,
+dosing of the animals should begin as soon as possible after weaning and acclimatisation and preferably
+before the animals are 8 weeks old. The test animals should be characterised as to species, strain, source,
+sex, weight and age. At the commencement of the study, the weight variation for each sex of animal used
+should be minimal and not exceed ± 20 % of the mean weight of all the animals within the study,
+separately for each sex. Animals should be randomly assigned to the control and treatment groups. After
+
+-- 4 of 15 --
+
+OECD/OCDE 451 │ 5
+© OECD 2018
+randomisation, there should be no significant differences in mean body weights between groups within
+each sex. If there are statistically significant differences, then the randomisation step should be repeated,
+if possible. Each animal should be assigned a unique identification number, and permanently marked
+with this number by tattooing, microchip implant, or other suitable method.
+PROCEDURE
+Number and sex of animals
+19. Both sexes should be used. A sufficient number of animals should be used so that a thorough
+biological and statistical evaluation is possible. Each dose group and concurrent control group should
+therefore contain at least 50 animals of each sex. Depending on the aim of the study, it may be possible
+to increase the statistical power of the key estimates by differentially allocating animals unequally to the
+various dose groups, with more than 50 animals in the low dose groups; e.g., to estimate the carcinogenic
+potential at low doses. However it should be recognized that a moderate increase in group size will
+provide relatively little increase in statistical power of the study. Further information on statistical design
+of the study and choice of dose levels to maximise statistical power is provided in Guidance Document
+No. 116 (7).
+Provision for interim kills and satellite (sentinel) groups
+20. The study may make provision for interim kills, e.g., at 12 months, to provide information on
+progression of neoplastic changes and mechanistic information, if scientifically justified. Where such
+information is already available from previous repeat dose toxicity studies on the substance, interim kills
+may not be scientifically justified. If interim kills are included in the study design, the number of
+animals in each dose group scheduled for an interim kill will normally be 10 animals per sex, and the
+total number of animals included in the study design should be increased by the number of animals
+scheduled to be killed before the completion of the study. An additional group of sentinel animals
+(typically 5 animals per sex) may be included for monitoring of disease status, if necessary, during the
+study (30). Further guidance is provided in Guidance Document No. 116 (7).
+Dose groups and dosage
+21. Guidance on all aspects of dose selection and dose level spacing is provided in Guidance
+Document No. 116 (7). At least three dose levels and a concurrent control should be used. Dose levels
+will generally be based on the results of shorter-term repeated dose or range finding studies and should
+take into account any existing toxicological and toxicokinetic data available for the test chemical or
+related materials.
+22. In the dose selection the investigator should also consider and ensure that data generated is
+adequate to fulfil the regulatory requirements across OECD countries as appropriate (e.g., hazard and
+risk assessment, classification and labelling, ED assessment, etc.)
+23. Unless limited by the physical-chemical nature or biological effects of the test chemical, the
+highest dose level should be chosen to identify the principal target organs and toxic effects while
+avoiding suffering, severe toxicity, morbidity, or death. While taking into account the factors outlined in
+paragraph 23 below, the highest dose level should normally be chosen to elicit evidence of toxicity, as
+evidenced by, for example, depression of body weight gain (approximately 10%). However, dependent
+on the objectives of the study (see paragraph 6), a top dose lower than the dose providing evidence of
+toxicity may be chosen, e.g., if a dose elicits an adverse effect of concern that nonetheless has little
+impact on lifespan or body weight.
+
+-- 5 of 15 --
+
+6 │ 451 OECD/OCDE
+© OECD 2018
+24. Dose levels and dose level spacing may be selected to establish a dose-response and, depending
+on the mode of action of the test chemical, a NOAEL or other intended outcome of the study, e.g. a BMD
+(see paragraph 25) at the lowest dose level. Factors that should be considered in the placement of lower
+doses include the expected slope of the dose–response curve, the doses at which important changes may
+occur in metabolism or mode of toxic action, where a threshold is expected, or where a point of departure
+for low-dose extrapolation is expected.
+25. The dose level spacing selected will depend on the characteristics of the test chemical, and
+cannot be prescribed in this Guideline, but two to four fold intervals frequently provide good test
+performance for setting the descending dose levels and addition of a fourth test group is often preferable
+to using very large intervals (e.g., more than a factor of about 6-10) between dosages. In general, the use
+of factors greater than 10 should be avoided, and should be justified if used.
+26. As discussed further in Guidance Document No. 116 (7), points to be considered in dose
+selection include:
+ Known or suspected nonlinearities or inflection points in the dose–response;
+ Toxicokinetics, and dose ranges where metabolic induction, saturation, or nonlinearity
+between external and internal doses does or does not occur;
+ Precursor lesions, markers of effect, or indicators of the operation of key underlying
+biological processes;
+ Key (or suspected) aspects of mode of action, such as doses at which cytotoxicity begins
+to arise, hormone levels are perturbed, homeostatic mechanisms are overwhelmed, etc.;
+ Regions of the dose–response curve where particularly robust estimation is needed, e.g.,
+in the range of the anticipated BMD or a suspected threshold;
+ Consideration of anticipated human exposure levels.
+27. The control group shall be an untreated group or a vehicle-control group if a vehicle is used in
+administering the test chemical. Except for treatment with the test chemical, animals in the control group
+should be handled in an identical manner to those in the test groups. If a vehicle is used, the control
+group shall receive the vehicle in the highest volume used among the dose groups. If a test chemical is
+administered in the diet, and causes significantly reduced dietary intake due to the reduced palatability of
+the diet, an additional pair-fed control group may be useful, to serve as a more suitable control.
+Preparation of doses and administration of test chemical
+28. The test chemical is normally administered orally, via the diet or drinking water, or by gavage.
+Additional information on routes and methods of administration is provided in Guidance Document
+No. 116 (7). The route and method of administration is dependent on the purpose of the study, the
+physical/chemical properties of the test chemical, its bioavailability and the predominant route and
+method of exposure of humans. A rationale should be provided for the chosen route and method of
+administration. In the interest of animal welfare, oral gavage should normally be selected only for those
+agents, for which this route and method of administration reasonably represent potential human exposure
+(e.g., pharmaceuticals). For dietary or environmental chemicals including pesticides, administration is
+typically via the diet or drinking water. However, for some scenarios, e.g., occupational exposure,
+administration via other routes may be more appropriate.
+
+-- 6 of 15 --
+
+OECD/OCDE 451 │ 7
+© OECD 2018
+29. Where necessary, the test chemical is dissolved or suspended in a suitable vehicle.
+Consideration should be given to the following characteristics of the vehicle and other additives, as
+appropriate: effects on the absorption, distribution, metabolism, or retention of the test chemical; effects
+on the chemical properties of the test chemical which may alter its toxic characteristics; and effects on
+the food or water consumption or the nutritional status of the animals. It is recommended that, wherever
+possible, the use of an aqueous solution/suspension be considered first, followed by consideration of a
+solution/ emulsion in oil (e.g., corn oil) and then by possible solution in other vehicles. For vehicles other
+than water, the toxic characteristics of the vehicle should be known. Information should be available on
+the stability of the test chemical and the homogeneity of dosing solutions or diets (as appropriate) under
+the conditions of administration (e.g., diet).
+30. For substances administered via the diet or drinking water it is important to ensure that the
+quantities of the test chemical involved do not interfere with normal nutrition or water balance. In long-
+term toxicity studies using dietary administration, the concentration of the chemical in the feed should
+not normally exceed an upper limit of 5% of the total diet, in order to avoid nutritional imbalances. When
+the test chemical is administered in the diet, either a constant dietary concentration (mg/kg diet or ppm)
+or a constant dose level in terms of the animal’s body weight (mg/kg body weight), calculated on a
+weekly basis, may be used. The alternative used should be specified.
+31. In the case of oral administration, the animals are dosed with the test chemical daily (seven
+days per week), normally for a period of 24 months for rodents (see also paragraph 32). Any other dosing
+regime, e.g., five days per week, needs to be justified. In the case of dermal administration, animals are
+normally treated with the test chemical for at least 6 hours per day, 7 days per week, as specified in TG
+410 (11), for a period of 24 months. Exposure by the inhalation route is carried out for 6 hours per da , 7
+days per week, but exposure for 5 days per week may also be used, if justified. The period of exposure
+will normally be for a period of 24 months. If rodent species other than rats are exposed nose-only,
+maximum exposure durations may be adjusted to minimise species-specific distress. A rationale should
+be provided when using an exposure duration less than 6 hours per day. See also TG 412 (9).
+32. When the test chemical is administered by gavage to the animals, this should be done using a
+stomach tube or a suitable intubation cannula, at similar times each day. Normally a single dose will be
+administered once daily; where for example a compound is a local irritant, it may be possible to maintain
+the daily dose-rate by administering it as a split dose (twice a day). The maximum volume of liquid that
+can be administered at one time depends on the size of the test animal. The volume should be kept as low
+as practical, and should not normally exceed 1 ml/100g body weight for rodents (31). Variability in test
+volume should be minimised by adjusting the concentration to ensure a constant volume at all dose
+levels. Potentially corrosive or irritant substances are the exception, and need to be diluted to avoid
+severe local effects. Testing at concentrations that are likely to be corrosive or irritant to the
+gastrointestinal tract should be avoided.
+Duration of study
+33. The duration of the study will normally be 24 months for rodents, representing the majority of
+the normal life span of the animals to be used. Shorter or longer study durations may be used, dependent
+on the lifespan of the strain of the animal species in the study, but should be justified. For specific strains
+of mice, e.g., AKR/J, C3H/J or C57BL/6J strains a duration of 18 months may be more appropriate. The
+following provides some guidance on duration, termination of the study and survival; further guidance,
+including consideration of the acceptability of a negative carcinogenicity relative to survival in the study,
+is provided in the OECD Guidance Document No. 116 on the Design and Conduct of Chronic Toxicity
+and Carcinogenicity Studies(7).
+
+-- 7 of 15 --
+
+8 │ 451 OECD/OCDE
+© OECD 2018
+ Termination of the study should be considered when the number of survivors in the
+lower dose groups or the control group falls below 25 per cent.
+ In the case where only the high dose group dies prematurely due to toxicity, this should
+not trigger termination of the study.
+ Survival of each sex should be considered separately.
+ The study should not be extended beyond the point when the data available from the
+study are no longer sufficient to enable a statistically valid evaluation to be made.
+OBSERVATIONS
+34. All animals should be checked for morbidity or mortality, usually at the beginning and the end
+of each day, including at weekends and holidays. Animals should additionally be checked once a day for
+specific signs of toxicological relevance, taking into consideration the peak period of anticipated effects
+after dosing in the case of gavage administration. Particular attention should be paid to tumour
+development; and the time of tumour onset, location, dimensions, appearance, and progression of each
+grossly visible or palpable tumour should be recorded.
+Body weight, food/water consumption and food efficiency
+35. All animals should be weighed at the start of treatment, at least once a week for the first 13
+weeks and at least monthly thereafter. Measurements of food consumption and food efficiency should be
+made at least weekly for the first 13 weeks and at least monthly thereafter. Water consumption should be
+measured at least weekly for the first 13 weeks and at least monthly thereafter when the substance is
+administered in drinking water. Water consumption measurements should also be considered for studies
+in which drinking activity is altered.
+Haematology, clinical biochemistry and other measurements
+36. In order to maximise the information obtained from the study, especially for mode of action
+considerations, blood samples may be taken for haematology and clinical biochemistry, and this at the
+discretion of the study director. Urinalysis may also be appropriate. Further guidance on the value of
+taking such samples as part of a carcinogenicity study is provided in Guidance Document No. 116 (7). If
+considered appropriate, blood sampling for haematological and clinical chemistry determinations and
+urinalysis may be conducted as part of an interim kill (paragraph 20) and at study termination on a
+minimum of 10 animals per sex per group. Blood samples should be taken from a named site, for
+example by cardiac puncture or from the retro-orbital sinus under anaesthesia, and stored, if applicable,
+under appropriate conditions. Blood smears may also be prepared for examination, particularly if bone
+marrow appears to be the target organ, although the value of such examination for the assessment of
+carcinogenic/oncogenic potential has been questioned (32).
+PATHOLOGY
+Gross necropsy
+37. All animals in the study except sentinel animals (see paragraph 20) and other satellite animals
+should be subjected to a full, detailed gross necropsy which includes careful examination of the external
+surface of the body, all orifices, and the cranial, thoracic and abdominal cavities and their contents.
+Sentinel animals and other satellite animals may require necropsy on a case-by-case basis, at the
+
+-- 8 of 15 --
+
+OECD/OCDE 451 │ 9
+© OECD 2018
+discretion of the study director. Organ weights are not normally part of a carcinogenesis study, since
+geriatric changes and, at later stages, the development of tumours confounds the usefulness of organ
+weight data. They may, however, be critical to performing a weight of evidence evaluation and especially
+for mode of action considerations. If they are part of a satellite study, they should be collected at no later
+than one year after initiation of the study.
+38. The following tissues should be preserved in the most appropriate fixation medium for both the
+type of tissue and the intended subsequent histopathological examination (33) (tissues in square brackets
+are optional):
+all gross lesions heart pancreas stomach (forestomach,
+glandular stomach)
+adrenal gland ileum parathyroid gland [teeth]
+aorta jejunum peripheral nerve testis
+brain (including
+sections of cerebrum,
+cerebellum, and
+medulla/pons)
+kidney pituitary thymus
+caecum lacrimal gland
+(exorbital)
+prostate thyroid
+cervix liver rectum [tongue]
+coagulating gland lung salivary gland trachea
+colon lymph nodes (both
+superficial and deep)
+seminal vesicle urinary bladder
+duodenum mammary gland
+(obligatory for
+females and, if visibly
+dissectable, from
+males)
+skeletal muscle uterus (including
+cervix)
+epididymis [upper respiratory
+tract, including nose,
+turbinates, and
+paranasal sinuses]
+skin [ureter]
+eye (including retina) oesophagus spinal cord (at three
+levels: cervical, mid-
+thoracic, and lumbar)
+[urethra]
+[femur with joint] [olfactory bulb] spleen vagina
+gall bladder (for
+species other than rat)
+ovary [sternum], section of bone
+marrow and/or a fresh
+bone marrow aspirate
+Harderian gland
+In the case of paired organs, e.g., kidney, adrenal, both organs should be preserved. The clinical
+and other findings may suggest the need to examine additional tissues. Also, any organs
+considered likely to be target organs based on the known properties of the test chemical should be
+preserved. In studies involving the dermal route of administration, the list of organs as set out for
+the oral route should be preserved, and specific sampling and preservation of the skin from the site
+of application is essential. In inhalation studies, the list of preserved and examined tissues from the
+respiratory tract should follow the recommendations of TG 412 (9) and TG 413 (10). For other
+organs/tissues (and in addition to the specifically preserved tissues from the respiratory tract) the
+list of organs as set out for the oral route should be examined.
+
+-- 9 of 15 --
+
+10 │ 451 OECD/OCDE
+© OECD 2018
+Histopathology
+39. Guidance is available on best practices in the conduct of toxicological pathology studies (33).
+The minimum tissues examined should be:
+ All tissues from the high dose and control groups;
+ All tissues of animals dying or killed during the study;
+ All tissues showing macroscopic abnormalities including tumours;
+ When treatment-related histopathological changes are observed in the high dose group,
+those same tissues are to be examined from all animals in all other dose groups;
+ In the case of paired organs, e.g., kidney, adrenal, both organs should be examined.
+DATA AND REPORTING
+Data
+40. Individual animal data should be provided for all parameters evaluated. Additionally, all data
+should be summarised in tabular form showing for each test group the number of animals at the start of
+the test, the number of animals found dead during the test or killed for humane reasons and the time of
+any death or humane kill, the number showing signs of toxicity, a description of the signs of toxicity
+observed, including time of onset, duration, and severity of any toxic effects, the number of animals
+showing lesions, the type of lesions and the percentage of animals displaying each type of lesion.
+Summary data tables should provide the means and standard deviations (for continuous test data) of
+animals showing toxic effects or lesions, in addition to the grading of lesions.
+41. Historical control data may be valuable in the interpretation of the results of the study, e.g. in
+the case when there are indications that the data provided by the concurrent controls are substantially out
+of line when compared to recent data from control animals from the same test facility/colony. Historical
+control data, if evaluated, should be submitted from the same laboratory and relate to animals of the same
+age and strain generated during the five years preceding the study in question.
+42. When applicable, numerical results should be evaluated by an appropriate and generally
+acceptable statistical method. The statistical methods and the data to be analysed should be selected
+during the design of the study (paragraph 9). Selection should make provision for survival adjustments, if
+needed.
+Test report
+43. The test report should include the following information:
+Test chemical:
+ physical nature, purity, and physicochemical properties;
+ identification data;
+ source of substance;
+ batch number;
+ certificate of chemical analysis;
+Vehicle (if appropriate):
+ justification for choice of vehicle (if other than water);
+
+-- 10 of 15 --
+
+OECD/OCDE 451 │ 11
+© OECD 2018
+Test animals:
+ species/strain used and justification for choice made;
+ number, age, and sex of animals at start of test;
+ source, housing conditions, diet, etc.;
+ individual weights of animals at the start of the test;
+Test conditions:
+ rationale for route of administration and dose selection;
+ when applicable, the statistical methods used to analyse the data;
+ details of test chemical formulation/diet preparation.
+ analytical data on achieved concentration, stability and homogeneity of the preparation;
+ route of administration and details of the administration of the test chemical;
+ for inhalation studies, whether nose only or whole body;
+ actual doses (mg/kg body weight/day), and conversion factor from diet/drinking water
+test chemical concentration (mg/kg or ppm) to the actual dose, if applicable;
+ details of food and water quality;
+Results (summary tabulated data and individual animal data should be presented)
+General
+ survival data;
+ body weight/body weight changes;
+ food consumption, calculations of food efficiency, if made, and water consumption,
+if applicable;
+ toxicokinetic data if available;
+ opthalmoscopy (if available);
+ haematology (if available);
+ clinical chemistry (if available);
+Clinical findings
+ Signs of toxicity;
+ Incidence (and, if scored, severity) of any abnormality;
+ Nature, severity, and duration of clinical observations (whether transitory or permanent);
+Necropsy data
+ Terminal body weight;
+ Organ weights and their ratios, if applicable;
+ Necropsy findings; Incidence and severity of abnormalities;
+Histopathology
+ Non neoplastic histopathological findings,;
+ Neoplastic histopathological findings;
+ Correlation between gross and microscopic findings;
+ Detailed description of all treatment-related histopathological findings including
+severity gradings;
+ Report of any peer review of slides;
+
+-- 11 of 15 --
+
+12 │ 451 OECD/OCDE
+© OECD 2018
+Statistical treatment of results, as appropriate
+Discussion of results including
+ Discussion of any modelling approaches;
+ Dose-response relationships;
+ Historical control data;
+ Consideration of any mode of action information;
+ BMD, NOAEL or LOAEL determination;
+ Relevance for humans;
+Conclusions
+
+-- 12 of 15 --
+
+OECD/OCDE 451 │ 13
+© OECD 2018
+LITERATURE
+1. OECD (1995), Report of the Consultation Meeting on Sub-chronic and Chronic
+Toxicity/Carcinogenicity Testing (Rome, 1995), internal working document, Environment
+Directorate, OECD, Paris.
+2. EPA (2005). Guidelines for Carcinogen Risk Assessment Risk Assessment Forum U.S.
+Environmental Protection Agency Washington, DC
+http://cfpub.epa.gov/ncea/cfm/recordisplay.cfm?deid=116283&CFID=1267360&CFTOKEN=65052793&jsessionid=983
+0b2c4116e3d8fbbf017414e1a782e7f79TR
+3. Combes RD, Gaunt, I, Balls M (2004). A Scientific and Animal Welfare Assessment of the OECD
+Health Effects Test Guidelines for the Safety Testing of Chemicals under the European Union
+REACH System. ATLA 32, 163-208.
+4. Barlow SM, Greig JB, Bridges JW et al (2002). Hazard identification by methods of animal-based
+toxicology. Food. Chem. Toxicol. 40, 145-191.
+5. Chhabra RS, Bucher JR, Wolfe M, Portier C (2003). Toxicity characterization of environmental
+chemicals by the US National Toxicology Programme: an overview. Int. J. Hyg. Environ. Health
+206, 437-445.
+6. OECD (1998), Repeat Dose 90-day Oral Toxicity Study in Non-Rodents, Test Guideline No. 409,
+OECD Guidelines for the Testing of Chemicals, OECD, Paris.
+7. OECD (2009), Draft Guidance Document on the Design and Conduct of Chronic Toxicity and
+Carcinogenicity Studies, Series on Testing and Assessment No. 116, available on the OECD public
+website for Test Guideline at www.oecd.org/env/testguidelines.
+8. OECD (2009), Guidance Document on Acute Inhalation Toxicity Testing, Series on Testing and
+Assessment No. 39, ENV/JM/MONO(2009)28, OECD, Paris.
+9. OECD (2009), Subacute Inhalation Toxicity: 28-Day Study, Test Guideline No. 412, OECD
+Guidelines for the Testing of Chemicals, OECD, Paris.
+10. OECD (2009), Subchronic Inhalation Toxicity: 90-Day Study, Test Guideline No. 413, OECD
+Guidelines for the Testing of Chemicals, OECD, Paris.
+11. OECD (1981), Repeated Dose Dermal Toxicity: 21/28-day Study, Test Guideline No. 410, OECD
+Guidelines for the Testing of Chemicals, OECD, Paris.
+12. Boobis, A.R., Cohen, S.M., Dellarco, V., McGregor, D., Meek, M.E., Vickers, C., Willcocks, D. &
+Farland, W. IPCS Framework for analyzing the Relevance of a Cancer Mode of Action for Humans.
+Crit. Rev. in Toxicol, (2006) 36:793-801.
+13. Cohen, S.M., Meek, M.E., Klaunig, J.E., Patton, D.E., and Fenner-Crisp, P.A. (2003) The human
+relevance of information on carcinogenic Modes of Action: An Overview. Crit. Rev. Toxicol.
+33:581-589
+
+-- 13 of 15 --
+
+14 │ 451 OECD/OCDE
+© OECD 2018
+14. Holsapple, M.P., Pitot, H.C., Cohen, S.N., Boobis, A.R., Klaunig, J.E., Pastoor, T., Dellarco, V.L. &
+Dragan, Y.P. (2006) Mode of Action in Relevance of Rodent Liver Tumors to Human Cancer Risk.
+Toxicol. Sci. 89:51-56.
+15. Meek, E.M., Bucher, J.R., Cohen, S.M., Dellarco, V., Hill, R.N., Lehman-McKemmon, L.D.,
+Longfellow, D.G., Pastoor, T., Seed, J. & Patton, D.E. A Framework for Human Relevance analysis
+of Information on Carcinogenic Modes of Action. Crit. Rev. Toxicol. (2003). 33:591-653.
+16. Carmichael NG, Barton HA, Boobis AR et al (2006). Agricultural Chemical Safety Assessment: A
+Multisector Approach to the Modernization of Human Safety Requirements. Critical Reviews in
+Toxicology 36, 1-7.
+17. Barton HA, Pastoor TP, Baetcke T et al (2006). The Acquisition and Application of Absorption,
+Distribution, Metabolism, and Excretion (ADME) Data in Agricultural Chemical Safety
+Assessments. Critical Reviews in Toxicology 36, 9-35.
+18. Doe JE, Boobis AR, Blacker A et al (2006). A Tiered Approach to Systemic Toxicity Testing for
+Agricultural Chemical Safety Assessment. Critical Reviews in Toxicology 36, 37-68.
+19. Cooper RL, Lamb JS, Barlow SM et al (2006). A Tiered Approach to Life Stages Testing for
+Agricultural Chemical Safety Assessment. Critical Reviews in Toxicology 36, 69-98.
+20. OECD (2002), Guidance Notes for Analysis and Evaluation of Chronic Toxicity and Carcinogenicity
+Studies, Series on Testing and Assessment No. 35 and Series on Pesticides No. 14,
+ENV/JM/MONO(2002)19, OECD, Paris.
+21. OECD (2000), Guidance Document on the recognition, assessment, and use of clinical signs as
+humane endpoints for experimental animals used in safety evaluation, Series on Testing and
+Assessment No. 19, ENV/JM/MONO(2000)7, OECD, Paris.
+22. Rhomberg, LR, Baetcke, K, Blancato, J, Bus, J, Cohen, S, Conolly, R, Dixit R, Doe, J, Ekelman, K,
+Fenner-Crisp, P, Harvey, P, Hattis, D, Jacobs, A, Jacobson-Kram, D, Lewandowski, T, Liteplo, R,
+Pelkonen, O, Rice, J, Somers, D, Turturro, A, West, W, Olin, S. Issues in the Design and
+Interpretation of Chronic Toxicity and Carcinogenicity Studies in Rodents: Approaches to Dose
+Selection Crit Rev. Toxicol. 37 (9) 729 - 837 (2007).
+23. ILSI (International Life Sciences Institute) (1997). Principles for the Selection of Doses in Chronic
+Rodent Bioassays. Foran JA (Ed.). ILSI Press, Washington, DC.
+24. Griffiths SA, Parkinson C, McAuslane JAN and Lumley CE (1994) The utility of the second rodent
+species in the carcinogenicity testing of pharmaceuticals. The Toxicologist 14(1):214.
+25. Usui T, Griffiths SA and Lumley CE (1996). The utility of the mouse for the assessment of the
+carcinogenic potential of pharmaceuticals. In D'Arcy POF & Harron DWG (eds). Proceedings of the
+Third International Conference on Harmonisation. Queen's University Press, Belfast. pp 279-284.
+26. Carmichael NG, Enzmann H, Pate I, Waechter, F (1997). The Significance of Mouse Liver Tumor
+Formation for Carcinogenic Risk Assessment: Results and Conclusions from a Survey of Ten Years
+of Testing by the Agrochemical Industry. Environ Health Perspect 105:1196-1203
+
+-- 14 of 15 --
+
+OECD/OCDE 451 │ 15
+© OECD 2018
+27. EEC Council Directive 86/609/EEC on the approximation of laws, regulations, and administrative
+provisions of the Member States regarding the protection of animals used for experimental and other
+scientific purposes. Official Journal 29, L358, 18 December 1986.
+28. National Research Council, 1985. Guide for the care and use of laboratory animals. NIH Publication
+No. 86-23. Washington, D.C., US Dept. of Health and Human Services.
+29. GV-SOLAS (Society for Laboratory Animal Science, Gesellschaft für Versuchstierkunde, 1988).
+Publication on the Planning and Structure of Animal Facilities for Institutes Performing Animal
+Experiments. ISBN 3-906255-04-2. http://www.gv-solas.de/publ/heft1_1988.pdf
+30. GV-SOLAS (Society for Laboratory Animal Science, Gesellschaft für Versuchstierkunde, 2006).
+Microbiological monitoring of laboratory animals in various housing systems. http://www.gv-
+solas.de/auss/hyg/hyg-p7_e.html
+31. Diehl K-H, Hull R, Morton D, Pfister R, Rabemampianina Y, Smith D, Vidal J-M, van de
+Vorstenbosch C. 2001. A good practice guide to the administration of substances and removal of
+blood, including routes and volumes. Journal of Applied Toxicology, 21:15-23. Available at:
+http://www.ff.up.pt/farmacologia/pdf/good_practice_lab_animals.pdf
+32. Weingand, K., et al. 1996. Harmonization of Animal Clinical Pathology Testing in Toxicity and
+Safety Studies. Fund. Appl. Toxicol. 29: 198-201.
+33. Crissman, J., Goodman D., Hildebrandt P., et al. (2004). Best Practices Guideline: Toxicological
+Histopathology. Toxicologic Pathology 32, 126-131.
+
+-- 15 of 15 --
+

@@ -1,0 +1,62 @@
+{
+  "scenario_id": "API04",
+  "scenario_title": "화장품 대체법 — 모든 카테고리 ON",
+  "input": {
+    "modality": "화장품",
+    "priceStandard": "MFDS",
+    "excipientCount": null,
+    "route": "",
+    "durations": [],
+    "addons": {},
+    "categories": {
+      "singleDose": true,
+      "genotox": true,
+      "skinIrritation": true,
+      "skinSensitization": true,
+      "eyeIrritation": true,
+      "phototox": true,
+      "photosensitization": true,
+      "repeatDermal": false
+    }
+  },
+  "hit_count": 12,
+  "notes": [],
+  "total_unit_price": 125500000,
+  "sample_hits": [
+    {
+      "testName": "광감작(Harber)",
+      "adminRoute": "도포",
+      "priority": "필수",
+      "tag": "화장품·photosensitization",
+      "unitPrice": 16000000
+    },
+    {
+      "testName": "광독성(3T3 NRU)",
+      "adminRoute": "도포",
+      "priority": "필수",
+      "tag": "화장품·phototox",
+      "unitPrice": 6000000
+    },
+    {
+      "testName": "단회투여 독성",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "화장품·singleDose",
+      "unitPrice": 3200000
+    },
+    {
+      "testName": "단회투여(경구)",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "화장품·singleDose",
+      "unitPrice": 3200000
+    },
+    {
+      "testName": "단회투여(경피)",
+      "adminRoute": "경피",
+      "priority": "필수",
+      "tag": "화장품·singleDose",
+      "unitPrice": 4600000
+    }
+  ]
+}

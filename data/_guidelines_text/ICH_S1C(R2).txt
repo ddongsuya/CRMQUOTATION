@@ -1,0 +1,500 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/S1C_R2__Guideline.pdf
+[CHARS] 29933
+
+INTERNATIONAL CONFERENCE ON HARMONISATION OF TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN USE
+ICH H ARMONISED TRIPARTITE G UIDELINE
+DOSE SELECTION FOR CARCINOGENICITY S TUDIES
+OF P HARMACEUTICALS
+S1C(R2)
+Current Step 4 version
+Parent Guideline dated 27 October 1994
+(Addendum on a Limit Dose dated 17 July 1997 and incorporated in November 2005)
+Revised on 11 March 2008
+This Guideline has been developed by the appropriate ICH Expert Working Group and has been
+subject to consultation by the regulatory parties, in accordance with the ICH Process. At Step 4
+of the Process the final draft is recommended for adoption to the regulatory bodies of the
+European Union, Japan and USA.
+
+-- 1 of 12 --
+
+S1C(R2)
+Document History
+First
+Codification History 	Date
+New
+Codification
+November
+2005
+Parent Guideline: Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+S1 	Approval by the Steering Committee under Step 2 and
+release for public consultation.
+27
+October
+1993
+S1
+S1C 	Approval by the Steering Committee under Step 4 and
+recommendation for adoption to the three ICH regulatory
+bodies.
+27
+October
+1994
+S1C
+Addendum to the Parent Guideline: Addition of a Limit Dose and Related Notes
+S1C(R) 	Approval of the Addendum by the Steering Committee
+under Step 2 and release for public consultation.
+6
+November
+1996
+in S1C(R1)
+S1C(R) 	Approval of the Addendum by the Steering Committee
+under Step4 and recommendation for adoption to the three
+ICH regulatory bodies.
+17
+July
+1997
+in S1C(R1)
+First Revision (R1)
+S1C and
+S1C(R)
+The parent guideline is now renamed S1C(R1) as the
+Addendum has been incorporated to the parent guideline.
+The new title is: “Dose Selection for Carcinogenicity Studies
+of Pharmaceuticals & Limit Dose”.
+November
+2005
+S1C(R1)
+Current Step 4 version
+S1C(R2) 	Approval by the Steering Committee of the second revision
+directly under Step 4 without further public consultation, to
+delete Note 2 of the parent guideline and revise the text
+referring to the Notes. The title has been changed by
+deleting “& Limit Dose”. The Addendum has been
+integrated in the text.
+In this revision the pharmacokinetic endpoint of 25 is
+declared to be applicable also for pharmaceuticals with
+positive genotoxicity signals. This change has implications
+on “Refinement” (one of the 3R’s) in enhancing the welfare,
+i.e., reducing the pain or discomfort of the animals at the
+MTD.
+11 March
+2008
+S1C(R2)
+
+-- 2 of 12 --
+
+i
+DOSE SELECTION FOR CARCINOGENICITY S TUDIES
+OF P HARMACEUTICALS
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting
+on 11 March 2008, this guideline is recommended for
+adoption to the three regulatory parties to ICH
+TABLE OF CONTENTS
+1. 	INTRODUCTION............................................................................................................ 1
+1.1 	General Considerations for the Conduct of Dose-Ranging Studies................................ 2
+1.2 	Toxicity Endpoints in High Dose Selection ..................................................................... 2
+1.3 	Pharmacokinetic Endpoints in High Dose Selection....................................................... 3
+1.4 	Criteria for Comparisons of AUC in Animals and Man for use in
+High Dose Selection .......................................................................................................... 3
+1.5 	Saturation of Absorption in High Dose Selection............................................................ 4
+1.6 	Pharmacodynamic Endpoints in High Dose Selection.................................................... 4
+1.7 	Maximum Feasible Dose................................................................................................... 4
+1.8 	Limit Dose ......................................................................................................................... 4
+1.9 	Additional Endpoints in High Dose Selection ................................................................. 5
+1.10 	Selection of Middle and Low Doses in Carcinogenicity Studies ..................................... 5
+2. 	SUMMARY ....................................................................................................................... 5
+3. 	NOTES .............................................................................................................................. 5
+
+-- 3 of 12 --
+
+
+
+-- 4 of 12 --
+
+1
+D OSE SELECTION FOR C ARCINOGENICITY S TUDIES
+OF P HARMACEUTICALS
+1. 	INTRODUCTION
+Traditionally, carcinogenicity studies for chemical agents have relied upon the
+maximally tolerated dose (MTD) as the standard method for high dose selection (Note
+1). The MTD is generally chosen based on data derived from toxicity studies of 3
+months' duration.
+In the past, the criteria for high dose selection for carcinogenicity studies of human
+pharmaceuticals have not been uniform among international regulatory agencies. In
+Europe and Japan, dose selection based on toxicity endpoints or attaining high
+multiples of the maximum recommended human daily dose (>100x on a mg/kg basis)
+has been accepted. However, in the United States, dose selection based on the MTD
+has traditionally been considered the only appropriate practice. All regions have used
+a maximum feasible dose as an appropriate endpoint.
+For pharmaceuticals with low rodent toxicity, use of the MTD can result in the
+administration of very large doses in carcinogenicity studies, often representing high
+multiples of the clinical dose. This has led to the concern that exposures in rodents
+greatly in excess of the intended human exposures might not be relevant to human
+risk; because they so greatly alter the physiology of the test species, the findings
+might not reflect what would occur following human exposure.
+Ideally, the doses selected for rodent bioassays for pharmaceuticals should provide an
+exposure to the agent that (1) allows an adequate margin of safety over the human
+therapeutic 	exposure, 	(2) 	is 	tolerated 	without 	significant 	chronic 	physiological
+dysfunction and is compatible with good survival, (3) is guided by a comprehensive set
+of animal and human data that focus broadly on the properties of the agent and the
+suitability of the animal, and (4) permits data interpretation in the context of clinical
+use.
+In order to achieve international harmonisation of requirements for high dose
+selection for carcinogenicity studies of pharmaceuticals, and to establish a rational
+basis for high dose selection, the ICH Expert Working Group on Safety initiated a
+process to arrive at common, scientifically based criteria for high dose selection.
+Several features of pharmaceutical agents distinguish them from other environmental
+chemicals and can justify a guideline which might differ in some respects from other
+guidelines. This should enhance the relevance of the carcinogenicity study for
+pharmaceuticals. Thus much knowledge might be available on the pharmacology,
+pharmacokinetics, and metabolic disposition in humans. In addition, there will
+usually be information on the patient population, the expected use pattern, the range
+of exposure, and the toxicity and/or side effects that cannot be tolerated in humans.
+Diversity of the chemical and pharmacological nature of the substances developed as
+pharmaceuticals, and the diversity of mechanisms of carcinogenesis, call for a flexible
+approach 	to 	dose 	selection. 	This 	document 	proposes 	that 	any 	one 	of 	several
+approaches could be useful for dose selection, and should provide for a more rational
+approach to dose selection for carcinogenicity studies for pharmaceuticals. These
+include: 1) toxicity-based endpoints; 2) pharmacokinetic endpoints; 3) saturation of
+absorption; 4) pharmacodynamic endpoints; 5) maximum feasible dose; 6) limit dose;
+and 7) additional endpoints.
+
+-- 5 of 12 --
+
+Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+2
+Consideration of all relevant animal data and integration with available human data
+is paramount in determining the most appropriate endpoint for selecting the high
+dose for the carcinogenicity study. Relevant pharmacokinetic, pharmacodynamic, and
+toxicity data should be considered in the selection of doses for the carcinogenicity
+study, regardless of the primary endpoint used for high dose selection.
+In the process of defining such a flexible approach, it is recognised that the
+fundamental mechanisms of carcinogenesis are only poorly understood at the present
+time. Further, it is also recognised that the use of the rodent to predict human
+carcinogenic risk has inherent limitations, although this approach is the best
+available option at this time. Thus, while the use of plasma levels of drug-derived
+substances represents an important attempt at improving the design of the rodent
+bioassay, progress in this field calls for continuing examination of the best method to
+detect human risk. This guideline is therefore intended to serve as guidance in this
+difficult and complex area, recognising the importance of updating the specific
+provisions outlined below as new data become available.
+1.1 	General Considerations for the Conduct of Dose-Ranging Studies
+The considerations involved when undertaking dose-ranging studies to select the high
+dose for carcinogenicity studies are the same regardless of the final endpoint utilised.
+1. 	In practice, carcinogenicity studies are carried out in a limited number of rat
+and mouse strains for which there is reasonable information on spontaneous
+tumour incidence. Ideally, rodent species/strains with metabolic profiles as
+similar as possible to humans should be studied (Note 2);
+2. 	Dose-ranging studies should be conducted for both males and females for all
+strains and species to be tested in the carcinogenicity bioassay;
+3. 	Dose selection is generally determined from 90-day studies using the route and
+method of administration that will be used in the bioassay;
+4. 	Selection of an appropriate dosing schedule and regimen should be based on
+clinical 	use 	and 	exposure 	patterns, 	pharmacokinetics, 	and 	practical
+considerations;
+5. 	Ideally, both the toxicity profile and any dose-limiting toxicity should be
+characterised. Consideration should also be given to general toxicity, the
+occurrence of preneoplastic lesions and/or tissue-specific proliferative effects,
+and disturbances in endocrine homeostasis;
+6. 	Changes in metabolite profile or alterations in metabolising enzyme activities
+(induction 	or 	inhibition) 	over 	time 	should 	be 	understood 	to 	allow 	for
+appropriate interpretation of studies.
+1.2 	Toxicity Endpoints in High Dose Selection
+ICH 1 agreed to evaluate endpoints other than the MTD for the selection of the high
+dose in carcinogenicity studies. These were to be based on the pharmacological
+properties and toxicological profile of the test compound. There is no scientific
+consensus on the use of toxicity endpoints other than the MTD. Therefore, the ICH
+Expert Working Group on Safety has agreed to continue use of the MTD as a useful
+toxicity-based endpoint for high dose selection for carcinogenicity studies.
+The following definition of the MTD is considered consistent with those published
+previously by international regulatory authorities (Note 1): The top dose or maximum
+
+-- 6 of 12 --
+
+Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+3
+tolerated dose is that which is predicted to produce a minimum toxic effect over the
+course of the carcinogenicity study. Such an effect can be predicted from a 90-day dose
+range-finding study in which minimal toxicity is observed. Factors to consider are
+alterations in physiological function which would be predicted to alter the animal's
+normal life span or interfere with interpretation of the study. Such factors include: no
+more than 10% decrease in body weight gain relative to controls; target organ toxicity;
+significant alterations in clinical pathological parameters.
+1.3 	Pharmacokinetic Endpoints in High Dose Selection
+A systemic exposure representing a large multiple of the human area under the
+exposure curve (AUC) (at the maximum recommended daily dose) can be an
+appropriate endpoint for dose selection for carcinogenicity studies for pharmaceuticals
+which have similar metabolic profiles in humans and rodents and low organ toxicity
+in rodents (i.e., high doses are well tolerated in rodents). The level of animal systemic
+exposure should be sufficiently great compared to exposure to provide reassurance of
+an adequate test of carcinogenicity.
+It is recognised that the doses administered to different species might not correspond
+to tissue concentrations because of different metabolic and excretory patterns.
+Comparability of systemic exposure is better assessed by blood concentrations of
+parent drug and metabolites than by administered dose. The unbound drug in plasma
+is thought to be the most relevant indirect measure of tissue concentrations of
+unbound drug. The AUC is considered the most comprehensive pharmacokinetic
+endpoint since it takes into account the plasma concentration of the compound and
+residence time in vivo.
+There is, as yet, no validated scientific basis for use of comparative drug plasma
+concentrations in animals and humans for the assessment of carcinogenic risk to
+humans. However, for the present, and based on an analysis of a database of
+carcinogenicity studies performed at the MTD, the selection of a high dose for
+carcinogenicity studies which represents a 25- to-1 exposure ratio of rodent to human
+plasma AUC of parent compound and/or metabolites is considered pragmatic (Note 3).
+1.4 	Criteria for Comparisons of AUC in Animals and Man for use in High
+Dose Selection
+The 	following 	criteria 	are 	especially 	applicable 	for 	use 	in 	determining 	a
+pharmacokinetically-defined exposure for high dose selection.
+1. 	Rodent pharmacokinetic data are derived from the strains used for the
+carcinogenicity studies using the route of compound administration and dose
+ranges planned for the carcinogenicity study (Notes 4, 5 and 6);
+2. 	Pharmacokinetic data are derived from studies of sufficient duration to take
+into account potential time-dependent changes in pharmacokinetic parameters
+which might occur during the dose ranging studies;
+3. 	Documentation is provided on the similarity of metabolism between rodents
+and humans (Note 7);
+4. 	In assessing exposure, scientific judgement is used to determine whether the
+AUC comparison is based on data for the parent, parent and metabolite(s), or
+metabolite(s). The justification for this decision is provided;
+
+-- 7 of 12 --
+
+Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+4
+5. 	Interspecies differences in protein binding are taken into consideration when
+estimating relative exposure (Note 8);
+6. 	Human pharmacokinetic data are derived from studies encompassing the
+maximum recommended human daily dose (Note 9).
+1.5 	Saturation of Absorption in High Dose Selection
+High 	dose 	selection 	based 	on 	saturation 	of 	absorption 	measured 	by 	systemic
+availability of drug-related substances can be considered. The mid and low doses
+selected for the carcinogenicity study should take into account saturation of metabolic
+and elimination pathways.
+1.6 	Pharmacodynamic Endpoints in High Dose Selection
+The utility and safety of many pharmaceuticals depend on their pharmacodynamic
+receptor selectivity. Pharmacodynamic endpoints for high dose selection will be highly
+compound-specific and can be considered for individual study designs based on
+scientific merits. The high dose selected should produce a pharmacodynamic response
+in dosed animals of such magnitude as would preclude further dose escalation.
+However, the dose should not produce disturbances of physiology or homeostasis
+which would compromise the validity of the study. Examples include hypotension and
+inhibition of blood clotting (because of the risk of spontaneous bleeding).
+1.7 	Maximum Feasible Dose
+Currently, the maximum feasible dose by dietary administration is considered to be
+5% of diet. International regulatory authorities are re-evaluating this standard. It is
+believed that the use of pharmacokinetic endpoints (AUC ratio) for dose selection of
+low toxicity pharmaceuticals, discussed in this guideline, should significantly reduce
+the number of instances where high doses are selected based on feasibility criteria.
+When routes other than dietary administration are appropriate, the high dose can be
+limited based on considerations including practicality and local tolerance.
+1.8 	Limit Dose
+In determining the high dose for carcinogenicity studies using the approaches
+outlined in this guideline it is appropriate to limit this dose to 1500 mg/kg/day (Note
+10). This limit dose applies where the maximum recommended human dose does not
+exceed 500 mg/day (Note 11).
+Data should be provided comparing exposure of rodents and humans to drug and
+metabolites 	primarily 	to 	support 	dose 	selection 	for 	and 	interpretation 	of 	the
+carcinogenicity study. Based on such information, there might be cases where the
+limit of 1500 mg/kg/day is not applicable because it cannot be assured that animal
+exposure after 1500 mg/kg/day is sufficiently high compared to the exposure achieved
+in humans. The rodent systemic exposure at 1500 mg/kg/day should be greater by at
+least an order of magnitude than human exposure measured at the intended human
+therapeutic dose. (If this is not the case, efforts should be made to increase the rodent
+exposure or to reconsider the animal model in a case-by-case approach.) If the human
+dose exceeds 500 mg/day the high dose can be increased up to the maximum feasible
+dose.
+
+-- 8 of 12 --
+
+Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+5
+1.9 	Additional Endpoints in High Dose Selection
+It is recognised that there might be merit in the use of alternative endpoints not
+specifically defined in this guidance on high dose selection for rodent carcinogenicity
+studies. Use of these additional endpoints in individual study designs should be based
+on scientific rationale. Such designs should be evaluated based on their individual
+merits (Note 12).
+1.10 	Selection of Middle and Low Doses in Carcinogenicity Studies
+Regardless of the method used for the selection of the high dose, the selection of the
+mid and low doses for the carcinogenicity study should provide information to aid in
+assessing the relevance of study findings to humans. The doses should be selected
+following integration of rodent and human pharmacokinetic, pharmacodynamic, and
+toxicity data. The rationale for the selection of these doses should be provided. While
+not all-encompassing, the following points should be considered in selection of the
+middle and low doses for rodent carcinogenicity studies:
+1. 	Linearity of pharmacokinetics and saturation of metabolic pathways;
+2. 	Human exposure and therapeutic dose;
+3. 	Pharmacodynamic response in rodents;
+4. 	Alterations in normal rodent physiology;
+5. 	Mechanistic information and potential for threshold effects;
+6. 	The unpredictability of the progression of toxicity observed in short-term
+studies.
+2. 	SUMMARY
+This guidance outlines six criteria for selection of the high dose for carcinogenicity
+studies 	of 	therapeutics: 	the 	maximum 	tolerated 	dose, 	25-fold 	AUC 	ratio
+(rodent:human), dose-limiting pharmacodynamic effects, saturation of absorption,
+maximum feasible dose, and limit dose. The use of other pharmacodynamic-,
+pharmacokinetic-, or toxicity-based endpoints in study design should be considered
+based on scientific rationale and individual merits. In all cases, appropriate dose
+ranging studies should be conducted. All relevant information should be considered
+for dose and species/strain selection for the carcinogenicity study. This information
+should include knowledge of human use, exposure patterns, and metabolism. The
+availability of multiple criteria for dose selection will provide greater flexibility in
+optimising the design of carcinogenicity studies for therapeutic agents.
+3. 	NOTES
+Note 1
+The following are considered equivalent definitions of the toxicity-based endpoint
+describing the maximum tolerated dose:
+The US Interagency Staff Group on Carcinogens has defined the MTD as follows: "The
+highest dose currently recommended is that which, when given for the duration of the
+chronic study, is just high enough to elicit signs of minimal toxicity without
+significantly 	altering 	the 	animal's 	normal 	lifespan 	due 	to 	effects 	other 	than
+carcinogenicity. This dose, sometimes called the maximum tolerated dose (MTD), is
+determined in a subchronic study (usually 90 days duration) primarily on the basis of
+
+-- 9 of 12 --
+
+Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+6
+mortality, toxicity and pathology criteria. The MTD should not produce morphologic
+evidence of toxicity of a severity that would interfere with the interpretation of the
+study. Nor should it comprise so large a fraction of the animal's diet that the
+nutritional composition of the diet is altered, leading to nutritional imbalance.”
+"The MTD was initially based on a weight gain decrement observed in the subchronic
+study; i.e., the highest dose that caused no more than a 10% weight gain decrement.
+More recent studies and the evaluation of many more bioassays indicate refinement of
+MTD selection on the basis of a broader range of biological information. Alterations in
+body and organ weight and clinically significant changes in haematologic, urinary,
+and clinical chemistry measurements can be useful in conjunction with the usually
+more definitive toxic, pathologic or histopathologic endpoints." (Environmental Health
+Perspectives, Vol. 67, pp. 201-281, 1986)
+The Ministry of Health and Welfare in Japan prescribes the following: "The dose in
+the preliminary carcinogenicity study that inhibits body weight gain by less than 10%
+in comparison with the control and causes neither death due to toxic effects nor
+remarkable changes in the general signs and laboratory examination findings of the
+animals is the highest dose to be used in the full-scale carcinogenicity study."
+(Toxicity test guideline for pharmaceuticals, Chapter 5, pg. 127, 1985)
+The Committee on Proprietary Medicinal Products of the European Community
+prescribes the following: "The top dose should produce a minimum toxic effect, for
+example a 10% weight loss or failure of growth, or minimal target organ toxicity.
+Target organ toxicity will be demonstrated by failure of physiological functions and
+ultimately by pathological changes." (Rules Governing Medicinal Products in the
+European Community, Vol. III, 1987)
+Note 2
+This does not imply that all possible rodent strains should be surveyed for metabolic
+profile, but rather that standard strains used in carcinogenicity studies should be
+examined.
+Note 3
+In order to select a multiple of the human AUC that would serve as an useful
+endpoint for dose selection for carcinogenicity studies, a retrospective analysis was
+performed on data from carcinogenicity studies of therapeutics conducted at the MTD
+for 	which 	there 	was 	sufficient 	human 	and 	rodent 	pharmacokinetic 	data 	for
+comparison of AUC values.
+In 35 drug carcinogenicity studies carried out at the MTD for which there were
+adequate pharmacokinetic data in rats and humans, approximately 1/3 had a relative
+systemic exposure ratio less than or equal to 1, and another 1/3 had ratios between 1
+and 10.
+An analysis of the correlation between the relative systemic exposure ratio, the
+relative dose ratio (rat mg/kg:human mg/kg MRD), and the dose ratio adjusted for
+body surface area (rat mg/M2 MTD:human mg/M2 MRD), performed in conjunction
+with the above-described database analysis, indicates that the relative systemic
+exposure corresponds better with dose ratios expressed in terms of body surface area
+rather than body weight. When 123 compounds in the expanded FDA database were
+analysed by this approach, a similar distribution of relative systemic exposures was
+observed. In the selection of a relative systemic exposure ratio (AUC ratio) to apply in
+
+-- 10 of 12 --
+
+Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+7
+high dose selection, consideration was given to a ratio value that would represent an
+adequate margin of safety, would detect known or probable human carcinogens, and
+could be attained by a reasonable proportion of compounds.
+To 	address 	the 	issue 	of 	detection 	of 	known 	or 	probable 	human 	carcinogenic
+pharmaceuticals, an analysis of exposure and/or dose ratios was performed on IARC
+class 1 and 2A pharmaceuticals with positive rat findings. For phenacetin, sufficient
+rat and human pharmacokinetic data are available to estimate that a relative
+systemic exposure ratio of at least 15 was found to produce positive findings in a rat
+carcinogenicity study. 	For most of 14 IARC 1 and 2A drugs evaluated with positive
+carcinogenicity findings in rats, there is a lack of adequate pharmacokinetic data for
+analysis. For these compounds, the body surface area adjusted dose ratio was
+employed as a surrogate for the relative systemic exposure ratio. The results of this
+analysis indicated that using doses in the rodent corresponding to body surface area
+ratios 	of 	10 	or 	more 	would 	identify 	the 	carcinogenic 	potential 	of 	these
+pharmaceuticals.
+As a result of the evaluations described above, a minimum systemic exposure ratio of
+25 can be considered as a useful pharmacokinetic endpoint for high dose selection.
+This value was attained by approximately 25% of compounds tested in the FDA
+database (see Note 10), is high enough to detect known or probable (IARC 1, 2A)
+human carcinogenic drugs, and represents an adequate margin of safety. Those
+pharmaceuticals tested using a 25 fold or greater AUC ratio for the high dose will
+have exposure ratios greater than do 75% of pharmaceuticals tested previously in
+carcinogenicity studies performed at the MTD.
+Note 4
+The rodent AUCs and metabolite profiles can be determined from separate steady-
+state kinetic studies, as part of the subchronic toxicity studies, or dose-ranging
+studies.
+Note 5
+AUC values in rodents are usually obtainable using a small number of animals,
+depending on the route of administration and the availability of data on the
+pharmacokinetic characteristics of the test compound.
+Note 6
+Equivalent analytical methods of adequate sensitivity and precision should be used to
+determine plasma concentrations of pharmaceuticals in rodents and humans.
+Note 7
+It is recommended that in vivo metabolism be characterised in humans and rodents, if
+possible. However, in the absence of appropriate in vivo metabolism data, in vitro
+metabolism data (e.g., from liver slices, uninduced microsomal preparations) can
+provide appropriate support for the similarity of metabolism across species.
+Note 8
+While in vivo determinations of unbound drug might be the best approach, in vitro
+determinations of protein binding using parent and/or metabolites as appropriate
+(over the range of concentrations achieved in vivo in rodents and humans) might be
+used in the estimation of AUC unbound. When protein binding is low in both humans
+
+-- 11 of 12 --
+
+Dose Selection for Carcinogenicity Studies of Pharmaceuticals
+8
+and rodents, or when protein binding is high and the unbound fraction of drug is
+greater in rodents than in humans, the comparison of total plasma concentration of
+drug is appropriate. When protein binding is high and the unbound fraction is greater
+in humans than in rodents, the ratio of the unbound concentrations should be used.
+Note 9
+Human systemic exposure data can be derived from pharmacokinetic monitoring in
+normal volunteers and/or patients. The possibility of extensive inter-individual
+variation in exposure should be taken into consideration. In the absence of knowledge
+of the maximum recommended human daily dose, at a minimum, doses producing the
+desired 	pharmacodynamic 	effect 	in 	humans 	should 	be 	used 	to 	derive 	the
+pharmacokinetic data.
+Note 10
+Review of the FDA carcinogenicity database of nearly 900 carcinogenicity tests
+indicated that about 20 tests had been conducted that used doses of 1000 mg/kg or
+greater as the highest dose tested. About 10 of these tests were considered as having
+demonstrated a carcinogenic response. Seven of these were positive only at or above
+1000 mg/kg. Regulatory action has resulted from some of these cases. Based on these
+results, the limit dose for carcinogenicity testing should be 1500 mg/kg rather than
+1000 mg/kg to eliminate the risk that a carcinogen will not be able to be identified as
+a result of adoption of a limit dose of 1000 mg/kg.
+Note 11
+It has been agreed that if a drug is only positive in rodents at doses above those
+producing a 25-fold exposure over exposure in humans, such a finding would not be
+considered likely to reflect a relevant risk to humans.
+It has been shown that systemic exposure comparisons between rodents and humans
+are better estimated by a dose using mg/m2 than using mg/kg (see Note 3 above).
+Therefore, the human dose should be at least 25-fold lower on a mg/m 2 basis than the
+high dose in the carcinogenicity study. The factor 6-7 (6.5) is used to convert rat doses
+from mg/kg to mg/m2 and the factor 40 is used to convert human doses from mg/kg to
+mg/m2. Thus, the estimated systemic exposure ratio of 25-fold rodent/human is equal
+to about a 25-fold mg/m2 ratio or a 150-fold mg/kg ratio (150 ≈ 25 x 40/6.5). Therefore a
+human dose below 10 mg/kg/day (about 500 mg/day or less) could be tested in rats at
+1500 mg/kg as the high dose.
+Note 12
+Additional pharmaceutical-specific endpoints to select an appropriate high dose are
+currently under discussion (e.g., additional pharmacodynamic, pharmacokinetic and
+toxicity endpoints as well as alternatives to a maximum feasible dose).
+
+-- 12 of 12 --
+

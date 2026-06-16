@@ -1,0 +1,1035 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2016/07/test-no-490-in-vitro-mammalian-cell-gene-mutation-tests-using-the-thymidine-kinase-gene_g1g6fb2e/9789264264908-en.pdf
+[CHARS] 73092
+
+OECD/OCDE 490
+Adopted:
+29 July 2016
+1
+© OECD, (2016)
+You are free to use this material subject to the terms and conditions available at
+http://www.oecd.org/termsandconditions/.
+This Guideline was adopted by the OECD Council by written procedure on 29 July 2016 [C(2016)103].
+OECD GUIDELINE FOR THE TESTING OF CHEMICALS
+In Vitro Mammalian Cell Gene Mutation Tests Using the Thymidine Kinase Gene
+INTRODUCTION
+1. The OECD Guidelines for the Testing of Chemicals are periodically reviewed and revised in the
+light of scientific progress, regulatory needs and animal welfare. The mouse lymphoma assay (MLA) and
+TK6 test using the thymidine kinase (TK) locus were originally contained in Test Guideline 476 adopted in
+1984 and revised in 1997, based on scientific progress made to that date. Subsequently, the MLA Expert
+Workgroup of the International Workshop for Genotoxicity Testing (IWGT) has developed internationally
+harmonized recommendations for assay acceptance criteria and data interpretation for the MLA (1) (2) (3)
+(4) (5), and these recommendations are incorporated into this new Test Guideline (TG 490). TG 490 is
+written for the MLA and, because it also utilizes the TK locus, the TK6. While the MLA has been widely
+used for regulatory purposes, the TK6 has been used much less frequently. It should be noted that in spite
+of the similarity between the endpoints the two cell lines are not interchangeable and regulatory programs
+may validly express a preference for one over the other for a particular regulatory use. For instance, the
+validation of the MLA demonstrated its appropriateness for detecting not only gene mutation, but also, the
+ability of a test chemical to induce structural chromosomal damage. This Test Guideline is part of a series
+of Test Guidelines on genetic toxicology. A document that provides succinct information on genetic
+toxicology testing and an overview of the recent changes that were made to these Test Guidelines has been
+developed (6).
+2. The purpose of the in vitro mammalian cell gene mutation tests is to detect gene mutations
+induced by chemicals. The cell lines used in these tests measure forward mutations in reporter genes,
+specifically the endogeneous thymidine kinase gene (TK for human cells and Tk for rodent cells,
+collectively referred to as TK in this Guideline). This Guideline is intended for use with two cell lines: the
+L5178Y TK+/--3.7.2C mouse lymphoma cell line (generally called L5178Y) and the TK6 human
+lymphoblastoid cell line (generally called TK6). Although the two cell lines vary because of their origin,
+cell growth, p53-status, etc., the TK gene mutation tests can be conducted in a similar way in both cell
+types as described in this guideline.
+3. The autosomal and heterozygous nature of the thymidine kinase gene enables the detection of
+viable colonies whose cells are deficient in the enzyme thymidine kinase following mutation from TK+/- to
+TK-/-. This deficiency can result from genetic events affecting the TK gene including both gene mutations
+(point mutations, frame-shift mutations, small deletions, etc.) and chromosomal events (large deletions,
+chromosome rearrangements and mitotic recombination). The latter events are expressed as loss of
+heterozygosity, which is a common genetic change of tumor suppressor genes in human tumorigenesis.
+Theoretically, loss of the entire chromosome carrying the TK gene resulting from spindle impairment
+
+-- 1 of 24 --
+
+490 OECD/OCDE
+2
+© OECD, (2016)
+and/or mitotic non-disjunction can be detected in the MLA. Indeed, a combination of cytogenetic and
+molecular analysis clearly shows that some MLA TK mutants are the result of nondisjunction. However,
+the weight of evidence shows that the TK gene mutation tests cannot reliably detect aneugens when
+applying standard cytotoxicity criteria (as described in this guideline) and therefore, it is not appropriate to
+use these tests to detect aneugens (7) (8) (9).
+4. In the TK gene mutation tests, two distinct phenotypic classes of TK mutants are generated; the
+normal growing mutants that grow at the same rate as the TK heterozygous cells, and slow growing
+mutants which grow with prolonged doubling times. The normal growing and slow growing mutants are
+recognized as large colony and small colony mutants in the MLA and as early appearing colony and late
+appearing colony mutants in the TK6. The molecular and cytogenetic nature of both large and small colony
+MLA mutants has been explored in detail (8) (10) (11) (12) (13). The molecular and cytogenetic nature of
+the early appearing and late appearing TK6 mutants has also been extensively investigated (14) (15) (16)
+(17). Slow growing mutants for both cell types have suffered genetic damage that involves putative
+growth regulating gene(s) near the TK locus which results in prolonged doubling times and the formation
+of late appearing or small colonies (18). The induction of slow growing mutants has been associated with
+substances that induce gross structural changes at the chromosomal level. Cells whose damage does not
+involve the putative growth regulating gene(s) near the TK locus grow at rates similar to the parental cells
+and become normal growing mutants. The induction of primarily normal growing mutants is associated
+with substances primarily acting as point mutagens. Consequently it is essential to count both slow
+growing and normal growing mutants in order to recover all of the mutants and to provide some insight
+into the type(s) of damage (mutagens vs. clastogens) induced by the test chemical (10) (12) (18) (19).
+5. The Test Guideline is organized so as to provide general information that applies to both MLA
+and TK6 and specialised guidance for the individual tests.
+6. Definitions used are provided in Annex 1.
+INITIAL CONSIDERATIONS AND LIMITATIONS
+7. Tests conducted in vitro generally require the use of an exogenous source of metabolic activation.
+The exogenous metabolic activation system does not entirely mimic in vivo conditions.
+8. Care should be taken to avoid conditions that could lead to artifactual positive results (i.e.
+possible interaction with the test system) not caused by interaction between the test chemical and the
+genetic material of the cell; such conditions include changes in pH or osmolality, interaction with the
+medium components (20) (21), or excessive levels of cytotoxicity (22) (23) (24). Cytotoxicity exceeding
+the recommended top cytotoxicity levels as defined in paragraph 28 is considered excessive for the MLA
+and TK6. In addition, it should be noted that test chemicals that are thymidine analogues, or behave like
+thymidine analogues can increase the mutant frequency by selective growth of the spontaneous background
+mutants during cell treatment and require additional test methods for adequate evaluation (25).
+9. For manufactured nanomaterials, specific adaptations of this Test Guideline may be needed but
+are not described in this Test Guideline.
+10. Before using the Test Guideline for testing a mixture to generate data for an intended regulatory
+purpose, it should be considered whether, and if so why, it may provide adequate results for that purpose.
+Such considerations are not needed, when there is a regulatory requirement for testing the mixture.
+11. Mutant cells deficient in thymidine kinase enzyme activity because of a mutation TK+/- to TK-/-
+are resistant to the cytostatic effects of the pyrimidine analogue trifluorothymidine (TFT). The TK
+
+-- 2 of 24 --
+
+OECD/OCDE 490
+3
+© OECD, (2016)
+proficient cells are sensitive to TFT, which causes the inhibition of cellular metabolism and halts further
+cell division. Thus, mutant cells are able to proliferate in the presence of TFT and form visible colonies,
+whereas cells containing the TK enzyme are not.
+PRINCIPLE OF THE TEST
+12. Cells in suspension are exposed to the test chemical, both with and without an exogenous source
+of metabolic activation (see paragraph 19), for a suitable period of time (see paragraph 33), and then sub-
+cultured to determine cytotoxicity and to allow phenotypic expression prior to mutant selection.
+Cytotoxicity is determined by relative total growth (RTG—see paragraph 25) for the MLA and by relative
+survival (RS—see paragraph 26) for TK6. The treated cultures are maintained in growth medium for a
+sufficient period of time, characteristic of each cell type (see paragraph 37), to allow near-optimal
+phenotypic expression of induced mutations. Following phenotypic expression, mutant frequency is
+determined by seeding known numbers of cells in medium containing the selective agent to detect mutant
+colonies, and in medium without selective agent to determine the cloning efficiency (viability). After a
+suitable incubation time, colonies are counted. Mutant frequency is calculated based on the number of
+mutant colonies corrected by the cloning efficiency at the time of mutant selection.
+DESCRIPTION OF THE METHOD
+Preparations
+Cells
+13. For MLA: Because the MLA was developed and characterized using the TK+/- -3.7.2C subline of
+L5178Y cells, this specific subline has to be be used for the MLA. The L5178Y cell line was derived from
+a methylcholanthrene-induced thymic lymphoma from a DBA-2 mouse (26). Clive and co-workers treated
+L5178Y cells (designated by Clive as TK+/+ -3) with ethylmethane sulfonate and isolated a TK-/-
+(designated as TK-/- -3.7) clone using bromodeoxyuridine as the selective agent. From the TK-/- clone a
+spontaneous TK+/- clone (designated as TK+/- -3.7.2.) and a subclone (designated as TK+/--3.7.2C) were
+isolated and characterized for use in the MLA (27). The karyotype for the cell line has been published (28)
+(29) (30) (31). The modal chromosome number is 40. There is one metacentric chromosome (t12;13) that
+should be counted as one chromosome. The mouse TK locus is located on the distal end of chromosome
+11. The L5178Y TK+/- -3.7.2C cell line has mutations in both p53 alleles and produces mutant-p53 protein
+(32) (33). The p53 status of the TK+/--3.7.2C cell line is likely responsible for the ability of the test to detect
+large-scale damage (17).
+14. For TK6: The TK6 is a human lymphoblastoid cell line. The parent cell line is an Epstein-Barr
+virus-transformed cell line, WI-L2, which was originally derived from a 5-year-old male with hereditary
+spherocytosis. The first isolated clone, HH4, was mutagenized with ICR191 and a TK heterozygous cell
+line, TK6, was generated (34). TK6 cells are nearly diploid and the representative karyotype is 47, XY,
+13+, t(14; 20), t(3; 21) (35). The human TK locus is located on the long arm of chromosome 17. The TK6
+is a p53-competent cell line, because it has a wild-type p53 sequence in both alleles and expresses only
+wild-type p53 protein (36).
+15. For both the MLA and the TK6, when first establishing or replenishing a master stock, it is
+advisable for the testing laboratory to assure the absence of Mycoplasma contamination, karyotype the
+cells or paint the chromosomes harboring the TK locus, and to check population doubling times. The
+normal cell cycle time for the cells used in the testing laboratory should be established and should be
+consistent with published cell characteristics (16) (19) (37). This master stock should be stored at -150o C
+or below and used to prepare all working cell stocks.
+
+-- 3 of 24 --
+
+490 OECD/OCDE
+4
+© OECD, (2016)
+16. Either prior to establishing a large number of cryopreserved working stocks or just prior to use in
+an experiment, the culture may need to be cleansed of pre-existing mutant cells [unless the solvent control
+mutant frequency (MF) is already within the acceptable range—see Table 2 for the MLA)]. This is
+accomplished using methotrexate (aminopterin) to select against TK-deficient cells and adding thymidine,
+hypoxanthine and glycine (L5178Y) or 2’-deoxycytidine (TK6) to the culture to ensure optimal growth of
+the TK-competent cells (19) (38) (39), and (40) for TK6). General advice on good practice for the
+maintenance of cell cultures as well as specific advice for L5178Y and TK6 cells can be found in (19) (31)
+(37) (39) (41). For laboratories requiring master cell stocks to initiate either the MLA or TK6 or to obtain
+new master cell stocks, a cell repository of well characterized cells is available (37).
+Media and culture conditions
+17. For both tests, appropriate culture medium and incubation conditions (e.g. culture vessels,
+humidified atmosphere of 5% CO2, incubation temperature of 37oC) should be used for maintaining
+cultures. Cell cultures should always be maintained under conditions that ensure that they are growing in
+log phase. It is particularly important to choose media and culture conditions that ensure optimal growth of
+cells during the expression period and cloning for both mutant and non-mutant cells. For the MLA and the
+TK6, it is also important that the culture conditions ensure optimal growth of both the large colony/early
+appearing and the small colony/late appearing TK mutants. More culture details, including the need to
+properly heat inactivate horse serum if RPMI medium is used during mutant selection can be found in (19)
+(31) (38) (39) (40) (42).
+Preparation of cultures
+18. Cells are propagated from stock cultures, seeded in culture medium at a density such that the
+suspension cultures will continue to grow exponentially through the treatment and expression periods.
+Metabolic activation
+19. Exogenous metabolizing systems should be used when employing L5178Y and TK6 cells
+because they have inadequate endogenous metabolic capacity. The most commonly used system that is
+recommended by default unless otherwise justified, is a co-factor-supplemented post-mitochondrial
+fraction (S9) prepared from the livers of rodents (generally rats) treated with enzyme-inducing agents such
+as Aroclor 1254 (43) (44) (45) or a combination of phenobarbital and β-naphthoflavone (46) (47) (48) (49)
+(50) (51). The latter combination does not conflict with the Stockholm Convention on Persistent Organic
+Pollutants (52) and has been shown to be as effective as Aroclor 1254 for inducing mixed-function
+oxidases (45) (46) (47) (48) (49). The S9 fraction typically is used at concentrations ranging from 1-2% but
+may be increased to 10% (v/v) in the final test medium. The choice of type and concentration of exogenous
+metabolic activation system or metabolic inducer employed may be influenced by the class of test
+chemicals.
+Test chemical preparations
+20. Solid test chemicals should be prepared in appropriate solvents and diluted, if appropriate, prior
+to treatment of the cells (see paragraph 21). Liquid test chemicals may be added directly to the test system
+and/or diluted prior to treatment of the test system. Gaseous or volatile test chemicals should be tested by
+appropriate modifications to the standard protocols, such as treatment in sealed culture vessels (53) (54)
+(55). Preparations of the test chemical should be made just prior to treatment unless stability data
+demonstrate the acceptability of storage.
+
+-- 4 of 24 --
+
+OECD/OCDE 490
+5
+© OECD, (2016)
+Test Conditions
+Solvents
+21. The solvent should be chosen to optimize the solubility of the test chemical without adversely
+impacting the conduct of the test, e.g. changing cell growth, affecting the integrity of the test chemical,
+reacting with culture vessels, impairing the metabolic activation system. It is recommended that, wherever
+possible, the use of an aqueous solvent (or culture medium) should be considered first. Well established
+solvents are water or dimethyl sulfoxide. Generally organic solvents should not exceed 1% (v/v) and
+aqueous solvents (saline or water) should not exceed 10% (v/v) in the final treatment medium. If other than
+well-established solvents are used (e.g. ethanol or acetone), their use should be supported by data
+indicating their compatibility with the test chemicals, the test system and their lack of genetic toxicity at
+the concentration used. In the absence of that supporting data, it is important to add untreated controls (see
+Annex 1, Definitions) to demonstrate that no deleterious or mutagenic effects are induced by the chosen
+solvent.
+Measuring cytotoxicity and choosing treatment concentrations
+22. When determining the highest test chemical concentration, concentrations that have the capability
+of producing artifactual positive responses, such as those producing excessive cytotoxicity (see paragraph
+28), precipitation (see paragraph 29) in the culture medium, or marked changes in pH or osmolality (see
+paragraph 8), should be avoided. If the test chemical causes a marked change in the pH of the medium at
+the time of addition, the pH might be adjusted by buffering the final treatment medium so as to avoid
+artifactual positive results and to maintain appropriate culture conditions.
+23. Concentration selection is based on cytotoxicity and other considerations (see paragraphs 27-30).
+While the evaluation of cytotoxicity in an initial test may be useful to better define the concentrations to be
+used in the main experiment, an initial test is not required. Even if an initial cytotoxicity evaluation is
+performed, the measurement of cytotoxicity for each culture is still required in the main experiment. If a
+range finding experiment is conducted, it should cover a wide range of concentrations and can either be
+terminated at day 1 after treatment or carried through the 2 day expression and to mutant selection (should
+it appear that the concentrations used are appropriate).
+24. Cytotoxicity should be determined for each individual test culture and control culture: methods
+for MLA (2) and the TK6 (15) are defined by internationally agreed practice.
+25. For both the agar and microwell versions of the MLA: Cytotoxicity should be evaluated using
+relative total growth (RTG) which was originally defined by Clive and Spector in 1975 (2). This measure
+includes the relative suspension growth (RSG: test culture vs. solvent control) during the cell treatment, the
+expression time and the relative cloning efficiency (RCE: test culture vs. solvent control) at the time that
+mutants are selected (2). It should be noted that the RSG includes any cell loss occurring in the test culture
+during treatment (See Annex 2 for formulae).
+26. For TK6: Cytotoxicity should be evaluated using relative survival (RS) i.e. cloning efficiency of
+cells plated immediately after treatment, adjusted for any cell loss during treatment, based on cell count as
+compared to the negative control (assigned a survival of 100%) (See Annex 2 for the formula).
+27. At least four test concentrations (not including the solvent and positive controls) that meet the
+acceptability criteria (appropriate cytotoxicity, number of cells, etc) should be evaluated. While the use of
+duplicate cultures is advisable, either replicate or single treated cultures may be used at each concentration
+tested. The results obtained for replicate cultures at a given concentration should be reported separately but
+
+-- 5 of 24 --
+
+490 OECD/OCDE
+6
+© OECD, (2016)
+can be pooled for the data analysis (55). For test chemicals demonstrating little or no cytotoxicity,
+concentration intervals of approximately 2 to 3 fold will usually be appropriate. Where cytotoxicity occurs,
+concentrations should be selected to cover the cytotoxicity range from that producing cytotoxicity as
+described in paragraph 28 and including concentrations at which there is moderate and little or no
+cytotoxicity. Many test chemicals exhibit steep concentration response curves and in order to cover the
+whole range of cytotoxicity or to study the concentration response in detail, it may be necessary to use
+more closely spaced concentrations and more than four concentrations, in particular in situations where a
+repeat experiment is required (see paragraph 70). The use of more than 4 concentrations may be
+particularly important when using single cultures.
+28. If the maximum concentration is based on cytotoxicity, the highest concentration should aim to
+achieve between 20 and 10% RTG for the MLA, and between 20 and 10% RS for the TK6 (paragraph 67).
+29. For poorly soluble test chemicals that are not cytotoxic at concentrations below the lowest
+insoluble concentration, the highest concentration analysed should produce turbidity or a precipitate visible
+by eye or with the aid of an inverted microscope at the end of the treatment with the test chemical. Even if
+cytotoxicity occurs above the lowest insoluble concentration, it is advisable to test at only one
+concentration producing turbidity or with a visible precipitate because artifactual effects may result from
+the precipitate. Because the MLA and TK6use suspension cultures, particular care should be taken to
+assure that the precipitate does not interfere with the conduct of the test. The determination of solubility in
+the culture medium prior to the experiment may also be useful.
+30. If no precipitate or limiting cytotoxicity is observed, the highest test concentration should
+correspond to 10 mM, 2 mg/mL or 2 μl/mL, whichever is the lowest (57) (58). When the test chemical is
+not of defined composition e.g. substance of unknown or variable composition, complex reaction products
+or biological materials [i.e. Chemical Substances of unknown or Variable Composition (UVCBs)],
+environmental extracts etc., the top concentration, may need to be higher (e.g. 5 mg/mL), in the absence of
+sufficient cytotoxicity, to increase the concentration of each of the components. It should be noted however
+that these requirements may differ for human pharmaceuticals (59).
+Controls
+31. Concurrent negative controls (see paragraph 21), consisting of the solvent alone in the treatment
+medium and handled in the same way as the treatment cultures, should be included for every experimental
+condition.
+32. Concurrent positive controls are needed to demonstrate the ability of the laboratory to identify
+mutagens under the conditions of the test protocol used, the effectiveness of the exogenous metabolic
+activation system (when applicable), and to demonstrate adequate detection of both small/late appearing
+and large/early appearing TK mutants. Examples of positive controls are given in the table 1 below.
+Alternative positive control substances can be used, if justified. Because in vitro mammalian cell tests for
+genetic toxicity are sufficiently standardized for short-term treatments (3-4 hours) done concurrently with
+and without metabolic activation using the same treatment duration, the use of positive controls may be
+confined to a mutagen requiring metabolic activation. In this case, this single positive control response
+will demonstrate both the activity of the metabolic activation system and the responsiveness of the test
+system. If used, long term treatment (i.e. 24 hours without S9) should however have its own positive
+control, as the treatment duration will differ from the test using metabolic activation. Each positive control
+should be used at one or more concentrations expected to give reproducible and detectable increases over
+background in order to demonstrate the sensitivity of the test system, and the response should not be
+compromised by cytotoxicity exceeding the limits specified in this TG (see paragraph 28).
+
+-- 6 of 24 --
+
+OECD/OCDE 490
+7
+© OECD, (2016)
+Table 1: Reference substances recommended for assessing laboratory proficiency and for selection of
+positive controls
+Category Substance CASRN
+1. Mutagens active without metabolic activation
+Methyl methanesulphonate 66-27-3
+Mitomycin C 50-07-7
+4-Nitroquinoline-N-Oxide 56-57-5
+2. Mutagens requiring metabolic activation
+Benzo(a)pyrene 50-32-8
+Cyclophosphamide
+(monohydrate)
+50-18-0
+(6055-19-2)
+7,12-Dimethylbenzanthracene 57-97-6
+3-Methylcholanthrene 56-49-5
+PROCEDURE
+Treatment with test chemical
+33. Proliferating cells are treated with the test chemical in the presence and absence of a metabolic
+activation system. Exposure should be for a suitable period of time (usually 3 to 4 hours is adequate). It
+should be noted however that these requirements may differ for human pharmaceuticals (59). For MLA, in
+cases where the short-term treatment yields negative results, and there is information suggesting the need
+for longer treatment [e.g. nucleoside analogs, poorly soluble substances, (5) (59)], consideration should be
+given to conducting the test with longer treatment, i.e. 24 hours without S9.
+34. The minimum number of cells used for each test (control and treated) culture at each stage in the
+test should be based on the spontaneous mutant frequency. A general guide is to treat and passage sufficient
+cells in each experimental culture so as to maintain at least 10 but ideally 100 spontaneous mutants in all
+phases of the test (treatment, phenotypic expression and mutant selection) (56).
+35. For MLA the recommended acceptable spontaneous mutant frequency is between 35-140 x 10-6
+(agar version) and 50-170 x 10-6 (microwell version) (see Table 2). To have at least 10 and ideally 100
+spontaneous mutants surviving treatment for each test culture, it is necessary to treat at least 6 x 106 cells.
+Treating this number of cells, and maintaining sufficient cells during expression and cloning for mutant
+selection, provides for a sufficient number of spontaneous mutants (10 or more) during all phases of the
+experiment, even for the cultures treated at concentrations that result in 90% cytotoxicity (as measured by
+an RTG of 10%) (19) (38) (39).
+36. For the TK6, the spontaneous mutant frequency is generally between 2 and 10 x 10-6. To have at
+least 10 spontaneous mutants surviving treatment for each culture, it is necessary to treat at least 20 x 106
+cells. Treating this number of cells provides for a sufficient number of spontaneous mutants (10 or more)
+even for the cultures treated at concentrations that cause 90% cytotoxicity during treatment (10% RS). In
+addition a sufficient number of cells must be cultured during the expression period and plated for mutant
+selection (60).
+
+-- 7 of 24 --
+
+490 OECD/OCDE
+8
+© OECD, (2016)
+Phenotypic expression time and measurement of cytotoxicity and mutant frequency
+37. At the end of the treatment period, cells are cultured for a defined time to allow near optimal
+phenotypic expression of newly induced mutants; specific to each cell line. For the MLA, the phenotypic
+expression period is 2 days. For the TK6, the phenotypic expression period is 3-4 days. If a 24 hr
+treatment is used, the expression period begins after the end of treatment.
+38. During the phenotypic expression period, cells are enumerated on a daily basis. For the MLA the
+daily cell counts are used to calculate the daily suspension growth (SG). Following the 2 day expression
+period, cells are suspended in medium with and without selective agent for the determination of the
+numbers of mutants (selection plates) and for cloning efficiency (viability plates), respectively. For MLA
+there are two equally acceptable methods for mutant selection cloning; one using soft agar and the other
+using liquid medium in 96-well plates (19) (38) (39). Cloning in the TK6 is conducted using liquid media
+and 96-well plates (16).
+39. Triflurothymidine (TFT) is the only recommended selective agent for TK mutants (61).
+40. For the MLA, agar plates and microwell plates are counted after 10-12 days incubation. For the
+TK6, colonies in microwell plates are scored after 10-14 days for the early appearing mutants. In order to
+recover the slow growing (late appearing) TK6 mutants, it is necessary to re-feed the cells with growth
+medium and TFT after counting the early appearing mutants and then to incubate the plates for an
+additional 7-10 days (62). See paragraphs 42 & 44 for a discussion concerning the enumeration of the slow
+and normal growth TK mutants.
+41. The appropriate calculations for the two tests including the two methods (agar and microwell) for
+the MLA are in Annex 2. For the agar method of the MLA, colonies are counted and the number of mutant
+colonies adjusted by the cloning efficiency to calculate a MF. For the microwell version of the MLA and
+the TK6, cloning efficiency both for the selection and cloning efficiency plates is determined according to
+the Poisson distribution (63). The MF is calculated from these two cloning efficiencies.
+Mutant Colony characterization
+42. For the MLA, if the test chemical is positive (see paragraphs 62-63), colony characterization by
+colony sizing or growth should be performed on at least one of the test cultures (generally the highest
+acceptable positive concentration) and on the negative and positive controls. If the test chemical is negative
+(see paragraph 64), mutant colony characterization should be performed on the negative and positive
+controls. For the microwell method of the MLA, small colony mutants are defined as those covering less
+than 25% of the well’s diameter and large colony mutants as those that cover more than 25% of the well’s
+diameter. For the agar method, an automatic colony counter is used to enumerate the mutant colonies and
+for colony sizing. Approaches to colony sizing are detailed in the literature (19) (38) (40). Colony
+characterization on the negative and positive control is needed to demonstrate that the studies are
+adequately conducted.
+43. The test chemical cannot be determined to be negative if the both the large and small colony
+mutants are not adequately detected in the positive control. Colony characterization can be used to provide
+general information concerning the ability of the test chemical to cause point mutations and/or
+chromosomal events (paragraph 4).
+44. TK6: Normal growing and slow growing mutants are differentiated by a difference in incubation
+time (see paragraph 40). For the TK6 generally both the early and late appearing mutants are scored for all
+of the cultures including the negative and positive controls. Colony characterization of the negative and
+
+-- 8 of 24 --
+
+OECD/OCDE 490
+9
+© OECD, (2016)
+positive control is needed to demonstrate that the studies are adequately conducted. The test chemical
+cannot be determined to be negative if both the early appearing and late appearing mutants are not
+adequately detected in the positive control. Colony characterization can be used to provide general
+information concerning the ability of the test chemical to cause point mutations and/or chromosomal
+events (paragraph 4).
+Proficiency of the laboratory
+45. In order to demonstrate sufficient experience with the test prior to using it for routine testing, the
+laboratory should have performed a series of experiments with reference positive substances acting via
+different mechanisms (at least one active with and one active without metabolic activation selected from
+the substances listed in Table 1) and various negative controls (including untreated cultures and various
+solvents/vehicles). These positive and negative control responses should be consistent with the literature.
+This requirement is not applicable to laboratories that have experience, i.e. that have an historical data base
+available as defined in paragraphs 47-50. For the MLA the values obtained for both positive and negative
+controls should be consistent with the IWGT recommendations (see Table 2).
+46. A selection of positive control substances (see Table 1) should be investigated with short and long
+treatments (if using long treatments) in the absence of metabolic activation, and also with short treatment
+in the presence of metabolic activation, in order to demonstrate proficiency to detect mutagenic substances,
+to determine the effectiveness of the metabolic activation system and to demonstrate the appropriateness of
+the cell growth conditions during treatment, phenotypic expression and mutant selection and of the scoring
+procedures. A range of concentrations of the selected substances should be chosen so as to give
+reproducible and concentration-related increases above the background in order to demonstrate the
+sensitivity and dynamic range of the test system.
+Historical control data
+47. The laboratory should establish:
+- A historical positive control range and distribution,
+- A historical negative (untreated, solvent) control range and distribution.
+48. When first acquiring data for an historical negative control distribution, concurrent negative
+controls should be consistent with published negative control data. As more experimental data are added to
+the control distribution, concurrent negative controls should ideally be within the 95% control limits of that
+distribution (64) (65).
+49. The laboratory’s historical negative control database should initially be built with a minimum of
+10 experiments but would preferably consist of at least 20 experiments conducted under comparable
+experimental conditions. Laboratories should use quality control methods, such as control charts (e.g. C-
+charts or X-bar charts (65), to identify how variable their positive and negative control data are, and to
+show that the methodology is 'under control' in their laboratory (66). Further details and recommendations
+on how to build and use the historical data can be found in the literature (64).
+50. Negative control data should consist of mutant frequencies from single or preferably replicate
+cultures as described in paragraph 27. Concurrent negative controls should ideally be within the 95%
+control limits of the distribution of the laboratory’s historical negative control database. Where negative
+control data fall outside the 95% control limit they may be acceptable for inclusion in the historical control
+distribution as long as these data are not extreme outliers, there is evidence that the test system is ‘under
+control’ (see paragraph 49) and there is evidence of no technical or human failure.
+
+-- 9 of 24 --
+
+490 OECD/OCDE
+10
+© OECD, (2016)
+51. Any changes to the experimental protocol should be considered in terms of the consistency of the
+data with the laboratory’s existing historical control databases. Any major inconsistencies should result in
+the establishment of a new historical control database.
+DATA AND REPORTING
+Presentation of the results
+52. The presentation of data for both the MLA and TK6 should include, for both treated and control
+cultures, data required for the calculation of cytotoxicity (RTG or RS, respectively) and mutant
+frequencies, as described below.
+53. For MLA, individual culture data should be provided for RSG, RTG, the cloning efficiency at the
+time of mutant selection and the number of mutant colonies (for agar version) or number of empty wells
+(for microwell version). MF should be expressed as number of mutant cells per million surviving cells. If
+the response is positive, small and large colony MFs (and/or percentage of the total MF) should be given
+for at least one concentration of the test chemical (generally the highest positive concentration) and the
+negative and positive controls. In the case of a negative response, the small and large colony MF should be
+given for the negative control and the positive control.
+54. For TK6, individual culture data should be provided for RS, the cloning efficiency at the time of
+mutant selection and the number of empty wells for early appearing and late appearing mutants. MF should
+be expressed as number of mutant cells per number of surviving cells, and should include the total MF as
+well as the MF (and/or percentage of the total MF) of the early and late appearing mutants.
+Acceptability Criteria
+55. For both the MLA and the TK6 the following criteria should be met before determining the
+overall results for a specific test chemical:
+- Two experimental conditions (short treatment with and without metabolic activation - see
+paragraph 33) were conducted unless one resulted in positive results.
+- Adequate number of cells and concentrations should be analysable (see paragraphs 27, 34-36).
+- The criteria for the selection of top concentration are consistent with those described in
+paragraphs 28-30.
+Acceptability criteria for negative and positive controls
+56. The IWGT Expert MLA Workgroup analysis of an extensive amount of MLA data resulted in
+international consensus for specific acceptability criteria for the MLA (1) (2) (3) (4) (5). Therefore, this
+Test Guideline provides specific recommendations for determining the acceptability of negative and
+positive controls and for evaluating individual substance results in the MLA. The TK6 has a much smaller
+database and has not undergone evaluation by a workgroup.
+57. For MLA, every experiment should be evaluated as to whether the untreated/solvent control
+meets the IWGT MLA Workgroup acceptance criteria ((4) and Table 2, below) for the: (1) MF (note that
+the IWGT acceptable MFs are different for the agar and microwell versions of the MLA), (2) cloning
+efficiency (CE) at the time of mutant selection and (3) suspension growth (SG) for the solvent control (see
+Annex 2 for formulae).
+
+-- 10 of 24 --
+
+OECD/OCDE 490
+11
+© OECD, (2016)
+Table 2: Acceptability criteria for the MLA
+Parameter Soft Agar Method Microwell Method
+Mutant Frequency 35 – 140 X 10-6 50 – 170 X 10-6
+Cloning Efficiency 65 – 120% 65 – 120%
+Suspension Growth 8 – 32 fold (3-4 hour
+treatment)
+32 – 180 fold (24 hour
+treatment, if conducted)
+8 – 32 fold (3-4 hour
+treatment)
+32 – 180 fold (24 hour
+treatment, if conducted)
+58. For MLA, every test should also be evaluated as to whether the positive control(s) meets at least
+one of the following two acceptance criteria developed by the IWGT workgroup:
+(1) The positive control should demonstrate an absolute increase in total MF, that is, an increase
+above the spontaneous background MF [an induced MF (IMF)] of at least 300 X 10-6. At least
+40% of the IMF should be reflected in the small colony MF.
+(2) The positive control has an increase in the small colony MF of at least 150 X 10-6 above that
+seen in the concurrent untreated/solvent control (a small colony IMF of 150 X 10-6).
+59. For the TK6, a test will be acceptable if the concurrent negative control is considered acceptable
+for addition to the laboratory historical negative control database as described in paragraphs 48-49. In
+addition, the concurrent positive controls (see paragraph 32) should induce responses that are compatible
+with those generated in the historical positive control data base and produce a statistically significant
+increase compared with the concurrent negative control.
+60. For both tests, the upper limit of cytotoxicity observed in the positive control culture should be
+the same as of the experimental cultures. That is, the RTG/RS should not be less than 10%. It is sufficient
+to use a single concentration (or one of the concentrations of the positive control cultures if more than one
+concentration is used) to demonstrate that the acceptance criteria for the positive control have been
+satisfied. Further, the MF of the positive control must be within the acceptable range established for the
+laboratory.
+Evaluation and interpretation of results
+61. For the MLA, significant work on biological relevance and criteria for a positive response has
+been conducted by The Mouse Lymphoma Expert Workgroup of the IWGT (4). Therefore, this test
+guideline provides specific recommendations for the interpretation of test chemical results from the MLA
+(see paragraphs 62-64). The TK6 has a much smaller database and has not undergone evaluation by a
+workgroup. Therefore, the recommendations for the interpretation of data for the TK6 are given in more
+general terms (see paragraphs 65-66). Additional recommendations apply to both tests (see paragraphs 67-
+71).
+MLA
+62. An approach for defining positive and negative responses is recommended to assure that the
+increased MF is biologically relevant. In place of statistical analysis generally used for other tests, it relies
+on the use of a predefined induced mutant frequency (i.e. increase in MF above concurrent control),
+designated the Global Evaluation Factor (GEF), which is based on the analysis of the distribution of the
+negative control MF data from participating laboratories (4). For the agar version of the MLA the GEF is
+90 x 10-6 and for the microwell version of the MLA the GEF is 126 x 10-6.
+
+-- 11 of 24 --
+
+490 OECD/OCDE
+12
+© OECD, (2016)
+63. Providing that all acceptability criteria are fulfilled, a test chemical is considered to be clearly
+positive if, in any of the experimental conditions examined (see paragraph 33), the increase in MF above
+the concurrent background exceeds the GEF and the increase is concentration related (e.g. using a trend
+test). The test chemical is then considered able to induce mutation in this test system.
+64. Providing that all acceptability criteria are fulfilled, a test chemical is considered to be clearly
+negative if, in all experimental conditions examined (see paragraph 33) there is no concentration related
+response or, if there is an increase in MF, it does not exceed the GEF. The test chemical is then considered
+unable to induce mutations in this test system.
+TK6
+65. Providing that all acceptability criteria are fulfilled, a test chemical is considered to be clearly
+positive if, in any of the experimental conditions examined (see paragraph 33):
+a) at least one of the test concentrations exhibits a statistically significant increase compared with
+the concurrent negative control
+b) the increase is concentration-related when evaluated with an appropriate trend test (see
+paragraph 33)
+c) any of the results are outside the distribution of the historical negative control data (e.g. Poisson-
+based 95% control limit; see paragraph 48).
+When all of these criteria are met, the test chemical is then considered able to induce mutation in
+this test system. Recommendations for the most appropriate statistical methods can be found in
+the literature (66) (67).
+66. Providing that all acceptability criteria are fulfilled, a test chemical is considered clearly negative
+if, in all experimental conditions examined (see paragraph 33):
+a) none of the test concentrations exhibits a statistically significant increase compared with the
+concurrent negative control,
+b) there is no concentration-related increase when evaluated with an appropriate trend test
+c) all results are inside the distribution of the historical negative control data (e.g. Poisson-based
+95% control limit; see paragraph 48).
+The test chemical is then considered unable to induce mutations in this test system.
+For both the MLA and TK6:
+67. If the maximum concentration is based on cytotoxicity, the highest concentration should aim to
+achieve between 20 and 10% RTG/RS. The consensus is that care should be taken when interpreting
+positive results only found between 20 and 10% RTG/RS and a result would not be considered positive if
+the increase in MF occurred only at or below 10% RTG/RS (if evaluated) (2) (59).
+68. There are some circumstances under which additional information may assist in determining that
+a test chemical is not mutagenic when there is no culture showing an RTG value between 10-20 %
+RTG/RS. These situations are outlined as follows: (1) There is no evidence of mutagenicity (e.g. no dose
+response, no mutant frequencies above those seen in the concurrent negative control or historical
+background ranges, etc.) in a series of data points within 100% to 20% RTG/RS and there is at least one
+data point between 20 and 25% RTG/RS. (2) There is no evidence of mutagenicity (e.g. no dose response,
+
+-- 12 of 24 --
+
+OECD/OCDE 490
+13
+© OECD, (2016)
+no mutant frequencies above those seen in the concurrent negative control or historical background ranges,
+etc.) in a series of data points between 100% to 25% RTG/RS and there is also a negative data point
+slightly below 10% RTG/RS. In both of these situations the test chemical can be concluded to be negative.
+69. There is no requirement for verification of a clearly positive or negative response.
+70. In cases when the response is neither clearly negative nor clearly positive as described above
+and/or in order to assist in establishing the biological relevance of a result the data should be evaluated by
+expert judgement and/or further investigations. Performing a repeat experiment possibly using modified
+experimental conditions [e.g. concentration spacing to increase the probability of attaining data points
+within the 10-20% RTG/RS range, using other metabolic activation conditions (i.e. S9 concentration or S9
+origin) and duration of treatment] could be useful.
+71. In rare cases, even after further investigations, the data set will preclude making a conclusion of
+positive or negative results. Therefore the test chemical response should be concluded to be equivocal
+(interpreted as equally likely to be positive or negative).
+Test Report
+72. The test report should include the following information:
+Test chemical:
+- source, lot number, limit date for use, if available;
+- stability of the test chemical itself, if known;
+- solubility and stability of the test chemical in solvent, if known;
+- measurement of pH, osmolality, and precipitate in the culture medium to which the test chemical
+was added, as appropriate.
+Mono-constituent substance:
+- physical appearance, water solubility, and additional relevant physicochemical properties;
+- chemical identification, such as IUPAC or CAS name, CAS number, SMILES or InChI code,
+structural formula, purity, chemical identity of impurities as appropriate and practically feasible,
+etc.
+- Multi-constituent substance, UVBCs and mixtures:
+- characterized as far as possible by chemical identity (see above), quantitative occurrence and
+relevant physicochemical properties of the constituents.
+Solvent:
+ justification for choice of solvent;
+ percentage of solvent in the final culture medium.
+Cells:
+For Laboratory master cultures:
+ type and source of cells, and history in the testing laboratory;
+ karyotype features and/or modal number of chromosomes;
+ methods for maintenance of cell cultures;
+ absence of mycoplasma;
+ cell doubling times.
+Test conditions:
+ rationale for selection of concentrations and number of cell cultures; including e.g. cytotoxicity
+data and solubility limitations;
+
+-- 13 of 24 --
+
+490 OECD/OCDE
+14
+© OECD, (2016)
+ composition of media, CO2 concentration, humidity level;
+ concentration of test chemical expressed as final concentration in the culture medium (e.g. μg or
+mg/mL or mM of culture medium);
+ concentration (and/or volume) of solvent and test chemical added in the culture medium;
+ incubation temperature;
+ incubation time;
+ duration of treatment;
+ cell density during treatment;
+ type and composition of metabolic activation system (source of S9, method of preparation of the
+S9 mix, the concentration or volume of S9 mix and S9 in the final culture medium, quality
+controls of S9);
+ positive and negative control substances, final concentrations for each conditions of treatment;
+ length of expression period (including number of cells seeded, and subcultures and feeding
+schedules, if appropriate);
+ identity of the selective agent and its concentration;
+ for the MLA, the version used (agar or microwell) should be indicated
+ criteria for acceptability of the tests;
+ methods used to enumerate numbers of viable and mutant cells;
+ methods used for the measurements of cytotoxicity;
+ any supplementary information relevant to cytotoxicity and method used;
+ duration of incubation times after plating;
+ definition of colonies of which size and type are considered (including criteria for "small' and
+"large" colonies, as appropriate);
+ criteria for considering studies as positive, negative or equivocal;
+ methods used to determine pH, osmolality, if performed and precipitation if relevant.
+Results:
+ number of cells treated and number of cells sub-cultured for each culture;
+ toxicity parameters (RTG for MLA and RS for TK6);
+ signs of precipitation and time of the determination;
+ number of cells plated in selective and non-selective medium;
+ number of colonies in non-selective medium and number of resistant colonies in selective
+medium and related mutant frequencies;
+ colony sizing for the negative and positive controls and if the test chemical is positive, at least
+one concentration, and related mutant frequencies;
+ concentration-response relationship, where possible;
+ concurrent negative (solvent) and positive control data (concentrations and solvents);
+ historical negative (solvent) and positive control data (concentrations and solvents) with ranges,
+means and standard deviations; number of tests upon which the historical controls are based;
+ statistical analyses (for individual cultures and pooled replicates if appropriate), and p-values if
+any; and for the MLA, the GEF evaluation.
+Discussion of the results.
+Conclusion..
+
+-- 14 of 24 --
+
+OECD/OCDE 490
+15
+© OECD, (2016)
+LITERATURE
+1) Moore, M.M., Honma, M. Clements, J. (Rapporteur), Awogi, T., Bolcsfoldi, G., Cole, J.,
+Gollapudi, B., Harrington-Brock, K., Mitchell, A., Muster, W., Myhr, B., O'Donovan, M.,
+Ouldelhkim, M-C., San, R., Shimada, H. and Stankowski, L.F. Jr. (2000). Mouse Lymphoma
+Thymidine Kinase Locus (TK) Gene Mutation Assay: International Workshop on Genotoxicity
+Test Procedures (IWGTP) Workgroup Report, Environ. Mol. Mutagen., 35 (3): 185-190.
+2) Moore, M.M., Honma, M., Clements, J., Harrington-Brock, K., Awogi, T., Bolcsfoldi, G., Cifone,
+M., Collard, D., Fellows, M., Flanders, K., Gollapudi, B., Jenkinson, P., Kirby, P., Kirchner, S.,
+Kraycer, J., McEnaney, S., Muster, W., Myhr, B., O’Donovan, M., Oliver, Ouldelhkim, M-C.,
+Pant, K., Preston, R., Riach, C., San, R., Shimada, H. and Stankowski, L.F. Jr. (2002). Mouse
+Lymphoma Thymidine Kinase Locus Gene Mutation Assay: Follow-Up International Workshop
+on Genotoxicity Test Procedures, New Orleans, Louisiana, (April 2000), Environ. Mol.
+Mutagen., 40 (4): 292-299.
+3) Moore, M.M., Honma, M., Clements, J., Bolcsfoldi, G., Cifone, M., Delongchamp, R., Fellows,
+M., Gollapudi, B., Jenkinson, P., Kirby, P., Kirchner, S., Muster, W., Myhr, B., O’Donovan, M.,
+Ouldelhkim, M-C., Pant, K., Preston, R., Riach, C., San, R., Stankowski, L.F. Jr., Thakur, A.,
+Wakuri, S. and Yoshimura, I. (2003), Mouse Lymphoma Thymidine Kinase Locus Gene Mutation
+Assay: International Workshop (Plymouth, UK) on Genotoxicity Test Procedures Workgroup
+Report, Mutation Res., 540:127-140.
+4) Moore, M.M., Honma, M., Clements, J., Bolcsfoldi, G., Burlinson, B., Cifone, M., Clarke, J.,
+Delongchamp, R., Durward, R., Fellows, M., Gollapudi, B., Hou, S., Jenkinson, P., Lloyd, M.,
+Majeska, J., Myhr, B., O’Donovan, M., Omori, T., Riach, C., San, R., Stankowski, L.F. Jr.,
+Thakur, A.K., Van Goethem, F., Wakuri, S. and Yoshimura, I. (2006). Mouse Lymphoma
+Thymidine Kinase Gene Mutation Assay: Follow-Up Meeting of the International Workshop on
+Genotoxicity Tests – Aberdeen, Scotland, 2003 – Assay Acceptance Criteria, Positive Controls,
+and Data Evaluation, Environ. Mol. Mutagen., 47 (1):1-5.
+5) Moore, M.M., Honma, M., Clements, J., Bolcsfoldi, G., Burlinson, B., Cifone, M., Clarke, J.,
+Clay, P., Doppalapudi, R., Fellows, M., Gollapudi, B., Hou, S., Jenkinson, P., Muster, W., Pant,
+K., Kidd, D.A., Lorge, E., Lloyd, M., Myhr, B., O’Donovan, M., Riach, C., Stankowski, L.F. Jr.,
+Thakur A.K. and Van Goethem, F. (2007). Mouse Lymphoma Thymidine Kinase Mutation Assay:
+Meeting of the International Workshop on Genotoxicity Testing, San Francisco, 2005,
+Recommendations for 24-h Treatment, Mutation. Res., 627 (1): 36-40.
+6) OECD (2016). Overview of the set of OECD Genetic Toxicology Test Guidelines and updates
+performed in 2014-2015. ENV Publications. Series on Testing and Assessment, No. 234, OECD,
+Paris.
+7) Fellows M.D., Luker, T., Cooper, A. and O'Donovan, M.R. (2012). Unusual Structure-
+Genotoxicity Relationship in Mouse Lymphoma Cells Observed with a Series of Kinase
+Inhibitors. Mutation, Res., 746 (1): 21-28.
+8) Honma, M., Momose, M., Sakamoto, H., Sofuni, T. and Hayashi, M. (2001), Spindol Poisons
+Induce Allelic Loss in Mouse Lymphoma Cells Through Mitotic Non-Disjunction. Mutation Res.,
+493 (1-2): 101-114.
+
+-- 15 of 24 --
+
+490 OECD/OCDE
+16
+© OECD, (2016)
+9) Wang, J., Sawyer, J.R., Chen, L., Chen, T., Honma, M., Mei, N. and Moore, M.M. (2009). The
+Mouse Lymphoma Assay Detects Recombination, Deletion, and Aneuploidy, Toxicol. Sci.., 109
+(1): 96-105.
+10) Applegate, M.L., Moore, M.M., Broder, C.B., Burrell, A., and Hozier, J.C. (1990), Molecular
+Dissection of Mutations at the Heterozygous Thymidine Kinase Locus in Mouse Lymphoma
+Cells. Proc. National. Academy. Sci. USA, 87 (1): 51-55.
+11) Hozier, J., Sawyer, J., Moore, M., Howard, B. and Clive, D. (1981). Cytogenetic Analysis of the
+L5178Y/TK+/- Leads to TK-/- Mouse Lymphoma Mutagenesis Assay System, Mutation Res., 84
+(1): 169-181.
+12) Hozier, J., Sawyer, J., Clive, D. and Moore, M.M. (1985), Chromosome 11 Aberrations in Small
+Colony L5178Y TK-/- Mutants Early in their Clonal History, Mutation Res., 147 (5): 237-242.
+13) Moore, M.M., Clive, D., Hozier, J.C., Howard, B.E., Batson, A.G., Turner, N.T. and Sawyer, J.
+(1985). Analysis of Trifluorothymidine-Resistant (TFTr) Mutants of L5178Y/TK+/- Mouse
+Lymphoma Cells. Mutation Res., 151 (1): 161-174.
+14) Liber H.L., Call K.M. and Little J.B. (1987). Molecular and Biochemical Analyses of
+Spontaneous and X-Ray-Induced Mutants in Human Lymphoblastoid Cells. Mutation Res., 178
+(1): 143-153.
+15) Li C.Y., Yandell D.W. and Little J.B. (1992). Molecular Mechanisms of Spontaneous and Induced
+Loss of Heterozygosity in Human Cells In Vitro. Somat. Cell Mol. Genet., 18 (1): 77-87.
+16) Honma M., Hayashi M. and Sofuni T. (1997). Cytotoxic and Mutagenic Responses to X-Rays
+and Chemical Mutagens in Normal and P53-Mutated Human Lymphoblastoid Cells. Mutation.
+Res., 374 (1): 89-98.
+17) Honma, M., Momose, M., Tanabe, H., Sakamoto, H., Yu, Y., Little, J.B., Sofuni, T. and Hayashi,
+M. (2000). Requirement of Wild-Type P53 Protein for Maintenance of Chromosomal Integrity.
+Mol. Carcinogen., 28 (4): 203-14.
+18) Amundson S.A. and Liber H.L. (1992). A Comparison of Induced Mutation at Homologous
+Alleles of the TK Locus in Human Cells. II. Molecular Analysis of Mutants. Mutation Res., 267
+(1): 89-95.
+19) Schisler M.R., Moore M.M. and Gollapudi B.B. (2013). In Vitro Mouse Lymphoma (L5178Y
+TK+/- -3.7.2C) Forward Mutation Assay. In Protocols in Genotoxicity Assessment A. Dhawan and
+M. Bajpayee (Eds.), Springer Protocols, Humana Press. p. 27-50.
+20) Long, L.H., Kirkland, D., Whitwell, J. and Halliwell, B. (2007), Different Cytotoxic and
+Clastogenic Effects of Epigallocatechin Gallate in Various Cell-Culture Media Due to Variable
+Rates of its Oxidation in the Culture Medium, Mutation Res., 634 (1-2): 177-183.
+21) Nesslany, F., Simar-Meintieres, S., Watzinger, M., Talahari, I. and Marzin, D. (2008).
+Characterization of the Genotoxicity of Nitrilotriacetic Acid. Environ. Mol. Mutagen., 49 (6):
+439-452.
+22) Brusick D. (1986). Genotoxic Effects in Cultured Mammalian Cells Produced by Low pH
+Treatment Conditions and Increased Ion Concentrations. Environ. Mutagen., 8 (6): 879-886.
+
+-- 16 of 24 --
+
+OECD/OCDE 490
+17
+© OECD, (2016)
+23) Morita, T., Nagaki, T., Fukuda, I. and Okumura, K. (1992). Clastogenicity of Low pH to Various
+Cultured Mammalian Cells. Mutation Res., 268 (2): 297-305.
+24) Scott, D., Galloway, S.M., Marshall, R.R., Ishidate, M.Jr, Brusick, D., Ashby, J. and Myhr, B.C.
+(1991). Genotoxicity Under Extreme Culture Conditions. A report from ICPEMC Task Group 9.
+Mutation Res., 257: 147-204.
+25) Wang J., Heflich R.H. and Moore M.M. (2007). A Method to Distinguish Between the De Novo
+Induction of Thymidine Kinase Mutants and the Selection of Pre-Existing Thymidine Kinase
+Mutants in the Mouse Lymphoma Assay. Mutation Res., 626 (1-2): 185-190.
+26) Fischer, G.A. (1958). Studies on the Culture of Leukemic Cells In Vitro. Ann. N.Y. Academy Sci.,
+76: 673-680.
+27) Clive, D., Johnson, K.O., Spector, J.F.S., Batson, A.G. and Brown, M.M.M. (1979), Validation
+and Characterization of the L5178Y/TK+/-- Mouse Lymphoma Mutagen Assay System. Mutation
+Res., 59(1): 61-108.
+28) Sawyer, J., Moore, M.M., Clive, D. and Hozier, J. (1985). Cytogenetic Characterization of the
+L5178Y TK+/- 3.7.2C Mouse Lymphoma Cell Line, Mutation Res., 147 (5): 243-253.
+29) Sawyer J.R., Moore M.M. and Hozier J.C. (1989). High-Resolution Cytogenetic Characterization
+of the L5178Y TK+/- Mouse Lymphoma Cell Line, Mutation Res., 214 (2): 181-193.
+30) Sawyer, J.R., Binz, R.L., Wang, J. and Moore, M.M. (2006). Multicolor Spectral Karyotyping of
+the L5178Y TK+/--3.7.2C Mouse Lymphoma Cell Line, Environ. Mol. Mutagen., 47 (2): 127-131.
+31) Fellows, M.D., McDermott, A., Clare, K.R., Doherty, A. and Aardema, M.J. (2014), The Spectral
+Karyotype of L5178Y TK+/- Mouse Lymphoma Cells Clone 3.7.2C and Factors Affecting Mutant
+Frequency at the Thymidine Kinase (TK) Locus in the Microtitre Mouse Lymphoma Assay,
+Environ. Mol. Mutagen., 55 (1): 35-42.
+32) Storer, R.D., Jraynak, A.R., McKelvey, T.W., Elia, M.C., Goodrow, T.L. and DeLuca, J.G. (1997).
+The Mouse Lymphoma L5178Y TK+/- Cell Line is Heterozygous for a Codon 170 Mutation in the
+P53 Tumor Suppressor Gene. Mutation.. Res., 373 (2): 157-165.
+33) Clark L.S., Harrington-Brock, K., Wang, J., Sargent, L., Lowry, D., Reynolds, S.H. and Moore,
+M.M. (2004). Loss of P53 Heterozygosity is not Responsible for the Small Colony Thymidine
+Kinase Mutant Phenotype in L5178Y Mouse Lymphoma Cells. Mutagen., 19 (4): 263-268.
+34) Skopek T.R., Liber, H.L., Penman, B.W. and Thilly, W.G. (1978). Isolation of a Human
+Lymphoblastoid Line Heterozygous at the Thymidine Kinase Locus: Possibility for a Rapid
+Human Cell Mutation Assay. Biochem. Biophys. Res. Commun., 84 (2): 411–416.
+35) Honma M. (2005). Generation of Loss of Heterozygosity and its Dependency on P53 Status in
+Human Lymphoblastoid Cells. Environ. Mol. Mutagen., 45 (2-3): 162-176.
+36) Xia, F., Wang, X., Wang, Y.H., Tsang, N.M., Yandell, D.W., Kelsey, K.T. and Liber, H.L. (1995).
+Altered P53 Status Correlates with Differences in Sensitivity to Radiation-Induced Mutation and
+Apoptosis in Two Closely Related Human Lymphoblast Lines. Cancer. Res., 55 (1): 12-15.
+
+-- 17 of 24 --
+
+490 OECD/OCDE
+18
+© OECD, (2016)
+37) Lorge, E., M. Moore, J. Clements, M. O Donovan, M. Honma, A. Kohara, J. van Benthem, S.
+Galloway, M.J. Armstrong, V. Thybaud, B. Gollapudi, M. Aardema, J. Kim, A. Sutter, D.J.
+Kirkland,(2015). Standardized Cell Sources and Recommendations for Good Cell Culture
+Practices in Genotoxicity Testing. (Manuscript in preparation).
+38) Lloyd M. and Kidd D. (2012). The Mouse Lymphoma Assay. Springer Protocols: Methods in
+Molecular Biology 817, Genetic Toxicology Principles and Methods, ed. Parry and Parry,
+Humana Press. ISBN, 978-1-61779-420-9, 35-54.
+39) Mei N., Guo X. and Moore M.M. (2014). Methods for Using the Mouse Lymphoma Assay to
+Screen for Chemical Mutagenicity and Photo-Mutagenicity. In: Optimization in Drug Discover:
+In Vitro Methods: Yan Z and Caldwell(Eds) , 2nd Edition, GW; Humana Press, Totowa, NJ.
+40) Liber H.L. and Thilly W.G. (1982). Mutation Assay at the Thymidine Kinase Locus in
+Diploidhuman Lymphoblasts. Mutation Res., 94 (2): 467-485.
+41) Coecke, S., Balls, M., Bowe, G., Davis, J., Gstraunthaler, G., Hartung, T., Hay, R., Merten, OW.,
+Price, A., Schechtman, L., Stacey, G. and Stokes, W. (2005), Guidance on Good Cell Culture
+Practice. A Report of the Second ECVAM Task Force on Good Cell Culture Practice. ATLA., 33
+(3): 261-287.
+42) Moore M.M. and Howard B.E. (1982). Quantitation of Small Colony Trifluorothymidine-
+Resistant Mutants of L5178Y/TK+/- Mouse Lymphoma Cells in RPMI-1640 Medium, Mutation
+Res., 104 (4-5): 287-294.
+43) Ames B.N., McCann J. and Yamasaki E. (1975). Methods for Detecting Carcinogens and Mutagens
+with the Salmonella/Mammalian Microsome Mutagenicity Test. Mutation Res., 31 (6): 347-364.
+44) Maron D.M. and Ames B.N. (1983). Revised Methods for the Salmonella Mutagenicity Test.
+Mutation Res., 113 (3-4): 173-215.
+45) Natarajan, A.T., Tates, A.D, Van Buul, P.P.W., Meijers, M. and De Vogel, N. (1976). Cytogenetic
+Effects of Mutagens/Carcinogens After Activation in a Microsomal System In Vitro, I. Induction of
+Chromosomal Aberrations and Sister Chromatid Exchanges by Diethylnitrosamine (DEN) and
+Dimethylnitrosamine (DMN) in CHO Cells in the Presence of Rat-Liver Microsomes. Mutation
+Res., 37 (1): 83-90.
+46) Matsuoka A., Hayashi M. and Ishidate M. Jr. (1979). Chromosomal Aberration Tests on 29
+Chemicals Combined with S9 Mix In Vitro. Mutation Res., 66 (3): 277-290.
+47) Ong T.M., et al. (1980). Differential Effects of Cytochrome P450-Inducers on Promutagen
+Activation Capabilities and Enzymatic Activities of S-9 from Rat Liver, J. Environ. Pathol.
+Toxicol., 4 (1): 55-65
+48) Elliott, B.M., Combes, R.D., Elcombe, C.R., Gatehouse, D.G., Gibson, G.G., Mackay, J.M. and
+Wolf, R.C. (1992). Report of UK Environmental Mutagen Society Working Party. Alternatives to
+Aroclor 1254-Induced S9 in In Vitro Genotoxicity Assays. Mutagen., 7 (3): 175-177.
+49) Matsushima, T., Sawamura, M., Hara, K. and Sugimura, T. (1976). A Safe Substitute for
+Polychlorinated Biphenyls as an Inducer of Metabolic Activation Systems. In: ) In Vitro Metabolic
+Activation in Mutagenesis Testing. de Serres F.J., et al. (Eds, Elsevier, North-Holland, pp. 85-88.
+
+-- 18 of 24 --
+
+OECD/OCDE 490
+19
+© OECD, (2016)
+50) Galloway S.M., et al. (1994). Report from Working Group on In Vitro Tests for Chromosomal
+Aberrations. Mutation Res., 312 (3): 241-261.
+51) Johnson T.E., Umbenhauer D.R. and Galloway S.M. (1996). Human Liver S-9 Metabolic
+Activation: Proficiency in Cytogenetic Assays and Comparison with Phenobarbital/Beta-
+Naphthoflavone or Aroclor 1254 Induced Rat S-9, Environ. Mol. Mutagen., 28 (1): 51-59.
+52) UNEP. (2001). Stockholm Convention on Persistent Organic Pollutants, United Nations
+Environment Programme (UNEP).
+53) Krahn D.F., Barsky F.C. and McCooey K.T. (1982). CHO/HGPRT Mutation Assay: Evaluation of
+Gases and Volatile Liquids. In: Genotoxic Effects of Airborne Agents Tice R.R., Costa D.L.and
+Schaich K.M. (Eds.). New York, Plenum, pp. 91-103.
+54) Zamora, P.O., Benson, J.M., Li, A.P. and Brooks, A.L. (1983). Evaluation of an Exposure System
+Using Cells Grown on Collagen Gels for Detecting Highly Volatile Mutagens in the CHO/HGPRT
+Mutation Assay. Environ. Mutagen., 5 (6): 795-801.
+55) Asakura M., Sasaki T., Sugiyama T., Arito H., Fukushima, S. and Matsushima, T. (2008), An
+Improved System for Exposure of Cultured Mammalian Cells to Gaseous Compounds in the
+Chromosomal Aberration Assay. Mutation Res., 652 (2): 122-130.
+56) Arlett C.F., et al. (1989). Mammalian Cell Gene Mutation Assays Based upon Colony Formation.
+In: Statistical Evaluation of Mutagenicity Test Data, Kirkland, D.J. (Ed.), CambridgeUniversity
+Press, pp. 66-101.
+57) Morita T., Honma M. and Morikawa K. (2012), Effect of Reducing the Top Concentration Used
+in the In Vitro Chromosomal Aberration Test in CHL Cells on the Evaluation of Industrial
+Chemical Genotoxicity. Mutation Res., 741 (1-2): 32-56.
+58) Brookmire L., Chen J.J. and Levy D.D. (2013). Evaluation of the Highest Concentrations Used in
+the In Vitro Chromosome Aberrations Assay. Environ. Mol. Mutagen., 54 (1): 36-43.
+59) USFDA. (2012). International Conference on Harmonisation (ICH) Guidance S2 (R1) on
+Genotoxicity Testing and Data Interpretation for Pharmaceuticals Intended For Human Use.
+Available at: [https://www.federalregister.gov/a/2012-13774].
+60) Honma M. and Hayashi M. (2011). Comparison of In Vitro Micronucleus and Gene Mutation
+Assay Results for P53-Competent Versus P53-Deficient Human Lymphoblastoid Cells. Environ.
+Mol. Mutagen., 52 (5): 373-384.
+61) Moore-Brown, M.M., Clive, D., Howard, B.E., Batson, A.G. and Johnson, K.O. (1981). The
+Utilization of Trifluorothymidine (TFT) to Select for Thymidine Kinase-Deficient (TK-/-)
+Mutants from L5178Y/TK+/- Mouse Lymphoma Cells, Mutation Res., 85 (5): 363-378.
+62) Liber H.L., Yandell D.W. and Little J.B. (1989). A Comparison of Mutation Induction at the TK
+and HRPT Loci in Human Lymphoblastoid Cells; Quantitative Differences are Due to an
+Additional Class of Mutations at the Autosomal TK locus. Mutation Res., 216 (1): 9-17.
+63) Furth E.E., Thilly, W.G., Penman, B.W., Liber, H.L. and Rand, W.M. (1981), Quantitative Assay
+for Mutation in Diploid Human Lymphoblasts Using Microtiter Plates. Anal. Biochem., 110 (1):
+1-8.
+
+-- 19 of 24 --
+
+490 OECD/OCDE
+20
+© OECD, (2016)
+64) Hayashi, M, Dearfield, K., Kasper, P., Lovell, D., Martus, H. J. and Thybaud, V. (2011).
+Compilation and Use of Genetic Toxicity Historical Control Data, Mutation Res., 723 (2): 87-90.
+65) Ryan T.P. (2000). Statistical Methods for Quality Improvement. John Wiley and Sons, New York
+2nd Edition.
+66) OECD (2014), Statistical analysis supporting the revision of the genotoxicity Test Guidelines.
+Environmental, Health and Safety Publications, Series on Testing and Assessment (No. 199.),
+Organisation for Economic Cooperation and Development, Paris.
+67) Fleiss J.L., Levin B. and Paik M.C. (2003). Statistical Methods for Rates and Proportions, Third
+Edition, New York: John Wiley & Sons.
+
+-- 20 of 24 --
+
+OECD/OCDE 490
+21
+© OECD, (2016)
+ANNEX 1:
+DEFINITIONS
+Aneugen: Any substance or process that, by interacting with the components of the mitotic and meiotic
+cell division cycle, leads to aneuploidy in cells or organisms.
+Aneuploidy: Any deviation from the normal diploid (or haploid) number of chromosomes by a
+single chromosome or more than one, but not by entire set(s) of chromosomes (polyploidy).
+Base-pair-substitution mutagens: Substances that cause substitution of base pairs in the DNA.
+Cloning efficiency: The percentage of cells plated at a low density that are able to grow into a colony that
+can be counted.
+Clastogen: Any substance or process which causes structural chromosomal aberrations in populations
+of cells or organisms.
+Cytotoxicity: For the assays covered in this guideline, cytotoxicity is identified as a reduction in relative
+total growth (RTG) or relative survival (RS) for the MLA and TK6, respectively.
+Forward mutation: A gene mutation from the parental type to the mutant form which gives rise to an
+alteration or a loss of the enzymatic activity or the function of the encoded protein.
+Frameshift mutagens: Substances which cause the addition or deletion of single or multiple base pairs in the
+DNA molecule.
+Genotoxic: A general term encompassing all types of DNA or chromosomal damage, including DNA
+breakage, adducts, rearrangements, mutations, chromosome aberrations, and aneuploidy. Not all types
+of genotoxic effects result in mutations or stable chromosomal damage.
+Mitotic recombination: During mitosis, recombination between homologous chromatids possibly resulting in
+the induction of DNA double strand breaks or in a loss of heterozygosity.
+Mutagenic: Produces a heritable change of DNA base-pair sequences(s) in genes or of the structure of
+chromosomes (chromosome aberrations).
+Mutant frequency (MF): The number of mutant cells observed divided by the number of viable cells.
+Phenotypic expression time: The time after treatment during which the genetic alteration is fixed within the
+genome and any preexisting gene products are depleted to the point that the phenotypic trait is altered.
+Relative survival (RS): RS is used as the measure of treatment-related cytotoxicity in the TK6. It is the
+relative cloning efficiency (CE) of cells plated immediately after the cell treatment adjusted by any loss of
+cells during treatment as compared with the cloning efficiency of the negative control.
+Relative suspension growth (RSG): For the MLA, the relative total two day suspension growth of the test
+culture compared to the total two-day suspension growth of the negative/solvent control (Clive and
+
+-- 21 of 24 --
+
+490 OECD/OCDE
+22
+© OECD, (2016)
+Spector, 1975). The RSG should include the relative growth of the test culture compared to the
+negative/solvent control during the treatment period.
+Relative total growth (RTG): RTG is used as the measure of treatment-related cytotoxicity in the MLA. It
+is a measure of relative (to the vehicle control) growth of test cultures during the, treatment, two-day
+expression and mutant selection cloning phases of the test. The RSG of each test culture is multiplied by
+the relative cloning efficiency of the test culture at the time of mutant selection and expressed relative to
+the cloning efficiency of the negative/solvent control (Clive and Spector, 1975).
+S9 liver fractions: Supernatant of liver homogenate after 9000g centrifugation, i.e. raw liver extract
+S9 mix: Mix of the liver S9 fraction and cofactors necessary for metabolic enzyme activity.
+Suspension growth (SG): The fold-increase in the number of cells over the course of the treatment and
+expression phases of the MLA. The SG is calculated by multiplying the fold-increase on day 1 by the fold-
+increase on day 2 for the short (3 or 4 hr) treatment. If a 24 hr treatment is used the SG is the fold-increase
+during the 24 hr treatment multiplied by the fold increases on expression days 1 and 2.
+Solvent control: General term to define the control cultures receiving the solvent alone used to dissolve the
+test chemical.
+Untreated controls: Untreated controls are cultures that receive no treatment (i.e. no test chemical nor
+solvent) but are processed the same way as the cultures receiving the test chemical.
+
+-- 22 of 24 --
+
+OECD/OCDE 490
+23
+© OECD, (2016)
+Annex 2:
+FORMULAS
+Cytotoxicity
+For both versions (agar and microwell) of the MLA
+Cytotoxicity is defined as the Relative Total Growth (RTG) which includes the Relative Suspension
+Growth (RSG) during the 2 day expression period and the Relative Cloning Efficiency (RCE) obtained at
+the time of mutant selection. RTG, RSG and RCE are all expressed as a percentage.
+Calculation of RSG: Suspension Growth one (SG1) is the growth rate between day 0 and day 1 (cell
+concentration at day 1 / cell concentration at day 0) and Suspension Growth two (SG2) is the growth rate
+between day 1 and day 2 (cell concentration at day 2 / cell concentration at day 1). The RSG is the total SG
+(SG1 X SG2) for the treated culture compared to the untreated/solvent control. That is: RSG = [SG1(test) x
+SG2(test)] / [SG1(control) x SG2(control)] The SG1 should be calculated from the initial cell concentration used at
+the beginning of cell treatment. The accounts for any differential cytotoxicity that occurs in the test
+culture(s) during the cell treatment.
+RCE is the relative cloning efficiency of the test culture compared to the relative cloning efficiency of the
+untreated/solvent control obtained at the time of mutant selection.
+Relative Total Growth (RTG): RTG=RSG x RCE
+TK6
+Relative Survival (RS):
+Cytotoxicity is evaluated by relative survival, i.e. cloning efficiency (CE) of cells plated immediately after
+treatment adjusted by any loss of cells during treatment as compared with cloning efficiency in the
+negative controls (assigned a survival of 100%). The adjustment for cell loss during treatment can be
+calculated as:
+Adjusted CE = CE x Number of cells at the end of treatment
+Number of cells at the beginning of treatment
+The RS for a culture treated by a test chemical is calculated as:
+RS = Adjusted CE in the treated culture x 100
+Adjusted CE in the solvent control
+Mutant frequency for both the MLA and TK6
+Mutant frequency (MF) is the cloning efficiency of mutant colonies in selective medium (CEM) adjusted by
+the cloning efficiency in non-selective medium at the time of mutant selection (CEV). That is,
+MF=CEM/CEV. The calculation of these two cloning efficiencies is described below for the agar and
+microwell cloning methods.
+MLA Agar Version: In the soft agar version of the MLA, the number of colonies on the mutant selection
+plate (CM) and number of colonies on the unselected or cloning efficiency (viable count) plate (CV) are
+obtained by directly counting the clones. When 600 cells are plated for cloning efficiency (CE) for the
+
+-- 23 of 24 --
+
+490 OECD/OCDE
+24
+© OECD, (2016)
+mutant selection (CEM) plates and the unselected or cloning efficiency (viable count) plates (CEV) and 3 x
+106 cells are used for mutant selection,
+CEM = CM / (3 x 106) = (CM / 3) x 10-6
+CEV = CV / 600
+MLA and TK6 Microwell Version: In the microwell version of the MLA, CM and CV are determined as the
+product of the total number of microwells (TW) and the probable number of colonies per well (P) on
+microwell plates.
+CM = PM x TWM
+CV = PV x TWV
+From the zero term of the Poisson distribution (Furth et al., 1981), the P is given by
+P = - ln (EW / TW)
+Where, EW is empty wells and TW is total wells. Therefore,
+CEM = CM / TM = (PM x TWM) / TM
+CEV = CV / TV = (PV x TWV) / TV
+For the microwell version of the MLA, small and large colony mutant frequencies will be calculated in an
+identical manner, using the relevant number of empty wells for small and large colonies.
+For TK6, small and large colony mutant frequencies are based on the early appearing and late appearing
+mutants.
+
+-- 24 of 24 --
+

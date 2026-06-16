@@ -1,0 +1,61 @@
+{
+  "scenario_id": "API06",
+  "scenario_title": "복합제 3종 (excipientCount=3 → priceTiers tier 3)",
+  "input": {
+    "modality": "합성신약",
+    "priceStandard": "MFDS",
+    "excipientCount": 3,
+    "route": "경구",
+    "durations": [
+      "W13"
+    ],
+    "addons": {
+      "drf": true,
+      "recovery": false,
+      "tk": false,
+      "genotox": false,
+      "safetyPharm": false
+    },
+    "categories": {}
+  },
+  "hit_count": 5,
+  "notes": [],
+  "total_unit_price": 587000000,
+  "sample_hits": [
+    {
+      "testName": "조제물분석 (개별분석)",
+      "adminRoute": null,
+      "priority": "필수",
+      "tag": "조제물분석 (Validation)",
+      "unitPrice": 30000000
+    },
+    {
+      "testName": "설치류 4주 DRF",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "DRF (13주용)",
+      "unitPrice": 33000000
+    },
+    {
+      "testName": "비설치류 4주 DRF",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "DRF (13주용)",
+      "unitPrice": 84000000
+    },
+    {
+      "testName": "설치류 13주 반복투여 독성",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "13주 본시험",
+      "unitPrice": 199000000
+    },
+    {
+      "testName": "비설치류 13주 반복투여 독성",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "13주 본시험",
+      "unitPrice": 241000000
+    }
+  ]
+}

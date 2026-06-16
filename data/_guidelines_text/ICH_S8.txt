@@ -1,0 +1,564 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/S8_Guideline.pdf
+[CHARS] 32389
+
+INTERNATIONAL CONFERENCE ON HARMONISATION OF TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN USE
+ICH HARMONISED TRIPARTITE GUIDELINE
+IMMUNOTOXICITY STUDIES
+FOR HUMAN PHARMACEUTICALS
+S8
+Current Step 4 version
+dated 15 September 2005
+This Guideline has been developed by the appropriate ICH Expert Working Group
+and has been subject to consultation by the regulatory parties, in accordance with the
+ICH Process. At Step 4 of the Process the final draft is recommended for adoption to
+the regulatory bodies of the European Union, Japan and USA.
+
+-- 1 of 15 --
+
+S8
+Document History
+First
+Codification History Date
+New
+Codification
+November
+2005
+S8 Approval by the Steering Committee under Step 2 and
+release for public consultation.
+18
+November
+2004
+S8
+Current Step 4 version
+S8 Approval by the Steering Committee under Step 4 and
+recommendation for adoption to the three ICH regulatory
+bodies.
+15
+September
+2005
+S8
+
+-- 2 of 15 --
+
+i
+IMMUNOTOXICITY STUDIES FOR HUMAN PHARMACEUTICALS
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting
+on 15 September 2005, this guideline is recommended for
+adoption to the three regulatory parties to ICH
+TABLE OF CONTENTS
+1. INTRODUCTION .................................................................................................. 1
+1.1 Objectives of the Guideline...................................................................................... 1
+1.2 Background.............................................................................................................. 1
+1.3 Scope of the Guideline ............................................................................................. 2
+1.4 Overview .................................................................................................................. 2
+2. GUIDELINE........................................................................................................... 2
+2.1 Factors to Consider in the Evaluation of Potential Immunotoxicity ..................... 2
+2.1.1 Standard Toxicity Studies ....................................................................... 3
+2.1.2 Pharmacological Properties ..................................................................... 3
+2.1.3 Intended Patient Population .................................................................... 4
+2.1.4 Structural Similarity ............................................................................... 4
+2.1.5 Disposition of the Drug............................................................................. 4
+2.1.6 Signs Observed in Clinical Trials or Clinical Use................................... 4
+2.2 Weight of Evidence Review ..................................................................................... 4
+3. SELECTION AND DESIGN OF ADDITIONAL IMMUNOTOXICITY
+STUDIES ................................................................................................................ 4
+3.1 Objectives................................................................................................................. 4
+3.2 Selection of assays ................................................................................................... 4
+3.3 Study Design............................................................................................................ 5
+3.4 Evaluation of Additional Immunotoxicity Studies and Need
+for Further Studies.................................................................................................. 5
+4. TIMING OF IMMUNOTOXICITY TESTING IN RELATION TO
+CLINICAL STUDIES............................................................................................ 5
+5. REFERENCES ...................................................................................................... 5
+Figure 1: Flow Diagram for Recommended Immunotoxicity Evaluation.............. 6
+APPENDIX: Methods to Evaluate Immunotoxicity .................................................... 7
+
+-- 3 of 15 --
+
+
+
+-- 4 of 15 --
+
+1
+IMMUNOTOXICITY STUDIES FOR HUMAN PHARMACEUTICALS
+1. INTRODUCTION
+1.1 Objectives of the Guideline
+The objectives of this guideline are to provide (1) recommendations on nonclinical
+testing approaches to identify compounds which have the potential to be
+immunotoxic, and (2) guidance on a weight-of-evidence decision making approach for
+immunotoxicity testing. Immunotoxicity is, for the purpose of this guideline, defined
+as unintended immunosuppression or enhancement. Drug-induced hypersensitivity
+and autoimmunity are excluded.
+1.2 Background
+Evaluation of potential adverse effects of human pharmaceuticals on the immune
+system should be incorporated into standard drug development. Toxicity to the
+immune system encompasses a variety of adverse effects. These include suppression
+or enhancement of the immune response. Suppression of the immune response can
+lead to decreased host resistance to infectious agents or tumor cells. Enhancing the
+immune response can exaggerate autoimmune diseases or hypersensitivity. Drug or
+drug-protein adducts might also be recognized as foreign and stimulate an anti-drug
+response. Subsequent exposures to the drug can lead to hypersensitivity (allergic)
+reactions. Much of the science and method development and validation efforts in the
+past have been focused on evaluating drug development candidates for their potential
+for either immunosuppression or contact sensitization. No standard approaches for
+human pharmaceuticals are currently available for testing for respiratory or systemic
+allergenicity (antigenicity) or drug-specific autoimmunity; testing for these endpoints
+is not currently required in any region. There are no regional differences in testing
+approaches of skin sensitization.
+Immunosuppression or enhancement can be associated with two distinct groups:
+1) Drugs intended to modulate immune function for therapeutic purposes
+(e.g., to prevent organ transplant rejection) where adverse
+immunosuppression can be considered exaggerated pharmacodynamics;
+2) Drugs not intended to affect immune function but cause immunotoxicity
+due, for instance, to necrosis or apoptosis of immune cells or interaction
+with cellular receptors shared by both target tissues and non-target
+immune system cells.
+Anti-proliferative agents used to treat cancer are an example of drugs that produce
+unintended immunosuppression. In such instances, adverse findings in nonclinical
+studies are predictive of human immunotoxicity in a rather straightforward manner.
+That is, specific assays to determine immunotoxicity are probably not valuable in
+drug risk assessment since the target tissues are usually rapidly dividing cell types,
+such as bone marrow-derived immune system progenitor cells. Hence, the adverse
+effects on immune function can be predicted based on pharmacologic activity and can
+usually be reliably evaluated in non-clinical studies. For other types of compounds not
+intended to suppress the immune response, distinction between exaggerated
+pharmacodynamics and non-target effects can be less obvious. As an example, some
+anti-inflammatory compounds have an effect on certain innate immune functions but
+do not necessarily affect the adaptive immune response.
+
+-- 5 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+2
+1.3 Scope of the Guideline
+This guideline is focused on providing recommendations on nonclinical testing for
+immunotoxicity induced by human pharmaceuticals. It is restricted to unintended
+immunosuppression and immunoenhancement, excluding allergenicity or drug-
+specific autoimmunity.
+This guideline applies to new pharmaceuticals intended for use in humans, as well as
+to marketed pharmaceuticals proposed for different indications or other variations on
+the current product label in which the change could result in unaddressed and
+relevant immunotoxicity issues. In addition, the guideline might also apply to drugs
+for which clinical signs of immunotoxicity are observed during clinical trials and
+following approval to market. The guideline does not apply to biotechnology-derived
+pharmaceutical products covered by ICH S6 Guideline1 and other biologicals.
+Existing guidance documents on sensitization or hypersensitivity remain in force and
+are not affected by this document. It is beyond the scope of this guideline to provide
+specific guidance on how each immunotoxicity study should be performed. General
+methodology guidance is provided in the Appendix.
+1.4 Overview
+The general principles that apply to this guideline are:
+1) All new human pharmaceuticals should be evaluated for the potential to
+produce immunotoxicity;
+2) Methods include standard toxicity studies (STS) and additional
+immunotoxicity studies conducted as appropriate. Whether additional
+immunotoxicity studies are appropriate should be determined by a weight
+of evidence review of factor(s) in section 2.1.
+The description of the guideline below will follow the recommended decision process in
+immunotoxicity evaluation as shown in the flow diagram (Figure 1). More detailed
+descriptions of the testing methods are in the Appendix.
+2. GUIDELINE
+2.1 Factors to Consider in the Evaluation of Potential Immunotoxicity
+Factors to consider that might prompt additional immunotoxicity studies can be
+identified in the following areas: (1) findings from STS; (2) the pharmacological
+properties of the drug; (3) the intended patient population; (4) structural similarities
+to known immunomodulators; (5) the disposition of the drug; and (6) clinical
+information.
+The initial screen for potential immunotoxicity involves standard toxicity studies.
+Data from rodent and non-rodent studies from early short term to more chronic
+repeat-dose studies should be taken into consideration. Additional details on the
+parameters that should be evaluated and the reporting of histopathology findings are
+provided in the Appendix.
+
+-- 6 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+3
+2.1.1 Standard Toxicity Studies
+Data from STS should be evaluated for signs of immunotoxic potential. Signs that
+should be taken into consideration are the following:
+1) Hematological changes such as leukocytopenia/leukocytosis,
+granulocytopenia/granulocytosis, or lymphopenia/lymphocytosis;
+2) Alterations in immune system organ weights and/or histology (e.g., changes
+in thymus, spleen, lymph nodes, and/or bone marrow);
+3) Changes in serum globulins that occur without a plausible explanation,
+such as effects on the liver or kidney, can be an indication that there are
+changes in serum immunoglobulins;
+4) Increased incidence of infections;
+5) Increased occurrence of tumors can be viewed as a sign of
+immunosuppression in the absence of other plausible causes such as
+genotoxicity, hormonal effects, or liver enzyme induction.
+Changes in these parameters could reflect immunosuppression or enhanced activation
+of the immune system. Immunosuppression is usually reflected by reduced values of
+immune parameters, whereas immunoenhancement is usually reflected by increased
+values. However, these relationships are not absolute and can be inverted in some
+cases.
+Similar to the assessment of risk with toxicities in other organ systems, the
+assessment of immunotoxicity should include the following:
+• Statistical and biological significance of the changes;
+• Severity of the effects;
+• Dose/exposure relationship;
+• Safety factor above the expected clinical dose;
+• Treatment duration;
+• Number of species and endpoints affected;
+• Changes that may occur secondarily to other factors (e.g., stress, see the
+Appendix, section 1.4);
+• Possible cellular targets and/or mechanism of action;
+• Doses which produce these changes in relation to doses which produce other
+toxicities; and
+• Reversibility of effect(s).
+2.1.2 Pharmacological Properties
+If the pharmacological properties of a test compound indicate it has the potential to
+affect immune function (e.g., anti-inflammatory drugs), additional immunotoxicity
+testing should be considered. Information obtained from the nonclinical
+pharmacology studies on the ability of the compound to affect the immune system
+could be used in a weight of evidence approach to decide if additional immunotoxicity
+studies are needed.
+
+-- 7 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+4
+2.1.3 Intended Patient Population
+Additional immunotoxicity studies might be warranted if the majority of the patient
+population for whom the drug is intended is immunocompromised by a disease state
+or concurrent therapy.
+2.1.4 Structural Similarity
+Compounds structurally similar to compounds with known immunosuppressive
+properties should also be considered for additional immunotoxicity testing.
+2.1.5 Disposition of the Drug
+If the compound and/or its metabolites are retained at high concentrations in cells of
+the immune system, additional immunotoxicity testing should be considered.
+2.1.6 Signs Observed in Clinical Trials or Clinical Use
+Clinical findings suggestive of immunotoxicity in patients exposed to the drug could
+call for additional nonclinical immunotoxicity testing.
+2.2 Weight of Evidence Review
+A weight of evidence review should be performed on information from all the factors
+outlined above to determine whether a cause for concern exists. A finding of sufficient
+magnitude in a single area should trigger additional immunotoxicity studies. Findings
+from two or more factors, each one of which would not be sufficient on its own, could
+trigger additional studies. If additional immunotoxicity studies are not performed,
+the sponsor should provide justification.
+3. SELECTION AND DESIGN OF ADDITIONAL IMMUNOTOXICITY
+STUDIES
+3.1 Objectives
+If a cause for concern is identified, additional immunotoxicity studies should be
+performed to verify the immunotoxic potential of the compound. These studies can
+also help determine the cell type affected reversibility, and the mechanism of action.
+This type of information can also provide more insight into potential risk and possibly
+lead to biomarker selection for clinical studies.
+3.2 Selection of assays
+If the weight-of-evidence review indicates that additional immunotoxicity studies are
+called for, there are a number of assays which can be used. If there are changes in
+standard toxicity testing data suggesting immunotoxicity, the type of additional
+immunotoxicity testing that is considered appropriate will depend on the nature of
+the immunological changes observed and the concerns raised by the class of
+compound. It is recommended that an immune function study be conducted, such as a
+T-cell dependent antibody response (TDAR). If specific cell types that are affected in
+STS are not known to participate in a TDAR, assays that measure function of that
+specific affected cell type might be conducted (see the Appendix). Where a specific
+target is not identified, an immune function study such as the TDAR is recommended.
+In addition, immunophenotyping of leukocyte populations, a non-functional assay, can
+be conducted to identify the specific cell populations affected and might provide useful
+clinical biomarkers.
+
+-- 8 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+5
+3.3 Study Design
+To assess drug-induced immunotoxicity, a generally accepted study design in rodents
+is a 28 day study with consecutive daily dosing. Adaptations of immunotoxicity assays
+have been described using non-rodent species. The species, strain, dose, duration, and
+route of administration used in additional immunotoxicity studies should be
+consistent, where possible, with the standard toxicity study in which an adverse
+immune effect was observed. Usually both sexes should be used in these studies,
+excluding nonhuman primates. Rationale should be given when one sex is used in
+other species. The high dose should be above the no observed adverse effect level
+(NOAEL) but below a level inducing changes secondary to stress (see Appendix,
+section 1.4). Multiple dose levels are recommended in order to determine dose-
+response relationships and the dose at which no immunotoxicity is observed.
+3.4 Evaluation of Additional Immunotoxicity Studies and Need for
+Further Studies
+Results from additional immunotoxicity studies should be evaluated as to whether
+sufficient data are available to reasonably determine the risk of immunotoxicity:
+1. Additional studies might show that no risk of immunotoxicity can be
+detected and no further testing is called for;
+2. Additional studies might demonstrate a risk of immunotoxicity but fail to
+provide sufficient data to make a reasonable risk-benefit decision. In this
+case further testing might help provide sufficient information for the risk-
+benefit decision;
+3. If the overall risk-benefit analysis suggests that the risk of immunotoxicity
+is considered acceptable and/or can be addressed in a risk management
+plan (see ICH E2E Guideline2), then no further testing in animals might be
+called for.
+4. TIMING OF IMMUNOTOXICITY TESTING IN RELATION TO
+CLINICAL STUDIES
+If the weight-of-evidence review indicates that additional immunotoxicity studies are
+appropriate, these should be completed before exposure of a large population of
+patients, usually Phase III. This will allow for the incorporation of monitoring
+immune system parameters in the clinical studies if appropriate. The timing of the
+additional immunotoxicity testing might be determined by the nature of the effect by
+the test compound and the type of clinical testing that would be called for if a positive
+finding is observed with the additional immunotoxicity testing. If the target patient
+population is immunocompromised, immunotoxicity testing can be initiated at an
+earlier time point in the development of the drug.
+5. REFERENCES
+1. ICH Harmonised Tripartite Guideline (S6) “Preclinical Safety Evaluation
+of Biotechnology-Derived Pharmaceuticals”
+2. ICH Harmonised Tripartite Guideline (E2E) “Pharmacovigilance Planning”
+
+-- 9 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+6
+Figure 1: Flow Diagram for Recommended Immunotoxicity Evaluation
+(2.1) Identify factors to consider
+(2.2) Weight of evidence (WoE) review
+Additional nonclinical
+immunotoxicity testing
+not needed
+NO
+(3.0) Conduct additional immunotoxicity studies
+YES
+WoE review
+warrants additional
+immunotoxicity
+Testing ?
+(3.4) Significant
+changes
+observed?
+YES
+(3.4 Pt 1) Further
+nonclinical
+immunotoxicity testing
+not needed
+NO
+All human pharmaceuticals (non-biologicals)
+(3.4) Sufficient
+data for risk
+assessment / risk
+management?
+NO
+YES
+(3.4 Pt 2) Consider further immunotoxicity testing
+(3.4 Pt 3) Further
+nonclinical
+immunotoxicity testing
+not needed
+
+-- 10 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+7
+APPENDIX: Methods to Evaluate Immunotoxicity
+1. Standard Toxicity Studies
+The following table lists the parameters that should be evaluated in standard toxicity
+studies for signs of immunotoxicity. These parameters (excluding hematology and
+clinical chemistry) and methods for obtaining samples and evaluating tissue sections
+are described in more detail in documents from professional toxicological pathology
+societies.
+Parameter Specific Component
+Hematology Total and absolute differential leukocyte counts
+Clinical Chemistry Globulin levels1 and A/G ratios
+Gross pathology Lymphoid organs / tissues
+Organ weights Thymus, spleen (optional: lymph nodes)
+Histology Thymus, spleen, draining lymph node and at least one
+additional lymph node, bone marrow2, Peyer’s patch3,
+BALT4, NALT4
+1 Unexplained alterations in globulin levels could call for measurement of
+immunoglobulins.
+2 Unexplained alterations in peripheral blood cell lines or histopathologic findings
+might suggest that cytologic evaluation of the bone marrow would be appropriate.
+3 Oral administration only.
+4 For inhalation or nasal route only. BALT: bronchus-associated lymphoid tissues.
+NALT: nasal-associated lymphoid tissues
+1.1 Hematology and Clinical Chemistry
+Total leukocyte counts and absolute differential leukocyte counts are recommended to
+assess immunotoxicity. When evaluating changes in globulin levels, other factors
+should be taken into account (e.g., liver toxicity, nephrotoxicity). Changes in serum
+globulins can be an indication that there are changes in serum immunoglobulins.
+Although serum immunoglobulins are an insensitive indicator of immunosuppression,
+changes in immunoglobulins levels can be useful in certain situations in order to
+better understand target cell populations or mechanism of action.
+1.2 Gross Pathology and Organ Weights
+All lymphoid tissues should be evaluated for gross changes at necropsy. However,
+this can be more difficult for the Peyer’s patches of rodents due to the small size.
+Spleen and thymus weights should be recorded. To minimize variability of spleen
+weights in dogs and monkeys, bleeding the animals thoroughly at necropsy is
+recommended. Atrophy of the thymus with aging can preclude obtaining accurate
+thymus weight.
+1.3 Histopathological Examination
+Histopathological changes of the spleen and thymus should be evaluated as an
+indicator of systemic immunotoxicity. The lymphoid tissue that drains or contacts the
+
+-- 11 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+8
+site of drug administration (and therefore is exposed to the highest concentration of
+the drug) should be examined. These sites include the Peyer’s patches and mesenteric
+lymph nodes for orally administered drugs, bronchus-associated lymphoid tissues
+(BALT) for drugs administered by the inhalation route, nasal-associated lymphoid
+tissues (NALT) for drugs administered by the inhalation or nasal route (if possible),
+and the most proximal regional draining lymph nodes for drugs administered by the
+dermal, intramuscular, intradermal, intrathecal, or subcutaneous routes. The specific
+node selected and the additional lymph node should be at the discretion of the sponsor
+based on the sponsor's experience. For intravenously administered drugs, the spleen
+can be considered the draining lymphoid tissue.
+It is recommended that a “semi-quantitative” description of changes in compartments
+of lymphoid tissues be used in recording changes and reporting treatment-related
+changes in lymphoid tissues.
+1.4 Interpretation of Stress Related Changes
+With standard toxicity studies, doses near or at the maximum tolerated dose can
+result in changes to the immune system related to stress (e.g., by exaggerated
+pharmacodynamic action). These effects on the immune system might be mediated by
+increased corticosterone or cortisol release or other mediators. Commonly observed
+stress-related immune changes include increases in circulating neutrophils, decreases
+in circulating lymphocytes, decreases in thymus weight, decreases in thymic cortical
+cellularity and associated histopathologic changes, and changes in spleen and lymph
+node cellularity. Increases in adrenal gland weight and/or histologic evidence of
+adrenal cortical hyperplasia can also be observed. Thymic weight decreases in the
+presence of clinical signs, such as decreased body weight and physical activity, are too
+often attributed to stress. These findings on their own should not be considered
+sufficient evidence of stress-related immunotoxicity. The evidence of stress should be
+compelling in order to justify not conducting additional immunotoxicity studies.
+2. Additional Immunotoxicity Studies
+2.1 Assay Characterization and Validation
+In general, the immunotoxicity test selected should be widely used and have been
+demonstrated to be adequately sensitive and specific for known immunosuppressive
+agents. However, in certain situations, extensive validation might have not been
+completed and/or the assay might not be widely used. In these situations, a
+scientific/mechanistic basis for use of the assay is called for and, if feasible,
+appropriate positive controls should be incorporated.
+There can be variations of response for each type of immunotoxicity test used by
+different labs. In most situations, these changes do not affect the ability of the assay
+to assess immunotoxicity. However, to ensure proper assay performance and lab
+proficiency, several standard technical validation parameters should be observed.
+These parameters can include determining intra- and inter-assay precision,
+technician-to-technician precision, limit of quantitation, linear region of quantitation
+and test sample stability. In addition, assay sensitivity to known immunosuppressive
+agents should be established. It is recommended that each laboratory test a positive
+control concomitantly with an investigational compound or periodically in order to
+demonstrate proficiency of performance, except for studies with non-human primates.
+
+-- 12 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+9
+For immunophenotyping, if properly validated technically, the addition of positive
+controls for each study might not be needed.
+Immunotoxicity studies are expected to be performed in compliance with Good
+Laboratory Practice (GLP). It is recognized that some specialized assays, such as
+those described below, might not comply fully with GLP.
+2.2 T-cell Dependent Antibody Response (TDAR)
+The TDAR should be performed using a recognized T-cell dependent antigen (e.g.,
+sheep red blood cells (SRBC) or keyhole limpet hemocyanin (KLH)) that results in a
+robust antibody response. The endpoint selected should be justified as the most
+appropriate for the chosen assay and the selected species.
+Antigens for immunization should not be used with adjuvants without justification.
+Alum might be considered acceptable for use only in non-human primate studies. The
+relative TDAR response can be strain-dependent, especially in mice. With outbred
+rats, there can be significant variability among rats within the same group. Inbred rat
+strains could be used with provision of sufficient exposure data to bridge to the strain
+used in the STS.
+Antibody can be measured by using an ELISA or other immunoassay methods. One
+advantage of this method over the antibody forming cell response is that samples can
+be collected serially during the study. In monkeys, serial blood collection can be
+important due to the high inter-animal variability in the kinetics of the response. For
+these studies, data can be expressed as the sum of the antibody response over several
+collection dates (e.g., area under the curve).
+When SRBC antigens are used for an ELISA, the preparation of the capture antigen
+that is coated on the plates is considered critical. Whole fixed erythrocytes or
+membrane preparations can be used as the SRBC capture antigen. ELISA results
+should be expressed either as concentration or as titer, but expression as optical
+densities is not recommended.
+2.3 Immunophenotyping
+Immunophenotyping is the identification and/or enumeration of leukocyte subsets
+using antibodies. Immunophenotyping is usually conducted by flow cytometric
+analysis or by immunohistochemistry.
+Flow cytometry, when employed to enumerate specific cell populations, is not a
+functional assay. However, flow cytometry can be used to measure antigen-specific
+immune responses of lymphocytes. Data obtained from peripheral blood can be useful
+as a bridge for clinical studies in which peripheral blood leukocytes are also
+evaluated. It is recommended that absolute numbers of lymphocyte subsets as well as
+percentages be used in evaluating treatment-related changes.
+One of the advantages of immunohistochemistry over flow cytometry is that tissues
+from standard toxicity studies can be analyzed retrospectively if signs of
+immunotoxicity are observed. In addition, changes in cell types within a specific
+compartment within the lymphoid tissue can be observed. Some of the lymphocyte
+markers for certain species are sensitive to formalin fixation and can only be localized
+in tissue that are either fixed with certain fixatives or flash frozen. Quantitation of
+leukocytes and intensity of staining is much more difficult with
+immunohistochemistry.
+
+-- 13 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+10
+When immunophenotyping studies are used to characterize or identify alterations in
+specific leukocyte populations, the choice of the lymphoid organs and/or peripheral
+blood to be evaluated should be based on changes observed. Immunophenotyping can
+be easily added to standard repeat dose toxicity studies and changes can be followed
+during the dosing phase and periods without drug exposure (reversal period).
+2.4 Natural Killer Cell Activity Assays
+Natural killer (NK) cell activity assays can be conducted if immunophenotyping
+studies demonstrate a change in number, or if STS studies demonstrate increased
+viral infection rates, or in response to other factors. In general, all NK cell assays are
+ex vivo assays in which tissues (e.g., spleen) or blood are obtained from animals that
+have been treated with the test compound. Cell preparations are co-incubated with
+target cells that have been labeled with 51Cr. New methods that involve non-
+radioactive labels can be used if adequately validated. Different effector to target cell
+ratios should be evaluated for each assay to obtain a sufficient level of cytotoxicity and
+generate a curve.
+2.5 Host Resistance Studies
+Host resistance studies involve challenging groups of mice or rats treated with the
+different doses of test compound with varying concentrations of a pathogen (bacteria,
+fungal, viral, parasitic) or tumor cells. Infectivity of the pathogens or tumor burden
+observed in vehicle versus test compound treated animals is used to determine if the
+test compound is able to alter host resistance. Models have been developed to evaluate
+a wide range of pathogens such as Listeria monocytogenes, Streptococcus pneumoniae,
+Candida albicans, influenza virus, cytomegalovirus, Plasmodium yoelii and
+Trichinella spiralis. Tumor host resistance models in mice have used the B16F10
+melanoma and PYB6 sarcoma tumor cell lines.
+Host resistance assays can provide information on the susceptibility to particular
+classes of infectious agents or tumor cells and can have an impact on the risk
+management plan. In addition, they can have an important role in identifying or
+confirming the cell type affected by a test compound. Moreover, host resistance assays
+involve innate immune mechanisms for which specific immune function assays have
+not been developed. In conducting host resistance studies, the investigator should
+carefully consider the direct or indirect (non-immune mediated) effects of the test
+compound on the growth and pathogenicity of the organism or tumor cell. For
+instance, compounds that inhibit the proliferation of certain tumor cells can seem to
+increase host resistance. An in vitro assay to test direct effects on the organism is
+recommended.
+2.6 Macrophage/Neutrophil Function
+In vitro macrophage and neutrophil function assays (phagocytosis, oxidative burst,
+chemotaxis, and cytolytic activity) have been published for several species. These
+assays assess macrophage/neutrophil function of cells exposed to the test compound in
+vitro or obtained from animals treated with the test compound (ex vivo assay). In vitro
+exposure to test compound can also be investigated. An in vivo assay can also be used
+to assess the effects on the reticuloendothelial cell to phagocytize radioactively or
+fluorescently labeled targets.
+
+-- 14 of 15 --
+
+Immunotoxicity Studies for Human Pharmaceuticals
+11
+2.7 Assays to Measure Cell-Mediated Immunity
+Assays to measure cell-mediated immunity have not been as well established as those
+used for the antibody response. These are in vivo assays where antigens are used for
+sensitization. The endpoint is the ability of drugs to modulate the response to
+challenge. Delayed-type hypersensitivity (DTH) reactions with protein immunization
+and challenge have been reported for mice and rats. Models in which contact
+sensitizers are used have been explored in mice but have not been well validated or
+extensively used. Cytotoxic T cell response can be generated in mice using a virus,
+tumor cell line, or allograft as the antigenic challenge. Monkey DTH reactions have
+also been reported. However, these reactions in monkeys are very difficult to
+consistently reproduce. In addition, one should make sure that the DTH response is
+not mistaken for an antibody and complement mediated Arthus reaction.
+
+-- 15 of 15 --
+

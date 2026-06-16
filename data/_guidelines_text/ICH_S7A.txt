@@ -1,0 +1,495 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/S7A_Guideline.pdf
+[CHARS] 32555
+
+INTERNATIONAL 	CONFERENCE 	ON 	HARMONISATION 	OF 	TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN USE
+ICH HARMONISED TRIPARTITE G UIDELINE
+SAFETY P HARMACOLOGY STUDIES FOR H UMAN P HARMACEUTICALS
+S7A
+Current Step 4 version
+dated 8 November 2000
+This Guideline has been developed by the appropriate ICH Expert Working Group and has
+been subject to consultation by the regulatory parties, in accordance with the ICH Process.
+At Step 4 of the Process the final draft is recommended for adoption to the regulatory bodies
+of the European Union, Japan and USA.
+
+-- 1 of 13 --
+
+S7A
+Document History
+First
+Codification History 	Date
+New
+Codification
+November
+2005
+S7A 	Approval by the Steering Committee under Step 2 and
+release for public consultation.
+2
+March
+2000
+S7A
+Current Step 4 version
+S7A 	Approval by the Steering Committee under Step 4 and
+recommendation for adoption to the three ICH regulatory
+bodies.
+8
+November
+2000
+S7A
+
+-- 2 of 13 --
+
+SAFETY P HARMACOLOGY STUDIES FOR H UMAN P HARMACEUTICALS
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting
+on 8 November 2000, this guideline is recommended for
+adoption to the three regulatory parties to ICH
+TABLE OF CONTENTS
+1. 	INTRODUCTION .............................................................................................................. 1
+1.1 	Objectives of the Guideline ..................................................................................... 1
+1.2 	Background.............................................................................................................. 1
+1.3 	Scope of the Guideline............................................................................................. 1
+1.4 	General Principle .................................................................................................... 1
+1.5 	Definition of Safety Pharmacology......................................................................... 1
+2. 	GUIDELINE ....................................................................................................................... 2
+2.1 	Objectives of Studies ............................................................................................... 2
+2.2 	General Considerations in Selection and Design of Safety Pharmacology Studies
+.................................................................................................................................. 2
+2.3 	Test Systems............................................................................................................ 2
+2.3.1 	General Considerations on Test Systems............................................... 3
+2.3.2 	Use of In Vivo and In Vitro Studies........................................................ 3
+2.3.3 	Experimental Design............................................................................... 3
+2.3.3.1 	Sample Size and Use of Controls ............................................................ 3
+2.3.3.2 	Route of Administration .......................................................................... 3
+2.4 	Dose Levels or Concentrations of Test Substance................................................. 4
+2.4.1 	In Vivo Studies ........................................................................................ 4
+2.4.2 	In Vitro Studies ....................................................................................... 4
+2.5 	Duration of Studies ................................................................................................. 4
+2.6 	Studies on Metabolites, Isomers and Finished Products ...................................... 4
+2.7 	Safety Pharmacology Core Battery ........................................................................ 5
+2.7.1 	Central Nervous System ......................................................................... 5
+2.7.2 	Cardiovascular System............................................................................ 5
+2.7.3 	Respiratory System ................................................................................. 5
+i
+
+-- 3 of 13 --
+
+Statistical Principles for Clinical Trials
+2.8 	Follow-up and Supplemental Safety Pharmacology Studies.................................5
+2.8.1 	Follow-up Studies For Safety Pharmacology Core Battery ...................5
+2.8.1.1 	Central Nervous System...........................................................................6
+2.8.1.2 	Cardiovascular System ............................................................................6
+2.8.1.3 	Respiratory System..................................................................................6
+2.8.2 	Supplemental Safety Pharmacology Studies..........................................6
+2.8.2.1 	Renal/Urinary System.............................................................................6
+2.8.2.2 	Autonomic Nervous System......................................................................6
+2.8.2.3 	Gastrointestinal System ...........................................................................6
+2.8.2.4 	Other Organ Systems ...............................................................................6
+2.9 	Conditions under which Studies are not Necessary ..............................................6
+2.10 	Timing of Safety Pharmacology Studies in Relation to Clinical Development ....7
+2.10.1 	Studies Prior to First Administration in Humans .................................7
+2.10.2 	Studies During Clinical Development.....................................................7
+2.10.3 	Studies Before Approval ..........................................................................7
+2.11 	Application of Good Laboratory Practice (GLP) .....................................................7
+3. 	NOTES .................................................................................................................................8
+4. 	REFERENCES ...................................................................................................................9
+ii
+
+-- 4 of 13 --
+
+SAFETY P HARMACOLOGY STUDIES FOR H UMAN P HARMACEUTICALS
+1. 	INTRODUCTION
+1.1 	Objectives of the Guideline
+This guideline was developed to help protect clinical trial participants and patients
+receiving marketed products from potential adverse effects of pharmaceuticals, while
+avoiding unnecessary use of animals and other resources.
+This guideline provides a definition, general principles and recommendations for safety
+pharmacology studies.
+1.2 	Background
+Pharmacology studies have been performed worldwide for many years as part of the non-
+clinical evaluation of pharmaceuticals for human use. 	There have been, however, no
+internationally accepted definitions, objectives or recommendations on the design and
+conduct of safety pharmacology studies. (Note 1)
+The term “safety pharmacology studies” first appeared in the ICH topics, “Timing of Non-
+Clinical Safety Studies for the Conduct of Human Clinical Trials for Pharmaceuticals (M3)”
+and “Preclinical Safety Evaluation of Biotechnology-Derived Pharmaceuticals (S6)” as
+studies that should be conducted to support use of therapeutics in humans (1, 2). Details of
+the safety pharmacology studies, including their definition and objectives, were left for
+future discussion.
+1.3 	Scope of the Guideline
+This 	guideline 	generally 	applies 	to 	new 	chemical 	entities 	and 	biotechnology-derived
+products for human use. This guideline can be applied to marketed pharmaceuticals when
+appropriate (e.g., when adverse clinical events, a new patient population, or a new route of
+administration raises concerns not previously addressed).
+1.4 	General Principle
+It is important to adopt a rational approach when selecting and conducting safety
+pharmacology studies. The specific studies that should be conducted and their design will
+vary based on the individual properties and intended uses of the pharmaceuticals.
+Scientifically valid methods should be used, and when there are internationally recognized
+methods that are applicable to pharmaceuticals, these are preferable. Moreover, the use of
+new technologies and methodologies in accordance with sound scientific principles is
+encouraged.
+Some safety pharmacology endpoints can be incorporated in the design of toxicology,
+kinetic, clinical studies, etc., while in other cases these endpoints should be evaluated in
+specific safety pharmacology studies. Although adverse effects of a substance may be
+detectable at exposures that fall within the therapeutic range in appropriately designed
+safety pharmacology studies, they may not be evident from observations and measurements
+used to detect toxicity in conventional animal toxicity studies.
+1.5 	Definition of Safety Pharmacology
+Pharmacology studies can be divided into three categories: primary pharmacodynamic,
+secondary pharmacodynamic and safety pharmacology studies.
+For the purpose of this document, safety pharmacology studies are defined as those studies
+that investigate the potential undesirable pharmacodynamic effects of a substance on
+1
+
+-- 5 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+physiological functions in relation to exposure in the therapeutic range and above. (See
+Note 2 for definitions of primary pharmacodynamic and secondary pharmacodynamic
+studies.)
+In some cases, information on the primary and secondary pharmacodynamic properties of
+the substance may contribute to the safety evaluation for potential adverse effect(s) in
+humans and should be considered along with the findings of safety pharmacology studies.
+2. 	GUIDELINE
+2.1 	Objectives of Studies
+The 	objectives 	of 	safety 	pharmacology 	studies 	are: 	1) 	to 	identify 	undesirable
+pharmacodynamic properties of a substance that may have relevance to its human safety;
+2) to evaluate adverse pharmacodynamic and/or pathophysiological effects of a substance
+observed in toxicology and/or clinical studies; and 3) to investigate the mechanism of the
+adverse pharmacodynamic effects observed and/or suspected. 	The investigational plan to
+meet these objectives should be clearly identified and delineated.
+2.2 	General Considerations in Selection and Design of Safety Pharmacology
+Studies
+Since pharmacological effects vary depending on the specific properties of each test
+substance, the studies should be selected and designed accordingly. The following factors
+should be considered (the list is not comprehensive):
+1) 	Effects related to the therapeutic class of the test substance, since the mechanism of
+action may suggest specific adverse effects (e.g., proarrhythmia is a common feature of
+antiarrhythmic agents);
+2) 	Adverse effects associated with members of the chemical or therapeutic class, but
+independent of the primary pharmacodynamic effects (e.g., anti-psychotics and QT
+prolongation);
+3) 	Ligand binding or enzyme assay data suggesting a potential for adverse effects;
+4) 	Results from previous safety pharmacology studies, from secondary pharmacodynamic
+studies, from toxicology studies, or from human use that warrant further investigation
+to establish and characterize the relevance of these findings to potential adverse effects
+in humans.
+During early development, sufficient information (e.g., comparative metabolism) may not
+always be available to rationally select or design the studies in accordance with the points
+stated above; in such circumstances, a more general approach in safety pharmacology
+investigations can be applied.
+A hierarchy of organ systems can be developed according to their importance with respect
+to life-supporting functions. Vital organs or systems, the functions of which are acutely
+critical for life, such as the cardiovascular, respiratory and central nervous systems, are
+considered to be the most important ones to assess in safety pharmacology studies. Other
+organ systems, such as the renal or gastrointestinal system, the functions of which can be
+transiently disrupted by adverse pharmacodynamic effects without causing irreversible
+harm, are of less immediate investigative concern. Safety pharmacology evaluation of
+effects on these other systems may be of particular importance when considering factors
+such as the likely clinical trial or patient population (e.g. gastrointestinal tract in Crohn’s
+disease, 	renal 	function 	in 	primary 	renal 	hypertension, 	immune 	system 	in
+immunocompromised patients.).
+2.3 	Test Systems
+2
+
+-- 6 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+2.3.1 	General Considerations on Test Systems
+Consideration should be given to the selection of relevant animal models or other test
+systems so that scientifically valid information can be derived. Selection factors can include
+the pharmacodynamic responsiveness of the model, pharmacokinetic profile, species, strain,
+gender 	and 	age 	of 	the 	experimental 	animals, 	the 	susceptibility, 	sensitivity, 	and
+reproducibility of the test system and available background data on the substance. Data
+from humans (e.g., in vitro metabolism), when available, should also be considered in the
+test system selection. 	The time points for the measurements should be based on
+pharmacodynamic and pharmacokinetic considerations. 	Justification should be provided
+for the selection of the particular animal model or test system.
+2.3.2 	Use of In Vivo and In Vitro Studies
+Animal models as well as ex vivo and in vitro preparations can be used as test systems. Ex
+vivo and in vitro systems can include, but are not limited to: isolated organs and tissues,
+cell 	cultures, 	cellular 	fragments, 	subcellular 	organelles, 	receptors, 	ion 	channels,
+transporters and enzymes. In vitro systems can be used in supportive studies (e.g., to
+obtain a profile of the activity of the substance or to investigate the mechanism of effects
+observed in vivo).
+In conducting in vivo studies, it is preferable to use unanesthetized animals. Data from
+unrestrained animals that may be chronically instrumented for telemetry, other suitable
+instrumentation methods for conscious animals, or animals conditioned to the laboratory
+environment are preferable to data from restrained or unconditioned animals. In the use of
+unanesthetized animals, the avoidance of discomfort or pain is a foremost consideration.
+2.3.3 	Experimental Design
+2.3.3.1 	Sample Size and Use of Controls
+The size of the groups should be sufficient to allow meaningful scientific interpretation of
+the data generated. Thus, the number of animals or isolated preparations should be
+adequate to demonstrate or rule out the presence of a biologically significant effect of the
+test substance. This should take into consideration the size of the biological effect that is of
+concern for humans. Appropriate negative and positive control groups should be included in
+the experimental design. In well-characterized in vivo test systems, positive controls may
+not be necessary. The exclusion of controls from studies should be justified.
+2.3.3.2 	Route of Administration
+In general, the expected clinical route of administration should be used when feasible.
+Regardless of the route of administration, exposure to the parent substance and its major
+metabolites should be similar to or greater than that achieved in humans when such
+information is available. Assessment of effects by more than one route may be appropriate
+if the test substance is intended for clinical use by more than one route of administration
+(e.g. oral and parenteral), or where there are observed or anticipated significant qualitative
+and quantitative differences in systemic or local exposure.
+3
+
+-- 7 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+2.4 	Dose Levels or Concentrations of Test Substance
+2.4.1 	In Vivo Studies
+Safety pharmacology studies should be designed to define the dose-response relationship of
+the adverse effect observed. The time course (e.g., onset and duration of response) of the
+adverse effect should be investigated, when feasible. Generally, the doses eliciting the
+adverse effect should be compared to the doses eliciting the primary pharmacodynamic
+effect in the test species or the proposed therapeutic effect in humans, if feasible. It is
+recognized that there are species differences in pharmacodynamic sensitivity. Therefore,
+doses should include and exceed the primary pharmacodynamic or therapeutic range. 	In
+the absence of an adverse effect on the safety pharmacology parameter(s) evaluated in the
+study, the highest tested dose should be a dose that produces moderate adverse effects in
+this or in other studies of similar route and duration. These adverse effects can include
+dose-limiting pharmacodynamic effects or other toxicity. In practice, some effects in the
+toxic range (e.g., tremors or fasciculation during ECG recording) may confound the
+interpretation of the results and may also limit dose levels. Testing of a single group at the
+limiting dose as described above may be sufficient in the absence of an adverse effect on
+safety pharmacology endpoints in the test species.
+2.4.2 	In Vitro Studies
+In vitro studies should be designed to establish a concentration-effect relationship. The
+range of concentrations used should be selected to increase the likelihood of detecting an
+effect on the test system. The upper limit of this range may be influenced by physico-
+chemical properties of the test substance and other assay specific factors. In the absence of
+an effect, the range of concentrations selected should be justified.
+2.5 	Duration of Studies
+Safety pharmacology studies are generally performed by single dose administration. When
+pharmacodynamic effects occur only after a certain duration of treatment, or when results
+from repeat dose non-clinical studies or results from use in humans give rise to concerns
+about safety pharmacological effects, the duration of the safety pharmacology studies to
+address these effects should be rationally based.
+2.6 	Studies on Metabolites, Isomers and Finished Products
+Generally, any parent compound and its major metabolite(s) that achieve, or are expected
+to achieve, systemic exposure in humans should be evaluated in safety pharmacology
+studies. Evaluation of major metabolites is often accomplished through studies of the
+parent compound in animals. If the major human metabolite(s) is (are) found to be absent
+or present only at relatively low concentrations in animals, assessment of the effects of such
+metabolite(s) on safety pharmacology endpoints should be considered. Additionally, if
+metabolites from humans are known to substantially contribute to the pharmacological
+actions of the therapeutic agent, it may be important to test such active metabolites. When
+the in vivo studies on the parent compound have not adequately assessed metabolites, as
+discussed above, the tests of metabolites can use in vitro systems based on practical
+considerations.
+In vitro or in vivo testing of the individual isomers should also be considered when the
+product contains an isomeric mixture.
+Safety pharmacology studies with the finished product formulation(s) should be conducted
+only 	for 	formulations 	that 	substantially 	alter 	the 	pharmacokinetics 	and/or
+4
+
+-- 8 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+pharmacodynamics of the active substance in comparison to formulations previously tested
+(i.e. through active excipients such as penetration enhancers, liposomes, and other changes
+such as polymorphism).
+2.7 	Safety Pharmacology Core Battery
+The purpose of the safety pharmacology core battery is to investigate the effects of the test
+substance on vital functions. In this regard, the cardiovascular, respiratory and central
+nervous systems are usually considered the vital organ systems that should be studied in
+the core battery. In some instances, based on scientific rationale, the core battery should be
+supplemented (see section 2.8) or need not be implemented (see also section 2.9).
+The exclusion of certain test(s) or exploration(s) of certain organs, systems or functions
+should be scientifically justified.
+2.7.1 	Central Nervous System
+Effects 	of 	the 	test 	substance 	on 	the 	central 	nervous 	system 	should 	be 	assessed
+appropriately. 	Motor 	activity, 	behavioral 	changes, 	coordination, 	sensory/motor 	reflex
+responses 	and 	body 	temperature 	should 	be 	evaluated. 	For 	example, 	a 	functional
+observation battery (FOB) (3), modified Irwin’s (4), or other appropriate test (5) can be
+used.
+2.7.2 	Cardiovascular System
+Effects of the test substance on the cardiovascular system should be assessed appropriately.
+Blood pressure, heart rate, and the electrocardiogram should be evaluated. In vivo, in vitro
+and/or 	ex 	vivo 	evaluations, 	including 	methods 	for 	repolarization 	and 	conductance
+abnormalities, should also be considered. (Note 3)
+2.7.3 	Respiratory System
+Effects of the test substance on the respiratory system should be assessed appropriately.
+Respiratory rate and other measures of respiratory function (e.g., tidal volume (6) or
+hemoglobin oxygen saturation) should be evaluated. Clinical observation of animals is
+generally not adequate to assess respiratory function, and thus these parameters should be
+quantified by using appropriate methodologies.
+2.8 	Follow-up and Supplemental Safety Pharmacology Studies
+Adverse effects may be suspected based on the pharmacological properties or chemical class
+of the test substance. Additionally, concerns may arise from the safety pharmacology core
+battery, clinical trials, pharmacovigilance, experimental in vitro or in vivo studies, or from
+literature reports. When such potential adverse effects raise concern for human safety,
+these should be explored in follow-up or supplemental safety pharmacology studies, as
+appropriate.
+2.8.1 	Follow-up Studies For Safety Pharmacology Core Battery
+Follow-up studies are meant to provide a greater depth of understanding than, or
+additional knowledge to, that provided by the core battery on vital functions. The following
+subsections provide lists of studies to further evaluate these organ systems for potential
+adverse pharmacodynamic effects. These lists are not meant to be comprehensive or
+prescriptive, and the studies should be selected on a case-by-case basis after considering
+factors such as existing non-clinical or human data. In some cases, it may be more
+appropriate to address these effects during the conduct of other non-clinical and/or clinical
+studies.
+5
+
+-- 9 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+2.8.1.1 Central Nervous System
+Behavioral pharmacology, learning and memory, ligand-specific binding, neurochemistry,
+visual, auditory and/or electrophysiology examinations, etc.
+2.8.1.2 Cardiovascular System
+Cardiac output, ventricular contractility, vascular resistance, the effects of endogenous
+and/or exogenous substances on the cardiovascular responses, etc.
+2.8.1.3 Respiratory System
+Airway resistance, compliance, pulmonary arterial pressure, blood gases, blood pH, etc.
+2.8.2 	Supplemental Safety Pharmacology Studies
+Supplemental studies are meant to evaluate potential adverse pharmacodynamic effects on
+organ system functions not addressed by the core battery or repeated dose toxicity studies
+when there is a cause for concern.
+2.8.2.1 Renal/Urinary System
+Effects of the test substance on renal parameters should be assessed. For example, urinary
+volume, specific gravity, osmolality, pH, fluid/electrolyte balance, proteins, cytology, and
+blood chemistry determinations such as blood urea nitrogen, creatinine and plasma
+proteins can be used.
+2.8.2.2 Autonomic Nervous System
+Effects of the test substance on the autonomic nervous system should be assessed. For
+example, binding to receptors relevant for the autonomic nervous system, functional
+responses to agonists or antagonists in vivo or in vitro, direct stimulation of autonomic
+nerves and measurement of cardiovascular responses, baroreflex testing, and heart rate
+variability can be used.
+2.8.2.3 Gastrointestinal System
+Effects of the test substance on the gastrointestinal system should be assessed. For
+example, gastric secretion, gastrointestinal injury potential, bile secretion, transit time in
+vivo, ileal contraction in vitro, gastric pH measurement and pooling can be used.
+2.8.2.4 Other Organ Systems
+Effects of the test substance on organ systems not investigated elsewhere should be
+assessed when there is a reason for concern. For example, dependency potential or skeletal
+muscle, immune and endocrine functions can be investigated.
+2.9 	Conditions under which Studies are not Necessary
+Safety pharmacology studies may not be needed for locally applied agents (e.g., dermal or
+ocular) where the pharmacology of the test substance is well characterized, and where
+systemic exposure or distribution to other organs or tissues is demonstrated to be low.
+Safety pharmacology studies prior to the first administration in humans may not be needed
+for cytotoxic agents for treatment of end-stage cancer patients. However, for cytotoxic
+agents 	with 	novel 	mechanisms 	of 	action, 	there 	may 	be 	value 	in 	conducting 	safety
+pharmacology studies.
+For biotechnology-derived products that achieve highly specific receptor targeting, it is
+often sufficient to evaluate safety pharmacology endpoints as a part of toxicology and/or
+6
+
+-- 10 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+pharmacodynamic studies, and therefore safety pharmacology studies can be reduced or
+eliminated for these products.
+For biotechnology-derived products that represent a novel therapeutic class and/or those
+products that do not achieve highly specific receptor targeting, a more extensive evaluation
+by safety pharmacology studies should be considered.
+There may be additional exceptions where safety pharmacology testing is not needed, for
+example, in the case of a new salt having similar pharmacokinetics and pharmacodynamics.
+2.10 	Timing 	of 	Safety 	Pharmacology 	Studies 	in 	Relation 	to 	Clinical
+Development
+When 	planning 	a 	safety 	pharmacology 	program, 	section 	2.9 	should 	be 	reviewed 	to
+determine whether or not specific studies are recommended.
+2.10.1 Studies Prior to First Administration in Humans
+The effects of a test substance on the functions listed in the safety pharmacology core
+battery should be investigated prior to first administration in humans. Any follow-up or
+supplemental studies identified as appropriate, based on a cause for concern, should also be
+conducted. Information from toxicology studies adequately designed and conducted to
+address safety pharmacology endpoints can result in reduction or elimination of separate
+safety pharmacology studies.
+2.10.2 Studies During Clinical Development
+Additional studies may be warranted to clarify observed or suspected adverse effects in
+animals and humans during clinical development.
+2.10.3 Studies Before Approval
+Safety pharmacology effects on systems listed in section 2.8 should be assessed prior to
+product approval, unless not warranted, in which case this should be justified. Available
+information from toxicology studies adequately designed and conducted to address safety
+pharmacology endpoints, or information from clinical studies, can support this assessment
+and replace safety pharmacology studies.
+2.11 	Application of Good Laboratory Practice (GLP)
+It is important to ensure the quality and reliability of non-clinical safety studies. 	This is
+normally accomplished through the conduct of the studies in compliance with GLP. Due to
+the unique design of, and practical considerations for, some safety pharmacology studies, it
+may not be feasible to conduct these in compliance with GLP. It has to be emphasized that
+data quality and integrity in safety pharmacology studies should be ensured even in the
+absence of formal adherence to the principles of GLP. 	When studies are not conducted in
+compliance 	with 	GLP, 	study 	reconstruction 	should 	be 	ensured 	through 	adequate
+documentation of study conduct and archiving of data. Any study or study component not
+conducted in compliance with GLP should be adequately justified, and the potential impact
+on evaluation of the safety pharmacology endpoints should be explained.
+The safety pharmacology core battery should ordinarily be conducted in compliance with
+GLP. Follow-up and supplemental studies should be conducted in compliance with GLP to
+the greatest extent feasible. Safety pharmacology investigations can be part of toxicology
+studies; in such cases, these studies would be conducted in compliance with GLP.
+Primary pharmacodynamic studies do not need to be conducted in compliance with GLP.
+7
+
+-- 11 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+Generally, secondary pharmacodynamic studies do not need to be conducted in compliance
+with 	GLP. 	Results 	from 	secondary 	pharmacodynamic 	studies 	conducted 	during 	the
+compound selection process may contribute to the safety pharmacology evaluation; when
+there is no cause for concern (e.g., there are no findings for the safety pharmacological
+endpoint or the chemical or therapeutic class), these studies need not be repeated in
+compliance with GLP. In some circumstances, results of secondary pharmacodynamic
+studies may make a pivotal contribution to the safety evaluation for potential adverse
+effects in humans, and these are normally conducted in compliance with GLP.
+3. 	NOTES
+1. 	General pharmacology studies have been considered an important component in
+drug safety assessment. General pharmacology studies were originally referred to as
+those designed to examine effects other than the primary therapeutic effect of a drug
+candidate. Safety pharmacology studies were focused on identifying adverse effects
+on physiological functions. All three regions have accepted data from general
+pharmacology studies (Japan and EC) or safety pharmacology studies (USA) in the
+assessment of a marketing application. The Japanese Ministry of Health and
+Welfare (MHW) issued the “Guideline for General Pharmacology“ in 1991. In this
+MHW guideline, general pharmacology studies include those designed to identify
+unexpected effects on organ system function, and to broaden pharmacological
+characterization 	(pharmacological 	profiling). 	However, 	there 	has 	been 	no
+internationally 	accepted 	definition 	of 	the 	terms 	“primary 	pharmacodynamics”,
+“secondary 	pharmacodynamics” 	and 	“safety 	pharmacology.” 	The 	need 	for
+international 	harmonization 	of 	the 	nomenclature 	and 	the 	development 	of 	an
+international guideline for safety pharmacology has been recognized.
+2. 	Studies on the mode of action and/or effects of a substance in relation to its desired
+therapeutic target are primary pharmacodynamic studies. Studies on the mode of
+action and/or effects of a substance not related to its desired therapeutic target are
+secondary pharmacodynamic studies (these have sometimes been referred to as part
+of general pharmacology studies).
+3. 	There is no scientific consensus on the preferred approach to, or internationally
+recognized guidance on, addressing risks for repolarization-associated ventricular
+tachyarrhythmia (e.g., Torsade de Pointes). A guideline (S7B) will be prepared to
+present 	some 	currently 	available 	methods 	and 	discuss 	their 	advantages 	and
+disadvantages. Submission of data to regulatory authorities to support the use of
+these methods is encouraged.
+8
+
+-- 12 of 13 --
+
+Safety Pharmacology Studies for Human Pharmaceuticals
+4. 	REFERENCES
+1) 	ICH Harmonized Tripartite Guideline (M3) “Timing of Non-clinical Safety Studies
+for the Conduct of Human Clinical Trials for Pharmaceuticals” (1997)
+2) 	ICH 	Harmonized 	Tripartite 	Guideline 	(S6) 	“Preclinical 	Safety 	Evaluation 	of
+Biotechnology-derived Pharmaceuticals” (1997)
+3) 	Mattsson, J. L., Spencer, P. J. and Albee, R. R.: A performance standard for clinical
+and Functional Observational Battery examinations of rats. J. Am. Coll. Toxicol. 15,
+239 (1996).
+4) 	Irwin, S.: Comprehensive observational assessment: 1a. A systematic, quantitative
+procedure 	for 	assessing 	the 	behavioural 	and 	physiologic 	state 	of 	the 	mouse.
+Psychopharmacologia (Berl.) 13, 222-257(1968).
+5) 	Haggerty, G.C.: Strategies for and experience with neurotoxicity testing of new
+pharmaceuticals. J. Am. Coll. Toxicol. 10:677-687 (1991).
+6) 	Murphy, D.J.: Safety Pharmacology of the Respiratory System: Techniques and
+Study Design. Drug Dev. Res. 32: 237-246 (1994).
+9
+
+-- 13 of 13 --
+

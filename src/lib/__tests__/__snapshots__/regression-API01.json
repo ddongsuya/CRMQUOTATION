@@ -1,0 +1,61 @@
+{
+  "scenario_id": "API01",
+  "scenario_title": "합성신약 IND 표준 — 13주, 양종, 모든 addon",
+  "input": {
+    "modality": "합성신약",
+    "priceStandard": "MFDS",
+    "excipientCount": null,
+    "route": "경구",
+    "durations": [
+      "W13"
+    ],
+    "addons": {
+      "drf": true,
+      "recovery": true,
+      "tk": true,
+      "genotox": true,
+      "safetyPharm": true
+    },
+    "categories": {}
+  },
+  "hit_count": 15,
+  "notes": [],
+  "total_unit_price": 874500000,
+  "sample_hits": [
+    {
+      "testName": "조제물분석 (개별분석)",
+      "adminRoute": null,
+      "priority": "필수",
+      "tag": "조제물분석 (Validation)",
+      "unitPrice": 30000000
+    },
+    {
+      "testName": "설치류 4주 DRF",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "DRF (13주용)",
+      "unitPrice": 20000000
+    },
+    {
+      "testName": "비설치류 4주 DRF",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "DRF (13주용)",
+      "unitPrice": 84000000
+    },
+    {
+      "testName": "설치류 13주 반복투여 독성",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "13주 본시험",
+      "unitPrice": 112000000
+    },
+    {
+      "testName": "비설치류 13주 반복투여 독성",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "13주 본시험",
+      "unitPrice": 241000000
+    }
+  ]
+}

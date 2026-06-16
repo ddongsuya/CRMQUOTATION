@@ -1,0 +1,472 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2023/07/test-no-405-acute-eye-irritation-corrosion_g1g24072/9789264185333-en.pdf
+[CHARS] 33196
+
+Test Guideline No. 405
+Acute Eye Irritation/Corrosion
+4 July 2023
+OECD Guidelines for the
+Testing of Chemicals
+Section 4
+Health effects
+
+-- 1 of 13 --
+
+OECD/OCDE 405
+Adopted:
+9 October 2017
+Corrected: 4 July 2023
+© OECD, (2023)
+You are free to use this material subject to the terms and conditions available at http://www.oecd.org/termsandconditions/
+1
+OECD GUIDELINE FOR THE TESTING OF CHEMICALS
+INTRODUCTION
+1. OECD Guidelines for Testing of Chemicals are periodically reviewed to ensure that they reflect the
+best available science. In previous reviews of this Test Guideline (TG), special attention was given to
+possible improvements through the evaluation of all existing information on the test chemical in order to
+avoid unnecessary testing in laboratory animals and thereby address animal welfare concerns. This
+updated version of TG 405 (originally adopted in 1981 and updated in 1987, 2002, 2012, 2020 and 2021)
+includes reference to the Guidance Document (GD) 263 on Integrated Approaches to Testing and
+Assessment (IATA) for Serious Eye Damage and Eye Irritation (1), proposing a modular approach for eye
+irritation and serious eye damage testing. The IATA describes several modules which group information
+sources and analysis tools, and (i) provides guidance on how to integrate and use existing testing and non-
+testing data for the assessment of the eye irritation and serious eye damage potentials of chemicals and
+(ii) proposes an approach when further testing is needed (1) The present in vivo rabbit eye test should be
+conducted only as a last resort after all the existing information has been considered, and in vitro testing
+has been conducted and evaluated as recommended within the IATA for serious eye damage and eye
+irritation described within the OECD GD 263. It is recommended to make use of alternative testing
+strategies such as those described in TG 467 and 492B to address the required ranges of irritation
+potential. At the time of drafting of this updated TG 405, there are instances where using this TG may still
+be necessary or required by some regulatory authorities.
+2. The update from 2012 mainly focused on the use of analgesics and anesthetics without impacting
+the basic concept and structure of the TG. The Interagency Coordinating Committee on the Validation of
+Alternative Methods (ICCVAM) and an independent international scientific peer review panel reviewed the
+usefulness and limitations of routinely using topical anesthetics, systemic analgesics, and humane
+endpoints during in vivo ocular irritation safety testing (2). The review concluded that the use of topical
+anesthetics and systemic analgesics could avoid most or all pain and distress without affecting the outcome
+of the test, and recommended that these substances should always be used. This TG takes this review
+into account. Topical anesthetics, systemic analgesics, and humane endpoints should be routinely used
+during eye irritation and serious eye damage in vivo testing. Exceptions to their use should be justified.
+The refinements described in this proposal will substantially reduce or avoid animal pain and distress in
+most testing situations where in vivo ocular safety testing is still necessary.
+3. Balanced preemptive pain management should include (i) routine pretreatment with a topical
+anesthetic (e.g., proparacaine or tetracaine) and a systemic analgesic (e.g. buprenorphine), (ii) routine
+post-treatment schedule of systemic analgesia (e.g., buprenorphine and meloxicam), (iii) scheduled
+Acute eye irritation/corrosion
+
+-- 2 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+2
+observation, monitoring, and recording of animals for clinical signs of pain and/or distress, and (iv)
+scheduled observation, monitoring, and recording of the nature, severity, and progression of all eye
+injuries. Further detail is provided in the updated procedures described below. Following test chemical
+administration, no additional topical anesthetics or analgesics should be applied in order to avoid
+interference with the study. Analgesics with anti-inflammatory activity (e.g., meloxicam) should not be
+applied topically, and doses used systemically should not interfere with ocular effects.
+4. Definitions are set out in the Annex to the TG.
+INITIAL CONSIDERATIONS
+5. In the interest of both sound science and animal welfare, in vivo testing should not be considered
+until all available data relevant to the potential eye irritation/serious eye damage of the test chemical have
+been evaluated in a weight-of-the-evidence (WoE) analysis as presented in the GD263 (1) i.e. over the
+three Parts of this GD and their corresponding modules (1). Briefly, under Part 1 existing data is addressed
+over eight modules covering human data, in vivo data, in vitro/ex vivo eye or skin irritation/corrosion data,
+physico-chemical properties data (e.g. pH) and non-testing methods. Under Part 2, WoE analysis is
+performed. If this WoE analysis is still inconclusive, Part 3 should be conducted with additional testing,
+starting with in vitro methods (3)(4)(5)(6)(7)(8) or in chemico method (9), and in vivo testing is used as last
+resort. The in vivo animal test, if e.g. required by regulators, should be considered after conducting in vitro
+testing only when: i) the test chemical is not directly identified as UN GHS Cat. 1, UN GHS Cat. 2 or as UN
+GHS No Cat. by currently adopted in vitro test methods and defined approaches.ii) WoE assessment
+cannot conclude with high enough confidence if the test chemical is Cat. 1, Cat. 2 (or Cat. 2A or Cat. 2B,
+if applicable), or No Cat. depending on country-specific regulatory requirements. iii) the test chemical
+cannot be tested with the currently available in vitro test methods or defined approaches due to the
+limitations of the test methods or when falling outside of the applicability domain of the test method or
+approach.”
+PRINCIPLE OF THE IN VIVO TEST
+6. Following pretreatment with a systemic analgesic and instillation of appropriate topical anesthesia,
+the test chemical is applied in a single dose to one of the eyes of the experimental animal; the untreated
+eye serves as the control. The degree of eye irritation/serious eye damage is evaluated by scoring lesions
+of conjunctiva, cornea, and iris, at specific intervals. Other effects in the eye and adverse systemic effects
+are also described to provide a complete evaluation of the effects. The duration of the study should be
+sufficient to evaluate the reversibility or irreversibility of the effects.
+7. Animals showing signs of severe distress and/or pain at any stage of the test or lesions consistent
+with the humane endpoints described in this TG (see Paragraph 24) should be humanely killed, and the
+test chemical assessed accordingly without performing further testing with more animals. Criteria for
+making the decision to humanely kill moribund and severely suffering animals are the subject of a separate
+GD (10).
+
+-- 3 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+3
+PREPARATIONS FOR THE IN VIVO TEST
+Selection of species
+8. The albino rabbit is the preferable laboratory animal and healthy young adult animals are used. A
+rationale for using other strains or species should be provided.
+Preparation of animals
+9. Both eyes of each experimental animal provisionally selected for testing should be examined within
+24 hours before testing starts. Animals showing eye irritation, ocular defects, or pre-existing corneal injury
+should not be used.
+Housing and feeding conditions
+10. Animals should be individually housed. The temperature of the experimental animal room should
+be 20°C (± 3°C) for rabbits. Although the relative humidity should be at least 30% and preferably not
+exceed 70%, other than during room cleaning, the aim should be 50-60%. Lighting should be artificial, the
+sequence being 12 hours light, 12 hours dark. Excessive light intensity should be avoided. For feeding,
+conventional laboratory diets may be used with an unrestricted supply of drinking water.
+TEST PROCEDURE
+Use of topical anesthetics and systemic analgesics
+11. The following procedures are recommended to avoid or minimize pain and distress in ocular safety
+testing procedures. Alternate procedures that have been determined to provide as good or better
+avoidance or relief of pain and distress may be substituted.
+• Sixty minutes prior to test chemical application (TCA), buprenorphine 0.01 mg/kg is administered
+by subcutaneous injection (SC) to provide a therapeutic level of systemic analgesia.
+Buprenorphine and other similar opioid analgesics administered systemically are not known or
+expected to alter ocular responses (2).
+• Five minutes prior to TCA, one or two drops of a topical ocular anesthetic (e.g. 0.5% proparacaine
+hydrochloride or 0.5% tetracaine hydrochloride) are applied to each eye. In order to avoid possible
+interference with the study, a topical anesthetic that does not contain preservatives is
+recommended. The eye of each animal that is not treated with a test chemical, but which is treated
+with topical anesthetics, serves as a control. If the test chemical is anticipated to cause significant
+pain and distress, it should not normally be tested in vivo. However, in case of doubt or where
+testing is necessary, consideration should be given to additional applications of the topical
+anesthetic at 5-minute intervals prior to TCA. Users should be aware that multiple applications of
+topical anesthetics could potentially cause a slight increase in the severity and/or time required for
+chemically-induced lesions to clear.
+• Eight hours after TCA, buprenorphine 0.01 mg/kg SC and meloxicam 0.5 mg/kg SC are
+administered to provide a continued therapeutic level of systemic analgesia. While there are no
+data to suggest that meloxicam has anti-inflammatory effects on the eye when administered SC
+once daily, meloxicam should not be administered until at least 8 hours after TCA in order to avoid
+any possible interference with the study (2).
+
+-- 4 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+4
+• After the initial 8-hour post-TCA treatment, buprenorphine 0.01 mg/kg SC should be administered
+every 12 hours, in conjunction with meloxicam 0.5 mg/kg SC every 24hours, until the ocular lesions
+resolve and no clinical signs of pain and distress are present. Sustained-release preparations of
+analgesics are available that could be considered to decrease the frequency of analgesic dosing.
+• “Rescue” analgesia should be given immediately after TCA if pre-emptive analgesia and topical
+anesthesia are inadequate. If an animal shows signs of pain and distress during the study, a
+“rescue” dose of buprenorphine 0.03 mg/kg SC would be given immediately and repeated as often
+as every 8 hours, if necessary, instead of 0.01 mg/kg SC every 12 hours. Meloxicam 0.5 mg/kg
+SC would be administered every 24 hours in conjunction with the “rescue” dose of buprenorphine,
+but not until at least 8 hours post-TCA.
+Application of the test chemical
+12. The test chemical should be placed in the conjunctival sac of one eye of each animal after gently
+pulling the lower lid away from the eyeball. The lids are then gently held together for a few seconds in order
+to prevent loss of the material. The other eye, which remains untreated, serves as a control.
+Irrigation
+13. The eyes of the test animals should not be washed for at least 24 hours following instillation of the
+test chemical, except for solids (see paragraph 16), and in case of immediate serious eye damage or eye
+irritation effects. At 24 hours a washout may be used if considered appropriate.
+14. Use of a satellite group of animals to investigate the influence of washing is not recommended
+unless it is scientifically justified. If a satellite group is needed, two rabbits should be used. Conditions of
+washing should be carefully documented, e.g., time of washing; composition and temperature of wash
+solution; duration, volume, and velocity of application.
+Dose level
+(1) Testing of liquids
+15. For testing liquids, a dose of 0.1 mL is used. Pump sprays should not be used for instilling the test
+chemical directly into the eye. The liquid spray should be expelled and collected in a container prior to
+instilling 0.1 mL into the eye.
+(2) Testing of solids
+When testing solids, pastes, and particulate substances, the amount used should have a volume of 0.1mL
+or a weight of not more than 100 mg. The test material should be ground to a fine dust. The weight of the
+0.1 mL volume of solid material should be recorded after gently compacting it, e.g. by tapping the
+measuring container. The amount used should not exceed 100 mg. Application of powdered solid test
+chemicals to the eyes will increase blinking and this may contribute to a higher degree of irritation.
+16. If the solid test chemical has not been removed from the eye of the test animal by physiological
+mechanisms at the first observation time point of 1 hour after treatment, the eye may be rinsed with saline
+or distilled water.
+(3) Testing of aerosols
+17. It is recommended that all pump sprays and aerosols be collected prior to instillation into the eye.
+The one exception is for test chemicals in pressurised aerosol containers, which cannot be collected due
+
+-- 5 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+5
+to vaporisation. In such cases, the eye should be held open, and the test chemical is administered to the
+eye in a simple burst of about one second, from a distance of 10 cm directly in front of the eye. This
+distance may vary depending on the pressure of the spray and its contents. Care should be taken not to
+damage the eye from the pressure of the spray. In appropriate cases, there may be a need to evaluate the
+potential for “mechanical” damage to the eye from the force of the spray.
+18. An estimate of the dose from an aerosol can be made by simulating the test as follows: the test
+chemical is sprayed on to weighing paper through an opening the size of a rabbit eye placed directly before
+the paper. The weight increase of the paper is used to approximate the amount sprayed into the eye. For
+volatile test chemicals, the dose may be estimated by weighing a receiving container before and after
+removal of the test material.
+Initial test (in vivo serious eye damage/eye irritation test using one animal)
+19. It is strongly recommended that the in vivo test be performed initially using one animal.
+Observations should allow for determination of severity and reversibility before proceeding to a
+confirmatory test in a second animal.
+20. If the results of this test indicate the test chemical to be seriously damaging to the eye using the
+procedure described, further testing for ocular irritancy should not be performed. Termination of the testing
+after a first animal showing serious eye damage is for animal welfare reasons and the rate of
+misclassification due to the variability of the animal’s response could be considered.
+Confirmatory test (in vivo eye irritation test with additional animals)
+21. If a serious eye damage/irreversible effect is not observed in the initial test, the irritant or negative
+response should be confirmed using up to two additional animals. If an irritant effect is observed in the
+initial test, it is recommended that the confirmatory test be conducted in a sequential manner in one animal
+at a time, rather than exposing the two additional animals simultaneously. If the second animal reveals
+serious eye damage/irreversible effects, the test is not continued. If results from the second animal are
+sufficient to allow for a hazard classification determination, then no further testing should be conducted.
+Observation period
+22. The duration of the observation period should be sufficient to evaluate fully the magnitude and
+reversibility of the effects observed. However, the experiment should be terminated at any time that the
+animal shows signs of severe pain or distress (11) (12). To determine reversibility of effects, the animals
+should be observed normally for 21 days post administration of the test chemical. If reversibility is seen
+before 21 days, the experiment should be terminated at that time.
+Clinical observations and grading of eye reactions
+23. The eyes should be comprehensively evaluated for the presence or absence of ocular lesions one
+hour post-TCA, followed by at least daily evaluations. Animals should be evaluated several times daily for
+the first 3 days to ensure that termination decisions are made in a timely manner. Test animals should be
+routinely evaluated for the entire duration of the study for clinical signs of pain and/or distress (e.g. repeated
+pawing or rubbing of the eye, excessive blinking, excessive tearing) (11) (12) at least twice daily, with a
+minimum of 6 hours between observations, or more often if necessary. This is necessary to (i) adequately
+assess animals for evidence of pain and distress in order to make informed decisions on the need to
+increase the dosage of analgesics and (ii) assess animals for evidence of established humane endpoints
+
+-- 6 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+6
+in order to make informed decisions on whether it is appropriate to humanely euthanize animals, and to
+ensure that such decisions are made in a timely manner. Fluorescein staining should be routinely used
+and a slit lamp biomicroscope used when considered appropriate (e.g., assessing depth of injury when
+corneal ulceration is present) as an aid in the detection and measurement of ocular damage, and to
+evaluate if established endpoint criteria for humane euthanasia have been met. Digital photographs of
+observed lesions may be collected for reference and to provide a permanent record of the extent of ocular
+damage. Animals should be kept on test no longer than necessary once definitive information has been
+obtained. Animals showing severe pain or distress should be humanely killed without delay, and the test
+chemical assessed accordingly without performing further testing with more animals.
+24. Animals with the following eye lesions post-instillation should be humanely killed (refer to Table 1
+for a description of lesion grades): corneal perforation or significant corneal ulceration including
+staphyloma; blood in the anterior chamber of the eye; grade 4 corneal opacity; absence of a light reflex
+(iridial response grade 2) which persists for 72 hours; ulceration of the conjunctival membrane; necrosis of
+the conjunctivae or nictitating membrane; or sloughing. This is because such lesions generally are not
+reversible. Furthermore, it is recommended that the following ocular lesions be used as humane endpoints
+to terminate studies before the end of the scheduled 21-day observation period. These lesions are
+considered predictive of serious eye damage and injuries that are not expected to fully reverse by the end
+of the 21-day observation period: severe depth of injury (e.g., corneal ulceration extending beyond the
+superficial layers of the stroma), limbus destruction >50% (as evidenced by blanching of the conjunctival
+tissue), and severe eye infection (purulent discharge). A combination of: vascularization of the cornea
+surface (i.e., pannus); area of fluorescein staining not diminishing over time based on daily assessment;
+and/or lack of re-epithelialization 5 days after test chemical application could also be considered as
+potentially useful criteria to influence the clinical decision on early study termination. However, these
+findings individually are insufficient to justify early study termination. Once serious eye damage/irreversible
+effects have been identified, an attending or qualified laboratory animal veterinarian or personnel trained
+to identify the clinical lesions should be consulted for a clinical examination to determine if the combination
+of these effects warrants early study termination. The grades of ocular reaction (conjunctivae, cornea and
+iris) should be obtained and recorded at 1, 24, 48, and 72 hours following test chemical application (Table
+1). The study should be terminated not earlier than 3 days post instillation if the animals do not develop
+ocular lesions. Animals with ocular lesions that are not severe should be observed until the lesions clear,
+or for 21 days, at which time the study is terminated. Observations should be performed and recorded at
+a minimum of 1 hour, 24 hours, 48 hours, 72 hours, 7 days, 14 days, and 21 days in order to determine
+the status of the lesions, and their reversibility or irreversibility. More frequent observations should be
+performed if necessary in order to determine whether the test animal should be euthanized out of humane
+considerations or removed from the study due to negative results
+25. The grades of ocular lesions (Table 1) should be recorded at each examination. Any other lesions
+in the eye (e.g. pannus, staining, anterior chamber changes) or adverse systemic effects should also be
+reported.
+26. Examination of reactions can be facilitated by use of a binocular loupe, hand slit-lamp,
+biomicroscope, or other suitable device. After recording the observations at 24 hours, the eyes may be
+further examined with the aid of fluorescein.
+27. The grading of ocular responses is necessarily subjective. To promote harmonisation of grading
+of ocular response and to assist testing laboratories and those involved in making and interpreting the
+observations, the personnel performing the observations need to be adequately trained in the scoring
+system used.
+
+-- 7 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+7
+DATA AND REPORTING
+Evaluation of results
+28. The ocular irritation scores should be evaluated in conjunction with the nature and severity of
+lesions, and their reversibility or lack of reversibility. The individual scores do not represent an absolute
+standard for the irritant properties of a material, as other effects of the test material are also evaluated.
+Instead, individual scores should be viewed as reference values and are only meaningful when supported
+by a full description and evaluation of all observations.
+Test report
+29. The test report should include the following information:
+Rationale for in vivo testing: weight-of-the-evidence analysis of pre-existing test data, including results from
+sequential testing strategy:
+‒ description of relevant data available from prior testing;
+‒ data derived in each step of testing strategy;
+‒ description of in vitro tests performed, including details of procedures, results obtained with test
+chemical/reference substances;
+‒ description of in vivo dermal irritation / corrosion study performed, including results obtained;
+‒ weight-of-the-evidence analysis for performing in vivo study
+Test chemical:
+‒ identification data (e.g. chemical name and if available CAS number, purity, known impurities,
+source, lot number);
+‒ physical nature and physicochemical properties (e.g. pH, volatility, solubility, stability, reactivity
+with water);
+‒ in case of a mixture, components should be identified including identification data of the constituent
+substances (e.g. chemical names and if available CAS numbers) and their concentrations;
+‒ dose applied;
+Vehicle:
+‒ identification, concentration (where appropriate), volume used;
+‒ justification for choice of vehicle.
+Test animals:
+‒ species/strain used, rationale for using animals other than albino rabbit;
+‒ age of each animal at start of study;
+‒ number of animals of each sex in test and control groups (if required);
+‒ individual animal weights at start and conclusion of test;
+‒ source, housing conditions, diet, etc.
+Anaesthetics and analgesics
+
+-- 8 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+8
+‒ doses and times when topical anaesthetics and systemic analgesics were administered;
+‒ if local anaesthetic is used, identification, purity, type, and potential interaction with test chemical.
+Results:
+‒ description of method used to score irritation at each observation time (e.g., hand slitlamp,
+biomicroscope, fluorescein);
+‒ tabulation of serious eye damage/eye irritation response data for each animal at each observation
+time up to removal of each animal from the test;
+‒ narrative description of the degree and nature of serious eye damage/eye irritation observed;
+‒ description of any other lesions observed in the eye (e.g., vascularization, pannus formation,
+adhesions, staining);
+‒ description of non-ocular local and systemic adverse effects, record of clinical signs of pain and
+distress, digital photographs, and histopathological findings, if any.
+‒ If applicable, relevant UNGHS classification (13) for the test chemicals, including not classified.
+Interpretation of the results
+30. Extrapolation of the results of eye irritation studies in laboratory animals to humans is valid only to
+a limited degree. In many cases the albino rabbit is more sensitive than humans to ocular irritants or
+chemicals inducing serious eye damage.
+31. Care should be taken in the interpretation of data to exclude irritation resulting from secondary
+infection.
+
+-- 9 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+9
+LITERATURE
+(1) OECD (2019). Guidance Document on an Integrated Approaches on Testing and Assessment for
+Serious Eye Damage and Eye irritation. Series on Testing and Assessment No.263. ENV Publications,
+Organisation for Economic Cooperation and Development, Paris.
+(2) ICCVAM (2010), ICCVAM Test Method Evaluation Report: Recommendations for Routine Use of
+Topical Anesthetics, Systemic Analgesics, and Humane Endpoints to Avoid or Minimize Pain and
+Distress in Ocular Safety Testing, NIH Publication No. 10-7514, Research Triangle Park, NC, USA:
+National Institute of Environmental Health Sciences. Available:
+(3) OECD(2020), Test No. 437: Bovine Corneal Opacity and Permeability Test Method for Identifying
+i) Chemicals Inducing Serious Eye Damage And ii) Chemicals Not Requiring Classification For Eye
+Irritation Or Serious Eye Damage, OECD Guidelines for the Testing of Chemicals, Section 4, OECD
+Publishing. https://doi.org/10.1787/9789264203846-en
+(4) OECD (2018), Test No. 438: Isolated Chicken Eye Test Method for Identifying i) Chemicals
+Inducing Serious Eye Damage And ii) Chemicals Not Requiring Classification For Eye Irritation Or Serious
+Eye Damage, OECD Guidelines for the Testing of Chemicals, Section 4, OECD Publishing, Paris.
+https://doi.org/10.1787/9789264203860-en
+(5) OECD (2017), Test No. 460: Fluorescein Leakage Test Method for Identifying Ocular Corrosives
+and Severe Irritants. OECD Guidelines for the Testing of Chemicals, Section 4, OECD Publishing, Paris.
+https://doi.org/10.1787/9789264185401-en
+(6) OECD (2020), Test No. 491: Short Time Exposure In Vitro Test Method for Identifying i) Chemicals
+Inducing Serious Eye Damage and ii) Chemicals Not Requiring Classification for Eye Irritation or Serious
+Eye Damage. OECD Guidelines for the Testing of Chemicals, Section 4, OECD Publishing.
+https://doi.org/10.1787/9789264242432-en
+(7) OECD (2019), Test No. 492: Reconstructed human Cornea-like Epithelium (RhCE) test method
+for identifying chemicals not requiring classification and labelling for eye irritation or serious eye damage.
+OECD Guidelines for the Testing of Chemicals, Section 4, OECD Publishing.
+https://doi.org/10.1787/9789264242548-en
+(8) OECD (2019), Test No. 494: Vitrigel-Eye Irritancy Test Method for Identifying Chemicals Not
+Requiring Classification and Labelling for Eye Irritation or Serious Eye Damage. OECD Guidelines for the
+Testing of Chemicals, Section 4, OECD Publishing. https://doi.org/10.1787/9f20068a-en
+(9) OECD (2019), Test No. 496: In vitro Macromolecular Test Method for Identifying Chemicals
+Inducing Serious Eye Damage and Chemicals Not Requiring Classification for Eye Irritation or Serious Eye
+Damage. OECD Guidelines for the Testing of Chemicals, Section 4, OECD Publishing.
+https://doi.org/10.1787/970e5cd9-en
+(10) OECD (2000), Guidance Document on the Recognition, Assessment and Use of Clinical Signs as
+Humane Endpoints for Experimental Animals Used in Safety Evaluation. OECD Environmental Health and
+Safety Publications, Series on Testing and Assessment No. 19 (http://www.oecd.org/ehs/test/monos.htm).
+(11) Wright EM, Marcella KL, Woodson JF. (1985), Animal pain: evaluation and control, Lab Animal,
+May/June: 20-36.
+(12) National Research Council (NRC) (2009), Recognition and Alleviation of Pain in Laboratory
+Animals, Washington, DC: The National Academies Press.
+
+-- 10 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+10
+(13) United nations (UN) (2019). Globally Harmonized System of Classification and Labelling of
+Chemicals (GHS). Eight revised edition, UN New York and Geneva, 2019. Available at:
+https://unece.org/fileadmin/DAM/trans/danger/publi/ghs/ghs_rev08/ST-SG-AC10-30-Rev8e.pdf
+
+-- 11 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+11
+TABLE 1: GRADING OF OCULAR LESIONS
+Cornea Grade
+Opacity: degree of density (readings should be taken from most dense area)*
+No ulceration or opacity .............................................................................................................. 0
+Scattered or diffuse areas of opacity (other than slight dulling of normal lustre); details
+of iris clearly visible ................................................................................................................... 1
+Easily discernible translucent area; details of iris slightly obscured ........................................... 2
+Nacrous area; no details of iris visible; size of pupil barely discernible ..................................... 3
+Opaque cornea; iris not discernible through the opacity ............................................................. 4
+Maximum possible: 4
+* The area of corneal opacity should be noted
+Iris
+Normal ......................................................................................................................................... 0
+Markedly deepened rugae, congestion, swelling, moderate circumcorneal hyperaemia;
+or injection; iris reactive to light (a sluggish reaction is considered to be an effect .................... 1
+Hemorrhage, gross destruction, or no reaction to light ............................................................... 2
+Maximum possible: 2
+Conjunctivae
+Redness (refers to palpebral and bulbar conjunctivae; excluding cornea and iris)
+Normal ......................................................................................................................................... 0
+Some blood vessels hyperaemic (injected) ................................................................................. 1
+Diffuse,crimson colour; individual vessels not easily discernible............................................... 2
+Diffuse beefy red ......................................................................................................................... 3
+Maximum possible: 3
+Chemosis
+Swelling (refers to lids and/or nictating membranes)
+Normal ......................................................................................................................................... 0
+Some swelling above normal....................................................................................................... 1
+Obvious swelling, with partial eversion of lids ........................................................................... 2
+Swelling, with lids about half closed ........................................................................................... 3
+Swelling, with lids more than half closed ................................................................................... 4
+Maximum possible: 4
+
+-- 12 of 13 --
+
+OECD/OCDE 405
+© OECD, (2023)
+12
+ANNEX
+DEFINITIONS
+1. Not Classified: Test chemicals that are not classified for eye irritation (UN GHS Category 2) or
+serious damage to eye (UN GHS Category 1) according to the UN GHS classification (13). Interchangeable
+with “UN GHS No Category”.
+2. Eye irritation refers to the production of changes in the eye, which are fully reversible, occurring
+after the exposure of the eye to a chemical or mixture; these chemicals are classified as UN GHS Category
+2, 2A or 2B (13).
+3. Serious eye damage refers to the production of tissue damage in the eye, or serious physical
+decay of vision, which is not fully reversible, occurring after exposure of the eye to a chemical or mixture .
+These chemicals are classified as GHS Category 1 (13).
+4. Weight-of-the-evidence (assessment): The strengths and weaknesses of a collection of
+information are used as the basis for a conclusion that may not be evident from the individual data.
+5. IATA (Integrated Approach to Testing and Assessment): A structured approach used for hazard
+identification (potential), hazard characterisation (potency), and/or safety assessment (potential/potency
+and exposure) of a chemical or group of chemicals, which strategically integrates and weights all relevant
+data to inform regulatory decision regarding potential hazards, risks, and the need for further targeted and
+therefore minimal testing.
+6. “Defined Approach (DA): a DA consists of a fixed data interpretation procedure (e.g. statistical,
+mathematical models) applied to data (e.g. in silico predictions, in chemico, in vitro data) generated with a
+defined set of information sources to derive a prediction.”
+
+-- 13 of 13 --
+

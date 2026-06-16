@@ -1,0 +1,42 @@
+{
+  "scenario_id": "API03",
+  "scenario_title": "백신 4주(3회) 반복 + 면역원성",
+  "input": {
+    "modality": "백신",
+    "priceStandard": "MFDS",
+    "excipientCount": null,
+    "route": "근육",
+    "durations": [],
+    "addons": {
+      "recovery": true,
+      "immunogenicity": true
+    },
+    "categories": {}
+  },
+  "hit_count": 3,
+  "notes": [],
+  "total_unit_price": 97600000,
+  "sample_hits": [
+    {
+      "testName": "설치류 4주(3회) 4주 회복 (2군)",
+      "adminRoute": "근육",
+      "priority": "권장",
+      "tag": "백신 4주 회복 · 2군",
+      "unitPrice": 30800000
+    },
+    {
+      "testName": "설치류 4주(3회) 반복투여 독성 (2군)",
+      "adminRoute": "근육",
+      "priority": "필수",
+      "tag": "백신 4주(3회) 반복 · 2군",
+      "unitPrice": 56000000
+    },
+    {
+      "testName": "항체형성 확인시험 (2군)",
+      "adminRoute": "근육",
+      "priority": "필수",
+      "tag": "면역원성 · 2군",
+      "unitPrice": 10800000
+    }
+  ]
+}

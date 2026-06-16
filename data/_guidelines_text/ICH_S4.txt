@@ -1,0 +1,115 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/S4_Guideline.pdf
+[CHARS] 5033
+
+INTERNATIONAL 	CONFERENCE 	ON 	HARMONISATION 	OF 	TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN
+USE
+ICH HARMONISED TRIPARTITE G UIDELINE
+DURATION OF CHRONIC TOXICITY TESTING IN A NIMALS
+(R ODENT AND NON R ODENT TOXICITY TESTING)
+S4
+Current Step 4 version
+dated 2 September 1998
+This Guideline has been developed by the appropriate ICH Expert Working Group and
+has been subject to consultation by the regulatory parties, in accordance with the ICH
+Process. 	At Step 4 of the Process the final draft is recommended for adoption to the
+regulatory bodies of the European Union, Japan and USA.
+
+-- 1 of 4 --
+
+S4
+Document History
+First
+Codification History 	Date
+New
+Codification
+November
+2005
+S4A 	Approval by the Steering Committee under Step 2
+and release for public consultation.
+16
+July
+1997
+S4
+Current Step 4 version
+S4 	Approval by the Steering Committee under Step 4 and
+recommendation 	for 	adoption 	to 	the 	three 	ICH
+regulatory bodies.
+2
+September
+1998
+S4
+
+-- 2 of 4 --
+
+DURATION OF CHRONIC TOXICITY TESTING IN A NIMALS
+(R ODENT AND NON R ODENT TOXICITY TESTING)
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting
+on 2 September 1998, this guideline is recommended for
+adoption to the three regulatory parties to ICH
+1. 	O BJECTIVE
+The objective of this guidance is to set out the considerations that apply to chronic
+toxicity testing in rodents and non rodents as part of the safety evaluation of a
+medicinal product. 	Since guidance is not legally binding, an applicant may submit
+justification for an alternative approach.
+2. 	SCOPE
+This guidance has been prepared for the development of medicinal products with the
+exception of those already covered by the ICH Guideline on Safety Studies for
+Biotechnological Products, e.g., Monoclonal antibodies, recombinant DNA proteins.
+3. 	B ACKGROUND
+During the first International Conference on Harmonisation in 1991, the practices for
+the testing of chronic toxicity in the 3 regions (EU, Japan, and US) had been
+reviewed. 	Arising from this it emerged that there was a scientific consensus on the
+approach for chronic testing in rodents, supporting the harmonised duration of testing
+of 6 months. However, for chronic toxicity testing in non-rodents, there were different
+approaches to the duration of testing.
+The lack of harmonised duration led to the need for pharmaceutical companies to
+perform partially duplicative studies for both 6 and 12 months duration when
+developing new medicinal products. As the objective of ICH is to reduce or eliminate
+the need to duplicate testing during development of medicinal products and to ensure
+a more economical use of material, animal and human resources, while at the same
+time maintaining safeguards to protect public health, further scientific evaluation
+was undertaken.
+Each of the regulatory authorities in EU, Japan and US undertook a review to
+determine whether a single duration for chronic toxicity testing in non-rodents could
+be identified. 	From this analysis it emerged that in 16 cases a more detailed
+evaluation of 6 versus 12 months data should be undertaken.
+This evaluation was conducted as a joint exercise by the competent authorities in the
+3 regions.
+In some of the cases analysed at the tripartite meetings, there were no additional
+findings at 12 months. 	For some other cases, there was not complete agreement
+among the regulators with respect to the comparability in study design and conduct to
+allow assessment of whether there were differences in the findings at 6 and 12
+months due to duration of treatment alone.
+In a number of cases there were findings observed by 12 months, but not by 6 months.
+It was concluded that these would, or could have been detected in a study of nine
+months duration. 	Varying degrees of concern for the differences in findings detected
+1
+
+-- 3 of 4 --
+
+Duration of Chronic Toxicity Testing in Animals
+between the studies of different durations were expressed. 	An agreement on the
+clinical relevance of these findings could not be reached.
+Studies of 12 months duration are usually not necessary and studies of shorter than 9
+months duration may be sufficient.
+In the EU, studies of 6 months duration in non-rodents are acceptable according to
+Council Directive 75/318/EEC, as amended. To avoid duplication, where studies with
+a longer duration have been conducted, it would not be necessary to conduct a study of
+6 months.
+4. 	G UIDANCE ON DURATION OF CHRONIC TOXICITY TESTING FOR TRIPARTITE
+DEVELOPMENT PLAN
+Arising from the extensive analysis and review of the above mentioned data in non-
+rodents and based upon the achievements of ICH1 for testing in rodents, and so as to
+avoid duplication and follow a single development plan for chronic toxicity testing of
+new 	medicinal 	products, 	the 	following 	studies 	are 	considered 	acceptable 	for
+submission in the 3 Regions:
+1) Rodents:
+a study of 6 months duration;
+2) Non-rodents:
+a study of nine months duration.
+2
+
+-- 4 of 4 --
+

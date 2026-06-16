@@ -1,0 +1,59 @@
+{
+  "name": "chemon-quotation",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "node --test src/engine/__tests__/*.test.js src/lib/__tests__/*.test.js",
+    "test:rules": "node --test src/lib/__tests__/rules-catalog.test.js",
+    "test:regression": "node --test src/lib/__tests__/catalog-integrity.test.js src/lib/__tests__/regression-assemble.test.js src/lib/__tests__/regression-suggest-api.test.js src/lib/__tests__/rule-coverage.test.js",
+    "test:snapshots:update": "node scripts/update-snapshots.js",
+    "extract": "node scripts/extract_mapping.js",
+    "presets": "node scripts/build_presets.js",
+    "backfill:prices": "node scripts/backfill-prices.js",
+    "backfill:detail": "node scripts/backfill-detail.js",
+    "backfill:study-weeks": "node scripts/backfill-study-weeks.js",
+    "backfill:all": "npm run backfill:prices && npm run backfill:detail && npm run backfill:study-weeks",
+    "data:build": "npm run extract && npm run presets && npm run backfill:all",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node --transpile-only prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.0",
+    "@types/js-yaml": "^4.0.9",
+    "bcryptjs": "^3.0.3",
+    "cfb": "^1.2.2",
+    "clsx": "^2.1.1",
+    "exceljs": "^4.4.0",
+    "js-yaml": "^4.1.1",
+    "lucide-react": "^1.11.0",
+    "next": "14.2.15",
+    "next-auth": "^4.24.14",
+    "pdf-parse": "^2.4.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwind-merge": "^2.5.2",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.14.0",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "^10.4.20",
+    "fast-check": "^3.22.0",
+    "postcss": "^8.4.47",
+    "prisma": "^5.19.0",
+    "tailwindcss": "^3.4.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

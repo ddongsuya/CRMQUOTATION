@@ -1,0 +1,54 @@
+{
+  "scenario_id": "SC01",
+  "scenario_title": "13주 반복투여 1건 (베이스라인)",
+  "options": {
+    "excipientCount": 0,
+    "priceStandard": "MFDS",
+    "discountRate": 0,
+    "currency": "KRW"
+  },
+  "lines": [
+    {
+      "kind": "prep_analysis",
+      "testItemKey": null,
+      "testName": "투여물질의 조제물 분석 — in vivo (동물 투여 시험 — 본시험·DRF·TK·회복)",
+      "adminRoute": null,
+      "unitPrice": 10000000,
+      "quantity": 1,
+      "subtotal": 10000000,
+      "linkRelation": null,
+      "note": "포함 시험: 설치류 13주 반복투여 독성"
+    },
+    {
+      "kind": "analysis",
+      "testItemKey": null,
+      "testName": "투여물질의 함량 분석",
+      "adminRoute": null,
+      "unitPrice": 1000000,
+      "quantity": 2,
+      "subtotal": 2000000,
+      "linkRelation": null,
+      "note": "(1) 설치류 13주 반복투여 독성 : 2회"
+    },
+    {
+      "kind": "test",
+      "testItemKey": "독성시험_항목_마스터_추가정규화_v2.xlsx#시험항목 마스터#19@경구__경구",
+      "testName": "설치류 13주 반복투여 독성",
+      "adminRoute": "경구",
+      "unitPrice": 112000000,
+      "quantity": 1,
+      "subtotal": 112000000,
+      "linkRelation": null,
+      "note": null
+    }
+  ],
+  "warnings": [],
+  "totals": {
+    "totalBeforeDiscount": 124000000,
+    "discountAmount": 0,
+    "totalAfterDiscount": 124000000,
+    "vatAmount": 12400000,
+    "grandTotal": 136400000,
+    "currency": "KRW"
+  }
+}

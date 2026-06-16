@@ -1,0 +1,760 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2002/02/test-no-420-acute-oral-toxicity-fixed-dose-procedure_g1gh2949/9789264070943-en.pdf
+[CHARS] 30371
+
+OECD/OCDE 	420
+Adopted:
+17 th December 2001
+1/14
+OECD GUIDELINE FOR TESTING OF CHEMICALS
+Acute Oral Toxicity – Fixed Dose Procedure
+INTRODUCTION
+1. 	OECD Guidelines for the Testing of Chemicals are periodically reviewed in the light of scientific
+progress or changing assessment practices. The original Guideline 420 was adopted in July 1992 as the
+first alternative to the conventional acute toxicity test, described in Test Guideline 401. 	Based on the
+recommendations of several expert meetings, revision was considered timely because: i) international
+agreement had been reached on harmonised LD50 cut-off values for the classification of chemical
+substances, which differ from the cut-offs recommended in the 1992 version of the Guideline, and ii)
+testing in one sex (usually females) is now considered sufficient.
+2. 	Traditional methods for assessing acute toxicity use death of animals as an endpoint. In 1984, a
+new approach to acute toxicity testing was suggested by the British Toxicology Society based on the
+administration at a series of fixed dose levels (1). The approach avoided using death of animals as an
+endpoint, and relied instead on the observation of clear signs of toxicity at one of a series of fixed dose
+levels. Following UK (2) and international (3) in vivo validation studies the procedure was adopted by the
+Council as a Test Guideline in 1992. Subsequently, the statistical properties of the Fixed Dose Procedure
+have been evaluated using mathematical models in a series of studies (4)(5)(6). Together, the in vivo and
+modelling studies have demonstrated that the procedure is reproducible, uses fewer animals and causes less
+suffering than the traditional methods and is able to rank substances in a similar manner to the other acute
+toxicity testing methods (Test Guidelines 423 and 425).
+3. 	Guidance on the selection of the most appropriate test method for a given purpose can be found
+in the Guidance Document on Acute Oral Toxicity Testing (7). 	This Guidance Document also contains
+additional information on the conduct and interpretation of Guideline 420.
+4. 	Definitions used in the context of this Guideline are set out in Annex 1.
+INITIAL CONSIDERATIONS
+5. 	It is a principle of the method that in the main study only moderately toxic doses are used, and
+that administration of doses that are expected to be lethal should be avoided. Also, doses that are
+known to cause marked pain and distress, due to corrosive or severely irritant actions, need not be
+administered. Moribund animals, or animals obviously in pain or showing signs of severe and enduring
+distress shall be humanely killed, and are considered in the interpretation of the test results in the same
+way as animals that died on test. Criteria for making the decision to kill moribund or severely suffering
+animals, and guidance on the recognition of predictable or impending death, are the subject of a
+separate Guidance Document (8).
+6. 	The method provides information on the hazardous properties and allows the substance to be
+ranked and classified according to the Globally Harmonised System (GHS) for the classification of
+chemicals which cause acute toxicity (9).
+
+-- 1 of 14 --
+
+420 	OECD/OCDE
+2/14
+7. 	The testing laboratory should consider all available information on the test substance prior to
+conducting the study. Such information will include the identity and chemical structure of the substance;
+its physico-chemical properties; the results of any other in vitro or in vivo toxicity tests on the substance;
+toxicological data on structurally related substances; and the anticipated use(s) of the substance. This
+information is necessary to satisfy all concerned that the test is relevant for the protection of human health,
+and will help in the selection of an appropriate starting dose.
+PRINCIPLE OF THE TEST
+8. 	Groups of animals of a single sex are dosed in a stepwise procedure using the fixed doses of 5, 50,
+300 and 2000 mg/kg (exceptionally an additional fixed dose of 5000 mg/kg may be considered, see
+paragraph 19). The initial dose level is selected on the basis of a sighting study as the dose expected to
+produce some signs of toxicity without causing severe toxic effects or mortality. Clinical signs and
+conditions associated with pain, suffering, and impending death, are described in detail in a separate
+OECD Guidance Document (8). Further groups of animals may be dosed at higher or lower fixed doses,
+depending on the presence or absence of signs of toxicity or mortality. This procedure continues until the
+dose causing evident toxicity or no more than one death is identified, or when no effects are seen at the
+highest dose or when deaths occur at the lowest dose.
+DESCRIPTION OF THE METHOD
+Selection of animal species
+9. 	The preferred rodent species is the rat, although other rodent species may be used. Normally
+females are used (7). This is because literature surveys of conventional LD50 tests show that usually there
+is little difference in sensitivity between the sexes, but in those cases where differences are observed,
+females are generally slightly more sensitive (10). 	However, if knowledge of the toxicological or
+toxicokinetic properties of structurally related chemicals indicates that males are likely to be more sensitive
+then this sex should be used. When the test is conducted in males, adequate justification should be
+provided.
+10. 	Healthy young adult animals of commonly used laboratory strains should be employed. Females
+should be nulliparous and non-pregnant. Each animal, at 	the commencement of its dosing, should be
+between 8 and 12 weeks old and its weight should fall in an interval within + 20 % of the mean weight of
+any previously dosed animals.
+Housing and feeding conditions
+11. 	The temperature of the experimental animal room should be 22ºC (+ 3ºC). Although the relative
+humidity should be at least 30% and preferably not exceed 70% other than during room cleaning the aim
+should be 50-60%. Lighting should be artificial, the sequence being 12 hours light, 12 hours dark. For
+feeding, conventional laboratory diets may be used with an unlimited supply of drinking water. Animals
+may be group-caged by dose, but the number of animals per cage must not interfere with clear observations
+of each animal.
+
+-- 2 of 14 --
+
+OECD/OCDE 	420
+3/14
+Preparation of animals
+12. 	The animals are randomly selected, marked to permit individual identification, and kept in their
+cages for at least 5 days prior to the start of dosing to allow for acclimatisation to the laboratory conditions.
+Preparation of doses
+13. 	In general test substances should be administered in a constant volume over the range of doses to
+be tested by varying the concentration of the dosing preparation. Where a liquid end product or mixture is
+to be tested however, the use of the undiluted test substance, ie at a constant concentration, may be more
+relevant to the subsequent risk assessment of that substance, and is a requirement of some regulatory
+authorities. 	In either case, the maximum dose volume for administration must not be exceeded. The
+maximum volume of liquid that can be administered at one time depends on the size of the test animal. In
+rodents, the volume should not normally exceed 1mL/100g of body weight: however in the case of aqueous
+solutions 2 mL/100g body weight can be considered. With respect to the formulation of the dosing
+preparation, the use of an aqueous solution/suspension/emulsion is recommended wherever possible,
+followed in order of preference by a solution/suspension/emulsion in oil (e.g. corn oil) and then possibly
+solution in other vehicles. 	For vehicles other than water the toxicological characteristics of the vehicle
+should be known. 	Doses must be prepared shortly prior to administration unless the stability of the
+preparation over the period during which it will be used is known and shown to be acceptable.
+PROCEDURE
+Administration of doses
+14. 	The test substance is administered in a single dose by gavage using a stomach tube or a suitable
+intubation canula. In the unusual circumstance that a single dose is not possible, the dose may be given in
+smaller fractions over a period not exceeding 24 hours.
+15. 	Animals should be fasted prior to dosing (e.g. with the rat, food but not water should be withheld
+over-night; with the mouse, food but not water should be withheld for 3-4 hours). Following the period of
+fasting, the animals should be weighed and the test substance administered. After the substance has been
+administered, food may be withheld for a further 3-4 hours in rats or 1-2 hours in mice. Where a dose is
+administered in fractions over a period of time, it may be necessary to provide the animals with food and
+water depending on the length of the period.
+Sighting study
+16. 	The purpose of the sighting study is to allow selection of the appropriate starting dose for the main
+study. The test substance is administered to single animals in a sequential manner following the flow charts
+in Annex 2. The sighting study is completed when a decision on the starting dose for the main study can be
+made (or if a death is seen at the lowest fixed dose).
+17. 	The starting dose for the sighting study is selected from the fixed dose levels of 5, 50, 300 and
+2000 mg/kg as a dose expected to produce evident toxicity based, when possible, on evidence from in vivo
+and in vitro data from the same chemical and from structurally related chemicals. In the absence of such
+information, the starting dose will be 300 mg/kg.
+18. 	A period of at least 24 hours will be allowed between the dosing of each animal. All animals
+should be observed for at least 14 days.
+
+-- 3 of 14 --
+
+420 	OECD/OCDE
+4/14
+19. 	Exceptionally, and only when justified by specific regulatory needs, the use of an additional upper
+fixed dose level of 5000 mg/kg may be considered (see Annex 4). For reasons of animal welfare concern,
+testing of animals in GHS Category 5 ranges (2000-5000mg/kg) is discouraged and should only be
+considered when there is a strong likelihood that results of such a test have a direct relevance for protecting
+human or animal health or the environment.
+20. 	In cases where an animal tested at the lowest fixed dose level (5mg/kg) in the sighting study dies,
+the normal procedure is to terminate the study and assign the substance to GHS Category 1 (as shown in
+Annex 2). 	However, if further confirmation of the classification is required, an optional supplementary
+procedure may be conducted, as follows. A second animal is dosed at 5mg/kg. If this second animal dies,
+then GHS Category 1 will be confirmed and the study will be immediately terminated. If the second animal
+survives, then a maximum of three additional animals will be dosed at 5mg/kg. Because there will be a
+high risk of mortality, these animals should be dosed in a sequential manner to protect animal welfare. The
+time interval between dosing each animal should be sufficient to establish that the previous animal is likely
+to survive. If a second death occurs, the dosing sequence will be immediately terminated and no further
+animals will be dosed. Because the occurence of a second death (irrespective of the number of animals
+tested at the time of termination) falls into outcome A (2 or more deaths), the classification rule of Annex 3
+at the 5mg/kg fixed dose is followed (Category 1 if there are 2 or more deaths or Category 2 if there is no
+more than 1 death).
+Main study
+Numbers of animals and dose levels
+21. 	The action to be taken following testing at the starting dose level is indicated by the flow charts
+in Annex 3. One of three actions will be required; either stop testing and assign the appropriate hazard
+classification class, test at a higher fixed dose or test at a lower fixed dose. However, to protect animals, a
+dose level that caused death in the sighting study will not be revisited in the main study (see Annex 3).
+Experience has shown that the most likely outcome at the starting dose level will be that the substance can
+be classified and no further testing will be necessary.
+22. 	A total of five animals of one sex will normally be used for each dose level investigated. The five
+animals will be made up of one animal from the sighting study dosed at the selected dose level together
+with an additional four animals (except, unusually, if a dose level used on the main study was not included
+in the sighting study).
+23. 	The time interval between dosing at each level is determined by the onset, duration, and severity of
+toxic signs. Treatment of animals at the next dose should be delayed until one is confident of survival of
+the previously dosed animals. A period of 3 or 4 days between dosing at each dose level is recommended,
+if needed, to allow for the observation of delayed toxicity. The time interval may be adjusted as
+appropriate, e.g., in case of inconclusive response.
+24. 	When the use of an upper fixed dose of 5000 mg/kg is considered, the procedure outlined in
+Annex 4 should be followed (see also paragraph 19).
+Limit test
+25. 	The limit test is primarily used in situations where the experimenter has information indicating that
+the test material is likely to be nontoxic, i.e., having toxicity only above regulatory limit doses.
+Information about the toxicity of the test material can be gained from knowledge about similar tested
+compounds or similar tested mixtures or products, taking into consideration the identity and percentage of
+
+-- 4 of 14 --
+
+OECD/OCDE 	420
+5/14
+components known to be of toxicological significance. 	In those situations where there is little or no
+information about its toxicity, or in which the the test material is expected to be toxic, the main test should
+be performed.
+26. 	Using the normal procedure, a sighting study starting dose of 2000mg/kg (or exceptionally
+5000mg/kg) followed by dosing of a further four animals at this level serves as a limit test for this
+guideline.
+OBSERVATIONS
+27. 	Animals are observed individually after dosing at least once during the first 30 minutes,
+periodically during the first 24 hours, with special attention given during the first 4 hours, and daily
+thereafter, for a total of 14 days, except where they need to be removed from the study and humanely killed
+for animal welfare reasons or are found dead. However, the duration of observation should not be fixed
+rigidly. It should be determined by the toxic reactions, time of onset and length of recovery period, and
+may thus be extended when considered necessary. The times at which signs of toxicity appear and
+disappear are important, especially if there is a tendency for toxic signs to be delayed (11). All
+observations are systematically recorded, with individual records being maintained for each animal.
+28. 	Additional observations will be necessary if the animals continue to display signs of toxicity.
+Observations should include changes in skin and fur, eyes and mucous membranes, and also respiratory,
+circulatory, autonomic and central nervous systems, and somatomotor activity and behaviour pattern.
+Attention should be directed to observations of tremors, convulsions, salivation, diarrhoea, lethargy, sleep
+and coma. The principles and criteria summarised in the Humane Endpoints Guidance Document should be
+taken into consideration (8). Animals found in a moribund condition and animals showing severe pain or
+enduring signs of severe distress should be humanely killed. When animals are killed for humane reasons
+or found dead, the time of death should be recorded as precisely as possible.
+Body weight
+29. 	Individual weights of animals should be determined shortly before the test substance is
+administered and at least weekly thereafter. Weight changes should be calculated and recorded. At the end
+of the test surviving animals are weighed and then humanely killed.
+Pathology
+30. 	All test animals (including those that die during the test or are removed from the study for animal
+welfare reasons) should be subjected to gross necropsy. All gross pathological changes should be recorded
+for each animal. Microscopic examination of organs showing evidence of gross pathology in animals
+surviving 24 or more hours after the initial dosing may also be considered because it may yield useful
+information.
+DATA AND REPORTING
+Data
+31. 	Individual animal data should be provided. Additionally, all data should be summarised in tabular
+form, showing for each test group the number of animals used, the number of animals displaying signs of
+toxicity, the number of animals found dead during the test or killed for humane reasons, time of death of
+
+-- 5 of 14 --
+
+420 	OECD/OCDE
+6/14
+individual animals, a description and the time course of toxic effects and reversibility, and necropsy
+findings.
+Test report
+32. 	The test report must include the following information, as appropriate:
+Test substance:
+- 	physical nature, purity, and, where relevant, physico-chemical properties
+(including isomerisation);
+- 	identification data, including CAS number.
+Vehicle (if appropriate):
+- 	justification for choice of vehicle, if other than water.
+Test animals:
+- 	species/strain used;
+- 	microbiological status of the animals, when known;
+- 	number, age and sex of animals (including, where appropriate, a rationale for use of males
+instead of females);
+- 	source, housing conditions, diet etc.
+Test conditions:
+- 	details of test substance formulation, including details of the physical form of the material
+administered;
+- 	details of the administration of the test substance including dosing volumes and time of
+dosing;
+- 	details of food and water quality (including diet type/source, water source);
+- 	the rationale for the selection of the starting dose.
+Results:
+- 	tabulation of response data and dose level for each animal (i.e. animals showing signs of
+toxicity including mortality, nature, severity and duration of effects);
+- 	tabulation of body weight and body weight changes;
+- 	individual weights of animals at the day of dosing, in weekly intervals thereafter, and at
+time of death or sacrifice;
+- 	date and time of death if prior to scheduled sacrifice;
+- 	time course of onset of signs of toxicity and whether these were reversible for each
+animal;
+- 	necropsy findings and histopathological findings for each animal, if available.
+Discussion and interpretation of results.
+Conclusions.
+
+-- 6 of 14 --
+
+OECD/OCDE 	420
+7/14
+LITERATURE
+(1) 	British Toxicology Society Working Party on Toxicity (1984). Special report: a new approach to
+the classification of substances and preparations on the basis of their acute toxicity. Human
+Toxicol., 3, 85-92.
+(2) 	Van den Heuvel, M.J., Dayan, A.D. and Shillaker, R.O. (1987). Evaluation of the BTS approach
+to the testing of substances and preparations for their acute toxicity. Human Toxicol.‚ 6, 279-291.
+(3) 	Van den Heuvel, M.J., Clark, D.G., Fielder, R.J., Koundakjian, P.P., Oliver, G.J.A., Pelling, D.,
+Tomlinson, N.J. and Walker, A.P. (1990). The international validation of a fixed-dose procedure
+as an alternative to the classical LD50 test. Fd. Chem. Toxicol. 28, 469-482.
+(4) 	Whitehead, A. and Curnow, R.N. (1992). Statistical evaluation of the fixed-dose procedure. Fd.
+Chem. Toxicol., 30, 313-324.
+(5) 	Stallard, N. and Whitehead, A. (1995). 	Reducing numbers in the fixed-dose procedure. Human
+Exptl. Toxicol. 14, 315-323.
+(6) 	Stallard, N., Whitehead, A. and Ridgeway, P. (2000). Statistical evaluation of modifications to the
+fixed dose procedure (manuscript in preparation).
+(7) 	OECD (2000). Guidance Document on Acute Oral Toxicity. 	Environmental Health and Safety
+Monograph Series on Testing and Assessment No.24.
+(8) 	OECD (2000). Guidance Document on the Recognition, Assessment and Use of Clinical Signs as
+Humane Endpoints for Experimental Animals Used in Safety Evaluation. Environmental Health
+and Safety Monograph Series on Testing and Assesment No 19.
+(9) 	OECD (1998). Harmonised Integrated Hazard Classification for Human Health and Environmental
+Effects of Chemical Substances as endorsed by the 28 th Joint Meeting of the Chemicals Committee
+and 	the 	Working 	Party 	on 	Chemicals 	in 	November 	1998, 	Part 	2, 	p.11
+[http://webnet1.oecd.org/oecd/pages/home/displaygeneral/0,3380,EN-documents-521-14-no-24-
+no-0,FF.html].
+(10) 	Lipnick, R.L., Cotruvo, J.A., Hill, R.N., Bruce, R.D., Stitzel, K.A., Walker, A.P., Chu, I., Goddard,
+M., Segal, L., Springer, J.A. and Myers, R.C. 	(1995). 	Comparison of the Up-and-Down,
+Conventional LD50 , and Fixed-Dose Acute Toxicity Procedures. Fd. Chem. Toxicol. 33, 223-231.
+(11) 	Chan P.K and A.W. Hayes (1994) Chapter 16 Acute Toxicity and Eye Irritation In: Principles and
+Methods of Toxicology. 3
+rd
+Edition. A.W. Hayes , Editor. Raven Press, Ltd. New York, USA.
+
+-- 7 of 14 --
+
+420 	OECD/OCDE
+8/14
+ANNEX 1
+DEFINITIONS
+Acute oral toxicity refers to those adverse effects occurring following oral administration of a single dose
+of a substance, or multiple doses given within 24 hours.
+Delayed death means that an animal does not die or appear moribund within 48 hours but dies later during
+the 14-day observation period.
+Dose is the amount of test substance administered. Dose is expressed as weight of test substance per unit
+weight of test animal (e.g. mg/kg).
+Evident toxicity is a general term describing clear signs of toxicity following the administration of test
+substance, 	(see Van den Heuvel, M.J., Clark, D.G., Fielder, R.J., Koundakjian, P.P., Oliver, G.J.A.,
+Pelling, D., Tomlinson, N.J. and Walker, A.P. (1990). 	The international validation of a fixed-dose
+procedure as an alternative to the classical LD50 test. Fd. Chem. Toxicol. 28, 469-482. (3) for examples)
+such that at the next highest fixed dose either severe pain and enduring signs of severe distress, moribund
+status (criteria are presented in the Humane Endpoints Guidance Document (8), or probable mortality in
+most animals can be expected.
+GHS: Globally Harmonised Classification System for Chemical Substances and Mixtures. A joint activity
+of OECD (human health and the environment), UN Committee of Experts on Transport of Dangerous
+Goods (physical–chemical properties) and ILO (hazard communication) and co-ordinated by the
+Interorganisation Programme for the Sound Management of Chemicals (IOMC).
+Impending death: when moribund state or death is expected prior to the next planned time of observation.
+Signs indicative of this state in rodents could include convulsions, lateral position, recumbence, and
+tremor. (See the Humane Endpoint Guidance Document (8) for more details).
+LD50 (median lethal oral dose) is a statistically derived single dose of a substance that can be expected to
+cause death in 50 per cent of animals when administered by the oral route. The LD50 value is expressed in
+terms of weight of test substance per unit weight of test animal (mg/kg).
+Limit dose refers to a dose at an upper limitation on testing (2000 or 5000 mg/kg).
+Moribund status: being in a state of dying or inability to survive, even if treated. (See the Humane
+Endpoint Guidance Document (8) for more details).
+Predictable death: presence of clinical signs indicative of death at a known time in the future before the
+planned end of the experiment, for example: inability to reach water or food. (See the Humane Endpoint
+Guidance Document (8) for more details).
+
+-- 8 of 14 --
+
+OECD/OCDE
+ 
+420
+9/14
+ANNEX 2: FLOW CHART FOR THE
+ 
+SIGH TING STUDY
+1 animal
+2000 mg/kg*
+1 animal
+	5mg/kg
+1 animal
+	300 mg/kg
+A 
+B 
+C 
+A 
+B 
+C 
+A 
+B 
+C
+1 animal
+2000 mg/kg
+1 animal
+	5mg/kg
+A 
+B 
+C 
+A 
+B 
+A 
+B
+Starting dose: 5 mg/kg
+START
+A 
+B
+Starting dose: 50 mg/kg
+START
+A 
+B 
+C
+C
+1 animal
+	50 mg/kg
+C
+1 animal
+	300 mg/kg
+C
+1 animal
+	50 mg/kg
+Main Study starting Dose (mg/kg)
+ 
+5 
+5 
+50 
+50 
+300
+ 
+300
+ 
+2000
+ 
+2000
+Classify GHS
+	Category 1 *
+	Classify GHS
+	Category 1 *
+Main Study starting Dose (mg/kg)
+ 
+5 
+5 
+50 
+50 
+300
+ 
+300
+ 
+2000
+ 
+2000
+A	
+B
+	C
+Outcome
+death
+evident toxicity
+	No toxicity
+A
+* for outcome
+ 
+at 5 mg/kg there is an optional supplem entary
+procedure to confirm the GHS classification: see paragraph 20.
+
+-- 9 of 14 --
+
+420
+ 
+OECD/OCDE
+10/14
+1 anim al
+2000 m g/kg*
+1 anim al
+	5m g/kg
+1 anim al
+	50 m g/kg
+1 anim al
+	300 m g/kg
+A 
+B 
+C 
+A 
+B 
+C 
+A 
+B 
+C
+1 anim al
+2000 m g/kg
+1 anim al
+	5m g/kg
+1 anim al
+	50 m g/kg
+1 anim al
+	300 m g/kg
+A 
+B 
+C 
+A 
+B 
+C 
+A 
+B 
+C
+S tarting d ose : 300 m g /kg
+ST ART
+A 
+B 
+C
+S tarting d ose : 200 0 m g /k g
+ST ART
+A 
+B 
+C
+Ma in Stud y starting D ose (m g /k g)
+ 
+5 
+5 
+50
+ 
+50
+ 
+300
+ 
+3 00
+ 
+2 000
+ 
+20 00
+A	
+B
+	C
+O utcom e
+death
+	evident toxicity
+	No toxicity
+AN NE X 2: F L O W CH AR T FO R T HE SIG H TING S TU DY
+Classify G H S
+	Category 1 *
+Classify G H S
+	Category 1 *
+M ain Study starting D ose (mg /kg )
+ 
+5 
+5 
+50
+ 
+5 0
+ 
+300
+ 
+300
+ 
+2 000
+ 
+2 000
+A
+* for outcom e
+ 
+at 5 m g/kg there is an optional supplem entary
+procedure to confirm the G H S classification: see paragraph 20.
+
+-- 10 of 14 --
+
+OECD/OCDE
+ 
+420
+11/14
+5 an im als
+2 0 00 m g /kg *
+5 an im als
+	5 m g /k g
+ 
+5 anim als
+	3 0 0 m g /kg
+A 
+B 
+C 
+A 
+B 
+C 
+A 
+B 
+C
+5 an im als
+	2 0 00 m g /kg
+5 an im als
+	5 m g /k g
+A 
+B 
+C 
+A 
+B 
+A 
+B
+S ta rting d o s e : 5 m g /k g
+S T A RT
+A 
+B
+S ta rtin g d os e : 5 0 m g /k g
+S T A RT
+A 
+B 
+C
+C la ss ify G H S C a te g o ry
+ 
+1 
+2 
+2 
+3 
+3 
+4 
+4 
+5 
+5 /U n cla ss ifie d
+C la ss ify G H S C a te g o ry
+ 
+1 
+2 
+2 
+3 
+3 
+4 
+4 
+5 
+5 /Un c las sifie d
+A	
+B
+	C
+O u tco m e
+> 2 d e a ths
+	> 1 w ith e vid en t to xic ity a n d /o r < 1 d e a th
+	N o toxicity
+G rou p size
+	T he 5 an im als in e ach m a in stu d y gro u p w ill in clude any an im al tes ted at
+	th at do se le ve l in th e sigh ting stu dy
+	A n im a l w e lfare ove rride
+	If this d o se le ve l c aus ed d e ath in th e s ig h tin g s tud y , th en n o fu rthe r
+	a n im a ls w ill be te ste d. G o dire ctly to o u tco m e
+ 
+A
+A N NE X 3 : FL O W C H A RT FO R T H E M AIN S T UD Y
+C
+5 an im als
+	5 0 m g /kg
+C
+5 an im als
+	3 0 0 m g/kg
+C
+5 anim als
+	5 0 m g /kg
+
+-- 11 of 14 --
+
+420
+ 
+OECD/OCDE
+12/14
+5 animals
+2000 mg/kg*
+5 animals
+	5mg/kg
+5 animals
+	50 mg/kg
+ 
+5 animals
+	300 mg/kg
+A 
+B 
+C 
+A 
+B 
+C 
+A 
+B 
+C
+5 animals
+	2000 mg/kg
+5 animals
+	5mg/kg
+5 animals
+	50 mg/kg
+5 animals
+	300 mg/kg
+A 
+B 
+C 
+A 
+B 
+C 
+A 
+B 
+C
+Starting dose: 300 m g/kg
+START
+A 
+B 
+C
+Starting dose: 2000 mg/kg
+START
+A 
+B 
+C
+Classify GHS Category
+ 
+1 
+2 
+2 
+3 
+3 
+4 
+4 
+5 
+5/Unclassified
+Classify GHS Category
+ 
+1 
+2 
+2 
+3 
+3 
+4 
+4 
+5 
+5/Unclassified
+Outcome
+A	
+B
+	C
+> 2 deaths
+	> 1 with evident toxicity and/or < 1 death
+	No toxicity
+Group size
+	The 5 animals in each main study group will include any animal tested at
+	that dose level in the sighting study
+	Animal welfare override
+	If this dose level caused death in the sighting study, then no further
+	animals will be tested. Go directly to outcome
+ 
+A
+ANNEX 3: FLOW CHART FOR THE MAIN STUDY
+
+-- 12 of 14 --
+
+OECD/OCDE 	420
+13/14
+ANNEX 4
+CRITERIA FOR CLASSIFICATION OF TEST SUBSTANCES WITH EXPECTED LD50
+VALUES EXCEEDING 2000 MG/KG WITHOUT THE NEED FOR TESTING.
+1. 	Criteria for hazard Category 5 are intended to enable the identification of test substances which are
+of relatively low acute toxicity hazard but which, under certain circumstances may present a danger to
+vulnerable populations. These substances are anticipated to have an oral or dermal LD50 in the range of
+2000-5000 mg/kg or equivalent doses for other routes. Test substances could be classified in the hazard
+category defined by: 2000mg/kg <LD50 < 5000mg/kg (Category 5 in the GHS) in the following cases:
+a) 	if directed to this category by any of the testing schemes of Annex 3, based on mortality
+incidences;
+b) 	if reliable evidence is already available that indicates the LD50 to be in the range of Category
+5 values; or other animal studies or toxic effects in humans indicate a concern for human
+health of an acute nature;
+c) 	through extrapolation, estimation or measurement of data if assignment to a more hazardous
+category is not warranted and
+· 	reliable information is available indicating significant toxic effects in humans, or
+· 	any mortality is observed when tested up to category 4 values by the oral route, or
+· 	where expert judgement confirms significant clinical signs of toxicity, when tested up to
+Category 4 values, except for diarrhoea, piloerection or an ungroomed appearance, or
+· 	where expert judgement confirms reliable information indicating the potential for
+significant acute effects from the other animal studies.
+TESTING AT DOSES ABOVE 2000 MG/KG
+2. 	Exceptionally, and only when justified by specific regulatory needs, the use of an additional upper
+fixed dose level of 5000 mg/kg may be considered. Recognising the need to protect animal welfare, testing
+at 5000 mg/kg is discouraged and should only be considered when there is a strong likelihood that the
+results of such a test would have a direct relevance for protecting animal or human health (9).
+Sighting Study
+3. 	The decision rules governing the sequential procedure presented in Annex 2 are extended to
+include a 5000 mg/kg dose level. Thus, when a sighting study starting dose of 5000 mg/kg is used outcome
+A (death) will require a second animal to be tested at 2000 mg/kg; outcomes B and C (evident toxicity or
+no toxicity) will allow the selection of 5000 mg/kg as the main study starting dose. Similarly, if a starting
+dose other than 5000 mg/kg is used then testing will progress to 5000 mg/kg in the event of outcomes B or
+C at 2000 mg/kg; a subsequent 5000 mg/kg outcome A will dictate a main study starting dose of 2000
+mg/kg and outcomes B and C will dictate a main study starting dose of 5000 mg/kg.
+Main Study
+4. 	The decision rules governing the sequential procedure presented in Annex 3 are extended to
+include a 5000 mg/kg dose level. Thus, when a main study starting dose of 5000 mg/kg is used, outcome A
+(³2 deaths) will require the testing of a second group at 2000 mg/kg; outcome B (evident toxicity and/or £1
+death) or C (no toxicity) will result in the substance being unclassified according to GHS.
+
+-- 13 of 14 --
+
+420 	OECD/OCDE
+14/14
+Similarly, if a starting dose other than 5000 mg/kg is used then testing will progress to 5000 mg/kg in the
+event of outcome C at 2000 mg/kg; a subsequent 5000 mg/kg outcome A will result in the substance being
+assigned to GHS Category 5 and outcomes B or C will lead to the substance being unclassified.
+
+-- 14 of 14 --
+

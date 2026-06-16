@@ -1,0 +1,111 @@
+// Chemon Quotation — Prisma schema (SQLite for development)
+//
+// Catalog data (TestItem / GuidelineBlock / ModalityPreset) stays in JSON files
+// under data/. The DB persists only operational data: users + quotes.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────
+// Auth
+// ─────────────────────────────────────────────────────────
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  name          String
+  role          String    @default("user")   // user / admin
+  passwordHash  String
+  createdAt     DateTime  @default(now())
+  quotes        Quote[]
+}
+
+// ─────────────────────────────────────────────────────────
+// Quotations
+// ─────────────────────────────────────────────────────────
+
+model Quote {
+  id                  Int        @id @default(autoincrement())
+  quoteNumber         String     @unique           // CK-YYYYMMDD-NNN
+
+  // ownership
+  user                User?      @relation(fields: [userId], references: [id])
+  userId              Int?
+
+  // customer
+  customerName        String?
+  customerCompany     String?
+  customerEmail       String?
+
+  // project / modality
+  projectName         String
+  substanceName       String?
+  modality            String
+  priceStandard       String     @default("MFDS")  // MFDS / OECD
+
+  // plan snapshot (free-form JSON: route/durations/phase/species/addons/categories/tk)
+  planJson            String?
+
+  // settings
+  excipientCount      Int        @default(0)
+  currency            String     @default("KRW")   // KRW / USD
+  exchangeRate        Float?
+  discountRate        Float      @default(0)        // 0.0 ~ 1.0
+
+  // lifecycle
+  status              String     @default("DRAFT") // DRAFT / ISSUED / SENT / ACCEPTED / REJECTED
+  issuedAt            DateTime?
+  validUntil          DateTime?
+
+  // calculated snapshot (so we can render the same totals later regardless of catalog drift)
+  totalBeforeDiscount Float?
+  totalAfterDiscount  Float?
+  vatAmount           Float?
+  grandTotal          Float?
+
+  items               QuoteItem[]
+
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model QuoteItem {
+  id               Int      @id @default(autoincrement())
+  quote            Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  quoteId          Int
+
+  // Reference to TestItem in JSON catalog — snapshot fields preserve display values
+  testItemKey      String
+  testNameSnapshot String
+  adminRouteSnap   String?
+  category         String?
+  tag              String?
+
+  unitPrice        Float                       // 실제 적용된 가격 (override 적용 후)
+  quantity         Int      @default(1)
+  subtotal         Float
+
+  source           String   @default("preset") // preset / manual
+  priority         String?                     // 필수 / 권장 / 옵션
+  displayOrder     Int      @default(0)
+
+  // ─── Phase C-1: 사용자 직접 입력 (override) ─────────────────────────
+  // 비임상시험 특유의 변수 다양성 대응. null = override 없음 (자동값 사용).
+  // 명시적 0 도 유효한 값 (예: unitPriceOverride=0 → 무료 옵션, studyWeeksOverride=0 → 단회).
+  // 견적 재현 시 unitPrice 만으로 충분하나, 어떤 값이 수동인지 추적 위해 별도 저장.
+  unitPriceOverride     Float?   // null = pickPrice() 자동값 사용
+  studyWeeksOverride    Int?     // null = test item 의 studyWeeks 사용 (F-1)
+  hamryangCountOverride Int?     // null = hamryangCountForWeeks() 자동 계산
+  customNote            String?  // 자유 메모 (견적서 비고란 출력)
+
+  @@index([quoteId])
+}

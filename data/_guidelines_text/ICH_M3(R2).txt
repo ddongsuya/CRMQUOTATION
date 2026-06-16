@@ -1,0 +1,1408 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/M3_R2__Guideline.pdf
+[CHARS] 72412
+
+INTERNATIONAL CONFERENCE ON HARMONISATION OF TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN USE
+ICH HARMONISED TRIPARTITE GUIDELINE
+GUIDANCE ON NONCLINICAL SAFETY STUDIES FOR THE
+CONDUCT OF
+HUMAN CLINICAL TRIALS AND MARKETING AUTHORIZATION
+FOR PHARMACEUTICALS
+M3(R2)
+Current Step 4 version
+dated 11 June 2009
+This guideline has been developed by the appropriate ICH Expert Working Group and has
+been subject to consultation by the regulatory parties, in accordance with the ICH Process.
+At Step 4 of the Process the draft is recommended for adoption to the regulatory bodies of
+the European Union, Japan and the USA.
+
+-- 1 of 31 --
+
+M3(R2)
+Document History
+Code History Date
+M3 Approval by the Steering Committee under Step 2 and release
+for public consultation.
+7 November
+1996
+M3 Approval by the Steering Committee under Step 4 and
+recommendation for adoption to the three ICH regulatory
+bodies.
+16 July
+1997
+M3(R1) Approval by the Steering Committee of minor revisions
+without further public consultation under Step 4 and
+recommendation for adoption to the three ICH regulatory
+bodies.
+9 November
+2000
+M3(R2) Approval by the Steering Committee of M3(R1) Revision
+under Step 2 and release for public consultation.
+15 July
+2008
+M3(R2) Approval by the Steering Committee of minor post Step 2
+editorial correction.
+17 July
+2008
+Current Step 4 version
+M3(R2) Approval by the Steering Committee of M3(R1) Revision
+under Step 4 and recommendation for adoption to the three
+ICH regulatory bodies.
+11 June
+2009
+
+-- 2 of 31 --
+
+i
+GUIDANCE ON NONCLINICAL SAFETY STUDIES FOR THE CONDUCT OF
+HUMAN CLINICAL TRIALS AND MARKETING AUTHORIZATION FOR
+PHARMACEUTICALS
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting
+on June 11, 2009, this guideline is recommended for adoption to the three
+regulatory parties to ICH.
+TABLE OF CONTENTS
+1. INTRODUCTION ...............................................................................................1
+1.1 Objectives of the Guideline ...................................................................................1
+1.2 Background ...........................................................................................................1
+1.3 Scope of the Guideline...........................................................................................1
+1.4 General Principles.................................................................................................2
+1.5 High Dose Selection for General Toxicity Studies................................................2
+2. PHARMACOLOGY STUDIES ..........................................................................5
+3. TOXICOKINETIC AND PHARMACOKINETIC STUDIES..........................5
+4. ACUTE TOXICITY STUDIES...........................................................................5
+5. REPEATED-DOSE TOXICITY STUDIES.......................................................6
+5.1 Clinical Development Trials .................................................................................6
+5.2 Marketing Authorization ......................................................................................7
+6. ESTIMATION OF THE FIRST DOSE IN HUMAN .......................................8
+7. EXPLORATORY CLINICAL TRIALS .............................................................8
+7.1 Microdose Trials ....................................................................................................9
+7.2 Single-Dose Trials at Sub-therapeutic Doses or into the Anticipated
+Therapeutic Range ................................................................................................9
+7.3 Multiple Dose Trials..............................................................................................9
+8. LOCAL TOLERANCE STUDIES ...................................................................17
+9. GENOTOXICITY STUDIES............................................................................17
+10. CARCINOGENICITY STUDIES ....................................................................17
+11. REPRODUCTION TOXICITY STUDIES......................................................17
+11.1 Men .....................................................................................................................18
+11.2 Women Not of Childbearing Potential...............................................................18
+11.3 Women of Childbearing Potential......................................................................18
+11.4 Pregnant Women................................................................................................19
+12. CLINICAL TRIALS IN PEDIATRIC POPULATIONS ...............................19
+
+-- 3 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+ii
+13. IMMUNOTOXICITY ........................................................................................20
+14. PHOTOSAFETY TESTING.............................................................................20
+15. NONCLINICAL ABUSE LIABILITY.............................................................21
+16. OTHER TOXICITY STUDIES ........................................................................22
+17. COMBINATION DRUG TOXICITY TESTING ............................................22
+18. CONTINUING EFFORTS TO IMPROVE HARMONIZATION .................23
+19. ENDNOTES.......................................................................................................23
+20. REFERENCES..................................................................................................24
+
+-- 4 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+iii
+LIST OF ABBREVIATIONS
+AUC Area Under the Curve
+Cmax Maximum Plasma Concentration
+EU European Union
+GLP Good Laboratory Practices
+HCG Human Chorionic Gonadotropin
+HIV Human Immunodeficiency Virus
+ICH International Conference on Harmonisation of Technical Requirements for
+Registration of Pharmaceuticals for Human Use
+i.v. Intravenous
+MFD Maximum Feasible Dose
+MTD Maximum Tolerated Dose
+NOAEL No Observed Adverse Effect Level
+PET Positron Emission Tomography
+PK Pharmacokinetics
+PD Pharmacodynamics
+SAR Structure-Activity Relationship
+siRNA Small Interfering RNA
+WOCBP Women of Childbearing Potential
+
+-- 5 of 31 --
+
+
+
+-- 6 of 31 --
+
+1
+GUIDANCE ON NONCLINICAL SAFETY STUDIES FOR THE CONDUCT OF
+HUMAN CLINICAL TRIALS AND MARKETING AUTHORIZATION FOR
+PHARMACEUTICALS
+1. INTRODUCTION
+1.1 Objectives of the Guideline
+The purpose of this document is to recommend international standards for, and promote
+harmonisation of, the nonclinical safety studies recommended to support human clinical
+trials of a given scope and duration as well as marketing authorization for
+pharmaceuticals.
+Harmonisation of the guidance for nonclinical safety studies will help to define the
+current recommendations and reduce the likelihood that substantial differences will
+exist among regions.
+This guidance should facilitate the timely conduct of clinical trials, reduce the use of
+animals in accordance with the 3R (reduce/refine/replace) principles and reduce the use
+of other drug development resources. Although not discussed in this guidance,
+consideration should be given to use of new in vitro alternative methods for safety
+evaluation. These methods, if validated and accepted by all ICH regulatory authorities,
+can be used to replace current standard methods.
+This guidance promotes safe, ethical development and availability of new
+pharmaceuticals.
+1.2 Background
+The recommendations of this revised guidance further harmonise the nonclinical safety
+studies to support the various stages of clinical development among the regions of
+European Union (EU), Japan, and the United States. The present guidance represents
+the consensus that exists regarding the type and duration of nonclinical safety studies
+and their timing to support the conduct of human clinical trials and marketing
+authorization for pharmaceuticals.
+1.3 Scope of the Guideline
+The nonclinical safety assessment for marketing approval of a pharmaceutical usually
+includes pharmacology studies, general toxicity studies, toxicokinetic and nonclinical
+pharmacokinetic studies, reproduction toxicity studies, genotoxicity studies and, for
+drugs that have special cause for concern or are intended for a long duration of use, an
+assessment of carcinogenic potential. Other nonclinical studies to assess phototoxicity,
+immunotoxicity, juvenile animal toxicity and abuse liability should be conducted on a
+case-by-case basis. The need for nonclinical safety studies and their relation to the
+conduct of human clinical trials is delineated in this guidance.
+This document applies to the situations usually encountered during the development of
+pharmaceuticals and should be viewed as general guidance for drug development.
+Nonclinical safety studies and human clinical trials should be planned and designed to
+represent an approach that is scientifically and ethically appropriate.
+For biotechnology-derived products (as defined in Ref. 1), appropriate nonclinical safety
+studies should be determined in accordance with ICH S6. For these products, ICH
+
+-- 7 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+2
+M3(R2) only provides guidance with regard to timing of nonclinical studies relative to
+clinical development.
+Pharmaceuticals under development for indications in life-threatening or serious
+diseases (e.g., advanced cancer, resistant HIV infection, and congenital enzyme
+deficiency diseases) without current effective therapy also warrant a case-by-case
+approach to both the toxicological evaluation and clinical development in order to
+optimise and expedite drug development. In these cases and for products using
+innovative therapeutic modalities (e.g., siRNA), as well as vaccine adjuvants, particular
+studies can be abbreviated, deferred, omitted, or added. Where ICH guidances for
+specific product areas exist, they should be consulted.
+1.4 General Principles
+The development of a pharmaceutical is a stepwise process involving an evaluation of
+both animal and human efficacy and safety information. The goals of the nonclinical
+safety evaluation generally include a characterisation of toxic effects with respect to
+target organs, dose dependence, relationship to exposure, and, when appropriate,
+potential reversibility. This information is used to estimate an initial safe starting dose
+and dose range for the human trials and to identify parameters for clinical monitoring
+for potential adverse effects. The nonclinical safety studies, although usually limited at
+the beginning of clinical development, should be adequate to characterise potential
+adverse effects that might occur under the conditions of the clinical trial to be supported.
+Human clinical trials are conducted to investigate the efficacy and safety of a
+pharmaceutical, starting with a relatively low systemic exposure in a small number of
+subjects. This is followed by clinical trials in which exposure to the pharmaceutical
+usually increases by duration and/or size of the exposed patient population. Clinical
+trials should be extended based on the demonstration of adequate safety in the previous
+clinical trial(s), as well as on additional nonclinical safety information that becomes
+available as clinical development proceeds.
+Serious adverse clinical or nonclinical findings can influence the continuation of clinical
+trials. Within the overall clinical context, these findings should be evaluated to
+determine the appropriateness and design of additional nonclinical and/or clinical
+studies.
+Clinical trials are conducted in phases for which different terminology has been utilised
+in the various regions. This document generally uses the terminology as defined in the
+ICH E8 guideline (Ref. 2). However, as there is a growing trend to merge phases of
+clinical development, in some cases this document also relates the nonclinical studies to
+the duration and size of clinical trials and the characteristics of the subjects included.
+1.5 High Dose Selection for General Toxicity Studies
+Generally, in toxicity studies, effects that are potentially clinically relevant can be
+adequately characterized using doses up to the maximum tolerated dose (MTD). It is not
+essential to demonstrate the MTD in every study. Other equally appropriate limiting
+doses include those that achieve large exposure multiples or saturation of exposure or
+use the maximum feasible dose (MFD). These limit doses (see additional details below
+and Figure 1) prevent the use of doses in animals that would not add value to predicting
+clinical safety. These recommendations are consistent with those for reproduction and
+carcinogenicity study designs that already have defined limit doses and/or exposures
+(Refs. 3 and 4).
+Limit doses for acute, subchronic, and chronic toxicity studies of 1000 mg/kg/day for
+rodents and non-rodents are considered appropriate in all cases except those discussed
+
+-- 8 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+3
+below. In the few situations where a dose of 1000 mg/kg/day does not result in a mean
+exposure margin of 10-fold to the clinical exposure and the clinical dose exceeds 1 g per
+day, then the doses in the toxicity studies should be limited by a 10-fold exposure margin
+or a dose of 2000 mg/kg/day or the MFD, whichever is lower. In those rare situations in
+which the dose of 2000 mg/kg/day results in an exposure that is less than the clinical
+exposure, a higher dose up to the MFD can be considered.
+Doses providing a 50-fold margin of exposure (usually based on group mean AUC values
+[see Note 1] of the parent drug or the pharmacologically active molecule of a pro-drug) to
+the clinical systemic exposure generally are also considered acceptable as the maximum
+dose for acute and repeated-dose toxicity studies in any species.
+To support Phase III clinical trials for the United States, dose-limiting toxicity generally
+should be identified in at least one species when using the 50-fold margin of exposure as
+the limit dose. If this is not the case, a study of one-month or longer duration in one
+species that is conducted at the 1000 mg/kg limit dose, MFD or MTD, whichever is
+lowest, is recommended. However, on a case-by-case basis this study might not be
+warranted if a study of a shorter duration identifies dose-limiting toxicity at doses
+higher than those resulting in a 50-fold exposure margin.
+If genotoxicity endpoints are to be incorporated into a general toxicity study, then an
+appropriate maximum dose should be selected based on a MFD, MTD or limit dose of
+1000 mg/kg/day.
+
+-- 9 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+4
+Figure 1 Recommended high dose selection for general toxicity studies
+Are/were any
+of the above situations
+met? 
+Yes
+1000 mg/kg
+limit dose
+reached ?
+Mean exposure
+margin ≥10x clinical?
+Human Dose
+<1 gram/day?
+2000 mg/kg
+dose level tested?
+1. MTD
+2. Exposure saturation
+3. MFD
+4. Mean exposure margin 50x clinical*
+MFD or mean
+exposure margin
+≥10x clinical?
+Exposure
+animals ≥ humans ?
+Consider testing up to MFD
+* For the US: see additional recommendations in section 1.5
+No
+Yes 	Yes
+No
+Yes
+Yes Yes
+Yes
+In completed or subsequent studies :
+Additional studies might
+be warranted
+No
+No
+No No
+No
+Tested dose level
+is considered
+adequate
+Tested dose level
+is considered
+adequate
+Additional studies might
+be warranted
+
+-- 10 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+5
+2. PHARMACOLOGY STUDIES
+Safety pharmacology and pharmacodynamic (PD) studies are defined in ICH S7A (Ref.
+5).
+The core battery of safety pharmacology studies includes the assessment of effects on
+cardiovascular, central nervous and respiratory systems, and should generally be
+conducted before human exposure, in accordance with ICH S7A and S7B (Refs. 5 and 6).
+When warranted, supplemental and follow-up safety pharmacology studies can be
+conducted during later clinical development. Consideration should be given to inclusion
+of any in vivo evaluations as additions to general toxicity studies, to the extent feasible,
+in order to reduce animal use.
+In addition, primary PD studies (in vivo and/or in vitro) are intended to investigate the
+mode of action and/or effects of a substance in relation to its desired therapeutic target.
+Such studies are generally conducted during the discovery phase of pharmaceutical
+development and as such, are not generally conducted in accordance with Good
+Laboratory Practices (GLP). These studies can contribute to dose selection for both
+nonclinical and clinical studies.
+3. TOXICOKINETIC AND PHARMACOKINETIC STUDIES
+In vitro metabolic and plasma protein binding data for animals and humans and
+systemic exposure data (ICH S3A, Ref. 7) in the species used for repeated-dose toxicity
+studies generally should be evaluated before initiating human clinical trials. Further
+information on pharmacokinetics (PK) (e.g., absorption, distribution, metabolism and
+excretion), in test species and in vitro biochemical information relevant to potential drug
+interactions should be available before exposing large numbers of human subjects or
+treating for long duration (generally before Phase III). These data can be used to
+compare human and animal metabolites and for determining if any additional testing is
+warranted.
+Nonclinical characterization of a human metabolite(s) is only warranted when that
+metabolite(s) is observed at exposures greater than 10% of total drug-related exposure
+and at significantly greater levels in humans than the maximum exposure seen in the
+toxicity studies. Such studies should be conducted to support Phase III clinical trials. For
+drugs for which the daily administered dose is <10 mg, greater fractions of the drug
+related material might be more appropriate triggers for testing. Some metabolites are
+not of toxicological concern (e.g., most glutathione conjugates) and do not warrant
+testing. The nonclinical characterization of metabolites with an identified cause for
+concern (e.g., a unique human metabolite) should be considered on a case-by-case basis.
+4. ACUTE TOXICITY STUDIES
+Historically, acute toxicity information has been obtained from single-dose toxicity
+studies in two mammalian species using both the clinical and a parenteral route of
+administration. However, such information can be obtained from appropriately
+conducted dose-escalation studies or short-duration dose-ranging studies that define an
+MTD in the general toxicity test species (Refs. 8 and 9).
+When this acute toxicity information is available from any study, separate single-dose
+studies are not recommended. Studies providing acute toxicity information can be
+limited to the clinical route only and such data can be obtained from non-GLP studies if
+clinical administration is supported by appropriate GLP repeated-dose toxicity studies.
+Lethality should not be an intended endpoint in studies assessing acute toxicity.
+
+-- 11 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+6
+In some specific situations (e.g., microdose trials; see Section 7) acute toxicity or single-
+dose studies can be the primary support for studies in humans. In these situations, the
+high dose selection can be different from that described in Section 1.5 but should be
+appropriate for supporting the intended clinical dose and route. These studies should be
+performed in compliance with GLP.
+Information on the acute toxicity of pharmaceutical agents could be useful to predict the
+consequences of human overdose situations and should be available to support Phase III.
+An earlier assessment of acute toxicity could be important for therapeutic indications for
+which patient populations are at higher risk for overdosing (e.g., depression, pain, and
+dementia) in out-patient clinical trials.
+5. REPEATED-DOSE TOXICITY STUDIES
+The recommended duration of the repeated-dose toxicity studies is usually related to the
+duration, therapeutic indication and scope of the proposed clinical trial. In principle, the
+duration of the animal toxicity studies conducted in two mammalian species (one non-
+rodent) should be equal to or exceed the duration of the human clinical trials up to the
+maximum recommended duration of the repeated-dose toxicity studies (Table 1). Limit
+doses/exposures that are considered appropriate in repeated-dose toxicity studies are
+described in Section 1.5.
+In circumstances where significant therapeutic gain has been shown, trials can be
+extended beyond the duration of supportive repeated-dose toxicity studies on a case-by-
+case basis.
+5.1 Clinical Development Trials
+Repeated-dose toxicity studies in two species (one non-rodent) for a minimum duration of
+2 weeks (Table 1) would generally support any clinical development trial up to 2 weeks
+in duration. Clinical trials of longer duration should be supported by repeated-dose
+toxicity studies of at least equivalent duration. Six month rodent and 9 month non-
+rodent studies generally support dosing for longer than 6 months in clinical trials (for
+exceptions see Table 1 footnotes).
+Table 1 Recommended Duration of Repeated-Dose Toxicity Studies to
+Support the Conduct of Clinical Trials
+Maximum Duration of
+Clinical Trial
+Recommended Minimum Duration of
+Repeated-Dose Toxicity Studies to Support
+Clinical Trials
+Rodents Non-rodents
+Up to 2 weeks 2 weeksa 2 weeksa
+Between 2 weeks and 6
+months
+Same as clinical trialb Same as clinical trialb
+> 6 months 6 monthsb, c 9 months b, c, d
+a. In the United States, as an alternative to 2 week studies, extended single-dose
+toxicity studies (see footnote c in Table 3) can support single-dose human trials.
+Clinical studies of less than 14 days can be supported with toxicity studies of the
+same duration as the proposed clinical study.
+
+-- 12 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+7
+b. In some circumstances clinical trials of longer duration than 3 months can be
+initiated, provided that the data are available from a 3-month rodent and a 3-
+month non-rodent study, and that complete data from the chronic rodent and
+non-rodent study are made available, consistent with local clinical trial
+regulatory procedures, before extending dosing beyond 3 months in the clinical
+trial. For serious or life-threatening indications or on a case-by-case basis, this
+extension can be supported by complete chronic rodent data and in-life and
+necropsy data for the non-rodent study. Complete histopathology data from the
+non-rodent should be available within an additional 3 months.
+c. There can be cases where a pediatric population is the primary population, and
+existing animal studies (toxicology or pharmacology) have identified potential
+developmental concerns for target organs. In these cases, long-term toxicity
+testing starting in juvenile animals can be appropriate in some circumstances
+(see Section 12).
+d. In the EU, studies of 6 months duration in non-rodents are considered acceptable.
+However, where studies with a longer duration have been conducted, it is not
+appropriate to conduct an additional study of 6 months.
+The following are examples where non-rodent studies of up to 6 months duration
+can also be appropriate for Japan and the United States:
+• When immunogenicity or intolerance confounds conduct of longer term
+studies.
+• Repeated short-term drug exposure even if clinical trial duration exceeds 6
+months, such as intermittent treatment of migraine, erectile dysfunction,
+or herpes simplex.
+• Drugs administered on a chronic basis to reduce the risk of recurrence of
+cancer.
+• Drugs for indications for which life expectancy is short.
+5.2 Marketing Authorization
+Because of the size of the population at risk and the relatively less controlled conditions
+in clinical practice in contrast to clinical trials, longer durations of nonclinical testing
+can be valuable. The durations of repeated-dose toxicity studies to support marketing for
+different treatment durations are outlined in Table 2. However, for a small number of
+conditions in which the indicated use is between 2 weeks and 3 months, but for which
+there is extensive clinical experience suggesting both widespread and long-term use
+beyond that recommended (e.g., anxiety, seasonal allergic rhinitis, pain), the duration of
+testing might more appropriately be equivalent to that recommended for treatment of
+greater than 3 months.
+
+-- 13 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+8
+Table 2 Recommended Duration of Repeated-Dose Toxicity Studies to
+Support Marketing
+Duration of Indicated
+Treatment
+Rodent Non-rodent
+Up to 2 weeks 1 month 1 month
+>2 weeks to 1 month 3 months 3 months
+>1 month to 3 months 6 months 6 months
+>3 months 6 monthsc 9 months c,d
+N.B., See footnotes c and d in Table 1.
+6. ESTIMATION OF THE FIRST DOSE IN HUMAN
+The estimation of the first dose in humans is an important element to safeguard subjects
+participating in first-in-human studies. All of the relevant nonclinical data, including
+the pharmacological dose response, the pharmacological/toxicological profile, and
+pharmacokinetics, should be considered when determining the recommended starting
+dose in humans.
+In general, the No Observed Adverse Effect Level (NOAEL) determined in nonclinical
+safety studies performed in the most appropriate animal species gives the most
+important information. The proposed clinical starting dose will also depend on various
+factors, including PD, particular aspects of the molecule, and the design of the clinical
+trials. See available regional guidance for specific approaches that can be used.
+Exploratory clinical trials (see Section 7) in humans can be initiated with less, or
+different, nonclinical support than is generally warranted for clinical development trials
+(see Section 5.1); therefore, the estimation of the clinical starting (and maximal) dose can
+differ. The recommended criteria for starting doses for various exploratory clinical trial
+designs are described in Table 3.
+7. EXPLORATORY CLINICAL TRIALS
+It is recognized that in some cases earlier access to human data can provide improved
+insight into human physiology/pharmacology, knowledge of drug candidate
+characteristics and therapeutic target relevance to disease. Streamlined early
+exploratory approaches can accomplish this end. Exploratory clinical studies for the
+purpose of this guidance are those intended to be conducted early in Phase I, involve
+limited human exposure, have no therapeutic intent, and are not intended to examine
+clinical tolerability. They can be used to investigate a variety of parameters such as PK,
+PD and other biomarkers, which could include PET receptor binding and displacement
+or other diagnostic measures. The subjects included in these studies can be patients from
+selected populations or healthy individuals.
+The amount and type of nonclinical supporting data that is appropriate in these
+situations will be dependent on the extent of proposed human exposure, both with
+respect to the maximum clinical dose used and the duration of dosing. Five different
+examples of exploratory clinical approaches are summarized below and in more detail in
+Table 3, together with the nonclinical testing programs that would be recommended in
+these particular approaches. However, alternative approaches not described in this
+guidance can also be used, including strategies to support biotechnology-derived
+
+-- 14 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+9
+products. It is recommended that these alternative approaches be discussed and agreed
+upon with the appropriate regulatory authority. The use of any of these approaches can
+reduce overall animal use in drug development.
+Recommended starting doses and maximal doses for the five approaches are included in
+Table 3. In all cases, characterization of PD and pharmacology using in vivo and/or in
+vitro models as noted in Table 3 and Section 2 is important and should be used in
+support of human dose selection.
+7.1 Microdose Trials
+Two different microdose approaches are described below with details provided in Table 3.
+The first approach would involve not more than a total dose of 100 μg that can be
+administered as a single dose or divided doses in any subject. This could be useful to
+investigate target receptor binding or tissue distribution in a PET study. A second use
+could be to assess PK with or without the use of an isotopically labelled agent.
+A second microdose approach is one that involves < 5 administrations of a maximum of
+100 μg per administration (a total of 500 μg per subject). This can be useful for
+applications similar to the first microdose approach described above, but with less active
+PET ligands.
+In some situations it could be appropriate to carry out a clinical microdose study using
+the i.v. route on a product intended for oral administration and for which an oral
+nonclinical toxicology package already exists. In this case the i.v. microdose can be
+qualified by the existing oral toxicity studies as described in Table 1 or Table 3,
+Approach 3, where adequate exposure margins have been achieved. It is not
+recommended to investigate i.v. local tolerance of the drug substance in this situation
+because the administered dose is very low (100 μg maximum). If a novel i.v. vehicle is
+being employed then local tolerance of the vehicle should be assessed.
+7.2 Single-Dose Trials at Sub-therapeutic Doses or into the Anticipated
+Therapeutic Range
+The third approach involves a single-dose clinical study typically starting at
+subtherapeutic doses and possibly escalating into the pharmacological or anticipated
+therapeutic range (see Table 3). The maximum allowable dose should be based on the
+nonclinical data, but could be further limited based on emerging clinical information
+obtained during the course of the study. This approach could allow, for example,
+determination of PK parameters with non-radiolabeled drug at or near the predicted
+pharmacodynamically active dose. Another example could be assessment of target
+engagement or pharmacology after a single dose. This approach is not intended to
+support the determination of the maximum tolerated clinical dose (see exception, Table
+1, footnote a).
+7.3 Multiple Dose Trials
+Two different nonclinical approaches (numbers 4 and 5) to support multiple dose clinical
+trials are provided in Table 3. These approaches support up to 14 days of dosing for
+determination of PK and PD in human in the therapeutic dose range, but are not
+intended to support the determination of maximum tolerated clinical dose.
+Approach 4 involves 2-week repeated-dose toxicity studies in rodents and non-rodents
+where dose selection in animals is based on exposure multiples of anticipated AUC at the
+maximum clinical dose.
+
+-- 15 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+10
+Approach 5 involves a 2-week toxicity study in a rodent species and a confirmatory non-
+rodent study that is designed to investigate whether the NOAEL in the rodent is also not
+a toxic dose in the non-rodent. If toxic effects are observed in the non-rodent at the
+rodent NOAEL exposure, clinical administration should be deferred until further
+nonclinical studies in this species have been conducted (usually a standard toxicity study
+(see Section 5)).
+
+-- 16 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+11
+Table 3 Recommended Non-Clinical Studies to Support Exploratory Clinical Trials
+Clinical: Non clinical:
+Dose to be Administered Start and Maximum
+Doses
+Pharmacology General Toxicity
+Studiesa
+Genotoxicityb / Other
+Approach 1:
+Total dose ≤ 100 μg (no
+inter-dose interval
+limitations)
+AND
+Total dose ≤ 1/100th NOAEL
+and ≤1/100th
+pharmacologically active
+dose (scaled on mg/kg for
+i.v. and mg/m2 for oral).
+Maximal and starting doses
+can be the same but not
+exceed a total accumulated
+dose of 100 μg.
+In vitro target/ receptor
+profiling should be
+conducted.
+Appropriate
+characterization of primary
+pharmacology (mode of
+action and/or effects) in a
+pharmacodynamically
+relevant model should be
+available to support human
+dose selection.
+Extended single dose
+toxicity study (see footnotes
+c and d in one species,
+usually rodent, by intended
+route of administration
+with toxicokinetic data, or
+via the i.v. route. A
+maximum dose of 1000-fold
+the clinical dose on a mg/kg
+basis for i.v. and mg/m2 for
+oral administration can be
+used.
+Genotoxicity studies are not
+recommended, but any
+studies or SAR assessments
+conducted should be
+included in the clinical trial
+application.
+For highly radioactive
+agents (e.g., PET imaging
+agents), appropriate PK and
+dosimetry estimates should
+be submitted.
+Approach 2:
+Total cumulative dose ≤ 500
+μg, maximum of 5
+administrations with a
+washout between doses (6
+or more actual or predicted
+half-lives)
+AND
+each dose ≤ 100 μg
+AND
+each dose ≤ 1/100th of the
+NOAEL and ≤ 1/100th of the
+pharmacologically active
+dose.
+Maximal daily and starting
+doses can be the same, but
+not exceed 100 μg.
+In vitro target/receptor
+profiling should be
+conducted.
+Appropriate
+characterization of primary
+pharmacology (mode of
+action and/or effects) in a
+pharmacodynamically
+relevant model should be
+available to support human
+dose selection.
+7-day repeated-dose toxicity
+study in one species,
+usually rodent, by intended
+route of administration
+with toxicokinetic data, or
+via the i.v. route.
+Hematology, clinical
+chemistry, necropsy, and
+histopathology data should
+be included. A maximum
+dose of 1000-fold the clinical
+dose on a mg/kg basis for
+i.v. and mg/m2 for oral
+administration can be used.
+Genotoxicity studies are not
+recommended, but any
+studies or SAR assessments
+conducted should be
+included in the clinical trial
+application.
+For highly radioactive
+agents (e.g., PET imaging
+agents), appropriate PK and
+dosimetry estimates should
+be submitted.
+
+-- 17 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+12
+Table 3 Recommended Non-Clinical Studies to Support Exploratory Clinical Trials
+Clinical: Non clinical:
+Dose to be Administered Start and Maximum
+Doses
+Pharmacology General Toxicity
+Studiesa
+Genotoxicityb
+Approach 3
+Single Dose Studies at Sub-
+therapeutic Doses or into
+the Anticipated Therapeutic
+Range.
+Starting dose should be
+based on the types of
+toxicity findings observed in
+the most sensitive species
+and a consideration of the
+pharmacologically active
+dose. For other
+considerations on initial
+dosing in humans, regional
+guidances should be
+consulted.
+Maximum dose can be that
+yielding up to ½ NOAEL
+exposure in the more
+sensitive species, in cases
+where any relevant toxicity
+observed in animals is
+anticipated to be
+monitorable and reversible
+in humans.
+In vitro target/receptor
+profiling should be
+conducted.
+Appropriate
+characterization of primary
+pharmacology (mode of
+action and/or effects) in a
+pharmacodynamically
+relevant model should be
+available to support human
+dose selection.
+Core battery of safety
+pharmacology (see Section
+2).
+Extended single dose
+toxicity studies in both the
+rodent and non-rodent (see
+footnote c by intended
+clinical route of
+administration with
+toxicokinetics, hematology,
+clinical chemistry,
+necropsy, and
+histopathology data. For
+this situation the top dose
+should be MTD, MFD or
+limit dose (see Section 1.5).
+Ames assay (or an
+alternative assay if Ames is
+inappropriate, for example,
+for an antibacterial
+product).
+
+-- 18 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+13
+Table 3 Recommended Non-Clinical Studies to Support Exploratory Clinical Trials
+Clinical: Non clinical:
+Dose to be
+Administered
+Start and Maximum Dose Pharmacology General toxicity
+studiesa
+Genotoxicityb
+Approach 4:
+Dosing up to 14 days into
+the therapeutic range but
+not intended to evaluate
+clinical MTD.
+With toxicity in both species, follow
+appropriate regional guidance for
+clinical starting dose. If toxicity is
+not seen in either species (i.e., the
+NOAELs are the highest dose tested
+and doses used were not otherwise
+limited, e.g., not an MFD), or is seen
+only in one species, the clinical
+starting dose should be one that gives
+a predicted clinical AUC value
+(based on either interspecies PK
+modelling or mg/m2 conversion) that
+is approximately 1/50th of the AUC
+at the NOAEL from the species
+yielding the lower exposure. For
+other considerations on initial dosing
+in humans, e.g., predicted PD
+activity, regional guidance should be
+consulted.
+Without toxicity in both species,
+it is recommended that the
+maximum clinical dose not
+exceed 1/10th the lower exposure
+(AUC) in either species at the
+highest dose tested in the
+animals.
+When only one species
+demonstrates toxicity, the
+maximum clinical dose should
+In vitro target/receptor
+profiling should be
+conducted.
+Appropriate
+characterization of
+primary pharmacology
+(mode of action and/or
+effects) in a
+pharmacodynamically
+relevant model should
+be available to support
+human dose selection.
+Core battery of
+safety pharmacology
+(see Section 2) using
+doses similar to
+those used for the
+toxicity studies.
+2-week repeated-dose
+toxicity studies in rodent
+and non-rodent with
+standard parameters
+assessed and where dose
+selection in animals is
+based on exposure
+multiples of anticipated
+clinical AUC at
+maximum dose.
+Ames assay (or an
+appropriate alternative
+assay if Ames is
+inappropriate, for
+example, for an
+antibacterial product)
+and an assay (in vitro or
+in vivo) capable of
+detecting chromosomal
+damage in a mammalian
+system.
+
+-- 19 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+14
+not be higher than the NOAEL
+in the species showing toxicity,
+or 1/2 the AUC at the highest
+dose tested in the species not
+showing toxicity, whichever is
+lower.
+With toxicity in both species,
+the maximum clinical dose
+should be based on standard
+risk assessment approaches
+and, in this specific case, the
+clinical MTD can be explored.
+
+-- 20 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+15
+Table 3 Recommended Non-Clinical Studies to Support Exploratory Clinical Trials
+Clinical: Non clinical:
+Dose to be Administered Start and Maximum
+Doses
+Pharmacology General Toxicity Studiesa Genotoxicityb
+Approach 5:
+Dosing up to 14 days and
+not to exceed duration of
+dosing in non-rodent; into
+therapeutic range but not
+intended to evaluate
+clinical MTD.
+Starting dose predicted
+exposures should not
+exceed 1/50th the NOAEL
+in the more sensitive
+species on a mg/m2 basis.
+For other considerations on
+initial dosing in humans,
+regional guidance should
+be consulted.
+The maximum exposure in
+humans should not be
+higher than the AUC at
+the NOAEL in the non-
+rodent species or higher
+than ½ the AUC at the
+NOAEL in the rodent
+species, whichever is
+lowere.
+In vitro target/receptor
+profiling should be
+conducted
+Appropriate
+characterization of
+primary pharmacology
+(mode of action and/or
+effects) in a
+pharmacodynamically
+relevant model should
+be available to support
+human dose selection.
+Core battery of safety
+pharmacology (see
+Section 2) using
+doses similar to those
+used for the toxicity
+studies.
+Standard 2-week repeated-
+dose toxicity study in
+rodents (with justification
+of the rodent as an
+appropriate species). The
+top dose should be the
+MTD, MFD or limit dose
+(see Section 1.5).
+Confirmatory study in non-
+rodent (n=3) at the
+anticipated NOAEL
+exposure in rodent, with
+duration of a minimum of 3
+days and at least the
+intended clinical study
+duration.
+Alternatively, an escalating
+dose study in the non-
+rodent with duration of a
+minimum of 3 days and at
+least the intended clinical
+study duration at the
+anticipated NOAEL
+exposure in the rodent.
+Ames assay (or an
+appropriate alternative
+assay if Ames is
+inappropriate, for example,
+for an antibacterial
+product) and an assay (in
+vitro or in vivo) capable of
+detecting chromosomal
+damage in a mammalian
+system. If an in vivo
+assessment is used then
+this could be part of the
+rodent toxicity study.
+
+-- 21 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+16
+a. General toxicity studies should be conducted according to GLP regulations.
+b. See Ref. 10 for genotoxicity study design and dose selection.
+c. Generally, extended single dose toxicity studies should be designed to evaluate hematology, clinical chemistry, necropsy, and
+histopathology data (control and high dose only if no treatment-related pathology is seen at the high dose) after a single
+administration, with further evaluations conducted 2 weeks later to assess delayed toxicity and/or recovery. The usual design for
+rodents consists of 10 animals/sex/group to be assessed on the day following dosing, and 5 animals/sex at the dose level(s) selected
+to be assessed on day 14 post-dose. The usual design for non-rodents consists of 3/sex/group for all groups on day 2 and 2/sex for
+the dose level(s) assessed on day 14.
+d. A single dose level to assess reversibility/delayed toxicity on day 14 can support the microdose approach. The dose level used need
+not be the high dose but should be a dose that is at least 100 times the clinical dose.
+e. In the absence of adverse effects in the clinical trial, escalation above this AUC can be appropriate if the findings in the toxicity
+studies are anticipated to be monitorable, reversible, and of low severity in humans.
+
+-- 22 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+17
+8. LOCAL TOLERANCE STUDIES
+It is preferable to evaluate local tolerance by the intended therapeutic route as part of
+the general toxicity studies; stand alone studies are generally not recommended.
+To support limited human administration by non-therapeutic routes (e.g., a single i.v.
+dose to assist in the determination of absolute bioavailability of an oral drug), a single
+dose local tolerance study in a single species is considered appropriate. In cases where
+the anticipated systemic exposure (AUC and Cmax) from the non-therapeutic
+administration is covered by the existing toxicology package, the endpoints in the local
+tolerance study can be confined to clinical signs and macroscopic and microscopic
+examination of the application site. The formulation delivered for local tolerance need
+not be identical but should be similar to the clinical formulation.
+For an i.v. microdose study that is supported by an oral toxicology package (see Section
+7), evaluation of local tolerance of the drug substance is not warranted. If a novel i.v.
+vehicle is being employed, then local tolerance of the vehicle should be assessed.
+For parenteral products, evaluation for local tolerance at unintended injection sites,
+when appropriate, should be conducted before exposure of large numbers of patients
+(e.g., Phase III clinical trials). The approach to such studies differs in the various
+regions. Such studies are generally not recommended in the United States (an example
+of an exception would be intrathecal for the epidural route). Japan and the EU
+recommend single dose paravenous administration for the i.v. route. Other parenteral
+routes should be evaluated on a case-by-case basis.
+9. GENOTOXICITY STUDIES
+An assay for gene mutation is generally considered sufficient to support all single dose
+clinical development trials. To support multiple dose clinical development trials, an
+additional assessment capable of detecting chromosomal damage in a mammalian
+system(s) should be completed (Ref. 10). A complete battery of tests for genotoxicity
+should be completed before initiation of Phase II trials (Ref. 10).
+If a positive finding occurs, an assessment, and then possibly additional testing (Ref. 10),
+should be conducted to determine if further administration to humans is still
+appropriate.
+The genotoxicity studies recommended to support Exploratory Clinical Study approaches
+are discussed in Section 7.
+10. CARCINOGENICITY STUDIES
+Conditions relevant for carcinogenicity testing are discussed in the ICH S1A document
+(Ref. 11). If carcinogenicity studies are recommended for the clinical indication, they
+should be conducted to support the marketing application. Only in circumstances where
+there is a significant cause for concern for carcinogenic risk should the study results be
+submitted to support clinical trials. A long clinical study duration alone is not
+considered to be a significant cause for concern.
+For pharmaceuticals developed to treat certain serious diseases for adults or pediatric
+patients, carcinogenicity testing, if recommended, can be concluded post-approval.
+11. REPRODUCTION TOXICITY STUDIES
+Reproduction toxicity studies (Ref. 3) should be conducted as is appropriate for the
+population that is to be exposed.
+
+-- 23 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+18
+11.1 Men
+Men can be included in Phase I and II trials before the conduct of the male fertility study
+since an evaluation of the male reproductive organs is performed in the repeated-dose
+toxicity studies (Note 2).
+A male fertility study (Ref. 3) should be completed before the initiation of large scale or
+long duration clinical trials (e.g., Phase III trials).
+11.2 Women Not of Childbearing Potential
+Women not of childbearing potential (i.e., permanently sterilised, postmenopausal) can
+be included in clinical trials without reproduction toxicity studies if the relevant
+repeated-dose toxicity studies (which include an evaluation of the female reproductive
+organs) have been conducted. Postmenopausal is defined as 12 months with no menses
+without an alternative medical cause.
+11.3 Women of Childbearing Potential
+For women of childbearing potential (WOCBP) there is a high level of concern for the
+unintentional exposure of an embryo or fetus before information is available concerning
+the potential benefits versus potential risks. The recommendations on timing of
+reproduction toxicity studies to support the inclusion of WOCBP in clinical trials are
+similar in all ICH regions.
+It is important to characterize and minimize the risk of unintentional exposure of the
+embryo or fetus when including WOCBP in clinical trials. One approach to achieve this
+objective is to conduct reproduction toxicity studies to characterize the inherent risk of a
+drug and take appropriate precautions during exposure of WOCBP in clinical trials. A
+second approach is to limit the risk by taking precautions to prevent pregnancy during
+clinical trials. Precautions to prevent pregnancy include pregnancy testing (e.g., based
+on the β-subunit of HCG), use of highly effective methods of birth control (Note 3), and
+study entry only after a confirmed menstrual period. Testing for pregnancy during the
+trial and subject education should be sufficient to ensure compliance with the measures
+designed to prevent pregnancy during the period of drug exposure (which could exceed
+the length of study). To support these approaches, informed consent should be based on
+any known pertinent information related to reproduction toxicity, such as a general
+assessment of potential toxicity of pharmaceuticals with related structures or
+pharmacological effects. If no relevant reproductive information is available, the
+potential for unidentified risks to the embryo or fetus should be communicated.
+In all ICH regions, WOCBP can be included in early clinical trials without non-clinical
+developmental toxicity studies (e.g., embryo-fetal studies) in certain circumstances. One
+circumstance could be intensive control of pregnancy risk over short duration (e.g., 2
+weeks) clinical trials. Another circumstance could be where there is a predominance of
+the disease in women and the objectives of the clinical trial cannot be effectively met
+without inclusion of WOCBP and there are sufficient precautions to prevent pregnancy
+(see above).
+Additional considerations for the conduct of studies in WOCBP without the non-clinical
+developmental toxicity studies include knowledge of the mechanism of action of the
+agent, the type of pharmaceutical agent, the extent of fetal exposure or the difficulty of
+conducting developmental toxicity studies in an appropriate animal model. For example,
+for monoclonal antibodies for which embryo-fetal exposure during organogenesis is
+understood to be low in humans based on current scientific knowledge, the
+
+-- 24 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+19
+developmental toxicity studies can be conducted during Phase III. The completed reports
+should be submitted with the marketing application.
+Generally, where appropriate preliminary reproduction toxicity data are available (see
+Note 4) from two species, and where precautions to prevent pregnancy in clinical trials
+(see above) are used, inclusion of WOCBP (up to 150) receiving investigational treatment
+for a relatively short duration (up to 3 months) can occur before conduct of definitive
+reproduction toxicity testing. This is based on the very low rate of pregnancy in
+controlled clinical trials of this size and duration (see Note 5), and the ability of
+adequately designed preliminary studies to detect most developmental toxicity findings
+that could raise concern for enrolment of WOCBP in clinical trials. The number of
+WOCBP and the duration of the study can be influenced by characteristics of the
+population that alter pregnancy rates (e.g., age, disease).
+In the United States, assessment of embryo-fetal development can be deferred until
+before Phase III for WOCBP using precautions to prevent pregnancy in clinical trials
+(see above). In the EU and Japan, other than the situations described in the above
+paragraphs, definitive nonclinical developmental toxicity studies should be completed
+before exposure of WOCBP.
+In all ICH regions, WOCBP can be included in repeated-dose Phase I and II trials before
+conduct of the female fertility study since an evaluation of the female reproductive
+organs is performed in the repeated-dose toxicity studies (Note 2). Nonclinical studies
+that specifically address female fertility (Ref. 3) should be completed to support inclusion
+of WOCBP in large-scale or long-duration clinical trials (e.g., Phase III trials).
+In all ICH regions, the pre-postnatal development study should be submitted for
+marketing approval.
+All female reproduction toxicity studies (Ref. 3) and the standard battery of genotoxicity
+tests (Ref. 10) should be completed before inclusion, in any clinical trial, of WOCBP not
+using highly effective birth control (see Note 3) or whose pregnancy status is unknown.
+11.4 Pregnant Women
+Before the inclusion of pregnant women in clinical trials, all female reproduction toxicity
+studies (Refs. 3) and the standard battery of genotoxicity tests (Ref. 10) should be
+conducted. In addition, safety data from previous human exposure should be evaluated.
+12. CLINICAL TRIALS IN PEDIATRIC POPULATIONS
+When pediatric patients are included in clinical trials, safety data from previous adult
+human experience would usually represent the most relevant information and should
+generally be available before initiation of pediatric clinical trials. The appropriateness
+and extent of adult human data should be determined on a case-by-case basis. Extensive
+adult experience might not be available before pediatric exposures (e.g., for pediatric-
+specific indications).
+Results from repeated-dose toxicity studies of appropriate duration in adult animals (see
+Table 1), the core safety pharmacology package, and the standard battery of genotoxicity
+tests should be available before initiation of trials in pediatric populations.
+Reproduction toxicity studies relevant to the age and gender of the pediatric patient
+populations under study can also be important to provide information on direct toxic or
+developmental risks (e.g., fertility and pre-postnatal developmental studies). Embryo-
+fetal developmental studies are not critical to support clinical studies for males or
+prepubescent females.
+
+-- 25 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+20
+The conduct of any juvenile animal toxicity studies should be considered only when
+previous animal data and human safety data, including effects from other drugs of the
+pharmacological class, are judged to be insufficient to support pediatric studies. If a
+study is warranted, one relevant species, preferably rodent, is generally considered
+adequate. A study in a non-rodent species can be appropriate when scientifically
+justified.
+Generally, juvenile animal toxicity studies are not considered important for short-term
+PK studies (e.g., 1 to 3 doses) in pediatric populations.
+Depending on the therapeutic indication, age of the pediatric population, and safety data
+from adult animal and human exposure, the appropriateness of obtaining juvenile
+animal study results before initiation of short-duration multiple-dose efficacy and safety
+trials should be considered. The age of the trial participants in relation to the duration of
+the clinical study (i.e., the fraction of a developmental period of concern during which
+clinical study participants are exposed) is among the most important considerations.
+This evaluation can determine whether juvenile animal studies are warranted and, if
+warranted, their timing in relation to clinical trials.
+For long-term clinical trials in pediatric populations when an assessment of juvenile
+animal toxicity is recommended, the nonclinical studies should be completed before the
+initiation of the trials.
+There can be cases where a pediatric population is the primary population and existing
+animal studies have identified potential developmental concerns for target organs
+(toxicology or pharmacology). In some of these cases long-term juvenile animal toxicity
+testing can be appropriate. A chronic study initiated in the appropriate age and species
+with the relevant end points to address this developmental concern (e.g., 12 months
+duration in dog or 6 month in rodent) can be appropriate. A 12-month study can cover
+the full development period in the dog. For either species, this design could be adapted to
+replace the corresponding standard chronic study and a separate juvenile animal study
+in some circumstances.
+The appropriateness of carcinogenicity testing should be addressed before long-term
+exposure in pediatric clinical trials. However, unless there is a significant cause for
+concern (e.g., evidence of genotoxicity in multiple tests, or concern for pro-carcinogenic
+risk based on mechanistic considerations or findings from general toxicity studies),
+carcinogenicity studies are not recommended to support the conduct of pediatric clinical
+trials.
+13. IMMUNOTOXICITY
+As stated in the ICH S8 guidance (Ref. 14), all new human pharmaceuticals should be
+evaluated for the potential to produce immunotoxicity using standard toxicity studies
+and additional immunotoxicity studies conducted as appropriate based on a weight-of-
+evidence review, including immune-related signals from standard toxicity studies. If
+additional immunotoxicity studies are indicated, these should be completed before
+exposure of a large population of patients (e.g., Phase III).
+14. PHOTOSAFETY TESTING
+The appropriateness or timing of photosafety testing in relation to human exposure
+should be influenced by: 1) the photochemical properties (e.g., photoabsorption and
+photostability) of the molecule; 2) information on the phototoxic potential of chemically
+related compounds; 3) tissue distribution; and 4) clinical or nonclinical findings
+indicative of phototoxicity.
+
+-- 26 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+21
+An initial assessment of phototoxic potential based on a drug’s photochemical properties
+and pharmacological/chemical class should be performed. If assessment of all the
+available data and the proposed clinical plan indicates a potential for a significant
+human phototoxicity risk, appropriate protective measures should be taken during
+outpatient clinical studies. In addition, a subsequent evaluation of the nonclinical drug
+distribution to skin and eye should be completed to inform further on the human risk
+and the need for further testing. Then, if appropriate, an experimental evaluation
+(nonclinical, in vitro or in vivo, or clinical) of phototoxic potential should be undertaken
+before exposure of large numbers of subjects (Phase III).
+Alternatively, instead of the above stepwise approach, a direct assessment of phototoxic
+potential in a nonclinical or clinical study can be undertaken. If this study is negative,
+an early assessment of eye/skin distribution studies and clinical protective measures are
+not called for.
+If the phototoxicity assessment indicates a potential photocarcinogenic risk, the risk can
+usually be adequately managed in patients by protective measures including a warning
+statement in the informed consent for clinical trials and in product information for
+marketing (Note 6).
+15. NONCLINICAL ABUSE LIABILITY
+For drugs that produce central nervous system activity, regardless of therapeutic
+indication, it should be considered whether or not an evaluation of abuse liability is
+warranted. Nonclinical studies should support the design of clinical evaluations of abuse
+potential, classification/scheduling by regulatory agencies, and product information.
+There are regional guidance documents on the conduct of nonclinical abuse liability
+assessment that can be helpful in designing specific abuse liability packages.
+Nonclinical data collected early in the drug development process can be useful in
+identification of early indicators of abuse potential. These early indicators would
+typically be available before first human dose and include the PK/PD profile to identify
+the duration of action, similarity of chemical structure to known drugs of abuse, receptor
+binding profile, and behavioural/clinical signs from in vivo nonclinical studies. When no
+abuse potential is apparent from these early studies, extensive testing in nonclinical
+abuse liability models might not be warranted. Generally, if the active substance shows
+signals associated with known abuse liability patterns or the active substance has a
+novel mechanism of action on the central nervous system, further nonclinical studies are
+recommended to support large clinical trials (e.g., Phase III).
+When the metabolite profile and the target for drug activity in rodent are consistent with
+that of human, the nonclinical abuse liability evaluations should be conducted in
+rodents. Nonhuman primates should be reserved only for those limited cases where
+there is clear evidence that they would be predictive of human abuse liability and the
+rodent model is inadequate. Three types of studies are often completed to evaluate the
+potential for abuse liability: drug discrimination, self-administration of the compound,
+and an assessment of withdrawal. When conducted, studies of drug discrimination and
+self-administration are generally stand-alone. Assessments of withdrawal can sometimes
+be incorporated within the design of the reversibility arm of a repeated-dose toxicity
+study. A maximum dose that produces a plasma concentration several-fold higher than
+that obtained at the therapeutic clinical dose is considered appropriate for these
+nonclinical abuse assessments.
+
+-- 27 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+22
+16. OTHER TOXICITY STUDIES
+Additional nonclinical studies (e.g., to identify potential biomarkers, to provide
+mechanistic understanding) can be useful if previous nonclinical or clinical findings with
+the product or related products have indicated special safety concerns.
+The approaches for qualifying impurities and degradants are outlined in ICH Guidelines
+Q3A and Q3B (Refs. 12 and 13). If specific studies are warranted to qualify an impurity
+or degradant, generally these studies are not warranted before Phase III, unless there
+are changes that result in a significant new impurity profile (e.g., a new synthetic
+pathway, a new degradant formed by interactions between the components of the
+formulation). In these latter cases, appropriate qualification studies can be warranted to
+support Phase II or later stages of development.
+17. COMBINATION DRUG TOXICITY TESTING
+This section covers combination drugs that are intended to be co-packaged or
+administered in a single dosage form (‘fixed formulation’). The principles outlined can
+also apply when developing products that will have product information
+recommendations for co-use with a specific drug, even if not in a fixed combination, and
+for which there is minimal clinical information regarding the combination.
+Combinations covered might involve: (1) two or more late stage entities (defined as
+compounds with significant clinical experience (i.e., from Phase III studies and/ or post
+marketing)); (2) one or more late stage entity(ies) and one or more early stage entities
+(defined as compounds with limited clinical experience (i.e., Phase II studies or less)); or
+(3) more than one early stage entity.
+For most combinations which involve two late stage entities and for which there is
+adequate clinical experience with co-administration, combination toxicity studies would
+generally not be recommended to support clinical studies or marketing unless there is
+significant toxicological concern (e.g., similar target organ toxicity). This concern would
+be modified depending on the margins of safety and the ability to monitor the adverse
+effects in humans. If a study is being conducted to address a cause for significant
+toxicological concern it should generally be completed before carrying out clinical studies
+with the combination.
+Where there are two late stage products for which there is not adequate clinical
+experience with co-administration, but there are no causes for significant toxicological
+concern based on the available data, nonclinical combination studies generally are not
+recommended to support small-scale, relatively short-duration clinical studies (e.g.,
+Phase II studies of up to 3 months duration). Nonclinical combination studies, however,
+are recommended before large-scale or long-term combination trials, as well as for
+marketing.
+For combinations of an early stage entity(ies) with clinical experience with a late stage
+entity(ies), for which there is no significant toxicological concern, combination toxicity
+studies are not recommended to support clinical proof-of-concept studies of up to one-
+month duration. The clinical study of the combination should not be longer than the
+clinical experience of the individual entities. Later stage or longer duration clinical
+studies should be supported by a nonclinical combination toxicity study.
+For combinations of two early stage entities, nonclinical combination toxicity studies are
+recommended to support clinical trials.
+Provided complete nonclinical development programs are being conducted on the
+individual entities and a nonclinical combination toxicity study is warranted to support
+
+-- 28 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+23
+combination clinical trials, the duration of the combination study should be equivalent to
+that of the clinical trial, up to a maximum duration of 90 days. A 90-day combination
+toxicity study would also support marketing. A combination toxicity study of shorter
+duration can also support marketing, depending on the duration of the intended clinical
+use.
+The design of the nonclinical studies recommended to characterize the combination will
+depend on the pharmacological, toxicological and PK profiles of the individual entities,
+the treatment indication(s), the intended patient population, and the available clinical
+data.
+Combination nonclinical studies should generally be limited to a single relevant species.
+If unexpected toxicity is identified, additional testing can be appropriate.
+When complete nonclinical development programs are not conducted on the individual
+entities, then a complete nonclinical toxicology program with the combination only can
+be appropriate, provided that the individual agents are only intended for use in
+combination.
+Combination genotoxicity, safety pharmacology, or carcinogenicity studies generally are
+not recommended to support clinical trials or marketing if the individual agents have
+been tested according to current standards. In those cases where the patient population
+includes WOCBP and studies with the individual agent(s) have shown findings
+indicative of embryo-fetal risk, combination studies are not recommended as a potential
+human developmental hazard has already been identified. If nonclinical embryo-fetal
+studies have indicated that neither agent poses a potential human developmental risk,
+combination studies are not recommended unless concerns exist, based on the properties
+of individual components, that their combination could give rise to a hazard for humans.
+In circumstances when the individual agents have been tested in embryo-fetal studies
+but embryo-fetal studies of the drug combination are warranted, the study(ies) of the
+combination should be available to support the marketing application.
+18. CONTINUING EFFORTS TO IMPROVE HARMONIZATION
+It is recognised that significant advances in harmonisation of the timing of nonclinical
+safety studies for the conduct of human clinical trials for pharmaceuticals have already
+been achieved and are detailed in this guideline. However, differences remain in a few
+areas. Regulators and industry will continue to consider these differences and work
+towards further improving the drug development process.
+19. ENDNOTES
+Note 1: In this document “exposure” generally means group mean AUC. In some
+circumstances (e.g., if the compound or compound class is known to produce acute
+functional cardiovascular changes or central nervous system-related clinical signs) it
+might be appropriate to base the exposure margin on group mean Cmax values rather
+than AUC.
+Note 2: An assessment of male and female fertility by thorough standard
+histopathological examination on the testis and ovary in a repeated-dose toxicity study
+(generally rodent) of at least 2-week duration is considered to be as sensitive as fertility
+studies in detecting toxic effects on male and female reproductive organs (Refs. 3, 15,
+16).
+Note 3: Highly effective methods of birth control are defined as those, alone or in
+combination, that result in a low failure rate (i.e., less than 1% per year) when used
+
+-- 29 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+24
+consistently and correctly. For subjects using a hormonal contraceptive method,
+information regarding the product under evaluation and its potential effect on the
+contraceptive should be addressed.
+Note 4: A preliminary embryo-fetal study useful for this purpose is one with adequate
+dose levels; that includes assessment of fetal survival, body weight and external and
+visceral examinations; that uses a minimum of six dams per group; and that has dams
+treated over the period of organogenesis. This preliminary nonclinical study should be
+conducted under high-quality scientific standards with data collection records readily
+available or under GLP conditions.
+Note 5: The pregnancy rate of women initially attempting to become pregnant is ~17%
+per menstrual cycle. Pregnancy rates estimated from Phase III studies conducted in
+WOCBP were observed to be <0.1% per menstrual cycle. During these studies, subjects
+were encouraged to avoid pregnancy and measures were instituted to prevent pregnancy.
+Survey information from earlier Phase II studies suggests that the pregnancy rates were
+lower than in Phase III studies but the extent of further reduction could not be
+estimated due to the limited number of women enrolled. Based on the above Phase III
+experience, Phase II trials enrolling 150 WOCBP for 3 months are estimated to result in
+significantly less than 0.5 pregnancies per pharmaceutical under development.
+Note 6: Testing for photocarcinogenicity in rodents using currently available models
+(e.g., hairless rodent) is not considered useful in support of pharmaceutical development
+and generally is not recommended. If the phototoxicity assessment suggests a potential
+photocarcinogenic risk and an appropriate assay becomes available, the study should
+usually be completed before marketing and the results should be considered in the
+human risk assessment.
+20. REFERENCES
+1. ICH S6 Guideline: Preclinical Safety Evaluation for Biotechnological-Derived
+Pharmaceuticals; July 1997.
+2. ICH E8 Guideline: General Considerations for Clinical Trials; July 1997.
+3. ICH S5(R2) Guideline: Detection of Toxicity to Reproduction for Medicinal Products
+and Toxicity to Male Fertility; June 1993.
+4. ICH S1C(R2) Guideline: Dose Selection for Carcinogenicity Studies of
+Pharmaceuticals; March 2008.
+5. ICH S7A Guideline: Safety Pharmacology Studies for Human Pharmaceuticals;
+November 2000.
+6. ICH S7B Guideline: The Nonclinical Evaluation of the Potential for Delayed
+Ventricular Repolarization (QT Interval Prolongation) By Human Pharmaceuticals;
+May 2005.
+7. ICH S3A Guideline: Note for Guidance on Toxicokinetics: The Assessment of
+Systemic Exposure in Toxicity Studies; October 1994.
+8. National Centre for the Replacement, Refinement and Reduction of Animals in
+Research. Challenging Requirements for Acute Toxicity Studies: Workshop Report;
+May 2007.
+9. Robinson S, Delongeas JL, Donald E, Dreher D, Festag M, Kervyn S et al. A
+European pharmaceutical company initiative challenging the regulatory
+requirement for acute toxicity studies in pharmaceutical drug development. Regul
+Toxicol Pharmacol 2008;50:345-352.
+
+-- 30 of 31 --
+
+Guidance on Nonclinical Safety Studies
+for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals
+25
+10. ICH S2B Guideline: Genotoxicity: A Standard Battery for Genotoxicity Testing for
+Pharmaceuticals; July 1997.
+11. ICH S1A Guideline: Guideline on the Need for Carcinogenicity Studies of
+Pharmaceuticals; November 1995.
+12. ICH Q3A(R2) Guideline: Impurities in New Drug Substances; October 2006.
+13. ICH Q3B(R2) Guideline: Impurities in New Drug Products; June 2006.
+14. ICH S8 Guideline: Immunotoxicity Studies for Human Pharmaceuticals;
+September 2005.
+15. Sakai T, Takahashi M, Mitsumori K, Yasuhara K, Kawashima K, Mayahara H et
+al. Collaborative work to evaluate toxicity on male reproductive organs by 2-week
+repeated-dose toxicity studies in rats. Overview of the studies. J Toxicol Sci
+2000;25:1-21.
+16. Sanbuissho A, Yoshida M, Hisada S, Sagami F, Kudo S, Kumazawa T et al.
+Collaborative work on evaluation of ovarian toxicity by repeated-dose and fertility
+studies in female rats. J Toxicol Sci 2009;34:1-22.
+
+-- 31 of 31 --
+

@@ -1,0 +1,268 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2015/07/test-no-404-acute-dermal-irritation-corrosion_g1g59b23/9789264242678-en.pdf
+[CHARS] 16640
+
+OECD/OCDE 404
+Adopted:
+28 July 2015
+1
+© OECD, (2015)
+You are free to use this material for personal, non-commercial purposes without seeking prior consent
+from the OECD, provided the source is duly mentioned. Any commercial use of this material is subject to
+written permission from the OECD.
+OECD GUIDELINE FOR TESTING OF CHEMICALS
+Acute Dermal Irritation/Corrosion
+INTRODUCTION
+1. OECD Guidelines for Testing of Chemicals are periodically reviewed to ensure that they reflect
+the best available science. In the review of this Guideline, special attention was given to possible
+improvements in relation to animal welfare concerns and to the evaluation of all existing information on
+the test chemical in order to avoid unnecessary testing in laboratory animals. This updated version of
+Guideline 404 (originally adopted in 1981, revised in 1992, 2002 and 2015) includes reference to the
+Guidance Document on Integrated Approaches to Testing and Assessment (IATA) for Skin
+Irritation/Corrosion (1), proposing a modular approach for skin irritation and skin corrosion testing. The
+IATA describes several modules which group information sources and analysis tools, and provides
+guidance on (i) how to integrate and use existing testing and non-testing data for the assessment of the skin
+irritation and skin corrosion potentials of chemicals and (ii) proposes an approach when further testing is
+needed (1). In addition, where needed, the successive, instead of simultaneous, application of the three test
+patches to the animal in the initial in vivo test is recommended in this Guideline.
+2. Definitions of dermal irritation and corrosion are set out in the Annex to the Guideline.
+INITIAL CONSIDERATIONS
+3. In the interest of both sound science and animal welfare, in vivo testing should not be undertaken
+until all available data relevant to the potential dermal corrosivity/irritation of the test chemical have been
+evaluated in a weight-of-the-evidence (WoE) analysis as presented in the Guidance Document on
+Integrated Approaches to Testing and Assessment for Skin Corrosion and Irritation, i.e. over the three Parts
+of this guidance and their corresponding modules (1). Briefly, under Part 1 existing data is addressed over
+seven modules covering human data, in vivo data, in vitro data, physico-chemical properties data (e.g. pH,
+in particular strong acidity or alkalinity) and non-testing methods. Under Part 2, WoE analysis is
+performed. If this WoE is still inconclusive, Part 3 should be conducted with additional testing, starting
+with in vitro methods, and in vivo testing is used as last resort. This analysis should therefore decrease the
+need for in vivo testing for dermal corrosivity/irritation of test chemicals for which sufficient evidence
+already exists from other studies as to those two endpoints.
+PRINCIPLE OF THE IN VIVO TEST
+4. The test chemical to be tested is applied in a single dose to the skin of an experimental animal;
+untreated skin areas of the test animal serve as the control. The degree of irritation/corrosion is read and
+scored at specified intervals and is further described in order to provide a complete evaluation of the
+
+-- 1 of 8 --
+
+404 OECD/OCDE
+2
+© OECD, (2015)
+effects. The duration of the study should be sufficient to evaluate the reversibility or irreversibility of the
+effects observed.
+5. Animals showing continuing signs of severe distress and/or pain at any stage of the test should be
+humanely killed, and the test chemical assessed accordingly. Criteria for making the decision to humanely
+kill moribund and severely suffering animals are the subject of a separate Guidance Document (2).
+PREPARATIONS FOR THE IN VIVO TEST
+Selection of animal species
+6. The albino rabbit is the preferable laboratory animal, and healthy young adult rabbits are used. A
+rationale for using other species should be provided.
+Preparation of the animals
+7. Approximately 24 hours before the test, fur should be removed by closely clipping the dorsal area
+of the trunk of the animals. Care should be taken to avoid abrading the skin, and only animals with
+healthy, intact skin should be used.
+8. Some strains of rabbit have dense patches of hair that are more prominent at certain times of the
+year. Such areas of dense hair growth should not be used as test sites.
+Housing and feeding conditions
+9. Animals should be individually housed. The temperature of the experimental animal room
+should be 20C ( 3C) for rabbits. Although the relative humidity should be at least 30% and preferably
+not exceed 70%, other than during room cleaning, the aim should be 50-60%. Lighting should be artificial,
+the sequence being 12 hours light, 12 hours dark. For feeding, conventional laboratory diets may be used
+with an unrestricted supply of drinking water.
+TEST PROCEDURE
+Application of the test chemical
+10. The test chemical should be applied to a small area (approximately 6 cm2) of skin and covered
+with a gauze patch, which is held in place with non-irritating tape. In cases in which direct application is
+not possible (e.g., liquids or some pastes), the test chemical should first be applied to the gauze patch,
+which is then applied to the skin. The patch should be loosely held in contact with the skin by means of a
+suitable semi-occlusive dressing for the duration of the exposure period. If the test chemical is applied to
+the patch, it should be attached to the skin in such a manner that there is good contact and uniform
+distribution of the test chemical on the skin. Access by the animal to the patch and ingestion or inhalation
+of the test chemical should be prevented.
+11. Liquid test chemicals are generally used undiluted. When testing solids (which may be
+pulverised, if considered necessary), the test chemical should be moistened with the smallest amount of
+water (or, where necessary, of another suitable vehicle) sufficient to ensure good skin contact. When
+vehicles other than water are used, the potential influence of the vehicle on irritation of the skin by the test
+chemical should be minimal, if any.
+
+-- 2 of 8 --
+
+OECD/OCDE 404
+3
+© OECD, (2015)
+12. At the end of the exposure period, which is normally 4 hours, residual test chemical should be
+removed, where practicable, using water or an appropriate solvent without altering the existing response or
+the integrity of the epidermis.
+Dose level
+13. A dose of 0.5 mL of liquid or 0.5 g of solid or paste is applied to the test site.
+Initial test (In vivo dermal irritation/corrosion test using one animal)
+14. When a test chemical has been judged to be corrosive, irritant or non-classified on the basis of a
+weight of evidence analyses or of previous in vitro testing, further in vivo testing is normally not necessary.
+However, in the cases where additional data are felt warranted, the in vivo test is performed initially using
+one animal and applying the following approach. Up to three test patches are applied sequentially to the
+animal. The first patch is removed after three minutes. If no serious skin reaction is observed, a second
+patch is applied at a different site and removed after one hour. If the observations at this stage indicate that
+exposure can humanely be allowed to extend to four hours, a third patch is applied and removed after four
+hours, and the response is graded.
+15. If a corrosive effect is observed after any of the three sequential exposures, the test is
+immediately terminated. If a corrosive effect is not observed after the last patch is removed, the animal is
+observed for 14 days, unless corrosion develops at an earlier time point.
+16. In those cases in which the test chemical is not expected to produce corrosion but may be
+irritating, a single patch should be applied to one animal for four hours.
+Confirmatory test (In vivo dermal irritation test with additional animals)
+17. If a corrosive effect is not observed in the initial test, the irritant or negative response should be
+confirmed using up to two additional animals, each with one patch, for an exposure period of four hours.
+If an irritant effect is observed in the initial test, the confirmatory test may be conducted in a sequential
+manner, or by exposing two additional animals simultaneously. In the exceptional case, in which the initial
+test is not conducted, two or three animals may be treated with a single patch, which is removed after four
+hours. When two animals are used, if both exhibit the same response, no further testing is needed.
+Otherwise, the third animal is also tested. Equivocal responses may need to be evaluated using additional
+animals.
+Observation period
+18. The duration of the observation period should be sufficient to evaluate fully the reversibility of
+the effects observed. However, the experiment should be terminated at any time that the animal shows
+continuing signs of severe pain or distress. To determine the reversibility of effects, the animals should be
+observed up to 14 days after removal of the patches. If reversibility is seen before 14 days, the experiment
+should be terminated at that time.
+Clinical observations and grading of skin reactions
+
+-- 3 of 8 --
+
+404 OECD/OCDE
+4
+© OECD, (2015)
+19. All animals should be examined for signs of erythema and oedema, and the responses scored at
+60 minutes, and then at 24, 48 and 72 hours after patch removal. For the initial test in one animal, the test
+site is also examined immediately after the patch has been removed. Dermal reactions are graded and
+recorded according to the grades in the Table below. If there is damage to skin which cannot be identified
+as irritation or corrosion at 72 hours, observations may be needed until day 14 to determine the
+reversibility of the effects. In addition to the observation of irritation, all local toxic effects, such as
+defatting of the skin, and any systemic adverse effects (e.g., effects on clinical signs of toxicity and body
+weight), should be fully described and recorded. Histopathological examination should be considered to
+clarify equivocal responses.
+20. The grading of skin responses is necessarily subjective. To promote harmonisation in grading of
+skin response and to assist testing laboratories and those involved in making and interpreting the
+observations, the personnel performing the observations need to be adequately trained in the scoring
+system used (see Table below). An illustrated guide for grading skin irritation and other lesions could be
+helpful (3).
+DATA AND REPORTING
+21. Study results should be summarised in tabular form in the final test report and should cover all
+items listed in paragraph 24.
+Evaluation of results
+22. The dermal irritation scores should be evaluated in conjunction with the nature and severity of
+lesions, and their reversibility or lack of reversibility. The individual scores do not represent an absolute
+standard for the irritant properties of a material, as other effects of the test material are also evaluated.
+Instead, individual scores should be viewed as reference values, which need to be evaluated in combination
+with all other observations from the study.
+23. Reversibility of dermal lesions should be considered in evaluating irritant responses. When
+responses such as alopecia (limited area), hyperkeratosis, hyperplasia and scaling, persist to the end of the
+14-day observation period, the test chemical should be considered an irritant.
+Test report
+24. The test report must include the following information:
+Rationale for in vivo testing: weight-of-evidence analysis of pre-existing test data, including
+results from sequential testing strategy:
+- Description of relevant data available from prior testing;
+- Data derived at each stage of testing strategy;
+- Description of in vitro tests performed, including details of procedures, results obtained
+with test/reference substances;
+- Weight-of-the-evidence analysis for performing in vivo study.
+Test chemical:
+- Mono-constituent substance: chemical identification, such as IUPAC or CAS name,
+
+-- 4 of 8 --
+
+OECD/OCDE 404
+5
+© OECD, (2015)
+CAS number, SMILES or InChI code, structural formula, purity, chemical identity of
+impurities as appropriate and practically feasible, etc;
+- Multi-constituent substance, mixture and substances of unknown or variable
+composition, complex reaction products or biological materials: characterised as far as
+possible by chemical identity (see above), quantitative occurrence and relevant physico-
+chemical properties of the constituents;
+- Physical appearance, water solubility, and additional relevant physico-chemical properties;
+- Source, lot number if available;
+- Treatment of the test chemical/control substance prior to testing, if applicable (e.g.
+warming, grinding);
+- Stability of the test chemical, limit date for use, or date for re-analysis if known;
+- Storage conditions.
+Vehicle:
+- Identification, concentration (where appropriate), volume used;
+- Justification for choice of vehicle.
+Test animal(s):
+- Species/strain used, rationale for using animal(s) other than albino rabbit;
+- Number of animal(s) of each sex;
+- Individual animal weight(s) at start and conclusion of test;
+- Age at start of study;
+- Source of animal(s), housing conditions, diet, etc.
+Test conditions:
+- Technique of patch site preparation;
+- Details of patch materials used and patching technique;
+- Details of test chemical preparation, application, and removal.
+Results:
+- Tabulation of irritation/corrosion response scores for each animal at all time points
+measured;
+- Descriptions of all lesions observed;
+- Narrative description of nature and degree of irritation or corrosion observed, and any
+histopathological findings;
+- Description of other adverse local (e.g., defatting of skin) and systemic effects in addition
+to dermal irritation or corrosion.
+Discussion of results
+Conclusions
+
+-- 5 of 8 --
+
+404 OECD/OCDE
+6
+© OECD, (2015)
+LITERATURE
+1) OECD (2014). Guidance document on Integrated Approached to Testing and Assessment for Skin
+Irritation/Corrosion. Environmental Health and Safety Publications, Series on Testing and Assessment,
+(No. 203.), Organisation for Economic Cooperation and Development, Paris.
+2) OECD (1998) Harmonized Integrated Hazard Classification System for Human Health and
+Environmental Effects of Chemical Substances, as endorsed by the 28th Joint Meeting of the Chemicals
+Committee and the Working Party on Chemicals, November 1998
+(http://www.oecd.org/ehs/Class/HCL6.htm).
+3) OECD (2000). Guidance Document on the Recognition, Assessment and Use of Clinical Signs as
+Humane Endpoints for Experimental Animals Used in Safety Evaluation. Environmental Health and
+Safety Publications, Series on Testing and Assessment (No. 19.), Organistion for Economic Cooperation
+and Development, Paris.
+
+-- 6 of 8 --
+
+OECD/OCDE 404
+7
+© OECD, (2015)
+TABLE: GRADING OF SKIN REACTIONS
+Erythema and Eschar Formation
+No erythema 0
+Very slight erythema (barely perceptible) ................................................................................. 1
+Well defined erythema .............................................................................................................. 2
+Moderate to severe erythema ..................................................................................................... 3
+Severe erythema (beef redness) to eschar formation preventing grading of erythema ............. 4
+Maximum possible: 4
+Oedema Formation
+No oedema 0
+Very slight oedema (barely perceptible) .................................................................................. 1
+Slight oedema (edges of area well defined by definite raising) ................................................ 2
+Moderate oedema (raised approximately 1 mm) ...................................................................... 3
+Severe oedema (raised more than 1 mm and extending beyond area of exposure) ................... 4
+Maximum possible: 4
+Histopathological examination may be carried out to clarify equivocal responses.
+
+-- 7 of 8 --
+
+404 OECD/OCDE
+8
+© OECD, (2015)
+ANNEX
+DEFINITIONS
+1. Dermal irritation is the production of reversible damage of the skin following the application of a
+test chemical for up to 4 hours.
+2. Dermal corrosion is the production of irreversible damage of the skin; namely, visible necrosis
+through the epidermis and into the dermis, following the application of a test chemical for up to four hours.
+Corrosive reactions are typified by ulcers, bleeding, bloody scabs, and, by the end of observation at 14
+days, by discolouration due to blanching of the skin, complete areas of alopecia, and scars. Histopathology
+should be considered to evaluate questionable lesions.
+
+-- 8 of 8 --
+

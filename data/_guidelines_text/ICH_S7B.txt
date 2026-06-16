@@ -1,0 +1,530 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/S7B_Guideline.pdf
+[CHARS] 30901
+
+INTERNATIONAL 	CONFERENCE 	ON 	HARMONISATION 	OF 	TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN USE
+ICH H ARMONISED TRIPARTITE G UIDELINE
+THE N ON -CLINICAL E VALUATION OF THE P OTENTIAL FOR DELAYED
+V ENTRICULAR R EPOLARIZATION
+(QT I NTERVAL P ROLONGATION)
+BY H UMAN P HARMACEUTICALS
+S7B
+Current Step 4 version
+dated 12 May 2005
+This Guideline has been developed by the appropriate ICH Expert Working Group
+and has been subject to consultation by the regulatory parties, in accordance with the
+ICH Process. 	At Step 4 of the Process the final draft is recommended for adoption to
+the regulatory bodies of the European Union, Japan and USA.
+
+-- 1 of 14 --
+
+S7B
+Document History
+First
+Codification History 	Date
+New
+Codification
+November
+2005
+S7B 	Approval by the Steering Committee under Step 2 and
+release for public consultation.
+7
+February
+2002
+S7B
+S7B 	Due to scientific and procedural reasons, the guideline was
+revised, re-approved by the Steering Committee and re-
+released for public consultation as a Step 2 document.
+10
+June
+2004
+S7B
+Current Step 4 version
+S7B 	Approval by the Steering Committee under Step 4 and
+recommendation for adoption to the three ICH regulatory
+bodies.
+12
+May
+2005
+S7B
+
+-- 2 of 14 --
+
+THE N ON - CLINICAL E VALUATION OF THE P OTENTIAL FOR DELAYED
+V ENTRICULAR R EPOLARIZATION (QT INTERVAL P ROLONGATION) BY
+H UMAN P HARMACEUTICALS
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting
+on 12 May 2005, this guideline is recommended for
+adoption to the three regulatory parties to ICH
+TABLE OF CONTENTS
+1. 	INTRODUCTION .........................................................................................................1
+1.1 	Objective of the Guideline ..............................................................................................1
+1.2 	Background .....................................................................................................................1
+1.3 	Scope of the Guideline ....................................................................................................2
+1.4 	General Principles ..........................................................................................................2
+2. 	GUIDELINE ..................................................................................................................2
+2.1 	Objectives of S7B Studies...............................................................................................2
+2.2 	Considerations for Selection and Design of Studies .....................................................3
+2.3 	Non-clinical Testing Strategy ........................................................................................4
+2.3.1 	In Vitro I Kr Assay ...............................................................................................4
+2.3.2 	In Vivo QT Assay ...............................................................................................4
+2.3.3 	Chemical/Pharmacological Class ....................................................................4
+2.3.4 	Relevant Non-Clinical and Clinical Information ............................................5
+2.3.5 	Follow-up Studies..............................................................................................5
+2.3.6 	Integrated Risk Assessment ..............................................................................6
+2.3.7 	Evidence of Risk.................................................................................................6
+2.4 	Timing of S7B Non-clinical Studies and Integrated Risk Assessment in Relation to
+Clinical Development .....................................................................................................6
+3. 	TEST SYSTEMS ...........................................................................................................6
+3.1 	Considerations for Test Systems ...................................................................................6
+3.1.1 	Use of Positive Control Substances and Reference Compounds ......................7
+3.1.2 	In Vitro Electrophysiology Studies ...................................................................7
+3.1.3 	In Vivo Electrophysiology Studies ....................................................................8
+3.1.4 	Simulated Pathological Conditions and Arrhythmias ..................................10
+i
+
+-- 3 of 14 --
+
+
+
+-- 4 of 14 --
+
+1
+THE N ON - CLINICAL E VALUATION OF THE P OTENTIAL FOR DELAYED
+V ENTRICULAR R EPOLARIZATION (QT INTERVAL P ROLONGATION)
+BY H UMAN P HARMACEUTICALS
+1. 	INTRODUCTION
+The assessment of the effects of pharmaceuticals on ventricular repolarization and
+proarrhythmic risk is the subject of active investigation. When additional data (non-
+clinical and clinical) are accumulated in the future, they will be evaluated and this
+guideline might be revised.
+1.1 	Objective of the Guideline
+This guideline describes a non-clinical testing strategy for assessing the potential of a
+test 	substance 	to 	delay 	ventricular 	repolarization. 	This 	guideline 	includes
+information concerning non-clinical assays and integrated risk assessments.
+1.2 	Background
+The QT interval (time from the beginning of the QRS complex to the end of the T
+wave) of the electrocardiogram (ECG) is a measure of the duration of ventricular
+depolarization and repolarization. 	QT interval prolongation can be congenital or
+acquired (e.g., pharmaceutical-induced). 	When ventricular repolarization is delayed
+and 	the 	QT 	interval 	is 	prolonged, 	there 	is 	an 	increased 	risk 	of 	ventricular
+tachyarrhythmia, including torsade de pointes, particularly when combined with
+other risk factors (e.g., hypokalemia, structural heart disease, bradycardia). 	Thus,
+much 	emphasis 	has 	been 	placed 	on 	the 	potential 	proarrhythmic 	effects 	of
+pharmaceuticals that are associated with QT interval prolongation.
+Ventricular repolarization, determined by the duration of the cardiac action potential,
+is a complex physiological process. 	It is the net result of the activities of many
+membrane ion channels and transporters. 	Under physiological conditions, the
+functions of these ion channels and transporters are highly interdependent. 	The
+activity of each ion channel or transporter is affected by multiple factors including,
+but not limited to, intracellular and extracellular ion concentrations, membrane
+potential, cell-to-cell electrical coupling, heart rate, and autonomic nervous system
+activity. The metabolic state (e.g., acid-base balance) and location and type of cardiac
+cell are also important. 	The human ventricular action potential consists of five
+sequential phases:
+• 	phase 0: The upstroke of the action potential is primarily a consequence of a
+rapid, transient influx of Na+ (INa) through Na+ channels;
+• 	phase 1: The termination of the upstroke of the action potential and early
+repolarization phase result from the inactivation of Na+ channels and the
+transient efflux of K+ (Ito) through K+ channels;
+• 	phase 2: The plateau of the action potential is a reflection of a balance between
+the influx of Ca2+ (ICa) through L-type Ca2+ channels and outward repolarizing
+K+ currents;
+• 	phase 3: The sustained downward stroke of the action potential and the late
+repolarization phase result from the efflux of K+ (IKr and IKs) through delayed
+rectifier K+ channels;
+
+-- 5 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+2
+• 	phase 4: The resting potential is maintained by the inward rectifier K+ current
+(IK1).
+Prolongation of the action potential can result from decreased inactivation of the
+inward Na+ or Ca2+ currents, increased activation of the Ca2+ current, or inhibition of
+one 	or 	more 	of 	the outward 	K+ currents. 	The 	rapidly 	and 	slowly 	activating
+components of the delayed rectifier potassium current, IKr and IKs, seem to have the
+most influential role in determining the duration of the action potential and thus the
+QT interval. The human ether-a-go-go-related gene (hERG) and KvLQT1 gene encode
+pore-forming proteins KCNH2 and KCNQ1 that are thought to represent the α-
+subunits of the human potassium channels responsible for IKr and IKs, respectively.
+These α-subunit proteins can form hetero-oligomeric complexes with auxiliary β-
+subunits (i.e. MiRP and MinK gene products), which have been speculated to
+modulate 	the 	gating 	properties 	of 	the 	channel 	proteins. 	The 	most 	common
+mechanism of QT interval prolongation by pharmaceuticals is inhibition of the
+delayed rectifier potassium channel that is responsible for IKr.
+1.3 	Scope of the Guideline
+This guideline extends and complements the “ICH Guideline on Safety Pharmacology
+Studies for Human Pharmaceuticals” (ICH S7A). 	This guideline applies to new
+chemical entities for human use and marketed pharmaceuticals when appropriate
+(e.g., when adverse clinical events, a new patient population, or a new route of
+administration raises concerns not previously addressed). 	Conditions under which
+studies are not called for are described in ICH S7A.
+1.4 	General Principles
+Principles and recommendations described in ICH S7A also apply to the studies
+conducted in accordance with the present guideline. In vitro IKr and in vivo QT assays
+described in Sections 2.3.1 and 2.3.2 when performed for regulatory submission
+should be conducted in compliance with good laboratory practice (GLP). 	Follow-up
+studies described in Section 2.3.5 should be conducted in compliance with GLP to the
+greatest extent feasible.
+In vitro and in vivo assays are complementary approaches; therefore, according to
+current understanding, both assay types should be conducted.
+The investigational approach and evidence of risk should be individualized for the test
+substance, depending on its pharmacodynamic, pharmacokinetic and safety profiles.
+2. 	GUIDELINE
+2.1 	Objectives of S7B Studies
+The objectives of studies are to: 1) identify the potential of a test substance and its
+metabolites to delay ventricular repolarization, and 2) relate the extent of delayed
+ventricular 	repolarization 	to 	the 	concentrations 	of 	a 	test 	substance 	and 	its
+metabolites. The study results can be used to elucidate the mechanism of action and,
+when 	considered 	with 	other 	information, 	estimate 	risk 	for 	delayed 	ventricular
+repolarization and QT interval prolongation in humans.
+
+-- 6 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+3
+2.2 	Considerations for Selection and Design of Studies
+Non-clinical methodologies can address the following:
+• 	Ionic currents measured in isolated animal or human cardiac myocytes,
+cultured cardiac cell lines, or heterologous expression systems for cloned
+human ion channels;
+• 	Action 	potential 	parameters 	in 	isolated 	cardiac 	preparations 	or 	specific
+electrophysiology 	parameters 	indicative 	of 	action 	potential 	duration 	in
+anesthetized animals;
+• 	ECG parameters measured in conscious or anesthetized animals;
+• 	Proarrhythmic effects measured in isolated cardiac preparations or animals.
+As indicated above, these four functional levels can be investigated by in vitro and/or
+in vivo methods. 	Findings from the functional levels listed above are considered
+useful and complementary.
+In vitro electrophysiology studies can explore potential cellular mechanisms that
+might not be evident from in vivo data. Changes in other cardiovascular parameters
+or 	effects 	on 	multiple 	ion 	channels 	can 	complicate 	interpretation 	of 	data.
+Complementary assessments in other systems can address this issue. Although delay
+of repolarization can occur through modulation of several types of ion channels,
+inhibition of IKr is the most common mechanism responsible for pharmaceutical-
+induced prolongation of QT interval in humans.
+In vivo models that possess the full complement of molecular, biochemical, and
+physiological systems can also be informative with regard to the response in humans
+to the test substance. 	Carefully designed and conducted in vivo studies allow
+evaluation of parent substance and metabolites, and can enable estimation of safety
+margins. 	In vivo ECG evaluations provide information on conduction properties and
+non-cardiac influences (e.g., autonomic nervous system tone). 	Studies of action
+potential parameters provide information on the integrated activity of multiple ion
+channels in the heart.
+
+-- 7 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+Integrated Risk
+Assessment
+Follow-up
+Studies
+Non-clinical Testing Strategy
+In Vitro IKr
+Assay
+In Vivo QT
+Assay
+Relevant Non-
+clinical and Clinical
+Information
+Evidence of Risk
+Chemical/
+Pharmacological
+Class
+Integrated Risk
+Assessment
+Follow-up
+Studies
+Non-clinical Testing Strategy
+In Vitro IKr
+Assay
+In Vivo QT
+Assay
+Relevant Non-
+clinical and Clinical
+Information
+Evidence of Risk
+Chemical/
+Pharmacological
+Class
+2.3 	Non-clinical Testing Strategy
+The following sections describe a general non-clinical testing strategy for assessing
+risk for delayed ventricular repolarization and QT interval prolongation that is
+pragmatic and based on currently available information. 	The figure illustrates the
+component elements of the testing strategy, but not specific test systems or their
+designs.
+2.3.1 	In Vitro IKr Assay
+An in vitro IKr assay evaluates the effects on the ionic current through a native or
+expressed IKr channel protein, such as that encoded by hERG (see section 3.1.2).
+2.3.2 	In Vivo QT Assay
+An in vivo QT assay measures indices of ventricular repolarization such as QT
+interval (see section 3.1.3). 	This assay can be designed to meet the objective of both
+ICH S7A (cardiovascular core battery study) and S7B. 	This will reduce the use of
+animals and other resources.
+2.3.3 	Chemical/Pharmacological Class
+Consideration 	should 	be 	given 	to 	whether 	the 	test 	substance 	belongs 	to 	a
+chemical/pharmacological class in which some members have been shown to induce
+QT interval prolongation in humans (e.g., antipsychotics, histamine H-1 receptor
+antagonists, fluoroquinolones). 	This factor should, where appropriate, influence the
+choice of reference compound(s) and be included in the integrated risk assessment.
+4
+
+-- 8 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+5
+2.3.4 	Relevant Non-Clinical and Clinical Information
+Additional information for the integrated risk assessment can include results from:
+• 	Pharmacodynamic studies;
+• 	Toxicology/safety studies;
+• 	Pharmacokinetic studies, including plasma levels of parent substance and
+metabolites (including human data if available);
+• 	Drug interaction studies;
+• 	Tissue distribution and accumulation studies;
+• 	Post-marketing surveillance.
+2.3.5 	Follow-up Studies
+Follow-up 	studies 	are 	intended 	to 	provide 	greater 	depth 	of 	understanding 	or
+additional knowledge regarding the potential of test substance for delayed ventricular
+repolarization and QT interval prolongation in humans. 	Such studies can provide
+additional information concerning potency, mechanism of action, slope of the dose-
+response curve, or magnitude of the response. 	Follow-up studies are designed to
+address specific issues, and, as a result, various in vivo or in vitro study designs can
+be applicable.
+In circumstances where results among non-clinical studies are inconsistent and/or
+results of clinical studies differ from those for non-clinical studies, retrospective
+evaluation and follow-up non-clinical studies can be used to understand the basis for
+the discrepancies. Results from follow-up studies can be a significant component of an
+integrated risk assessment.
+Relevant non-clinical and clinical information along with the following should be
+considered in the selection and design of follow-up studies:
+• 	Use 	of 	ventricular 	repolarization 	assays 	that 	measure 	action 	potential
+parameters in isolated cardiac preparations (see section 3.1.2);
+• 	Use of specific electrophysiological parameters indicative of action potential
+duration in anesthetized animals (see section 3.1.3);
+• 	Repeated administration of test substance;
+• 	Selection of animal species and gender(s);
+• 	Use of metabolic inducers or inhibitors;
+• 	Use of concurrent positive control substances and reference compounds (see
+section 3.1.1);
+• 	Inhibition of other channels not previously evaluated;
+• 	Measurement of electrophysiological parameters at multiple time points;
+• 	Confounding effects in conscious animals that limit the interpretation of data
+such as test substance-induced effects on heart rate or autonomic tone, or
+toxicities such as tremor, convulsion, or emesis.
+
+-- 9 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+6
+2.3.6 	Integrated Risk Assessment
+The 	integrated 	risk 	assessment 	is 	the 	evaluation 	of 	non-clinical 	study 	results
+including the results from follow-up studies and other relevant information. 	The
+integrated risk assessment should be scientifically based and individualized for the
+test 	substance. 	Such 	an 	assessment 	can 	contribute 	to 	the 	design 	of 	clinical
+investigations and interpretation of their results. When available, the integrated risk
+assessment should be included in the Investigator’s Brochure and the Non-clinical
+Overview (ICH M4). Depending on the stage of drug development, the integrated risk
+assessment should also consider:
+• 	Assay sensitivity and specificity;
+• 	Potencies of test substance in S7B assays relative to reference compound(s);
+• 	Relationship between the exposures associated with an effect on repolarization
+and those eliciting the primary pharmacodynamic effect in the non-clinical test
+species or the proposed therapeutic effect in humans;
+• 	Contribution of metabolites to QT interval prolongation as well as metabolic
+differences between humans and animals.
+2.3.7 	Evidence of Risk
+Evidence of risk is the overall conclusion from the integrated risk assessment for a
+test substance to delay ventricular repolarization and prolong QT interval in humans.
+2.4 	Timing of S7B Non-clinical Studies and Integrated Risk Assessment in
+Relation to Clinical Development
+Conduct of S7B non-clinical studies assessing the risk for delayed ventricular
+repolarization and QT interval prolongation prior to first administration in humans
+should be considered. 	These results, as part of an integrated risk assessment, can
+support the planning and interpretation of subsequent clinical studies.
+3. 	TEST SYSTEMS
+3.1 	Considerations for Test Systems
+This section provides an overview of methodologies currently used to assess the
+potential for a test substance to delay ventricular repolarization and to prolong QT
+interval. 	The following should be considered in selecting the most appropriate test
+systems:
+• 	Assay methodology and experimental endpoints are scientifically valid and
+robust;
+• 	Assays and preparations are standardized;
+• 	Results are reproducible;
+• 	Endpoints/parameters of the assays are relevant for assessing human risk.
+
+-- 10 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+7
+3.1.1 	Use of Positive Control Substances and Reference Compounds
+A sub-maximally effective concentration of a positive control substance should be used
+to demonstrate the responsiveness of in vitro preparations for ion channel and action
+potential duration assays and should be included in every study. In the case of in vivo
+studies, positive control substances should be used to validate and define the
+sensitivity of the test system, but need not be included in every study.
+For test substances belonging to a chemical/pharmacological class that is associated
+with 	QT 	interval 	prolongation 	in 	humans, 	the 	use 	of 	concurrent 	reference
+compound(s) (member(s) of the same class) in in vitro and in vivo studies should be
+considered to facilitate ranking the potency of the test substance in relation to its
+comparators.
+3.1.2 	In Vitro Electrophysiology Studies
+In vitro electrophysiology studies can provide valuable information concerning the
+effect of a test substance on action potential duration and/or cardiac ionic currents.
+These assays have an important role in assessing the potential for QT interval
+prolongation and elucidating cellular mechanisms affecting repolarization. 	In vitro
+electrophysiology studies employ either single cell (e.g., heterologous expression
+systems, disaggregated cardiomyocytes) or multicellular (e.g., Purkinje fiber; papillary
+muscle; trabeculae; perfused myocardium; intact heart) preparations. 	Heterologous
+expression systems, where human ion channel protein(s) are expressed in noncardiac
+cell lines, are used to assess the effects of a test substance on a specific ion channel.
+Disaggregated 	myocytes 	are 	technically 	more 	challenging 	than 	the 	expression
+systems but have the advantage of being suitable for assessing effects on both action
+potential duration and ionic currents. 	Although single cell preparations are more
+fragile, they minimize diffusional barriers to the site of action. 	Multicellular
+preparations are stable test systems to study action potential duration. The analysis
+of parameters for each phase of the action potential such as Vmax for phase 0 (INa),
+APD30 or APD40 for phase 2 (ICa) and “triangulation” for phase 3 (IK) can be useful to
+investigate the effects on specific channels responsible for these phases. In addition,
+some parameters derived from the Langendorff preparation have been reported to
+provide information regarding proarrhythmic risk.
+Tissue and cell preparations for in vitro assays are obtained from different laboratory
+animal species including rabbit, ferret, guinea pig, dog, swine, and occasionally from
+humans. 	The ionic mechanisms of repolarization in adult rats and mice differ from
+larger species, including humans (the primary ion currents controlling repolarization
+in adult rats and mice is Ito); therefore, use of tissues from these species is not
+considered appropriate. 	Species differences in terms of which cardiac ion channels
+contribute to cardiac repolarization and to the duration of the action potential should
+be considered in selecting a test system. 	When native cardiac tissues or cells are
+used, the characteristics and source of the preparation should be considered because
+the distribution of ion channel types varies according to the region and type of cell.
+Test substance concentrations for in vitro studies should span a broad range, covering
+and exceeding the anticipated maximal therapeutic plasma concentration. Ascending
+concentrations 	should 	be 	tested 	until 	a 	concentration-response 	curve 	has 	been
+characterized or physicochemical effects become concentration-limiting. 	Ideally, the
+duration of exposure should be sufficient to obtain steady-state electrophysiological
+
+-- 11 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+8
+effects, unless precluded by the viability of the cell or tissue preparation. 	The
+duration of exposure should be indicated. 	Appropriate positive control substances
+should be used to establish the sensitivity of the in vitro assay system.
+Factors that can confound or limit the interpretation of in vitro electrophysiology
+studies include the following:
+• 	The testing of high concentrations of the test substance can be precluded by
+limited solubility in aqueous physiological salt solutions;
+• 	Adsorption to glass or plastic or non-specific binding to the test matrix can
+reduce the concentration of the test substance in the incubation or perfusion
+medium;
+• 	Test substance concentrations can be limited by cytotoxic or physicochemical
+attributes of the test substance that disrupt cell membrane integrity so that
+electrophysiological endpoints cannot be obtained;
+• 	Cardiac cells and tissues have limited capacity for drug metabolism; therefore,
+in vitro studies using the parent substance do not provide information on the
+effects of metabolites. 	When in vivo non-clinical or clinical studies reveal QT
+interval prolongation that is not consistent with data from in vitro studies
+using the parent substance, testing metabolites in the in vitro test systems
+should be considered.
+New technologies for potassium channel assays are being developed. 	Novel ion
+channel activity assays can be useful in preliminary screening of test substances to
+identify lead candidates. 	It is important to demonstrate concordance between
+conventional and new technologies before adopting new technologies for regulatory
+purposes.
+Competition binding protocols, in which test substances are studied for their ability to
+displace a radiolabeled hERG channel blocker from a cell line expressing hERG, are
+used. 	However, competition for radioligand-binding sites provides no information on
+agonistic or antagonistic effects of the test substance on IKr. Moreover, this assay will
+not identify test substances that bind to hERG at sites other than the radioligand
+binding sites. 	Based upon these potential limitations, this assay is not considered a
+substitute for voltage clamp assays described above.
+3.1.3 	In Vivo Electrophysiology Studies
+Intact animal models allow investigation of ventricular repolarization or associated
+arrhythmias where integrated effects on the full complement of ion channel and cell
+types are assessed. 	Also, potential neuronal and hormonal influences on the
+pharmacodynamic effect of the pharmaceuticals are present in animals.
+The QT interval of the ECG is the most commonly used endpoint to gauge effects of a
+test substance on ventricular repolarization. In specialized electrophysiology studies,
+information 	regarding 	the 	ventricular 	repolarization 	(e.g., 	monophasic 	action
+potential duration and effective refractory period) can also be obtained from in vivo
+models. 	Additional safety parameters of interest, including blood pressure, heart
+rate, PR interval, QRS duration, and arrhythmias, can be assessed simultaneously.
+The QT interval and heart rate have an inverse, non-linear relationship, which varies
+among species and between animals within a species. 	Thus, a change in heart rate
+
+-- 12 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+9
+exerts an effect on QT interval, which can confound the assessment of the effect of the
+test substance on ventricular repolarization and the QT interval. 	There are two
+important situations where there is variability in heart rate among animals: one is
+due to difference in autonomic tone, and the other is due to effects of test substances
+on heart rate. 	Therefore, the interpretation of data from in vivo test systems should
+take into account the effect of coincident changes in heart rate. 	Ideally, QT interval
+data obtained after administration of a test substance should be compared with
+control and baseline data at similar heart rates. 	When the heart rate variability is
+not due to the test substance, it can be reduced by acclimatization, or the use of
+anesthetized animal models. 	When the effects are due to a test substance, the most
+common approach is to correct the QT interval for heart rate (QTc) using formulae
+such as Bazett or Fridericia. 	The choice of heart rate correction formula should be
+justified with data from the test system. 	When differences in heart rate between
+treatment and control are large, the correction formulae may not be effective for
+assessing risk of QT interval prolongation. An alternative approach is to maintain a
+constant heart rate using cardiac pacing. 	An analysis of QT/RR relationship,
+including correction of the QT interval using formulae for individual animals, may be
+more appropriate.
+Laboratory animal species used for in vivo electrophysiology studies include dog,
+monkey, swine, rabbit, ferret, and guinea pig. The ionic mechanisms of repolarization
+in adult rats and mice differ from larger species, including humans (the primary ion
+currents controlling repolarization in adult rats and mice is Ito); therefore, use of these
+species is not considered appropriate. The most appropriate in vivo test systems and
+species should be selected and justified.
+The dose range should be in accord with that discussed in ICH S7A and, whenever
+feasible, should include and exceed the anticipated human exposure. The dose range
+can be limited by animal intolerance to the test substance, e.g., emesis, tremor, or
+hyperactivity. 	For studies designed to relate the extent of delayed ventricular
+repolarization to concentrations of the parent test substance and its metabolites,
+controlled exposure via constant intravenous infusion can be used. 	Monitoring
+exposure to the test substance and metabolites (see ICH S3A) provides opportunities
+to interpret dose- and concentration-response data and to design follow-up studies, if
+appropriate.
+Factors that should be considered in conducting studies and interpreting the results
+include the following:
+• 	Data acquisition and analysis methods;
+• 	Sensitivity and reproducibility of the test systems;
+• 	Dosing period and measurement points;
+• 	Heart rate and other effects that confound interpretation of QT interval data;
+• 	Inter-species 	and 	gender 	differences, 	e.g., 	cardiac 	electrophysiology,
+hemodynamics, or metabolism of pharmaceuticals;
+• 	Pharmaceuticals that have effects on several ion channels can yield complex
+dose-response relationships that could be difficult to interpret.
+
+-- 13 of 14 --
+
+The Non-Clinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval
+Prolongation) by Human Pharmaceuticals
+10
+3.1.4 	Simulated Pathological Conditions and Arrhythmias
+The 	precise 	relationship 	between 	test 	substance-induced 	delay 	of 	ventricular
+repolarization and risk of proarrhythmia is not known. 	Directly assessing the
+proarrhythmic risk of pharmaceuticals that prolong the QT interval would be a logical
+undertaking. 	Indices of proarrhythmic activity (e.g., electrical instability, temporal
+and/or spatial dispersion of refractoriness, reverse use-dependency, changes in action
+potential 	configuration) 	and 	animal 	models 	might 	have 	utility 	in 	assessing
+proarrhythmia. 	Interested parties are encouraged to develop these models and test
+their usefulness in predicting risk in humans.
+
+-- 14 of 14 --
+

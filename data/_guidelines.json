@@ -1,0 +1,889 @@
+{
+  "_meta": {
+    "description": "가이드라인 사전 — 공식 원문 기반 체크리스트. 통합 마스터의 가이드라인 시트 소스.",
+    "process": "WebSearch로 공식 URL 확인 → PDF 다운로드 → pdf-parse 텍스트 추출 → digest → 원문에서 요구사항 추출",
+    "confidence_levels": {
+      "원문확인": "공식 문서 원문에서 직접 추출 (검증됨)",
+      "원문확보·추출대기": "PDF 원문은 확보, 체크리스트 추출 진행 예정",
+      "초안": "Claude 학습지식 기반 — 시험팀 검수 필요"
+    },
+    "batches_done": ["배치1 유전독성"],
+    "batches_pending": ["배치2 일반독성", "배치3 생식발생독성", "배치4 발암성", "배치5 안전성약리·TK", "배치6 국소·감작·대체법", "배치7 기타ICH+MFDS"]
+  },
+  "guidelines": [
+    {
+      "code": "OECD TG 471",
+      "title_ko": "세균 복귀돌연변이시험 (Ames test)",
+      "title_en": "Bacterial Reverse Mutation Test",
+      "category": "유전독성",
+      "version": "1997 채택 / 2020 수정",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2020/06/test-no-471-bacterial-reverse-mutation-test_g1gh295b/9789264071247-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "아미노산 요구성 세균을 이용해 점돌연변이(염기치환·프레임시프트)를 검출",
+      "checklist": {
+        "시험계": "최소 5균주: S.typhimurium TA1535, TA1537(또는 TA97/TA97a), TA98, TA100 + E.coli WP2uvrA(또는 S.typhimurium TA102). 배양 37°C",
+        "대사활성": "S9 첨가/무첨가 양쪽 모두 (S9 5~30% v/v, Aroclor1254 또는 phenobarbital+β-naphthoflavone 유도 설치류 간)",
+        "농도수": "최소 5개 분석가능 농도, 약 half-log(√10) 간격. 가용성·비독성 물질 최대 5 mg/plate 또는 5 µl/plate",
+        "반복": "용량당 3중 평판(triplicate). 과학적 정당화 시 2중 허용",
+        "대조군": "균주별 양성대조 + 음성(용매)대조, S9 ±양쪽. 무처리 대조 포함",
+        "배양": "37°C, 48~72시간",
+        "판정": "농도 관련 증가 및/또는 1개 이상 균주에서 재현성 있는 복귀집락 증가",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "시험보고서에 시험물질 순도·안정성, 용매 내 용해도·안정성, 침전 징후 보고 필수. 농도 신뢰성 입증 요구.",
+      "related_tests": ["유전독성 : Ames(TG471)", "복귀돌연변이"]
+    },
+    {
+      "code": "OECD TG 473",
+      "title_ko": "In Vitro 포유류 염색체이상시험",
+      "title_en": "In Vitro Mammalian Chromosomal Aberration Test",
+      "category": "유전독성",
+      "version": "2016 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2016/07/test-no-473-in-vitro-mammalian-chromosomal-aberration-test_g1g6ed0e/9789264264649-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "배양 포유류 세포에서 구조적 염색체이상(염색체형·염색분체형)을 유발하는 물질 식별",
+      "checklist": {
+        "시험계": "확립세포주 또는 사람/설치류 1차배양(림프구 등). 37°C, 5% CO2. 모드 염색체수 안정성·Mycoplasma 음성 확인",
+        "대사활성": "S9 첨가/무첨가 양쪽 (Aroclor1254 또는 PB+βNF 유도 랫드 간)",
+        "농도수": "최소 3개 분석가능 농도(허용기준 충족)",
+        "최고농도": "세포독성 기준 55±5% 세포독성, 또는 침전 발생 농도, 또는 10 mM·2 mg/mL·2 µl/mL 중 최저",
+        "처리시간": "단기 3~6시간(S9 ±), 장기(S9 무) 처리. 처리 시작 후 약 1.5 세포주기 시점 채취",
+        "관찰": "농도/대조군당 최소 300개 잘 퍼진 중기상(metaphase) 분석",
+        "대조군": "동시 양성(clastogen, S9±) + 음성(용매)대조, 실험실 이력대조 DB(최소 10~20실험)",
+        "판정": "음성대조 95% 관리한계 내, 양성대조 통계적 유의 증가",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "보고서에 시험물질 안정성·용매 내 용해도, 배지 pH·삼투압·침전 측정, 배지 내 최종농도(μg 또는 mg/mL) 명시 요구.",
+      "related_tests": ["유전독성 : 염색체이상(TG473)", "염색체 이상 시험"]
+    },
+    {
+      "code": "OECD TG 474",
+      "title_ko": "포유류 적혈구 소핵시험 (in vivo)",
+      "title_en": "Mammalian Erythrocyte Micronucleus Test",
+      "category": "유전독성",
+      "version": "2016 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2016/07/test-no-474-mammalian-erythrocyte-micronucleus-test_g1g6fb16/9789264264762-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "골수/말초혈 적혈구에서 소핵(염색체 단편·전체 염색체 포함) 형성을 유발하는 세포유전 손상 식별",
+      "checklist": {
+        "시험계": "마우스 또는 랫드, 건강한 젊은 성체(설치류 6~10주령). 22±3°C, 12h 명암주기",
+        "동물수": "용량당 암수 각 5마리 이상. 3용량군+양/음성대조 시 총 약 25~35마리",
+        "용량설정": "최소 3용량, 인자 2(최대 4) 간격. 한계용량 1000 mg/kg/day(14일↑) 또는 2000 mg/kg/day(14일 미만)",
+        "투여경로": "예상 사람 노출경로(경구·정맥·식이·흡입 등). 복강주사는 정당화 필요",
+        "투여횟수": "24시간 간격 2회 이상 권장(단회 정당화 가능)",
+        "채취시점": "골수 투여후 24~48시간(투여횟수에 따라 상이)",
+        "관찰": "동물당 미성숙 적혈구 최소 4000개에서 소핵 계수. 미성숙비율은 골수 500/말초 2000 적혈구",
+        "대조군": "동시 양성+음성대조, 이력대조 DB",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "보고서에 조제물 분석결과(안정성·균질성·명목농도) 명시 요구 — 식이/음수 조제 시 함량분석 직접 근거.",
+      "related_tests": ["유전독성 : 소핵시험(TG474)", "소핵시험"]
+    },
+    {
+      "code": "OECD TG 487",
+      "title_ko": "In Vitro 포유류세포 소핵시험",
+      "title_en": "In Vitro Mammalian Cell Micronucleus Test",
+      "category": "유전독성",
+      "version": "2023 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2023/07/test-no-487-in-vitro-mammalian-cell-micronucleus-test_g1g6fb2a/9789264264861-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "분열한 세포의 세포질에서 소핵을 검출하여 clastogen·aneugen 활성 평가",
+      "checklist": {
+        "시험계": "세포주 또는 1차배양(사람/설치류). 사람 말초혈 림프구는 18~35세 비흡연자. cytochalasin B(3~6 µg/ml) 사용/미사용. 37°C, 5% CO2",
+        "대사활성": "S9 첨가/무첨가 양쪽",
+        "농도수": "최소 3개 분석가능 농도",
+        "최고농도": "55±5% 세포독성, 또는 침전 농도, 또는 10 mM·2 mg/mL·2 µl/mL 중 최저",
+        "대조군": "동시 양성+음성(용매)대조, 이력대조 DB",
+        "판정": "음성대조 95% 관리한계 내, 양성대조 통계적 유의 증가",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "in vitro라도 배지 내 침전·용해도·pH 확인 및 최종농도 신뢰성 입증 필요.",
+      "related_tests": ["소핵시험(in vitro)", "유전독성 소핵"]
+    },
+    {
+      "code": "OECD TG 489",
+      "title_ko": "In Vivo 포유류 알칼리 코멧 분석",
+      "title_en": "In Vivo Mammalian Alkaline Comet Assay",
+      "category": "유전독성",
+      "version": "2016 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2016/07/test-no-489-in-vivo-mammalian-alkaline-comet-assay_g1g6fb2c/9789264264885-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "알칼리 조건(>pH13)에서 DNA 단일·이중가닥 절단 손상 유발 물질 식별",
+      "checklist": {
+        "시험계": "설치류(주로 수컷 랫드). 간·위가 표준 표적조직",
+        "동물수": "군당 분석가능 5마리 이상(암수 또는 일성). 양성대조군 최소 3마리. 3용량군+대조 시 다수",
+        "용량설정": "MTD(최대내약용량) + 최소 2개 추가 용량(√10 미만 간격 권장)",
+        "투여횟수": "24시간 간격 2일 이상 매일 투여. 마지막 투여 후 2~6시간(또는 Tmax)에 채취",
+        "투여경로": "예상 사람 노출경로. 복강주사는 정당화 필요",
+        "대조군": "동시 음성(용매)+양성대조, 이력대조 DB",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "식이/음수 조제 투여 시 조제물 분석 요구. 표적조직 노출 입증 필요.",
+      "related_tests": ["Comet assay", "코멧시험"]
+    },
+    {
+      "code": "OECD TG 490",
+      "title_ko": "In Vitro 포유류세포 유전자돌연변이시험 (TK; MLA/TK6)",
+      "title_en": "In Vitro Mammalian Cell Gene Mutation Tests Using the Thymidine Kinase Gene",
+      "category": "유전독성",
+      "version": "2016 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2016/07/test-no-490-in-vitro-mammalian-cell-gene-mutation-tests-using-the-thymidine-kinase-gene_g1g6fb2e/9789264264908-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "thymidine kinase(TK) 유전자좌의 전방돌연변이를 검출 (MLA: L5178Y, TK6 세포)",
+      "checklist": {
+        "시험계": "L5178Y tk+/- (마우스림프종, MLA) 또는 TK6 tk+/- (사람). 37°C, 5% CO2, log phase 유지",
+        "대사활성": "S9 첨가/무첨가 양쪽 (내인성 대사능 부족)",
+        "농도수": "최소 4개 분석가능 농도",
+        "최고농도": "MLA 10~20% RTG, TK6 10~20% RS, 또는 침전, 또는 10 mM·2 mg/mL·2 µl/mL 중 최저",
+        "처리시간": "단기 3~4시간(±S9), 필요시 장기 24시간. 발현기간 MLA 2일·TK6 3~4일",
+        "세포수": "MLA 최소 6×10⁶ 세포 처리, TK6 최소 20×10⁶ 세포",
+        "대조군": "동시 양성+음성대조, 이력대조 DB. MLA는 IWGT 허용기준(MF·CE·SG) 적용",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "현탁배양 특성상 침전·용해도 주의. 최종농도 신뢰성 입증 필요.",
+      "related_tests": ["MLA", "MLA(TG490)", "유전자돌연변이시험"]
+    },
+    {
+      "code": "OECD TG 470",
+      "title_ko": "포유류 적혈구 Pig-a 유전자돌연변이 분석",
+      "title_en": "Mammalian Erythrocyte Pig-a Gene Mutation Assay",
+      "category": "유전독성",
+      "version": "2022 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2022/06/test-no-470-mammalian-erythrocyte-pig-a-gene-mutation-assay_8d5eb84f/4faea90e-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "적혈구 전구세포(골수)의 Pig-a 유전자 돌연변이를 in vivo로 검출. 직접작용 변이원과 대사활성 필요 promutagen 모두 검출",
+      "checklist": {
+        "시험계": "건강한 젊은 성체 랫드 또는 마우스(투여 시작 6~12주령). 22±3°C",
+        "측정": "변이형 망상적혈구(MUT RET) + 변이형 적혈구(MUT RBC) 양쪽 평가. %RET로 골수 노출·독성 확인",
+        "동물수": "용량군 + 동시 음성·양성대조 (소핵시험과 유사 규모, 다른 시험에 통합 가능)",
+        "대조군": "동시 음성(용매)+양성대조, 이력대조 DB. 숙련도 입증 위해 변이원 최소 2종",
+        "투여경로": "예상 사람 노출경로. 반복투여 독성시험에 통합 가능",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "식이/음수 조제 투여 시 조제물 분석 요구. 골수 노출 입증 필요.",
+      "related_tests": ["Pig-a assay"]
+    },
+    {
+      "code": "ICH S2(R1)",
+      "title_ko": "유전독성 시험 및 데이터 해석 (의약품)",
+      "title_en": "Guidance on Genotoxicity Testing and Data Interpretation for Pharmaceuticals",
+      "category": "유전독성",
+      "version": "2011 Step4 (S2A+S2B 통합)",
+      "official_url": "https://database.ich.org/sites/default/files/S2(R1)%20Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "의약품(small molecule) 표준 유전독성 시험 배터리 및 결과 해석 지침. 두 가지 옵션이 동등하게 인정됨",
+      "checklist": {
+        "표준배터리_옵션1": "① 세균 유전자돌연변이시험(Ames, TG471) + ② 포유류세포 염색체손상 in vitro 시험[염색체이상 TG473 또는 in vitro 소핵 TG487 또는 MLA TG490] + ③ in vivo 유전독성시험[설치류 조혈세포 소핵 TG474 또는 염색체이상]",
+        "표준배터리_옵션2": "① 세균 유전자돌연변이시험(Ames) + ② 서로 다른 2개 조직 in vivo 평가[설치류 조혈세포 소핵 + 두 번째 in vivo 시험(통상 간 Comet TG489)]",
+        "비고": "두 옵션 동등. in vivo는 급성·반복투여 설계 모두 가능하며, 반복투여 독성시험에 유전독성 엔드포인트 통합 권장",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "배터리 전체에 적용되는 상위 지침. 개별 시험(TG471/473/487/474/489/490)의 조제물 분석 요건을 따름.",
+      "related_tests": ["유전독성 3종", "유전독성 배터리"]
+    },
+    {
+      "code": "OECD TG 407",
+      "title_ko": "설치류 28일 반복투여 경구독성시험",
+      "title_en": "Repeated Dose 28-day Oral Toxicity Study in Rodents",
+      "category": "일반독성",
+      "version": "2025 채택/수정 (내분비 엔드포인트 포함)",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2008/10/test-no-407-repeated-dose-28-day-oral-toxicity-study-in-rodents_g1gh292f/9789264070684-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "28일 반복 경구투여 후 아급성 전신독성·표적장기·내분비 활성 평가 (단기 스크리닝)",
+      "checklist": {
+        "시험계": "설치류(랫드 권장). 젊은 건강한 성체. 22±3°C, 12h 명암",
+        "동물수": "용량당 최소 10마리(암수 각 5). 회복군(satellite) +10(암수 각 5)을 대조·최고용량군에 추가(투여 후 14일 관찰)",
+        "용량설정": "최소 3용량군 + 동시대조. 한계용량 1000 mg/kg/day",
+        "투여": "매일 경구(gavage) 28일",
+        "검사": "임상증상, 체중, 사료/음수, 안과, 혈액학, 혈액생화학, 요검사, 호르몬, 부검·장기중량, 전체 조직병리(대조·최고용량)",
+        "투여기간_주": 4
+      },
+      "함량분석_관련": "보고서에 '조제물/식이 조제, 달성농도(achieved concentration), 안정성·균질성' 명시 요구 — 함량분석 직접 근거.",
+      "related_tests": ["설치류 4주 반복투여 독성", "4주 반복"]
+    },
+    {
+      "code": "OECD TG 408",
+      "title_ko": "설치류 90일(13주) 반복투여 경구독성시험",
+      "title_en": "Repeated Dose 90-day Oral Toxicity Study in Rodents",
+      "category": "일반독성",
+      "version": "2025 채택 (2025-06-25, 내분비 엔드포인트 포함)",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/06/test-no-408-repeated-dose-90-day-oral-toxicity-study-in-rodents_g1gh2931/9789264070707-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "90일 반복 경구투여 후 아만성 전신독성·표적장기·NOAEL·내분비 활성 평가",
+      "checklist": {
+        "시험계": "설치류(랫드 권장). 젊은 건강한 성체. 22±3°C, 12h 명암",
+        "동물수": "용량당 최소 20마리(암수 각 10). 회복군 +10(암수 각 5)을 대조·최고용량군에 추가",
+        "용량설정": "최소 3용량군 + 동시대조. 한계용량 1000 mg/kg/day",
+        "투여": "매일 7일/주 경구(gavage), 최소 90일. gavage 용량 ≤1ml/100g(수용액 2ml/100g)",
+        "검사": "임상증상, 체중, 사료/음수, 안과, 혈액학, 혈액생화학, 요검사, 호르몬, 부검·장기중량, 전체 조직병리",
+        "투여기간_주": 13
+      },
+      "함량분석_관련": "'시험물질의 균질성·안정성을 투여조건에서 결정' 명시. 보고서에 조제물 달성농도·안정성·균질성 요구 — 함량분석 직접 근거.",
+      "related_tests": ["설치류 13주 반복투여 독성", "13주 반복"]
+    },
+    {
+      "code": "OECD TG 409",
+      "title_ko": "비설치류 90일(13주) 반복투여 경구독성시험",
+      "title_en": "Repeated Dose 90-day Oral Toxicity Study in Non-Rodents",
+      "category": "일반독성",
+      "version": "1998 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/1998/09/test-no-409-repeated-dose-90-day-oral-toxicity-study-in-non-rodents_g1gh2933/9789264070721-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "비설치류(주로 개/비글)에서 90일 반복 경구투여 후 아만성 전신독성·표적장기·NOAEL 평가",
+      "checklist": {
+        "시험계": "비설치류 — 통상 개(비글). 돼지(swine)도 가능. 순화기간 개 5일↑(외부도입 2주↑)",
+        "동물수": "용량당 최소 8마리(암수 각 4). 회복군 +8(암수 각 4)을 대조·최고용량군에 추가",
+        "용량설정": "최소 3용량군 + 동시대조. 한계용량 1000 mg/kg/day",
+        "투여": "매일 경구 90일",
+        "검사": "임상증상, 체중, 사료/음수, 안과, 혈액학, 혈액생화학, 요검사, 부검·장기중량, 전체 조직병리",
+        "투여기간_주": 13
+      },
+      "함량분석_관련": "'투여조건에서 시험물질 안정성 결정' + 보고서에 조제물 달성농도·안정성·균질성 요구.",
+      "related_tests": ["비설치류 13주 반복투여 독성", "비글 13주"]
+    },
+    {
+      "code": "OECD TG 420",
+      "title_ko": "급성 경구독성 — 고정용량법",
+      "title_en": "Acute Oral Toxicity - Fixed Dose Procedure",
+      "category": "단회투여독성",
+      "version": "2002 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2002/02/test-no-420-acute-oral-toxicity-fixed-dose-procedure_g1gh2949/9789264070943-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "급성 경구독성을 사망이 아닌 명확한 독성징후 기준으로 평가 (GHS 분류). 동물 사용 최소화",
+      "checklist": {
+        "시험계": "랫드, 단일 성별(통상 암컷)",
+        "고정용량": "5, 50, 300, 2000 mg/kg (예외적 5000 mg/kg)",
+        "투여": "단회 경구(gavage), 절식 후. 동물간 24시간 이상 간격",
+        "관찰": "최소 14일",
+        "절차": "예비시험(sighting study)으로 초기용량 결정 → 본시험 단계적 진행 → GHS 분류",
+        "투여기간_주": 0
+      },
+      "함량분석_관련": "단회투여라 주기적 함량분석 개념은 약함. 조제물 농도 확인은 권장.",
+      "related_tests": ["단회투여 독성", "급성 경구독성시험"]
+    },
+    {
+      "code": "OECD TG 423",
+      "title_ko": "급성 경구독성 — 급성독성등급법",
+      "title_en": "Acute Oral Toxicity - Acute Toxic Class Method",
+      "category": "단회투여독성",
+      "version": "2002 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2002/02/test-no-423-acute-oral-toxicity-acute-toxic-class-method_g1gh294f/9789264071001-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "급성 경구독성을 단계적 등급법으로 평가하여 GHS 분류 (LD50 범위 추정)",
+      "checklist": {
+        "시험계": "랫드, 단일 성별(통상 암컷)",
+        "용량": "고정 출발용량 5, 50, 300, 2000 mg/kg 중 선택. 단계당 3마리",
+        "투여": "단회 경구(gavage), 절식 후. 단계적 진행",
+        "관찰": "최소 14일",
+        "절차": "각 단계 결과에 따라 다음 용량 결정 → GHS Category 분류",
+        "투여기간_주": 0
+      },
+      "함량분석_관련": "단회투여 — 주기적 함량분석 개념 약함. 조제물 농도 확인 권장.",
+      "related_tests": ["단회투여 독성(등급법)", "급성독성등급법"]
+    },
+    {
+      "code": "ICH M3(R2)",
+      "title_ko": "임상시험·허가를 위한 비임상 안전성시험 시기 (의약품)",
+      "title_en": "Guidance on Nonclinical Safety Studies for the Conduct of Human Clinical Trials and Marketing Authorization for Pharmaceuticals",
+      "category": "일반독성(상위지침)",
+      "version": "2009 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/M3_R2__Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "임상시험 단계별로 필요한 비임상 안전성시험의 종류·기간·시점을 규정하는 상위 지침",
+      "checklist": {
+        "핵심원칙": "동물 반복투여독성시험 기간은 2종(1종은 비설치류)에서 임상시험 기간 이상이어야 함(최대 권장기간까지)",
+        "최소요건": "임상시험 지원에는 2종(1종 비설치류) 최소 2주 반복투여독성시험 필요",
+        "적용": "임상기간↔비임상기간 매핑 표(Table 1) 제공. DRF·TK·유전독성·안전성약리 등 패키지 시점 규정",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "개별 시험의 조제물 분석 요건을 따름. 시점·패키지 구성의 상위 프레임.",
+      "related_tests": ["IND 패키지", "반복투여독성"]
+    },
+    {
+      "code": "ICH S4",
+      "title_ko": "동물 만성독성시험 기간 (설치류·비설치류)",
+      "title_en": "Duration of Chronic Toxicity Testing in Animals (Rodent and Non-Rodent Toxicity Testing)",
+      "category": "일반독성(상위지침)",
+      "version": "1998 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/S4_Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "의약품 만성독성시험의 표준 기간을 규정",
+      "checklist": {
+        "설치류_만성": "6개월 (약 26주)",
+        "비설치류_만성": "9개월 (약 39주)",
+        "비고": "12개월은 통상 불필요, 9개월 미만으로 충분할 수 있음. EU는 비설치류 6개월도 허용",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "기간 규정 지침. 26주(6개월)·39주(9개월) 만성시험의 함량분석 회수는 4주룰(floor(주/4)) 적용.",
+      "related_tests": ["26주 반복투여 독성", "39주 반복투여 독성", "만성독성"]
+    },
+    {
+      "code": "OECD TG 414",
+      "title_ko": "출생전 발생독성시험 (배태자 발생)",
+      "title_en": "Prenatal Developmental Toxicity Study",
+      "category": "생식독성",
+      "version": "2018 채택 (내분비 엔드포인트 추가)",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/06/test-no-414-prenatal-developmental-toxicity-study_g1gh293d/9789264070820-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "임신 중 노출이 모체 및 발생 중인 태자에 미치는 영향 평가 (기형·발생독성)",
+      "checklist": {
+        "시험계": "설치류(랫드 권장) + 비설치류(토끼 권장). 설치류 22±3°C, 토끼 18±3°C",
+        "동물수": "용량당 착상부위 보유 암컷 약 20마리 확보 권장. 미경산 젊은 성체 교배",
+        "용량설정": "최소 3용량 + 동시대조. 한계용량 1000 mg/kg/day. 최고용량은 모체·발생독성 유발하되 사망 회피",
+        "투여기간": "착상~제왕절개 전일(임신기간 전체). 분만 예정 1일 전 제왕절개",
+        "평가": "자궁내용물 검사, 태자 외형·연조직·골격 변화. 모체 독성·체중",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "보고서에 시험물질 안정성·균질성, 조제물 달성농도 요구. 임신 중 투여라 농도 정확성 중요.",
+      "related_tests": ["배태자 발생 시험 (본시험)", "배태자 발생"]
+    },
+    {
+      "code": "OECD TG 421",
+      "title_ko": "생식·발생독성 스크리닝시험",
+      "title_en": "Reproduction/Developmental Toxicity Screening Test",
+      "category": "생식독성",
+      "version": "2016 채택 (내분비 엔드포인트 추가)",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/1995/07/test-no-421-reproduction-developmental-toxicity-screening-test_g1gh294b/9789264070967-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "암수 생식능력 및 초기 발생에 대한 시험물질 영향을 스크리닝 (후속 시험 설계 지표)",
+      "checklist": {
+        "시험계": "랫드. 젊은 건강한 성체",
+        "투여기간_수컷": "최소 4주 (교배 2주 전 + 교배기 + 교배 후 ~2주)",
+        "투여기간_암컷": "교배 전~임신~수유 PND4까지 (약 63일)",
+        "용량설정": "최소 3용량 + 대조. 한계용량 1000 mg/kg/day",
+        "평가": "생식능력, 난소·고환·부고환 조직병리(최고용량+대조), 새끼 발생",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "보고서에 '조제물/식이 조제, 달성농도, 안정성·균질성' 명시 요구 — 함량분석 근거.",
+      "related_tests": ["수태능 및 초기배 발생시험", "생식발생 스크리닝"]
+    },
+    {
+      "code": "OECD TG 426",
+      "title_ko": "발달신경독성시험",
+      "title_en": "Developmental Neurotoxicity Study",
+      "category": "생식독성",
+      "version": "2007 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2007/10/test-no-426-developmental-neurotoxicity-study_g1gh87b8/9789264067394-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "자궁내·출생초기 발생 중 반복노출이 신경계 발달에 미치는 영향 평가",
+      "checklist": {
+        "시험계": "임신 랫드(권장). 착상(GD6)~수유 종료(PND21) 매일 경구투여",
+        "동물수": "용량당 20 litters(배) 권장",
+        "용량설정": "최소 3용량 + 동시대조",
+        "평가": "신경학·행동 이상, 신체발달, 행동발달, 운동활성, 운동·감각기능, 학습·기억, 뇌중량·신경병리",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "임신~수유 장기 투여라 조제물 농도·안정성 확인 필요.",
+      "related_tests": ["발달신경독성", "출생전후 발생"]
+    },
+    {
+      "code": "ICH S5(R3)",
+      "title_ko": "생식발생독성 시험 (의약품)",
+      "title_en": "Detection of Reproductive and Developmental Toxicity for Human Pharmaceuticals",
+      "category": "생식독성(상위지침)",
+      "version": "2020 Step4 (R3)",
+      "official_url": "https://database.ich.org/sites/default/files/S5-R3_Step4_Guideline_2020_0218.pdf",
+      "confidence": "원문확인",
+      "purpose": "의약품 생식발생독성 평가의 표준 시험 구성 및 설계 지침",
+      "checklist": {
+        "구성_FEED": "수태능 및 초기배 발생시험 (Fertility and Early Embryonic Development) — 교배·착상 평가",
+        "구성_EFD": "배태자 발생시험 (Embryo-Fetal Development) — DRF(예비)+본시험. 통상 2종(설치류+토끼)",
+        "구성_PPND": "출생전후 발생 및 모체기능시험 (Pre/Postnatal Development)",
+        "비고": "임상단계·대상군에 따라 시험 구성·시점 조정. 개별 시험은 OECD TG 414/421/426 절차 참조",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "배터리 상위 지침. 개별 시험의 조제물 분석 요건을 따름. TK 채혈(태반이행 확인 포함) 별도 진행.",
+      "related_tests": ["수태능 및 초기배 발생시험", "배태자 발생 시험", "출생전후 발생", "생식독성"]
+    },
+    {
+      "code": "OECD TG 451",
+      "title_ko": "발암성시험",
+      "title_en": "Carcinogenicity Studies",
+      "category": "발암성",
+      "version": "2018 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/06/test-no-451-carcinogenicity-studies_g1gh2955/9789264071186-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "장기 노출에 따른 종양 발생(발암 잠재성) 평가",
+      "checklist": {
+        "시험계": "설치류(통상 랫드·마우스)",
+        "동물수": "용량군·대조군 각각 성별당 최소 50마리 (중간부검 계획 시 증가)",
+        "용량설정": "최소 3용량 + 동시대조",
+        "투여기간": "설치류 24개월(약 104주)",
+        "평가": "종양 발생률, 전체 조직병리",
+        "투여기간_주": 104
+      },
+      "함량분석_관련": "초장기 투여 — 조제물 농도·안정성 확인 다수회 필요. 4주룰 적용 시 다수 회수.",
+      "related_tests": ["발암성 : 랫드", "발암성 : 마우스"]
+    },
+    {
+      "code": "OECD TG 452",
+      "title_ko": "만성독성시험",
+      "title_en": "Chronic Toxicity Studies",
+      "category": "발암성",
+      "version": "2018 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/06/test-no-452-chronic-toxicity-studies_g1gh2957/9789264071209-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "장기 반복투여(만성)에 따른 전신독성·표적장기·NOAEL 평가",
+      "checklist": {
+        "시험계": "설치류 + 비설치류 가능. 비설치류 성별당 최소 4마리/군 권장",
+        "용량설정": "최소 3용량 + 동시대조",
+        "투여기간": "통상 12개월(설치류 52주)",
+        "평가": "혈액학·생화학·요검사, 전체 조직병리",
+        "투여기간_주": 52
+      },
+      "함량분석_관련": "장기 투여 — 조제물 달성농도·안정성·균질성 다수회 확인. 52주 기준 함량분석 13회(4주룰).",
+      "related_tests": ["52주 만성독성", "만성독성"]
+    },
+    {
+      "code": "ICH S1A",
+      "title_ko": "발암성시험 필요성 (의약품)",
+      "title_en": "Guideline on the Need for Carcinogenicity Studies of Pharmaceuticals",
+      "category": "발암성(상위지침)",
+      "version": "1995 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/S1A_Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "어떤 의약품에 발암성시험이 필요한지 판단 기준 제공",
+      "checklist": {
+        "핵심기준": "연속 6개월 이상 사용 의약품은 발암성시험 필요 (미 FDA 기준 3개월 이상)",
+        "우려요인": "유전독성 양성, 구조경고, 호르몬 작용 등 cause for concern 시 단기 사용도 필요",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "필요성 판단 지침. 실제 시험은 OECD TG 451 절차·조제물 분석 요건 따름.",
+      "related_tests": ["발암성"]
+    },
+    {
+      "code": "ICH S1C(R2)",
+      "title_ko": "발암성시험 용량선택 (의약품)",
+      "title_en": "Dose Selection for Carcinogenicity Studies of Pharmaceuticals",
+      "category": "발암성(상위지침)",
+      "version": "2008 Step4 (R2)",
+      "official_url": "https://database.ich.org/sites/default/files/S1C_R2__Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "발암성시험의 고용량(MTD·노출배수·한계용량 등) 선택 기준 제공",
+      "checklist": {
+        "고용량기준": "MTD(최대내약용량), 노출배수(예: 25배 AUC), 흡수포화, 한계용량 등 다양한 endpoint 허용",
+        "비고": "유전독성·표적장기 데이터 종합 고려",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "용량설정 지침. 조제물 분석은 TG 451 따름.",
+      "related_tests": ["발암성 용량설정"]
+    },
+    {
+      "code": "ICH S7A",
+      "title_ko": "안전성약리시험 (의약품)",
+      "title_en": "Safety Pharmacology Studies for Human Pharmaceuticals",
+      "category": "안전성약리",
+      "version": "2000 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/S7A_Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "의약품의 생명유지기관 기능에 대한 잠재적 유해영향(안전성약리) 평가",
+      "checklist": {
+        "코어배터리": "① 중추신경계(CNS) — 운동활성·행동·협응·감각운동반사·체온 (예: Irwin/FOB) ② 심혈관계(Cardiovascular) — 혈압·심박·심전도(통상 in vivo telemetry) ③ 호흡계(Respiratory) — 호흡수·일회호흡량 등",
+        "추가시험": "필요 시 보조시험(신장·소화기 등) 추가 가능",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "동물 투여 시험(CNS·심혈관·호흡)은 조제물 농도 확인 필요. in vitro hERG도 노출농도 검증 필요(ICH S7B).",
+      "related_tests": ["안전성약리 : 중추신경계", "안전성약리 : 심혈관계", "안전성약리 : 호흡기계"]
+    },
+    {
+      "code": "ICH S7B",
+      "title_ko": "QT간격 연장 비임상평가 (hERG)",
+      "title_en": "Nonclinical Evaluation of the Potential for Delayed Ventricular Repolarization (QT Interval Prolongation)",
+      "category": "안전성약리",
+      "version": "2005 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/S7B_Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "심실재분극 지연(QT 연장) 위험성을 비임상으로 평가",
+      "checklist": {
+        "in_vitro": "IKr 분석 — hERG 칼륨채널 전류 억제 측정 (patch-clamp)",
+        "in_vivo": "QT assay — 심전도상 QT간격 측정 (통상 telemetry)",
+        "종합": "두 시험 + 화학·약리학적 클래스 + 기타 비임상/임상 정보 종합(integrated risk assessment)",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "in vitro hERG도 GLP 노출 증명을 위해 처리농도(명목농도 대비 실제농도) 분석 필요 — 함량분석 in vitro 근거.",
+      "related_tests": ["안전성약리 : hERG(국내)", "안전성약리 : hERG(USFDA)", "hERG screening"]
+    },
+    {
+      "code": "ICH S3A",
+      "title_ko": "독성동태 — 독성시험 내 전신노출 평가 (TK)",
+      "title_en": "Toxicokinetics: The Assessment of Systemic Exposure in Toxicity Studies",
+      "category": "독성동태(TK)",
+      "version": "1994 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/S3A_Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "독성시험에서 동물의 전신노출(systemic exposure)을 측정하여 용량-노출-독성 관계 규명",
+      "checklist": {
+        "정의": "독성시험에 통합된 약동학 — 시험물질(또는 대사체)의 혈중농도를 측정",
+        "방식": "본시험군 또는 위성군(satellite group)에서 채혈. 또는 별도 시험",
+        "적용": "단회·반복투여, 생식독성, 유전독성, 발암성 시험을 지원",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "TK 위성군은 본시험과 별도 동물(추가 구매)로 투여되므로 함량분석을 별도 합산 — 회사 룰의 근거.",
+      "related_tests": ["TK", "독성동태", "TK 채혈"]
+    },
+    {
+      "code": "ICH S8",
+      "title_ko": "면역독성시험 (의약품)",
+      "title_en": "Immunotoxicity Studies for Human Pharmaceuticals",
+      "category": "면역독성",
+      "version": "2005 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/S8_Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "의약품의 의도치 않은 면역억제·면역증강 평가",
+      "checklist": {
+        "평가요인": "표준 독성시험 소견(혈액학·림프조직 등) + 약리학적 특성 + 대상환자군 + 구조경고를 종합(weight of evidence)",
+        "추가시험": "우려 시 면역기능시험(예: TDAR — T세포 의존성 항체반응) 추가",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "동물 반복투여 기반 — 해당 본시험의 조제물 분석 요건 따름.",
+      "related_tests": ["면역독성", "면역원성"]
+    },
+    {
+      "code": "OECD TG 404",
+      "title_ko": "급성 피부자극/부식성 시험",
+      "title_en": "Acute Dermal Irritation/Corrosion",
+      "category": "국소독성",
+      "version": "2015 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2015/07/test-no-404-acute-dermal-irritation-corrosion_g1g59b23/9789264242678-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "피부 노출에 따른 자극/부식 위험성 평가 (in vitro 시험 후 최종 단계)",
+      "checklist": {
+        "시험계": "토끼(알비노). in vitro/in chemico 사전평가 후 필요 시 in vivo",
+        "방법": "패치로 피부 적용, 노출 후 홍반·부종(erythema/edema) 채점. 초기 1마리 순차 적용 권장",
+        "투여기간_주": 0
+      },
+      "함량분석_관련": "국소 단회 적용 — 주기적 함량분석 개념 약함.",
+      "related_tests": ["피부자극시험"]
+    },
+    {
+      "code": "OECD TG 405",
+      "title_ko": "급성 안자극/부식성 시험",
+      "title_en": "Acute Eye Irritation/Corrosion",
+      "category": "국소독성",
+      "version": "2023 채택 (2023-07-04)",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2023/07/test-no-405-acute-eye-irritation-corrosion_g1g24072/9789264185333-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "눈 노출에 따른 자극/부식(심한 눈손상) 위험성 평가",
+      "checklist": {
+        "시험계": "토끼(알비노). 기존정보·in vitro 평가 후 최종수단(last resort)으로만 in vivo",
+        "방법": "결막낭에 점안 후 각막·홍채·결막 반응 채점",
+        "투여기간_주": 0
+      },
+      "함량분석_관련": "국소 단회 적용 — 주기적 함량분석 개념 약함.",
+      "related_tests": ["안점막자극시험", "안자극시험"]
+    },
+    {
+      "code": "OECD TG 406",
+      "title_ko": "피부감작성 시험 (기니피그)",
+      "title_en": "Skin Sensitisation (Guinea Pig Maximisation Test / Buehler Test)",
+      "category": "국소독성",
+      "version": "2022 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2022/06/test-no-406-skin-sensitisation_g1gh292d/9789264070660-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "반복 피부노출에 따른 알레르기성 접촉피부염(감작) 잠재성 평가",
+      "checklist": {
+        "시험계": "기니피그(guinea pig)",
+        "방법": "GPMT(Magnusson-Kligman, 피내주사+국소 유도) 또는 Buehler test(국소 유도). 유도 후 야기(challenge) 반응 평가",
+        "비고": "최신 접근은 in vitro/in chemico(TG442C/D/E) 또는 LLNA(TG429/442A/B) 우선",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "국소 적용 — 조제물 농도 확인 권장 수준.",
+      "related_tests": ["피부감작성 시험 (Buehler법)", "피부감작성(GPMT)"]
+    },
+    {
+      "code": "OECD TG 432",
+      "title_ko": "In Vitro 3T3 NRU 광독성시험",
+      "title_en": "In Vitro 3T3 NRU Phototoxicity Test",
+      "category": "광독성",
+      "version": "2019 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2019/06/test-no-432-in-vitro-3t3-nru-phototoxicity-test_g1gh4b69/9789264071162-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "광(UV/가시광) 존재/부재 하 세포생존율 차이로 광독성 잠재성 평가",
+      "checklist": {
+        "시험계": "BALB/c 3T3 세포(마우스 섬유아세포). 18~24시간 단층배양",
+        "방법": "8개 농도 × 2플레이트(1개 조사/1개 차광), 1시간 전배양 후 조사. Neutral Red 흡수로 세포독성 측정",
+        "판정": "광조사군 vs 차광군 생존율 차이(PIF/MPE)로 광독성 판정",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "in vitro라도 GLP 노출증명 위해 처리농도(명목 대비 실제) 분석 필요.",
+      "related_tests": ["광독성시험", "In vitro 3T3 NRU 광독성"]
+    },
+    {
+      "code": "OECD TG 439",
+      "title_ko": "In Vitro 피부자극시험 (재구성 인체 표피)",
+      "title_en": "In Vitro Skin Irritation: Reconstructed Human Epidermis (RhE) Test Method",
+      "category": "국소독성(대체법)",
+      "version": "2021 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2021/06/test-no-439-in-vitro-skin-irritation-reconstructed-human-epidermis-test-method_g1g59b2f/9789264242845-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "재구성 인체표피(RhE)로 피부자극(GHS Category 2) 식별 — 동물 대체법",
+      "checklist": {
+        "시험계": "재구성 인체표피(RhE) 3차원 조직(검증된 모델). 인체 표피 모사",
+        "방법": "시험물질 국소 적용 후 MTT 분석으로 세포생존율 측정",
+        "판정": "세포생존율 ≤50% → 자극성(GHS Cat.2)",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "조직 표면 적용 — 처리농도 확인 권장.",
+      "related_tests": ["피부자극(RhE)", "1차 피부자극시험"]
+    },
+    {
+      "code": "OECD TG 442B",
+      "title_ko": "피부감작성 — 국소림프절시험 (LLNA: BrdU-ELISA/FCM)",
+      "title_en": "Skin Sensitisation: Local Lymph Node Assay: BrdU-ELISA or -FCM",
+      "category": "국소독성",
+      "version": "2025 채택 (2025-06-25)",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2017/06/test-no-442b-skin-sensitization_g1g1139e/9789264090996-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "감작물질이 유발하는 귀 림프절 림프구 증식을 측정하여 피부감작성 평가 (비방사성 LLNA)",
+      "checklist": {
+        "시험계": "마우스",
+        "방법": "귀에 시험물질 도포 후 귀 림프절 림프구 증식을 BrdU(티미딘 유사체) 도입으로 측정(ELISA/FCM)",
+        "판정": "자극지수(SI)로 감작성 판정. 1A(강)/1B(중) 아분류 가능",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "국소 도포 — 조제물 농도 확인 권장.",
+      "related_tests": ["피부감작성(국소림프절시험)", "LLNA: BrdU"]
+    },
+    {
+      "code": "OECD TG 492",
+      "title_ko": "In Vitro 안자극시험 (재구성 인체 각막상피)",
+      "title_en": "Reconstructed human Cornea-like Epithelium (RhCE) Test Method",
+      "category": "국소독성(대체법)",
+      "version": "2023 채택",
+      "official_url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2023/07/test-no-492-reconstructed-human-cornea-like-epithelium-rhce-test-method-for-identifying-chemicals-not-requiring-classification-and-labelling-for-eye-irritation-or-serious-eye-damage_g1g59947/9789264242548-en.pdf",
+      "confidence": "원문확인",
+      "purpose": "재구성 인체 각막상피(RhCE)로 '눈 자극 분류 불필요' 화학물질 식별 — 동물 대체법",
+      "checklist": {
+        "시험계": "재구성 인체 각막유사상피(RhCE) 조직. 인체 각막상피 모사",
+        "방법": "시험물질 적용 후 MTT 분석으로 세포생존율 측정",
+        "판정": "생존율 기준으로 '분류 불필요' 식별 (계층적 전략의 일부)",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "조직 표면 적용 — 처리농도 확인 권장.",
+      "related_tests": ["안점막자극(RhCE)", "안자극(RhCE)"]
+    },
+    {
+      "code": "ICH S6(R1)",
+      "title_ko": "생물공학 의약품 비임상 안전성평가",
+      "title_en": "Preclinical Safety Evaluation of Biotechnology-Derived Pharmaceuticals",
+      "category": "생물의약품(상위지침)",
+      "version": "2011 Step4 (R1)",
+      "official_url": "https://database.ich.org/sites/default/files/S6_R1_Guideline_0.pdf",
+      "confidence": "원문확인",
+      "purpose": "생물공학 유래 의약품(단클론항체·재조합단백질 등)의 비임상 안전성평가 원칙",
+      "checklist": {
+        "적용대상": "단클론항체, 재조합 DNA 단백질 등 생물의약품",
+        "종선택": "약리학적으로 관련 있는 종(relevant species) 사용 — 통상 2종, 정당화 시 1종 가능. 적절한 종 없으면 대체모델(유전자조작동물·동족단백질) 고려",
+        "특이고려": "면역원성, 표적결합, 종간 차이 고려. 표준 독성시험 패키지를 그대로 적용하지 않음",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "생물의약품은 분석법 특수(ELISA·결합분석 등). 조제물 분석은 단백질 특성에 맞게 수행.",
+      "related_tests": ["생물의약품", "항체", "재조합단백질"]
+    },
+    {
+      "code": "ICH S10",
+      "title_ko": "의약품 광안전성 평가",
+      "title_en": "Photosafety Evaluation of Pharmaceuticals",
+      "category": "광독성(상위지침)",
+      "version": "2013 Step4",
+      "official_url": "https://database.ich.org/sites/default/files/S10_Guideline.pdf",
+      "confidence": "원문확인",
+      "purpose": "의약품의 광독성·광알레르기 등 광안전성 평가 필요성과 방법 제시",
+      "checklist": {
+        "판단기준": "광화학적 특성(UV-가시광 290~700nm 흡수, MEC ≥1000 L·mol⁻¹·cm⁻¹), 광반응성(ROS assay), 조직분포",
+        "시험방법": "필요 시 in vitro 광독성(예: OECD TG 432 3T3 NRU) 또는 in vivo 광독성시험",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "광안전성 판단 상위지침. 개별 시험(TG432 등)의 노출농도 분석 요건 따름.",
+      "related_tests": ["광독성시험", "광감작성시험"]
+    },
+    {
+      "code": "MFDS 의약품등의 독성시험기준",
+      "title_ko": "의약품등의 독성시험기준 (식약처 고시)",
+      "title_en": "MFDS Notification — Toxicity Test Standards for Pharmaceuticals",
+      "category": "국내기준(상위지침)",
+      "version": "식약처 고시 제2022-18호 (2022-03-02 시행)",
+      "official_url": "https://www.law.go.kr/LSW/admRulLsInfoP.do?chrClsCd=&admRulSeq=2100000209652",
+      "confidence": "원문확인",
+      "purpose": "국내(식약처) 제출용 의약품 독성시험의 종류·방법·기준을 규정하는 행정규칙",
+      "checklist": {
+        "포함시험": "단회·반복투여독성, 유전독성, 생식발생독성, 발암성, 면역독성, 흡입독성, 국소독성, 안전성약리 등 (조문별 규정)",
+        "조화": "OECD·ICH 최신 국제기준 반영하여 주기적 개정",
+        "특이": "타당한 과학적 근거 시 시험동물 1종만 사용 가능 등 국내 운영기준 포함",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "제4조 등에서 투여 조제물의 균질성·안정성·함량 분석을 규정 — 국내 함량분석 직접 근거.",
+      "related_tests": ["의약품 전체 (MFDS 제출용)"]
+    },
+    {
+      "code": "MFDS 줄기세포 종양원성",
+      "title_ko": "줄기세포치료제 종양원성 평가 가이드라인",
+      "title_en": "Tumorigenicity Assessment of Stem Cell Therapy Product",
+      "category": "세포치료제",
+      "version": "식약처 민원인 안내서 (개정)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "줄기세포치료제의 비임상 종양원성(종양형성 위험성) 평가 — 세포 자체 특성·배양조작으로 인한 종양발생 위험 평가",
+      "checklist": {
+        "법적근거": "첨단재생바이오법 세포치료제. 첨단바이오의약품 품목허가·심사 규정 제17조제1항제3호라목(줄기세포·핵형분석 이상 세포 등 종양형성 가능성 있는 세포는 실시). 독성자료는 비임상시험관리기준(GLP)+의약품등 독성시험기준 부합",
+        "시험원칙": "in vivo 평가가 기본 + in vitro(핵형분석, 분자세포유전학 FISH/CCGH/SNP 유전적 안정성) 참고. ★임상시험용의약품(동물세포 아님) 사용. 최초 임상 진입 전 수행",
+        "시험동물": "사람유래 세포의 이종거부 회피 — 면역저하(immunocompromised)/면역결핍(immune-deficient)/인간화(humanized) 설치류, 또는 면역억제제 투여, 또는 질환/손상 모델. 종양형성 충분히 관찰 가능하도록 장기생존 동물",
+        "동물수": "감수성·정밀도·돌연사 소실분·중간도살군 고려하여 최종 판정 시점 해석(통계분석 포함) 가능한 수",
+        "투여경로": "★임상적용경로와 동일 — 임상 분포 예상부위와 해부학적 동일 부위 분포 중요",
+        "관찰기간": "★종양형성 충분히 관찰 가능한 기간 (품목허가심사규정 예시: 6~12개월). ★회사 실무룰: 성체유래 26주 / 배아(ESC)·유도만능(iPSC)유래 52주",
+        "전분화능_특이": "ESC·iPSC 유래는 미분화 잔존 종양형성 우려 → 미분화 줄기세포를 분화세포에 단계적 희석 혼합하여 이식, 희석단계별 종양발생 프로파일 관찰",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "세포치료제 — 투여물질(세포) 특성분석. 일반 조제물 함량분석과 별개.",
+      "related_tests": ["종양원성 26주", "종양원성 52주", "Spiking test"]
+    },
+    {
+      "code": "MFDS 줄기세포 체내분포",
+      "title_ko": "줄기세포치료제 체내분포 평가 가이드라인 (정량 PCR 중심)",
+      "title_en": "Biodistribution Assessment of Stem Cell Therapy Product",
+      "category": "세포치료제",
+      "version": "식약처 민원인 안내서 (2024.6)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "투여된 줄기세포치료제의 체내 분포·생착·이동을 정량 PCR(qPCR)로 평가",
+      "checklist": {
+        "측정법": "정량 PCR(qPCR) 중심 — 사람 특이 서열 표적으로 조직 내 세포 정량",
+        "밸리데이션": "★시험법 밸리데이션 필수. 검출한계(LOD: NTC와 명확한 Ct 차이 보이는 농도) + 정량한계(LOQ) 설정. 특이성·정확성·정밀성",
+        "조직채취": "주요 장기·조직(간·폐·비장·투여부위 등) 채취하여 분포 정량. 채취시점(투여 후 시간경과별)",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "세포 정량 분석 — 일반 조제물 함량분석과 별개.",
+      "related_tests": ["체내분포", "QPCR 체내분포 Validation", "조직내 분포 채취+분석"]
+    },
+    {
+      "code": "MFDS 동종세포 면역원성",
+      "title_ko": "동종줄기세포치료제 면역원성 평가 가이드라인",
+      "title_en": "Immunogenicity Assessment of Allogenic Stem Cell Therapy Product",
+      "category": "세포치료제",
+      "version": "식약처 민원인 안내서 (안내서-0302-02, 2025.6)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "동종(allogenic) 세포치료제의 면역원성(거부반응·감작) 평가 — 이종세포치료제는 제외",
+      "checklist": {
+        "적용대상": "첨단재생바이오법 동종세포치료제 (이종 제외)",
+        "면역반응_고려": "조직적합항원(HLA) 불일치 거부반응, 과량투여에 의한 과도 면역억제, 염증미세환경에 의한 조직적합항원 발현변화, 반복투여 감작(sensitization), 후성유전학적 영향",
+        "시험방법": "세포증식시험(BrdU/3H-thymidine/CFSE 표지, 항체자극 말초혈액단핵구 양성대조) + 효소면역측정법(ELISA) 등으로 항체·세포성 면역 평가",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "해당 없음 (면역반응 평가).",
+      "related_tests": ["면역원성", "동종 면역원성"]
+    },
+    {
+      "code": "MFDS 유전자치료제 비임상",
+      "title_ko": "유전자치료제 비임상시험 평가 가이드라인",
+      "title_en": "Nonclinical Evaluation of Gene Therapy Products",
+      "category": "유전자치료제",
+      "version": "식약처 민원인 안내서 (개정)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "유전자치료제(벡터·유전물질)의 비임상 안전성 평가",
+      "checklist": {
+        "독성자료_구성": "반복투여독성 + 생체분포(biodistribution: 임상 초기용량·표적기관 확인) + 종양원성 + 생식발생독성 + 면역독성",
+        "벡터_특이고려": "★벡터 특이적 고려사항 — 삽입돌연변이(insertional mutagenesis), 벡터 분포·지속성, 증식성/복제가능 벡터(RCV), 생식세포 전달(germline transmission) 위험",
+        "생체분포": "벡터 분포로 표적/비표적 기관 확인, 임상 관찰지표 도출",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "벡터 특성분석 — 일반 조제물 함량분석과 별개.",
+      "related_tests": ["유전자치료제", "벡터 생체분포"]
+    },
+    {
+      "code": "MFDS 의료기기 생물학적평가",
+      "title_ko": "위험관리 기반 의료기기 생물학적 평가 가이드라인",
+      "title_en": "Risk-Management Based Biological Evaluation of Medical Devices",
+      "category": "의료기기",
+      "version": "식약처 민원인 안내서 (안내서-1186-02, 2022.12)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "의료기기의 생물학적 안전성을 위험관리(ISO 14971) 기반으로 평가 — 인체 노출 특성에 따라 시험 선정",
+      "checklist": {
+        "분류원칙": "★인체 접촉 빈도·시간·접촉상태·원재료 화학성분을 고려하여 의료기기 분류 → 적절한 시험항목 선정. 원재료 또는 완제품에 적용",
+        "시험항목": "세포독성(ISO 10993-5, 7일) + 감작성(10993-10, 검수7일+시험27일) + 자극성/피내반응 + 급성전신독성(10993-11) + 아급성/아만성 + 유전독성(10993-3) + 이식(10993-6) + 발열성 + 혈액적합성(10993-4)",
+        "근거규격": "KS P ISO 10993-1~17 시리즈, 의료기기 생물학적 안전 공통기준규격(식약처 고시)",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "용출물 시험 등 — 일반 조제물 함량분석과 별개.",
+      "related_tests": ["세포독성", "감작성", "자극성", "급성전신독성", "이식시험"]
+    },
+    {
+      "code": "MFDS 생물의약품 비임상",
+      "title_ko": "생물의약품 비임상시험 가이드라인",
+      "title_en": "Nonclinical Studies for Biological Products",
+      "category": "생물의약품",
+      "version": "식약처 (2018)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "생물의약품(항체·재조합단백질·백신 등)의 비임상 안전성 평가 — ICH S6 국내판",
+      "checklist": {
+        "종선택": "★약리학적 관련종(relevant species) 사용. 적합 종 없으면 조직교차반응성(tissue cross-reactivity)으로 사람-동물조직 결합 양상 비교하여 종 선택 보조(종 선택 자체엔 제한적)",
+        "백신_반복독성": "★임상 반복투여 백신: 두 종 이상 반복투여독성 일반 요구. 단회투여 백신도 요구될 수 있음(타당성 인정 시 면제·대체)",
+        "백신_생식발생": "★가임기 여성·임산부 대상 백신은 생식발생독성 고려. 예방백신은 배아/태아/신생아 발달이 일차 평가대상(주로 태아기)",
+        "면역원성": "비임상 전 과정에서 면역원성·개념증명·제품특성 분석 포함",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "단백질 특성분석법(ELISA·결합분석)에 맞게 수행.",
+      "related_tests": ["생물의약품", "백신 반복투여 독성", "항체형성 확인시험"]
+    },
+    {
+      "code": "MFDS 바이오시밀러 단클론항체",
+      "title_ko": "단클론항체 동등생물의약품 비임상·임상 평가 가이드라인",
+      "title_en": "Nonclinical and Clinical Evaluation of mAb Biosimilars",
+      "category": "바이오시밀러",
+      "version": "식약처 민원인 안내서 (안내서-0321-01)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "단클론항체 동등생물의약품(바이오시밀러)의 비임상·임상 비교동등성 평가",
+      "checklist": {
+        "핵심원칙": "★오리지널(대조약) 대비 비교동등성(comparability) 증명이 핵심 — 단계별 순차 추진(품질→비임상→임상)",
+        "비임상": "오리지널 대비 비교 시험(통상 비교 반복투여독성), 면역원성, 약동/약력 비교. 비교동등성 입증 시 시험 범위 축소 가능",
+        "외삽": "임상 비교동등성으로 개별 시험 안 한 적응증 외삽 가능(타당성 증명 시)",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "해당 없음 (비교동등성).",
+      "related_tests": ["바이오시밀러", "비교 반복독성"]
+    },
+    {
+      "code": "MFDS 보툴리눔 독소제제",
+      "title_ko": "보툴리눔 독소제제 심사 시 고려사항",
+      "title_en": "Considerations for Review of Botulinum Toxin Products",
+      "category": "생물의약품(보툴리눔)",
+      "version": "식약처 민원인 안내서 (2023.11)",
+      "official_url": "https://www.mfds.go.kr/brd/m_1060/ (식약처 지침서·안내서)",
+      "confidence": "원문확인",
+      "purpose": "보툴리눔 독소제제의 비임상(독성·면역원성·역가) 평가 고려사항",
+      "checklist": {
+        "단회투여독성": "감수성 있는 1종 이상(랫드·원숭이 등). 임상적용경로 최우선. 개략 치사량 적절 용량단계. 활성대조약 비교독성 고려. 관찰 통상 2주",
+        "반복투여독성": "★반드시 요구(임상 반복사용). 감수성 1종 이상, 임상 예상 투여횟수·경로 고려. 회복군 권장. 활성대조약(독성유발 용량 포함) 비교 디자인",
+        "면역원성": "중화항체 자료 — in vivo 또는 ELISA 등 in vitro(시험법 밸리데이션·특이성·검출한도, in vivo 상관관계)",
+        "역가시험": "Mouse LD50 분석 또는 독소중화반응/검증된 ELISA",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "독소 역가·특성분석 — 일반 조제물 함량분석과 별개.",
+      "related_tests": ["보툴리눔 단회독성", "보툴리눔 반복독성", "역가시험"]
+    },
+    {
+      "code": "MFDS 기능성화장품 심사규정",
+      "title_ko": "기능성화장품 심사에 관한 규정",
+      "title_en": "Regulation on Review of Functional Cosmetics",
+      "category": "화장품",
+      "version": "식약처 고시 제2023-61호 (2023.9.21)",
+      "official_url": "https://www.law.go.kr/ (국가법령정보센터)",
+      "confidence": "원문확인",
+      "purpose": "기능성화장품 심사를 위한 안전성·유효성 제출자료 범위·요건 규정",
+      "checklist": {
+        "안전성자료": "★단회투여독성 + 1차피부자극 + 안점막자극(기타점막자극) + 피부감작성 + 광독성·광감작성 + 인체첩포 + (우려시)인체누적첩포",
+        "면제조건": "★광독성·광감작성: 자외선 흡수 없음을 입증하는 흡광도 시험자료 제출 시 면제. 과학적 타당성 인정 시 일부 자료 생략 가능",
+        "근거조화": "용어·일반사항은 의약품등의 독성시험기준 + 비임상시험관리기준(GLP) 따름",
+        "유효성자료": "효력시험 + 인체적용시험 (+ 염모효력·SPF/PA 근거자료 해당 시)",
+        "투여기간_주": null
+      },
+      "함량분석_관련": "해당 없음 (국소 적용).",
+      "related_tests": ["화장품 단회독성", "피부자극", "안점막자극", "피부감작", "광독성"]
+    }
+  ]
+}
+

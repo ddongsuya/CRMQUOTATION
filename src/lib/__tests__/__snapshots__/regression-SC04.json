@@ -1,0 +1,56 @@
+{
+  "scenario_id": "SC04",
+  "scenario_title": "TK만 (warning: 동일 기간 본시험 미선택)",
+  "options": {
+    "excipientCount": 0,
+    "priceStandard": "MFDS",
+    "discountRate": 0,
+    "currency": "KRW"
+  },
+  "lines": [
+    {
+      "kind": "prep_analysis",
+      "testItemKey": null,
+      "testName": "투여물질의 조제물 분석 — in vivo (동물 투여 시험 — 본시험·DRF·TK·회복)",
+      "adminRoute": null,
+      "unitPrice": 10000000,
+      "quantity": 1,
+      "subtotal": 10000000,
+      "linkRelation": null,
+      "note": "포함 시험: 설치류 13주 TK(2회) 6pt"
+    },
+    {
+      "kind": "analysis",
+      "testItemKey": null,
+      "testName": "투여물질의 함량 분석",
+      "adminRoute": null,
+      "unitPrice": 1000000,
+      "quantity": 2,
+      "subtotal": 2000000,
+      "linkRelation": null,
+      "note": "(1) 설치류 13주 TK(2회) 6pt : 2회"
+    },
+    {
+      "kind": "test",
+      "testItemKey": "독성시험_항목_마스터_추가정규화_v2.xlsx#시험항목 마스터#21@경구__경구",
+      "testName": "설치류 13주 TK(2회) 6pt",
+      "adminRoute": "경구",
+      "unitPrice": 88000000,
+      "quantity": 1,
+      "subtotal": 88000000,
+      "linkRelation": "TK(독성동태)",
+      "note": null
+    }
+  ],
+  "warnings": [
+    "TK \"설치류 13주 TK(2회) 6pt\" — 동일 기간(13주) 반복투여 본시험이 선택되지 않았습니다."
+  ],
+  "totals": {
+    "totalBeforeDiscount": 100000000,
+    "discountAmount": 0,
+    "totalAfterDiscount": 100000000,
+    "vatAmount": 10000000,
+    "grandTotal": 110000000,
+    "currency": "KRW"
+  }
+}

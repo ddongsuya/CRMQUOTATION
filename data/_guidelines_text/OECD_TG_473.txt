@@ -1,0 +1,798 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2016/07/test-no-473-in-vitro-mammalian-chromosomal-aberration-test_g1g6ed0e/9789264264649-en.pdf
+[CHARS] 52613
+
+OECD/OCDE 473
+Adopted:
+29 July 2016
+1
+© OECD, (2016)
+You are free to use this material subject to the terms and conditions available at
+http://www.oecd.org/termsandconditions/.
+This Guideline was adopted by the OECD Council by written procedure on 29 July 2016 [C(2016)103].
+OECD GUIDELINE FOR THE TESTING OF CHEMICALS
+In Vitro Mammalian Chromosomal Aberration Test
+INTRODUCTION
+1. The OECD Guidelines for the Testing of Chemicals are periodically reviewed in light of scientific
+progress, changing regulatory needs, and animal welfare considerations. The original Test Guideline 473
+was adopted in 1983. In 1997 a revised version was issued, based on scientific progress made to that date.
+This modified version of Test Guideline reflects nearly thirty years of experience with this test and the
+interpretation of the data. This Test Guideline is part of a series of Test Guidelines on genetic toxicology.
+A document that provides succinct information on genetic toxicology testing and an overview of the recent
+changes that were made to these Test Guidelines has been developed (1).
+2. The purpose of the in vitro chromosomal aberration test is to identify substances that cause
+structural chromosomal aberrations in cultured mammalian cells (2) (3) (4). Structural aberrations may be
+of two types, chromosome or chromatid. Polyploidy (including endoreduplication) could arise in
+chromosome aberration assays in vitro. While aneugens can induce polyploidy, polyploidy alone does not
+indicate aneugenic potential and can simply indicate cell cycle perturbation or cytotoxicity (5). This test is
+not designed to measure aneuploidy. An in vitro micronucleus test (6) would be recommended for the
+detection of aneuploidy.
+3. The in vitro chromosomal aberration test may employ cultures of established cell lines or primary
+cell cultures of human or rodent origin. The cells used should be selected on the basis of growth ability in
+culture, stability of the karyotype (including chromosome number) and spontaneous frequency of
+chromosomal aberrations (7). At the present time, the available data do not allow firm recommendations to
+be made but suggest it is important, when evaluating chemical hazards to consider the p53 status, genetic
+(karyotype) stability, DNA repair capacity and origin (rodent versus human) of the cells chosen for testing.
+The users of this Test Guideline are thus encouraged to consider the influence of these and other cell
+characteristics on the performance of a cell line in detecting the induction of chromosomal aberrations, as
+knowledge evolves in this area.
+4. Definitions used are provided in Annex 1.
+
+-- 1 of 22 --
+
+473 OECD/OCDE
+2
+© OECD, (2016)
+INITIAL CONSIDERATIONS AND LIMITATIONS
+5. Tests conducted in vitro generally require the use of an exogenous source of metabolic activation
+unless the cells are metabolically competent with respect to the test substances. The exogenous metabolic
+activation system does not entirely mimic in vivo conditions. Care should be taken to avoid conditions that
+could lead to artifactual positive results, i.e. chromosome damage not caused by direct interaction between
+the test chemicals and chromosomes; such conditions include changes in pH or osmolality (8) (9) (10),
+interaction with the medium components (11) (12) or excessive levels of cytotoxicity (13) (14) (15) (16).
+6. This test is used to detect chromosomal aberrations that may result from clastogenic events. The
+analysis of chromosomal aberration induction should be done using cells in metaphase. It is thus essential
+that cells should reach mitosis both in treated and in untreated cultures. For manufactured nanomaterials,
+specific adaptations of this Test Guideline may be needed but are not described in this Test Guideline.
+7. Before use of the Test Guideline on a mixture for generating data for an intended regulatory
+purpose, it should be considered whether, and if so why, it may provide adequate results for that purpose.
+Such considerations are not needed, when there is a regulatory requirement for testing of the mixture.
+PRINCIPLE OF THE TEST
+8. Cell cultures of human or other mammalian origin are exposed to the test chemical both with and
+without an exogenous source of metabolic activation unless cells with an adequate metabolizing capability
+are used (see paragraph 13). At an appropriate predetermined intervals after the start of exposure of cell
+cultures to the test chemical, they are treated with a metaphase-arresting substance (e.g. Colcemid® or
+colchicine), harvested, stained and metaphase cells are analysed microscopically for the presence of
+chromatid-type and chromosome-type aberrations.
+DESCRIPTION OF THE METHOD
+Preparations
+Cells
+9. A variety of cell lines (e.g. Chinese Hamster Ovary (CHO), Chinese Hamster lung V79, Chinese
+Hamster Lung (CHL)/IU, TK6) or primary cell cultures, including human or other mammalian peripheral
+blood lymphocytes, can be used (7). The choice of the cell lines used should be scientifically justified.
+When primary cells are used, for animal welfare reasons, the use of primary cells from human origin
+should be considered where feasible and sampled in accordance with the human ethical principles and
+regulations. Human peripheral blood lymphocytes should be obtained from young (approximately 18-35
+years of age), non-smoking individuals with no known illness or recent exposures to genotoxic agents (e.g.
+chemicals, ionizing radiations) at levels that would increase the background incidence of chromosomal
+aberrations. This would ensure the background incidence of chromosomal aberrations to be low and
+consistent. The baseline incidence of chromosomal aberrations increases with age and this trend is more
+marked in females than in males (17) (18). If cells from more than one donor are pooled for use, the
+number of donors should be specified. It is necessary to demonstrate that the cells have divided from the
+beginning of treatment with the test chemical to cell sampling. Cell cultures are maintained in an
+exponential cell growth phase (cell lines) or stimulated to divide (primary cultures of lymphocytes), to
+
+-- 2 of 22 --
+
+OECD/OCDE 473
+3
+© OECD, (2016)
+expose the cells at different stages of the cell cycle, since the sensitivity of cell stages to the test substances
+may not be known. The primary cells that need to be stimulated with mitogenic agents in order to divide
+are generally no longer synchronized during exposure to the test chemical (e.g. human lymphocytes after a
+48-hour mitogenic stimulation). The use of synchronized cells during treatment is not recommended, but
+can be acceptable if justified.
+Media and culture conditions
+10. Appropriate culture medium and incubation conditions (culture vessels, humidified atmosphere of
+5% CO2 if appropriate, incubation temperature of 37°C) should be used for maintaining cultures. Cell lines
+should be checked routinely for the stability of the modal chromosome number and the absence of
+Mycoplasma contamination (7) (19), and cells should not be used if contaminated or if the modal
+chromosome number has changed. The normal cell cycle time of cell lines or primary cultures used in the
+testing laboratory should be established and should be consistent with the published cell characteristics
+(20).
+Preparation of cultures
+11. Cell lines: cells are propagated from stock cultures, seeded in culture medium at a density such that
+the cells in suspensions or in monolayers will continue to grow exponentially until harvest time (e.g.
+confluence should be avoided for cells growing in monolayers).
+12. Lymphocytes: whole blood treated with an anti-coagulant (e.g. heparin) or separated lymphocytes
+are cultured (e.g. for 48 hours for human lymphocytes) in the presence of a mitogen mitogen [e.g.
+phytohaemagglutinin (PHA) for human lymphocytes] in order to induce cell division prior to exposure to
+the test chemical.
+Metabolic activation
+13. Exogenous metabolising systems should be used when employing cells which have inadequate
+endogenous metabolic capacity. The most commonly used system that is recommended by default, unless
+otherwise justified, is a co-factor-supplemented post-mitochondrial fraction (S9) prepared from the livers
+of rodents (generally rats) treated with enzyme-inducing agents such as Aroclor 1254 (21) (22) (23) or a
+combination -naphthoflavone (24) (25) (26) (27) (28) (29). The latter combination
+does not conflict with the Stockholm Convention on Persistent Organic Pollutants (30) and has been shown
+to be as effective as Aroclor 1254 for inducing mixed-function oxidases (24) (25) (26) (28). The S9
+fraction typically is used at concentrations ranging from 1 to 2% (v/v) but may be increased to 10% (v/v) in
+the final test medium. The use of products that reduce the mitotic index, especially calcium complexing
+products (31) should be avoided during treatment. The choice of type and concentration of exogenous
+metabolic activation system or metabolic inducer employed may be influenced by the class of substances
+being tested.
+Test chemical preparation
+14. Solid test chemicals should be prepared in appropriate solvents and diluted, if appropriate, prior to
+treatment of the cells (see paragraph 23). Liquid test chemicals may be added directly to the test system
+and/or diluted prior to treatment of the test system. Gaseous or volatile test chemicals should be tested by
+appropriate modifications to the standard protocols, such as treatment in sealed culture vessels (32) (33)
+
+-- 3 of 22 --
+
+473 OECD/OCDE
+4
+© OECD, (2016)
+(34). Preparations of the test chemical should be made just prior to treatment unless stability data
+demonstrate the acceptability of storage.
+
+-- 4 of 22 --
+
+OECD/OCDE 473
+5
+© OECD, (2016)
+Test conditions
+Solvents
+15. The solvent should be chosen to optimize the solubility of the test substances without adversely
+impacting the conduct of the assay, e.g. changing cell growth, affecting the integrity of the test chemical,
+reacting with culture vessels, impairing the metabolic activation system. It is recommended that, wherever
+possible, the use of an aqueous solvent (or culture medium) should be considered first. Well established
+solvents are for example water or dimethyl sulfoxide. Generally organic solvents should not exceed 1%
+(v/v) and aqueous solvents (saline or water) should not exceed 10% (v/v) in the final treatment medium. If
+not well-established solvents are used (e.g. ethanol or acetone), their use should be supported by data
+indicating their compatibility with the test chemicals, the test system and their lack of genetic toxicity at
+the concentration used. In the absence of that supporting data, it is important to include untreated controls
+(see Annex 1) to demonstrate that no deleterious or clastogenic effects are induced by the chosen solvent.
+Measuring cell proliferation and cytotoxicity and choosing treatment concentrations
+16. When determining the highest test chemical concentration, concentrations that have the capability
+of producing artifactual positive responses, such as those producing excessive cytotoxicity (see paragraph
+22), precipitation in the culture medium (see paragraph 23), or marked changes in pH or osmolality (see
+paragraph 5), should be avoided. If the test chemical causes a marked change in the pH of the medium at
+the time of addition, the pH might be adjusted by buffering the final treatment medium so as to avoid
+artifactual positive results and to maintain appropriate culture conditions.
+17. Measurements of cell proliferation are made to assure that a sufficient number of treated cells
+have reached mitosis during the test and that the treatments are conducted at appropriate levels of
+cytotoxicity (see paragraphs 18 and 22). Cytotoxicity should be determined with and without metabolic
+activation in the main experiment using an appropriate indication of cell death and growth. While the
+evaluation of cytotoxicity in an initial test may be useful to better define the concentrations to be used in
+the main experiment, an initial test is not mandatory. If performed, it should not replace the measurement
+of cytotoxicity in the main experiment.
+18. Relative Population Doubling (RPD) or Relative Increase in Cell Count (RICC) are appropriate
+methods for the assessment of cytotoxicity in cytogenetic tests (13) (15) (35) (36) (55) (see Annex 2 for
+formulas). In case of long-term treatment and sampling times after the beginning of treatment longer than
+1.5 normal cell cycle lengths (i.e. longer than 3 cell cycle lengths in total), RPD might underestimate
+cytotoxicity (37). Under these circumstances RICC might be a better measure or the evaluation of
+cytotoxicity after 1.5 normal cell cycle lengths would be a helpful estimate using RPD.
+19. For lymphocytes in primary cultures, while the mitotic index (MI) is a measure of
+cytotoxic/cytostatic effects, it is influenced by the time after treatment it is measured, the mitogen used and
+possible cell cycle disruption. However, the MI is acceptable because other cytotoxicity measurements
+may be cumbersome and impractical and may not apply to the target population of lymphocytes growing in
+response to PHA stimulation.
+20. While RICC and RPD for cell lines and MI for primary culture of lymphocytes are the
+recommended cytotoxicity parameters, other indicators (e.g. cell integrity, apoptosis, necrosis, cell cycle)
+could provide useful additional information.
+
+-- 5 of 22 --
+
+473 OECD/OCDE
+6
+© OECD, (2016)
+21. At least three test concentrations (not including the solvent and positive controls) that meet the
+acceptability criteria (appropriate cytotoxicity, number of cells, etc) should be evaluated. Whatever the
+types of cells (cell lines or primary cultures of lymphocytes), either replicate or single treated cultures may
+be used at each concentration tested. While the use of duplicate cultures is advisable, single cultures are
+also acceptable provided that the same total number of cells are scored for either single or duplicate
+cultures. The use of single cultures is particularly relevant when more than 3 concentrations are assessed
+(see paragraph 31). The results obtained in the independent replicate cultures at a given concentration can
+be pooled for the data analysis (38). For test chemicals demonstrating little or no cytotoxicity,
+concentration intervals of approximately 2 to 3 fold will usually be appropriate. Where cytotoxicity occurs,
+the test concentrations selected should cover a range from that producing cytotoxicity as described in
+paragraph 22 and including concentrations at which there is moderate and little or no cytotoxicity. Many
+test chemicals exhibit steep concentration response curves and in order to obtain data at low and moderate
+cytotoxicity or to study the dose response relationship in detail, it will be necessary to use more closely
+spaced concentrations and/or more than three concentrations (single cultures or replicates), in particular in
+situations where a repeat experiment is required (see paragraph 47).
+22. If the maximum concentration is based on cytotoxicity, the highest concentration should aim to
+achieve 55 ± 5% cytotoxicity using the recommended cytotoxicity parameters (i.e. reduction in RICC and
+RPD for cell lines and reduction in MI for primary cultures of lymphocytes to 45± 5% of the concurrent
+negative control). Care should be taken in interpreting positive results only to be found in the higher end of
+this 55 ± 5% cytotoxicity range (13).
+23. For poorly soluble test chemicals that are not cytotoxic at concentrations lower than the lowest
+insoluble concentration, the highest concentration analysed should produce turbidity or a precipitate visible
+by eye or with the aid of an inverted microscope at the end of the treatment with the test chemical. Even if
+cytotoxicity occurs above the lowest insoluble concentration, it is advisable to test at only one
+concentration producing turbidity or with a visible precipitate because artifactual effects may result from
+the precipitate. At the concentration producing a precipitate, care should be taken to assure that the
+precipitate does not interfere with the conduct of the test (e.g. staining or scoring). The determination of
+solubility in the culture medium prior to the experiment may be useful.
+24. If no precipitate or limiting cytotoxicity is observed, the highest test concentration should
+correspond to 10 mM, 2 mg/mL or 2 μl/mL, whichever is the lowest (39) (40) (41). When the test chemical
+is not of defined composition e.g. substance of unknown or variable composition, complex reaction
+products or biological materials (i.e. UVCBs) (42), environmental extracts etc., the top concentration may
+need to be higher (e.g. 5 mg/ml), in the absence of sufficient cytotoxicity, to increase the concentration of
+each of the components. It should be noted however that these requirements may differ for human
+pharmaceuticals (43).
+Controls
+25. Concurrent negative controls (see paragraph 15), consisting of solvent alone in the treatment
+medium and treated in the same way as the treatment cultures, should be included for every harvest time.
+26. Concurrent positive controls are needed to demonstrate the ability of the laboratory to identify
+clastogens under the conditions of the test protocol used and the effectiveness of the exogenous metabolic
+activation system, when applicable. Examples of positive controls are given in the table 1 below.
+Alternative positive control substances can be used, if justified. Because in vitro mammalian cell tests for
+genetic toxicity are sufficiently standardized, the use of positive controls may be confined to a clastogen
+
+-- 6 of 22 --
+
+OECD/OCDE 473
+7
+© OECD, (2016)
+requiring metabolic activation. Provided it is done concurrently with the non-activated test using the same
+treatment duration, this single positive control response will demonstrate both the activity of the metabolic
+activation system and the responsiveness of the test system. Long term treatment (without S9) should
+however have its own positive control as the treatment duration will differ from the test using metabolic
+activation. Each positive control should be used at one or more concentrations expected to give
+reproducible and detectable increases over background in order to demonstrate the sensitivity of the test
+system (i.e. the effects are clear but do not immediately reveal the identity of the coded slides to the
+reader), and the response should not be compromised by cytotoxicity exceeding the limits specified in the
+Test Guideline.
+Table 1. Reference substances recommended for assessing laboratory proficiency and for selection of
+positive controls.
+Category Substance CASRN
+1. Clastogens active without metabolic activation
+Methyl methanesulphonate 66-27-3
+Mitomycin C 50-07-7
+4-Nitroquinoline-N-Oxide 56-57-5
+Cytosine arabinoside 147-94-4
+2. Clastogens requiring metabolic activation
+Benzo(a)pyrene 50-32-8
+Cyclophosphamide 50-18-0
+PROCEDURE
+Treatment with test chemical
+27. Proliferating cells are treated with the test chemical in the presence and absence of a metabolic
+activation system.
+Culture harvest time
+28. For thorough evaluation, which would be needed to conclude a negative outcome, all three of the
+following experimental conditions should be conducted using a short term treatment with and without
+metabolic activation and long term treatment without metabolic activation (see paragraphs 43, 44 and 45):
+Cells should be exposed to the test chemical without metabolic activation for 3-6 hours, and
+sampled at a time equivalent to about 1.5 normal cell cycle lengths after the beginning of treatment
+(18),
+Cells should be exposed to the test chemical with metabolic activation for 3-6 hours, and sampled
+at a time equivalent to about 1.5 normal cell cycle lengths after the beginning of treatment (18),
+Cells should be continuously exposed without metabolic activation until sampling at a time
+equivalent to about 1.5 normal cell cycle lengths. Certain substances (e.g. nucleoside analogues)
+may be more readily detected by treatment/sampling times longer than 1.5 normal cell cycle
+lengths (24).
+
+-- 7 of 22 --
+
+473 OECD/OCDE
+8
+© OECD, (2016)
+In the event that any of the above experimental conditions lead to a positive response, it may not be
+necessary to investigate any of the other treatment regimens.
+
+-- 8 of 22 --
+
+OECD/OCDE 473
+9
+© OECD, (2016)
+Chromosome preparation
+29. Cell cultures are treated with Colcemid® or colchicine usually for one to three hours prior to
+harvesting. Each cell culture is harvested and processed separately for the preparation of chromosomes.
+Chromosome preparation involves hypotonic treatment of the cells, fixation and staining. In monolayers,
+mitotic cells (identifiable as being round and detaching from the surface) may be present at the end of the
+3-6 hour treatment. Because these mitotic cells are easily detached, they can be lost when the medium
+containing the test chemical is removed. If there is evidence for a substantial increase in the number of
+mitotic cells compared with controls, indicating likely mitotic arrest, then the cells should be collected by
+centrifugation and added back to cultures, to avoid losing cells that are in mitosis, and at risk for
+chromosome aberration, at the time of harvest.
+Analysis
+30. All slides, including those of the positive and negative controls, should be independently coded
+before microscopic analysis for chromosomal aberrations. Since fixation procedures often result in a
+proportion of metaphase cells which have lost chromosomes, the cells scored should, therefore, contain a
+number of centromeres equal to the modal number +/- 2.
+31. At least 300 well-spread metaphases should be scored per concentration and control to conclude a
+test chemical as clearly negative (see paragraph 45). The 300 cells should be equally divided among the
+replicates, when replicate cultures are used. When single cultures are used per concentration (see
+paragraph 21), at least 300 well spread metaphases should be scored in this single culture. Scoring 300
+cells has the advantage of increasing the statistical power of the test and in addition, zero values will be
+rarely observed (expected to be only 5%) (44). The number of metaphases scored can be reduced when
+high numbers of cells with chromosome aberrations are observed and the test chemical considered as
+clearly positive.
+32. Cells with structural chromosomal aberration(s) including and excluding gaps should be scored.
+Breaks and gaps are defined in Annex 1 according to (45) (46). Chromatid- and chromosome-type
+aberrations should be recorded separately and classified by sub-types (breaks, exchanges). Procedures in
+use in the laboratory should ensure that analysis of chromosomal aberrations is performed by well-trained
+scorers and peer-reviewed if appropriate.
+33. Although the purpose of the test is to detect structural chromosomal aberrations, it is important to
+record polyploidy and endoreduplication frequencies when these events are seen. (See paragraph 2).
+Proficiency of the laboratory
+34. In order to establish sufficient experience with the test prior to using it for routine testing, the
+laboratory should have performed a series of experiments with reference positive substances acting via
+different mechanisms and various negative controls (using various solvents/vehicle). These positive and
+negative control responses should be consistent with the literature. This is not applicable to laboratories
+that have experience, i.e. that have an historical data base available as defined in paragraph 37.
+35. A selection of positive control substances (see Table 1 in paragraph 26) should be investigated
+with short and long treatments in the absence of metabolic activation, and also with short treatment in the
+presence of metabolic activation, in order to demonstrate proficiency to detect clastogenic substances and
+determine the effectiveness of the metabolic activation system. A range of concentrations of the selected
+
+-- 9 of 22 --
+
+473 OECD/OCDE
+10
+© OECD, (2016)
+substances should be chosen so as to give reproducible and concentration-related increases above the
+background in order to demonstrate the sensitivity and dynamic range of the test system.
+Historical control data
+36. The laboratory should establish:
+A historical positive control range and distribution,
+A historical negative (untreated, solvent) control range and distribution.
+37. When first acquiring data for an historical negative control distribution, concurrent negative
+controls should be consistent with published control data, where they exist. As more experimental data are
+added to the control distribution, concurrent negative controls should ideally be within the 95% control
+limits of that distribution (44) (47
+built with a minimum of 10 experiments but would preferably consist of at least 20 experiments conducted
+under comparable experimental conditions. Laboratories should use quality control methods, such as
+control charts (e.g. C-charts or X-bar charts (48)), to identify how variable their positive and negative
+control data are, and to show that the methodology is 'under control' in their laboratory (44). Further
+recommendations on how to build and use the historical data (i.e. criteria for inclusion and exclusion of
+data in historical data and the acceptability criteria for a given experiment) can be found in the literature
+(47).
+38. Any changes to the experimental protocol should be considered in terms of their consistency with
+result in the
+establishment of a new historical control database.
+39. Negative control data should consist of the incidence of cells with chromosome aberrations from a
+single culture or the sum of replicate cultures as described in paragraph 21. Concurrent negative controls
+control database (44) (47). Where concurrent negative control data fall outside the 95% control limits they
+may be acceptable for inclusion in the historical control distribution as long as these data are not extreme
+7) and evidence of
+absence of technical or human failure.
+DATA AND REPORTING
+Presentation of the results
+40. The percentage of cells with structural chromosomal aberration(s) should be evaluated. Chromatid-
+and chromosome-type aberrations classified by sub-types (breaks, exchanges) should be listed separately
+with their numbers and frequencies for experimental and control cultures. Gaps are recorded and reported
+separately but not included in the total aberration frequency. Percentage of polyploidy and/or
+endoreduplicated cells are reported when seen.
+41. Concurrent measures of cytotoxicity for all treated, negative and positive control cultures in the
+main aberration experiment(s) should be recorded.
+42. Individual culture data should be provided. Additionally, all data should be summarised in tabular
+form.
+
+-- 10 of 22 --
+
+OECD/OCDE 473
+11
+© OECD, (2016)
+Acceptability Criteria
+43. Acceptance of a test is based on the following criteria:
+The concurrent negative control is considered acceptable for addition to the laboratory historical
+negative control database as described in paragraph 39.
+Concurrent positive controls (see paragraph 26) should induce responses that are compatible with
+those generated in the historical positive control data base and produce a statistically significant
+increase compared with the concurrent negative control.
+Cell proliferation criteria in the solvent control should be fulfilled (paragraphs 17 and 18).
+All three experimental conditions were tested unless one resulted in positive results (see paragraph
+28).
+Adequate number of cells and concentrations are analysable (paragraphs 31 and 21).
+The criteria for the selection of top concentration are consistent with those described in paragraphs
+22, 23 and 24.
+Evaluation and interpretation of results
+44. Providing that all acceptability criteria are fulfilled, a test chemical is considered to be clearly
+positive if, in any of the experimental conditions examined (see paragraph 28):
+a) at least one of the test concentrations exhibits a statistically significant increase compared with the
+concurrent negative control,
+b) the increase is dose-related when evaluated with an appropriate trend test,
+c) any of the results are outside the distribution of the historical negative control data (e.g. Poisson-
+based 95% control limits; see paragraph 39).
+When all of these criteria are met, the test chemical is then considered able to induce chromosomal
+aberrations in cultured mammalian cells in this test system. Recommendations for the most appropriate
+statistical methods can be found in the literature (49) (50) (51).
+45. Providing that all acceptability criteria are fulfilled, a test chemical is considered clearly negative
+if, in all experimental conditions examined (see paragraph 28):
+a) none of the test concentrations exhibits a statistically significant increase compared with the
+concurrent negative control,
+b) there is no concentration-related increase when evaluated with an appropriate trend test,
+c) all results are inside the distribution of the historical negative control data (e.g. Poisson-based 95%
+control limits; see paragraph 39).
+The test chemical is then considered unable to induce chromosomal aberrations in cultured mammalian
+cells in this test system.
+46. There is no requirement for verification of a clearly positive or negative response.
+47. In case the response is neither clearly negative nor clearly positive as described above or in order
+to assist in establishing the biological relevance of a result, the data should be evaluated by expert
+
+-- 11 of 22 --
+
+473 OECD/OCDE
+12
+© OECD, (2016)
+judgement and/or further investigations. Scoring additional cells (where appropriate) or performing a
+repeat experiment possibly using modified experimental conditions (e.g. concentration spacing, other
+metabolic activation conditions [i.e. S9 concentration or S9 origin]) could be useful.
+48. In rare cases, even after further investigations, the data set will preclude making a conclusion of
+positive or negative results, and therefore the test chemical response will be concluded to be equivocal.
+49. An increase in the number of polyploid cells may indicate that the test substances have the
+potential to inhibit mitotic processes and to induce numerical chromosomal aberrations (52). An increase in
+the number of cells with endoreduplicated chromosomes may indicate that the test substances have the
+potential to inhibit cell cycle progress (53) (54) (see paragraph 2). Therefore incidence of polyploid cells
+and cells with endoreduplicated chromosomes should be recorded separately.
+Test report
+50. The test report should include the following information:
+Test chemical:
+- source, lot number, limit date for use, if available
+- stability of the test chemical itself, if known;
+- solubility and stability of the test chemical in solvent, if known.
+- measurement of pH, osmolality and precipitate in the culture medium to which the test
+chemical was added, as appropriate.
+Mono-constituent substance:
+- physical appearance, water solubility, and additional relevant physicochemical properties;
+- chemical identification, such as IUPAC or CAS name, CAS number, SMILES or InChI code,
+structural formula, purity, chemical identity of impurities as appropriate and practically
+feasible, etc.
+Multi-constituent substance, UVBCs and mixtures:
+- characterised as far as possible by chemical identity (see above), quantitative occurrence and
+relevant physicochemical properties of the constituents.
+Solvent:
+- justification for choice of solvent.
+- percentage of solvent in the final culture medium should also be indicated.
+Cells:
+- type and source of cells
+- karyotype features and suitability of the cell type used;
+- absence of mycoplasma, for cell lines;
+- for cell lines, information on cell cycle length, doubling time or proliferation index;
+- sex of blood donors, age and any relevant information on the donor, whole blood or separated
+lymphocytes, mitogen used;
+
+-- 12 of 22 --
+
+OECD/OCDE 473
+13
+© OECD, (2016)
+- number of passages, if available, for cell lines;
+- methods for maintenance of cell cultures, for cell lines;
+- modal number of chromosomes, for cell lines.
+Test conditions:
+- identity of the metaphase-arresting substance, its concentration and duration of cell exposure;
+- concentration of test chemical expressed as final concentration in the culture medium (e.g. μg
+or mg/mL or mM of culture medium).
+- rationale for selection of concentrations and number of cultures including, e.g. cytotoxicity data
+and solubility limitations;
+- composition of media, CO2 concentration if applicable, humidity level;
+- concentration (and/or volume) of solvent and test chemical added in the culture medium;
+- incubation temperature;
+- incubation time;
+- duration of treatment;
+- harvest time after treatment;
+- cell density at seeding, if appropriate;
+- type and composition of metabolic activation system (source of S9, method of preparation of
+the S9 mix, the concentration or volume of S9 mix and S9 in the final culture medium, quality
+controls of S9);
+- positive and negative control substances, final concentrations for each conditions of treatment;
+- methods of slide preparation and staining technique used;
+- criteria for acceptability of assays;
+- criteria for scoring aberrations;
+- number of metaphases analysed;
+- methods for the measurements of cytotoxicity;
+- any supplementary information relevant to cytotoxicity and method used;
+- criteria for considering studies as positive, negative or equivocal;
+- methods used to determine pH, osmolality and precipitation.
+Results:
+- the number of cells treated and the number of cells harvested for each culture when cell lines
+are used
+- cytotoxicity measurements, e.g. RPD, RICC, MI, other observations if any;
+- information on cell cycle length, doubling time or proliferation index in case of cell lines;
+- signs of precipitation and time of the determination;
+- definition for aberrations, including gaps;
+- Number of cells scored, number of cells with chromosomal aberrations and type of
+chromosomal aberrations given separately for each treated and control culture, including and
+excluding gaps;
+- changes in ploidy (polyploid cells and cells with endoreduplicated chromosomes, given
+separately) if seen;
+- concentration-response relationship, where possible;
+- concurrent negative (solvent) and positive control data (concentrations and solvents);
+- historical negative (solvent) and positive control data, with ranges, means and standard
+deviations and 95% control limits for the distribution, as well as the number of data;
+- statistical analyses, p-values if any.
+
+-- 13 of 22 --
+
+473 OECD/OCDE
+14
+© OECD, (2016)
+Discussion of the results.
+Conclusions.
+
+-- 14 of 22 --
+
+OECD/OCDE 473
+15
+© OECD, (2016)
+LITERATURE
+(1) OECD (2016). Overview of the set of OECD Genetic Toxicology Test Guidelines and updates
+performed in 2014-2015. ENV Publications. Series on Testing and Assessment, No. 234, OECD,
+Paris.
+(2) Chemical
+Mutagens, Principles and Methods for their Detection, Vol. 4, Hollaender, A. (ed.), Plenum Press,
+New York and London, pp. 1-29
+(3) Ishidate, M. Jr., T. Sofuni (1985),
+Progress in Mutation Research, Vol. 5, Ashby,
+J. et al. (eds.), Elsevier Science Publishers, Amsterdam-New York- Oxford, pp. 427-432.
+(4) Galloway, S.M. et al. (1987), Chromosomal aberration and sister chromatid exchanges in Chinese
+hamster ovary cells: Evaluation of 108 chemicals, Environmental and Molecular Mutagenesis, Vol.
+10/suppl. 10, pp. 1-175.
+(5) Muehlbauer, P.A. et al. ose selection and identification of aneugens in the in
+vitro chromosome aberration test by integration of flow cytometry-based methods, Environmental
+and Molecular Mutagenesis, Vol. 49/4, pp. 318-327.
+(6) OECD (2014), Test No. 487: In Vitro Mammalian Cell Micronucleus Test, OECD Guidelines for
+the Testing of Chemicals, Section 4, OECD Publishing, Paris.
+(7) ILSI paper (draft), Lorge, E., M. Moore, J. Clements, M. O Donovan, F. Darroudi, M. Honma, A.
+Czich, J van Benthem, S. Galloway, V. Thybaud, B. Gollapudi, M. Aardema, J. Kim, D.J.
+Kirkland, Recommendations for good cell culture practices in genotoxicity testing.
+(8) Scott, D. et al. (1991), Genotoxicity under Extreme Culture Conditions. A report from ICPEMC
+Task Group 9, Mutation Research/Reviews in Genetic Toxicology, Vol.257/2, pp. 147-204.
+(9) Morita, T. et al. (1992), Clastogenicity of Low pH to Various Cultured Mammalian Cells, Mutation
+Research/Genetic Toxicology and Environmental Mutagenesis, Vol. 268/2, pp. 297-305.
+(10) Brusick, D. (1986), Genotoxic effects in cultured mammalian cells produced by low pH treatment
+conditions and increased ion concentrations, Environmental and Molecular Mutagenesis, Vol. 8/6,
+pp. 789-886.
+(11) Long, L.H. et al. (2007), Different cytotoxic and clastogenic effects of epigallocatechin gallate in
+various cell-culture media due to variable rates of its oxidation in the culture medium, Mutation
+Research/Genetic Toxicology and Environmental Mutagenesis, Vol. 634/1-2, pp. 177-183.
+(12) Nesslany, F. et al. (2008), Characterization of the Genotoxicity of Nitrilotriacetic Acid,
+Environmental and Molecular Mutagenesis, Vol. 49/6, pp. 439-452.
+
+-- 15 of 22 --
+
+473 OECD/OCDE
+16
+© OECD, (2016)
+(13) Galloway, S. (2000), Cytotoxicity and chromosome aberrations in vitro: Experience in industry
+and the case for an upper limit on toxicity in the aberration assay, Environmental and Molecular
+Mutagenesis, Vol. 35/3, pp. 191-201.
+(14) Kirkland, D. et al. (2005), Evaluation of the ability of a battery of three in vitro genotoxicity tests
+to discriminate rodent carcinogens and non-carcinogens. I: Sensitivity, specificity and relative
+predictivity, Mutation Research/Genetic Toxicology and Environmental Mutagenesis, Vol. 584/1-
+2, pp. 1 256.
+(15) Greenwood, S. et al. (2004), Population doubling: a simple and more accurate estimation of cell
+growth suppression in the in vitro assay for chromosomal aberrations that reduces irrelevant
+positive results, Environmental and Molecular Mutagenesis, Vol. 43/1, pp. 36 44.
+(16) Hilliard, C.A. et al. (1998), Chromosome aberrations in vitro related to cytotoxicity of
+nonmutagenic chemicals and metabolic poisons, Environmental and Molecular Mutagenesis, Vol.
+31/4, pp. 316 326.
+(17) Hedner K. et al. (1982), Sister chromatid exchanges and structural chromosomal aberrations in
+relation to age and sex, Human Genetics, Vol. 62, pp. 305-309.
+(18) Ramsey M.J. et al. (1995), The effects of age and lifestyle factors on the accumulation of
+cytogenetic damage as measured by chromosome painting, Mutation Research, Vol. 338, pp. 95-
+106.
+(19) Coecke S. et al. (2005), Guidance on Good Cell Culture Practice. A Report of the Second ECVAM
+Task Force on Good Cell Culture Practice, ATLA, Vol. 33/3, pp. 261-287.
+(20) Henderson, L. et al. (1997), Industrial Genotoxicology Group collaborative trial to investigate cell
+cycle parameters in human lymphocyte cytogenetics studies, Mutagenesis, Vol.12/3, pp.163-167.
+(21) Ames, B.N., J. McCann, E. Yamasaki (1975), Methods for Detecting Carcinogens and Mutagens
+with the Salmonella/Mammalian Microsome Mutagenicity Test, Mutation Research/Environmental
+Mutagenesis and Related Subjects, Vol. 31/6, pp. 347-363.
+(22) Maron, D.M., B.N. Ames (1983), Revised Methods for the Salmonella Mutagenicity Test, Mutation
+Research/Environmental Mutagenesis and Related Subjects, Vol. 113/3-4, pp. 173-215.
+(23) Natarajan, A.T. et al. (1976), Cytogenetic Effects of Mutagens/Carcinogens after Activation in a
+Microsomal System In Vitro, I. Induction of Chromosomal Aberrations and Sister Chromatid
+Exchanges by Diethylnitrosamine (DEN) and Dimethylnitrosamine (DMN) in CHO Cells in the
+Presence of Rat-Liver Microsomes, Mutation Research, Vol. 37/1, pp. 83-90.
+(24) Matsuoka, A., M. Hayashi, M. Jr. Ishidate (1979), Chromosomal Aberration Tests on 29 Chemicals
+Combined with S9 Mix In vitro, Mutation Research/Genetic Toxicology, Vol. 66/3, pp. 277-290.
+(25) Ong, T.-m. et al. (1980), Differential effects of cytochrome P450-inducers on promutagen
+activation capabilities and enzymatic activities of S-9 from rat liver, Journal of Environmental
+Pathology and Toxicology, Vol. 4/1, pp. 55-65.
+
+-- 16 of 22 --
+
+OECD/OCDE 473
+17
+© OECD, (2016)
+(26) Elliot, B.M. et al. (1992), Report of UK Environmental Mutagen Society Working Party.
+Alternatives to Aroclor 1254-induced S9 in In Vitro Genotoxicity Assays, Mutagenesis, Vol. 7/3, pp.
+175-177.
+(27)
+In Vitro Metabolic Activation in Mutagenesis Testing, de Serres,
+F.J. et al. (eds.), Elsevier, North-Holland, pp. 85-88.
+(28) Galloway, S.M. et al. (1994). Report from Working Group on in Vitro Tests for Chromosomal
+Aberrations, Mutation Research/Environmental Mutagenesis and Related Subjects, Vol. 312/3, pp.
+241-261.
+(29) Johnson, T.E., D.R. Umbenhauer, S.M. Galloway (1996), Human liver S-9 metabolic activation:
+proficiency in cytogenetic assays and comparison with phenobarbital/beta-naphthoflavone or
+Aroclor 1254 induced rat S-9, Environmental and Molecular Mutagenesis, Vol. 28/1, pp. 51-59.
+(30) UNEP (2001), Stockholm Convention on Persistent Organic Pollutants, United Nations
+Environment Programme (UNEP). : http://www.pops.int/.
+(31) Tucker, J.D., M.L. Christensen (1987), Effects of anticoagulants upon sister-chromatid exchanges,
+cell-cycle kinetics, and mitotic index in human peripheral lymphocytes, Mutation Research, Vol.
+190/3, pp. 225-8.
+(32) Krahn, D.F.
+Genotoxic Effects of Airborne Agents, Tice, R.R., D.L. Costa, K.M.
+Schaich (eds.), Plenum, New York, pp. 91-103.
+(33) Zamora, P.O. et al. (1983), Evaluation of an Exposure System Using Cells Grown on Collagen Gels
+for Detecting Highly Volatile Mutagens in the CHO/HGPRT Mutation Assay, Environmental and
+Molecular Mutagenesis, Vol. 5/6, pp. 795-801.
+(34) Asakura, M. et al. (2008), An improved system for exposure of cultured mammalian cells to
+gaseous compounds in the chromosomal aberration assay, Mutation Research, Vol. 652/2, pp. 122-
+130.
+(35) Lorge, E. et al. (2008), Comparison of different methods for an accurate assessment of cytotoxicity
+in the in vitro micronucleus test. I. Theoretical aspects, Mutation Research/Genetic Toxicology and
+Environmental Mutagenesis, Vol. 655/1-2, pp. 1-3.
+(36) Galloway, S. et al. (2011), Workshop summary: Top concentration for in vitro mammalian cell
+genotoxicity assays; and Report from working group on toxicity measures and top concentration
+for in vitro cytogenetics assays (chromosome aberrations and micronucleus), Mutation
+Research/Genetic Toxicology and Environmental Mutagenesis, Vol. 723/2, pp. 77-83.
+(37) Honma, M. (2011), Cytotoxicity measurement in in vitro chromosome aberration test and
+micronucleus test, Mutation Research/Fundamental and Molecular Mechanisms of Mutagenesis,
+Vol. 724/1-2, pp. 86-87.
+
+-- 17 of 22 --
+
+473 OECD/OCDE
+18
+© OECD, (2016)
+(38) Richardson, C. et al. (1989), Analysis of Data from In Vitro Cytogenetic Assays. In:
+Statistical Evaluation of Mutagenicity Test Data, Kirkland, D.J. (ed.) Cambridge University
+Press, Cambridge, pp. 141-154.
+(39) OECD (2014), Document supporting the WNT decision to implement revised criteria for the
+selection of the top concentration in the in vitro mammalian cell assays on genotoxicity (Test
+Guidelines 473, 476 and 487) ENV/JM/TG(2014)17. Available upon request.
+(40) Morita, T., M. Honma, K. Morikawa (2012), Effect of reducing the top concentration used in the in
+vitro chromosomal aberration test in CHL cells on the evaluation of industrial chemical
+genotoxicity, Mutation Research/Genetic Toxicology and Environmental Mutagenesis, Vol. 741/1-
+2, pp. 32-56.
+(41) Brookmire, L., J.J. Chen, D.D. Levy (2013), Evaluation of the Highest Concentrations Used in the
+In Vitro Chromosome Aberrations Assay, Environmental and Molecular Muagenesis, Vol. 54/1,
+pp. 36-43.
+(42) EPA, Office of Chemical Safety and Pollution Prevention (2011), Chemical Substances of
+Unknown or Variable Composition, Complex Reaction Products and Biological Materials: UVCB
+Substances, http://www.epa.gov/opptintr/newchems/pubs/uvcb.txt.
+(43) USFDA (2012), International Conference on Harmonisation (ICH) Guidance S2 (R1) on
+Genotoxicity Testing and Data Interpretation for Pharmaceuticals Intended For Human Use.
+: https://federalregister.gov/a/2012-13774.
+(44)
+OECD Environment, Health and Safety Publications (EHS), Series on Testing and Assessment,
+No. 198, OECD Publishing, Paris.
+(45) ISCN (2013), An International System for Human Cytogenetic Nomenclature, Schaffer, L.G., J.
+MacGowan-Gordon, M. Schmid (eds.), Karger Publishers Inc., Connecticut.
+(46) Basic Mutagenicity
+Tests: UKEMS Recommended Procedures, Kirkland, D.J. (ed.), Cambridge University Press,
+Cambridge, pp. 62-86.
+(47) Hayashi, M. et al. (2011), Compilation and use of genetic toxicity historical control Data, Mutation
+Research, Vol. 723/2, pp. 87-90.
+(48) Ryan, T. P. (2000), Statistical Methods for Quality Improvement, 2nd Edition, John Wiley and
+Sons, New York.
+(49) Fleiss, J. L., B. Levin, M.C. Paik (2003), Statistical Methods for Rates and Proportions, 3rd ed.,
+John Wiley & Sons, New York.
+(50) Galloway, S.M. et al. (1987), Chromosome aberration and sister chromatid exchanges in Chinese
+hamster ovary cells: Evaluation of 108 chemicals, Environmental and Molecular Mutagenesis,
+Vol. 10/suppl. 10, pp. 1-175.
+
+-- 18 of 22 --
+
+OECD/OCDE 473
+19
+© OECD, (2016)
+(51) In Vitro Statistical
+Evaluation of Mutagenicity Test Data, Kirkland, D.J. (ed.), Cambridge University Press,
+Cambridge, pp. 141-154.
+(52) Warr, T.J., E.M. Parry, J.M. Parry (1993), A comparison of two in vitro mammalian cell
+cytogenetic assays for the detection of mitotic aneuploidy using 10 known or suspected aneugens,
+Mutation Research, Vol. 287/1, pp. 29-46.
+(53) Locke-Huhle, C. (1983), Endoreduplication in Chinese hamster cells during alpha-radiation induced
+G2 arrest, Mutation Research, Vol. 119/3, pp. 403-413.
+(54) Huang, Y., C. Change, J.E. Trosko (1983), Aphidicolin - induced endoreduplication in Chinese
+hamster cells, Cancer Research, Vol. 43/3, pp. 1362-1364.
+(55) Soper, K.A., S.M. Galloway (1994), Cytotoxicity measurement in in vitro chromosome aberration
+test and micronucleus test, Mutation Research, Vol. 312, pp. 139-149.
+
+-- 19 of 22 --
+
+473 OECD/OCDE
+20
+© OECD, (2016)
+ANNEX 1
+DEFINITIONS
+Aneuploidy: any deviation from the normal diploid (or haploid) number of chromosomes by a single
+chromosome or more than one, but not by entire set(s) of chromosomes (polyploidy).
+Apoptosis: programmed cell death characterized by a series of steps leading to a disintegration of cells into
+membrane-bound particles that are then eliminated by phagocytosis or by shedding.
+Cell proliferation: increase in cell number as a result of mitotic cell division.
+Chromatid break: discontinuity of a single chromatid in which there is a clear misalignment of one of the
+chromatids.
+Chromatid gap: non-staining region (achromatic lesion) of a single chromatid in which there is minimal
+misalignment of the chromatid.
+Chromatid-type aberration: structural chromosome damage expressed as breakage of single chromatids or
+breakage and reunion between chromatids.
+Chromosome-type aberration: structural chromosome damage expressed as breakage, or breakage and
+reunion, of both chromatids at an identical site.
+Clastogen: any substance which causes structural chromosomal aberrations in populations of cells or
+eukaryotic organisms.
+Concentrations: refer to final concentrations of the test chemical in the culture medium.
+Cytotoxicity: For the assays covered in this guideline using cell lines, cytotoxicity is identified as a
+reduction in relative population doubling (RPD) or relative increase in cell count (RICC) of the treated
+cells as compared to the negative control (see paragraph 17 and Annex 2).
+For the assays covered in this guideline using primary cultures of lymphocytes, cytotoxicity is identified as
+a reduction in mitotic index (MI) of the treated cells as compared to the negative control (see paragraph 18
+and Annex 2).
+Endoreduplication: a process in which after an S period of DNA replication, the nucleus does not go into
+mitosis but starts another S period. The result is chromosomes with 4, 8, 16 , chromatids.
+Genotoxic: a general term encompassing all types of DNA or chromosome damage, including breaks,
+deletions, adducts, nucleotides modifications and linkages, rearrangements, gene mutations, chromosome
+aberrations, and aneuploidy. Not all types of genotoxic effects result in mutations or stable chromosome
+damage.
+Mitotic index (MI): the ratio of cells in metaphase divided by the total number of cells observed in a
+population of cells; an indication of the degree of proliferation of that population.
+
+-- 20 of 22 --
+
+OECD/OCDE 473
+21
+© OECD, (2016)
+Mitosis: division of the cell nucleus usually divided into prophase, prometaphase, metaphase, anaphase and
+telophase.
+Mutagenic: produces a heritable change of DNA base-pair sequences(s) in genes or of the structure of
+chromosomes (chromosome aberrations).
+Numerical aberration: a change in the number of chromosomes from the normal number characteristic of the
+cells utilised.
+Polyploidy: numerical chromosomal aberrations in cells or organisms involving entire set(s) of
+chromosomes, as opposed to an individual chromosome or chromosomes (aneuploidy).
+p53 status: p53 protein is involved in cell cycle regulation, apoptosis and DNA repair. Cells deficient in
+functional p53 protein, unable to arrest cell cycle or to eliminate damaged cells via apoptosis or other
+mechanisms (e.g. induction of DNA repair) related to p53 functions in response to DNA damage, should
+be theoretically more prone to gene mutations or chromosomal aberrations.
+Relative Increase in Cell Counts (RICC): the increase in the number of cells in chemically-exposed
+cultures versus increase in non-treated cultures, a ratio expressed as a percentage.
+Relative Population Doubling (RPD): the increase in the number of population doublings in chemically-
+exposed cultures versus increase in non-treated cultures, a ratio expressed as a percentage.
+S9 liver fraction: supernatant of liver homogenate after 9000g centrifugation, i.e. raw liver extract.
+S9 mix: mix of the S9 liver fraction and cofactors necessary for metabolic enzymes activity.
+Solvent control: General term to define the control cultures receiving the solvent alone used to dissolve the
+test chemical.
+Structural aberration: a change in chromosome structure detectable by microscopic examination of the
+metaphase stage of cell division, observed as deletions and fragments, intrachanges or interchanges.
+Untreated controls: cultures that receive no treatment (i.e. no test chemical nor solvent) but are processed
+concurrently in the same way as the cultures receiving the test chemical.
+
+-- 21 of 22 --
+
+473 OECD/OCDE
+22
+© OECD, (2016)
+ANNEX 2
+FORMULAS FOR CYTOTOXICITY ASSESSMENT
+Mitotic index (MI):
+Number of mitotic cells
+MI (%) = ------------------------------------ × 100
+Total number of cells scored
+Relative Increase in Cell Counts (RICC) or Relative Population Doubling (RPD) is recommended,
+as both take into account the proportion of the cell population which has divided.
+(Increase in number of cells in treated cultures (final starting))
+RICC (%) = --------------------------------------------------------------------------------- × 100
+(Increase in number of cells in control cultures (final starting))
+(No. of Population doublings in treated cultures)
+RPD (%) = ----------------------------------------------------------------- × 100
+(No. of Population doublings in control cultures)
+where:
+Population Doubling = [log (Post-treatment cell number ÷ Initial cell number)] ÷ log 2
+For example, a RICC, or a RPD of 53% indicates 47% cytotoxicity/cytostasis and
+55% cytotoxicity/cytostasis measured by MI means that the actual MI is 45% of control.
+In any case, the number of cells before treatment should be measured and the same for treated and negative
+control cultures.
+While RCC (i.e. Number of cells in treated cultures/ Number of cells in control cultures) had been used as
+cytotoxicity parameter in the past, is no longer recommended because it can underestimate cytotoxicity
+In the negative control cultures, population doubling should be compatible with the requirement to sample
+cells after treatment at a time equivalent to about 1.5 normal cell cycle length and mitotic index should be
+higher enough to get a sufficient number of cells in mitosis and to reliably calculate a 50% reduction.
+
+-- 22 of 22 --
+

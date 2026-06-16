@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SC03",
+  "scenario_title": "회복군만 (warning: 상위 본시험 미선택)",
+  "options": {
+    "excipientCount": 0,
+    "priceStandard": "MFDS",
+    "discountRate": 0,
+    "currency": "KRW"
+  },
+  "lines": [
+    {
+      "kind": "test",
+      "testItemKey": "독성시험_항목_마스터_추가정규화_v2.xlsx#시험항목 마스터#20@경구__경구",
+      "testName": "설치류 13주 반복 4주 회복",
+      "adminRoute": "경구",
+      "unitPrice": 32000000,
+      "quantity": 1,
+      "subtotal": 32000000,
+      "linkRelation": "회복군(ADD-ON)",
+      "note": null
+    }
+  ],
+  "warnings": [
+    "회복군 \"설치류 13주 반복 4주 회복\" — 상위 본시험 \"13주 반복투여독성\" 이(가) 선택되지 않았습니다."
+  ],
+  "totals": {
+    "totalBeforeDiscount": 32000000,
+    "discountAmount": 0,
+    "totalAfterDiscount": 32000000,
+    "vatAmount": 3200000,
+    "grandTotal": 35200000,
+    "currency": "KRW"
+  }
+}

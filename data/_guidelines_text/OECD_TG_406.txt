@@ -1,0 +1,378 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2022/06/test-no-406-skin-sensitisation_g1gh292d/9789264070660-en.pdf
+[CHARS] 20670
+
+Test Guideline No. 406
+Skin Sensitisation
+30 June 2022
+OECD Guidelines for the
+Testing of Chemicals
+Section 4
+Health effects
+
+-- 1 of 12 --
+
+OECD/OCDE 406
+Adopted:
+17 July1992
+Corrected
+30 June 2022
+© OECD, (2022)
+You are free to use this material subject to the terms and conditions available at http://www.oecd.org/termsandconditions/.
+OECD GUIDELINE FOR THE TESTING OF CHEMICALS
+Skin Sensitisation Guinea Pig Maximisation Test and Buehler Test
+1. INTRODUCTION
+1. OECD Guidelines for Testing of Chemicals are periodically reviewed to reflect the
+best available science. In the review of this Guideline, special attention was given to
+possible improvements in relation to animal welfare concerns. This updated version of
+Guideline 406 (originally adopted in 1981, revised in 1991, and in 2021) takes into account
+and draws attention to new skin sensitisation Test Guidelines. Although this Test Guideline
+has been used for sensitisation tests for several decades, users should be aware that other
+in chemico, in vitro and in vivo skin sensitisation Test Guidelines are now available and
+the new TGs, and other information available, should be considered before conducting the
+guinea pig assay.
+2. Both the Buehler and the Guinea pig maximisation tests use animals. For animal
+welfare reasons, these tests should only be conducted as a last resort, if justified e.g. when
+other skin sensitisation test methods are not applicable.
+3. In the original Guideline 406, four adjuvant tests and three non-adjuvant tests were
+considered to be acceptable. The present TG describes two types of tests: the Guinea pig
+maximisation Test (GPMT) of Magnusson and Kligman which uses adjuvant (Freund’s
+Complete Adjuvant (FCA)) to potentiate skin sensitisation (1)(2)(3)(4), and the non-
+adjuvant Buehler Test (5)(6). Both procedures are presented in detail.
+4. The Buehler test has shown to be less sensitive than the Guinea pig maximisation
+test (7)(8). Both the Buehler and the Guinea pig maximisation tests provide data on skin
+sensitisation potential and limited information on quantitative potency depending on the
+dose level selection. If information on quantitative potency is required, other test methods
+(such as the Local Lymph Node Assay (LLNA) or appropriate non-animal methods) should
+be used to provide the necessary information on sensitisation potency.
+5. Definitions used are set out in the Annex to the Guideline.
+
+-- 2 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+2. GENERAL PRINCIPLE OF SENSITISATION TESTS IN GUINEA PIGS
+6. The test animals are initially exposed to the test chemical by intradermal injection
+and/or epidermal application (induction exposure). Following a rest period of 10 to 14 days
+(induction period), during which an immune response may develop, the animals are
+exposed to a challenge dose. The extent and degree of skin reaction to the challenge
+exposure in the test animals is compared with that demonstrated by control animals which
+undergo sham treatment during induction and receive the challenge exposure.
+ELEMENTS COMMON TO SENSITISATION TESTS IN GUINEA PIGS
+Sex of animals
+7. Male and/or female healthy young adult animals can be used. If females are used
+they should be nulliparous and non-pregnant.
+Housing and feeding conditions
+8. The temperature of the experimental animal room should be 20°C (+ 3°C) and the
+relative humidity 30-70 per cent. Where the lighting is artificial, the sequence should be 12
+hours light, 12 hours dark. For feeding, conventional laboratory diets may be used with an
+unlimited supply of drinking water. It is essential that guinea pigs receive an adequate
+amount of ascorbic acid to maintain a healthy condition.
+Preparation of the animals
+9. Animals are acclimatised to the laboratory conditions for at least 5 days prior to the
+test. Before the test, animals are randomised and assigned to the treatment groups. Removal
+of hair is by clipping, shaving or possibly by chemical depilation, depending on the test
+method used. Care should be taken to avoid abrading the skin. The animals are weighed
+before the test commences and at the end of the test.
+Reliability check
+10. The sensitivity and reliability of the experimental technique used should be
+assessed, no more than six months previously, by use of substances which are known to
+have mild-to-moderate skin sensitisation properties.
+11. In a properly conducted test, a response of at least 30% in an adjuvant test and at
+least 15% in a non-adjuvant test should be expected for mild/moderate sensitisers. Preferred
+substances are hexyl cinnamic aldehyde (CAS No. 101-86-0), mercaptobenzothiazole
+(CAS No. 149-30-4) and benzocaine (CAS No. 94-09-7). The concentrations of the
+sensitisers selected for the sensitivity and reliability check should be close to the threshold
+for sensitisation. There may be circumstances where, given adequate justification, other
+control substances meeting the above criteria may be used (9).
+Removal of the test chemical
+12. If removal of the test chemical is considered necessary, this should be achieved
+using water or an appropriate solvent without altering the existing response or the integrity
+of the epidermis.
+
+-- 3 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+3. DESCRIPTION OF THE GUINEA PIG MAXIMISATION TEST METHOD
+Number of animals
+13. A minimum of 10 animals is used in the treatment group and at least 5 animals in
+the control group. When fewer than 20 test and 10 control guinea pigs have been used, and
+it is not possible to conclude that the test chemical is a sensitiser, testing in additional
+animals to give a total of at least 20 test and 10 control animals is strongly recommended.
+Dose levels
+14. The concentration of test chemical used for each induction exposure should be well-
+tolerated systemically and should be the highest to cause mild-to-moderate skin irritation.
+The concentration used for the challenge exposure should be the highest non-irritant dose.
+The appropriate concentrations can be determined from a pilot study using two or three
+animals. Consideration should be given to the use of FCA-treated animals for this purpose.
+Induction: Intradermal Injections
+Day 0 - treated group
+15. Three pairs of intradermal injections of 0.1 ml volume are given in the shoulder
+region which is cleared of hair so that one of each pair lies on each side of the midline.
+ Injection 1: a 1:1 mixture (v/v) FCA/water or physiological saline
+ Injection 2: the test chemical in an appropriate vehicle at the selected concentration
+ Injection 3: the test chemical at the selected concentration formulated in a 1:1
+mixture (v/v) FCA/water or physiological saline.
+16. In injection 3, water soluble substances are dissolved in the aqueous phase prior to
+mixing with FCA. Liposoluble or insoluble substances are suspended in FCA prior to
+combining with the aqueous phase. The concentration of test chemical shall be equal to that
+used in injection 2.
+17. Injections 1 and 2 are given close to each other and nearest the head, while 3 is
+given towards the caudal part of the test area.
+Day 0 - control group
+18. Three pairs of intradermal injections of 0.1 ml volume are given in the same sites
+as in the treated animals.
+ Injection 1: a 1:1 mixture (v/v) FCA/water or physiological saline
+ Injection 2: the undiluted vehicle
+ Injection 3: a 50% w/v formulation of the vehicle in a 1:1 mixture (v/v) FCA/water
+or physiological saline.
+Induction: Topical Application
+Day 5-7 - treated and control groups
+19. Approximately twenty-four hours before the topical induction application, if the
+test chemical is not a skin irritant, the test area, after close-clipping and/or shaving is
+
+-- 4 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+painted with 0.5 ml of 10% sodium lauryl sulphate in vaseline, in order to create a local
+irritation.
+Day 6-8 - treated group
+20. The test area is again cleared of hair. A filter paper (2 x 4 cm) is fully-loaded with
+test chemical in a suitable vehicle and applied to the test area and held in contact by an
+occlusive dressing for 48 hours. The choice of the vehicle should be justified. Solids are
+finely pulverised and incorporated in a suitable vehicle. Liquids can be applied undiluted,
+if appropriate.
+Day 6-8 - control group
+21. The test area is again cleared of hair. The vehicle only is applied in a similar manner
+to the test area and held in contact by an occlusive dressing for 48 hours.
+Challenge: Topical Application
+Day 20-22 - treated and control groups
+22. The flanks of treated and control animals are cleared of hair. A patch or chamber
+loaded with the test chemical is applied to one flank of the animals and, if more application
+surface is needed, a patch or chamber loaded with the vehicle only may also be applied to
+the other flank. The patches are held in contact by an occlusive dressing for 24 hours.
+Observations - treated and control groups
+23. - approximately 21 hours after removing the patch the challenge area is cleaned and
+closely-clipped and/or shaved or depilated if necessary;
+- approximately 3 hours later (approximately 48 hours from the start of the challenge
+application) the skin reaction is observed and recorded according to the grades shown
+below;
+- approximately 24 hours after this observation a second observation (72 hours) is made
+and once again recorded.
+Blind reading of test and control animals is encouraged.
+
+-- 5 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+Table 1. Magnusson and Kligman grading scale for the evaluation of challenge patch test
+reactions
+0 No visible change
+1 Discrete or patchy erythema
+2 Moderate and confluent erythema
+3 Intense erythema and swelling
+Rechallenge
+24. If it is necessary to clarify the results obtained in the first challenge, a second
+challenge (i.e. a rechallenge), where appropriate with a new control group, should be
+considered approximately one week after the first one. A rechallenge may also be
+performed on the original control group.
+Clinical observations
+25. All skin reactions and any unusual findings, including systemic reactions, resulting
+from induction and challenge procedures should be observed and recorded. Other
+procedures, e.g. histopathological examination, the measurement of skin fold thickness,
+may be carried out to clarify doubtful reactions.
+DESCRIPTION OF THE BUEHLER TEST METHOD
+Number of animals
+26. A minimum of 20 animals is used in the treatment group and at least 10 animals in
+the control group.
+Dose levels
+27. The concentration of test chemical used for each induction exposure should be the
+highest to cause mild irritation. The concentration used for the challenge exposure should
+be the highest non-irritating dose. The appropriate concentration can be determined from a
+pilot study using two or three animals.
+28. For water soluble test materials, it is appropriate to use water or a dilute non-
+irritating solution of surfactant as the vehicle. For other test materials 80% ethanol/water is
+preferred for induction and acetone for challenge.
+Induction: Topical application
+Day 0 - treated group
+29. One flank is cleared of hair (closely-clipped). The test patch system should be fully
+loaded with test chemical in a suitable vehicle (the choice of the vehicle should be justified;
+liquid test substances can be applied undiluted, if appropriate). The test patch system is
+
+-- 6 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+applied to the test area and held in contact with the skin by an occlusive patch or chamber
+and a suitable dressing for 6 hours.
+30. The test patch system must be occlusive. A cotton pad is appropriate and can be
+circular or square, but should approximate 4-6 cm2. Restraint using an appropriate
+restrainer is preferred to assure occlusion. If wrapping is used, additional exposures may
+be required.
+Day 0 - control group
+31. One flank is cleared of hair (closely-clipped). The vehicle only is applied in a
+similar manner to that used for the treated group. The test patch system is held in contact
+with the skin by an occlusive patch or chamber and a suitable dressing for 6 hours. If it can
+be demonstrated that a sham control group (i.e. group receiving the challenge treatment
+only, see paragraph 6) is not necessary, a naive control group may be used.
+Days 6-8 and 13-15 - treated and control groups
+32. The same application as on day 0 is carried out on the same test area (cleared of
+hair if necessary) of the same flank on day 6-8, and again on day 13-15.
+Challenge
+Day 27-29 - treated and control groups
+33. The untreated flank of treated and control animals is cleared of hair (closely-
+clipped). An occlusive patch or chamber containing the appropriate amount of test chemical
+is applied, at the maximum non-irritant concentration, to the posterior untreated flank of
+treated and control animals. When relevant, an occlusive patch or chamber with vehicle
+only is also applied to the anterior untreated flank of both treated and control animals. The
+patches or chambers are held in contact by a suitable dressing for 6 hours.
+Observations - treated and control groups
+34. - approximately 21 hours after removing the patch the challenge area is cleared of
+hair;
+- approximately three hours later (approximately 30 hours after application of the
+challenge patch) the skin reactions are observed and recorded according to the grades
+shown in the Guinea pig maximisation test (see paragraph 23);
+- approximately 24 hours after the 30 hour observation (approximately 54 hours after
+application of the challenge patch) skin reactions are again observed and recorded.
+Blind reading of test and control animals is encouraged.
+Rechallenge
+35. If it is necessary to clarify the results obtained in the first challenge, a second
+challenge (i.e. a rechallenge), where appropriate with a new control group, should be
+considered approximately one week after the first one. The rechallenge may also be
+performed on the original control group.
+
+-- 7 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+Clinical observations
+36. All skin reactions and any unusual findings, including systemic reactions, resulting
+from induction and challenge procedures should be observed and recorded. Other
+procedures, e.g. histopathological examination, measurement of skin fold thickness, may
+be carried out to clarify doubtful reactions.
+4. DATA AND REPORTING (GPMT and Buehler Test)
+Data
+37. Data should be summarised in tabular form, showing for each animal the skin
+reactions at each observation.
+Test report
+38. The test report must include the following information:
+Test chemical:
+Mono-constituent substance
+ Chemical identification, such as IUPAC or CAS name(s), CAS number(s),
+SMILES or InChI code, structural formula, and/or other identifiers, like batch/lot
+number and expiry date;
+ Physical appearance, water solubility, DMSO solubility, molecular weight, and
+additional relevant physicochemical properties, to the extent available;
+ Statement on (in)solubility or stable dispersion in exposure media;
+ Purity, chemical identity of impurities as appropriate and practically feasible, etc;
+ Treatment prior to testing, if applicable (e.g. warming, grinding);
+ Concentration(s) tested;
+ Storage conditions and stability to the extent available.
+ Multi-constituent substance, UVCB and mixture:
+ Characterisation as far as possible by e.g. chemical identity (see above), purity,
+quantitative occurrence and relevant physicochemical properties (see above) of the
+constituents, to the extent available;
+ Physical appearance, water solubility, DMSO solubility and additional relevant
+physicochemical properties, to the extent available;
+ Molecular weight or apparent molecular weight in case of mixtures/polymers of
+known compositions or other information relevant for the conduct of the study;
+ Statement on (in)solubility or stable dispersion in exposure media;
+ Treatment prior to testing, if applicable (e.g. warming, grinding);
+ Concentration(s) tested;
+
+-- 8 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+ Storage conditions and stability to the extent available.
+Vehicle:
+- identification data (purity; concentration, where appropriate; volume used)
+- justification of choice of vehicle.
+Test animals:
+- strain of guinea-pig used;
+- number, age and sex of animals;
+- source, housing conditions, diet, etc.;
+- individual weights of animals at the start and at the conclusion of the test.
+Test conditions:
+- technique of patch site preparation;
+- details of patch materials used and patching technique;
+- Justification for the dose level selection (induction and challenge), including the results of
+the dose range finding study;
+- details of test chemical preparation, application and removal;
+- vehicle and test chemical concentrations used for induction and challenge exposures and
+the total amount of test chemical applied for induction and challenge;
+- details of food and water quality (including diet type/source, water source);
+- details of treatment and sampling schedules;
+- methods for measurement of toxicity;
+- criteria for considering studies as positive or negative;
+- details of any protocol deviations and an explanation on how the deviation affects the study
+design and results;
+Reliability check:
+- a summary of the results of the latest reliability check including information on chemical,
+concentration and vehicle used.
+Results:
+- on each animal including grading system; time course of onset and signs of toxicity,
+including dermal irritation at site of administration, if any, for each animal;
+- a table of individual guinea pig (individual animal approach) or mean/median (pooled
+treatment group approach);
+- narrative description of the nature and degree of effects observed for each animal;
+- any histopathological findings.
+
+-- 9 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+- statistical analyses, where appropriate;
+Discussion of the results.
+If a screening assay is performed before the guinea pig test the description or reference of
+the test, including details of the procedure, must be given together with results obtained
+with the test chemical and chemicals used for the reliability and sensitivity check .
+
+-- 10 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+5. LITERATURE
+(1) Magnusson B. and Kligman A.M. (1969). The identification of contact allergens by animal assay.
+The guinea pig maximisation test. J. Invest. Dermatol., 52, 268.
+(2) Magnusson B. and Kligman A.M. (1970). Allergic Contact Dermatitis in the Guinea Pig.Charles
+G. Thomas; Springfield, Illinois.
+(3) Magnusson B. (1980). Identification of contact sensitizers by animal assay. Cont. Derm., 6, 46.
+(4) Magnusson B., Fregert S. and Wahlberg J. (1979). Determination of skin sensitizationpotential of
+chemicals. Predictive testing in guinea pigs. Arbete och Hälsa, 26(E).
+(5) Buehler E.V. (1965). Delayed contact hypersensitivity in the guinea pig. Arch. Dermatol.,91, 171.
+(6) Ritz H.L. and Buehler E.V. (1980). Procedure for conducting the guinea pig assay.
+CurrentConcepts in Dermatology, Drill V.A. and Lazar P. (eds), Academic Press, New York,
+N.Y.,25-40.
+(7) Modjtahedi B.S, Fotenbach C.R., Marsano J.G, Gandhi A.M, Staab R., Maibach H.I. (2011).
+Guinea pig sensitization assays: An experimental comparison of three methodsCutaneous and
+Ocular Toxicology, Vol.30 (2). https://doi.org/10.3109/15569527.2010.544277
+(8) Frankild S., Volund A., Wahlberg J.E., Andersen K.E. (2000). Comparison of the sensitivities of
+the Buehler test and the guinea pig maximization test for predictive testing of contact allergy. Acta
+Derm Venereol. 2000 Jul-Aug;80(4):256-62. DOI: 10.1080/000155500750012126
+(9) Basketter DA, Selbie E, Scholes EW, Lees D, Kimber I, Botham PA. Results with OECD
+recommended positive control sensitizers in the maximization, Buehler and local lymph node
+assays. Food Chem Toxicol. 1993;31(1):63-67. doi:10.1016/0278-6915(93)90181-w
+
+-- 11 of 12 --
+
+OECD/OCDE 406
+© OECD 2022
+Annex A. DEFINITIONS
+Skin sensitisation (allergic contact dermatitis) is an immunologically mediated cutaneous
+reaction to a substance. In the human, the responses may be characterised by pruritis,
+erythema, oedema, papules, vesicles, bullae or a combination of these. In other species the
+reactions may differ and only erythema and oedema may be seen.
+Induction exposure: an experimental exposure of a subject to a test chemical with the
+intention of inducing a hypersensitive state.
+Induction period: a period of at least one week following an induction exposure during
+which a hypersensitive state may develop.
+Challenge exposure: an experimental exposure of a previously treated subject to a test
+chemical following an induction period, to determine if the subject reacts in a
+hypersensitive manner.
+FCA: Freund’s Complete Adjuvant
+GPMT: Guinea Pig Maximisation Test
+
+-- 12 of 12 --
+

@@ -1,0 +1,641 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# 견적 자동 생성 룰 카탈로그 — 검토용 메타 질문 모음 v1.0
+# 출처: rules_catalog.yaml v1.1의 review_notes에서 발견된 모호함 +
+#       extraction_log.md §5 "도메인 상식상 있어야 할 룰"
+# 작성일: 2026-05-14
+# 검토 대상: 센터장, 팀장
+#
+# 본 파일의 목적:
+#   각 질문은 룰 카탈로그에서 채워져야 하나 자료에 명시되지 않은 정보입니다.
+#   답변 후 새 룰을 카탈로그에 추가하거나 기존 룰의 review_notes를 보강합니다.
+#
+# 우선순위:
+#   필수 (P0): 시스템이 이 질문 답 없이는 진입 불가
+#   중요 (P1): 답 없으면 견적 자동 생성에서 영업 수기 개입 필요
+#   보통 (P2): 답 없어도 동작은 가능, 정확도/세부사항 영향
+#
+# 답변 시 작성 항목:
+#   answer_summary       — 한 줄 답
+#   answer_detail        — 상세
+#   resulting_rule_id    — 답변으로 생성된 룰 ID (있으면)
+#   answered_by          — 답변자
+#   answered_at          — 답변 일시
+# ─────────────────────────────────────────────────────────────────────────────
+
+review_questions:
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # 필수 (P0) — 시스템 진입 불가 수준의 빈 칸
+  # ══════════════════════════════════════════════════════════════════════════
+
+  - id: Q-001
+    related_rule_id_proposal: "MR-001"
+    priority: "필수 (P0)"
+    question_summary: "MFDS / OECD 시트 자동 선택 룰이 존재하는가?"
+    domain_context: |
+      현재 의약품 견적서는 4개 시트(MFDS·OECD × 경구피하근육·정맥경피)로
+      나뉘어 있습니다. 견적 자동 생성 시스템은 고객이 입력한 정보로부터
+      어느 시트를 사용할지 자동 선택해야 합니다.
+    questions_for_reviewer:
+      - "고객이 견적 의뢰서에 '국내 식약처 IND 제출용'이라고 적으면 MFDS 시트 가격으로 자동 산출되나요?"
+      - "고객이 'FDA IND 제출용'이라고 적으면 OECD 시트 가격으로 자동 산출되나요?"
+      - "국내 + USFDA 동시 제출인 경우 두 가격을 모두 보여주나요, 아니면 더 비싼 쪽으로 합치나요?"
+      - "EMA(유럽), PMDA(일본) 신청 시는 MFDS·OECD 중 어느 쪽을 쓰나요?"
+    suggested_rule_format: |
+      만약 답변이 "예, 국가별 매핑 있음"이라면:
+
+      generic_rules:
+        - id: MR-001
+          rule_type: submission_country_mapping
+          parameters:
+            mappings:
+              - submission_target: "국내 / MFDS"
+                use_standard: "MFDS"
+              - submission_target: "USFDA"
+                use_standard: "OECD"
+              - submission_target: "EMA"
+                use_standard: "OECD"
+              - submission_target: "PMDA"
+                use_standard: "OECD"
+            multi_country_policy: "show_both" | "use_max"
+    impact_if_undefined: |
+      엔진이 시트조차 선택 못함. 사실상 견적 생성 진입 불가.
+      현재 임시 대응: 영업이 수기로 시트 선택 후 가격 복사.
+    related_existing_rules: []
+    answer_summary: null
+    answer_detail: null
+    answered_by: null
+    answered_at: null
+
+
+  - id: Q-002
+    related_rule_id_proposal: "GR-004"
+    priority: "필수 (P0)"
+    question_summary: "GLP 시험은 non-GLP 대비 단가 가산율이 정해져 있는가?"
+    domain_context: |
+      심혈관계 스크리닝 견적서에 "안전성약리 시험: in vitro 심혈관계 시험 (GLP)"
+      (test_no=4)이 별도로 등록되어 있고, non-GLP 동일 시험들 대비 가격이 매우
+      높습니다 (40,000,000원 vs 3,000,000원, 13배 이상 차이).
+      다른 견적서(의약품 등)에서는 GLP/non-GLP 표기가 일관되지 않아, GLP 가산이
+      별도 룰로 존재하는지 불명확합니다.
+    questions_for_reviewer:
+      - "고객이 GLP 신청서를 가져오면 단가가 자동으로 +X% 되나요? (현재 의약품 견적서는 모두 GLP 가정인가요?)"
+      - "심혈관계 GLP 시험의 13배 가격차는 단순 GLP 가산이 아니라 시험 설계 자체가 다른 건가요?"
+      - "non-GLP 견적이라면 가격을 자동으로 -Y% 적용하면 되나요?"
+    suggested_rule_format: |
+      만약 답변이 "예, 가산율 있음"이라면:
+
+      generic_rules:
+        - id: GR-004
+          rule_type: glp_premium_rate
+          parameters:
+            default_assumption: "GLP"   # 모든 견적서 단가는 GLP 기준
+            non_glp_discount_rate: 0.4  # non-GLP 신청 시 -40%
+            file_type_specific:
+              cardiovascular_screening:
+                glp_discount_skipped: true   # 별도 시험 항목으로 등록됨
+    impact_if_undefined: |
+      GLP/non-GLP 신청에 따른 자동 가격 조정 불가. 영업이 수기 산출.
+    related_existing_rules: ["(없음)"]
+    answer_summary: null
+
+
+  - id: Q-003
+    related_rule_id_proposal: "PF-004"
+    priority: "필수 (P0)"
+    question_summary: "조제물 분석 가격 산출 공식이 따로 있는가? (현재 모든 견적서에 가격 비어있음)"
+    domain_context: |
+      모든 견적서의 test_no=1 "투여물질의 조제물 분석"은 가격이 비어 있고
+      duration_weeks="6~"로만 표시됩니다. 견적서에 "<견적 시마다 계산하여
+      수정할 것>"이라고 명시.
+      복합제 견적서만 예외적으로 가격이 있고 (2종=20M / 3종=30M / 4종=40M),
+      이는 PF-002로 캡처했습니다.
+      복합제 외 일반 견적의 경우, 가격 산출 변수가 무엇인지 명시되어 있지 않습니다.
+    questions_for_reviewer:
+      - "조제물 분석 가격 산출 시 어떤 정보가 필요한가요? (예: 검체 수, 분석법 종류, 분석 횟수)"
+      - "표준 단가표가 있나요? 예) HPLC 1회 분석 = X원, 균질성 검사 1회 = Y원"
+      - "혹시 영업 사용 산출 엑셀이 따로 있나요? (조직병리 계산식 같은)"
+    suggested_rule_format: |
+      만약 답변이 "예, 단가표 있음"이라면:
+
+      pricing_formulas:
+        - id: PF-004
+          formula: "validation_count * 5000000 + sample_analysis_count * analysis_unit_price"
+          variables:
+            - name: validation_count
+              source: "견적 입력"
+            - name: sample_analysis_count
+              source: "견적 입력"
+            - name: analysis_unit_price
+              source: "분석법별 단가표 (HPLC/LC-MS/MS 등)"
+    impact_if_undefined: |
+      모든 견적의 조제물 분석 항목이 빈 가격으로 출력됨. 영업이 매번 수기 산출.
+    related_existing_rules: ["PF-002 (복합제 조제물 분석 — 선형 패턴만 캡처됨)"]
+    answer_summary: null
+
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # 중요 (P1) — 자동 생성 가능하지만 정확도/완성도 큰 영향
+  # ══════════════════════════════════════════════════════════════════════════
+
+  - id: Q-004
+    related_rule_id_proposal: "AD-009 (보강)"
+    priority: "중요 (P1)"
+    question_summary: "번역보고서(국문→영문) 추가 비용 단가표가 있는가?"
+    domain_context: |
+      모든 견적서 footer에 "번역보고서 작성시 비용이 추가됩니다" 명시.
+      SEND/CTD/번역 견적서에 "설치류 단회 영문보고서 작성 = 1,000,000원" 등 일부 단가가 있습니다.
+      그러나 모든 시험 종류에 대한 완전한 단가표가 어디 있는지, 일반 견적서의
+      어떤 시험이 어느 번역 단가에 매핑되는지 명시 안 됨.
+    questions_for_reviewer:
+      - "고객이 의약품 13주 반복독성시험 견적을 받았을 때, 영문보고서 옵션을 추가하려면 어디서 단가를 가져오나요?"
+      - "단회 영문보고서 100만 / 반복 영문보고서 200만 같은 식으로 단가가 정해져 있나요?"
+      - "(번역비용) 견적서에 등록된 단가표가 모든 시험에 보편적으로 매핑되나요?"
+    suggested_rule_format: |
+      만약 답변이 "단가표 있음"이라면:
+
+      addons:
+        - id: AD-009    # 보강 (priceKrwTable 채움)
+          price_krw_table:
+            - test_type_ko: "단회 시험 영문보고서"
+              price_krw: 1000000
+            - test_type_ko: "반복 시험 영문보고서"
+              price_krw: 2500000
+            # ... (시험 카테고리별 모든 단가)
+    impact_if_undefined: |
+      영문보고서 옵션 가격이 견적에 자동 산출 안 됨. 영업이 수기로 SEND/CTD/번역 견적서 단가를 찾아 적용.
+    related_existing_rules: ["AD-009 (footer 명시만 캡처, 단가표 미연결)"]
+    answer_summary: null
+
+
+  - id: Q-005
+    related_rule_id_proposal: "PR-009"
+    priority: "중요 (P1)"
+    question_summary: "랫드 발암성시험에도 마우스(PR-001)와 같은 선행 시험 룰이 적용되는가?"
+    domain_context: |
+      PR-001은 마우스 발암성시험에 4주 DRF + 13주 반복독성시험을 자동 추가하도록
+      명시되어 있습니다. 그러나 랫드 발암성시험(test_no=98)에는 동일한 명시가 없습니다.
+      도메인 상식상 랫드 발암성에도 선행 시험이 필요할 것으로 추정됩니다.
+    questions_for_reviewer:
+      - "랫드 발암성시험을 신청하면 4주 DRF, 13주 반복독성도 자동으로 견적에 포함되어야 하나요?"
+      - "랫드와 마우스의 선행 시험 요구사항이 다른가요? (예: 랫드는 26주 반복독성도 필요?)"
+      - "이미 의뢰자가 랫드 13주 반복독성 자료를 가지고 있다면 견적에서 빼주나요?"
+    suggested_rule_format: |
+      만약 "예"라면:
+
+      prerequisite_rules:
+        - id: PR-009
+          trigger:
+            test_name_contains: "발암성시험"
+            test_subcategory_contains: "랫드"
+          prerequisites:
+            - test_name_pattern: "설치류 4주 투여 DRF 시험"
+              species_filter: "랫드 (SD rat)"
+              mandatory: true
+            - test_name_pattern: "설치류 13주 반복 투여 독성시험"
+              species_filter: "랫드 (SD rat)"
+              mandatory: true
+    impact_if_undefined: |
+      랫드 발암성 견적이 단독으로 산출 — 영업이 수기로 DRF·13주 추가.
+    related_existing_rules: ["PR-001 (마우스 한정)"]
+    answer_summary: null
+
+
+  - id: Q-006
+    related_rule_id_proposal: "AD-006 (보강)"
+    priority: "중요 (P1)"
+    question_summary: "SEND/CTD/번역 - 회복군·TK 추가 단가표가 어디 있는가?"
+    domain_context: |
+      AD-006은 "(회복군 및 TK 포함경우 별도 추가)"를 룰로 캡처했지만, 추가 단가가
+      명시 안 됨. 번역 견적서에는 "아래금액으로 별도 추가"라는 표현이 있어 별도 단가표가
+      존재하는 것으로 보이지만 자료에서 찾지 못했습니다.
+    questions_for_reviewer:
+      - "회복군 SEND 변환 추가 단가가 정해져 있나요? (예: 일괄 5,000,000원, 또는 시험 카테고리별?)"
+      - "TK 포함 추가는 회복군과 같은 단가인가요, 다른가요?"
+      - "추가 단가표가 별도 문서로 있다면 첨부 가능한가요?"
+    suggested_rule_format: |
+      만약 단가표 있음:
+
+      addons:
+        - id: AD-006    # 보강
+          price_krw_table:
+            - service: "SEND - 회복군 추가"
+              price_krw: 5000000
+            - service: "SEND - TK 추가"
+              price_krw: 5000000
+            - service: "CTD - 회복군+TK 추가"
+              price_krw: 1000000
+            # ...
+    impact_if_undefined: |
+      SEND·CTD 견적에서 회복군·TK 옵션이 추가됐을 때 가격 자동 산출 불가.
+    related_existing_rules: ["AD-006 (footer 명시만 캡처)"]
+    answer_summary: null
+
+
+  - id: Q-007
+    related_rule_id_proposal: "CG-002 (보강)"
+    priority: "중요 (P1)"
+    question_summary: "생식독성 TK 태반이행 - 임신동물 추가 마리당 단가가 있는가?"
+    domain_context: |
+      CG-002 룰은 "투여일이 매일 투여가 아닐 경우 군당 임신동물 3마리 추가"로 명시되어
+      있지만, 추가 동물의 단가가 별도 명시 안 됨. 1군당 3마리 × 시험군·대조군 4군 =
+      12마리 추가의 가격 영향이 어떻게 산출되는지 불명확합니다.
+    questions_for_reviewer:
+      - "임신 SD rat 1마리 추가 시 단가가 정해져 있나요?"
+      - "이 추가가 시험 가격(test_no=84/87)에 비례 가산되나요, 별도 항목으로 잡히나요?"
+      - "Rat과 Rabbit의 단가가 다른가요?"
+    suggested_rule_format: |
+      pregnant_animal_unit_prices:
+        SD_rat: X    # 원/마리
+        Rabbit: Y
+    impact_if_undefined: |
+      태반이행 시험 견적에서 매일 투여 아닌 케이스 가격 산출 불가.
+    related_existing_rules: ["CG-002"]
+    answer_summary: null
+
+
+  - id: Q-008
+    related_rule_id_proposal: "AD-002 (보강)"
+    priority: "중요 (P1)"
+    question_summary: "건기식 13주 반복독성 - 성호르몬 측정 4종 단가가 있는가?"
+    domain_context: |
+      AD-002 룰은 "성호르몬 측정 추가 비용 발생"으로만 명시. 단가 없음.
+      성호르몬 4종(testosterone, oestradiol, FSH, LH) 측정의 표준 단가가 있는지 불명확.
+    questions_for_reviewer:
+      - "성호르몬 4종 측정 가격이 시험당 정해져 있나요? (예: 1군당 X원, 또는 마리당 X원)"
+      - "검체 수에 비례하나요, 정액인가요?"
+      - "이 룰이 의약품 13주 반복독성에도 적용되나요? (현재 자료에는 건기식만 명시)"
+    suggested_rule_format: |
+      addons:
+        - id: AD-002    # 보강
+          price_krw: X       # 시험당 정액인 경우
+          # 또는
+          price_per_unit: Y  # 마리당 또는 검체당
+          unit: "per_animal" | "per_sample"
+    impact_if_undefined: |
+      건기식 13주 견적에 성호르몬 옵션 가격 자동 산출 불가.
+    related_existing_rules: ["AD-002"]
+    answer_summary: null
+
+
+  - id: Q-009
+    related_rule_id_proposal: "(GR-001 보강)"
+    priority: "중요 (P1)"
+    question_summary: "견적 60일 만료 시 시스템 동작 — 자동 무효화 vs 알림만?"
+    domain_context: |
+      GR-001은 "견적서 60일 유효" 룰로 추출됐습니다. CRM이 만료된 견적을 어떻게
+      처리할지 정책이 필요합니다.
+    questions_for_reviewer:
+      - "견적 60일 후, 시스템이 자동으로 견적을 무효화하고 새 견적을 발행해야 하나요? 아니면 알림만 보내고 영업이 수동 갱신하나요?"
+      - "만료된 견적으로 시험이 진행되지 않도록 차단해야 하나요? (영업이 부주의로 만료 견적 사용 방지)"
+      - "갱신 시 단가가 변경됐다면 재산정인가요, 원래 단가 유지인가요? (60일 안에 단가 인상이 있을 수 있음)"
+    suggested_rule_format: |
+      generic_rules:
+        - id: GR-001    # 보강
+          parameters:
+            validity_days: 60
+            on_expiry_action: "auto_invalidate" | "notify_only"
+            allow_extension: true | false
+            renewal_recalculate: true | false
+    impact_if_undefined: |
+      만료 견적 처리 정책 부재 → 영업 사고 위험 (만료 견적으로 시험 진행).
+    related_existing_rules: ["GR-001"]
+    answer_summary: null
+
+
+  - id: Q-010
+    related_rule_id_proposal: "(PR-007 보강)"
+    priority: "중요 (P1)"
+    question_summary: "시험물질 멸균 검수 미통과 시 견적 진행 기간(duration_weeks) 자동 연장?"
+    domain_context: |
+      PR-007 룰은 "미생물 검출 시 모든 물질 반환 → 멸균처리 → 재제공"으로 명시.
+      재공급에 따른 일정 지연이 견적의 duration_weeks에 어떻게 반영되는지 불명확.
+    questions_for_reviewer:
+      - "검수 실패로 시험물질이 반환되면 시험 시작이 늦춰지는데, duration_weeks에 자동으로 며칠/몇 주가 더해지나요?"
+      - "재제공까지 소요되는 표준 기간이 있나요? (예: 평균 2주 가산)"
+      - "이 지연이 견적 60일 유효기간(GR-001)에 영향 미치나요?"
+    suggested_rule_format: |
+      prerequisite_rules:
+        - id: PR-007    # 보강
+          on_failure_lead_time_weeks: 2
+          extends_quote_validity: true | false
+    impact_if_undefined: |
+      검수 실패 시 일정 자동 갱신 안 됨. 영업이 수기 조정.
+    related_existing_rules: ["PR-007", "GR-001", "GR-003"]
+    answer_summary: null
+
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # 보통 (P2) — 정확도·세부사항 영향
+  # ══════════════════════════════════════════════════════════════════════════
+
+  - id: Q-011
+    related_rule_id_proposal: "(AD-001 + AD-003 통합 여부)"
+    priority: "보통 (P2)"
+    question_summary: "유전독성 재현시험 200만원 — 자발적(AD-001) vs 양성판정 시 강제(AD-003) 구분 유지?"
+    domain_context: |
+      AD-001과 AD-003은 모두 "유전독성 복귀돌연변이 재현시험 +2,000,000원"으로 가격이
+      동일합니다. 트리거만 다릅니다.
+        - AD-001: 의약품·건기식 - "필요 시 자발적 재현"
+        - AD-003: 화장품 - "양성 판정 시 강제 재현"
+    questions_for_reviewer:
+      - "실제 영업에서 두 케이스를 구분하시나요, 아니면 둘 다 \"재현시험 200만원\"으로 동일 처리하시나요?"
+      - "통합한다면 트리거를 어떻게 잡을까요? (예: 양성판정 시 강제 + 의뢰자 요청 시 자발적, 두 트리거 모두 가능)"
+      - "양성판정 강제 케이스에서 의뢰자가 거부하면 어떻게 되나요?"
+    suggested_rule_format: |
+      만약 "통합"이라면:
+        AD-001을 다음 트리거로 확장:
+          trigger_keys: ["voluntary_recheck", "primary_result_positive"]
+          mandatory_when: ["primary_result_positive"]
+        AD-003 deprecate
+    impact_if_undefined: |
+      두 룰 유지 — 큰 문제 없으나 향후 룰 정비 시 통합 검토 필요.
+    related_existing_rules: ["AD-001", "AD-003"]
+    answer_summary: null
+
+
+  - id: Q-012
+    related_rule_id_proposal: "(CG-001 보강)"
+    priority: "보통 (P2)"
+    question_summary: "CG-001의 \"비설치류 4주 반복 자료\" 정의는?"
+    domain_context: |
+      CG-001은 "비설치류 4주 반복 자료가 있으면 시험군 4→3"으로 명시. "선행 자료"의
+      정확한 정의가 모호합니다.
+    questions_for_reviewer:
+      - "다른 CRO에서 진행한 4주 반복 자료도 인정되나요? 켐온에서 한 자료만 인정되나요?"
+      - "4주 DRF 결과만 있어도 인정되나요, 4주 반복독성 본 시험 결과가 필요한가요?"
+      - "자료가 있을 때 가격이 얼마나 줄어드나요? (시험군 1개 감소 비율, 예: -25%?)"
+    suggested_rule_format: |
+      conditional_groups:
+        - id: CG-001    # 보강
+          conditional_groups:
+            - condition_ko: "선행 4주 반복 자료 보유"
+              condition_definition_ko: "켐온 또는 GLP 인증 CRO의 4주 DRF 또는 본 시험 보고서"
+              price_reduction_rate: 0.25
+    impact_if_undefined: |
+      "자료 보유" 입력에 대한 가격 자동 재산정 불가. 영업이 수기 산출.
+    related_existing_rules: ["CG-001"]
+    answer_summary: null
+
+
+  - id: Q-013
+    related_rule_id_proposal: "(SB-001 보강)"
+    priority: "보통 (P2)"
+    question_summary: "SB-001의 \"정맥 가격으로 산출\" — 정맥경피(MFDS) vs 정맥경피(OECD)?"
+    domain_context: |
+      SB-001은 "비설치류 카테터 경구투여는 정맥 비용으로 산출"으로 명시.
+      견적의 standard(MFDS/OECD)에 맞춰 같은 standard의 정맥경피 가격을 쓴다고
+      추정했지만 명시 안 됨.
+    questions_for_reviewer:
+      - "MFDS 기준으로 의뢰받은 비설치류 시험에 카테터 경구가 들어오면, 정맥경피(MFDS) 가격을 쓰나요?"
+      - "OECD 기준 의뢰면 정맥경피(OECD) 가격을 쓰나요?"
+      - "혹시 카테터 경구만의 별도 단가가 따로 있나요?"
+    suggested_rule_format: |
+      substitution_rules:
+        - id: SB-001    # 보강
+          substitution:
+            use_price_from:
+              sheet: "정맥경피"
+              same_standard_as_quote: true   # 견적의 standard와 일치
+    impact_if_undefined: |
+      MFDS·OECD 모호 — 영업이 수기로 시트 선택 필요.
+    related_existing_rules: ["SB-001"]
+    answer_summary: null
+
+
+  - id: Q-014
+    related_rule_id_proposal: "(AD-008 보강)"
+    priority: "보통 (P2)"
+    question_summary: "영문보고서 요약본 70만원 — DRF에만 적용? 모든 시험에 적용?"
+    domain_context: |
+      AD-008 룰은 번역비용 견적서 R19(DRF 영문보고서)의 옆 셀(side_note)에 단독 등장한
+      "요약 : 700,000"에서 추출. DRF 한정인지 일반 적용인지 불명확.
+    questions_for_reviewer:
+      - "70만원 요약본 옵션이 DRF에만 적용되나요?"
+      - "13주 반복독성, 발암성 등 다른 시험의 영문보고서 요약본도 같은 70만원인가요?"
+      - "\"요약본\"의 분량/항목이 SOP에 정의돼 있나요?"
+    suggested_rule_format: |
+      addons:
+        - id: AD-008    # 보강
+          applies_to:
+            test_name_contains: "영문보고서"   # DRF 한정 해제 또는 유지
+          price_krw: 700000
+          summary_definition_ko: "<SOP 참조>"
+    impact_if_undefined: |
+      요약본 옵션 적용 범위 모호 — 영업이 수기 판단.
+    related_existing_rules: ["AD-008"]
+    answer_summary: null
+
+
+  - id: Q-015
+    related_rule_id_proposal: "(PR-001 보강)"
+    priority: "보통 (P2)"
+    question_summary: "마우스 발암성시험의 선행 4주 DRF·13주 반복독성 — 종 일치 강제 vs 기존 SD rat 자료 재활용?"
+    domain_context: |
+      PR-001은 마우스 발암성에 4주 DRF + 13주 반복독성을 추가하도록 명시.
+      그런데 표준 견적서에는 SD rat 기준 4주 DRF·13주 반복만 있고, 마우스용은 없음.
+    questions_for_reviewer:
+      - "마우스 발암성을 신청하면 마우스로 4주 DRF·13주 반복을 새로 진행해야 하나요?"
+      - "이미 의뢰자가 SD rat 4주 DRF·13주 반복 자료를 가지고 있다면 마우스 시험을 안 해도 되나요?"
+      - "마우스 4주 DRF·13주 반복독성의 표준 견적이 따로 있나요? (현재 자료에 없음)"
+    suggested_rule_format: |
+      prerequisite_rules:
+        - id: PR-001    # 보강
+          species_substitution_allowed: true | false
+          waivable_with_existing_data: true | false
+    impact_if_undefined: |
+      마우스 발암성 선행 시험 견적 산출 불가 — 영업이 마우스 시험 단가를 별도 산출.
+    related_existing_rules: ["PR-001"]
+    answer_summary: null
+
+
+  - id: Q-016
+    related_rule_id_proposal: "(WV-001 보강)"
+    priority: "보통 (P2)"
+    question_summary: "광독성 면제(WV-001) — In vitro 3T3 NRU 광독성시험에도 적용?"
+    domain_context: |
+      WV-001은 광독성(test_no=96)·광감작성(test_no=97)에만 적용. In vitro 3T3 NRU
+      광독성시험(test_no=95)에는 명시 없음.
+    questions_for_reviewer:
+      - "시험물질이 자외부에서 흡수가 없으면 In vitro 광독성도 면제되나요, 진행하나요?"
+      - "면제된다면 WV-001을 test_no=95에도 확장하면 되나요?"
+    suggested_rule_format: |
+      waiver_rules:
+        - id: WV-001    # 보강
+          applies_to:
+            sub_category:
+              - "광독성시험"
+              - "광감작성시험"
+              - "In vitro 3T3 NRU 광독성시험"   # 추가 검토 필요
+    impact_if_undefined: |
+      In vitro 광독성에 면제 적용 모호 — 영업이 수기 판단.
+    related_existing_rules: ["WV-001"]
+    answer_summary: null
+
+
+  - id: Q-017
+    related_rule_id_proposal: "(SB-002 보강)"
+    priority: "보통 (P2)"
+    question_summary: "\"외국 봉합사\" 정의 — SB-002 적용 범위?"
+    domain_context: |
+      SB-002는 "외국 봉합사의 경우 염색체 이상 대신 MLA 진행". "외국 봉합사"의 정의가
+      모호합니다.
+    questions_for_reviewer:
+      - "외국 봉합사 = 한국 미허가 제품인가요? 외국에서 제조됐지만 국내 허가받은 봉합사도 포함되나요?"
+      - "이 룰이 봉합사 외 다른 의료기기에도 적용되나요?"
+    suggested_rule_format: |
+      substitution_rules:
+        - id: SB-002    # 보강
+          trigger:
+            sub_condition_definition_ko: "한국 식약처 미허가 봉합사 (구체화 필요)"
+            applies_to_devices: ["봉합사"]   # 또는 확장
+    impact_if_undefined: |
+      트리거 모호 — 영업이 수기 판단 후 적용.
+    related_existing_rules: ["SB-002"]
+    answer_summary: null
+
+
+  - id: Q-018
+    related_rule_id_proposal: "(AD-004 보강)"
+    priority: "보통 (P2)"
+    question_summary: "독성 스크리닝 관심장기 추가 단가 — 조직병리 계산식 단가 그대로?"
+    domain_context: |
+      AD-004는 "관심장기 추가 시 비용 발생"만 명시. 같은 폴더의 *조직병리 표준견적
+      계산식.xlsx*에 장기당 단가 (슬라이드 12,000원 + 판독 25,000원 등)가 있어 이를
+      참조한다고 추정했습니다.
+    questions_for_reviewer:
+      - "관심장기 1개 추가 시 가격 = (슬라이드 비용) + (판독 비용)인가요? (조직병리 계산식 그대로)"
+      - "조직병리 계산식과 다른 별도 단가가 있나요?"
+      - "기본 5장기(뇌·신장·심장·간·폐장)는 견적에 이미 포함된 가격인가요?"
+    suggested_rule_format: |
+      addons:
+        - id: AD-004    # 보강
+          price_formula: "additional_organs * (slide_cost + reading_cost)"
+          price_source: "histopathology_calculation"   # 조직병리 계산식 참조
+    impact_if_undefined: |
+      추가 장기 가격 자동 산출 불가 — 영업이 조직병리 단가 수기 적용.
+    related_existing_rules: ["AD-004"]
+    answer_summary: null
+
+
+  - id: Q-019
+    related_rule_id_proposal: "(PR-003 보강)"
+    priority: "보통 (P2)"
+    question_summary: "RhE/RhCE 모델 사전 주문 후 취소 시 비용 처리?"
+    domain_context: |
+      PR-003은 "조직 입고 4주 소요(사전 주문 필요)" prerequisite 룰. 사전 주문 후
+      고객이 시험을 취소했을 때 처리 방법이 불명확.
+    questions_for_reviewer:
+      - "사전 주문 후 고객이 취소하면 조직 비용은 누가 부담하나요? (의뢰자, 켐온, 분담?)"
+      - "취소 가능 시점이 정해져 있나요? (예: 입고 1주 전까지 취소 가능)"
+      - "취소 위약금 룰이 있나요?"
+    suggested_rule_format: |
+      prerequisite_rules:
+        - id: PR-003    # 보강
+          cancellation_policy:
+            cutoff_weeks_before: 1
+            cancellation_fee_krw: X    # 또는 무료
+    impact_if_undefined: |
+      취소 시 분쟁 가능성. CRM에 정책 명시 필요.
+    related_existing_rules: ["PR-003"]
+    answer_summary: null
+
+
+  - id: Q-020
+    related_rule_id_proposal: "(CG-003·CG-004 보강)"
+    priority: "보통 (P2)"
+    question_summary: "의료기기 인체 노출 기간 임계값(아급성/아만성), 흡수성 판정 기준?"
+    domain_context: |
+      CG-003은 "인체 노출 기간에 따라 아급성/아만성 시험 선택", CG-004는 "흡수성/비흡수성에
+      따라 부검 포인트 변경" 룰. 임계값과 판정 기준이 명시 안 됨 (ISO 10993-1 기준
+      추정).
+    questions_for_reviewer:
+      - "인체 노출 24h 미만 = 단기, 24h~30일 = 중기, 30일 초과 = 장기 — 이게 ISO 기준이고 켐온도 따르나요?"
+      - "고객이 \"우리 제품은 30일 이상 인체 접촉\"이라고 신청서에 적으면 자동으로 아만성 시험으로 분류되나요?"
+      - "흡수성 판정은 고객 자료(생분해성 데이터)로 하나요, 켐온이 별도 시험으로 확인하나요?"
+    suggested_rule_format: |
+      conditional_groups:
+        - id: CG-003    # 보강
+          selection_thresholds:
+            short_term: "<24h"
+            medium_term: "24h-30days"
+            long_term: ">30days"
+            mapping:
+              short_term: "아급성"
+              medium_term: "아급성"
+              long_term: "아만성"
+    impact_if_undefined: |
+      의료기기 시험 자동 선택 불가 — 영업이 수기 판단.
+    related_existing_rules: ["CG-003", "CG-004"]
+    answer_summary: null
+
+
+  - id: Q-021
+    related_rule_id_proposal: "(PF-002·PF-003 외삽)"
+    priority: "보통 (P2)"
+    question_summary: "복합제 5종 이상 견적 — PF-002·PF-003 공식 외삽 가능?"
+    domain_context: |
+      PF-002 (조제물 분석 = 10M × N), PF-003 (함량 분석 = 5M × N)은 2~4종 데이터로
+      추출. 5종 이상에 그대로 외삽 가능한지 불명확.
+    questions_for_reviewer:
+      - "복합제 5종, 6종 견적 의뢰가 들어오면 PF-002 공식대로 50M, 60M으로 산출해도 되나요?"
+      - "특정 종 수 이상이면 단가가 비선형으로 증가하나요? (예: 5종 이상 +10%)"
+      - "복합제 단일 견적의 최대 종 수가 정해져 있나요?"
+    suggested_rule_format: |
+      pricing_formulas:
+        - id: PF-002    # 보강
+          formula_validity_range:
+            combination_count_min: 2
+            combination_count_max: 4   # 또는 무한
+          extrapolation_policy: "linear" | "step" | "negotiate"
+    impact_if_undefined: |
+      5종 이상 견적 시 영업 협의 필요.
+    related_existing_rules: ["PF-002", "PF-003"]
+    answer_summary: null
+
+
+  - id: Q-022
+    related_rule_id_proposal: "(GR-003 보강)"
+    priority: "보통 (P2)"
+    question_summary: "시험기간 시작점 — 동물입고일 지연 시 처리?"
+    domain_context: |
+      GR-003은 시험기간을 "동물입고일~최종보고서(안) 제출일"로 정의. 동물입고가 예정일보다
+      지연되면 견적의 duration_weeks가 자동 갱신되는지 불명확.
+    questions_for_reviewer:
+      - "동물입고가 1주 늦어지면 견적의 시험기간(duration_weeks)이 자동으로 1주 늘어나나요?"
+      - "지연된 기간만큼 견적 60일 유효기간(GR-001)도 연장되나요?"
+      - "지연 사유에 따라 책임이 갈리나요? (예: 동물 부족=공급사 사유, 검수 실패=의뢰자 사유)"
+    suggested_rule_format: |
+      generic_rules:
+        - id: GR-003    # 보강
+          parameters:
+            adjustable_on_delay: true | false
+            extends_quote_validity: true | false
+    impact_if_undefined: |
+      일정 지연 처리 정책 부재 — 영업 수기 조정.
+    related_existing_rules: ["GR-001", "GR-003", "PR-007"]
+    answer_summary: null
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 답변 워크플로우
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# 1) 센터장/팀장이 각 질문에 답변 (answer_summary, answer_detail 채움)
+# 2) 답변에 따라:
+#    a) 신규 룰 생성 → rules_catalog.yaml에 추가 (resulting_rule_id 기입)
+#    b) 기존 룰 보강 → rules_catalog.yaml의 해당 룰 review_notes·필드 업데이트
+#    c) 룰 불필요 → answer_summary에 "룰 불필요" 명시
+# 3) 답변 완료된 질문은 status="answered"로 변경
+# 4) 카탈로그 v1.2 발행 시 본 파일도 함께 업데이트
+#
+# ─────────────────────────────────────────────────────────────────────────────
+metadata:
+  version: "1.0"
+  created_at: "2026-05-14"
+  total_questions: 22
+  by_priority:
+    P0_critical: 3
+    P1_important: 7
+    P2_normal: 12
+  needs_review_by: ["센터장", "팀장"]

@@ -1,0 +1,1545 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2017/06/test-no-442b-skin-sensitization_g1g1139e/9789264090996-en.pdf
+[CHARS] 103393
+
+Test Guideline No. 442B
+Skin Sensitisation
+Local Lymph Node Assay: BrdU-ELISA or –FCM
+25 June 2025
+OECD Guidelines for the Testing
+of Chemicals
+Section 4
+Health effects
+
+-- 1 of 37 --
+
+OECD/OCDE 442B
+Adopted:
+25 June 2025
+© OECD (2025)
+You are free to use this material subject to the terms and conditions available at http://www.oecd.org/termsandconditions/
+1
+OECD GUIDELINES FOR THE TESTING OF
+CHEMICALS
+Local lymph node assay: BRDU-ELISA or –FCM
+GENERAL INTRODUCTION
+1. A skin sensitiser refers to a substance that will lead to an allergic response following repeated skin
+contact as defined by the United Nations Globally Harmonized System of Classification and Labelling of
+Chemicals (UN GHS) (1).
+2. There is general agreement regarding the key biological events underlying skin sensitisation. The
+current knowledge of the chemical and biological mechanisms associated with skin sensitisation has been
+summarised in the form of an Adverse Outcome Pathway (AOP) (2), starting with the molecular initiating
+event through intermediate events to the adverse effect, namely allergic contact dermatitis. This AOP
+focuses on chemicals that react with thiol (i.e. cysteine) and primary amines (i.e. lysine) such as organic
+chemicals. In this instance, the molecular initiating event (i.e. the first key event) is the covalent binding of
+electrophilic substances to nucleophilic centres in skin proteins. The first key event can be addressed using
+the in chemico Direct Peptide Reactivity Assay (DPRA) TG 442C (3). The second key event in this AOP
+takes place in the keratinocytes and includes inflammatory responses as well as changes in gene
+expression associated with specific cell signalling pathways such as the antioxidant/electrophile response
+element (ARE)-dependent pathways. This key event can be addressed using the in vitro ARE-Nrf2
+Luciferase Test Methods (KeratinoSensTM or LuSens) TG 442D (4). The third key event is the activation
+of dendritic cells (DC), typically assessed by expression of specific cell surface markers, chemokines and
+cytokines, and can be addressed using either the in vitro Human Cell Line Activation Test (h-CLAT), the in
+vitro U937 Cell Line Activation Test (U-SENS™) or the Interleukin-9 Reporter Gene assay (IL-8 Luc assay)
+as described in TG 442E (5). The fourth key event is T-cell proliferation, which is indirectly assessed in the
+in vivo murine Local Lymph Node Assays (LLNA) (6).
+3. The first Test Guideline (TG) for the determination of skin sensitisation in the mouse, the Local
+Lymph Node Assay (LLNA; TG 429) was adopted in 2002, and has since then been revised (7). The details
+of the validation of the LLNA and a review of the associated work have been published (8) (9) (10) (11)
+(12) (13) (14) (15). In the LLNA, radioisotopic thymidine or iodine is used to measure lymphocyte
+proliferation and therefore the assay has limited use in regions where the acquisition, use, or disposal of
+radioactivity is problematic.
+4. This Test Guideline describes two non-radioactive modifications to the LLNA test method, which
+utilise non-radiolabelled 5-bromo-2-deoxyuridine (BrdU) (Chemical Abstracts Service [CAS] No 59-14-3)
+in an ELISA [Enzyme-Linked Immunosorbent Assay] - or FCM [Flow Cytometry Method]-based test system
+to measure lymphocyte proliferation:
+The Local Lymph Node Assay: BrdU-ELISA (Appendix II), and
+The Local Lymph Node Assay: BrdU-FCM (Appendix II).
+
+-- 2 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+2
+5. Similar to the LLNA, the LLNA: BrdU-ELISA and the LLNA: BrdU-FCM study the induction phase
+of skin sensitisation and provide quantitative data suitable for dose-response assessment. The LLNA:
+BrdU-ELISA provides the UN GHS category 1 of skin sensitisation or no classification (1), and also
+provides sub-categories of 1A and 1B (17) (18) (19) (20). The LLNA: BrdU-FCM can only be used to
+conclude on either classification in category 1 or no classification. Furthermore, an ability to detect skin
+sensitisers without the necessity for using a radiolabel for DNA eliminates the potential for occupational
+exposure to radioactivity and waste disposal issues. This in turn may allow for the increased use of mice
+to detect skin sensitisers, which could further reduce the use of guinea pigs to test for skin sensitisation
+potential (i.e. TG 406) (16).
+6. This Test Guideline is designed for assessing skin sensitisation potential of chemicals in animals.
+TG 406 utilises guinea pig tests, notably the guinea pig maximisation test and the Buehler test (16). The
+LLNA (TG 429) (7) and the non-radioactive modifications, LLNA: BrdU-ELISA and FCM (TG 442 B) and
+LLNA: DA (TG 442 A) (21), all provide an advantage over the guinea pig tests in TG 406 (16) in terms of
+reduction and refinement of animal use. Currently defined approaches that use the combination of non-
+animal methods described in Test Guideline 497 (20) or the stand-alone kDPRA described in TG 442C (3)
+should be used as the first choice for hazard identification and GHS subcategorization, if applicable.
+Literature
+1) United Nations (2023), Globally Harmonised System of Classification and Labelling of Chemicals
+(GHS) Tenth revised edition. United Nations, New York. Available at:
+https://unece.org/transport/dangerous-goods/ghs-rev10-2023
+2) OECD (2012). The Adverse Outcome Pathway for Skin Sensitisation Initiated by Covalent
+Binding to Proteins. Part 1: Scientific Evidence. Series on Testing and Assessment No. 168.
+Available at: ENV/JM/MONO(2012)10/PART1
+3) OECD (2025), In Chemico Skin Sensitisation, Test Guideline No. 442C, Guidelines for Testing
+of Chemicals, OECD, Paris. Available at: [http://www.oecd.org/env/testguidelines]
+4) OECD (2024), In Vitro Skin Sensitisation, Test Guideline No. 442D, Guidelines for Testing of
+Chemicals, OECD, Paris. Available at: [http://www.oecd.org/env/testguidelines]
+5) OECD (2024), In Vitro Skin Sensitisation, Test Guideline No. 442E, Guidelines for Testing of
+Chemicals, OECD, Paris. Available at: [http://www.oecd.org/env/testguidelines].
+6) OECD (2010), The Local Lymph Node Assay. OECD Guideline for the Testing of Chemicals
+No. 429, Organisation for Economic Cooperation and Development, Paris. Available at:
+http://www.oecd.org/env/testguidelines
+7) OECD (2010), Skin Sensitization: Local Lymph Node Assay, Test Guideline No. 429, Guidelines
+for the Testing of Chemicals, OECD, Paris. Available at: [http://www.oecd.org/env/testguidelines]
+8) Chamberlain, M. and Basketter, D.A. (1996), The local lymph node assay: status of validation.
+Food Chem. Toxicol., 34, 999-1002.
+9) Basketter, D.A., Gerberick, G.F., Kimber, I. and Loveless, S.E. (1996), The local lymph node
+assay: A viable alternative to currently accepted skin sensitisation tests. Food Chem. Toxicol.,
+34, 985-997.
+10) Basketter, D.A., Gerberick, G.F. and Kimber, I. (1998), Strategies for identifying false positive
+responses in predictive sensitisation tests. Food Chem. Toxicol., 36, 327-33.
+
+-- 3 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+3
+11) Van Och, F.M.M., Slob, W., De Jong, W.H., Vandebriel, R.J. and Van Loveren, H. (2000), A
+quantitative method for assessing the sensitizing potency of low molecular weight chemicals using
+a local lymph node assay: employment of a regression method that includes determination of
+uncertainty margins. Toxicol., 146, 49-59.
+12) ICCVAM (1999), The murine local lymph node Assay: A test method for assessing the allergic
+contact dermatitis potential of chemicals/compounds: The results of an independent peer review
+evaluation coordinated by the Interagency Coordinating Committee on the Validation of Alternative
+Methods (ICCVAM) and the National Toxicology Program Center for the Evaluation of Alternative
+Toxicological Methods (NICETAM). NIH Publication No: 99-4494. Research Triangle Park, N.C.
+Available at:
+[http://iccvam.niehs.nih.gov/docs/immunotox_docs/llna/llnarep.pdf]
+13) Dean, J.H., Twerdok, L.E., Tice, R.R., Sailstad, D.M., Hattan, D.G., Stokes, W.S. (2001), ICCVAM
+evaluation of the murine local lymph node assay: II. Conclusions and recommendations of an
+independent scientific peer review panel. Reg. Toxicol. Pharmacol., 34(3), 258-273.
+14) Haneke, K.E., Tice, R.R., Carson, B.L., Margolin, B.H., Stokes, W.S. (2001), ICCVAM evaluation
+of the murine local lymph node assay: III. Data analyses completed by the national toxicology
+program interagency center for the evaluation of alternative toxicological methods. Reg. Toxicol.
+Pharmacol., 34(3), 274-286.
+15) Sailstad, D.M., Hattan, D., Hill, R.N., Stokes, W.S. (2001), ICCVAM evaluation of the murine local
+lymph node assay: I. The ICCVAM review process. Reg. Toxicol. Pharmacol., 34(3), 249- 257.
+16) OECD (1992), Skin Sensitisation, Test Guideline No. 406, Guidelines for Testing of Chemicals,
+OECD, Paris. Available at: [http://www.oecd.org/env/testguidelines]
+17) Maeda, Y., Takeyoshi, M. (2019), Proposal of GHS sub-categorization criteria for LLNA:BrdU-
+ELISA (OECD TG442B). Reg. Toxicol. Pharmacol., 107, 9–12.
+18) Kobayashi, T., Maeda,Y., Kondo, H., Takeyoshi, M. (2020), Applicability of the proposed GHS
+subcategorization criterion for LLNA:BrdU-ELISA (OECD TG442B) to the CBA/J strain mouse. J
+Appl Toxicol., 40, 1435–1439.
+19) United Nations (2022a), Peer review panel report for GHS sub-categorisation based LLNA BrdU-
+ELISA, UN/SCEGHS/42/INF.4, Available at: [https://unece.org/sites/default/files/2022-04/UN-
+SCEGHS-42-INF04e.pdf]
+20) United Nations (2022b), Japanese response to the comments noted in the peer review report for
+sub-categorisation based LLNA_BrdU-ELISA, UN/SCEGHS/42/INF.5, Available at:
+[https://unece.org/sites/default/files/2022-04/UN-SCEGHS-42-INF05e.pdf]
+21) OECD (2010). OECD Guidelines for Chemical Testing No. 442A.Skin sensitization: Local Lymph
+Node assay: DA. Organisation for Economic Cooperation and Development, Paris. Available at:
+[http://www.oecd.org/env/testguidelines].
+22) OECD (2005), Guidance Document on the Validation and International Acceptance of New or
+Updated Test Methods for Hazard Assessment, Environment, Health and Safety Monograph
+Series on Testing and Assessment No. 34, ENV/JM/MONO(2005)14, OECD, Paris. Available at:
+[http://www.oecd.org/env/testguidelines]
+
+-- 4 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+4
+Annex I – Definitions
+Accuracy: The closeness of agreement between test method results and accepted reference
+values. It is a measure of test method performance and one aspect of “relevance.” The term
+is often used interchangeably with “concordance”, to mean the proportion of correct
+outcomes of a test method (12).
+AOP (Adverse Outcome Pathway): sequence of events from the chemical structure of a
+target chemical or group of similar chemicals through the molecular initiating event to an
+in vivo outcome of interest (2).
+Benchmark test chemical: A sensitising or non-sensitising substance used as a standard
+for comparison to a test chemical. A benchmark chemical should have the following
+properties: (i) a consistent and reliable source(s); (ii) structural and functional similarity to
+the class of substances being tested; (iii) known physical/chemical characteristics;
+(iv) supporting data on known effects; and (v) known potency in the range of the desired
+response.
+EC1.6: Estimated concentrations of the chemical need to produce a stimulation index of
+1.6.
+False negative: A test chemical incorrectly identified as negative or non-active by a test
+method, when in fact it is positive or active (12). The false negative rate is one indicator of
+the test method performance.
+False positive: A test chemical incorrectly identified as positive or active by a test, when
+in fact it is negative or non-active (12). The false positive rate is one indicator of the test
+method performance.
+Hazard: Inherent property of an agent or situation having the potential to cause adverse
+effects when an organism, system or (sub) population is exposed to that agent.
+Inter-laboratory reproducibility: A measure of the extent to which different qualified
+laboratories, using the same protocol and testing the same test chemical, can produce
+qualitatively and quantitatively similar results. Inter-laboratory reproducibility is
+determined during the pre-validation and validation processes, and indicates the extent to
+which a test can be successfully transferred between laboratories, also referred to as
+between-laboratory reproducibility (12).
+Intra-laboratory reproducibility: A determination of the extent that qualified people
+within the same laboratory can successfully replicate results using a specific protocol at
+different times. Also referred to as within-laboratory reproducibility (12).
+Mixture: A mixture or a solution composed of two or more substances in which they do
+not react.
+Mono-constituent substance: A substance, defined by its quantitative composition, in
+which one main constituent is present to at least 80% (w/w).
+Multi-constituent substance: A substance, defined by its quantitative composition, in
+which more than one main constituent is present in a concentration ≥ 10% (w/w) and < 80%
+
+-- 5 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+5
+(w/w). A multi-constituent substance is the result of a manufacturing process. The
+difference between mixture and multi-constituent substance is that a mixture is obtained by
+blending of two or more substances without chemical reaction. A multi-constituent
+substance is the result of a chemical reaction.
+Outlier: An outlier is an observation that is markedly different from other values in a
+random sample from a population.
+Performance standards: Standards, based on a validated test method, that provide a basis
+for evaluating the comparability of a proposed test method that is mechanistically and
+functionally similar. Included are (i) essential test method components; (ii) a minimum list
+of reference chemicals selected from among the chemicals used to demonstrate the
+acceptable performance of the validated test method; and (iii) the comparable levels of
+accuracy and reliability, based on what was obtained for the validated test method, that the
+proposed test method should demonstrate when evaluated using the minimum list of
+reference chemicals (12).
+Proficiency chemicals (substances): A subset of the Reference Chemicals included in the
+Performance Standards that can be used by laboratories to demonstrate technical
+competence with a standardised test method. Selection criteria for these substances
+typically include that they represent the range of responses, are commercially available,
+and have high quality reference data available.
+Quality assurance: A management process by which adherence to laboratory testing
+standards, requirements, and record keeping procedures, and the accuracy of data transfer,
+are assessed by individuals who are independent from those performing the testing.
+Reference chemicals (substances): A set of chemicals to be used to demonstrate the
+ability of a new test method to meet the acceptability criteria demonstrated by the validated
+reference test method(s). These chemicals should be representative of the classes of
+chemicals for which the test method is expected to be used, and should represent the full
+range of responses that may be expected from the chemicals for which it may be used, from
+strong, to weak, to negative.
+Relevance: Description of relationship of the test to the effect of interest and whether it is
+meaningful and useful for a particular purpose. It is the extent to which the test correctly
+measures or predicts the biological effect of interest. Relevance incorporates consideration
+of the accuracy (concordance) of a test method (12).
+Reliability: Measures of the extent that a test method can be performed reproducibly within
+and between laboratories over time, when performed using the same protocol. It is assessed
+by calculating intra- and inter-laboratory reproducibility and intra-laboratory repeatability
+(12).
+Reproducibility: The agreement among results obtained from testing the same substance
+using the same test protocol (see reliability) (12).
+Receiver operating Characteristic (ROC) analysis: An analysis to set an optimal cut-off
+value for the prediction model. The prediction models using cut-off values allow test
+chemical to be categorized as positive or negative. Any variation of the cut-off value will
+
+-- 6 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+6
+result in changes of the sensitivity and specificity, in opposite directions. ROC analysis is
+commonly used to obtain optimal cutoff values for diagnostic tests.
+Sensitivity: The proportion of all positive / active chemicals that are correctly classified by
+the test method. It is a measure of accuracy for a test method that produces categorical
+results, and is an important consideration in assessing the relevance of a test method (12).
+Skin sensitisation: An immunological process that results when a susceptible individual is
+exposed topically to an inducing chemical allergen, which provokes a cutaneous immune
+response that can lead to the development of contact sensitisation.
+Specificity: The proportion of all negative / inactive chemicals that are correctly classified
+by the test method. It is a measure of accuracy for a test method that produces categorical
+results and is an important consideration in assessing the relevance of a test method (12).
+Stimulation Index (SI): A value calculated to assess the skin sensitisation potential of a
+test chemical that is the ratio of the proliferation in treated groups to that in the concurrent
+vehicle control group.
+Substance: Chemical elements and their compounds in the natural state or obtained by any
+production process, including any additive necessary to preserve the stability of the product
+and any impurities deriving from the process used, but excluding any solvent which may
+be separated without affecting the stability of the substance or changing its composition (1).
+Test chemical: The term "test chemical" is used to refer to what is being tested. It is not
+related to the applicability of the test methods to the testing of mono-constituent substances,
+multi-constituent substances and/or mixtures.
+UVCB: substances of unknown or variable composition, complex reaction products or
+biological materials.
+
+-- 7 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+7
+Appendix I: In Vivo Skin
+Sensitisation: The Local Lymph
+Node Assay: BrdU-ELISA
+INITIAL CONSIDERATIONS, APPLICABILITY AND LIMITATIONS
+1. The LLNA: BrdU-ELISA has been validated and reviewed, and recommended by an international
+independent scientific peer review panel as considered useful for identifying skin sensitising and non-
+sensitising test chemicals, with certain limitations (1) (2) (3).
+2. The LLNA: BrdU-ELISA is a modified non-radioactive LLNA method for identifying potential skin
+sensitising test chemicals, with specific limitations. This does not necessarily imply that in all instances the
+LLNA: BrdU-ELISA should be used in place of the radioactive LLNA (TG 429) or guinea pig tests (i.e. TG
+406) (4), when the use of an in vivo method is deemed necessary, but rather that the assay is of equal
+merit and may be employed as an alternative in which positive and negative results generally no longer
+require further confirmation (1) (2). The testing laboratory should consider all available information on the
+test chemical prior to conducting the study. Such information will include the identity and chemical structure
+of the test chemical; its physicochemical properties; the results of any other in vitro or in vivo toxicity tests
+on the test chemical; and toxicological data on structurally related test chemicals. This information should
+be considered in order to determine whether the LLNA: BrdU-ELISA is appropriate for the test chemical
+(given the incompatibility of limited types of test chemicals with the LLNA: BrdU-ELISA [see paragraph 3])
+and to aid in dose selection.
+3. The LLNA: BrdU-ELISA is an in vivo method and, as a consequence, will not eliminate the use of
+animals in the assessment of allergic contact sensitising activity. Therefore, consideration should be given
+to the applicability domain of suitable in vitro, in chemico and in silico methods and consequently, the
+possibility of using these approaches rather than testing on animals. Like other LLNA test methods, the
+LLNA: BrdU-ELISA has, however, the potential to reduce the animal use for this purpose when compared
+to the guinea pig tests (TG 406) (4). Moreover, the LLNA: BrdU-ELISA offers a substantial refinement of
+the way in which animals are used for allergic contact sensitisation testing, since unlike TG 406, the LLNA:
+BrdU-ELISA does not require that challenge-induced dermal hypersensitivity reactions be elicited.
+Furthermore, the LLNA: BrdU-ELISA does not require the use of an adjuvant, as is the case for the guinea
+pig maximisation test (4). Thus, the LLNA: BrdU-ELISA reduces animal distress. The positive result of the
+LLNA: BrdU-ELISA provides the UN GHS category 1 of skin sensitisation, and also provides sub-
+categories of 1A and 1B (5) (6) (7) (8). When the EC1.6 value is 6% or less, the chemical is subcategorized
+as 1A, and above 6% as 1B. Despite the advantages of the LLNA: BrdU-ELISA over TG 406 (4), there are
+certain limitations applicable to the LLNA test, that may necessitate the use of TG 406 (e.g. the testing of
+certain metals, false positive findings with certain skin irritants [such as some surfactant-type substances]
+(9) (10), solubility of the test chemicals [such as rarely soluble or non-soluble substances]). In addition,
+test chemical classes or substances containing functional groups shown to act as potential confounders
+(e.g. fatty acid glutamate, oleic acid, oleic acid ester, fatty alcohol 1, fatty alcohol 2, polyaminofunctional
+
+-- 8 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+8
+siloxane (11)) may necessitate the use of guinea pig tests (i.e. TG 406 (4)). Other limitations that have
+been identified for the LLNA (10) have also been recommended to apply to the LLNA: BrdU-ELISA (1).
+Other than such identified limitations, the LLNA: BrdU-ELISA should be applicable for testing any test
+chemicals unless there are properties associated with these substances that may interfere with the
+accuracy of the LLNA: BrdU-ELISA. In addition, consideration should be given to the possibility of
+borderline positive results when Stimulation Index (SI) values between 1.6 and 1.9 are obtained (see
+paragraphs 31-32) in the LLNA: BrdU-ELISA. This is based on the validation database of 43 substances
+using an SI ≥ 1.6 (see paragraph 6) for which the LLNA: BrdU-ELISA correctly identified all 32 LLNA
+sensitisers, but incorrectly identified two of 11 LLNA non-sensitisers with SI values between 1.6 and 1.9
+(i.e. borderline positive) (1). However, as the same dataset was used for setting the SI-values and
+calculating the predictive properties of the test, the stated results may be an over-estimation of the real
+predictive properties.
+4. When considering testing of mixtures, difficult-to-test chemicals (e.g. unstable), or test chemicals
+not clearly within the applicability domain described in this Guideline, upfront consideration should be given
+to whether the results of such testing will yield results that are meaningful scientifically.
+5. Definitions are provided in the Annex 1 of the General Introduction.
+PRINCIPLE OF THE TEST
+6. The basic principle underlying the LLNA: BrdU-ELISA is that sensitisers induce proliferation of
+lymphocytes in the lymph nodes draining the site of test chemical application. This proliferation is
+proportional to the dose and to the potency of the applied allergen and provides a simple means of
+obtaining a quantitative measurement of sensitisation. Proliferation is measured by comparing the mean
+proliferation in each test group to the mean proliferation in the vehicle treated control group (VC). The ratio
+of the mean proliferation in each treated group to that in the concurrent VC group, termed the SI, is
+determined, and should be ≥1.6 before further evaluation of the test chemical as a potential skin sensitiser
+is warranted. The methods described here are based on the use of measuring BrdU content to indicate an
+increased number of proliferating cells in the draining auricular lymph nodes. BrdU is an analogue of
+thymidine and is similarly incorporated into the DNA of proliferating cells. The incorporation of BrdU is
+measured by ELISA, which utilises an antibody specific for BrdU that is also labelled with peroxidase.
+When the substrate is added, the peroxidase reacts with the substrate to produce a coloured product that
+is quantified at a specific absorbance using a microtiter plate reader.
+DESCRIPTION OF THE ASSAY
+Selection of animal species
+7. The mouse is the species of choice for this test. Validation studies for the LLNA: BrdU-ELISA were
+conducted exclusively with the CBA/JN strain, which is therefore considered the preferred strain (1) (3).
+Young adult female mice, which are nulliparous and non-pregnant, are used. At the start of the study,
+animals should be between 8-12 weeks old, and the weight variation of the animals should be minimal and
+not exceed 20% of the mean weight. Alternatively, other strains or males may be used when sufficient data
+are generated to demonstrate that significant strain and/or gender-specific differences in the LLNA: BrdU-
+ELISA response do not exist.
+Housing and feeding conditions
+8. Mice should be group-housed (12) on solid-bottomed cages (13) with suitable substrate and
+nesting material (14) (15) (16) (17), unless adequate scientific rationale for alternative housing mice
+
+-- 9 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+9
+individually is provided. The temperature of the experimental animal room should be 22 ± 3ºC. Although
+the relative humidity should be at least 30% and preferably not exceed 70%, other than during room
+cleaning, the aim should be 50-60%. Lighting should be artificial, the sequence being 12 hours light, 12
+hours dark. For feeding, conventional laboratory diets may be used with an unlimited supply of drinking
+water.
+Preparation of animals
+9. The animals are randomly selected, humanely marked to permit individual identification preferably
+by non-invasive hair clipping (18) (19), and kept in their cages for at least five days prior to the start of
+dosing to allow for acclimatisation to the laboratory conditions. Prior to the start of treatment all animals
+are examined to ensure that they have no observable skin lesions. During all examinations, the mice should
+be handled using non-aversive methods such as cupping or tunnel handling (20).
+Preparation of dosing solutions
+10. Solid test chemicals should be dissolved or suspended in solvents/vehicles and diluted, if
+appropriate, prior to application to an ear of the mice. Liquid test chemicals may be applied neat or diluted
+prior to dosing. Insoluble chemicals, such as those generally seen in medical devices (39), should be
+subjected to an exaggerated extraction in an appropriate solvent to reveal all extractable constituents for
+testing prior to application to an ear of the mice. Test chemicals should be prepared daily unless stability
+data demonstrate the acceptability of storage.
+Reliability check
+11. Positive controls (PC) are used to demonstrate appropriate performance of the assay by
+responding with adequate and reproducible sensitivity to a sensitising test chemical for which the
+magnitude of the response is well characterised. Inclusion of a concurrent PC is recommended because it
+demonstrates competency of the laboratory to successfully conduct each assay and allows for an
+assessment of intra-, and inter-laboratory reproducibility and comparability. Some regulatory authorities
+also require a PC for each study and therefore users are encouraged to consult the relevant authorities
+prior to conducting the LLNA: BrdU-ELISA. Accordingly, the routine use of a concurrent PC is encouraged
+to avoid the need for additional animal testing to meet such requirements that might arise from the use of
+a periodic PC (see paragraph 12). The PC should produce a positive LLNA: BrdU-ELISA response at an
+exposure level expected to give an increase in the SI ≥ 1.6 over the VC group. The PC dose should be
+chosen such that it does not cause excessive skin irritation or systemic toxicity and the induction is
+reproducible but not excessive (e.g. SI > 14 would be considered excessive). Preferred PC test chemicals
+are 25% hexyl cinnamic aldehyde (CAS No 101-86-0) and 25% eugenol (CAS No 97-53-0) in acetone:
+olive oil (4:1, v/v). There may be circumstances in which, given adequate justification, other PC test
+chemicals, meeting the above criteria, may be used.
+12. While inclusion of a concurrent PC group is recommended, there may be situations in which
+periodic testing (i.e. at intervals ≤6 months) of the PC test chemical may be adequate for laboratories that
+conduct the LLNA: BrdU-ELISA regularly (i.e. conduct the LLNA: BrdU-ELISA at a frequency of no less
+than once per month) and have an established historical PC database that demonstrates the laboratory’s
+ability to obtain reproducible and accurate results with PCs. Adequate proficiency with the LLNA:
+BrdU-ELISA can be successfully demonstrated by generating consistent positive results with the PC in at
+least 10 independent tests conducted within a reasonable period of time (i.e. less than one year).
+13. A concurrent PC group should always be included when there is a procedural change to the LLNA:
+BrdU-ELISA (e.g. change in trained personnel, change in test method materials and/or reagents, change
+in test method equipment, change in source of test animals), and such changes should be documented in
+
+-- 10 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+10
+laboratory reports. Consideration should be given to the impact of these changes on the adequacy of the
+previously established historical database in determining the necessity for establishing a new historical
+database to document consistency in the PC results.
+14. Investigators should be aware that the decision to conduct a PC study on a periodic basis instead
+of concurrently has ramifications on the adequacy and acceptability of negative study results generated
+without a concurrent PC during the interval between each periodic PC study. For example, if a false
+negative result is obtained in the periodic PC study, negative test chemical results obtained in the interval
+between the last acceptable periodic PC study and the unacceptable periodic PC study may be questioned.
+Implications of these outcomes should be carefully considered when determining whether to include
+concurrent PCs or to only conduct periodic PCs. Consideration should also be given to using fewer animals
+in the concurrent PC group when this is scientifically justified and if the laboratory demonstrates, based on
+laboratory-specific historical data, that fewer mice can be used (21).
+15. Although the PC test chemical should be tested in the vehicle that is known to elicit a consistent
+response (e.g. acetone: olive oil; 4:1, v/v), there may be certain regulatory situations in which testing in a
+non-standard vehicle (clinically/chemically relevant formulation) will also be necessary (22). If the
+concurrent PC test chemical is tested in a different vehicle than the test chemical, then a separate VC for
+the concurrent PC should be included.
+16. In instances where test chemicals of a specific chemical class or range of responses are being
+evaluated, benchmark test chemicals may also be useful to demonstrate that the test method is functioning
+properly for detecting the skin sensitisation potential of these types of test chemicals. Appropriate
+benchmark test chemicals should have the following properties:
+• structural and functional similarity to the class of the test chemical being tested;
+• known physical/chemical characteristics;
+• supporting data from the LLNA: BrdU-ELISA;
+• supporting data from other animal models and/or from humans.
+TEST PROCEDURE
+Number of animals and dose levels
+17. A minimum of four animals is used per dose group, with a minimum of three concentrations of the
+test chemical, plus a concurrent VC group treated only with the vehicle for the test chemical, and a PC
+group (concurrent or recent, based on laboratory policy in considering paragraphs 11-15). Testing multiple
+doses of the PC should be considered especially when testing the PC on an intermittent basis. Except for
+absence of treatment with the test chemical, animals in the control groups should be handled and treated
+in a manner identical to that of animals in the treatment groups.
+18. Dose and vehicle selection should be based on the recommendations given in the references 2
+and 27. Three consecutive doses are normally selected from an appropriate concentration series such as
+100%, 50%, 25%, 10%, 5%, 2.5%, 1%, 0.5%, etc. Adequate scientific rationale should accompany the
+selection of the concentration series used. All existing toxicological information (e.g. acute toxicity and
+dermal irritation) and structural and physicochemical information on the test chemical of interest (and/or
+structurally related test chemicals) should be considered, where available, in selecting the three
+consecutive concentrations so that the highest concentration maximises exposure while avoiding systemic
+toxicity and/or excessive local skin irritation (23) (24). In the absence of such information, an initial pre-
+screen test may be necessary (see paragraphs 21-24).
+
+-- 11 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+11
+19. The vehicle should not interfere with or bias the test result and should be selected on the basis of
+maximising the solubility in order to obtain the highest concentration achievable while producing a
+solution/suspension suitable for application of the test chemical. Recommended vehicles are acetone: olive
+oil (4:1 v/v), N,N-dimethylformamide, methyl ethyl ketone, propylene glycol, and dimethyl sulphoxide (5)
+but others may be used if sufficient scientific rationale is provided. In certain situations it may be necessary
+to use a clinically relevant solvent or the commercial formulation in which the test chemical is marketed as
+an additional control. Particular care should be taken to ensure that hydrophilic substances are
+incorporated into a vehicle system, which wets the skin and does not immediately run off, by incorporation
+of appropriate solubilisers (e.g. 1% Pluronic® L92). Thus, wholly aqueous vehicles are to be avoided.
+20. The processing of lymph nodes from individual mice allows for the assessment of inter-animal
+variability and a statistical comparison of the difference between test chemical and VC group
+measurements (see paragraph 34). In addition, evaluating the possibility of reducing the number of mice
+in the PC group is only feasible when individual animal data are collected (22). Further, some national
+regulatory authorities require the collection of individual animal data. Regular collection of individual animal
+data provides an animal welfare advantage by avoiding duplicate testing that would be necessary if the
+test chemical results originally collected in one manner (e.g. via pooled animal data) were to be considered
+later by regulatory authorities with other requirements (e.g. individual animal data).
+Pre-screen test
+21. In the absence of information to determine the highest dose to be tested (see paragraph 18), a
+pre-screen test should be performed in order to define the appropriate dose level to test in the LLNA: BrdU-
+ELISA. The purpose of the pre-screen test is to provide guidance for selecting the maximum dose level to
+use in the main LLNA: BrdU-ELISA study, where information on the concentration that induces systemic
+toxicity (see paragraph 24) and/or excessive local skin irritation (see paragraph 23) is not available. The
+maximum dose level tested should be a concentration of 100% of the test chemical for liquids or the
+maximum possible concentration for solids or suspensions.
+22. The pre-screen test is conducted under conditions identical to the main LLNA: BrdU-ELISA study,
+except there is no assessment of lymph node proliferation and fewer animals per dose group can be used.
+One or two animals per dose group are suggested. All mice will be observed daily for any clinical signs of
+systemic toxicity or local irritation at the application site. Body weights are recorded pre-test and prior to
+termination (Day 6). Both ears of each mouse are observed for erythema and scored using Table 1 (24).
+Ear thickness measurements are taken using a thickness gauge (e.g. digital micrometer or Peacock Dial
+thickness gauge) on Day 1 (pre-dose), Day 3 (approximately 48 hours after the first dose), and Day 6.
+Additionally, on Day 6, ear thickness could be determined by ear punch weight determinations, which
+should be performed after the animals are humanely killed. Excessive local irritation is indicated by an
+erythema score ≥3 and/or ear thickness of ≥25% on any day of measurement (25) (26). The highest dose
+selected for the main LLNA: BrdU-ELISA study will be the highest dose used in the pre-screen
+concentration series (see paragraph 18) that did not induce systemic toxicity and/or excessive local skin
+irritation.
+• Table 1. Erythema Scores
+Observation Score
+No erythema 0
+Very slight erythema (barely perceptible) 1
+
+-- 12 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+12
+Well-defined erythema 2
+Moderate to severe erythema 3
+Severe erythema (beet redness) to eschar formation preventing grading of erythema 4
+23. In addition to a 25% increase in ear thickness (25) (26), a statistically significant increase in ear
+thickness in the treated mice compared to solvent/vehicle control mice has also been used to identify
+irritants in the LLNA (26) (27) (28) (29) (30) (31) (32). However, while statistically significant increases
+can occur when ear thickness is less than 25%, they have not been associated specifically with excessive
+irritation (29) (30) (31) (32) (33).
+24. The following clinical observations may indicate systemic toxicity (30) when used as part of an
+integrated assessment and therefore may indicate the maximum dose level to use in the main LLNA: BrdU-
+ELISA: changes in nervous system function (e.g. pilo-erection, ataxia, tremors, and convulsions); changes
+in behaviour (e.g. aggressiveness, change in grooming activity, marked change in activity level); changes
+in respiratory patterns (i.e. changes in frequency and intensity of breathing such as dyspnea, gasping, and
+rales), and changes in food and water consumption. In addition, signs of lethargy and/or unresponsiveness
+and any clinical signs of more than slight or momentary pain and distress, or a >5% reduction in body
+weight from Day 1 to Day 6 and mortality should be considered in the evaluation. Moribund animals or
+animals showing signs of severe pain and distress should be humanely killed (35).
+Main study experimental schedule
+The experimental schedule of the assays is as follows:
+• Day 1:
+Individually identify and record the weight of each animal and any clinical
+observation. Apply 25 μL of the appropriate dilution of the test chemical, the
+vehicle alone, or the PC (concurrent or recent, based on laboratory policy in
+considering paragraphs 11-15), to the dorsum of each ear.
+• Days 2 and 3:
+Repeat the application procedure carried out on Day 1.
+• Day 4:
+No treatment.
+• Day 5:
+Inject 0.5 mL (5 mg/mouse) of BrdU (10 mg/mL) solution intra-peritoneally.
+• Day 6:
+Record the weight of each animal and any clinical observation. Approximately
+24 hours (24 h) after BrdU injection, humanely kill the animals. Excise the draining
+auricular lymph nodes from each mouse ear and process separately in phosphate
+buffered saline (PBS) for each animal. Details and diagrams of the lymph node
+identification and dissection can be found in reference (21). To further monitor the
+local skin response in the main study, additional parameters such as scoring of ear
+erythema or ear thickness measurements (obtained either by using a thickness
+gauge, or ear punch weight determinations at necropsy) may be included into the
+study protocol.
+
+-- 13 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+13
+Preparation of cell suspensions
+25. From each mouse, a single-cell suspension of lymph node cells (LNC) excised bilaterally is
+prepared by gentle mechanical disaggregation through 200 micron-mesh stainless steel gauze or another
+acceptable technique for generating a single-cell suspension (e.g. use of a disposable plastic pestle to
+crush the lymph nodes followed by passage through a #70 nylon mesh). The procedure for preparing the
+LNC suspension is critical in this assay and therefore every operator should establish the skill in advance.
+Further, the lymph nodes in VC animals are small, so careful operation is important to avoid any artificial
+effects on SI values. In each case, the target volume of the LNC suspension should be adjusted to a
+determined optimised volume (approximately 15 mL). The optimised volume is based on achieving a mean
+absorbance of the VC group within 0.1-0.2.
+Determination of cellular proliferation (measurement of BrdU content in DNA
+of lymphocytes)
+26. BrdU is measured by ELISA using a commercial kit (e.g. in the validation study the Roche Applied
+Science, Mannheim, Germany, was used). Other BrdU ELISA kits may be used if they provide consistent
+results. Briefly, 100 μL of the LNC suspension is added to the wells of a flat-bottom microplate in triplicate.
+After fixation and denaturation of the LNC, peroxidase-conjugated anti-BrdU antibody is added to each
+well and allowed to react. Subsequently, the anti-BrdU antibody is removed by washing and the substrate
+solution is then added and allowed to produce chromogen. Absorbance at 370 nm with a reference
+wavelength of 492 nm is then measured. In all cases, assay test conditions should be optimised (see
+paragraph 26).
+OBSERVATIONS
+Clinical observations
+27. Each mouse should be carefully observed at least once daily for any clinical signs, either of local
+irritation at the application site or of systemic toxicity. All observations are systematically recorded with
+records being maintained for each mouse. Monitoring plans should include criteria to promptly identify
+those mice exhibiting systemic toxicity, excessive local skin irritation, or corrosion of skin for euthanasia
+(35).
+Body weights
+28. As stated in paragraph 25, individual animal body weights should be measured at the start of the
+test and at the scheduled humane kill.
+CALCULATION OF RESULTS
+29. Results for each treatment group are expressed as the mean SI. The SI is derived by dividing the
+mean BrdU labelling index/mouse within each test chemical group and the PC group by the mean BrdU
+labelling index for the solvent/VC group. The average SI for the VCs is then one.
+30. The BrdU labelling index is defined as:
+BrdU labelling index = (ABSem – ABS blankem) – (ABSref – ABS blankref)
+Where; em = emission wavelength; and ref = reference wavelength.
+31. The decision process regards a result as positive when SI ≥ 1.6 (1). However, the strength of the
+dose-response relationship, the statistical significance and the consistency of the solvent/vehicle and PC
+responses may also be used when determining whether a borderline result (i.e. SI value between 1.6 and
+
+-- 14 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+14
+1.9) is declared positive (5) (36) (37). When the positive result is obtained, the EC1.6 value can be
+calculated using following formula:
+EC1.6 = c + (1.6- d)/(b - d) ×(a −c)
+Where; a = dose concentration immediately above SI = 1.6, b = SI immediately above 1.6,
+c = dose concentration immediately below SI = 1.6, and d = SI immediately below 1.6.
+32. Also, when all the SIs exceeded 1.6, extrapolate EC 1.6 value (EC1.6 ex) can be calculated with
+the two lowest SI values above 1.6 and their corresponding concentrations using following formula:
+EC1.6ex = 2^ log2(c)+(1.6−d)(b−d)×[log2(a)−log2(c)]
+Where; a = dose concentration for next to lowest SI above 1.6, b = next to lowest SI above
+1.6, c = dose concentration for lowest SI above 1.6, d = lowest SI above 1.6.
+33. For a borderline positive response between an SI of 1.6 and 1.9, users may want to consider
+additional information such as dose-response relationship, evidence of systemic toxicity or excessive
+irritation, and where appropriate, statistical significance together with SI values to confirm that such results
+are positives (1). Consideration should also be given to various properties of the test chemical, including
+whether it has a structural relationship to known skin sensitisers, whether it causes excessive skin irritation
+in the mouse, and the nature of the dose-response observed. These and other considerations are
+discussed in detail elsewhere (38).
+34. Collecting data at the level of the individual mouse will enable a statistical analysis for presence
+and degree of dose-response relationship in the data. Any statistical assessment could include an
+evaluation of the dose-response relationship as well as suitably adjusted comparisons of test groups (e.g.
+pair-wise dosed group versus concurrent solvent/vehicle control comparisons). Statistical analyses may
+include, e.g. linear regression or Williams’s test to assess dose-response trends, and Dunnett’s test for
+pair-wise comparisons. In choosing an appropriate method of statistical analysis, the investigator should
+maintain an awareness of possible inequalities of variances and other related problems that may
+necessitate a data transformation or a non-parametric statistical analysis. In any case, the investigator may
+need to carry out SI calculations and statistical analyses with and without certain data points (sometimes
+called “outliers”).
+DATA AND REPORTING
+Data
+35. Data should be summarised in tabular form showing the individual animal BrdU labelling index
+values, the group mean BrdU labelling index/animal, its associated error term (e.g. SD, SEM), and the
+mean SI for each dose group compared against the concurrent solvent/vehicle control group.
+Test report
+36. The test report should contain the following information:
+Test chemical
+source, lot number, limit date for use, if available;
+stability of the test chemical, if known;
+
+-- 15 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+15
+Mono-constituent substance
+physical appearance, water solubility, and additional relevant physicochemical
+properties;
+chemical identification, such as IUPAC or CAS name, CAS number, SMILES or InChI
+code, structural formula, purity, chemical identity of impurities as appropriate and
+practically feasible, etc.
+Multi-constituent substance, UVBCs and mixtures
+characterised as far as possible by chemical identity (see above), quantitative
+occurrence and relevant physicochemical properties of the constituents.
+Controls
+identification data (e.g. CAS number, if available; source; purity; known impurities; lot
+number);
+physical nature and physicochemical properties (e.g. volatility, stability, solubility);
+Solvent/vehicle
+identification data (purity; concentration, where appropriate; volume used);
+justification for choice of vehicle;
+Test animals
+source of CBA mice;
+microbiological status of the animals, when known;
+number and age of animals;
+source of animals, housing conditions, diet, etc.;
+Test conditions
+source, lot number, and manufacturer’s quality assurance/quality control data (antibody
+sensitivity and specificity and the limit of detection) for the ELISA kit;
+details of test chemical preparation and application;
+justification for dose selection (including results from pre-screen test, if conducted);
+vehicle and test chemical concentrations used, and total amount of test chemical
+applied;
+details of food and water quality (including diet type/source, water source);
+details of treatment and sampling schedules;
+methods for measurement of toxicity;
+criteria for considering studies as positive or negative;
+details of any protocol deviations and an explanation on how the deviation affects the
+study design and results;
+report whether (yes/no) blinding was applied in the study.
+
+-- 16 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+16
+Reliability check
+a summary of results of latest reliability check, including information on test chemical,
+concentration, PC, VC and benchmark test chemical used, as appropriate;
+concurrent and/or historical PC and concurrent VC data for testing laboratory;
+if a concurrent PC was not included, the date and laboratory report for the most recent
+periodic PC and a report detailing the historical PC data for the laboratory justifying
+the basis for not conducting a concurrent PC;
+Results
+individual weights of mice at start of dosing and at scheduled humane kill; as well as
+mean and associated error term (e.g. SD, SEM) for each treatment group;
+time course of onset and signs of toxicity, including dermal irritation at site of
+administration, if any, for each animal;
+a table of individual mouse BrdU labelling indices and SI values for each treatment
+group;
+mean and associated error term (e.g. SD, SEM) for BrdU labelling index/mouse for
+each treatment group and the results of outlier analysis for each treatment group;
+calculated SI and an appropriate measure of variability that takes into account the inter-
+animal variability in both the test chemical and control groups;
+dose-response relationship;
+statistical analyses, where appropriate;
+EC1.6 or EC1.6ex value, if available
+Discussion of results:
+a brief commentary on the results, the dose-response analysis, and statistical analyses,
+where appropriate, with a conclusion as to whether the test chemical should be
+considered a skin sensitiser.
+Literature
+(1) ICCVAM (2010), ICCVAM Test Method Evaluation Report. Nonradioactive
+local lymph node assay: BrdU-ELISA Test Method Protocol (LLNA: BrdU-ELISA). NIH
+Publication No. 10- 7552A/B. Research Triangle Park, NC: National Institute of
+Environmental Health Sciences. Available at:
+[http://iccvam.niehs.nih.gov/methods/immunotox/llna-ELISA/TMER.htm]
+(2) ICCVAM (2009), Independent Scientific Peer Review Panel Report: Updated
+validation status of new versions and applications of the murine local lymph node assay: a
+test method for assessing the allergic contact dermatitis potential of chemicals and
+products. Research Triangle Park, NC: National Institute of Environmental Health
+Sciences. Available at:
+[http://iccvam.niehs.nih.gov/docs/immunotox_docs/LLNAPRPRept2009.pdf]
+(3) Takeyoshi, M., Iida, K., Shiraishi, K. and Hoshuyama, S. (2005), Novel approach
+for classifying chemicals according to skin sensitizing potency by non-radioisotopic
+modification of the local lymph node assay. J. Appl. Toxicol., 25, 129-134.
+
+-- 17 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+17
+(4) OECD (1992), Skin Sensitisation, Test Guideline No. 406, Guidelines for Testing
+of Chemicals, OECD, Paris. Available at: [http://www.oecd.org/env/testguidelines]
+(5) ICCVAM (1999), The murine local lymph node Assay: A test method for
+assessing the allergic contact dermatitis potential of chemicals/compounds: The results of
+an independent peer review evaluation coordinated by the Interagency Coordinating
+Committee on the Validation of Alternative Methods (ICCVAM) and the National
+Toxicology Program Center for the Evaluation of Alternative Toxicological Methods
+(NICETAM). NIH Publication No: 99-4494. Research Triangle Park, N.C. Available at:
+[http://iccvam.niehs.nih.gov/docs/immunotox_docs/llna/llnarep.pdf]
+(6) Maeda, Y., and Takeyoshi, M. (2019), Proposal of GHS sub-categorization criteria
+for LLNA:BrdU-ELISA (OECD TG442B). Reg. Toxicol. Pharmacol., 107, 9–12.
+(7) Kobayashi, T., Maeda,Y., Kondo, H., and Takeyoshi, M. (2020), Applicability of
+the proposed GHS subcategorization criterion for LLNA:BrdU-ELISA (OECD TG442B)
+to the CBA/J strain mouse. J Appl Toxicol., 40, 1435–1439.
+(8) United Nations (2022a), Peer review panel report for GHS sub-categorisation
+based LLNA BrdU-ELISA, UN/SCEGHS/42/INF.4, Available at:
+[https://unece.org/sites/default/files/2022-04/UN-SCEGHS-42-INF04e.pdf]
+(9) United Nations (2022b), Japanese response to the comments noted in the peer
+review report for sub-categorisation based LLNA_BrdU-ELISA, UN/SCEGHS/42/INF.5,
+Available at: [https://unece.org/sites/default/files/2022-04/UN-SCEGHS-42-INF05e.pdf]
+(10) OECD (2010), Skin Sensitization: Local Lymph Node Assay, Test Guideline No.
+429, Guidelines for the Testing of Chemicals, OECD, Paris. Available at:
+[http://www.oecd.org/env/testguidelines]
+(11) Basketter, D., Ball, N., Cagen, S., Carrilo, J.C., Certa, H., Eigler, D., Garcia, C.,
+Esch, H., Graham, C., Haux, C., Kreiling, R. and Mehling, A. (2009), Application of a
+weight of evidence approach to assessing discordant sensitisation datasets: implications for
+REACH. Reg. Toxicol. Pharmacol., 55, 90-96.
+(12) ILAR (1996), Institute of Laboratory Animal Research (ILAR) Guide for the Care
+and Use of Laboratory Animals. 7th ed. Washington, DC: National Academies Press.
+(13) National Research Council. 1996. Guide for the care and use of laboratory animals.
+National Academy Press, Washington, D.C
+(14) Olsson A, Dahlborn K. Improving housing conditions for laboratory mice: a
+review of 'environmental enrichment'. Lab Animals 2002;36:243- 270
+(15) Van Loo PLP, Kruitwagenb CLJJ, Koolhaasc JM, Van de Weerdd HA, Van
+Zutphena LFM, Baumans V. Influence of cage enrichment on aggressive behaviour and
+physiological parameters in male mice. Applied Animal Behaviour Science.
+2002;76(1):65-81
+(16) Würbel H. Ideal homes?: housing effects on rodent brain and behavior. Trends in
+Neuroscience. 2001;24:207-211
+(17) Würbel H, Garner JP. Refinement of rodent research through environmental
+enrichment and systematic randomization. NC3Rs. Published January 2007.
+https://www.nc3rs.org.uk/sites/default/files/documents/Refinementenvironmentalenrichm
+entandsystematicrandomization.pdf. Accessed April 06, 2018
+
+-- 18 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+18
+(18) Dahlborn K, Bugnon P, Nevalainen T, Raspa M, Verbost P and Spangenberg E.
+Report of the Federation of European Laboratory Animal Science Associations Working
+Group on animal identification. Laboratory Animals. 2013;47:2-11.
+(19) Norecopa. Toe Clipping: Evaluation and Alternatives.
+https://norecopa.no/media/6470/norecopa-toeclip.pdf, Published 2008. Accessed
+9 April 2018.
+(20) Hurst JL, West RS. Taming anxiety in laboratory mice. Nature Methods.
+2010;7:825-826
+(21) ICCVAM (2009), Recommended Performance Standards: Murine Local Lymph
+Node Assay. NIH Publication Number 09-7357. Research Triangle Park, NC: National
+Institute of Environmental Health Sciences. Available at:
+[http://iccvam.niehs.nih.gov/docs/immunotox_docs/llna-ps/LLNAPerfStds.pdf]
+(22) McGarry, H.F. (2007), The murine local lymph node assay: regulatory and
+potency considerations under REACH. Toxicol., 238, 71-89.
+(23) Kimber, I., Dearman, R.J., Scholes E.W. and Basketter, D.A. (1994), The local
+lymph node assay: developments and applications. Toxicol., 93, 13-31.
+(24) OECD (2002), Acute Dermal Irritation/Corrosion, Test Guideline No. 404,
+Guidelines for Testing of Chemicals, OECD, Paris. Available at:
+[http://www.oecd.org/env/testguidelines]
+(25) Reeder, M.K., Broomhead, Y.L., DiDonato, L. and DeGeorge, G.L. (2007), Use
+of an enhanced local lymph node assay to correctly classify irritants and false positive
+substances. Toxicologist, 96, 235.
+(26) ICCVAM (2009), Nonradioactive Murine Local Lymph Node Assay: Flow
+Cytometry Test Method Protocol (LLNA: BrdU-FC) Revised Draft Background Review
+Document. Research Triangle Park, NC: National Institute of Environmental Health
+Sciences. Available at:
+[http://iccvam.niehs.nih.gov/methods/immunotox/fcLLNA/BRDcomplete.pdf].
+(27) Hayes, B.B., Gerber, P.C., Griffey, S.S. and Meade, B.J. (1998), Contact
+hypersensitivity to dicyclohexylcarbodiimide and diisopropylcarbodiimide in female
+B6C3F1 mice. Drug Chem. Toxicol., 21, 195-206.
+(28) Homey, B., von Schilling, C., Blumel, J., Schuppe, H.C., Ruzicka, T., Ahr, H.J.,
+Lehmann, P. and Vohr, V.W. (1998), An integrated model for the differentiation of
+chemical-induced allergic and irritant skin reactions. Toxicol. Appl. Pharmacol., 153,
+83-94.
+(29) Woolhiser, M.R., Hayes, B.B. and Meade, B.J. (1998), A combined murine local
+lymph node and irritancy assay to predict sensitization and irritancy potential of chemicals.
+Toxicol. Meth., 8, 245-256.
+(30) Hayes, B.B. and Meade, B.J. (1999), Contact sensitivity to selected acrylate
+compounds in B6C3F1 mice: relative potency, cross reactivity, and comparison of test
+methods. Drug. Chem. Toxicol., 22, 491-506.
+(31) Ehling, G., Hecht, M., Heusener, A., Huesler, J., Gamer, A.O., van Loveren, H.,
+Maurer, T., Riecke, K., Ullmann, L., Ulrich, P., Vandebriel, R. and Vohr, H.W. (2005), A
+European inter- laboratory validation of alternative endpoints of the murine local lymph
+node assay: first round. Toxicol., 212, 60-68.
+
+-- 19 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+19
+(32) Vohr, H.W. and Ahr, H.J. (2005), The local lymph node assay being too sensitive?
+Arch. Toxicol., 79, 721-728.
+(33) Patterson, R.M., Noga, E. and Germolec D. (2007), Lack of evidence for contact
+sensitization by Pfiesteria extract. Environ. Health Perspect., 115, 1023-1028.
+(34) ICCVAM (2009), Report on the ICCVAM-NICEATM/ECVAM/JaCVAM
+Scientific Workshop on Acute Chemical Safety Testing: Advancing In Vitro Approaches
+and Humane Endpoints for Systemic Toxicity Evaluations. Research Triangle Park, NC:
+National Institute of Environmental Health Sciences. Available at:
+[http://iccvam.niehs.nih.gov/methods/acutetox/Tox_workshop.htm].
+(35) OECD (2000), Guidance Document on the Recognition, Assessment and
+Use of Clinical Signs as Humane Endpoints for Experimental Animals Used in
+Safety Evaluation, Environmental Health and Safety Monograph Series on Testing
+and Assessment No. 19, ENV/JM/MONO(2000)7, OECD, Paris. Available at:
+[http://www.oecd.org/env/testguidelines]
+(36) Basketter, D.A., Gerberick, G.F., Kimber, I. and Loveless, S.E. (1996), The local
+lymph node assay: A viable alternative to currently accepted skin sensitisation tests. Food
+Chem. Toxicol., 34, 985-997.
+(37) Kimber, I., Hilton, J., Dearman, R.J., Gerberick, G.F., Ryan, C.A., Basketter, D.A.,
+Lea, L., House, R.V., Ladies, G.S., Loveless, S.E. and Hastings, K.L. (1998), Assessment
+of the skin sensitization potential of topical medicaments using the local lymph node assay:
+An interlaboratory exercise. J. Toxicol. Environ.l Health, 53, 563-79.
+(38) Basketter, D.A., Gerberick, G.F. and Kimber, I. (1998), Strategies for identifying
+false positive responses in predictive sensitisation tests. Food Chem. Toxicol., 36, 327-33.
+(39) ISO 10993-12:2012 Biological evaluation of medical devices Part 12: Sample
+preparation and reference materials.
+
+-- 20 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+20
+
+-- 21 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+21
+Appendix II: In Vivo Skin
+Sensitisation: The Local Lymph
+Node Assay: BrdU-FCM
+INITIAL CONSIDERATIONS, APPLICABILITY AND LIMITATIONS
+1. The LLNA: BrdU-FCM has been validated and recommended, following an international
+independent scientific peer review, as useful for identifying skin sensitising and non-sensitising test
+chemicals, with certain limitations (1) (2) (3) (4). The validation study for the LLNA: BrdU-FCM was
+performed in compliance with the performance standards (PS) for assessment of proposed similar or
+modified LLNA test methods for skin sensitisation in Annex 1 of the OECD Guideline for the testing of
+chemicals, Skin sensitisation: Local lymph node assay (TG 429).
+2. The LLNA: BrdU-FCM is a modified non-radioactive LLNA method for identifying potential skin
+sensitising test chemicals, with specific limitations. This does not necessarily imply that in all instances the
+LLNA: BrdU-FCM should be used in place of the radioactive LLNA (TG 429) or guinea pig tests (i.e. TG
+406) (5), when the use of an in vivo method is deemed necessary, but rather that the assay is of equal
+merit and may be employed as an alternative in which positive and negative results generally no longer
+require further confirmation (1) (2). The testing laboratory should consider all available information on the
+test chemical prior to conducting the study. Such information will include the identity and chemical structure
+of the test chemical; its physicochemical properties; the results of any other in vitro or in vivo toxicity tests
+on the test chemical; and toxicological data on structurally related test chemicals. This information should
+be considered in order to determine whether the LLNA: BrdU-FCM is appropriate for the test chemical
+(given the incompatibility of limited types of test chemicals with the LLNA: BrdU-FCM [see paragraph 3])
+and to aid in dose selection.
+3. The LLNA: BrdU-FCM is an in vivo method and, as a consequence, will not eliminate the use of
+animals in the assessment of allergic contact sensitising activity. Therefore, consideration should be given
+to the applicability domain of suitable in vitro, in chemico and in silico methods and consequently, the
+possibility of using these approaches rather than testing on animals. Like other LLNA test methods, the
+LLNA: BrdU-FCM has, however, the potential to reduce the animal use for this purpose when compared
+to the guinea pig tests (TG 406) (5). Moreover, the LLNA: BrdU-FCM offers a substantial refinement of the
+way in which animals are used for allergic contact sensitisation testing, since unlike TG 406, the LLNA:
+BrdU-FCM does not require that challenge-induced dermal hypersensitivity reactions be elicited.
+Furthermore, the LLNA: BrdU-FCM does not require the use of an adjuvant, as is the case for the guinea
+pig maximisation test (5). Thus, the LLNA: BrdU-FCM reduces animal distress. Despite the advantages of
+the LLNA: BrdU-FCM over TG 406 (5), there are certain limitations applicable to the LLNA test, that may
+necessitate the use of TG 406 (e.g. the testing of certain metals, false positive findings with certain skin
+irritants [such as some surfactant-type substances] (6) (7), solubility of the test chemicals [such as
+practically insoluble or insoluble substances]). In addition, test chemical classes or substances containing
+functional groups shown to act as potential confounders (e.g. fatty acid glutamate, oleic acid, oleic acid
+
+-- 22 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+22
+ester, fatty alcohol 1, fatty alcohol 2, polyaminofunctional siloxane (8)) may necessitate the use of guinea
+pig tests (i.e. TG 406 (5)). Other limitations that have been identified for the LLNA (7) have also been
+recommended to apply to the LLNA: BrdU-FCM (1). Other than such identified limitations, the LLNA: BrdU-
+FCM should be applicable for testing any test chemicals unless there are properties associated with these
+substances that may interfere with the accuracy of the LLNA: BrdU-FCM. According to the validation study,
+the LLNA: BrdU-FCM correctly identified 20 among the 22 reference substances listed in the TG 429 PS
+on the basis of the LLNA results (1). One moderate skin sensitiser, 2-mercaptobenzothiazole, and one
+weak skin sensitiser, methyl methacrylate for which the other LLNA variants have limitation in prediction,
+were misclassified in the LLNA: BrdU-FCM (1) (2) (9). However, as the same dataset was used for setting
+the Stimulation Index (SI)-values and calculating the predictive properties of the test, the stated results
+may be an over-estimation of the real predictive properties.
+4. Before use of the Test Guideline on a mixture for generating data for an intended regulatory
+purpose, it should be considered whether, and if so why, it may provide adequate results for that purpose.
+Such considerations are not needed, when there is a regulatory requirement for testing of the mixture.
+5. Definitions are provided in the Annex 1 of the General Introduction.
+PRINCIPLE OF THE TEST
+6. The basic principle underlying the LLNA: BrdU-FCM is that sensitisers induce proliferation of
+lymphocytes in the lymph nodes draining the site of test chemical application. This proliferation is
+proportional to the dose and to the potency of the applied allergen and provides a simple means of
+obtaining a quantitative measurement of sensitisation. Proliferation is measured by comparing the mean
+proliferation in each test group to the mean proliferation in the vehicle treated control group (VC). The ratio
+of the mean proliferation in each treated group to that in the concurrent VC group, termed the SI, is
+determined, and should be ≥2.7 before further evaluation of the test chemical as a potential skin sensitiser
+is warranted. The methods described here are based on the use of measuring BrdU content to indicate an
+increased number of proliferating cells in the draining auricular lymph nodes. BrdU is an analogue of
+thymidine and is similarly incorporated into the DNA of proliferating cells. The incorporation of BrdU is
+measured by FCM, which utilises an antibody specific for BrdU that is also labelled with fluorescein
+isothiocyanate (FITC). The FCM quantifies the number of BrdU-positive viable cells using a flow cytometer,
+which is widely employed in analysing lymphocyte population.
+DESCRIPTION OF THE ASSAY
+Selection of animal species
+7. The mouse is the species of choice for this test. Validation studies for the LLNA: BrdU-FCM were
+conducted exclusively with the BALB/c strain, which is therefore considered the preferred strain (1) (2).
+The CBA/J strain can also be used in the LLNA: BrdU-FCM. CBA/J strain responses are highly correlated
+with and more sensitive than BALB/c strain responses (2) (10) (11) (12). However, different cut-off SI
+values may have to be adopted for each strain to maximize sensitivity after Receiver Operating
+Characteristic (ROC) analysis. Young adult female mice, which are nulliparous and non-pregnant, are
+used. At the start of the study, animals should be between 8-12 weeks old, and the weight variation of the
+animals should be minimal and not exceed 20% of the mean weight. Alternatively, other strains or males
+may be used when sufficient data are generated to demonstrate that significant strain and/or gender-
+specific differences in the LLNA: BrdU-FCM response do not exist.
+
+-- 23 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+23
+Housing and feeding conditions
+8. Mice should be group-housed (13) on solid-bottomed cages (34) with suitable substrate and
+nesting material (35) (36) (37) (38), unless adequate scientific rationale for alternative housing mice
+individually is provided. The temperature of the experimental animal room should be 22 ± 3ºC. Although
+the relative humidity should be at least 30% and preferably not exceed 70%, other than during room
+cleaning, the aim should be 50-60%. Lighting should be artificial, the sequence being 12 hours light, 12
+hours dark. For feeding, conventional laboratory diets may be used with an unlimited supply of drinking
+water.
+Preparation of animals
+9. The animals are randomly selected, humanely marked to permit individual identification preferably
+by non-invasive hair clipping (39) (40), and kept in their cages for at least five days prior to the start of
+dosing to allow for acclimatisation to the laboratory conditions. Prior to the start of treatment all animals
+are examined to ensure that they have no observable skin lesions. During all examinations, the mice should
+be handled using non-aversive methods such as cupping or tunnel handling (41).
+Preparation of dosing solutions
+10. Solid test chemicals should be dissolved or suspended in solvents/vehicles and diluted, if
+appropriate, prior to application to an ear of the mice. Liquid test chemicals may be applied neat or diluted
+prior to dosing. Insoluble chemicals, such as those generally seen in medical devices (33), should be
+subjected to an exaggerated extraction in an appropriate solvent to reveal all extractable constituents for
+testing prior to application to an ear of the mice. Test chemicals should be prepared daily unless stability
+data demonstrate the acceptability of storage.
+Reliability check
+11. Positive controls (PC) are used to demonstrate appropriate performance of the assay by
+responding with adequate and reproducible sensitivity to a sensitising test chemical for which the
+magnitude of the response is well characterised. Inclusion of a concurrent PC is recommended because it
+demonstrates competency of the laboratory to successfully conduct each assay and allows for an
+assessment of intra-, and inter-laboratory reproducibility and comparability. Some regulatory authorities
+also require a PC for each study and therefore users are encouraged to consult the relevant authorities
+prior to conducting the LLNA: BrdU-FCM. Accordingly, the routine use of a concurrent PC is encouraged
+to avoid the need for additional animal testing to meet such requirements that might arise from the use of
+a periodic PC (see paragraph 12). The PC should produce a positive LLNA: BrdU-FCM response at an
+exposure level expected to give an increase in the SI ≥ 2.7 over the VC group. The PC dose should be
+chosen such that it does not cause excessive skin irritation or systemic toxicity and the induction is
+reproducible but not excessive (e.g. SI > 27 would be considered excessive). Preferred PC test chemicals
+are 25% hexyl cinnamic aldehyde (CAS No 101-86-0) and 25% eugenol (CAS No 97-53-0) in acetone:
+olive oil (4:1, v/v). There may be circumstances in which, given adequate justification, other PC test
+chemicals, meeting the above criteria, may be used.
+12. While inclusion of a concurrent PC group is recommended, there may be situations in which
+periodic testing (i.e. at intervals ≤ 6 months) of the PC test chemical may be adequate for laboratories that
+conduct the LLNA: BrdU-FCM regularly (i.e. conduct the LLNA: BrdU-FCM at a frequency of no less than
+once per month) and have an established historical PC database that demonstrates the laboratory’s ability
+to obtain reproducible and accurate results with PCs. Adequate proficiency with the LLNA: BrdU-FCM can
+be successfully demonstrated by generating consistent positive results with the PC in at least 10
+independent tests conducted within a reasonable period of time (i.e. less than one year).
+
+-- 24 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+24
+13. A concurrent PC group should always be included when there is a procedural change to the LLNA:
+BrdU-FCM (e.g. change in trained personnel, change in test method materials and/or reagents, change in
+test method equipment, change in source of test animals), and such changes should be documented in
+laboratory reports. Consideration should be given to the impact of these changes on the adequacy of the
+previously established historical database in determining the necessity for establishing a new historical
+database to document consistency in the PC results.
+14. Investigators should be aware that the decision to conduct a PC study on a periodic basis instead
+of concurrently has ramifications on the adequacy and acceptability of negative study results generated
+without a concurrent PC during the interval between each periodic PC study. For example, if a false
+negative result is obtained in the periodic PC study, negative test chemical results obtained in the interval
+between the last acceptable periodic PC study and the unacceptable periodic PC study may be questioned.
+Implications of these outcomes should be carefully considered when determining whether to include
+concurrent PCs or to only conduct periodic PCs. Consideration should also be given to using fewer animals
+in the concurrent PC group when this is scientifically justified and if the laboratory demonstrates, based on
+laboratory-specific historical data, that fewer mice can be used (14).
+15. Although the PC test chemical should be tested in the vehicle that is known to elicit a consistent
+response (e.g. acetone: olive oil; 4:1, v/v), there may be certain regulatory situations in which testing in a
+non-standard vehicle (clinically/chemically relevant formulation) will also be necessary (15). If the
+concurrent PC test chemical is tested in a different vehicle than the test chemical, then a separate VC for
+the concurrent PC should be included.
+16. In instances where test chemicals of a specific chemical class or range of responses are being
+evaluated, benchmark test chemicals may also be useful to demonstrate that the test method is functioning
+properly for detecting the skin sensitisation potential of these types of test chemicals. Appropriate
+benchmark test chemicals should have the following properties:
+• structural and functional similarity to the class of the test chemical being tested;
+• known physical/chemical characteristics;
+• supporting data from the LLNA: BrdU-FCM;
+• supporting data from other animal models and/or from humans.
+TEST PROCEDURE
+Number of animals and dose levels
+17. A minimum of four animals is used per dose group, with a minimum of three concentrations of the
+test chemical, plus a concurrent VC group treated only with the vehicle for the test chemical, and a PC
+group (concurrent or recent, based on laboratory policy in considering paragraphs 11-15). Testing multiple
+doses of the PC should be considered especially when testing the PC on an intermittent basis. Except for
+absence of treatment with the test chemical, animals in the control groups should be handled and treated
+in a manner identical to that of animals in the treatment groups.
+18. Dose and vehicle selection should be based on the recommendations given in the references 2
+and 19. Three consecutive doses are normally selected from an appropriate concentration series such as
+100%, 50%, 25%, 10%, 5%, 2.5%, 1%, 0.5%, etc. Adequate scientific rationale should accompany the
+selection of the concentration series used. All existing toxicological information (e.g. acute toxicity and
+dermal irritation) and structural and physicochemical information on the test chemical of interest (and/or
+structurally related test chemicals) should be considered, where available, in selecting the three
+consecutive concentrations so that the highest concentration maximises exposure while avoiding systemic
+
+-- 25 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+25
+toxicity and/or excessive local skin irritation (16) (17). In the absence of such information, an initial pre-
+screen test may be necessary (see paragraphs 21-24).
+19. The vehicle should not interfere with or bias the test result and should be selected on the basis of
+maximising the solubility in order to obtain the highest concentration achievable while producing a
+solution/suspension suitable for application of the test chemical. Recommended vehicles are acetone: olive
+oil (4:1 v/v), N,N-dimethylformamide, methyl ethyl ketone, propylene glycol, and dimethyl sulphoxide (6)
+but others may be used if sufficient scientific rationale is provided. In certain situations it may be necessary
+to use a clinically relevant solvent or the commercial formulation in which the test chemical is marketed as
+an additional control. Particular care should be taken to ensure that hydrophilic substances are
+incorporated into a vehicle system, which wets the skin and does not immediately run off, by incorporation
+of appropriate solubilisers (e.g. 1% Pluronic® L92). Thus, wholly aqueous vehicles are to be avoided.
+20. The processing of lymph nodes from individual mice allows for the assessment of inter-animal
+variability and a statistical comparison of the difference between test chemical and VC group
+measurements (see paragraph 33). In addition, evaluating the possibility of reducing the number of mice
+in the PC group is only feasible when individual animal data are collected (14). Further, some national
+regulatory authorities require the collection of individual animal data. Regular collection of individual animal
+data provides an animal welfare advantage by avoiding duplicate testing that would be necessary if the
+test chemical results originally collected in one manner (e.g. via pooled animal data) were to be considered
+later by regulatory authorities with other requirements (e.g. individual animal data).
+Pre-screen test
+21. In the absence of information to determine the highest dose to be tested (see paragraph 18), a
+pre-screen test should be performed in order to define the appropriate dose level to test in the LLNA: BrdU-
+FCM. The purpose of the pre-screen test is to provide guidance for selecting the maximum dose level to
+use in the main LLNA: BrdU-FCM study, where information on the concentration that induces systemic
+toxicity (see paragraph 24) and/or excessive local skin irritation (see paragraph 23) is not available. The
+maximum dose level tested should be a concentration of 100% of the test chemical for liquids or the
+maximum possible concentration for solids or suspensions.
+22. The pre-screen test is conducted under conditions identical to the main LLNA: BrdU-FCM study,
+except there is no assessment of lymph node proliferation and fewer animals per dose group can be used.
+One or two animals per dose group are suggested. All mice will be observed daily for any clinical signs of
+systemic toxicity or local irritation at the application site. Body weights are recorded pre-test and prior to
+termination (Day 6). Both ears of each mouse are observed for erythema and scored using Table 1 (17).
+Ear thickness measurements are taken using a thickness gauge (e.g. digital micrometer or Peacock Dial
+thickness gauge) on Day 1 (pre-dose), Day 3 (approximately 48 hours after the first dose), and Day 6.
+Additionally, on Day 6, ear thickness could be determined by ear punch weight determinations, which
+should be performed after the animals are humanely killed. Excessive local irritation is indicated by an
+erythema score ≥3 and/or ear thickness of ≥ 25% on any day of measurement (18) (19). The highest dose
+selected for the main LLNA: BrdU-FCM study will be the highest dose used in the pre-screen concentration
+series (see paragraph 18) that did not induce systemic toxicity and/or excessive local skin irritation.
+• Table 1. Erythema Scores
+Observation Score
+No erythema 0
+
+-- 26 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+26
+Very slight erythema (barely perceptible) 1
+Well-defined erythema 2
+Moderate to severe erythema 3
+Severe erythema (beet redness) to eschar formation preventing grading of erythema 4
+23. In addition to a 25% increase in ear thickness (18) (19), a statistically significant increase in ear
+thickness in the treated mice compared to solvent/vehicle control mice has also been used to identify
+irritants in the LLNA (19) (20) (21) (22) (23) (24) (25). However, while statistically significant increases can
+occur when ear thickness is less than 25%, they have not been associated specifically with excessive
+irritation (22) (23) (24) (25) (26).
+24. The following clinical observations may indicate systemic toxicity (27) when used as part of an
+integrated assessment and therefore may indicate the maximum dose level to use in the main LLNA: BrdU-
+FCM: changes in nervous system function (e.g. pilo-erection, ataxia, tremors, and convulsions); changes
+in behaviour (e.g. aggressiveness, change in grooming activity, marked change in activity level); changes
+in respiratory patterns (i.e. changes in frequency and intensity of breathing such as dyspnea, gasping, and
+rales), and changes in food and water consumption. In addition, signs of lethargy and/or unresponsiveness
+and any clinical signs of more than slight or momentary pain and distress, or a >5% reduction in body
+weight from Day 1 to Day 6 and mortality should be considered in the evaluation. Moribund animals or
+animals showing signs of severe pain and distress should be humanely killed (28).
+Main study experimental schedule
+The experimental schedule of the assays is as follows:
+• Day 1:
+o Individually identify and record the weight of each animal and any clinical
+observation. Apply 25 μL of the appropriate dilution of the test chemical, the
+vehicle alone, or the PC (concurrent or recent, based on laboratory policy in
+considering paragraphs 11-15), to the dorsum of each ear.
+• Days 2 and 3:
+o Repeat the application procedure carried out on Day 1.
+• Day 4:
+o No treatment.
+• Day 5:
+o Inject 0.1 mL (2 mg/mouse) of BrdU (20 mg/mL) solution intra-peritoneally.
+• Day 6:
+o Record the weight of each animal and any clinical observation. Approximately
+24 hours (24 h) after BrdU injection, humanely kill the animals. Excise the
+draining auricular lymph nodes from each mouse ear and process separately in
+phosphate buffered saline (PBS) for each animal. Details and diagrams of the
+lymph node identification and dissection can be found in reference (14). To
+further monitor the local skin response in the main study, additional parameters
+such as scoring of ear erythema or ear thickness measurements (obtained either
+by using a thickness gauge, or ear punch weight determinations at necropsy)
+may be included into the study protocol.
+
+-- 27 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+27
+Preparation of cell suspensions
+25. From each mouse, a single-cell suspension of lymph node cells (LNC) excised bilaterally is
+prepared by gentle mechanical disaggregation through 200 micron-mesh stainless steel gauze or another
+acceptable technique for generating a single-cell suspension (e.g. use of a disposable plastic pestle to
+crush the lymph nodes followed by passage through a #70 nylon mesh). The procedure for preparing the
+LNC suspension is critical in this assay and therefore every operator should establish the skill in advance.
+Further, the lymph nodes in VC animals are small, so careful operation is important to avoid any artificial
+effects on SI values. The LNC are harvested with an appropriate volume of cold PBS (e.g. 2 mL) and, if
+necessary, the LNC suspension can be diluted (e.g. 1/10 dilution). The number of LNC should be counted
+and then 1.5 × 106 LNC are needed for the next step.
+Determination of cellular proliferation (measurement of BrdU-positive
+lymphocytes)
+26. BrdU-positive lymphocytes are counted through the FCM using a commercially available kit (e.g.
+in the validation study the BD Pharmingen, Franklin Lakes, NJ, USA, was used). Other anti-BrdU antibody
+kits may be used if they provide consistent results. Briefly, the LNC suspension (1.5 × 106) is washed once
+with PBS by centrifugation and then re-suspended. Cells are permeabilised with the buffer supplied with
+the kit and then treated with DNase. After washing, FITC-conjugated anti-BrdU antibody is added and after
+another wash, 7-aminoactinomycin D (7-AAD) solution is added. The number of BrdU-positive cells within
+the viable 7-AAD-expressing cell population (104 cells) is counted with a flow cytometer.
+OBSERVATIONS
+Clinical observations
+27. Each mouse should be carefully observed at least once daily for any clinical signs, either of local
+irritation at the application site or of systemic toxicity. All observations are systematically recorded with
+records being maintained for each mouse. Monitoring plans should include criteria to promptly identify
+those mice exhibiting systemic toxicity, excessive local skin irritation, or corrosion of skin for euthanasia
+(28).
+Body weights
+28. As stated in paragraph 25, individual animal body weights should be measured at the start of the
+test and at the scheduled humane kill.
+CALCULATION OF RESULTS
+29. Results for each treatment group are expressed as the mean SI. The SI for the LLNA: BrdU-FCM
+is derived by dividing the number of BrdU-positive LNCs/mouse of test chemical group or the PC group by
+the mean number of BrdU-positive LNCs in the solvent/VC group. The average SI for the VCs is then one.
+The number of BrdU-positive LNCs is defined as (See Appendix IB-Annex 1 paragraph 7):
+Number of BrdU-positive LNCs = % of BrdU-positive cells (% of Q21)  number of LNCs
+1 The gated percentage data (Q2 region %) from ‘Quadrant Statistics’ in the flow cytometer analysis.
+
+-- 28 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+28
+30. The decision process regards a result as positive when SI ≥ 2.7 (1) (2) (10). However, the strength
+of the dose-response relationship, the statistical significance and the consistency of the solvent/vehicle
+and PC responses may also be used when determining whether a borderline result is declared positive (6)
+(29) (30).
+31. If it is necessary to clarify the results obtained, consideration should also be given to various
+properties of the test chemical, including whether it has a structural relationship to known skin sensitisers,
+whether it causes excessive skin irritation in the mouse, and the nature of the dose-response observed.
+These and other considerations are discussed in detail elsewhere (31).
+32. Collecting data at the level of the individual mouse will enable a statistical analysis for presence
+and degree of dose-response relationship in the data. Any statistical assessment could include an
+evaluation of the dose-response relationship as well as suitably adjusted comparisons of test groups (e.g.
+pair-wise dosed group versus concurrent solvent/vehicle control comparisons). Statistical analyses may
+include, e.g. linear regression or Williams’s test to assess dose-response trends, and Dunnett’s test for
+pair-wise comparisons. In choosing an appropriate method of statistical analysis, the investigator should
+maintain an awareness of possible inequalities of variances and other related problems that may
+necessitate a data transformation or a non-parametric statistical analysis. In any case, the investigator may
+need to carry out SI calculations and statistical analyses with and without certain data points (sometimes
+called “outliers”).
+DATA AND REPORTING
+Data
+33. Data should be summarised in tabular form showing the number of BrdU-positive LNCs for the
+individual animal, the group mean number of BrdU-positive LNCs/animal, or, its associated error term (e.g.
+SD, SEM), and the mean SI for each dose group compared against the concurrent solvent/vehicle control
+group.
+Test report
+34. The test report should contain the following information:
+Test chemical:
+source, lot number, limit date for use, if available;
+stability of the test chemical, if known;
+Mono-constituent substance:
+physical appearance, water solubility, and additional relevant physicochemical
+properties;
+chemical identification, such as IUPAC or CAS name, CAS number, SMILES or InChI
+code, structural formula, purity, chemical identity of impurities as appropriate and
+practically feasible, etc.
+Multi-constituent substance, UVBCs and mixtures:
+characterised as far as possible by chemical identity (see above), quantitative
+occurrence and relevant physicochemical properties of the constituents.
+
+-- 29 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+29
+Controls:
+identification data (e.g. CAS number, if available; source; purity; known impurities; lot
+number);
+physical nature and physicochemical properties (e.g. volatility, stability, solubility);
+Solvent/vehicle:
+identification data (purity; concentration, where appropriate; volume used);
+justification for choice of vehicle;
+Test animals:
+source of BALB/c mice or CBA mice;
+microbiological status of the animals, when known;
+number and age of animals;
+source of animals, housing conditions, diet, etc.;
+Test conditions:
+source, lot number, and manufacturer’s quality assurance/quality control data (antibody
+sensitivity and specificity and the limit of detection) for the FCM kit;
+details of test chemical preparation and application;
+justification for dose selection (including results from pre-screen test, if conducted);
+vehicle and test chemical concentrations used, and total amount of test chemical
+applied;
+details of food and water quality (including diet type/source, water source);
+details of treatment and sampling schedules;
+methods for measurement of toxicity;
+criteria for considering studies as positive or negative;
+details of any protocol deviations and an explanation on how the deviation affects the
+study design and results;
+Reliability check:
+a summary of results of latest reliability check, including information on test chemical,
+concentration, PC, VC and benchmark test chemical used, as appropriate;
+concurrent and/or historical PC and concurrent VC data for testing laboratory;
+if a concurrent PC was not included, the date and laboratory report for the most recent
+periodic PC and a report detailing the historical PC data for the laboratory justifying
+the basis for not conducting a concurrent PC;
+Results:
+individual weights of mice at start of dosing and at scheduled humane kill; as well as
+mean and associated error term (e.g. SD, SEM) for each treatment group;
+
+-- 30 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+30
+time course of onset and signs of toxicity, including dermal irritation at site of
+administration, if any, for each animal;
+a table of number of BrdU-positive LNCs, and SI values of individual mouse for each
+treatment group;
+mean and associated error term (e.g. SD, SEM) for number of BrdU-positive
+LNCs/mouse for each treatment group and the results of outlier analysis for each
+treatment group;
+calculated SI and an appropriate measure of variability that takes into account the inter-
+animal variability in both the test chemical and control groups;
+dose-response relationship;
+statistical analyses, where appropriate;
+Discussion of results:
+a brief commentary on the results, the dose-response analysis, and statistical analyses,
+where appropriate, with a conclusion as to whether the test chemical should be
+considered a skin sensitiser.
+Literature
+(1) OECD (2018), Local Lymph Node Assay: 5-bromo-2-deoxyuridine-flow cytometry
+method (LLNA: BrdU-FCM) Validation Study Report, Environmental Health and Safety
+Monograph Series on Testing and Assessment No. 283, ENV/JM/MONO(2018)16, OECD,
+Paris.
+(2) OECD (2018), Summary of the Peer Review of the Validation Study for LLNA:
+BrdU-FCM Environmental Health and Safety Monograph Series on Testing and
+Assessment No.284, ENV/JM/MONO(2018)17, OECD, Paris.
+(3) Yang H, Na J, Jang WH, Jung MS, Jeon JY, Heo Y, Yeo KW, Jo JH, Lim KM, Bae SJ.
+(2015), Appraisal of within- and between-laboratory reproducibility of non-radioisotopic
+local lymph node assay using flow cytometry, LLNA: BrdU-FCM: Comparison of OECD
+TG429 performance standard and statistical evaluation. Toxicology Letters 234: 172-179.
+(4) Ahn IY, Kim TS, Jung ES, Yi JS, Jang WH, Jung KM, Park MY, Jung MS, Jeon EY,
+Yeo KY, Jo JH, Park JE, Kim CY, Park YC, Seong WK, Lee AY, Chun YJ, Jeong TC,
+Jeung EB, Lim KM, Bae SJ, Sohn SJ, Heo Y. (2016), Performance standards based
+validation study for Local Lymph Node Assay: 5-Bromo-2-Deoxyuridine-flow cytometry
+method. Regul. Toxicol. Pharmacol. 80:183-194.
+(5) OECD (1992), Skin Sensitisation, Test Guideline No. 406, Guidelines for Testing of
+Chemicals, OECD, Paris. Available at: [http://www.oecd.org/env/testguidelines]
+(6) ICCVAM (1999), The murine local lymph node Assay: A test method for assessing the
+allergic contact dermatitis potential of chemicals/compounds: The results of an independent
+peer review evaluation coordinated by the Interagency Coordinating Committee on the
+Validation of Alternative Methods (ICCVAM) and the National Toxicology Program
+Center for the Evaluation of Alternative Toxicological Methods (NICETAM). NIH
+Publication No: 99-4494. Research Triangle Park, N.C. Available at:
+[http://iccvam.niehs.nih.gov/docs/immunotox_docs/llna/llnarep.pdf]
+
+-- 31 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+31
+(7) OECD (2010), Skin Sensitization: Local Lymph Node Assay, Test Guideline No. 429,
+Guidelines for the Testing of Chemicals, OECD, Paris. Available at:
+[http://www.oecd.org/env/testguidelines]
+(8) Basketter, D., Ball, N., Cagen, S., Carrilo, J.C., Certa, H., Eigler, D., Garcia, C., Esch,
+H., Graham, C., Haux, C., Kreiling, R. and Mehling, A. (2009), Application of a weight of
+evidence approach to assessing discordant sensitisation datasets: implications for REACH.
+Reg. Toxicol. Pharmacol., 55, 90-96.
+(9) Kolle SN, Basketter DA, Casati S, Stokes WS, Strickland J, Ravenzwaay BV, Vohr
+HW, Landsiedel R 2013. Performance standards and alternative assays: Practical insights
+from skin sensitization. Regulatory Toxicology and Pharmacology 65: 278-285
+(10) Lee YS, Yi JS, Seo SJ, Kim JH, Jung MS, Seo IK, Ahn IY, Ko KY, Kim TS, Lim KM,
+Sohn SJ. (2017), Comparison of BALB/c and CBA/J mice for the local lymph node assay
+using bromodeoxyuridine with flow cytometry (LLNA: BrdU-FCM). Reg. Toxicol.
+Pharmacol. 33:13-22.
+(11) Ha SJ, Ahn IY, Kim DE, Lee JK, Sohn SJ, Jung MS, Heo Y, Omori T, Bae SJ, Lim
+KM. (2017) Evaluation of radioisotopic and non-radioisotopic versions of local lymph node
+assays for subcategorization of skin sensitizers compliant to UN GHS rev 4. Reg. Toxicol.
+Pharmacol. 85:124-131.
+(12) Maeda, Y., Hirosaki, H., Yakata, N., Takeyoshi, M. (2016), Comparison of outcomes
+obtained in murine local lymph node assays using CBA/J or CBA/Ca mice. J. Appl.
+Toxicol. 36:1011-4.
+(13) ILAR (1996), Institute of Laboratory Animal Research (ILAR) Guide for the Care and
+Use of Laboratory Animals. 7th ed. Washington, DC: National Academies Press.
+(14) ICCVAM (2009), Recommended Performance Standards: Murine Local Lymph Node
+Assay. NIH Publication Number 09-7357. Research Triangle Park, NC: National Institute
+of Environmental Health Sciences. Available at:
+[http://iccvam.niehs.nih.gov/docs/immunotox_docs/llna-ps/LLNAPerfStds.pdf]
+(15) McGarry, H.F. (2007), The murine local lymph node assay: regulatory and potency
+considerations under REACH. Toxicol., 238, 71-89.
+(16) Kimber, I., Dearman, R.J., Scholes E.W. and Basketter, D.A. (1994), The local lymph
+node assay: developments and applications. Toxicol., 93, 13-31.
+(17) OECD (2002), Acute Dermal Irritation/Corrosion, Test Guideline No. 404, Guidelines
+for Testing of Chemicals, OECD, Paris. Available at:
+[http://www.oecd.org/env/testguidelines]
+(18) Reeder, M.K., Broomhead, Y.L., DiDonato, L. and DeGeorge, G.L. (2007), Use of an
+enhanced local lymph node assay to correctly classify irritants and false positive
+substances. Toxicologist, 96, 235.
+(19) ICCVAM (2009), Nonradioactive Murine Local Lymph Node Assay: Flow Cytometry
+Test Method Protocol (LLNA: BrdU-FC) Revised Draft Background Review Document.
+Research Triangle Park, NC: National Institute of Environmental Health Sciences.
+Available at:
+[http://iccvam.niehs.nih.gov/methods/immunotox/fcLLNA/BRDcomplete.pdf].
+
+-- 32 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+32
+(20) Hayes, B.B., Gerber, P.C., Griffey, S.S. and Meade, B.J. (1998), Contact
+hypersensitivity to dicyclohexylcarbodiimide and diisopropylcarbodiimide in female
+B6C3F1 mice. Drug Chem. Toxicol., 21, 195-206.
+(21) Homey, B., von Schilling, C., Blumel, J., Schuppe, H.C., Ruzicka, T., Ahr, H.J.,
+Lehmann, P. and Vohr, V.W. (1998), An integrated model for the differentiation of
+chemical-induced allergic and irritant skin reactions. Toxicol. Appl. Pharmacol.,
+153, 83-94.
+(22) Woolhiser, M.R., Hayes, B.B. and Meade, B.J. (1998), A combined murine local
+lymph node and irritancy assay to predict sensitization and irritancy potential of chemicals.
+Toxicol. Meth., 8, 245-256.
+(23) Hayes, B.B. and Meade, B.J. (1999), Contact sensitivity to selected acrylate
+compounds in B6C3F1 mice: relative potency, cross reactivity, and comparison of test
+methods. Drug. Chem. Toxicol., 22, 491-506.
+(24) Ehling, G., Hecht, M., Heusener, A., Huesler, J., Gamer, A.O., van Loveren, H.,
+Maurer, T., Riecke, K., Ullmann, L., Ulrich, P., Vandebriel, R. and Vohr, H.W. (2005), A
+European inter- laboratory validation of alternative endpoints of the murine local lymph
+node assay: first round. Toxicol., 212, 60-68.
+(25) Vohr, H.W. and Ahr, H.J. (2005), The local lymph node assay being too sensitive?
+Arch. Toxicol., 79, 721-728.
+(26) Patterson, R.M., Noga, E. and Germolec D. (2007), Lack of evidence for contact
+sensitization by Pfiesteria extract. Environ. Health Perspect., 115, 1023-1028.
+(27) ICCVAM (2009), Report on the ICCVAM-NICEATM/ECVAM/JaCVAM Scientific
+Workshop on Acute Chemical Safety Testing: Advancing In Vitro Approaches and
+Humane Endpoints for Systemic Toxicity Evaluations. Research Triangle Park, NC:
+National Institute of Environmental Health Sciences. Available at:
+[http://iccvam.niehs.nih.gov/methods/acutetox/Tox_workshop.htm].
+(28) OECD (2000), Guidance Document on the Recognition, Assessment and Use of
+Clinical Signs as Humane Endpoints for Experimental Animals Used in Safety Evaluation,
+Environmental Health and Safety Monograph Series on Testing and Assessment No. 19,
+ENV/JM/MONO(2000)7, OECD, Paris. Available at:
+[http://www.oecd.org/env/testguidelines]
+(29) Basketter, D.A., Gerberick, G.F., Kimber, I. and Loveless, S.E. (1996), The local
+lymph node assay: A viable alternative to currently accepted skin sensitisation tests. Food
+Chem. Toxicol., 34, 985-997.
+(30) Kimber, I., Hilton, J., Dearman, R.J., Gerberick, G.F., Ryan, C.A., Basketter, D.A.,
+Lea, L., House, R.V., Ladies, G.S., Loveless, S.E. and Hastings, K.L. (1998), Assessment
+of the skin sensitization potential of topical medicaments using the local lymph node assay:
+An interlaboratory exercise. J. Toxicol. Environ.l Health, 53, 563-79.
+(31) Basketter, D.A., Gerberick, G.F. and Kimber, I. (1998), Strategies for identifying false
+positive responses in predictive sensitisation tests. Food Chem. Toxicol., 36, 327-33.
+(32) Gerberick GF, Ryan CA, Kern PS, Dearman RJ, Kimber I, Patlewicz GY, et al. 2004.
+A chemical dataset for evaluation of alternative approaches to skin-sensitization testing.
+Contact Dermatitis 50:274-288.
+(33) ISO 10993-12:2012 Biological evaluation of medical devices Part 12: Sample
+preparation and reference materials.
+
+-- 33 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+33
+(34) National Research Council. 1996. Guide for the care and use of laboratory animals.
+National Academy Press, Washington, D.C
+(35) Olsson A, Dahlborn K. Improving housing conditions for laboratory mice: a
+review of 'environmental enrichment'. Lab Animals 2002;36:243- 270
+(36) Van Loo PLP, Kruitwagenb CLJJ, Koolhaasc JM, Van de Weerdd HA, Van
+Zutphena LFM, Baumans V. Influence of cage enrichment on aggressive behaviour and
+physiological parameters in male mice. Applied Animal Behaviour Science.
+2002;76(1):65-81
+(37) Würbel H. Ideal homes?: housing effects on rodent brain and behavior. Trends in
+Neuroscience. 2001;24:207-211
+(38) Würbel H, Garner JP. Refinement of rodent research through environmental
+enrichment and systematic randomization. NC3Rs. Published January 2007.
+https://www.nc3rs.org.uk/sites/default/files/documents/Refinementenvironmentalenrichm
+entandsystematicrandomization.pdf. Accessed April 06, 2018
+(39) Dahlborn K, Bugnon P, Nevalainen T, Raspa M, Verbost P and Spangenberg E.
+Report of the Federation of European Laboratory Animal Science Associations Working
+Group on animal identification. Laboratory Animals. 2013;47:2-11.
+(40) Norecopa. Toe Clipping: Evaluation and Alternatives.
+https://norecopa.no/media/6470/norecopa-toeclip.pdf Published 2008. Accessed April 9,
+2018.
+(41) Hurst JL, West RS. Taming anxiety in laboratory mice. Nature Methods.
+2010;7:825–826
+
+-- 34 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+34
+APPENDIX IB - ANNEX I: MEASUREMENT OF BrdU-POSITIVE LNCs WITH
+FLOW CYTOMETRY
+This method is based on the LLNA: BrdU-FCM protocol, which was used for the
+KoCVAM- coordinated validation study (1). It is recommended that this protocol is used
+when implementing and using the LLNA: BrdU-FCM in the laboratory.
+Preparation prior to measurement
+1. To measure incorporated BrdU, the following samples should be prepared prior to
+the measurement.
+Blank sample (n=1): LNCs from the mouse not injected with BrdU.
+Non-treatment sample (n=1): LNCs from the mouse not treated with any substances,
+but received a BrdU injection.
+Vehicle control-treatment sample (n≥4): LNCs from the mouse treated with the vehicle
+control and received a BrdU injection.
+Test chemical-treatment sample (n≥4, a minimum of three concentrations): LNCs from
+the mouse treated with test chemicals and received a BrdU injection.
+Positive control-treatment sample (n≥4): LNCs from the mouse treated with the
+positive control and received a BrdU injection.
+Analysis of flow cytometric results
+A flow cytometer should be calibrated using appropriate tools (e.g. ‘BD FACSComp’ for
+FACSCaliburTM or ‘Beckman coulter FlowCheck’ for Cytomics FC500) prior to testing
+or regularly.
+Forward scatter-side scatter (FSC-SSC) graph
+1) Both the X axis (FSC) and Y axis (SSC) should be on a linear scale.
+2) Set up a zone (gate) with a flock of viable lymph nodes at its centre in the FSC-
+SSC graph.
+3) Outline the gate such that it has at least 10,000 cells.
+7-AAD-BrdU graph
+1) The X axis (7-AAD, FL3) should be on a linear scale, whereas the Y (BrdU,
+FL1) axis should be a log scale (Figure 1).
+* Compensation should be set using unstained, only BrdU-stained, only 7-AAD stained
+samples, and double stained with both anti-BrdU and 7-AAD at the time of beginning this
+assay. The compensation can be saved for future use.
+Set up Q2 following the steps below
+1) Using the blank sample, set up Q2 (upper right) where no cells are present
+(Figure 1A).
+2) Using the non-treatment sample, set up Q2 so that % BrdU-positive cells are
+about 1% of all cells (Figure 1B).
+3) The Q2 region percentage indicates the proportion of FITC conjugated anti-
+BrdU-Antibody positive live lymphocyte in 10,000 LNCs.
+
+-- 35 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+35
+• Figure 1. Flow cytometry configuration for the calculation of % of BrdU-positive cells
+(% of Q2)
+Note: A, blank sample; B, non-treatment sample; C, vehicle control-treatment sample; D, test chemical or
+positive control-treatment sample
+Count of % BrdU-positive cells
+Perform flow cytometric operation for the vehicle control-treatment samples (Figure 1C),
+the test chemical-treatment samples and the positive control-treatment samples (Figure
+1D). Obtain the gated percentage data (Q2 region %) from ‘Quadrant Statistics’ for each
+sample.
+Calculation of the SI and the EC2.7
+The number of BrdU-positive LNCs in the LNs of the vehicle control-treatment group is
+obtained by multiplying the number of LNCs in the LNs by the ratio of cells expressing
+BrdU in 10,000 LNCs (obtained by flow cytometry). The number of BrdU-positive LNCs
+in the LNs of the test chemical-treatment group is obtained by the method described above.
+Individual SIs are calculated by dividing the number of BrdU-positive LNCs/mouse in the
+test chemical-treatment group by the mean number of BrdU-positive LNCs in the vehicle
+control-treatment group. The mean SI of each test chemical group is calculated based on
+individual SIs.
+Stimulation
+Index (SI) = Number of BrdU-positive LNCs/mouse exposed to a test chemical
+Mean number of BrdU-positive LNCs in the vehicle control group
+For the positive results, the EC2.7 value, i.e. an estimated concentration showing 2.7 of SI,
+could be calculated by linear regression method using the following equation.
+Y (SI) = aX(concentration) + b → EC2.7 = (2.7-b)/a
+* Parameters a (slope) and b (y-intercept) can be derived using linear least squares method.
+A
+Q 2
+B
+C 	D
+Q 2
+Q 2 	Q 2
+F L1 (B rdU )
+F L3 (7-A A D )
+
+-- 36 of 37 --
+
+OECD/OCDE 442B
+© OECD (2025)
+36
+Other estimation methods (e.g. linear interpolation or extrapolation formulas) could be
+utilized to calculate EC2.7 value (32).
+
+-- 37 of 37 --
+

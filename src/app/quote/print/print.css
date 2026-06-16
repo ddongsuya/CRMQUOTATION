@@ -1,0 +1,402 @@
+/* ─── Modern 3-section quote PDF stylesheet ─────────────────────
+ * Loaded only by /quote/print page. Tuned for A4 portrait,
+ * works in both on-screen preview and the browser print dialog.
+ */
+
+.print-doc {
+  --ink: #0f172a;
+  --ink-muted: #475569;
+  --ink-subtle: #94a3b8;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --brand: #4f46e5;
+  --brand-deep: #312e81;
+  --brand-50: #eef2ff;
+  --bg: #ffffff;
+  background: #f1f5f9;
+  min-height: 100vh;
+  padding: 24px 0;
+}
+
+.print-doc .page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto 16px;
+  padding: 16mm 14mm;
+  background: var(--bg);
+  box-shadow: 0 4px 24px -4px rgb(15 23 42 / 0.12);
+  position: relative;
+  box-sizing: border-box;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--ink);
+  border-radius: 6px;
+}
+
+.print-doc .page-break { page-break-before: always; }
+
+/* ─── COVER ─────────────────────── */
+.print-doc .cover { padding: 0; overflow: hidden; }
+
+.print-doc .cover-band {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 50%, #312e81 100%);
+  color: white;
+  padding: 22mm 14mm 18mm;
+  position: relative;
+}
+.print-doc .cover-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(255,255,255,0.18), transparent 55%);
+}
+.print-doc .cover-band-inner {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.print-doc .cover-brand { display: flex; align-items: center; gap: 10px; }
+.print-doc .cover-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.print-doc .cover-brand-name { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
+.print-doc .cover-brand-sub { font-size: 9px; opacity: 0.78; letter-spacing: 0.05em; text-transform: uppercase; }
+.print-doc .cover-quote-no {
+  font-size: 10px; font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.print-doc .cover-body { padding: 18mm 14mm 14mm; }
+.print-doc .cover-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--brand);
+  margin-bottom: 10px;
+}
+.print-doc .cover-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--ink);
+}
+.print-doc .cover-substance {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.print-doc .cover-meta-grid {
+  margin-top: 14mm;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4mm 8mm;
+  padding: 5mm 6mm;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f8fafc 0%, transparent 100%);
+}
+.print-doc .meta-block { padding: 1mm 0; }
+.print-doc .meta-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-subtle);
+  margin-bottom: 2px;
+}
+.print-doc .meta-value { font-size: 12px; font-weight: 500; color: var(--ink); }
+
+.print-doc .cover-grand {
+  margin-top: 12mm;
+  padding: 8mm 10mm;
+  background: linear-gradient(135deg, var(--brand-50) 0%, white 100%);
+  border: 2px solid var(--brand);
+  border-radius: 12px;
+  text-align: center;
+}
+.print-doc .cover-grand-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brand-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.print-doc .cover-grand-value {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--brand-deep);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  margin-top: 4px;
+}
+
+.print-doc .cover-foot {
+  margin-top: 18mm;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8mm;
+  border-top: 1px solid var(--line);
+  padding-top: 6mm;
+}
+.print-doc .cover-foot-block {}
+.print-doc .cover-foot-label {
+  font-size: 9px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-subtle);
+  margin-bottom: 4px;
+}
+.print-doc .cover-foot-value { font-size: 13px; font-weight: 700; color: var(--ink); }
+.print-doc .cover-foot-sub { font-size: 10px; color: var(--ink-muted); }
+.print-doc .cover-sign-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-top: 2px;
+}
+.print-doc .cover-sign-box {
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 9px;
+  color: var(--ink-subtle);
+  padding: 1mm 0 8mm;
+  font-weight: 600;
+}
+
+/* ─── PAGE HEAD (shared on pp.2+) ─────────────────────── */
+.print-doc .page-head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  border-bottom: 2px solid var(--brand);
+  padding-bottom: 4mm;
+  margin-bottom: 8mm;
+}
+.print-doc .page-head-brand { font-size: 10px; font-weight: 600; color: var(--ink-subtle); }
+.print-doc .page-head-title { font-size: 18px; font-weight: 700; color: var(--ink); margin-top: 2px; letter-spacing: -0.01em; }
+.print-doc .page-head-right { text-align: right; font-size: 10px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.print-doc .page-num { font-size: 9px; color: var(--ink-subtle); }
+
+/* ─── QUOTE TABLE ─────────────────────── */
+.print-doc .quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10.5px;
+  margin-bottom: 6mm;
+}
+.print-doc .quote-table thead th {
+  background: var(--brand-50);
+  color: var(--brand-deep);
+  font-weight: 700;
+  text-align: left;
+  padding: 7px 8px;
+  border-bottom: 2px solid var(--brand);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.print-doc .quote-table thead th.num { text-align: right; }
+.print-doc .quote-table tbody td {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.print-doc .quote-table tbody tr.analysis-row { background: rgba(238, 242, 255, 0.45); }
+.print-doc .num { text-align: right; font-variant-numeric: tabular-nums; }
+.print-doc .strong { font-weight: 700; }
+.print-doc .muted { color: var(--ink-subtle); }
+.print-doc .line-name { display: flex; align-items: center; gap: 6px; font-weight: 500; color: var(--ink); }
+.print-doc .line-note { font-size: 9px; color: var(--ink-subtle); margin-top: 2px; }
+.print-doc .analysis-breakdown {
+  list-style: none;
+  margin: 3px 0 0 0;
+  padding: 0 0 0 4px;
+  font-size: 9.5px;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+.print-doc .analysis-breakdown li { padding: 1px 0; }
+.print-doc .analysis-breakdown li.multiplier {
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 1px dashed var(--line);
+  font-weight: 600;
+  color: var(--brand);
+}
+.print-doc .badge-analysis {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 700;
+  background: var(--brand);
+  color: white;
+  padding: 1px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+}
+.print-doc .badge-prep { background: #059669; }
+.print-doc .negotiate { color: #dc2626; font-weight: 700; font-size: 10px; }
+
+/* 근거 가이드라인 코드 칩 (지식베이스 연결) */
+.print-doc .guideline-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-top: 3px;
+}
+.print-doc .gl-code {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 600;
+  color: var(--brand-deep);
+  background: var(--brand-50);
+  border: 1px solid #c7d2fe;
+  border-radius: 3px;
+  padding: 1px 5px;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── TOTALS ─────────────────────── */
+.print-doc .totals-block {
+  margin-left: auto;
+  width: 65%;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5mm 6mm;
+}
+.print-doc .totals-row {
+  display: flex; justify-content: space-between;
+  font-size: 11px;
+  padding: 2px 0;
+  color: var(--ink-muted);
+}
+.print-doc .totals-row.muted { color: var(--ink-subtle); }
+.print-doc .totals-divider { border-top: 1px solid var(--line-strong); margin: 4px 0; }
+.print-doc .totals-grand {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 2px solid var(--brand);
+  font-weight: 700;
+  color: var(--ink);
+}
+.print-doc .totals-grand .num {
+  font-size: 18px;
+  color: var(--brand-deep);
+  letter-spacing: -0.01em;
+}
+
+/* ─── TERMS ─────────────────────── */
+.print-doc .terms {
+  margin-top: 8mm;
+  background: #f8fafc;
+  border-left: 3px solid var(--brand);
+  padding: 4mm 5mm;
+  border-radius: 0 6px 6px 0;
+}
+.print-doc .terms h3 {
+  font-size: 11px;
+  font-weight: 700;
+  margin: 0 0 3mm 0;
+  color: var(--brand-deep);
+  letter-spacing: 0.02em;
+}
+.print-doc .terms ul { margin: 0; padding-left: 14px; }
+.print-doc .terms li { font-size: 10px; color: var(--ink-muted); margin-bottom: 2px; line-height: 1.5; }
+
+.print-doc .warn-box {
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 6px;
+  padding: 3mm 4mm;
+  margin-bottom: 6mm;
+  font-size: 10px;
+  color: #78350f;
+}
+.print-doc .warn-title { font-weight: 700; margin-bottom: 2px; }
+
+/* ─── DETAIL CARDS ─────────────────────── */
+.print-doc .details-list { display: flex; flex-direction: column; gap: 6mm; }
+.print-doc .detail-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5mm;
+  page-break-inside: avoid;
+  background: white;
+}
+.print-doc .detail-head {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: start;
+  gap: 8px;
+  padding-bottom: 3mm;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 3mm;
+}
+.print-doc .detail-no {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.print-doc .detail-title { font-size: 13px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em; }
+.print-doc .detail-subtitle { font-size: 9.5px; color: var(--ink-subtle); margin-top: 2px; }
+.print-doc .detail-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-deep);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.print-doc .detail-block { margin-top: 3mm; }
+.print-doc .detail-block-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--brand);
+  margin-bottom: 1mm;
+}
+.print-doc .detail-block.notice .detail-block-label { color: #c2410c; }
+.print-doc .detail-text {
+  font-size: 10.5px;
+  color: var(--ink-muted);
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+.print-doc .detail-text.small { font-size: 9.5px; }
+
+/* ─── PRINT MODE ─────────────────────── */
+@media print {
+  @page { size: A4; margin: 0; }
+  .print-doc {
+    background: white !important;
+    padding: 0 !important;
+  }
+  .print-doc .page {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    page-break-after: always;
+  }
+  .print-doc .page:last-child { page-break-after: auto; }
+}

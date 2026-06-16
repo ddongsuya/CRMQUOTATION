@@ -1,0 +1,4985 @@
+[
+  {
+    "fileName": "_in vitro metabolism 견적서_코아스템켐온(주)_최종본(24'0408).xlsx",
+    "sheets": [
+      {
+        "name": "in vitro metabolism",
+        "headerRowNum": 4,
+        "rowCount": 35,
+        "dataRows": 18,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "CYP inhibition",
+        "headerRowNum": 2,
+        "rowCount": 37,
+        "dataRows": 29,
+        "headers": [
+          "CYPs inhibition(direct)",
+          "CYPs inhibition(direct)",
+          "CYPs inhibition(direct)",
+          "비고",
+          "예시"
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "List",
+            "List",
+            "금액(원)",
+            "비고",
+            "TDI Assay 사용량"
+          ],
+          [
+            "Human microsome",
+            "Human microsome",
+            305000,
+            "1개 주문 시 500uL이며, Assay  1개 사용 시 20uL 소진"
+          ],
+          [
+            "보조인자(NADPH)",
+            "보조인자(NADPH)",
+            249200,
+            "1개 주문시 5000uL이며, Assay 1개 사용 시 20uL 소진",
+            "CYPs",
+            "N(반복개수)",
+            "보조인자",
+            "농도 범위 ",
+            "샘플 개수"
+          ],
+          [
+            "내부표준물질(Tolterodine, 500mg)",
+            "내부표준물질(Tolterodine, 500mg)",
+            554393,
+            "1회 구입 후 소모량이 적기 때문에 1년간 사용가능\n(1년 주기로 교체 예정입니다.)\n\n*초기 비용이며, 반복 또는 연속으로 실험 진행 시 동일한 제품을 가지고 평가 합니다. 이점 참고 해주십시요.",
+            9,
+            3,
+            2,
+            1,
+            54
+          ]
+        ]
+      },
+      {
+        "name": "Direct inhibition",
+        "headerRowNum": 1,
+        "rowCount": 27,
+        "dataRows": 21,
+        "headers": [
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)",
+          "CYP inhibition (Direct inhibition)"
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다."
+          ],
+          [
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다."
+          ],
+          [
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다."
+          ],
+          [
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System Solution A, B를 얼음 위에 준비한다.\n2. Reaction mixture\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로 HLM을 마지막에 넣어준다. (표1.)\n4. Shaking incubation (37℃, 10분), 반응 용기는 공기가 통할 수 있도록 열어둔다.\n5. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n6. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n7. 원심분리 (10000g, 20분, 4℃)\n8. 전체 Volume에 1/25의 비율로 ISTD를 첨가한다.\n9. LC-MS/MS으로 분석한다."
+          ]
+        ]
+      },
+      {
+        "name": "Time-dependent inhition(TDI) 시험",
+        "headerRowNum": 2,
+        "rowCount": 34,
+        "dataRows": 23,
+        "headers": [
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)",
+          "CYP inhibition (Time dependent inhibition)"
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다."
+          ],
+          [
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다."
+          ],
+          [
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다."
+          ],
+          [
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다.",
+            "1. HLM, NADPH Regenerating System을 얼음 위에 준비한다.\n2. Pre-Incubation Reaction Mixture(Mixture A)와 No Pre-Incubation\nReaction Mixture(Mixture B)를 아래와 같이 준비한다. (표2)\n3. HLM과 NADPH Regenerating System이 혼합되면 반응이 시작되므로\nHLM을 마지막에 넣어준다.\n4. Secondary Incubation Reaction Mixture(Mixture C)를 아래와 같이\n준비한다. (표3)\n5. Mixture A : shaking pre-incubation (37℃, 30분), Mixture B :shaking incubation (37℃, 0분)\n6. Pre-incubation후, Mixture A, B 40 ㎕를 취하여 Mixture C(final volume : 400 ㎕)에 넣어준다.\n7. Mixture C : shaking incubation (37℃, 10분).\n8. 각 샘플에 stop solution을 100 ㎕씩 첨가한다.\n9. Shaking (300rpm, 5분), incubation (-20℃, 10분)\n10. 원심분리 (10,000g, 4℃, 20분)\n11. 전체 volume에 1/25의 비율로 ISD를 첨가한다.\n12. LC-MS/MS으로 분석한다."
+          ]
+        ]
+      },
+      {
+        "name": "Caco-2 permeability",
+        "headerRowNum": 2,
+        "rowCount": 11,
+        "dataRows": 9,
+        "headers": [
+          "Caco-2 permeability",
+          "Caco-2 permeability",
+          "Caco-2 permeability",
+          "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+          "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+          "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+          "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+          "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+          "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n"
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "List",
+            "List",
+            "금액(원)",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n"
+          ],
+          [
+            "Caco-2 cell",
+            "Caco-2 cell",
+            2671900,
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n"
+          ],
+          [
+            "Transwell plate",
+            "Transwell plate",
+            312000,
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n"
+          ],
+          [
+            "culutre media",
+            "culutre media",
+            100000,
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n",
+            "Caco-2 세포는 연간 라이센스비용이 필요.\n현재 비영리 목적으로 제품 구매/한국 세포주 은행 동물 cell line도 구매\n->비영리 목적으로 구매한 세포는 한국 세포주 은행과 동일하기 때문에 추후 라이센스비용은 필요치 않아 보이나, 추후 대외 업무시에는 논의가 필요\n\nTEER(Transepithelial electrical restance) 기기 구매 완료\n해당 사용되는 기기 견적은 제외 하였습니다.\n\n*기본 세포 배양 기간이 4~6주 소요되며, 이후 assay 진행됩니다. 이점 참고 해주십시요.\n"
+          ]
+        ]
+      },
+      {
+        "name": "microsome stability assay",
+        "headerRowNum": 2,
+        "rowCount": 10,
+        "dataRows": 8,
+        "headers": [
+          "Microsome stability assay",
+          "Microsome stability assay",
+          "Microsome stability assay",
+          "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+          "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+          "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+          "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다."
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "List",
+            "List",
+            "금액(원)",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다."
+          ],
+          [
+            "Human microsome",
+            "Human microsome",
+            305000,
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다."
+          ],
+          [
+            "S9 fraction",
+            "S9 fraction",
+            174377,
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다."
+          ],
+          [
+            "보조인자(NADPH)",
+            "보조인자(NADPH)",
+            249200,
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다.",
+            "1. 관련 버퍼 및 소모품은 제외 하였습니다.\n\n2. 예비시험을 통해 분석 조건을 확인해야 하기 때문에 microsome과 S9 fraction은 2개 정도 예상하고 진행합니다."
+          ]
+        ]
+      },
+      {
+        "name": "plasma binding assay",
+        "headerRowNum": 2,
+        "rowCount": 9,
+        "dataRows": 7,
+        "headers": [
+          "plasma binding assay",
+          "plasma binding assay",
+          "plasma binding assay",
+          "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+          "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+          "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+          "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+          "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+          "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다."
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "List",
+            "List",
+            "금액(원)",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다."
+          ],
+          [
+            "plasma binding assay",
+            "plasma binding assay",
+            254359,
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다."
+          ],
+          [
+            "Rapid Equilibrium Dialysis (RED) Inserts and Plates",
+            "Rapid Equilibrium Dialysis (RED) Inserts and Plates",
+            859000,
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다."
+          ],
+          [
+            "Warfarin",
+            "Warfarin",
+            315767,
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다.",
+            "1. plasma binding assay의 경우 assay 시 plasma stability(4h)에 대한 assay도 진행 가능합니다. 내용 참고 하시면 됩니다."
+          ]
+        ]
+      },
+      {
+        "name": "대사체확인",
+        "headerRowNum": 3,
+        "rowCount": 9,
+        "dataRows": 6,
+        "headers": [
+          "Microsome stability assay",
+          "Microsome stability assay",
+          "Microsome stability assay",
+          "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+          "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+          "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+          "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다."
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "List",
+            "List",
+            "금액(원)",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다."
+          ],
+          [
+            "Human microsome",
+            "Human microsome",
+            305000,
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다."
+          ],
+          [
+            "S9 fraction",
+            "S9 fraction",
+            174377,
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다."
+          ],
+          [
+            "보조인자(NADPH)",
+            "보조인자(NADPH)",
+            249200,
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다.",
+            "대사체 확인 시험은 기본 microsome assay을 통하여 대사체 화합물을 분석하기 때문에 microsome assay와 유사하게 견적을 전달드립니다. 대사체 확인 시험의 경우는 시험물질 및 대사체분석법 셋업에 포커스를 주어 진행 해야 합니다."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOO-2024년 건기식 독성 시험견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "건기식",
+        "headerRowNum": 4,
+        "rowCount": 37,
+        "dataRows": 20,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOO-2024년 프로바이오틱스 건기식 독성 시험견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "건기식",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년  SEND 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "SEND data",
+        "headerRowNum": 4,
+        "rowCount": 38,
+        "dataRows": 29,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 CTD 작성 견적서-코아스템켐온(주)- Module 2( 요약문만 진행시 ).xlsx",
+    "sheets": [
+      {
+        "name": "CTD",
+        "headerRowNum": 4,
+        "rowCount": 53,
+        "dataRows": 44,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 hERG assay(GLP) 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "세포치료제",
+        "headerRowNum": 4,
+        "rowCount": 30,
+        "dataRows": 13,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 가습기 살균제 살생물물질 독성 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "살생물",
+        "headerRowNum": 4,
+        "rowCount": 46,
+        "dataRows": 37,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 경구피하근육 or 정맥 독성 시험견적서-KGLP,OECD 기준-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "경구피하근육독성",
+        "headerRowNum": 4,
+        "rowCount": 140,
+        "dataRows": 123,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "경구피하근육독성 (OECD)",
+        "headerRowNum": 4,
+        "rowCount": 141,
+        "dataRows": 124,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "정맥경피독성",
+        "headerRowNum": 4,
+        "rowCount": 140,
+        "dataRows": 123,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "정맥경피독성  (OECD)",
+        "headerRowNum": 4,
+        "rowCount": 141,
+        "dataRows": 124,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 농약 환경 독성 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "농약 환경독성",
+        "headerRowNum": 4,
+        "rowCount": 24,
+        "dataRows": 15,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "oooo-2024년 독성 screening 견적서- 코아스템켐온(주)-final ver.(24'0109).xlsx",
+    "sheets": [
+      {
+        "name": "스크리닝",
+        "headerRowNum": 4,
+        "rowCount": 36,
+        "dataRows": 19,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 발암성 시험 견적서-코아스템켐온(24'0000).xlsx",
+    "sheets": [
+      {
+        "name": "발암성",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 백신 비임상 시험 견적서_코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "5군",
+        "headerRowNum": 4,
+        "rowCount": 32,
+        "dataRows": 15,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4군",
+        "headerRowNum": 4,
+        "rowCount": 32,
+        "dataRows": 15,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3군",
+        "headerRowNum": 4,
+        "rowCount": 32,
+        "dataRows": 15,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "2군",
+        "headerRowNum": 4,
+        "rowCount": 32,
+        "dataRows": 15,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 분포시험 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "분포시험 새로운 견적형식",
+        "headerRowNum": 4,
+        "rowCount": 32,
+        "dataRows": 16,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 비설치류 흡수, 배설 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "비글",
+        "headerRowNum": 4,
+        "rowCount": 33,
+        "dataRows": 16,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 세포치료제 뇌내, 척수 투여 독성, 종양원성 및 분포시험 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "세포치료제",
+        "headerRowNum": 4,
+        "rowCount": 36,
+        "dataRows": 19,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 세포치료제 정맥투여 반복, 종양원성(52주, spiking test추가시) 및 분포시험(1개 gene 추가시) 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "세포치료제",
+        "headerRowNum": 4,
+        "rowCount": 39,
+        "dataRows": 22,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 심혈관계 스크리닝시험 견적 (24'0416).xlsx",
+    "sheets": [
+      {
+        "name": "스크리닝",
+        "headerRowNum": 4,
+        "rowCount": 26,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 안전성약리 시험 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "2군",
+        "headerRowNum": 4,
+        "rowCount": 35,
+        "dataRows": 18,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3군",
+        "headerRowNum": 4,
+        "rowCount": 35,
+        "dataRows": 18,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4군",
+        "headerRowNum": 4,
+        "rowCount": 35,
+        "dataRows": 18,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 영문보고서 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "번역",
+        "headerRowNum": 4,
+        "rowCount": 56,
+        "dataRows": 47,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서",
+            "견 적 서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 의료기기 독성 시험 견적서-코아스템켐온(주)240404 ver..xlsx",
+    "sheets": [
+      {
+        "name": "의료기기",
+        "headerRowNum": 4,
+        "rowCount": 41,
+        "dataRows": 24,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 인축 독성 기본 패키지 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "인축 독성",
+        "headerRowNum": 4,
+        "rowCount": 26,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 점안제 독성 -비글,토끼.xlsx",
+    "sheets": [
+      {
+        "name": "비글4주,13주_일4회",
+        "headerRowNum": 4,
+        "rowCount": 73,
+        "dataRows": 48,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "토끼4주,13주_일4회",
+        "headerRowNum": 4,
+        "rowCount": 73,
+        "dataRows": 48,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "비글26주,39주_일4회",
+        "headerRowNum": 4,
+        "rowCount": 57,
+        "dataRows": 40,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "토끼26주,39주_일4회",
+        "headerRowNum": 4,
+        "rowCount": 57,
+        "dataRows": 40,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 줄기세포 배양액 화장품 독성 시험 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "줄기세포화장품",
+        "headerRowNum": 4,
+        "rowCount": 33,
+        "dataRows": 24,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 화장품 대체법 독성 시험 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "화장품대체",
+        "headerRowNum": 4,
+        "rowCount": 27,
+        "dataRows": 18,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 화학물질 비임상 시험 견적서_코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "1톤 이하",
+        "headerRowNum": 4,
+        "rowCount": 23,
+        "dataRows": 14,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "1-10톤",
+        "headerRowNum": 4,
+        "rowCount": 28,
+        "dataRows": 19,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "10-100톤",
+        "headerRowNum": 4,
+        "rowCount": 40,
+        "dataRows": 31,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "1000톤이상",
+        "headerRowNum": 4,
+        "rowCount": 32,
+        "dataRows": 23,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "모든항목",
+        "headerRowNum": 4,
+        "rowCount": 54,
+        "dataRows": 45,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 환경 독성 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "농약 환경독성",
+        "headerRowNum": 4,
+        "rowCount": 24,
+        "dataRows": 15,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2024년 의료기기 독성 시험(세포독성-직접,간접) 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "의료기기",
+        "headerRowNum": 4,
+        "rowCount": 23,
+        "dataRows": 14,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2023년 2종복합제 독성 견적서-개별분석기준 코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "2종개별_6point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "2종개별_6point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "2종개별_8point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "2종개별_8point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2023년 2종복합제 독성 견적서-동시분석기준 코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "2종동시_6point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "2종동시_6point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "2종동시_8point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "2종동시_8point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2023년 3종복합제 독성 견적서-개별분석기준 코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "3종개별_6point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3종개별_6point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3종개별_8point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3종개별_8point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2023년 3종복합제 독성 견적서-동시분석기준 코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "3종동시_6point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3종동시_6point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3종동시_8point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "3종동시_8point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2023년 4종복합제 독성 견적서-개별분석기준 코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "4종개별_6point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4종개별_6point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4종개별_8point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4종개별_8point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2023년 4종복합제 독성 견적서-동시분석기준 코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "4종동시_6point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4종동시_6point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4종동시_8point채혈",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "4종동시_8point분석",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 17,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "25년_이스텐드바이오 병리서비스 price list_25_0418.xlsx",
+    "sheets": [
+      {
+        "name": "전체 가격표",
+        "headerRowNum": 2,
+        "rowCount": 34,
+        "dataRows": 21,
+        "headers": [
+          "2021년 이스텐드바이오 pathology service 단가(안)",
+          "2021년 이스텐드바이오 pathology service 단가(안)",
+          "2021년 이스텐드바이오 pathology service 단가(안)",
+          "2021년 이스텐드바이오 pathology service 단가(안)"
+        ],
+        "priceColumns": [
+          "2021년 이스텐드바이오 pathology service 단가(안)",
+          "2021년 이스텐드바이오 pathology service 단가(안)",
+          "2021년 이스텐드바이오 pathology service 단가(안)",
+          "2021년 이스텐드바이오 pathology service 단가(안)"
+        ],
+        "samples": [
+          [
+            "항목",
+            "제작 가격(원)",
+            "검경 가격(원)",
+            "비고"
+          ],
+          [
+            "일반장기 H&E 슬라이드 제작/검경",
+            17000,
+            35000
+          ],
+          [
+            "(+) 추가 감별 특수염색/검경",
+            15000,
+            20000,
+            "PAS, Sirius Red, Trichrome 등"
+          ],
+          [
+            "뼈(경조직) H&E 슬라이드 제작/검경",
+            23500,
+            35000,
+            "decalcification 기간 (산탈회:1주 추가, EDTA: 한달추가)"
+          ]
+        ]
+      },
+      {
+        "name": "켐온",
+        "headerRowNum": 1,
+        "rowCount": 8,
+        "dataRows": 3,
+        "headers": [
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)",
+          "켐온 (이철규 약효본부장, 이선경 센터장)"
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "시점",
+            "시험번호",
+            "장기",
+            "H&E슬라이드제작 \n(개수/단가)",
+            "H&E슬라이드제작 \n(개수/단가)",
+            "검경 (개수/단가)",
+            "검경 (개수/단가)",
+            "추가염색",
+            "보고서",
+            "견적 액 (-VAT)"
+          ],
+          [
+            1,
+            "2021년 5월",
+            "비만",
+            "간, 부고환지방",
+            60,
+            17000,
+            60,
+            35000,
+            300000,
+            3420000
+          ],
+          [
+            2,
+            "치주염",
+            "하악골",
+            24,
+            23500,
+            24,
+            35000,
+            300000,
+            1704000,
+            "40일이내 전송"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "조직병리 표준견적 계산식_25_0418.xlsx",
+    "sheets": [
+      {
+        "name": "표준 견적",
+        "headerRowNum": 4,
+        "rowCount": 27,
+        "dataRows": 19,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "군구성",
+        "headerRowNum": 1,
+        "rowCount": 19,
+        "dataRows": 4,
+        "headers": [],
+        "priceColumns": [],
+        "samples": []
+      },
+      {
+        "name": "Sheet2",
+        "headerRowNum": 1,
+        "rowCount": 1,
+        "dataRows": 0,
+        "headers": [],
+        "priceColumns": [],
+        "samples": []
+      },
+      {
+        "name": "Sheet3",
+        "headerRowNum": 1,
+        "rowCount": 1,
+        "dataRows": 0,
+        "headers": [],
+        "priceColumns": [],
+        "samples": []
+      }
+    ]
+  },
+  {
+    "fileName": "표준견적서.xlsx",
+    "sheets": [
+      {
+        "name": "경구피하근육독성",
+        "headerRowNum": 4,
+        "rowCount": 140,
+        "dataRows": 123,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "경구피하근육독성 (OECD)",
+        "headerRowNum": 4,
+        "rowCount": 141,
+        "dataRows": 124,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "정맥경피독성",
+        "headerRowNum": 4,
+        "rowCount": 140,
+        "dataRows": 123,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "정맥경피독성  (OECD)",
+        "headerRowNum": 4,
+        "rowCount": 141,
+        "dataRows": 124,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "2025년 의료기기 독성 시험(안자극포함) 견적서-코아스템켐온(주)_25_0702.xlsx",
+    "sheets": [
+      {
+        "name": "의료기기",
+        "headerRowNum": 4,
+        "rowCount": 44,
+        "dataRows": 27,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "OOOO-2025년 의료기기 독성 시험 견적서-코아스템켐온(주)25_0724 ver..xlsx",
+    "sheets": [
+      {
+        "name": "견적서",
+        "headerRowNum": 2,
+        "rowCount": 36,
+        "dataRows": 30,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부 대표 송시환 (직인생략)",
+            "비임상CRO사업부 대표 송시환 (직인생략)",
+            "비임상CRO사업부 대표 송시환 (직인생략)",
+            "비임상CRO사업부 대표 송시환 (직인생략)",
+            "비임상CRO사업부 대표 송시환 (직인생략)"
+          ]
+        ]
+      },
+      {
+        "name": "상담",
+        "headerRowNum": 1,
+        "rowCount": 1,
+        "dataRows": 0,
+        "headers": [],
+        "priceColumns": [],
+        "samples": []
+      }
+    ]
+  },
+  {
+    "fileName": "2025년 줄기세포 배양액 화장품 독성 시험 견적서-코아스템켐온(주).xlsx",
+    "sheets": [
+      {
+        "name": "줄기세포화장품",
+        "headerRowNum": 4,
+        "rowCount": 34,
+        "dataRows": 25,
+        "headers": [
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서",
+            "견  적  서"
+          ],
+          [
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240",
+            "경기도 용인시 처인구 양지면 남평로 240"
+          ],
+          [
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜",
+            "코아스템켐온㈜"
+          ],
+          [
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)",
+            "비임상CRO사업부대표 송시환 (직인생략)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "fileName": "CTD 작성 견적서 - Module2 (요약문만 진행시) - 전사용.xlsx",
+    "sheets": [
+      {
+        "name": "CTD",
+        "headerRowNum": 1,
+        "rowCount": 41,
+        "dataRows": 38,
+        "headers": [
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서",
+          "CTD 작성 견적서"
+        ],
+        "priceColumns": [],
+        "samples": [
+          [
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서"
+          ],
+          [
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서"
+          ],
+          [
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서",
+            "CTD 작성 견적서"
+          ],
+          [
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준",
+            "* CTD 작성시 module 2.6 비임상 요약문 및 요약표 작성시 기준"
+          ]
+        ]
+      }
+    ]
+  }
+]

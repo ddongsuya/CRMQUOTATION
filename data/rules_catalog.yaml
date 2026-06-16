@@ -1,0 +1,1133 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# 견적 자동 생성 룰 카탈로그 (Quote Automation Rule Catalog) v1.1 — DRAFT
+# 출처: 2026년 표준견적서 14개 파일 파싱 결과 (parsed_all.json, 613 records)
+# 추출일: 2026-05-13 (v1.0) / 보강 추출: 2026-05-14 (v1.1)
+# 검토 필요: 센터장, 팀장
+#
+# v1.1 변경사항:
+#   - 기존 19개 룰: 변경 없이 그대로 유지 (status="draft", v1.0과 동일)
+#   - 신규 14개 룰 추가: status="draft_audit" — 보강 감사로 발견된 후보
+#     · 출처: footer 분해 (10개), 복합제 PricingFormula 패턴 (2개), 의료기기 ConditionalGroup (2개)
+#   - 신규 섹션: generic_rules — 시스템 메타룰 (견적 60일 유효, VAT 별도, 시험기간 정의)
+#
+# 룰 7종 (v1.0의 6종 + GenericRule 추가):
+#   pricing_formulas       — 가격 산출 공식 (PF)
+#   prerequisite_rules     — 선행 시험·자료·검수 (PR)
+#   conditional_groups     — 조건부 군 구성·관찰 변경 (CG)
+#   addons                 — 추가 옵션 항목 (AD)
+#   waiver_rules           — 면제 조건 (WV)
+#   substitution_rules     — 시험 대체 (SB)
+#   generic_rules          — 시스템 메타룰 (GR) — v1.1 신규
+#
+# 모든 룰의 공통 메타데이터:
+#   id              — 룰 식별자 (PF-001, GR-001 등)
+#   description_ko  — 비개발자가 읽을 한 줄 요약
+#   version         — 룰 버전 (수정 시 bump)
+#   status          — draft | draft_audit | approved | deprecated
+#                     · draft       = v1.0 초기 추출, 미검토
+#                     · draft_audit = v1.1 보강 추출, 미검토 (영업 검증 우선순위 높음)
+#                     · approved    = 검토 승인 완료, effective_date 부여
+#                     · deprecated  = 폐기됨
+#   confidence      — high | medium | low (텍스트 명확성)
+#   extracted_at    — 추출 일시
+#   effective_date  — 적용 시작일 (검토·승인 후 기입)
+#   needs_review_by — 검토 필요 인원
+#   review_notes    — 추출 시 LLM이 발견한 모호함
+#   source_quote    — 원본 텍스트 (검증용)
+#   source_location — 출처 파일·시트·행
+# ─────────────────────────────────────────────────────────────────────────────
+
+catalog_meta:
+  version: "1.1"
+  status: "draft"
+  extracted_at: "2026-05-13"
+  augmented_at: "2026-05-14"
+  source_files: 14
+  source_records_scanned: 613
+  candidates_audited: 665              # 작업 1 결과: 안내문 41 + special 76 + extras 188 + method 360
+  total_rules_extracted: 33            # v1.0의 19 + v1.1의 14
+  rules_v1_0: 19                       # status: draft
+  rules_v1_1_audit: 14                 # status: draft_audit
+  total_candidates_excluded: 22
+  needs_review_by: ["센터장", "팀장"]
+  audit_coverage_summary:
+    rule_captured: 83
+    attribute_captured: 138
+    method_description: 32
+    method_description_auto: 320
+    info_only: 6
+    section_header: 62
+    negotiable_note: 3
+    uncategorized: 1                   # 1건 (special_notes의 "(LD50 자료 제공)" — PR-004 review_notes에서 다룸)
+    uncategorized_footer: 0            # v1.1에서 모두 분해 추출 완료
+
+# ═════════════════════════════════════════════════════════════════════════════
+# A. PricingFormula — 가격 산출 공식
+# ═════════════════════════════════════════════════════════════════════════════
+pricing_formulas:
+
+  - id: PF-001
+    description_ko: "비설치류 채혈만 진행 시 가격 산출 공식 (총 채혈 포인트 × 30,000원 + 5,000,000원)"
+    formula: "bleeding_total_points * 30000 + 5000000"
+    formula_human: "총 채혈 포인트 × 30,000원 + 5,000,000원"
+    variables:
+      - name: bleeding_total_points
+        type: number
+        source: "TestItem.bleeding_info.total_points"
+        description_ko: "해당 TK 시험의 총 채혈 포인트 수"
+    applies_to:
+      category: "독성동태(TK)"
+      animal_grade: "비설치류"
+      sub_type: "delivery_only"     # 시험명 끝에 "채혈까지만 진행" 포함
+      file_type: "pharmaceutical_toxicology"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null   # 검토 후 기입
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      4개 시트(MFDS/OECD × 경구피하근육/정맥경피) 모두 동일 문구. 시트 무관 공통 적용으로 추정.
+      현재 파일에는 이 공식으로 산출된 가격이 기재돼 있지 않음 — 산출 결과 검증 불가.
+      설치류에는 별도 공식이 있을 가능성 (자료에는 없음).
+    source_quote: "비설치류 채혈까지만 진행의 경우\n  총 채혈 포인트 X 30000원 + 500만원으로 계산"
+    source_location: "안내문·푸터 / 의약품 / 경구피하근육(MFDS) R116, 경구피하근육(OECD) R118, 정맥경피(MFDS) R116, 정맥경피(OECD) R118"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# B. PrerequisiteRule — 선행 시험 강제
+# ═════════════════════════════════════════════════════════════════════════════
+prerequisite_rules:
+
+  - id: PR-001
+    description_ko: "마우스 발암성시험 선택 시 4주 DRF·13주 반복독성시험 자동 추가"
+    trigger:
+      test_name_contains: "발암성시험"
+      test_subcategory_contains: "마우스"
+      file_type: "pharmaceutical_toxicology"
+    prerequisites:
+      - test_name_pattern: "설치류 4주 투여 DRF 시험"
+        species_filter: "마우스"
+        mandatory: true
+        rationale_ko: "용량 결정"
+      - test_name_pattern: "설치류 13주 반복 투여 독성시험"
+        species_filter: "마우스"
+        mandatory: true
+        rationale_ko: "사전 독성 확인"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      현재 자료의 마우스 표준 견적에는 SD rat 기준 DRF/13주가 들어가 있는데,
+      마우스 발암성시험에서 요구되는 DRF는 마우스 종으로 새로 진행해야 하는지,
+      아니면 SD rat 자료를 재활용 가능한지 명확하지 않음 — 확인 필요.
+      (랫드 발암성시험에는 동일 룰이 명시돼 있지 않음 — 룰 빈 칸인지 의도적 생략인지 확인 필요)
+    source_quote: "마우스 발암성시험시 4주DRF, 13주 반복독성시험 수행해야 함."
+    source_location: "특이사항 / 의약품 / 발암성: 마우스 (test_no=100, R228 × 4 sheets)"
+
+  - id: PR-002
+    description_ko: "USFDA 제출 시 유전독성시험 추가 제안 (영업 메모, 정확한 발효일 미상)"
+    trigger:
+      submission_target: "USFDA"
+      file_type: "send_ctd_translation"
+      test_subcategory_contains: "비설치류 13주 반복"
+    prerequisites:
+      - test_name_pattern: "유전독성시험"
+        mandatory: false
+        suggestion_only: true
+    applies_to_sheets:
+      - "SEND"
+      - "CTD(Module 2)"
+    version: "1.0"
+    status: "draft"
+    confidence: "low"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      원본 텍스트에 "(2025년부터?)"라는 물음표가 있어 발효 시점이 불확실.
+      현재 시점(2026)에서 강제 룰인지 영업 제안 단계인지 확인 필요.
+      mandatory를 false로 두고 suggestion_only=true로 보수 표시.
+    source_quote: "유전독성시험도 USFDA 제출시 피수항목으로 의뢰자에게 제안(2025년부터?"
+    source_location: "extras.side_note / SEND/CTD/번역 / SEND R23 (test_no=6), CTD(Module 2) R23 (test_no=6)"
+
+  - id: PR-003
+    description_ko: "Reconstructed Human Epidermis/Cornea 모델 시험은 4주 사전 주문 필요"
+    trigger:
+      test_subcategory_contains: "reconstructed Human"
+      file_type:
+        - "cosmetic_alternative"
+        - "cosmetic_stem_cell"
+    prerequisites:
+      - prerequisite_type: "lead_time"
+        lead_time_weeks: 4
+        condition_ko: "조직 입고 (사전 주문 필요)"
+    applies_to_sheets:
+      - "대체법"
+      - "줄기세포 배양액"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      원본은 시험 방법 설명에 가까우나, 견적 진행 시 4주 리드타임을 고객에게 안내해야 하므로 룰화.
+      만약 입고 지연 시 견적서 기간(L열)에 자동 반영되어야 함.
+    source_quote: "조직 입고: 4 주 소요(사전 주문 필요)"
+    source_location: "방법 세부사항 / 화장품 대체법 R26·R28, 화장품 줄기세포 R38·R40"
+
+  - id: PR-004
+    description_ko: "소핵 시험 screening은 관련시험의 독성자료 제공 필요"
+    trigger:
+      test_name_contains: "소핵 시험 screening"
+      file_type: "toxicity_screening"
+    prerequisites:
+      - prerequisite_type: "customer_data"
+        required_data_ko: "관련시험의 독성자료 (LD50 등)"
+        mandatory: true
+    applies_to_sheets:
+      - "Screening"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      "관련시험의 독성자료 제공 시 가능"이라는 표현이 "고객이 제공해야 가능"인지
+      "켐온이 제공한 자료로 가능"인지 양쪽 해석 가능. 영업 관행 확인 필요.
+      또한 "LD50 자료 제공"이 옆 줄에 있어 LD50이 그 자료 중 하나로 추정.
+    source_quote: "관련시험의 독성자료 제공 시 가능"
+    source_location: "방법 세부사항 / 독성 스크리닝 / Screening R26 (test_no=5)"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# C. ConditionalGroup — 조건부 군 구성 변경
+# ═════════════════════════════════════════════════════════════════════════════
+conditional_groups:
+
+  - id: CG-001
+    description_ko: "비설치류 4주 반복투여 — 선행 4주 반복 자료 보유 시 시험군 1개 감소 (4→3)"
+    applies_to:
+      test_name_contains: "비설치류 4주 반복"
+      animal_grade: "비설치류"
+      file_type: "pharmaceutical_toxicology"
+    default_groups:
+      control: 1
+      test: 4
+    conditional_groups:
+      - condition_ko: "선행 4주 반복 자료 보유"
+        condition_key: "has_prior_4week_data"
+        groups:
+          control: 1
+          test: 3
+        price_adjustment_required: true
+        adjustment_note_ko: "시험군 감소에 따른 가격 재산정 필요 (재산정 공식 미명시 — 영업 협의)"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      원본 문구가 "비설치류 4주 반복 자료가 있으면"이라 정확히 어떤 자료인지(자체 자료 vs 선행 4주 DRF 결과)
+      맥락 의존. 가격 재산정 공식이 별도 명시되지 않음 — 현재는 영업 수기 산출로 추정.
+    source_quote: "비설치류 4주 반복 자료가 있으면, 시험군 4가 아닌 시험군3으로 견적서 제공"
+    source_location: "안내문·푸터 / 의약품 / 경구피하근육(MFDS) R107, 경구피하근육(OECD) R109, 정맥경피(MFDS) R107, 정맥경피(OECD) R109"
+
+  - id: CG-002
+    description_ko: "생식독성 TK 태반이행 시험 — 매일 투여 아닐 시 군당 임신동물 3마리 추가"
+    applies_to:
+      test_name_contains: "배태자 발생 시험의 TK 채혈시험"
+      test_subcategory_contains: "태반이행"
+      file_type: "pharmaceutical_toxicology"
+    default_groups: null
+    conditional_groups:
+      - condition_ko: "투여일이 매일 투여가 아닐 경우"
+        condition_key: "non_daily_dosing"
+        groups_addition:
+          pregnant_females_per_group: 3
+        price_adjustment_required: true
+        adjustment_note_ko: "임신동물 추가 마리수에 따른 가격 추가 (기준 단가 미명시)"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      태반이행 확인용 별도 추가 케이스 (test_no 84, 87 — Rat·Rabbit).
+      "매일 투여가 아닐 경우"에 추가하는 것이지 기본 시험은 매일 투여 가정.
+      추가 임신동물 마리수당 가격 단가는 별도 영업 산출일 가능성.
+    source_quote: "별도추가 : 투여일이 매일 투여가 아닐 경우\n: 군당 임신동물 3마리 추가"
+    source_location: "특이사항 / 의약품 / 생식독성 TK 태반이행 (test_no=84·87, R195·R203 × 4 sheets, 총 8건)"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# D. Addon — 추가 옵션 항목
+# ═════════════════════════════════════════════════════════════════════════════
+addons:
+
+  - id: AD-001
+    description_ko: "유전독성 복귀돌연변이 — 재현성 확인 추가시험 비용 (+2,000,000원)"
+    applies_to:
+      test_name: "유전독성시험"
+      sub_category_contains: "복귀 돌연변이"
+      file_type:
+        - "pharmaceutical_toxicology"
+        - "health_food_individual"
+        - "health_food_temporary"
+    addon_name_ko: "재현성 확인 추가시험"
+    addon_name: "reproducibility_recheck"
+    price_krw: 2000000
+    optional: true
+    trigger_ko: "초기 결과의 재현성 확인이 필요한 경우 (영업 판단 또는 고객 요청)"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+      - "개별인정형(기존 사용사례 물질)"
+      - "한시적식품"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      6건 중 4건은 의약품 4시트, 2건은 건기식. 화장품 유전독성에는 AD-003(양성 판정 시 재현시험)으로 분리 등록.
+      두 룰을 통합할지(트리거 다름: 자발적 재현 확인 vs 양성 판정) 영업 판단 필요.
+    source_quote: "재현성 확인을 위한 추가시험 진행 시 비용추가\n(추가금액 2,000,000원)"
+    source_location: "특이사항 / 6 occurrences (의약품 R165·R167 × 4 sheets + 건기식 개별 R27 + 건기식 한시적 R29)"
+
+  - id: AD-002
+    description_ko: "건기식 13주 반복독성·회복시험 — 성호르몬 측정 옵션 (개정 고시 추가 시험)"
+    applies_to:
+      test_name_contains: "13주 반복 투여 독성시험"
+      test_name_alternates: ["13주 반복 투여 4주 회복시험"]
+      file_type:
+        - "health_food_individual"
+        - "health_food_probiotics"
+        - "health_food_temporary"
+    addon_name_ko: "성호르몬 측정 (testosterone, oestradiol, FSH, LH)"
+    addon_name: "sex_hormone_panel"
+    price_krw: null
+    price_note_ko: "추가 비용 발생 (단가 미명시 — 영업 산출)"
+    optional: true
+    trigger_ko: "필요에 따라 측정 (영업·고객 협의)"
+    applies_to_sheets:
+      - "개별인정형(기존 사용사례 물질)"
+      - "프로바이오틱스"
+      - "한시적식품"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      "추가 비용 발생"이라고만 적혀 있고 정확한 금액 미명시. 영업에서 표준 단가가 있는지 확인 필요.
+      "개정 고시 추가 시험"이라는 표현은 식약처/MFDS 고시 개정에 따른 것으로 추정 — 발효일 확인 필요.
+    source_quote: "설치류 반복투여 독성 개정 고시 추가 시험\n성호르몬( testosterone, oestradiol, follicle stimulating hormone, luteinizing hormone )은 필요에 따라 측정할 수 있음 : 추가 비용 발생"
+    source_location: "특이사항 / 5 occurrences / 건기식 개별 R24, 건기식 프로바이오 R24·R26, 건기식 한시적 R24·R26"
+
+  - id: AD-003
+    description_ko: "화장품 유전독성 — 양성 판정 시 재현시험 강제 (+2,000,000원)"
+    applies_to:
+      test_name: "유전독성시험"
+      sub_category_contains: "복귀 돌연변이"
+      file_type:
+        - "cosmetic_alternative"
+        - "cosmetic_stem_cell"
+    addon_name_ko: "양성 판정 시 재현시험"
+    addon_name: "positive_result_recheck"
+    price_krw: 2000000
+    optional: false   # 양성 판정 시 강제
+    trigger_ko: "초기 시험 결과가 양성으로 판정된 경우"
+    trigger_key: "primary_result_positive"
+    applies_to_sheets:
+      - "대체법"
+      - "줄기세포 배양액"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      AD-001 (의약품·건기식 자발적 재현시험)과 가격은 동일하나 트리거가 명시적으로 다름:
+      여기는 "양성 판정 시 강제", AD-001은 "필요 시 자발적".
+      두 룰 통합 vs 분리 유지 — 영업 판단 필요.
+    source_quote: "결과 양성 판정 시, 재현시험 진행해야 함.\n(추가금액 2,000,000원)"
+    source_location: "특이사항 / 화장품 대체법 R20 (test_no=2), 화장품 줄기세포 R28 (test_no=6)"
+
+  - id: AD-004
+    description_ko: "독성 스크리닝 (설치류 2주 반복) — 관심장기 추가 시 비용 발생"
+    applies_to:
+      test_name_contains: "설치류 2주 반복 독성 screening"
+      file_type: "toxicity_screening"
+    addon_name_ko: "관심장기 추가 (기본: 뇌·신장·심장·간·폐장)"
+    addon_name: "additional_organs"
+    price_krw: null
+    price_note_ko: "조직병리 단가표(_조직병리 표준견적 계산식_) 기반 산출 — 별도 견적"
+    optional: true
+    trigger_ko: "기본 5장기 외 의뢰자 요청 추가 장기 (예: 비장, 흉선, 골수 등)"
+    applies_to_sheets:
+      - "Screening"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      가격이 명시 안 되었으나, 같은 폴더의 _2026년 조직병리 표준견적 계산식.xlsx_에
+      장기당 단가(슬라이드 12,000원 + 판독 25,000원 등)가 정의돼 있어 그 공식을 참조하면 산출 가능.
+      → 자동화 시 그 계산식을 호출.
+    source_quote: "( 뇌, 신장, 심장, 간, 폐장)\n의뢰자가 요청하는 관심장기 추가시 비용 발생"
+    source_location: "특이사항 / 독성 스크리닝 / Screening R20 (test_no=2)"
+
+  - id: AD-005
+    description_ko: "의료기기 유전독성 — 독성 있는 경우 확인 시험 추가 (비용·기간 추가)"
+    applies_to:
+      test_name: "유전독성시험"
+      sub_category:
+        - "복귀 돌연변이"
+        - "염색체 이상 시험"
+      file_type: "medical_device_biosafety"
+    addon_name_ko: "독성 발견 시 확인시험"
+    addon_name: "toxicity_confirmation"
+    price_krw: null
+    duration_weeks_addition: null
+    price_note_ko: "비용 및 기간 추가 (단가·기간 미명시 — 영업 산출)"
+    optional: false   # 독성이 있으면 강제
+    trigger_ko: "초기 시험에서 독성이 확인된 경우"
+    trigger_key: "toxicity_detected"
+    applies_to_sheets:
+      - "견적서"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      비용 단가와 기간 추가 폭이 명시 안 됨 — 영업 산출 룰이 있는지 확인 필요.
+    source_quote: "독성이 있는 경우, 확인이 필요하며 비용 및 기간 추가됨"
+    source_location: "특이사항 / 의료기기 / 견적서 R34 (복귀 돌연변이 test_no=9), R36 (염색체 이상 test_no=10)"
+
+  - id: AD-006
+    description_ko: "SEND/CTD/번역 서비스 — 회복군·TK 포함 시 별도 추가 비용"
+    applies_to:
+      test_name_contains: "반복 독성시험"
+      file_type: "send_ctd_translation"
+    addon_name_ko: "회복군·TK 포함 추가"
+    addon_name: "recovery_tk_inclusion"
+    price_krw: null
+    price_note_ko: |
+      서비스별로 별도 단가 적용. SEND/CTD에는 정확한 단가 미명시,
+      번역에는 "아래금액으로 별도 추가"라는 표현 — 동일 단가표 참조 추정.
+    optional: true
+    trigger_ko: "원시험에 회복군 또는 TK가 포함된 경우"
+    trigger_keys:
+      - "has_recovery_group"
+      - "has_tk"
+    applies_to_sheets:
+      - "SEND"
+      - "CTD(Module 2)"
+      - "번역비용"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      세 시트(SEND/CTD/번역)에 약간씩 다른 표현으로 등장 (총 21건). 단가표가 별도 존재한다면
+      "아래금액으로 별도 추가" 문구가 가리키는 표를 찾아 첨부 필요.
+    source_quote: "(회복군, TK 포함경우 별도 추가) [SEND]\n(회복군 및 TK 포함경우 별도 추가) [CTD]\n(회복군 및 TK 포함경우 아래금액으로 별도 추가) [번역]"
+    source_location: "특이사항 / SEND R20-24 (5건), CTD(Module 2) R20-25,R39-44 (12건), 번역비용 R20-25 (4건)"
+
+  - id: AD-007
+    description_ko: "의료기기 SD 랫드 이식시험 — 13주 초과 관찰기간·부검 포인트 추가 시 금액 추가"
+    applies_to:
+      test_name_contains: "SD 랫드를 이용한 이식 시험"
+      file_type: "medical_device_biosafety"
+    addon_name_ko: "관찰기간 연장·부검 포인트 추가"
+    addon_name: "extended_observation"
+    price_krw: null
+    price_note_ko: "추가 관찰주수·부검 포인트당 단가 미명시 — 영업 산출"
+    optional: true
+    trigger_ko: "기본 13주 관찰을 초과한 추가 관찰 또는 부검 포인트 추가가 필요한 경우"
+    applies_to_sheets:
+      - "견적서"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      "13주 관찰 기준"이 기본 — 초과 시 추가. 단가 미명시.
+    source_quote: "* 13주 관찰 기준으로 관찰기간 및 부검 포인트\n   추가에 따른 금액추가"
+    source_location: "extras.delivery_price_krw / 의료기기 / 견적서 R48 (SD 랫드 이식시험 test_no=16)"
+
+  - id: AD-008
+    description_ko: "영문보고서 — 요약본만 작성 시 700,000원"
+    applies_to:
+      test_name_contains: "DRF 독성시험 영문보고서 작성"
+      file_type: "send_ctd_translation"
+    addon_name_ko: "요약본 (요약 영문보고서)"
+    addon_name: "summary_report"
+    price_krw: 700000
+    optional: true
+    trigger_ko: "전체 보고서 대신 요약본만 요청한 경우"
+    applies_to_sheets:
+      - "번역비용"
+    version: "1.0"
+    status: "draft"
+    confidence: "low"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      원본 위치는 "DRF 독성시험 영문보고서 작성"의 옆 셀(M열, side_note)에 단독 등장 ("요약 : 700,000").
+      요약본이 "DRF 시험"에만 적용되는지 모든 시험에 보편적으로 적용되는지 불명확.
+      → 룰 적용 범위 확인 필요.
+    source_quote: "요약 : 700,000"
+    source_location: "extras.side_note / SEND/CTD/번역 / 번역비용 R19 (test_no=2, 설치류 –주 DRF)"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# E. WaiverRule — 면제 조건
+# ═════════════════════════════════════════════════════════════════════════════
+waiver_rules:
+
+  - id: WV-001
+    description_ko: "광독성·광감작성 시험 — 시험물질이 자외부(280~480nm)에서 흡수가 없으면 면제"
+    applies_to:
+      test_name: "국소독성시험"
+      sub_category:
+        - "광독성시험"
+        - "광감작성시험"
+      file_type: "pharmaceutical_toxicology"
+    waiver_condition_ko: "시험물질이 자외부(280~480nm)에서 흡수가 없음"
+    waiver_condition_key: "no_uv_absorption_280_480nm"
+    requires_evidence_ko: "UV 흡수 스펙트럼 자료 (의뢰자 제공)"
+    effect: "skip_test"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      광독성(test_no=96)과 광감작성(test_no=97) 두 시험 모두에 적용.
+      In vitro 3T3 NRU 광독성시험(test_no=95)에도 적용되는지 확인 필요 — 자료에는 명시 없음.
+    source_quote: "자외부(280~480nm)에서 흡수가 없을시 면제"
+    source_location: "특이사항 / 의약품 / 광독성·광감작성 (test_no=96·97, R221·R223 × 4 sheets, 총 10건)"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# F. SubstitutionRule — 시험 대체
+# ═════════════════════════════════════════════════════════════════════════════
+substitution_rules:
+
+  - id: SB-001
+    description_ko: "비설치류 카테터 경구투여는 정맥 가격으로 산출 + 조제물분석 동반"
+    trigger:
+      animal_grade: "비설치류"
+      route: "경구"
+      sub_condition_ko: "카테터 투여 (의뢰자 요청)"
+      sub_condition_key: "catheter_oral_administration"
+      file_type: "pharmaceutical_toxicology"
+    substitution:
+      use_price_from:
+        sheet: "정맥경피(같은 standard)"
+        same_test_name: true
+      rationale_ko: "기본 capsule 투여보다 카테터 투여가 정맥 시험 수준의 비용·인력 소요"
+    required_companions:
+      - test_name_contains: "조제물 분석"
+        rationale_ko: "투여물질 조제물 분석 시험을 함께 추가"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      "정맥 비용으로 산출"이 정맥경피(MFDS)/정맥경피(OECD) 중 어느 시트의 가격을 쓰는지 명시 안 됨.
+      추정: 견적의 standard(MFDS/OECD)에 맞춰 같은 standard의 정맥경피 가격을 사용.
+    source_quote: "비설치류 경구 투여는 capsule 투여 기준으로, 의뢰자 요청에 의한 카테터를 이용한 경구투여는 정맥 비용으로 산출해주시기\n  바랍니다. 함께 조제물 분석시험 추가해주시기 바랍니다."
+    source_location: "안내문·푸터 / 의약품 / 경구피하근육(MFDS) R92, 경구피하근육(OECD) R94, 정맥경피(MFDS) R92, 정맥경피(OECD) R94"
+
+  - id: SB-002
+    description_ko: "의료기기 외국 봉합사 — 염색체 이상 시험 대신 MLA로 대체 (의약품 기준 금액 사용)"
+    trigger:
+      file_type: "medical_device_biosafety"
+      test_name_contains: "유전독성시험"
+      sub_category_contains: "MLA"
+      sub_condition_ko: "외국 봉합사인 경우"
+      sub_condition_key: "foreign_suture"
+    substitution:
+      replace_test_ko: "염색체 이상 시험"
+      replace_test_key: "chromosome_aberration_test"
+      with_test_ko: "MLA (Mouse Lymphoma Assay)"
+      with_test_key: "mla"
+      use_price_from:
+        file_type: "pharmaceutical_toxicology"
+        test_name: "유전독성시험"
+        sub_category: "MLA"
+        rationale_ko: "의료기기 견적서에는 MLA 단가 미정의 — 의약품 견적서의 MLA 단가 참조"
+    requires_customer_confirmation: true
+    applies_to_sheets:
+      - "견적서"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      "외국 봉합사"가 정확히 어떤 의료기기 카테고리인지(혹은 모든 봉합사?) 확인 필요.
+      "의뢰자 확인 후 진행" 단계가 견적 자동 생성 워크플로우에 포함되어야 함 (자동 적용 X).
+    source_quote: "* 외국 봉합사의 경우, 염색체 이상 대신 MLA 진행\n → 의뢰자 확인 후 진행\n → 의약품 기준 금액으로 확인 후 진행"
+    source_location: "extras.delivery_price_krw / 의료기기 / 견적서 R40 (유전독성 MLA test_no=12)"
+
+  - id: SB-003
+    description_ko: "복합제 조제물분석 — 개별분석을 동시분석으로 대체 가능 (가격 동일)"
+    trigger:
+      test_name_contains: "조제물 분석"
+      file_type: "combination_drug"
+      sub_condition_ko: "동시분석으로 진행 가능 여부 확인 후 결정"
+      sub_condition_key: "simultaneous_analysis_feasible"
+    substitution:
+      replace_method_ko: "개별분석 (separate analysis)"
+      with_method_ko: "동시분석 (simultaneous analysis)"
+      price_change: "same"
+      price_change_ko: "금액 동일"
+    requires_customer_confirmation: true
+    applies_to_sheets:
+      - "2종"
+      - "3종"
+      - "4종"
+    version: "1.0"
+    status: "draft"
+    confidence: "medium"
+    extracted_at: "2026-05-13"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      가격은 동일하므로 견적 금액에는 영향 없음. 다만 견적서에 어느 분석법이 적용되는지 명시 필요.
+      "확인 후 수정"이라는 표현 — 자동 적용보다는 영업 검토 단계로 두는 것이 안전.
+    source_quote: "개별분석 → 동시분석 가능여부 확인 후 수정 (금액동일)"
+    source_location: "방법 세부사항 / 복합제 / 2종 R18, 3종 R18, 4종 R18 (조제물 분석 test_no=1)"
+
+
+# ╔═══════════════════════════════════════════════════════════════════════════╗
+# ║                                                                           ║
+# ║  v1.1 보강 추출 (status="draft_audit") — 14개 신규 룰                       ║
+# ║                                                                           ║
+# ║  추출 근거:                                                                ║
+# ║    - 작업 1 (Coverage Audit): footer 20건에서 10개 룰 분해                 ║
+# ║    - 작업 2 (저커버리지 재스캔):                                           ║
+# ║        · 복합제 가격 패턴 분석으로 PricingFormula 2개 발견                  ║
+# ║        · 의료기기 시험 조건부 변경으로 ConditionalGroup 2개 발견             ║
+# ║                                                                           ║
+# ║  검토 우선순위: draft_audit는 영업 검증 후 status="draft" → "approved" 전환  ║
+# ║                                                                           ║
+# ╚═══════════════════════════════════════════════════════════════════════════╝
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# A. PricingFormula — v1.1 신규 (복합제 선형 가격 패턴)
+# ═════════════════════════════════════════════════════════════════════════════
+pricing_formulas_v1_1_audit:
+
+  - id: PF-002
+    description_ko: "복합제 조제물 분석 가격 = 10,000,000원 × 복합 종 수 (2/3/4종 선형)"
+    formula: "10000000 * combination_count"
+    formula_human: "10,000,000원 × N (N = 복합 종 수)"
+    variables:
+      - name: combination_count
+        type: number
+        source: "TestItem.extras.combination_count"
+        description_ko: "복합제 종 수 (2/3/4)"
+    applies_to:
+      file_type: "combination_drug"
+      test_name_contains: "투여물질의 조제물 분석"
+      test_no: 1
+    applies_to_sheets:
+      - "2종"
+      - "3종"
+      - "4종"
+    observed_data_points:
+      - { combination_count: 2, price_krw: 20000000 }
+      - { combination_count: 3, price_krw: 30000000 }
+      - { combination_count: 4, price_krw: 40000000 }
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      복합제 견적서 3시트(2종/3종/4종)에서 가격이 정확히 선형으로 증가하는 패턴 발견.
+      증가폭 = 10,000,000원/종.
+      이 공식이 5종, 6종 이상에도 외삽 적용되는지 확인 필요 (현재 자료에는 4종까지만 있음).
+      또한 단가 인상 시 이 공식의 base unit이 변경될 가능성 — 영업이 이 공식 자체를 인지하고 있는지 확인 필요.
+    source_quote: "(가격 데이터 직접 비교: 2종=20M / 3종=30M / 4종=40M, Δ=10M 일정)"
+    source_location: "전체 레코드 / 복합제 / 2종 R18 (20M), 3종 R18 (30M), 4종 R18 (40M) — test_no=1"
+
+  - id: PF-003
+    description_ko: "복합제 함량 분석 가격 = 5,000,000원 × 복합 종 수 (2/3/4종 선형)"
+    formula: "5000000 * combination_count"
+    formula_human: "5,000,000원 × N (N = 복합 종 수)"
+    variables:
+      - name: combination_count
+        type: number
+        source: "TestItem.extras.combination_count"
+        description_ko: "복합제 종 수 (2/3/4)"
+    applies_to:
+      file_type: "combination_drug"
+      test_name_contains: "투여물질의 함량 분석"
+      test_no: 2
+    applies_to_sheets:
+      - "2종"
+      - "3종"
+      - "4종"
+    observed_data_points:
+      - { combination_count: 2, price_krw: 10000000 }
+      - { combination_count: 3, price_krw: 15000000 }
+      - { combination_count: 4, price_krw: 20000000 }
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      복합제 함량 분석도 정확한 선형 패턴. 증가폭 = 5,000,000원/종.
+      method_details에 "4주 DRF : 2회 / 13주 반복시험 : 3회"가 있어 시험 횟수에 비례하는 단가일 가능성도 있음.
+      → "함량 분석 1회 가격 × 시험 횟수 × 종 수"로 분해 가능한지 영업 검증 필요.
+    source_quote: "(가격 데이터 직접 비교: 2종=10M / 3종=15M / 4종=20M, Δ=5M 일정)"
+    source_location: "전체 레코드 / 복합제 / 2종 R20 (10M), 3종 R20 (15M), 4종 R20 (20M) — test_no=2"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# B. PrerequisiteRule — v1.1 신규 (footer 분해)
+# ═════════════════════════════════════════════════════════════════════════════
+prerequisite_rules_v1_1_audit:
+
+  - id: PR-005
+    description_ko: "시험 개시 prerequisites — 시험의뢰서 + 시험물질 정보기록지 + CoA 접수 필수"
+    trigger:
+      event: "quote_to_test_transition"   # 견적 승인 후 시험 시작 단계
+      file_type_excludes: ["medical_device_biosafety"]   # 의료기기는 PR-006 별도
+    prerequisites:
+      - prerequisite_type: "customer_document"
+        document_ko: "당사 시험의뢰서"
+        document_key: "test_request_form"
+        mandatory: true
+      - prerequisite_type: "customer_document"
+        document_ko: "시험물질 정보기록지"
+        document_key: "substance_info_sheet"
+        mandatory: true
+      - prerequisite_type: "customer_document"
+        document_ko: "시험물질성적서 (CoA)"
+        document_key: "substance_certificate_of_analysis"
+        mandatory: true
+    effect_ko: "위 3종 서류 모두 접수되어야 시험 개시"
+    applies_to_sheets:
+      - "(모든 의약품·건기식·복합제·화장품·백신·스크리닝·단회·심혈관계 시트의 footer)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      footer에 명시되어 있어 모든 견적서에 보편 적용. 의료기기는 CoA 대신 기술문서 (PR-006).
+      CRM에서 견적 승인 → 시험 개시 워크플로우의 prerequisite 체크에 사용.
+    source_quote: "* 시험개시는 당사 시험의뢰서, 시험물질 정보기록지와 함께 시험물질성적서(CoA)가 접수되어야 진행이 됩니다."
+    source_location: "footer Footer #1 (16개 파일 공통: 의약품 4시트 + 백신 + 복합제 3시트 + 단회·종양원성 + 건기식 3종 + 화장품 2종 + 독성 스크리닝 + 심혈관계 스크리닝)"
+
+  - id: PR-006
+    description_ko: "의료기기 시험 개시 prerequisites — CoA 대신 \"기술문서\" 접수 필수"
+    trigger:
+      event: "quote_to_test_transition"
+      file_type: "medical_device_biosafety"
+    prerequisites:
+      - prerequisite_type: "customer_document"
+        document_ko: "당사 시험의뢰서"
+        document_key: "test_request_form"
+        mandatory: true
+      - prerequisite_type: "customer_document"
+        document_ko: "시험물질 정보기록지"
+        document_key: "substance_info_sheet"
+        mandatory: true
+      - prerequisite_type: "customer_document"
+        document_ko: "기술문서 (technical document)"
+        document_key: "technical_document"
+        mandatory: true
+    effect_ko: "위 3종 서류 모두 접수되어야 시험 개시"
+    applies_to_sheets:
+      - "견적서 (의료기기)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      PR-005의 의료기기 변형. CoA 대신 기술문서.
+      "기술문서"의 정의·양식이 사내 SOP에 명시돼 있는지 확인 필요.
+    source_quote: "* 시험개시는 당사 시험의뢰서, 시험물질 정보기록지와 함께 기술문서가 접수되어야 진행이 됩니다."
+    source_location: "footer Footer #2 (의료기기 / 견적서 R54)"
+
+  - id: PR-007
+    description_ko: "시험물질 멸균 검수 — 미생물 검출 시 전량 반환 + 멸균 후 재제공"
+    trigger:
+      event: "substance_intake"   # 시험물질 입고 단계
+      file_type_excludes: ["send_ctd_translation"]   # SEND/CTD/번역에는 미적용
+    prerequisites:
+      - prerequisite_type: "substance_inspection"
+        inspection_ko: "멸균 상태 확인 (미생물 검사)"
+        on_failure_ko: "모든 시험물질 반환 → 의뢰자 멸균처리 → 재제공"
+        mandatory: true
+    effect_ko: "검수 통과 시 입고 → 시험 진행 / 실패 시 반환 → 재공급 사이클"
+    applies_to_sheets:
+      - "(SEND/CTD/번역 외 모든 견적서 footer)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      검체 입고 워크플로우 룰. CRM에서 입고 단계 체크리스트로 자동 변환 가능.
+      재공급에 따른 일정 지연을 견적 진행 기간(duration_weeks)에 반영해야 하는지 확인 필요.
+    source_quote: "* 모든 시험물질은 멸균상태를 유지해서 제공해야 합니다. 미생물 검출시 모든 물질은 반환되며, 멸균처리 후 다시 제공해 주셔야 합니다."
+    source_location: "footer Footer #1, Footer #2 (대부분 파일 공통, SEND/CTD/번역 제외)"
+
+  - id: PR-008
+    description_ko: "영문보고서 진행 prerequisites — 국문 최종보고서 완료 + 신청서 제출 필수"
+    trigger:
+      event: "translation_request"
+      file_type: "send_ctd_translation"
+      test_name_contains: "영문보고서 작성"
+    prerequisites:
+      - prerequisite_type: "lead_time"
+        lead_time_weeks_min: 6
+        lead_time_weeks_max: 8
+        condition_ko: "국문 최종보고서 완료 (이후 6~8주 소요)"
+        mandatory: true
+      - prerequisite_type: "customer_document"
+        document_ko: "영문보고서 신청서"
+        document_key: "english_report_request_form"
+        mandatory: true
+    deliverable_format_ko: "PDF 파일로 제공"
+    applies_to_sheets:
+      - "번역비용"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      두 prerequisites가 footer에 함께 명시. 6-8주 리드타임은 견적의 duration_weeks에 추가 반영 필요할 수 있음.
+      "신청서" 양식이 사내 SOP에 정의돼 있는지 확인 필요.
+    source_quote: "* 국문 최종보고서 완료 후 6~8 주 소요\n* 영문보고서 요청 시 신청서 제출\n* 영문보고서 PDF 파일로 제공"
+    source_location: "footer Footer #4 (SEND/CTD/번역 / 번역비용 R55)"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# C. ConditionalGroup — v1.1 신규 (의료기기 조건부 시험 변경)
+# ═════════════════════════════════════════════════════════════════════════════
+conditional_groups_v1_1_audit:
+
+  - id: CG-003
+    description_ko: "의료기기 — 인체 노출 기간에 따라 아급성(test_no=14) vs 아만성(test_no=15) 시험 자동 선택"
+    applies_to:
+      file_type: "medical_device_biosafety"
+      test_name_contains: "SD 랫드를 이용한"
+      test_no_options: [14, 15]
+    selection_criterion_ko: "의료기기가 인체에 노출되는 기간"
+    selection_criterion_key: "human_exposure_duration"
+    branches:
+      - condition_ko: "단기-중기 노출 (아급성 적용)"
+        condition_key: "subacute"
+        select_test_no: 14
+        select_test_name: "SD 랫드를 이용한 아급성시험"
+        observation_period_ko: "4주간 관찰"
+        price_krw: 35000000
+      - condition_ko: "중기-장기 노출 (아만성 적용)"
+        condition_key: "subchronic"
+        select_test_no: 15
+        select_test_name: "SD 랫드를 이용한 아만성시험"
+        observation_period_ko: "13주간 관찰"
+        price_krw: 60000000
+    applies_to_sheets:
+      - "견적서 (의료기기)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "medium"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      두 시험이 별도로 등록돼 있고, note_lines_raw에 "의료기기가 인체에 노출되는 기간에 따라 아급성 또는 아만성"이라는 분기 기준이 명시.
+      정확한 기간 임계값(예: 단기 24h 미만, 중기 24h~30일, 장기 30일 초과 등)이 ISO 10993-1 기준으로 정해져 있을 것으로 추정 — 영업 검증 필요.
+    source_quote: ": 의료기기가 인체에 노출되는 기간에 따라 아급성 또는 아만성\n시험 진행 - 시험물질 접촉부위 그대로를 적용(이식)"
+    source_location: "note_lines_raw / 의료기기 / 견적서 R28 (test_no=14 아급성), R30 (test_no=15 아만성)"
+
+  - id: CG-004
+    description_ko: "의료기기 SD 랫드 이식시험 — 흡수성/비흡수성에 따라 부검 포인트 수 변경"
+    applies_to:
+      file_type: "medical_device_biosafety"
+      test_name_contains: "SD 랫드를 이용한 이식 시험"
+      test_no: 16
+    selection_criterion_ko: "의료기기 재료의 흡수성"
+    selection_criterion_key: "material_bioabsorbable"
+    default_groups: null
+    conditional_groups:
+      - condition_ko: "비흡수성 의료기기"
+        condition_key: "non_absorbable"
+        observation_groups:
+          necropsy_points: 1
+          observation_weeks_max: 13
+        price_adjustment_required: false   # 13주 기본가 사용
+        adjustment_note_ko: "기본 가격 (price_krw=44,000,000) 적용"
+      - condition_ko: "흡수성 의료기기"
+        condition_key: "absorbable"
+        observation_groups:
+          necropsy_points_min: 3
+          necropsy_points_max: 4
+          observation_weeks_note_ko: "생분해성 결과를 바탕으로 결정"
+        price_adjustment_required: true
+        adjustment_note_ko: "부검 포인트 추가에 따른 금액 추가 (AD-007과 연동)"
+    applies_to_sheets:
+      - "견적서 (의료기기)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "medium"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      method_details에서 "흡수성 : 생분해성 결과를 바탕으로 3-4 point로 나누어 부검", "비흡수성 : 임상 사용기간에 따라 ... 1 point 부검"이 명시.
+      AD-007(13주 초과 관찰기간 추가)과 함께 적용되는 룰 — 흡수성이면 자동으로 추가 부검 포인트가 발생.
+      랫드 vs 토끼 선택 기준도 명시(랫드 6마리/12 site, 토끼 4마리/14 site) — 별도 룰화 가능하지만 현재는 AD-007에서 다룸.
+    source_quote: "흡수성 : 생분해성 결과를 바탕으로 3-4 point로 나누어 부검\n비흡수성 : 임상 사용기간에 따라 관찰기간 상이, 장기간 이식시 일반적으로 최대 13주 관찰, 1 point 부검"
+    source_location: "method_details / 의료기기 / 견적서 R48 (SD 랫드 이식시험 test_no=16)"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# D. Addon — v1.1 신규 (footer 분해)
+# ═════════════════════════════════════════════════════════════════════════════
+addons_v1_1_audit:
+
+  - id: AD-009
+    description_ko: "번역보고서 작성 시 비용 추가 (단가 미명시 — SEND/CTD/번역 견적서 별도 단가표 참조)"
+    applies_to:
+      file_type_excludes: ["send_ctd_translation"]   # 번역 견적서 본인은 제외
+      condition_ko: "보고서 영문 번역 요청 시"
+    addon_name_ko: "번역보고서 작성"
+    addon_name: "translation_report"
+    price_krw: null
+    price_note_ko: "단가 미명시 — SEND/CTD/번역 견적서 별도 단가표 참조 필요"
+    optional: true
+    trigger_ko: "고객이 영문 번역본을 요청한 경우"
+    applies_to_sheets:
+      - "(footer 명시: 의약품·건기식·복합제·화장품·백신·스크리닝·단회·심혈관계·의료기기 모든 견적서)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "medium"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      footer에 보편적 명시. 가격은 SEND/CTD/번역 견적서의 시험명·페이지 수에 따라 별도 산출.
+      이 룰 자체는 "추가 비용이 발생함을 안내"하는 메타룰 — 자동 가격 산출 로직은 SEND/CTD/번역 견적서 단가 호출.
+    source_quote: "* 번역보고서 작성시 비용이 추가됩니다."
+    source_location: "footer Footer #1, #2 (대부분 파일 공통)"
+
+  - id: AD-010
+    description_ko: "SEND - 타기관 진행 시험의 raw data review 추가 (단회 1,000,000원 / 반복 2,000,000원)"
+    applies_to:
+      file_type: "send_ctd_translation"
+      service_type:
+        - "SEND"
+        - "CTD_Module2"
+      condition_ko: "타기관에서 진행한 시험을 SEND 변환 의뢰하는 경우"
+    addon_name_ko: "타기관 raw data review (검토)"
+    addon_name: "external_raw_data_review"
+    price_krw_table:
+      - test_type_ko: "단회 시험"
+        test_type_key: "single_dose"
+        price_krw: 1000000
+      - test_type_ko: "반복 시험"
+        test_type_key: "repeat_dose"
+        price_krw: 2000000
+    optional: false   # 타기관 시험 SEND 시 강제
+    trigger_ko: "켐온 외 다른 기관에서 진행된 시험의 raw data를 SEND 변환 요청"
+    trigger_key: "external_test_send_request"
+    requires_negotiation: true   # 협의 필요 명시
+    applies_to_sheets:
+      - "SEND"
+      - "CTD(Module 2)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      footer에 단가 명시. high confidence.
+      단회/반복 외 다른 시험 타입(예: 생식독성, 유전독성)도 이 단가표에 포함되는지 확인 필요.
+    source_quote: "* 타기관에서 진행한 시험의 SEND 요청시는 켐온에서 raw data 의 review 필요할 경우 비용 추가됩니다.(협의 필요)\n  Ex) 단회 검토 비용 기준 : 1,000,000원 / 반복 비용 : 2,000,000원"
+    source_location: "footer Footer #3 (SEND/CTD/번역 / SEND R40, CTD(Module 2) R52)"
+
+  - id: AD-011
+    description_ko: "영문보고서 첨부문서(Appendix) 번역 추가 — 협의 필요"
+    applies_to:
+      file_type: "send_ctd_translation"
+      service_type: "translation"
+      condition_ko: "영문보고서 + 첨부문서(계획서 등) 번역까지 요청"
+    addon_name_ko: "첨부문서(Appendix) 번역"
+    addon_name: "appendix_translation"
+    price_krw: null
+    price_note_ko: "단가 미명시 — 협의 필요"
+    optional: true
+    trigger_ko: "Appendix(계획서 포함) 번역까지 요청한 경우 (기본은 본문만 번역)"
+    trigger_key: "include_appendix_translation"
+    requires_negotiation: true
+    applies_to_sheets:
+      - "번역비용"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "medium"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      "협의 필요" 명시 — 영업 단계 자동 산출 불가, 견적 시 의뢰자 옵션으로 제시 후 협의 단가 적용.
+    source_quote: "* 보고서 상 첨부문서 (Appendix(계획서 포함)) 는 번역 진행 제외하며, 첨부문서 번역까지 요청 시 추가비용 발생하므로 협의 필요합니다."
+    source_location: "footer Footer #4 (SEND/CTD/번역 / 번역비용 R55)"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# G. GenericRule — 시스템 메타룰 (v1.1 신규 섹션)
+# 견적 자동 생성 엔진 자체의 동작 규칙 — 시험 항목별 룰이 아니라 시스템 전반에 적용
+# ═════════════════════════════════════════════════════════════════════════════
+generic_rules:
+
+  - id: GR-001
+    description_ko: "견적서 유효 기간 = 견적 발행일로부터 60일 (자동 만료 처리)"
+    rule_type: "quote_validity"
+    parameters:
+      validity_days: 60
+      base_date_ko: "견적 발행일"
+      base_date_key: "quote_issued_at"
+      effect_after_expiry_ko: "재산정 필요 — 표준견적서 단가 기준 새 견적 발행"
+    applies_to:
+      scope: "all_quotes"
+      file_type: "*"
+    applies_to_sheets:
+      - "(모든 견적서 footer 공통)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      CRM의 견적 자동 만료 알림 룰로 직접 변환 가능.
+      만료 시 자동 무효화할지, 알림만 보낼지 영업 정책 확인 필요.
+    source_quote: "* 본 견적서는 견적 일로부터 60일간 유효합니다."
+    source_location: "footer Footer #1, #2, #3, #4 (모든 파일 공통, SEND/CTD에서는 \"60일간 유효 합니다\" 띄어쓰기 변형)"
+
+  - id: GR-002
+    description_ko: "모든 가격은 부가세(VAT) 별도 — 견적서 출력 시 자동 부가 표기"
+    rule_type: "price_display"
+    parameters:
+      vat_included: false
+      display_label_ko: "(VAT 별도)"
+    applies_to:
+      scope: "all_prices"
+      file_type: "*"
+    applies_to_sheets:
+      - "(모든 견적서 footer 공통)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      견적서 PDF 출력 시 모든 가격 옆 또는 푸터에 "(VAT 별도)" 자동 표시.
+      VAT 포함 가격 옵션을 고객이 선택 가능한지 확인 필요.
+    source_quote: "* 모든 금액은 VAT 별도입니다."
+    source_location: "footer Footer #1, #2, #3, #4 (모든 파일 공통)"
+
+  - id: GR-003
+    description_ko: "시험기간(duration_weeks) 정의 = 동물입고일부터 최종보고서(안) 제출일까지"
+    rule_type: "duration_definition"
+    parameters:
+      start_event_ko: "동물입고일"
+      start_event_key: "animal_intake_date"
+      end_event_ko: "최종보고서(안) 제출일"
+      end_event_key: "draft_final_report_submission"
+    applies_to:
+      scope: "TestItem.duration_weeks"
+      file_type_excludes: ["send_ctd_translation"]   # SEND/CTD는 시험 아님
+    applies_to_sheets:
+      - "(footer Footer #1, #2 명시: 의약품·건기식·복합제·화장품·백신·스크리닝·단회·심혈관계·의료기기)"
+    version: "1.0"
+    status: "draft_audit"
+    confidence: "high"
+    extracted_at: "2026-05-14"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      견적의 "기간(주)" 컬럼이 어디부터 어디까지를 의미하는지 정의.
+      CRM에서 일정 산출 시 동물입고 예정일 + duration_weeks = 보고서 제출 예정일.
+      검체 입고 지연 (PR-007 미통과)이 시작점에 영향 미치는지 확인 필요.
+    source_quote: "* 명시된 시험기간은 동물입고일부터 최종보고서(안) 제출일까지입니다."
+    source_location: "footer Footer #1, #2 (의약품 외 대부분 파일)"

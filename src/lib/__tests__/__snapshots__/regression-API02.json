@@ -1,0 +1,60 @@
+{
+  "scenario_id": "API02",
+  "scenario_title": "건강기능식품 — 단회 + 13주 + DRF + 회복 + 유전독성",
+  "input": {
+    "modality": "건강기능식품",
+    "priceStandard": "MFDS",
+    "excipientCount": null,
+    "route": "경구",
+    "durations": [
+      "SINGLE",
+      "W13"
+    ],
+    "addons": {
+      "drf": true,
+      "recovery": true,
+      "genotox": true
+    },
+    "categories": {}
+  },
+  "hit_count": 9,
+  "notes": [],
+  "total_unit_price": 198400000,
+  "sample_hits": [
+    {
+      "testName": "투여물질의 조제물 분석",
+      "adminRoute": null,
+      "priority": "필수",
+      "tag": "조제물분석 (Validation)",
+      "unitPrice": 26000000
+    },
+    {
+      "testName": "설치류 단회 투여 독성시험",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "단회투여",
+      "unitPrice": 3200000
+    },
+    {
+      "testName": "급성 경구독성시험",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "단회투여",
+      "unitPrice": 2700000
+    },
+    {
+      "testName": "설치류 4주 DRF",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "DRF (13주용)",
+      "unitPrice": 14400000
+    },
+    {
+      "testName": "설치류 13주 반복투여 독성",
+      "adminRoute": "경구",
+      "priority": "필수",
+      "tag": "13주 본시험",
+      "unitPrice": 92000000
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+[
+  {
+    "blockId": "GL-합성신-01",
+    "testName": "단회투여독성",
+    "modality": "합성신약",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-02",
+    "testName": "반복투여독성",
+    "modality": "합성신약",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-핵산치-03",
+    "testName": "반복투여독성",
+    "modality": "핵산치료제",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-03",
+    "testName": "반복투여독성",
+    "modality": "생물의약품",
+    "category": "임상연동",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-세포치-03",
+    "testName": "일반독성",
+    "modality": "세포치료제",
+    "category": "임상연동",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-항암제-01",
+    "testName": "반복투여독성",
+    "modality": "항암제",
+    "category": "임상연동",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-이중특-04",
+    "testName": "반복투여독성",
+    "modality": "이중특이항체",
+    "category": "임상연동",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-펩타이-01",
+    "testName": "반복투여독성",
+    "modality": "펩타이드",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-03",
+    "testName": "유전독성",
+    "modality": "합성신약",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-04",
+    "testName": "유전독성",
+    "modality": "생물의약품",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-세포치-04",
+    "testName": "유전독성",
+    "modality": "세포치료제",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-핵산치-04",
+    "testName": "유전독성",
+    "modality": "핵산치료제",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-항암제-02",
+    "testName": "유전독성",
+    "modality": "항암제",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-펩타이-03",
+    "testName": "유전독성",
+    "modality": "펩타이드",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-방사성-04",
+    "testName": "유전독성",
+    "modality": "방사성의약품",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-07",
+    "testName": "안전성약리",
+    "modality": "합성신약",
+    "category": "안전성약리",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-07",
+    "testName": "안전성약리",
+    "modality": "생물의약품",
+    "category": "안전성약리",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-핵산치-07",
+    "testName": "안전성약리",
+    "modality": "핵산치료제",
+    "category": "안전성약리",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-항암제-05",
+    "testName": "안전성약리",
+    "modality": "항암제",
+    "category": "안전성약리",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-펩타이-04",
+    "testName": "안전성약리",
+    "modality": "펩타이드",
+    "category": "안전성약리",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-04",
+    "testName": "생식·발생독성",
+    "modality": "합성신약",
+    "category": "생식독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-06",
+    "testName": "생식·발생독성",
+    "modality": "생물의약품",
+    "category": "생식독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-항암제-04",
+    "testName": "생식·발생독성",
+    "modality": "항암제",
+    "category": "생식독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-유전자-06",
+    "testName": "생식세포 전달 평가",
+    "modality": "유전자치료제",
+    "category": "생식독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-항암제-08",
+    "testName": "Juvenile 독성시험",
+    "modality": "항암제",
+    "category": "생식독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-06",
+    "testName": "면역독성",
+    "modality": "합성신약",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-02",
+    "testName": "면역원성",
+    "modality": "생물의약품",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-09",
+    "testName": "사이토카인 방출 평가",
+    "modality": "생물의약품",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-세포치-05",
+    "testName": "면역독성/거부반응",
+    "modality": "세포치료제",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-이중특-02",
+    "testName": "CRS/사이토카인 평가",
+    "modality": "이중특이항체",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-이중특-05",
+    "testName": "ICANS/신경독성 평가",
+    "modality": "이중특이항체",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-바이오-03",
+    "testName": "면역원성",
+    "modality": "바이오시밀러",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-09",
+    "testName": "국소독성",
+    "modality": "합성신약",
+    "category": "고정프로토콜",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-05",
+    "testName": "발암성",
+    "modality": "합성신약",
+    "category": "발암성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-05",
+    "testName": "발암성",
+    "modality": "생물의약품",
+    "category": "발암성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-항암제-03",
+    "testName": "발암성",
+    "modality": "항암제",
+    "category": "발암성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-펩타이-05",
+    "testName": "발암성",
+    "modality": "펩타이드",
+    "category": "발암성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-ADC-03",
+    "testName": "TK/PK 복합 분석",
+    "modality": "ADC",
+    "category": "PK샘플링",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-합성신-08",
+    "testName": "독성동태",
+    "modality": "합성신약",
+    "category": "PK샘플링",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-생물의-08",
+    "testName": "독성동태",
+    "modality": "생물의약품",
+    "category": "PK샘플링",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-백신-01",
+    "testName": "반복투여독성",
+    "modality": "백신",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-백신-05",
+    "testName": "ADE",
+    "modality": "백신",
+    "category": "면역독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-건강기-02",
+    "testName": "단회투여독성시험",
+    "modality": "건강기능식품",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-건강기-03",
+    "testName": "90일 반복투여독성시험",
+    "modality": "건강기능식품",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-건강기-05",
+    "testName": "만성독성/발암성시험",
+    "modality": "건강기능식품",
+    "category": "발암성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-건강기-04",
+    "testName": "유전독성시험",
+    "modality": "건강기능식품",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-의료기-03",
+    "testName": "감작성시험",
+    "modality": "의료기기(ISO10993)",
+    "category": "고정프로토콜",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-의료기-04",
+    "testName": "자극성/피내반응시험",
+    "modality": "의료기기(ISO10993)",
+    "category": "고정프로토콜",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-의료기-06",
+    "testName": "유전독성시험",
+    "modality": "의료기기(ISO10993)",
+    "category": "in_vitro",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-의료기-08",
+    "testName": "이식시험",
+    "modality": "의료기기(ISO10993)",
+    "category": "일반독성",
+    "weeks": null
+  },
+  {
+    "blockId": "GL-의료기-07",
+    "testName": "혈액적합성시험",
+    "modality": "의료기기(ISO10993)",
+    "category": "in_vitro",
+    "weeks": null
+  }
+]

@@ -1,0 +1,322 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/1998/09/test-no-409-repeated-dose-90-day-oral-toxicity-study-in-non-rodents_g1gh2933/9789264070721-en.pdf
+[CHARS] 21102
+
+OECD/OCDE 	409
+Adopted:
+21st September 1998
+1/9
+OECD GUIDELINE FOR THE TESTING OF CHEMICALS
+Repeated Dose 90-day Oral Toxicity Study in Non-Rodents
+INTRODUCTION
+1. 	OECD Guidelines for the Testing of Chemicals are periodically reviewed in the light of
+scientific progress. The original guideline 409 was adopted in 1981. In this revised version changes
+have been made with the objective of obtaining additional information from the animals used in the
+study.
+2. 	This revised version of Guideline 409 is to a large extent based on the outcome of an OECD
+Consultation Meeting of Experts on Sub-chronic and Chronic toxicity testing held in Rome on 2-3
+November 1995 (1).
+INITIAL CONSIDERATIONS
+3. 	In 	the 	assessment 	and 	evaluation 	of 	the 	toxic 	characteristics 	of 	a 	chemical, 	the
+determination of sub-chronic oral toxicity using repeated doses may be carried out after initial
+information on toxicity has been obtained from acute or repeated dose 28-day toxicity tests. The 90-
+day study provides information on the possible health hazards likely to arise from repeated exposure
+over a period of rapid growth and into young adulthood. The study will provide information on the
+major toxic effects, indicate target organs and the possibility of accumulation, and can provide an
+estimate of a no-observed-adverse-effect level of exposure which can be used in selecting dose levels
+for chronic studies and for establishing safety criteria for human exposure.
+4. 	The revised guideline allows for the identification in non-rodent species of adverse effects
+of chemical exposure and should only be used :
+- 	where effects observed in other studies indicate a need for clarification/characterisation
+in a second, non-rodent species, or
+- 	where toxicokinetic studies indicate that the use of a specific non-rodent species is the
+most relevant choice of laboratory animal, or
+- 	where other specific reasons justify the use of a non-rodent species.
+5. 	Definitions used are given in the Annex.
+PRINCIPLE OF THE TEST
+6. 	The test substance is orally administered daily in graduated doses to several groups of
+experimental animals, one dose level per group for a period of 90 days. 	During the period of
+
+-- 1 of 9 --
+
+409 	OECD/OCDE
+2/9
+administration the animals are observed closely for signs of toxicity. Animals which die or are killed
+during the test are necropsied and at the conclusion of the test surviving animals are also killed and
+necropsied.
+DESCRIPTION OF THE METHOD
+Selection of animal species
+7. 	The commonly used non-rodent species is the dog, which should be of a defined breed; the
+beagle is frequently used. Other species, e.g., swine, mini-pigs, may also be used. Primates are not
+recommended and their use should be justified. Young, healthy animals should be employed, and in
+the case of the dog, dosing should begin preferably at 4-6 months and not later than 9 months of age.
+Where the study is conducted as a preliminary to a long-term chronic toxicity study, the same
+species/breed should be used in both studies.
+Housing and feeding conditions
+8. 	For feeding, conventional laboratory diets may be used with an unlimited supply of
+drinking water. The choice of diet may be influenced by the need to ensure a suitable admixture of
+the test substance when administered by this method. Caging should be appropriate to the species.
+Lighting should preferably be artificial, the sequence being 12 hours light, 12 hours dark. Housing
+and feeding conditions should meet specific requirements for the selected species as provided in
+authoritative legislation and guidance (2)(3)(4).
+Preparation of animals
+9. 	Healthy young animals, which have been acclimated to laboratory conditions and have not
+been subjected to previous experimental procedures, should be used. The duration of acclimatisation
+will depend upon the selected test species and their source. At least 5 days for dogs or purpose bred
+swine from a resident colony and at least 2 weeks for these animals if from external sources are
+recommended. 	The test animals should be characterised as to species, strain, source, sex, weight
+and/or age. Animals should be randomly assigned to the control and treatment groups. Cages should
+be arranged in such a way that possible effects due to cage placement are minimised. Each animal
+should be assigned a unique identification number.
+Preparation of doses
+10. 	The test compound may be administered in the diet or in the drinking water, by gavage or in
+capsules. 	The method of oral administration is dependent on the purpose of the study, and the
+physical-chemical properties of the test material.
+11. 	Where necessary, the test substance is dissolved or suspended in a suitable vehicle. 	It is
+recommended that, wherever possible, the use of an aqueous solution/suspension be considered first,
+followed by consideration of a solution/emulsion in oil (e.g., corn oil) and then by possible solution
+in other vehicles. 	For vehicles other than water the toxic characteristics of the vehicle must be
+known. 	The stability of the test substance under the conditions of administration should be
+determined.
+
+-- 2 of 9 --
+
+OECD/OCDE 	409
+3/9
+PROCEDURE
+Number and sex of animals
+12. 	At least 8 animals (four female and four male) should be used at each dose level. If interim
+kills are planned, the number should be increased by the number of animals scheduled to be killed
+before the completion of the study. The number of animals at the termination of the study must be
+adequate for a meaningful evaluation of toxic effects. Based on previous knowledge of the chemical
+or a close analogue, consideration should be given to including an additional satellite group of 8
+animals (four per sex) in control and in top dose group for observation after the treatment period of
+reversibility or persistence of any toxic effects. The duration of this post-treatment period should be
+fixed appropriately with regard to the effects observed.
+Dosage
+13. 	At least three dose levels and a concurrent control shall be used, except where a limit test is
+conducted (see paragraph 16). 	Dose levels may be based on the results of repeated dose or range
+finding studies and should take into account any existing toxicological and toxicokinetic data
+available for the test compound or related materials . Unless limited by the physical-chemical nature
+or biological effects of the test substance, the highest dose level should be chosen with the aim to
+induce toxicity but not death or severe suffering. 	A descending sequence of dose levels should be
+selected with a view to demonstrating any dosage related response and a no-observed-adverse-effect
+level (NOAEL) at the lowest dose level. Two to four fold intervals are frequently optimal for setting
+the descending dose levels and addition of a fourth test group is often preferable to using very large
+intervals (e.g., more than a factor of about 6 - 10) between dosages.
+14. 	The control group shall be an untreated group or a vehicle-control group if a vehicle is used
+in administering the test substance. 	Except for treatment with the test substance, animals in the
+control group should be handled in an identical manner to those in the test groups. 	If a vehicle is
+used, the control group shall receive the vehicle in the highest volume used. 	If a test substance is
+administered in the diet, and causes reduced dietary intake, then a pair-fed control group may be
+useful in distinguishing between reductions due to palatability or toxicological alterations in the test
+model.
+15. 	Consideration should be given to the following characteristics of the vehicle and other
+additives, as appropriate: Effects on the absorption, distribution, metabolism, or retention of the test
+substance; effects on the chemical properties of the test substance which may alter its toxic
+characteristics; and effects on the food or water consumption or the nutritional status of the animals.
+Limit test
+16. 	If a test at one dose level, equivalent to at least 1000 mg/kg body weight/day), using the
+procedures described for this study, produces no observed adverse effects and if toxicity would not
+be expected based upon data from structurally related compounds, then a full study using three dose
+levels may not be considered necessary. 	The limit test applies except when human exposure
+indicates the need for a higher dose level to be used.
+
+-- 3 of 9 --
+
+409 	OECD/OCDE
+4/9
+Administration of doses
+17. 	The animals are dosed with the test substance daily seven days each week for a period of 90
+days. Any other dosing regime , e.g., five days per week, needs to be justified. 	When the test
+substance is administered by gavage, this should be done in a single dose to the animals using a
+stomach tube or a suitable intubation cannula. 	The maximum volume of liquid that can be
+administered at one time depends on the size of the test animal. Normally the volume should be kept
+as low as possible. 	Except for irritating or corrosive substances which will normally reveal
+exacerbated effects with higher concentrations, variability in test volume should be minimised by
+adjusting the concentration to ensure a constant volume at all dose levels.
+18. 	For substances administered via the diet or drinking water it is important to ensure that the
+quantities of the test substance involved do not interfere with normal nutrition or water balance.
+When the test substance is administered in the diet either a constant dietary concentration (ppm) or a
+constant dose level in terms of the animal’s body weight may be used; any alternative used must be
+specified. For a substance administered by gavage or by capsule, the dose should be given at similar
+times each day, and adjusted as necessary to maintain a constant dose level in terms of animal body
+weight. 	Where the 90 day study is used as a preliminary to a long term chronic toxicity study, a
+similar diet should be used in both studies.
+Observations
+19. 	The observation period should be at least 90 days. Animals in a satellite group scheduled
+for follow-up observations, should be kept for an appropriate period without treatment to detect
+persistence of, or recovery from toxic effects.
+20. 	General clinical observations should be made at least once a day, preferably at the same
+time(s) each day, taking into consideration the peak period of anticipated effects after dosing. The
+clinical condition of the animals should be recorded. At least twice daily, usually at the beginning
+and end of each day, all animals should be inspected for signs of morbidity and mortality.
+21. 	At least once prior to the first exposure (to allow for within-subject comparisons), and once
+a week thereafter, detailed clinical observations should be made in all animals. These observations
+should be made, where practical outside the home cage in a standard arena and preferably at similar
+times on each occasion. Effort should be made to ensure that variations in the observation conditions
+are minimal. 	Signs of toxicity should be carefully recorded, including time of onset, degree and
+duration. 	Observations should include, but not be limited to, changes in skin, fur, eyes, mucous
+membranes, occurrence of secretions and excretions and autonomic activity (e.g., lacrimation, pilo-
+erection, pupil size, unusual respiratory pattern). Changes in gait, posture and response to handling
+as well as the presence of clonic or tonic movements, stereotypes (e.g., excessive grooming,
+repetitive circling) or any bizarre behaviour should also be recorded
+22. 	Ophthalmological examination, using an ophthalmoscope or equivalent suitable equipment,
+should be made prior to the administration of the test substance and at the termination of the study,
+preferably in all animals but at least in the high dose and control groups. If treatment related changes
+in the eyes are detected all animals should be examined.
+Body weight and food/water consumption
+23. 	All animals should be weighed at least once a week. Measurements of food consumption
+should be made at least weekly. If the test substance is administered via the drinking water, water
+
+-- 4 of 9 --
+
+OECD/OCDE 	409
+5/9
+consumption should also be measured at least weekly. Water consumption may also be considered
+for dietary or gavage studies during which drinking activity may be altered.
+Haematology and Clinical Biochemistry
+24. 	Blood samples should be taken from a named site and stored, if applicable, under
+appropriate conditions. At the end of the test period, samples are collected just prior to or as part of
+the procedure for killing the animals.
+25. 	Haematology, including haematocrit, haemoglobin concentration, erythrocyte count, total
+and differential leukocyte count, platelet count and a measure of clotting potential such as clotting
+time, prothrombin time, or thromboplastin time should be investigated at the start of the study, then
+either at monthly intervals or midway through the test period and finally at the end of the test period.
+26. 	Clinical biochemistry determinations to investigate major toxic effects in tissues and,
+specifically, effects on kidney and liver, should be performed on blood samples obtained from all
+animals at the start, then either at monthly intervals or midway through the test and finally at the end
+of the test period. 	Test areas which should be considered are electrolyte balance, carbohydrate
+metabolism, and liver and kidney function. 	The selection of specific tests will be influenced by
+observations on the mode of action of the test substance. 	Animals should be fasted for a period
+appropriate to the species prior to blood sampling. 	Suggested determinations include calcium,
+phosphorus, chloride, sodium, potassium, fasting glucose, alanine aminotransferase, aspartate
+aminotransferase, ornithine decarboxylase, gamma glutamyl transpeptidase, urea nitrogen, albumin,
+blood creatinine, total bilirubin and total serum protein measurements.
+27. 	Urinalysis determinations should be performed at least at the start, then midway and finally
+at the end of the study using timed urine volume collection. 	Urinalysis determinations include
+appearance, volume, osmolality or specific gravity, pH, protein, glucose and blood/blood cells.
+Additional parameters may be employed where necessary to extend the investigation of observed
+effect(s).
+28. 	In addition, studies to investigate markers of general tissue damage should be considered.
+Other determinations which may be necessary for an adequate toxicological evaluation include
+analyses of lipids, hormones, acid/base balance, methaemoglobin, and cholinesterase inhibition.
+Additional clinical biochemistry may be employed where necessary to extend the investigation of
+observed effects. 	These need to be identified for chemicals in certain classes or on a case-by-case
+basis.
+29. 	Overall, there is a need for a flexible approach, depending on the species and the observed
+and/or expected effect with a given compound.
+Pathology
+Gross necropsy
+30. 	All animals in the study shall be subjected to a full, detailed gross necropsy which includes
+careful examination of the external surface of the body, all orifices, and the cranial, thoracic and
+abdominal cavities and their contents. 	The liver with 	gall bladder, kidneys, adrenals, testes,
+epididymides, ovaries, uterus, thyroid (with parathyroids), thymus, spleen, brain and heart of all
+
+-- 5 of 9 --
+
+409 	OECD/OCDE
+6/9
+animals (apart from those found moribund and/or inter-currently killed) should be trimmed of any
+adherent tissue, as appropriate, and their wet weight taken as soon as possible after dissection to
+avoid drying.
+31. 	The following tissues should be preserved in the most appropriate fixation medium for both
+the type of tissue and the intended subsequent histopathological examination: all gross lesions, brain
+(representative regions including cerebrum, cerebellum and medulla/pons), spinal cord (at three
+levels: cervical, mid-thoracic and lumbar), pituitary, eyes, thyroid, parathyroid, thymus, oesophagus,
+salivary glands, stomach, small and large intestines (including Peyer’s patches), liver, gall bladder,
+pancreas, kidneys, adrenals, spleen, heart, trachea and lungs, aorta, gonads, uterus, accessory sex
+organs, female mammary gland, prostate, urinary bladder, lymph nodes (preferably one lymph node
+covering the route of administration and another one distant from the route of administration to cover
+systemic effects), peripheral nerve (sciatic or tibial) preferably in close proximity to the muscle, a
+section of bone marrow (and/or a fresh bone marrow aspirate) and skin. 	The clinical and other
+findings may suggest the need to examine additional tissues. Also any organs considered likely to be
+target organs based on the known properties of the test substance should be preserved.
+Histopathology
+32. 	Full histopathology should be carried out on the preserved organs and tissues in at least all
+animals in control and high dose group. The examination should be extended to animals of all other
+dosage groups, if treatment-related changes are observed in the high dose group.
+33. 	All gross lesions should be examined.
+34. 	When a satellite group is used, histopathology should be performed on tissues and organs
+identified as showing effects in the treated groups.
+DATA AND REPORTING
+Data
+35. 	Individual data should be provided. Additionally, all data should be summarised in tabular
+form showing for each test group the number of animals at the start of the test, the number of animals
+found dead during the test or killed for humane reasons and the time of any death or humane kill, the
+number showing signs of toxicity, a description of the signs of toxicity observed, including time of
+onset, duration, and severity of any toxic effects, the number of animals showing lesions, the type of
+lesions and the percentage of animals displaying each type of lesion.
+36. 	When applicable, numerical results should be evaluated by an appropriate and generally
+acceptable statistical method. The statistical methods and the data to be analysed should be selected
+during the design of the study.
+Test report
+37. 	The test report must include the following information:
+
+-- 6 of 9 --
+
+OECD/OCDE 	409
+7/9
+Test substance:
+- 	physical nature, purity and physicochemical properties;
+- 	identification data.
+Vehicle (if appropriate):
+- 	justification for choice of vehicle, if other than water.
+Test animals:
+- 	species/strain used;
+- 	number, age and sex of animals;
+- 	source, housing conditions, diet, etc.;
+- 	individual weights of animals at the start of the test.
+Test conditions:
+- 	rationale for dose level selection;
+- 	details of test substance formulation/diet preparation, achieved concentration, stability
+and homogeneity of the preparation;
+- 	details of the administration of the test substance;
+- 	actual doses (mg/kg body weight/day), and conversion factor from diet/drinking water
+test substance concentration (ppm) to the actual dose, if applicable;
+- 	details of food and water quality.
+Results:
+- 	body weight/body weight changes;
+- 	food consumption, and water consumption, if applicable;
+- 	toxic response data by sex and dose level, including signs of toxicity;
+- 	nature, severity and duration of clinical observations (whether reversible or not);
+- 	ophthalmological examination;
+- 	haematological tests with relevant base-line values;
+- 	clinical biochemistry tests with relevant base-line values;
+- 	terminal body weight, organ weights and organ/body weight ratios;
+- 	necropsy findings;
+- 	a detailed description of all histopathological findings;
+- 	absorption data if available;
+- 	statistical treatment of results, where appropriate.
+Discussion of results.
+Conclusions.
+
+-- 7 of 9 --
+
+409 	OECD/OCDE
+8/9
+LITERATURE
+(1) 	OECD (Rome, 1995). 	Report of the Consultation Meeting on Sub-chronic and Chronic
+Toxicity/Carcinogenicity Testing.
+(2) 	EEC Council Directive 86/609/EEC on the approximation 	of 	laws, 	regulations 	and
+administrative provisions of the Member States regarding the protection of animals used for
+experimental and other scientific purposes. Official Journal, 29, L358, 18th December 1986.
+(3) 	National Research Council, 1985. 	Guide for the care and use of laboratory animals. 	NIH
+Publication No. 86-23. Washington D.C., US. Dept. of Health and Human Services.
+(4) 	GV-SOLAS (Society for Laboratory Animal Science, Gesellschaft für Versuchstierkunde,
+December, 1989). 	Publication on the Planning and Structure of Animal Facilities for
+Institutes Performing Animal Experiments. ISBN 3-906255-06-9.
+
+-- 8 of 9 --
+
+OECD/OCDE 	409
+9/9
+ANNEX
+DEFINITIONS
+Dose is the amount of test substance administered. Dose is expressed as weight (g, mg) or as weight of
+test substance per unit weight of test animal (e.g., mg/kg), or as constant dietary concentrations (ppm).
+Dosage is a general term comprising of dose, its frequency and the duration of dosing.
+NOAEL is the abbreviation for no-observed-adverse-effect level and is the highest dose level where no
+adverse treatment-related findings are observed.
+
+-- 9 of 9 --
+

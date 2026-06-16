@@ -1,0 +1,712 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2018/06/test-no-408-repeated-dose-90-day-oral-toxicity-study-in-rodents_g1gh2931/9789264070707-en.pdf
+[CHARS] 41928
+
+Test Guideline No. 408
+Repeated Dose 90-day Oral Toxicity Study
+in Rodents
+25 June 2025
+OECD Guidelines for the
+Testing of Chemicals
+Section 4
+Health effects
+
+-- 1 of 17 --
+
+OECD/OCDE 408
+Adopted:
+25 June 2025
+Corrected:
+18 September 2025
+ref. OECD (2025)
+© OECD (2025)
+You are free to use this material subject to the terms and conditions available at http://www.oecd.org/termsandconditions/
+1
+OECD GUIDELINES FOR THE TESTING OF CHEMICALS
+REPEATED DOSE 90-DAY ORAL TOXICITY STUDY IN RODENTS
+INTRODUCTION
+1. OECD Guidelines for the Testing of Chemicals are periodically reviewed in
+the light of scientific progress, changing regulatory needs, and animal welfare
+considerations. The original guideline 408 was adopted in 1981. In 1998 a revised
+version was adopted, to obtain additional information from the animals used in the study,
+based on the outcome of an OECD Consultation Meeting of Experts on Sub-chronic
+and Chronic Toxicity Testing held in Rome in 1995 (1).
+2. This Test Guideline (TG) was updated in 2018 to add endocrine-sensitive
+endpoints intended to improve detection of potential endocrine activity of test chemicals
+and mirrors updates to TG 407 (Repeated Dose 28-Day Oral Toxicity Study in Rodents).
+INITIAL CONSIDERATIONS
+3. In the assessment and evaluation of the toxic characteristics of a chemical,
+the determination of sub-chronic oral toxicity using repeated doses may be carried
+out after initial information on toxicity has been obtained from acute or repeated dose
+28-day toxicity tests. The 90- day study provides information on the possible health
+hazards likely to arise from repeated exposure over a prolonged period of time covering
+post-weaning maturation and growth into adulthood of the test animals. The study will
+provide information on the major toxic effects, indicate target organs and the possibility
+of accumulation of test chemical, and can provide an estimate of a no-observed-
+adverse-effect level (NOAEL) of exposure which can be used in selecting dose levels
+for chronic studies and for establishing safety criteria for human exposure.
+Alternatively, this study yields dose related response data that may be used to estimate
+point of departure for hazard assessment using appropriate modelling methods (e.g.,
+benchmark dose analysis).
+4. The revised Guideline places additional emphasis on endocrine endpoints to
+combine with the existing sensitivity to neurological and immunological and reproductive
+effects. The need for careful clinical observations of the animals, so as to obtain as much
+information as possible, is also stressed. Required endpoints include the measurement
+of thyroxine (T4), triiodothyronine (T3), thyroid stimulating hormone (TSH) and thyroid
+gland weight, which are responsive to thyroid pathway perturbation (2). In addition,
+serum total cholesterol, low-density lipoproteins (LDL) and high-density lipoproteins
+
+-- 2 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+2
+(HDL) should also be determined as levels of these parameters are directly controlled
+by thyroid hormone action and contribute (with other thyroid endpoints) to evidence of
+thyroid effects. (3). Optional endpoints include other hormone measurements, as well as
+assessments of sperm parameters. Required and optional measures that may be
+altered by endocrine effects are listed in Annex B. Assessment of the optional measures
+may be considered if existing information for the test chemical or similar chemicals
+suggests potential to influence these or can be triggered by observations from required
+measures collected as part of this guideline. This study should allow for the identification
+of chemicals with the potential to cause neurotoxic, endocrine, immunological or
+reproductive organ effects, which may warrant further in-depth investigation.
+5. The results obtained for the endocrine related parameters should be evaluated
+in the context of the “OECD Conceptual Framework for Testing and Assessment of
+Endocrine Disrupting Chemicals” (4). In this Conceptual Framework, TG 408 is included
+in level 4 as an in vivo assay providing data on adverse effects on endocrine relevant
+endpoints.
+6. This Test Guideline has been updated to include the opportunity (optional) to
+collect sample tissues for cryopreservation in view of further investigations. Decisions
+on whether to include the optional parameters set out in this test guideline should reflect
+existing knowledge for the test chemical or similar chemicals, as well as the needs of
+various regulatory authorities.
+7. All animal-based procedures should conform to standards of animal care; the
+descriptions of care and treatment set forth below are minimal performance standards,
+and will be superseded by local regulations where more stringent. Further guidance of
+the humane treatment of animals is provided in OECD Series on Testing and
+Assessment 19 (19).
+8. Definitions used in this test guideline are provided in Annex A.
+PRINCIPLE OF THE TEST
+9. The test chemical is orally administered daily in graduated doses to several
+groups of experimental animals, one dose level per group for a period of at least
+90 days. During the period of administration, the animals are observed closely for
+signs of toxicity as recommended by the OECD (19). Animals which die or are
+humanely killed during the test are necropsied and at the conclusion of the test,
+remaining animals are also humanely killed and necropsied after the full dosing period.
+DESCRIPTION OF THE METHOD
+Selection of animal species
+10. The preferred species is the rat, although other rodent species (e.g., the mouse)
+may be used. If the parameters specified within this TG 408 are investigated in another
+rodent species, a detailed justification for the choice of species should be given,
+including adaptations to the parameters measure. Although it is biologically plausible
+that other species should respond to toxicants in a similar manner to the rat, the use of
+smaller species may result in increased variability in endpoint measurements due to
+technical challenges of dissecting smaller organs. Commonly used laboratory strains of
+young healthy adult animals should be employed. The females should be nulliparous
+
+-- 3 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+3
+and non-pregnant. Dosing should begin as soon as possible after weaning and, in any
+case, before the animals are nine weeks old. At the commencement of the study the
+weight variation of animals used should be minimal and not exceed ± 20 % of the mean
+weight of each sex. Where the study is conducted preliminary to a long term chronic
+toxicity study, animals from the same strain and source should be used in both studies.
+Housing and feeding conditions
+11. All procedures should conform to local standards of laboratory animal care. The
+temperature in the experimental animal room should be 22C (± 3C). Although the
+relative humidity should be at least 30% and preferably not exceed 70% other than
+during room cleaning, the aim should be 50-60%. Lighting should be artificial, the
+sequence being 12 hours light, 12 hours dark. For feeding, conventional laboratory
+diets may be used with an unlimited supply of drinking water. The choice of diet may
+be influenced by the need to ensure a suitable admixture of a test chemical when
+administered by this method. Care should be taken to avoid diets or animal bedding
+that may contain unacceptably high levels of hormonally active substances prone or
+likely to interfere with the interpretation of the study results (e.g., phytoestrogens). High
+levels of phytooestrogens in laboratory diets have been known to increase uterine
+weights in rodents. As a guide, dietary levels of phytooestrogens should not exceed 350
+μg of genistein equivalents/gram of rodent laboratory diet.
+12. Animals should be housed in small groups of the same sex. Animals may be
+housed individually if scientifically justified and the duration of single housing shall be
+limited to the minimum period necessary. (5), (6), (7).
+Preparation of animals
+13. Healthy animals, which have been acclimated to laboratory conditions for at
+least 5 days and have not been subjected to previous experimental procedures, should
+be used. The test animals should be characterised as to species, strain, source, sex,
+weight and/or age. Animals should be randomly assigned to the control and treatment
+groups. Cages should be arranged in such a way that possible effects due to cage
+placement are minimised. Each animal should be assigned a unique identification
+number. The least invasive method of uniquely identifying animals must be
+used. Appropriate methods include ringing, tagging, micro-chipping and biometric
+identification.
+Preparation of doses
+14. The test compound is to be administered by oral gavage, incorporated in the diet
+or dissolved in drinking water. The method of oral administration is dependent on the
+purpose of the study and the physical/chemical properties of the test material.
+15. Where necessary, the test chemical is dissolved or suspended in a suitable
+vehicle. It is recommended that, wherever possible, the use of an aqueous
+solution/suspension be considered first, followed by consideration of a
+solution/emulsion in oil (e.g., corn oil) and then by possible solution in other vehicles.
+For vehicles other than water, the toxic characteristics of the vehicle must be
+known. The homogeneity and stability of the test chemical under the conditions of
+administration should be determined.
+
+-- 4 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+4
+PROCEDURE
+Number and sex of animals
+16. At least 20 animals (ten female and ten male) should be used at each dose
+level. If interim kills are planned, the number should be increased by the number of
+animals scheduled to be killed before the completion of the study. Based on previous
+knowledge of the chemical or a close analogue, consideration should be given to
+including an additional satellite group of at least ten animals (five per sex) in the control
+and in the top dose group for observation after the treatment period, for the potential
+reversibility or persistence of any toxic effects. The duration of this post-treatment period
+should be fixed appropriately with regard to the effects observed.
+Dosage
+17. At least three dose levels and a concurrent control shall be used, except where
+a limit test is conducted (see paragraph 19). Dose levels may be based on the results
+of repeated dose or range finding studies and should take into account any existing
+toxicological and toxicokinetic data available for the test compound or related materials.
+Unless limited by the physical-chemical nature or biological effects of the test chemical,
+the highest dose level should be chosen with the aim to induce toxicity but not death
+or severe suffering (see OECD Series on Testing and Assessment No. 19 (19)). A
+descending sequence of dose levels should be selected with a view to demonstrating
+any dosage related response and a NOAEL at the lowest dose level. Two- to four-fold
+intervals are frequently optimal for setting the descending dose levels and addition of
+a fourth test group is often preferable to using very large intervals (e.g., more than a
+factor of about 6-10) between dosages.
+18. The control group shall be an untreated group or a vehicle-control group if a
+vehicle is used for administering the test chemical. Except for treatment with the test
+chemical, animals in the control group should be handled in an identical manner to
+those in the test groups. If a vehicle is used, the control group shall receive the
+vehicle in the highest volume used. If a test chemical is administered in the diet, and
+causes reduced dietary intake, then a pair-fed control group may be useful in
+distinguishing between reduced food intake due to palatability or toxicological
+alterations in the test animals.
+19. Consideration should be given to the following characteristics of the vehicle,
+as appropriate: effects on the absorption, distribution, metabolism, or retention of the
+test chemical; effects on the chemical properties of the test chemical which may alter
+its toxic characteristics; and effects on the food or water consumption or the nutritional
+status of the animals.
+Limit Test
+20. Using the methods described for this study, if a test at one dose level
+equivalent to at least 1000 mg/kg body weight/day produces no observed adverse
+effects and if toxicity would not be expected based upon data from structurally-related
+compounds, then a full study using three dose levels may not be considered necessary.
+The limit test applies except when human exposure indicates the need for a higher dose
+level to be used.
+
+-- 5 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+5
+Administration of doses
+21. The animals are dosed with the test chemical daily seven days each week for at
+least 90 days. Any other dosing regimen ( e.g., five days per week) needs to be
+justified. When the test chemical is administered by gavage, this should be done in
+a single dose to the animals using a stomach tube or a suitable intubation cannula.
+The maximum volume of liquid that can be administered at one time depends on the
+size of the test animal. The volume should not exceed 1 ml/100g body weight, except
+in the case of aqueous solutions where 2 ml/100g body weight may be used. Except
+for irritating or corrosive substances which will normally reveal exacerbated effects
+with higher concentrations, variability in test volume should be minimised by adjusting
+the concentration to ensure a constant volume at all dose levels.
+22. For chemicals administered via the diet or drinking water it is important to
+ensure that palatability of the test chemical involved do not interfere with normal
+nutrition or water balance. When the test chemical is administered in the diet, either a
+constant dietary concentration (ppm) or adjusted as necessary to maintain a constant
+dose level in terms of the animal’s body weight (e.g., mg/kg body weight/day) may be
+used; the alternative used must be specified. For a chemical administered by gavage,
+the dose should be given at similar times each day, and adjusted as necessary to
+maintain a constant dose level in terms of animal body weight.
+Observations
+23. The observation period should be at least 90 days. If a satellite group is included
+in the study, animals in the satellite recovery group scheduled for follow-up
+observations should be kept for an appropriate period without treatment to detect
+persistence of, or recovery from toxic effects.
+24. General clinical observations should be made at least once a day, preferably
+at the same time(s) each day, taking into consideration the peak period of anticipated
+effects after dosing. The clinical condition of the animals should be recorded. At least
+twice daily, usually at the beginning and end of each day, all animals are inspected for
+signs of morbidity and mortality (19).
+25. At least once prior to the first exposure (to allow for within-subject comparisons),
+and once a week thereafter, detailed clinical observations should be made in all
+animals. These observations should be made outside the home cage, preferably in a
+standard arena and at similar times on each occasion. They should be carefully
+recorded, preferably using scoring systems explicitly defined by the testing laboratory.
+Effort should be made to ensure that variations in the observation conditions are
+minimal. Signs noted should include, but not be limited to, changes in skin, fur, eyes,
+mucous membranes, occurrence of secretions and excretions and autonomic activity
+(e.g., lacrimation, pilo-erection, pupil size, and unusual respiratory pattern). Changes
+in gait, posture and response to handling as well as the presence of clonic or tonic
+movements, stereotypes (e.g., excessive grooming, repetitive circling) or bizarre
+behaviour (e.g., self-mutilation, walking backwards) should also be recorded (8, 19).
+26. Ophthalmological examination, using an ophthalmoscope or equivalent suitable
+equipment, should be made prior to the administration of the test chemical and at the
+termination of the study, preferably in all animals but at least in the high dose and
+control groups. If changes in the eyes are detected all animals should be examined.
+27. Towards the end of the exposure period and not earlier than in week 11, sensory
+reactivity to stimuli of different types (5) (e.g., auditory, visual and proprioceptive
+
+-- 6 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+6
+stimuli) (9), (10), (11), assessment of grip strength (12) and motor activity assessment
+(13) should be conducted. Further details of the procedures that could be followed
+are given in the respective references. However, alternative procedures than those
+referenced could also be used.
+28. Functional observations conducted towards the end of the study may be omitted
+when data on functional observations are available from other studies or when daily
+clinical observations did not reveal any functional deficits.
+29. Exceptionally, functional observations may also be omitted for groups that
+otherwise reveal signs of toxicity to an extent that would significantly interfere with the
+functional test performance.
+Body weight and food/water consumption
+30. All animals should be weighed at least once a week. Measurements of food
+consumption should be made at least weekly. If the test chemical is administered via
+the drinking water, water consumption should also be measured at least weekly.
+Measurement of water consumption may also be considered for dietary or gavage
+studies.
+Haematology and Clinical Biochemistry
+31. Blood samples should be taken from a designated site and stored, if
+applicable, under appropriate conditions. At the end of the test period, samples are
+collected just prior to or as part of the procedure for killing the animals.
+32. The following haematological examinations should be made at the end of the
+test period and when any interim blood samples have been collected: haematocrit,
+haemoglobin concentration, erythrocyte count, reticulocyte count, total and differential
+leukocyte count, platelet count and a measure of blood clotting time/potential.
+33. Clinical biochemistry determinations to investigate major toxic effects in tissues
+and, specifically, effects on kidney and liver, should be performed on blood samples
+obtained from each animal just prior to or as part of the procedure for killing the
+animals (apart from those found moribund and/or intercurrently killed). In a similar
+manner to haematological investigations, interim sampling for clinical biochemical tests
+may be performed. Overnight fasting of the animals prior to blood sampling is
+recommended1. Determinations in plasma or serum should include sodium,
+potassium, glucose, total cholesterol, HDL, LDL, urea, blood urea nitrogen, creatinine,
+total protein and albumin, and more than two enzymes indicative of hepatocellular
+effects (e.g., alanine aminotransferase, aspartate aminotransferase, alkaline
+phosphatase, gamma glutamyl transpeptidase, and sorbitol dehydrogenase).
+Measurements of additional enzymes (of hepatic or other origin) and bile acids, which
+1 For a number of measurements in serum and plasma, most notably for glucose, overnight fasting would be
+preferable. The major reason for this preference is that the increased variability which would inevitably result from
+non-fasting, would tend to mask more subtle effects and make interpretation difficult. On the other hand, however,
+overnight fasting may interfere with the general metabolism of the animals and, particularly in feeding studies, may
+disturb the daily exposure to the test chemical. If overnight fasting is adopted, clinical biochemical determinations
+should be performed after the conduct of functional observations of the study.
+
+-- 7 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+7
+may provide useful information under certain circumstances, and bilirubin may also be
+included.
+34. Clinical biochemistries should be evaluated as potential markers of general
+tissue damage. Other determinations that should be carried out if the known
+properties of the test chemical may, or are suspected to, affect related metabolic
+profiles include calcium, phosphorus, fasting triglycerides, specific hormones,
+methaemoglobin and cholinesterase. These determinations may be identified for
+chemicals in certain classes or on a case-by-case basis.
+35. Serum total T4, T3 and TSH should be measured on samples obtained from
+each animal in the main group and in satellite and/or recovery groups at study
+termination. Other hormones, e.g., testosterone, oestradiol, follicle stimulating hormone
+(FSH), luteinizing hormone (LH) should be considered as on a case-by-case basis.
+Serum may be stored frozen to allow time to determine the most informative hormone
+analyses based on results observed for other endpoints (e.g., organ weight and
+histology). Hormones may be measured in plasma if appropriate validation and historical
+control data are available.
+36. The following factors might influence the variability and absolute concentration
+of the hormone determinations:
+• time of humane killing because of diurnal variation of hormone concentration
+• stage of the oestrus cycle
+• method of humane killing to avoid undue stress to the animals that may affect
+hormone concentrations
+• test kits for hormone determinations that may differ by their standard curves.
+37. Blood samples specifically intended for hormone determination should be
+obtained at a comparable time of the day. The numerical values obtained when
+analysing hormone concentrations differ with various commercial assay kits.
+Consequently, it may not be possible to provide performance criteria based upon uniform
+historical data. Control hormone levels (measured in the same lab, same rodent strain,
+and using the same method) should be taken into account to differentiate between
+incidental and treatment-related changes. Whenever possible, best practices for blood
+sample collection, handling and analysis should be used (23). Laboratories should strive,
+as far as possible, to keep control coefficients of variation below 25 for T3 and T4 and
+below 35 for TSH. All concentrations are to be recorded in ng/ml. Stability of T3, T4 and
+TSH under selected storage conditions should be tested as part of the hormonal assay
+validation
+38. Optionally, the following urinalysis determinations may be performed during the
+last week of the study using timed urine volume collection: appearance, volume,
+osmolality or specific gravity, pH, protein, glucose and blood/blood cells.
+39. If historical baseline data are inadequate, consideration should be given as
+to whether haematological and clinical biochemistry variables need to be determined
+before dosing commences; however, it is generally not recommended that these data
+be generated before treatment (14).
+Pathology
+40. At termination, testis and epididymis weights are recorded for all males. At least
+one epididymis from each male should be reserved for histopathological examination.
+
+-- 8 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+8
+The remaining epididymis may be used for optional enumeration of cauda epididymis
+sperm reserves, sperm morphology or sperm motility (15).
+41. For the optional evaluation of sperm morphology, an epididymal (or vas
+deferens) sperm sample should be examined as fixed or wet preparations and at least
+200 spermatozoa per sample classified as either normal (both head and midpiece/tail
+appear normal) or abnormal. Examples of morphologic sperm abnormalities would
+include fusion, isolated heads, and misshapen heads and/or tails. Misshapen or large
+sperm heads may indicate defects in spermiation. Sperm motility can either be evaluated
+immediately after humane killing or recorded for later analysis. The percentage of
+progressively motile sperm may be determined either visually or by computer-assisted
+motion analysis.
+42. Analyses of sperm parameters may be restricted to control and high-dose males.
+However, if treatment-related effects are observed, the lower dose groups should also
+be evaluated.
+43. At necropsy, the oestrus cycle of all females should be determined by taking
+vaginal smears. These observations will provide information regarding the stage of
+oestrus cycle at the time of humane killing and assist in histological evaluation of
+oestrogen sensitive tissues (see OECD Guidance Document 106, part 3 (17)).
+Gross necropsy
+44. All animals in the study shall be subjected to a full, detailed gross necropsy
+which includes careful examination of the external surface of the body, all orifices,
+and the cranial, thoracic and abdominal cavities and their contents. The liver,
+kidneys, adrenals, testes, epididymides, prostate + seminal vesicles with coagulating
+glands as a whole (alternatively, first weigh the entire prostate with seminal
+vesicles/coagulation glands together, then dissect and weigh the prostate gland
+separately), uterus, ovaries, thymus, spleen, brain, and heart of all animals (should
+be trimmed of any adherent tissue, as appropriate, and their wet weight taken as soon
+as possible after dissection to avoid drying. The pituitary gland may be weighted fresh,
+immediately after dissection, or post-fixation. Care must be exercised when trimming the
+prostate complex to avoid puncture of the fluid filled seminal vesicles. Alternatively,
+seminal vesicles and prostate may be trimmed and weighed after fixation.
+45. Weighing of the thyroid gland must be performed with extreme care as this tissue
+is easily damaged (for guidance, see reference 20). Tissue damage could compromise
+histopathology analysis. Therefore, the thyroid trimming and weighing should be done
+very carefully and should preferably be conducted after fixation in order to avoid tissue
+damage.
+46. The following tissues should be preserved in the most appropriate fixation
+medium for both the type of tissue and the intended subsequent histopathological
+examination (16, 17): all gross lesions, brain (representative regions including
+cerebrum, cerebellum and medulla/pons), spinal cord (at three levels: cervical, mid-
+thoracic and lumbar), pituitary, thyroid, parathyroid, thymus, oesophagus, salivary
+glands, stomach, small and large intestines (including Peyer’s patches), liver,
+pancreas, kidneys, adrenals, spleen, heart, trachea and lungs (preserved by inflation
+with fixative and then immersion), aorta, ovaries, uterus, cervix, vagina, testes,
+epididymides, prostate, seminal vesicles, coagulation glands, mammary gland (male
+and female), urinary bladder, gall bladder (mouse), lymph nodes (preferably one lymph
+node covering the route of administration and another one distant from the route of
+administration to cover systemic effects), peripheral nerve (sciatic or tibial; preferably
+
+-- 9 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+9
+in close proximity to the muscle), skeletal muscle, and bone, with bone marrow
+(section or alternatively, a fresh bone marrow aspirate), skin and eyes (if changes
+were observed during ophthalmological examinations). It is recommended to preserve
+testes by immersion in Bouin’s or modified Davidson’s fixative and histopathological
+assessment should consider staging of seminiferous tubule cross sections as described
+(16). See also OECD GD 106 (17) for fixation and histological evaluation of endocrine
+organs. The clinical and other findings may suggest the need to examine additional
+tissues. Also any organs considered likely to be target organs based on the known
+properties of the test chemical should be evaluated.
+47. Histopathological assessment of the testes should be performed with attention
+to stage specific changes as described (14). Detailed histopathological examination
+should be conducted in order to identify treatment related effects such as retained
+spermatids, missing germ cell layers or types, multinucleate giant cells or sloughing of
+spermatogenic cells into the lumen (21). Also see OECD GD 106 (17) fixation and
+histological evaluation of endocrine organs.
+Histopathology
+48. Full histopathology should be carried out on the preserved organs and tissues
+of all animals in the control and high dose groups. These examinations should be
+extended to animals of all other dosage groups, for those tissues where treatment-
+related changes are observed in the high dose group.
+49. All gross lesions should be examined.
+50. When a satellite group is used, histopathology should be performed on tissues
+and organs identified as showing effects in the treated groups.
+Sample cryopreservation
+51. Excess plasma as well as tissues or parts of tissues not preserved for
+histopathology may be preserved for additional investigations such as omics.
+Recommended procedures for preservation for omics are available in the OECD
+Guidance document No. 409 (24).
+52. Care should be taken when considering additional sample preservation so that
+this does not compromise the standard parameters.
+DATA AND REPORTING
+Data
+53. Individual data should be provided. Additionally, all data should be summarized
+in tabular form showing for each test group the number of animals at the start of the
+test; number of animals found dead during the test or killed for humane reasons and
+the time of any death or humane kill; number of animals showing signs of toxicity, a
+description of the signs of toxicity observed, including time of onset, duration, and
+severity of any toxic effects; and the number of animals showing lesions, the type of
+lesions and the percentage of animals displaying each type of lesion.
+
+-- 10 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+10
+54. When applicable, numerical results should be evaluated by an appropriate
+and generally acceptable statistical method. The statistical methods and the data to be
+analysed should be selected during the design of the study.
+55. For quality control it is proposed that control data are compared to historical
+control values originating from the same laboratory, species, strain, and collected under
+similar conditions. In addition, coefficients of variation are calculated for the continuous
+parameters in Annex B for endocrine activity. These data can be used for comparison
+among studies. Differences between rat strains should be taken into account when
+evaluating historical control data.
+Test report
+56. The test report must include the following information:
+Test chemical:
+− Chemical identification, such as IUPAC or CAS name(s), CAS registry number(s),
+SMILES or InChI code, structural formula, and/or other identifiers;
+− source, lot number, limit date for use (if available);
+− stability of chemical, if known;
+− physical nature and, where relevant, physiochemical properties;
+− identification including CAS number if known/established; and
+− purity.
+Mono-constituent substance:
+− physical appearance, water solubility, and additional relevant physicochemical properties;
+Multi-constituent substance, UVBCs and mixtures:
+− characterised as far as possible by chemical identity (see above), quantitative occurrence
+and relevant physicochemical properties of the constituents.
+Vehicle if appropriate:
+− justification for choice of vehicle, if other than water.
+Test animals:
+− species and strain used;
+− number, age and sex of animals;
+− source, housing conditions, diet, etc.;
+− individual weights of animals at the start of the test; and
+− justification for species if not rat.
+
+-- 11 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+11
+Test conditions:
+− rationale for dose level selection;
+− details of test chemical formulation/diet preparation, achieved concentration, stability and
+homogeneity of the preparation;
+− details of the administration of the test chemical;
+− actual doses (mg/kg body weight/day), and conversion factor from diet/drinking water test
+chemical concentration (ppm) to the actual dose, if applicable; and
+− details of food and water quality
+− report whether (yes/no) blinding was applied in the study
+− samples cryopreserved (if applicable)
+Results:
+− body weight and body weight changes;
+− food consumption, and water consumption, if applicable;
+− toxic response data by sex and dose level, including signs of toxicity;
+− nature, severity and duration of clinical observations (whether reversible or not);
+− results of ophthalmological examination;
+− sensory activity, grip strength and motor activity assessments (when available);
+− haematological tests with relevant baseline values;
+− clinical biochemistry tests with relevant baseline values;
+− circulating thyroid hormones (T4, T3, TSH; required);
+− other hormone measures (optional);
+− method of determining hormone values (assay type, supplier, protocol, etc.);
+− terminal body weight, organ weights and organ/body weight ratios;
+− necropsy findings;
+− terminal vaginal cytology;
+− a detailed description of all histopathological findings;
+− total cauda epididymal sperm number, percent progressively motile sperm, percent
+morphologically normal sperm, and percent of sperm with each identified abnormality
+(optional);
+− absorption (e.g., ADME or TK information) data if analysed;
+− statistical treatment of results, where appropriate;
+− for animals killed pre-terminally, the rationale behind the decision should be reported; and
+− for animals found dead during the study, the cause of death should, when possible, be
+established.
+
+-- 12 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+12
+Discussion of results.
+Conclusions.
+
+-- 13 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+13
+LITERATURE
+(1) OECD (Rome, 1995). Report of the Consultation Meeting on Sub-chronic and Chronic
+Toxicity/Carcinogenicity Testing.
+(2) OECD (2006). Detailed Review Paper on Thyroid Hormone Disruption Assays. OECD
+Environment, Health and Safety Publications Series on Testing and Assessment No. 57
+(3) Kovanen P.T. (1987). Regulation of plasma cholesterol by hepatic low-density lipoprotein
+receptors. Am Heart J. 113(2 Pt 2):464-9.
+(4) OECD (2012). Guidance Document on Standardised Test Guidelines for Evaluating
+Chemicals for Endocrine Disruption. Environment, Health and Safety Publications, Series on
+Testing and Assessment (No. 150), Organisation for Economic Cooperation and
+Development, Paris.
+(5) EEC Council Directive 86/609/EEC on the approximation of laws, regulations and
+administrative provisions of the Member States regarding the protection of animals used for
+experimental and other scientific purposes. Official Journal, 29, L358, 18th December 1986.
+(6) National Research Council ( 2011). Guide for the care and use of laboratory animals. 8th
+Edition. NIH Publication. Washington D.C., US. Dept. of Health and Human Services.
+(7) Andersen M.L., D’Almeida V., Ko G.M., Martins P.J.F., Tufik S. (2016) Care and Maintenance
+of Laboratory Animals. In: Andersen M., Tufik S. (eds) Rodent Model as Tools in Ethical
+Biomedical Research. Springer, Cham
+(8) IPCS (1986). Principles and Methods for the Assessment of Neurotoxicity Associated with
+Exposure to Chemicals. Environmental Health Criteria Document No. 60.
+(9) Tupper, D.E., Wallace, R.B. (1980). Utility of the Neurologic Examination in Rats. Acta
+Neurobiol. Exp., 40, 999-1003.
+(10) Gad, S.C. (1982). A Neuromuscular Screen for Use in Industrial Toxicology. J. Toxicol
+Environ. Health, 9, 691-704.
+(11) Moser, V.C., McDaniel, K.M., Phillips, P.M. (1991). Rat Strain and Stock Comparisons Using
+a Functional Observational Battery: Baseline Values and Effects of Amitraz. Toxicol. Appl.
+Pharmacol., 108, 267-283.
+(12) Meyer O.A., Tilson H.A., Byrd W.C., Riley M.T. (1979). A Method for the Routine
+Assessment of Fore- and Hind-limb Grip Strength of Rats and Mice. Neurobehav. Toxicol., 1,
+233-236.
+(13) Crofton K.M., Howard J.L., Moser V.C., Gill M.W., Reiter L.W., Tilson H.A., MacPhail R.C.
+(1991). Interlaboratory Comparison of Motor Activity Experiments: Implication for
+Neurotoxicological Assessments. Neurotoxicol. Teratol., 13, 599-609.
+(14) Weingand K, Brown G, Hall R et al. (1996). “Harmonisation of Animal Clinical Pathology
+Testing in Toxicity and Safety Studies”, Fundam. & Appl. Toxicol., 29: 198-201.
+(15) Seed, J., R.E. Chapin, E.D. Clegg, L.A. Dostal, R.H. Foote, M.E. Hurtt, G.R. Klinefelter, S.L.
+Makris, S.D. Perreault, S. Schrader, D. Seyler, R. Sprando, K.A. Treinen, D.N.R.
+Veeramachaneni, and L.D. Wise. (1996). Methods for assessing sperm motility, morphology,
+and counts in the rat, rabbit, and dog: a consensus report. Reproductive Toxicology
+10(3):237–244.
+(16) Russell, L.D; R.A. Ettlin; A.P. Sinha Hikim; E.D. Clegg. Histological and Histopathological
+Evaluation of the Testis, Cache River, Clearwater, FL (1990).
+
+-- 14 of 17 --
+
+OECD/OCDE 408
+© OECD (2025)
+14
+(17) OECD (2009). Guidance Document for Histologic Evaluation and Reproductive Tests in
+Rodents. Environmental Health and Safety Publications Series on Testing and Assessment
+No. 106.Parts 1-6. Organisation for Economic Cooperation and Development, Paris.
+(18) OECD (2006). Report of the Validation of the Updated Test Guideline 407 Repeat Dose 28-
+day Oral Toxicity Study in Laboratory Rats. Environmental Health and Safety Publications
+Series on Testing and Assessment No. 59. Organisation for Economic Cooperation and
+Development, Paris.
+(19) OECD (2000) Guidance document on the recognition, assessment and use of clinical signs as
+humane endpoints for experimental animals used in safety evaluation. Series on Testing and
+Assessment No 19. ENV/JM/MONO(2000)7.
+(20) US EPA (2005) Guidance for Thyroid Assay in Pregnant Animals, Fetuses and Postnatal
+Animals and Adult Animals. US EPA Office of Pesticide Programs, Washington. DC.
+https://www.epa.gov/sites/production/files/2015-
+06/documents/thyroid_guidance_assay.pdf
+(21) Creasy DM. (2002) Histopathology of the male reproductive system II: interpretation. Curr
+Protoc Toxicol. Nov;Chapter 16:Unit16.4.
+(22) Mondal S, Govindasamy M. 2017. Novel thyroid hormone analogues, enzyme inhibitors and
+mimetics, and their action. Mol Cell Endoc. 458: 91-104.
+(23) Kucheryavenko O, Lurman G, Lehmann A, Braz J, Niemann L, Chahoud I, Mantovani A,
+Håkansson H, Schneider S, Strauss V, Coder PS, Freyberger A, O'Connor JC, Rauch M, Renko
+K, Solano MLM, Andersson N, Blanck O, Ritz V, Solecki R. Report from the BfR expert
+hearing on practicability of hormonal measurements: recommendations for experimental
+design of toxicological studies with integrated hormonal end points. Arch Toxicol. 2019
+Apr;93(4):1157-1167. doi: 10.1007/s00204-019-02436-3.
+(24) OECD (2025). Guidance on Good Practices and Standardisation of Sample Collection for
+Omics Analysis. Series on Testing and Assessment, No. 409. ENV Publishing, OECD, Paris.
+
+-- 15 of 17 --
+
+OECD/OCDE 408
+© OECD, (2025)
+15
+Annex A. Definitions
+Androgenicity is the capability of a chemical to act like a natural androgenic hormone (e.g., testosterone)
+in a mammalian organism.
+Antiandrogenicity is the capability of a chemical to suppress the action of a natural androgenic hormone
+(e.g., testosterone) in a mammalian organism.
+Antioestrogenicity is the capability of a chemical to suppress the action of a natural oestrogenic hormone
+(e.g., oestradiol) in a mammalian organism.
+Antithyroid activity is the capability of a chemical to suppress the action of a natural thyroid hormone (e.g.,
+T3) in a mammalian organism.
+Dosage is a general term comprising of dose, its frequency and duration.
+Dose is the amount of test chemical administered. Dose is expressed as weight (g, mg) or as weight of test
+chemical per unit weight of test animal (e.g., mg/kg), or as constant dietary concentrations (ppm).
+Evident toxicity is a general term describing clear signs of toxicity following administration of test chemical.
+These should be sufficient for hazard assessment and should be such that an increase in the dose
+administered can be expected to result in the development of severe toxic signs and probable mortality.
+HDL High density lipoprotein
+LDL Low Density lipoprotein
+NOAEL is the abbreviation for no-observed-adverse-effect level and is the highest dose level where no
+adverse treatment-related findings are observed.
+Oestrogenicity is the capability of a chemical to act like a natural oestrogenic hormone (e.g., oestradiol) in
+a mammalian organism.
+T3 Tri-iodothyronine – the active form of thyroid hormone
+T4 Thyroxine – The main circulating thyroid gland product is converted to T3
+Thyroid activity is the capability of a chemical to act like a natural thyroid hormone (e.g., T3) in a mammalian
+organism.
+TSH Thyroid Stimulating Hormone – pituitary hormone that thyroid hormone production and release from the
+thyroid gland
+Validation is a scientific process designed to characterise the operational requirements and limitations of
+a test method and to demonstrate its reliability and relevance for a particular purpose.
+
+-- 16 of 17 --
+
+OECD/OCDE 408
+© OECD, (2025)
+16
+Annex B. Endpoints recommended for detection
+of endocrine activity
+Required Measures Optional Measures
+Organ Weights
+Testes
+Epididymides
+Adrenal glands
+Prostate + seminal vesicles with coagulating glands as a whole complex
+Uterus
+Ovaries
+Pituitary gland
+Thyroid gland
+Histopathology
+Thyroid and parathyroid glands
+Adrenal glands
+Pituitary gland1
+Testis
+Epididymides
+Ventral and dorsolateral prostate
+Seminal vesicles and coagulating glands
+Ovaries1
+Cervix1
+Vagina1
+Uterus1
+Vaginal smear (collected at necropsy) to determine stage of oestrus cycle
+Mammary glands (female and male)1
+Pancreatic islets
+Serum/Plasma Biochemistry
+Total cholesterol
+HDL
+LDL
+Serum/Plasma Hormone Analyses
+Thyroxine (T4)
+TSH
+T3
+FSH
+LH
+Oestradiol
+Testosterone
+Sperm Measures
+Cauda epididymis sperm reserves
+Sperm motility
+Sperm morphology
+1 The condition of the oestrogen-sensitive organs in the female should be assessed with reference to the stage of oestrus cycle at termination
+as endocrine active test agents may cause histological changes that, while not overtly pathological, may differ from the condition anticipated
+based on the stage of ovarian cycle
+Source: (OECD Guidance Document 106, parts 3, 4 (17)).
+
+-- 17 of 17 --
+

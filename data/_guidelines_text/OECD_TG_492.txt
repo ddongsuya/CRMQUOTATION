@@ -1,0 +1,2581 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2023/07/test-no-492-reconstructed-human-cornea-like-epithelium-rhce-test-method-for-identifying-chemicals-not-requiring-classification-and-labelling-for-eye-irritation-or-serious-eye-damage_g1g59947/9789264242548-en.pdf
+[CHARS] 117341
+
+Test Guideline No. 492
+Reconstructed human Cornea-like
+Epithelium (RhCE) test method for
+identifying chemicals not requiring
+classification and labelling for eye
+irritation or serious eye damage
+25 June 2025
+OECD Guidelines for the Testing
+of Chemicals
+Section 4
+Health effects
+
+-- 1 of 40 --
+
+OECD/OCDE 492
+Adopted:
+14 June 2019
+Corrected: 25 June 2025
+© OECD (2025)
+You are free to use this material subject to the terms and conditions available at http://www.oecd.org/termsandconditions/
+1
+OECD GUIDELINE FOR THE TESTING OF
+CHEMICALS
+Reconstructed Human Cornea-Like Epithelium (Rhce) Test Method For
+Identifying Chemicals Not Requiring Classification And Labelling For Eye
+Irritation Or Serious Eye Damage
+INTRODUCTION
+1. Serious eye damage refers to the production of tissue damage in the eye, or serious physical
+decay of vision, which is not fully reversible, occurring after exposure of the eye to a test chemical, as
+defined by the United Nations Globally Harmonized System of Classification and Labelling of Chemicals
+(UN GHS) (1). Also according to UN GHS, eye irritation refers to the production of changes in the eye,
+which are fully reversible, occurring after exposure of the eye to a test chemical. Test chemicals inducing
+serious eye damage are classified as UN GHS Category 1, while those inducing eye irritation are classified
+as UN GHS Category 2. Test chemicals not classified for eye irritation or serious eye damage are defined
+as those that do not meet the requirements for classification as UN GHS Category 1 or 2 (2A or 2B) i.e.,
+they are referred to as UN GHS No Category.
+2. The assessment of serious eye damage/eye irritation has typically involved the use of laboratory
+animals (OECD Test Guideline (TG) 405; adopted in 1981 and revised in 1987, 2002, 2012 and 2017) (2).
+The choice of the most appropriate test method and the use of this Test Guideline should be seen in the
+context of the OECD Guidance Document on an Integrated Approaches on Testing and Assessment
+(IATA) for Serious Eye Damage and Eye irritation (3).
+3. This Test Guideline describes an in vitro procedure allowing the identification of chemicals
+(substances and mixtures) not requiring classification and labelling for eye irritation or serious eye damage
+in accordance with UN GHS. It makes use of reconstructed human cornea-like epithelium (RhCE) which
+closely mimics the histological, morphological, biochemical and physiological properties of the human
+corneal epithelium. Four other in vitro test methods have been validated, considered scientifically valid and
+adopted as OECD Test Guidelines (TGs) 437 (4), 438 (5), 460 (6) and 491 (7) to address the human health
+endpoint serious eye damage or no classification.
+4. Four validated test methods using commercially available RhCE models are included in this Test
+Guideline. Validation studies for assessing eye irritation/serious eye damage have been conducted
+(8)(9)(10)(11)(12)(13)(14)(15) using the EpiOcular™ Eye Irritation Test (EIT), the SkinEthic™ Human
+Corneal Epithelium (HCE) EIT, the LabCyte CORNEA-MODEL24 EIT and the MCTT HCETM EIT. Each of
+these methods makes use of commercially available RhCE tissue constructs as test system, two of them
+are referred to in the following text as the Validated Reference Methods – EpiOcular™ EIT (VRM1) and
+SkinEthic™ HCE EIT (VRM2), respectively. From their validation studies and their independent peer
+review (10)(13)(16)(17) it was concluded that EpiOcular™ EIT, SkinEthic™ HCE EIT, LabCyte CORNEA-
+MODEL24 EIT, and the MCTT HCETM EIT are able to correctly identify chemicals (both substances and
+mixtures) not requiring classification and labelling for eye irritation or serious eye damage according to UN
+
+-- 2 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+2
+GHS (1), and the test methods were recommended as scientifically valid for that purpose. Annexes II-VII
+provide a synopsis of the important elements of the test methods, as well as flowcharts providing guidance
+for specific situations.
+5. The test method(s) described in this Test Guideline cannot be used on their own to replace the in
+vivo Draize eye test to predict across the full range of serious eye damage/eye irritation responses for
+different chemical classes. It is therefore recommended to make use of alternative testing strategies such
+as those described in TG 467 and 492B to address the required ranges of irritation potential. Strategic
+combinations of several alternative test methods within (tiered) testing strategies such as the Bottom-
+Up/Top-Down approach may be able to fully replace the Draize eye test (19). The Bottom-Up approach is
+designed to be used when, based on existing information, a chemical is expected not to cause sufficient
+eye irritation to require a classification, while the Top-Down approach is designed to be used when, based
+on existing information, a chemical is expected to cause serious eye damage. The EpiOcular™ EIT,
+SkinEthic™ HCE EIT, LabCyte CORNEA-MODEL24 EIT, and MCTT HCETM EIT are recommended to
+identify chemicals that do not require classification for eye irritation or serious eye damage according to
+UN GHS (UN GHS No Category) (1) without further testing, within a testing strategy such as the Bottom-
+Up/Top-Down approach suggested by Scott et al. e.g., as an initial step in a Bottom-Up approach or as
+one of the last steps in a Top-Down approach. However, the EpiOcular™ EIT, SkinEthic™ HCE EIT,
+LabCyte CORNEA-MODEL24 EIT, and MCTT HCETM EIT are not intended to differentiate between UN
+GHS Category 1 (serious eye damage) and UN GHS Category 2 (eye irritation). This differentiation will
+need to be addressed by another tier of a test strategy (3). A test chemical that is identified as requiring
+classification for eye irritation/serious eye damage with EpiOcular™ EIT, SkinEthic™ HCE EIT, LabCyte
+CORNEA-MODEL24 EIT or MCTT HCETM EIT will thus require additional testing (in vitro and/or in vivo) to
+reach a definitive conclusion (UN GHS No Category, Category 2 or Category 1), using e.g., TG 437, 438,
+460, 491, or as a last option TG 405.
+6. The purpose of this Test Guideline is to describe the procedure used to evaluate the eye hazard
+potential of a test chemical based on its ability to induce cytotoxicity in a RhCE tissue construct, as
+measured by the tetrazolium dye {TD; e.g., MTT [3-(4,5- Dimethylthiazol-2-yl)-2,5-diphenyltetrazolium
+bromide; Thiazolyl blue tetrazolium bromide; CAS RN 298-93-1] for VRM1 and VRM2, WST-8 [2-(2-
+methoxy-4- nitrophenyl)-3-(4-nitrophenyl)-5-(2,4-disulfophenyl)-2H-tetrazolium, monosodium salt; CAS
+RN 193149-74-5] for LabCyte CORNEA-MODEL24 EIT, or WST-1 [4-[3-(4-Iodophenyl)-2-(4-nitrophenyl)-
+2H-5-tetrazolio]-1,3-benzene disulfonate; CAS RN 150849-52-8] for MCTT HCE™ EIT} assay (20)(21)(22)
+(see paragraph 23). The viability of the RhCE tissue following exposure to a test chemical is determined
+in comparison to tissues treated with the negative control substance (%viability), and is then used to
+predict the eye hazard potential of the test chemical.
+7. Performance Standards (23) are available to facilitate the validation of new or modified in vitro
+RhCE-based test methods similar to EpiOcular™ EIT, SkinEthic™ HCE EIT, LabCyte CORNEA-
+MODEL24 EIT, and MCTT HCE™ EIT, in accordance with the principles of Guidance Document No. 34
+(24), and allow for timely amendment of this Test Guideline for their inclusion. Mutual Acceptance of Data
+(MAD) will only be guaranteed for test methods validated according to the Performance Standards, if these
+test methods have been reviewed and included in this Test Guideline by the OECD.
+8. Definitions are provided in Annex I.
+
+-- 3 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+3
+9. This Test Guideline is based on commercial three-dimensional RhCE tissue constructs that are
+produced using either primary human epidermal keratinocytes (i.e., EpiOcular™ OCL-200), human
+immortalized corneal epithelial cells (i.e., SkinEthic™ HCE/S), or primary human corneal epithelial cells
+(i.e., LabCyte CORNEA-MODEL24 or MCTT HCE™). The EpiOcular™ OCL-200, SkinEthic™ HCE/S,
+LabCyte CORNEA-MODEL24, and MCTT HCETM RhCE tissue constructs are similar to the in vivo corneal
+epithelium three-dimensional structure and are produced using cells from the species of interest
+(25)(26)(27)(28). Moreover, the test methods directly measure cytotoxicity resulting from penetration of the
+chemical through the cornea and production of cell and tissue damage following chemical exposure, which
+determines the overall in vivo serious eye damage/eye irritation response. Cell damage can occur by
+several modes of action (see paragraph 22), but cytotoxicity plays an important, if not the primary,
+mechanistic role in determining the overall serious eye damage/eye irritation response of a chemical,
+manifested in vivo mainly by corneal opacity, iritis, conjunctival redness and/or conjunctival chemosis,
+regardless of the physicochemical processes underlying tissue damage.
+10. A wide range of chemicals, covering a variety of chemical types, chemical classes, molecular
+weights, LogPs, chemical structures, etc., have been tested in the validation study underlying this Test
+Guideline. The EpiOcular™ EIT validation database contained 113 chemicals in total, covering 95 different
+organic functional groups according to an OECD QSAR toolbox analysis (9). The majority of these
+chemicals represented mono-constituent substances, but several multi-constituent substances (including
+3 homopolymers, 5 copolymers and 10 quasi polymers) were also included in the study. In terms of
+physical state and UN GHS Categories, the 113 tested chemicals were distributed as follows: 13 Category
+1 liquids, 15 Category 1 solids, 6 Category 2A liquids, 10 Category 2A solids, 7 Category 2B liquids, 7
+Category 2B solids, 27 No Category liquids and 28 No Category solids (8). The SkinEthic™ HCE EIT
+validation database contained 200 chemicals in total, covering 165 different organic functional groups
+(9)(11)(12). The majority of these chemicals represented mono-constituent substances, but several multi-
+constituent substances (including 10 polymers) were also included in the study. In terms of physical state
+and UN GHS Categories, the 200 tested chemicals were distributed as follows: 27 Category 1 liquids, 24
+Category 1 solids, 19 Category 2A liquids, 10 Category 2A solids, 9 Category 2B liquids, 8 Category 2B
+solids, 50 No Category liquids and 53 No Category solids (11)(12). The LabCyte CORNEA-MODEL24
+EIT catch-up validation database contained 30 reference chemicals listed in the performance standards
+(23) of this Test Guideline 492. The MCTT HCE™ EIT me-too validation database contained 30 reference
+chemicals listed in the performance standards (23) of this Test Guideline 492.
+11. This Test Guideline is applicable to substances and mixtures, and to solids, liquids, semi-solids
+and waxes. The liquids may be aqueous or non-aqueous; solids may be soluble or insoluble in water.
+Whenever possible, solids should be ground to a fine powder before application; no other pre-treatment of
+the sample is required. Gases and aerosols have not been assessed in a validation study. While it is
+conceivable that these can be tested using RhCE technology, the current Test Guideline does not allow
+testing of gases and aerosols. When considering testing of mixtures, difficult-to-test chemicals (e.g.
+unstable), or test chemicals not clearly within the applicability domain described in this Guideline, upfront
+consideration should be given to whether the results of such testing will yield results that are meaningful
+scientifically. Such considerations are not needed, when there is a regulatory requirement for testing of the
+mixture.
+12. Test chemicals absorbing light in the same range as formazan dye (FD, naturally or after
+treatment) and test chemicals able to directly reduce the vital dye TD (to FD) may interfere with the tissue
+viability measurements and need the use of adapted controls for corrections. The type of adapted controls
+INITIAL CONSIDERATIONS AND LIMITATIONS
+
+-- 4 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+4
+that may be required will vary depending on the type of interference produced by the test chemical and the
+procedure used to quantify each FD (see paragraphs 38-44).
+13. Results generated in pre-validation (29)(30)(31)(32) and validation (9)(11)(12)(14)(15) studies
+have demonstrated that EpiOcular™ EIT, SkinEthic™ HCE EIT, LabCyte CORNEA-MODEL24 EIT, and
+MCTT HCE™ EIT are transferable to laboratories considered to be naïve in the conduct of the assays and
+also to be reproducible within- and between laboratories. Based on these studies, the level of
+reproducibility in terms of concordance of predictions that can be expected from EpiOcular™ EIT from data
+on 113 chemicals is in the order of 95% within laboratories and 93% between laboratories. The level of
+reproducibility in terms of concordance of predictions that can be expected from SkinEthic™ HCE EIT from
+data on 120 chemicals is in the order of 92% within laboratories and 95% between laboratories. The level
+of reproducibility in terms of concordance of predictions that can be expected from LabCyte CORNEA-
+MODEL24 EIT from data on 30 reference chemicals listed in the performance standards (22) is in the order
+of 96% within laboratories and 87% between laboratories. The level of reproducibility in terms of
+concordance of predictions that can be expected from MCTT HCE™ EIT from data on 30 reference
+chemicals listed in the performance standards (23)is in the order of 93% within laboratories and 90%
+between laboratories.
+14. The EpiOcular™ EIT can be used to identify chemicals that do not require classification for eye
+irritation or serious eye damage according to the UN GHS classification system (1). Considering the data
+obtained in the validation study (9), the EpiOcular™ EIT has an overall accuracy of 80% (based on 112
+chemicals), sensitivity of 96% (based on 57 chemicals), false negative rate of 4% (based on 57 chemicals),
+specificity of 63% (based on 55 chemicals) and false positive rate of 37% (based on 55 chemicals), when
+compared to reference in vivo rabbit eye test data (OECD TG 405) (2)(18) classified according to the UN
+GHS classification system (1). A study where 97 liquid agrochemical formulations were tested with
+EpiOcular™ EIT demonstrated a similar performance of the test method for this type of mixtures as
+obtained in the validation study (33). The 97 formulations were distributed as follows: 21 Category 1, 19
+Category 2A, 14 Category 2B and 43 No Category, classified according to the UN GHS classification
+system (1) based on reference in vivo rabbit eye test data (OECD TG 405) (2)(18). An overall accuracy of
+82% (based on 97 formulations), sensitivity of 91% (based on 54 formulations), false negative rate of 9%
+(based on 54 formulations), specificity of 72% (based on 43 formulations) and false positive rate of 28%
+(based on 43 formulations) were obtained (33).
+15. The SkinEthic™ HCE EIT can be used to identify chemicals that do not require classification for
+eye irritation or serious eye damage according to the UN GHS classification system (1). Considering the
+data obtained in the validation study (11)(12), the SkinEthic™ HCE EIT has an overall accuracy of 84%
+(based on 200 chemicals), sensitivity of 95% (based on 97 chemicals), false negative rate of 5% (based
+on 97 chemicals), specificity of 72% (based on 103 chemicals) and false positive rate of 28% (based on
+103 chemicals), when compared to reference in vivo rabbit eye test data (OECD TG 405) (2)(18) classified
+according to the UN GHS classification system (1).
+16. The LabCyte CORNEA-MODEL EIT can be used to identify chemicals that do not require
+classification for eye irritation or serious eye damage according to the UN GHS classification system (1).
+Considering the data obtained in the catch-up validation study (14), the LabCyte CORNEA-MODEL EIT
+meets the criteria for reproducibility and reproductive capacity, as required by the Performance Standards
+of this Guideline (23). Additionally, a database consisting of 139 chemicals was tested by the tissue
+construct developer (unpublished data).
+17. The MCTT HCE™ EIT can be used to identify chemicals that do not require classification for eye
+irritation or serious eye damage according to the UN GHS classification system (1). Considering the data
+
+-- 5 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+5
+obtained in the catch-up validation study (15), the MCTT HCE™ EIT meets the criteria for reproducibility
+and predictive capacity, as required by the Performance Standards of this Guideline (23). Additionally, a
+set consisting of 141 chemicals was tested (15), which showed that MCTT HCE™ EIT has an overall
+accuracy of 86% (based on 141 chemicals), sensitivity of 99% (based on 80 chemicals), false negative
+rate of 1% (based on 80 chemicals), specificity of 69% (based on 61 chemicals) and false positive rate of
+31% (based on 61 chemicals), when compared to reference in vivo rabbit eye test data (OECD TG 405)
+(2)(18) classified according to the UN GHS classification system (1).
+18. The false negative rates obtained with these RhCE test methods with either substances or
+mixtures are within the in vivo Draize eye test within-test variability of 12% (34). The false positive rates
+obtained with any RhCE test methods with either substances or mixtures are not critical in the context of
+this Test Guideline since all test chemicals that produce a tissue viability equal or lower than the
+established cut-offs (see paragraph 46) will require further testing with (an)other in vitro test method(s), or
+as a last option in rabbits, depending on regulatory requirements, according to the OECD Guidance
+Document on an Integrated Approaches on Testing and Assessment for Serious Eye Damage and Eye
+irritation (3). These test methods can be used for all types of chemicals, whereby a negative result should
+be accepted for not classifying a chemical for eye irritation and serious eye damage (UN GHS No
+Category). The appropriate regulatory authorities should be consulted before using the EpiOcular™ EIT,
+SkinEthic™ HCE EIT, LabCyte CORNEA-MODEL24 EIT, and MCTT HCE™ EIT under classification
+schemes other than UN GHS.
+19. A limitation of this Test Guideline is that it does not allow discrimination between eye
+irritation/reversible effects on the eye (Category 2) and serious eye damage/irreversible effects on the eye
+(Category 1), nor between eye irritants (optional Category 2A) and mild eye irritants (optional Category
+2B), as defined by UN GHS (1). For these purposes, further testing as set out in the OECD Guidance
+Document on An Integrated Approach for Testing and Assessment for Serious Eye Damage and Eye
+Irritation, is required (3).
+20. The term "test chemical" is used in this Test Guideline to refer to what is being tested and is not
+related to the applicability of the RhCE test method to the testing of substances and/or mixtures.
+PRINCIPLE OF THE TEST
+21. The test chemical is applied topically to a minimum of two three-dimensional RhCE tissue
+constructs and tissue viability is measured following exposure and a post- treatment incubation period. The
+RhCE tissues are reconstructed from primary human epidermal keratinocytes, human immortalized
+corneal epithelial cells, or primary culture human corneal epithelial cells, which have been cultured for
+several days to form a stratified, highly differentiated squamous epithelium morphologically similar to that
+found in the human cornea. The EpiOcular™, LabCyte CORNEA-MODEL24, and MCTT HCE™ RhCE
+tissue construct consists of at least 3 viable layers of cells and a non-keratinized surface, showing a
+corneal-like structure analogous to that found in vivo (27). The SkinEthic™ HCE RhCE tissue construct
+consists of at least 4 viable layers of cells including columnar basal cells, transitional wing cells and
+superficial squamous cells similar to that of the normal human corneal epithelium (26)(35).
+22. Chemical-induced serious eye damage/eye irritation, manifested in vivo mainly by corneal opacity,
+iritis, conjunctival redness and/or conjunctival chemosis, is the result of a cascade of events beginning with
+penetration of the chemical through the cornea and/or conjunctiva and production of damage to the cells.
+Cell damage can occur by several modes of action, including: cell membrane lysis (e.g., by surfactants,
+organic solvents); coagulation of macromolecules (particularly proteins) (e.g., by surfactants, organic
+solvents, alkalis and acids); saponification of lipids (e.g., by alkalis); and alkylation or other covalent
+
+-- 6 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+6
+interactions with macromolecules (e.g., by bleaches, peroxides and alkylators) (19)(36)(37). However, it
+has been shown that cytotoxicity plays an important, if not the primary, mechanistic role in determining the
+overall serious eye damage/eye irritation response of a chemical regardless of the physicochemical
+processes underlying tissue damage (38)(39). Moreover, the serious eye damage/eye irritation potential
+of a chemical is principally determined by the extent of initial injury (36), which correlates with the extent
+of cell death (38) and with the extent of the subsequent responses and eventual outcomes (40)(41). Thus,
+slight irritants generally only affect the superficial corneal epithelium, the mild and moderate irritants
+damage principally the epithelium and superficial stroma and the severe irritants damage the epithelium,
+deep stroma and at times the corneal endothelium (39)(42). The measurement of viability of the RhCE
+tissue construct after topical exposure to a test chemical to identify chemicals not requiring classification
+for serious eye damage/eye irritancy (UN GHS No Category) is based on the assumption that all chemicals
+inducing serious eye damage or eye irritation will induce cytotoxicity in the corneal epithelium and/or
+conjunctiva.
+23. RhCE tissue viability is classically measured by enzymatic conversion of TD (MTT for VRM1 and
+VRM2, WST-8 for LabCyte CORNEA-MODEL24 EIT or WST-1 for MCTT HCE™ EIT) by the viable cells
+of the tissue into coloured FD (blue MTT formazan, or yellow WST-8 and WST-1 formazan). Blue MTT FD
+is quantitatively measured after extraction from tissues (20), whereas yellow WST-8 FD or WST-1 FD does
+not require extraction because of its water solubility and is quantitatively measured directly from the WST-
+8 or WST-1 solution on which the tissues are incubated during the WST-8 (21) or WST-1 assay (22).
+Chemicals not requiring classification and labelling according to UN GHS (No Category) are identified as
+those that do not decrease tissue viability below a defined threshold (i.e., tissue viability > 60% for
+EpiOcular™ EIT and SkinEthic™ HCE EITL ; > 50% for SkinEthic™ HCE EITS ; > 40% for LabCyte
+CORNEA-MODEL24 EIT or > 35% for liquids and > 60% for solids in MCTT HCE™ EIT) (see paragraph
+46).
+DEMONSTRATION OF PROFICIENCY
+24. Prior to routine use of RhCE test methods for regulatory purposes, laboratories should
+demonstrate technical proficiency by correctly predicting the fifteen proficiency chemicals listed in Table 1.
+These chemicals were selected from the chemicals used in the validation studies of the VRM1 and VRM2
+(9)(11)(12). The selection includes, to the extent possible, chemicals that: (i) cover different physical states;
+(ii) cover the full range of in vivo serious eye damage/eye irritation responses based on high quality results
+obtained in the reference in vivo rabbit eye test (OECD TG 405) (2)(16) and the UN GHS classification
+system (i.e., Categories 1, 2A, 2B, or No Category) (1); (iii) cover the various in vivo drivers of classification
+(34)(43); (iv) are representative of the chemical classes used in the validation study (9)(11)(12); (v) cover
+a good and wide representation of organic functional groups (9)(11)(12); (vi) have chemical structures that
+are well-defined (9)(11)(12); (vii) are coloured and/or direct TD reducers; (viii) produced reproducible
+results in RhCE test methods during their validations; (ix) were correctly predicted by RhCE test methods
+during their validation studies; (x) cover the full range of in vitro responses based on high quality RhCE
+test methods data (0 to 100% viability); (xi) are commercially available; and (xii) are not associated with
+prohibitive acquisition and/or disposal costs. In situations where a listed chemical is unavailable or cannot
+be used for other justified reasons, another chemical fulfilling the criteria described above, e.g. from the
+chemicals used in the validation of the VRMs, could be used. Such deviations should however be justified.
+
+-- 7 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+7
+Table 1: List of proficiency chemicals
+Chemical Name CAS
+RN
+Organic Functional
+Group1
+Physic
+al state
+VRM1
+viabili
+ty
+(%)2
+VRM2
+viability
+(%)3
+LabCyte
+viability
+(%)3-1
+MCTT HCETM
+viability
+(%)3-2
+VRM
+Prediction7
+Colo
+ur
+inte
+rf.
+In Vivo Category 14
+Methylthioglycolate 2365-48-
+2
+Carboxylic acid ester;
+Thioalcohol L 10.9±6.4 5.5±7.4 1.7±1.2 25.3±6.0 No prediction
+can be made N
+Hydroxyethyl acrylate 818-61-1 Acrylate; Alcohol L 7.5±4.755 1.6±1.0 7.5±4.75 9.8±7.7 No prediction
+can be made N
+2,5-Dimethyl-2,5-
+hexanediol 110-03-2 Alcohol S 2.3±0.2 0.2±0.1 2.8±2.6 0.5±0.1 No prediction
+can be made N
+Sodium oxalate 62-76-0 Oxocarboxylic acid S 29.0±1.2 5.3±4.1 3.7±1.5 30.6±6.3 No prediction
+can be made N
+In Vivo Category 2A4
+2,4,11,13-
+Tetraazatetradecane-
+diimidamide, N,N''- bis(4-
+chlorophenyl)- 3,12-
+diimino-, di-D- gluconate
+(20%, aqueous) 6
+18472-
+51-0
+Aromatic heterocyclic
+halide; Aryl halide;
+Dihydroxyl group;
+Guanidine
+L 4.0±1.1 1.3±0.6 0.4±0.4 1.8±0.1 No prediction
+can be made
+Y
+(weak)
+Sodium benzoate 532-32-1 Aryl; Carboxylic acid S 3.5±2.6 0.6±0.1 2.9±2.6 1.1±0.5 No prediction
+can be made N
+In Vivo Category 2B4
+Diethyl toluamide 134-62-3 Benzamide L 15.6±6.3 2.8±0.9 32.4±9.3 2.3±2.2 No prediction
+can be made N
+2,2-Dimethyl-3-
+methylenebicyclo
+[2.2.1] heptane
+79-92-5
+Alkane, branched with
+tertiary carbon; Alkene;
+Bicycloheptane;
+Bridged-ring
+carbocycles;
+Cycloalkane
+S 4.7±1.5 15.8±1.1 2.2±2.6 22.9±11.5 No prediction
+can be made N
+In Vivo No Category4
+1-Ethyl-3-
+methylimidazolium
+ethylsulphate
+342573-
+75-5
+Alkoxy; Ammonium
+salt; Aryl; Imidazole;
+Sulphate
+L 79.9±6.4 79.4±6.2 48.0±8.9 56.8±3.4 No Cat N
+Dicaprylyl ether 629-82-3 Alkoxy; Ether L 97.8±4.3 95.2±3.0 92.7±5.0 89.9±8.9 No Cat N
+Piperonyl butoxide 51-03-6 Alkoxy; Benzodioxole;
+Benzyl; Ether L 104.2±4.2 96.5±3.5 95.6±14.0 82.4±14.5 No Cat N
+Polyethylene glycol (PEG-
+40) hydrogenated castor
+oil
+61788-
+85-0 Acylal; Alcohol; Allyl; Ether Viscous 77.6±5.4 89.1±2.9 62.6±11.5 72.1±14.8 No Cat N
+1-(4-Chlorophenyl)-3-
+(3,4-dichlorophenyl) urea 101-20-2 Aromatic heterocyclic halide;
+Aryl halide; Urea derivatives S 106.7±5.3 101.9±6.
+6 77.8±9.0 94.5±5.9 No Cat N
+2,2'-Methylene-bis-(6-
+(2H-benzotriazol-2-yl)- 4-
+(1,1,3,3-
+tetramethylbutyl)-
+phenol)
+103597-
+45-1
+Alkane branched with
+quaternary carbon; Fused
+carbocyclic aromatic; Fused
+saturated heterocycles;
+Precursors quinoid
+compounds; tert-Butyl
+S 102.7±13.
+4 97.7±5.6 90.2±5.8 98.8±10.1 No Cat N
+Potassium
+tetrafluoroborate
+14075-
+53-7 Inorganic Salt S 88.6±3.3 92.9±5.1 66.6±0.2 90.5±6.3 No Cat N
+Abbreviations: CASRN = Chemical Abstracts Service Registry Number; UN GHS = United
+Nations Globally Harmonized System of Classification and Labelling of Chemicals (1); VRM1 =
+Validated Reference Method, EpiOcular™ EIT; VRM2 = Validated Reference Method,
+SkinEthic™ HCE EIT; Colour interf. = colour interference with the standard absorbance (Optical
+Density (OD)) measurement of FD.
+1Organic functional group assigned according to an OECD Toolbox 3.1 nested analysis (9).
+
+-- 8 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+8
+2Based on results obtained with EpiOcular™ EIT in the EURL ECVAM/Cosmetics Europe Eye
+Irritation Validation Study (EIVS) (9).
+3 Based on results obtained with SkinEthic™ HCE EIT in the validation study (11)(12).
+3-1 Based on results obtained with LabCyte CORNEA-MODEL24 EIT in the validation study (14).
+3-2 Based on results obtained with MCTT HCE™ EIT in the validation study (15).
+4Based on results from the in vivo rabbit eye test (OECD TG 405) (2)(18) and using the UN GHS
+(1). 5Based on results obtained in the CEFIC Consortium for in vitro Eye Irritation testing
+strategy (CON4EI) Study.
+6Classification as 2A or 2B depends on the interpretation of the UN GHS criterion for
+distinguishing between these two categories, i.e., 1 out of 3 vs 2 out of 3 animals with
+effects at day 7 necessary to generate a Category 2A classification. The in vivo study
+included 3 animals. All endpoints apart from corneal opacity in one animal recovered to a
+score of zero by day 7 or earlier. The one animal that did not fully recover by day 7 had a
+corneal opacity score of 1 (at day 7) that fully recovered at day 9.
+7 VRM prediction: see paragraph 46 for interpretation of the prediction model.
+25. As part of the proficiency testing, it is recommended that users verify the barrier properties of the
+tissues after receipt as specified by the RhCE tissue construct producer (see paragraphs 27, 29 and 32).
+This is particularly important if tissues are shipped over long distance / time periods. Once a test method
+has been successfully established and proficiency in its use has been acquired and demonstrated, such
+verification will not be necessary on a routine basis. However, when using a test method routinely, it is
+recommended to continue to assess the barrier properties at regular intervals.
+PROCEDURE
+26. The test methods currently covered by this Test Guideline are the scientifically valid EpiOcular™
+EIT, SkinEthic™ HCE EIT, LabCyte CORNEA-MODEL24 EIT, and MCTT HCE™ EIT (10)(13)(14) (15),
+the first two being referred as the Validated Reference Methods (VRM1 and VRM2, respectively). The
+Standard Operating Procedures (SOP) for the RhCE test methods are available and should be employed
+when implementing and using the test methods in a laboratory (44)(45)(46)(47). The following paragraphs
+and Annex II describe the main components and procedures of the RhCE test methods.
+RhCE TEST METHOD Components
+GENERAL CONDITIONS
+27. Relevant human-derived cells should be used to reconstruct the cornea-like epithelium three-
+dimensional tissue, which should be composed of progressively stratified but not cornified cells. The RhCE
+tissue construct is prepared in inserts with a porous synthetic membrane through which nutrients can pass
+to the cells. Multiple layers of viable, non-keratinized epithelial cells should be present in the reconstructed
+cornea-like epithelium. The RhCE tissue construct should have the epithelial surface in direct contact with
+air so as to allow for direct topical exposure of test chemicals in a fashion similar to how the corneal
+epithelium would be exposed in vivo. The RhCE tissue construct should form a functional barrier with
+sufficient robustness to resist rapid penetration of cytotoxic benchmark substances, e.g., Triton X-100 or
+sodium dodecyl sulphate (SDS). The barrier function should be demonstrated and may be assessed by
+
+-- 9 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+9
+determination of either the exposure time required to reduce tissue viability by 50% (ET50) upon application
+of a benchmark substance at a specified, fixed concentration (e.g., 50-100 μL of 0.3% (v/v) Triton X-100),
+or the concentration at which a benchmark substance reduces the viability of the tissues by 50% (IC50)
+following a fixed exposure time (e.g., 30 minutes treatment with 50 μL SDS or 60 minutes treatment with
+25 μL SDS) (see paragraph 32). The containment properties of the RhCE tissue construct should prevent
+the passage of test chemical around the edge of the viable tissue, which could lead to poor modelling of
+corneal exposure. The human derived cells used to establish the RhCE tissue construct should be free of
+contamination by bacteria, viruses, mycoplasma, and fungi. The sterility of the tissue construct should be
+checked by the supplier for absence of contamination by fungi and bacteria.
+FUNCTIONAL CONDITIONS
+Viability
+28. The assay used for quantifying tissue viability is the tetrazolium dye (TD) (MTT for VRM1 and
+VRM2, WST-8 for LabCyte CORNEA-MODEL24 EIT or WST-1 for MCTT HCE™ EIT) assay (19)(21).
+Viable cells of the RhCE tissue construct reduce the vital dye MTT into a blue MTT formazan precipitate,
+which is then extracted from the tissue using isopropanol (or a similar solvent). Alternatively, viable cells
+of the RhCE tissue construct reduce the vital dye WST-8 or WST-1 into a water soluble yellow formazan.
+The extracted formazan dye (FD) may be quantified using either a standard absorbance (Optical Density
+(OD)) measurement or an HPLC/UPLC-spectrophotometry procedure (48). The OD of the blank solution
+alone (which is the extraction solvent for MTT assay, the diluted WST-8 medium for the WST-8 assay or
+the diluted WST-1 medium for the WST-1 assay) should be sufficiently small, i.e., OD < 0.1. Users of the
+RhCE tissue construct should ensure that each batch of the RhCE tissue construct used meets defined
+criteria for the negative control. Acceptability ranges for the negative control OD values for the VRMs,
+LabCyte CORNEA-MODEL24, and MCTT HCE™ are given in Table 2. An HPLC/UPLC-
+spectrophotometry user should use the negative control OD ranges provided in Table 2 as the acceptance
+criterion for the negative control. It should be documented in the test report that the tissues treated with
+the negative control substance are stable in culture (provide similar tissue viability measurements) for the
+duration of the test exposure period. A similar procedure should be followed by the tissue producer as part
+of the quality control tissue batch release, but in this case different acceptance criteria than those specified
+in Table 2 may apply. An acceptability range (upper and lower limit) for the negative control OD values (in
+the QC test method conditions) should be established by the RhCE tissue construct developer/supplier.
+
+-- 10 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+10
+Table 2. Acceptability ranges for negative control OD values (for the test method users)
+TestMethod Loweracceptancelimit Upperacceptancelimit
+EpiOcular™ EIT(OCL-200)– VRM1
+(forboththeliquidsandthesolidsprotocols) > 0.81 < 2.8
+SkinEthic™ HCE EIT(HCE/S)– VRM2
+(forboththeliquidsandthesolidsprotocols)
+> 1.0 ≤ 2.5
+LabCyteCORNEA-MODEL24 EIT
+(forboththeliquidsandthesolidsprotocols)
+≥ 0.5 ≤ 1.6
+MCTT HCE™ EIT
+(forboththeliquidsandthesolidsprotocols)
+≥ 1.6 ≤ 3.0
+1This acceptance limit considers the possibility of extended shipping/storage time (e.g. > 4 days), which has been shown not
+to impact on the performance of the test method (44).
+Barrier function
+29. The RhCE tissue construct should be sufficiently thick and robust to resist the rapid penetration of
+cytotoxic benchmark substances, as estimated e.g. by ET50 (Triton X-100) or by IC50 (SDS) (Table 3).
+The barrier function of each batch of the RhCE tissue construct used should be demonstrated by the RhCE
+tissue construct developer/vendor upon supply of the tissues to the end user (see paragraph 32).
+Morphology
+30. Histological examination of the RhCE tissue construct should demonstrate human cornea-like
+epithelium structure (including at least 3 layers of viable epithelial cells and a non-keratinized surface). For
+the three test methods, appropriate morphology has been established by the developer/supplier and
+therefore does not need to be demonstrated again by a test method user for each tissue batch used.
+Reproducibility
+31. The results of the positive and negative controls of the test method should demonstrate
+reproducibility over time.
+Quality control (QC)
+32. The RhCE tissue construct should only be used if the developer/supplier demonstrates that each
+batch of the RhCE tissue construct used meets defined production release criteria, among which those for
+viability (paragraph 28) and barrier function (see paragraph 29) are the most relevant. An acceptability
+range (upper and lower limits) for the barrier functions as measured by the ET50 or IC50 (see paragraphs
+27 and 29) should be established by the RhCE tissue construct developer/supplier. The ET50 and IC50
+acceptability range used as QC batch release criterion by the developer/supplier of the RhCE tissue
+constructs used in the test methods is given in Table 3. Data demonstrating compliance with all production
+release criteria should be provided by the RhCE tissue construct developer/supplier to the test method
+users so that they are able to include this information in the test report. Only results produced with tissues
+
+-- 11 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+11
+fulfilling all of these production release criteria can be accepted for reliable prediction of chemicals not
+requiring classification and labelling for eye irritation or serious eye damage in accordance with UN GHS.
+Table 3. QC batch release criteria
+TestMethod Lower acceptance limit Upper acceptance limit
+EpiOcular™EIT(OCL-200)– VRM1
+(100 μL of 0.3%(v/v)Triton X-100) ET50= 12.2 minutes ET50 =37.5 minutes
+SkinEthic™ HCE EIT (HCE/S) –
+VRM2 (30 minutes treatmentwith 50μL
+SDS)
+IC50 = 1.0mg/mL IC50 =3.2 mg/mL
+LabCyte CORNEA-MODEL24 EIT
+(60 minutes treatment with 25μL SDS)
+IC50 =1.0 mg/mL IC50 =4.0 mg/mL
+MCTT HCE™ EIT –
+(50 μL of 0.3%(v/v) Triton X-100)
+ET50= 17.6 minutes ET50 = 41.0 minutes
+Application of the Test Chemical and Control Substances
+33. At least two tissue replicates should be used for each test chemical and each control substance in
+each run. Two different treatment protocols are used, one for liquid test chemicals and one for solid test
+chemicals (44)(45)(46)(47). For the two VRMs, and MCTT HCE™ EIT, the tissue construct surface should
+be moistened with calcium and magnesium-free Dulbecco's Phosphate Buffered Saline (Ca2+/Mg2+-free
+DPBS) before application of test chemicals, to mimic the wet conditions of the human eye. The treatment
+of the tissues is initiated with exposure to the test chemical(s) and control substances. For any treatment
+protocols in any of the two VRMs, and MCTT HCE™ EIT, a sufficient amount of test chemical or control
+substance should be applied to uniformly cover the epithelial surface while avoiding an infinite dose (see
+paragraphs 34 and 35) (Annex II).
+34. Test chemicals that can be pipetted at 37°C or lower temperatures (using a positive displacement
+pipette, if needed) are treated as liquids in the four test methods, otherwise they should be treated as solids
+(see paragraph 35). In the test methods, liquid test chemical are evenly spread over the tissue surface (i.e.
+a minimum of 60 μL/cm2 application) (see Annex II, (44)(45)(46)(47). Capillary effects (surface tension
+effects) that may occur due to the low volumes applied to the insert (on the tissue surface) should be
+avoided to the extent possible to guarantee the correct dosing of the tissue. Tissues treated with liquid test
+chemicals are incubated for 1 minute (LabCyte CORNEA-MODEL24 EIT), 10 minutes (MCTT HCE™ EIT)
+or 30 minutes (VRM1 and VRM2) at the standard conditions of each method. At the end of the exposure
+period, the liquid test chemical and the control substances should be carefully removed from the tissue
+surface by extensive rinsing with Ca2+/Mg2+-free DPBS at room temperature. For the two VRMs, this
+rinsing step should be followed by a post-exposure immersion in fresh medium at room temperature (to
+remove any test chemical absorbed into the tissue) for a pre-defined period of time that varies depending
+on the VRM used. For VRM1, LabCyte CORNEA-MODEL24 EIT and for MCTT HCE™ EIT, a post-
+exposure incubation in fresh medium at standard culture conditions is applied prior to performing the TD
+assay (see Annex II, (44)(45)(46)(47)).
+35. Test chemicals that cannot be pipetted at temperatures up to 37°C are treated as solids in the four
+test methods. The amount of test chemical applied should be sufficient to cover the entire surface of the
+tissue, i.e. a minimum of 33 mg/cm2 application should be used (Annex II). Whenever possible, solids
+
+-- 12 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+12
+should be tested as a fine powder. Tissues treated with solid test chemicals are incubated for a pre-defined
+period of time (depending on the method used) at standard culture conditions (see Annex II,
+(44)(45)(46)(47) ). At the end of the exposure period, the solid test chemical and the control substances
+should be carefully removed from the tissue surface by extensive rinsing with Ca2+/Mg2+-free DPBS at
+room temperature. For the two VRMs, this rinsing step should be followed by a post- exposure immersion
+in fresh medium at room temperature (to remove any test chemical absorbed into the tissue) for a pre-
+defined period of time that varies depending on the VRM used, followed by a post-exposure incubation in
+fresh medium at standard culture conditions, prior to performing the TD assay (see Annex II,
+(44)(45)(46)(47)).
+36. Concurrent negative and positive controls should be included in each run to demonstrate that the
+viability (determined with the negative control) and the sensitivity (determined with the positive control) of
+the tissues are within acceptance ranges defined based on historical data. The concurrent negative control
+also provides the baseline (100% tissue viability) to calculate the relative percent viability of the tissues
+treated with the test chemical (%Viabilitytest). The recommended positive control substance to be used
+with the VRMs, and MCTT HCE™ EIT is neat methyl acetate (CAS RN. 79-20-9, commercially available
+from e.g., Sigma-Aldrich, Cat# 45997; liquid) for both liquids and solids protocols. The recommended
+positive control substances to be used with the LabCyte CORNEA- MODEL24 EIT are ethanol (CAS RN.
+64-17-5) for liquids protocol and lauric acid (CAS RN. 143-07-7) for solids protocol. The recommended
+negative control substance to be used with the VRM1 is ultrapure H2O for both liquids and solids protocols.
+The recommended negative control substance to be used with the VRM2 and MCTT HCE™ EIT is
+Ca2+/Mg2+-free DPBS for both liquids and solids protocols. The recommended negative control to be
+used with the LabCyte CORNEA-MODEL24 EIT is Ca2+/Mg2+-free DPBS (CAS RN. 64-17-5) for liquids
+protocol and no treatment for solids protocol. These were the control substances used in the validation
+studies of the VRMs and are those for which most historical data exist. The use of suitable alternative
+positive or negative control substances should be scientifically and adequately justified. Negative and
+positive controls should be tested with the same protocol(s) as the one(s) used for the test chemicals
+included in the run (i.e. for liquids and/or solids). This application should be followed by the treatment
+exposure, rinsing, a post-exposure immersion, and post-exposure incubation where applicable, as
+described for controls run concurrently to liquid test chemicals (see paragraph 34) or for controls run
+concurrently to solid test chemicals (see paragraph 35), prior to performing the TD assay (see paragraph
+37) (44)(45)(46)(47) . One single set of negative and positive controls is sufficient for all test chemicals of
+the same physical state (liquids or solids) included in the same run.
+Tissue Viability Measurements
+37. The TD assay is a standardised quantitative method (20)(21)(22) that should be used to measure
+tissue viability under this Test Guideline. It is compatible with use in a three-dimensional tissue construct.
+The TD assay is performed immediately following the post- exposure procedures. The VRMs use the MTT
+assay. In the VRMs, the RhCE tissue construct sample is placed in 0.3 mL of MTT solution at 1 mg/mL for
+180±15 minutes at standard culture conditions. The vital dye MTT is reduced into a blue MTT formazan
+precipitate by the viable cells of the RhCE tissue construct. The precipitated blue MTT formazan product
+is then extracted from the tissue using an appropriate volume of isopropanol (or a similar solvent) (44)(45).
+Tissues tested with liquid test chemicals should be extracted from both the top and the bottom of the
+tissues, while tissues tested with solid test chemicals and coloured liquids should be extracted from the
+bottom of the tissue only (to minimise any potential contamination of the isopropanol extraction solution
+with any test chemical that may have remained on the tissue). Tissues tested with liquid test chemicals
+
+-- 13 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+13
+that are not readily washed off may also be extracted from the bottom of the tissue only. LabCyte CORNEA-
+MODEL24 EIT uses the WST-8 assay. In the LabCyte CORNEA-MODEL24 EIT, the RhCE tissue construct
+sample is placed in 0.3 mL of diluted WST-8 solution, prepared according to the standard operating
+procedures (46), for 240 minutes at standard culture conditions and the vital dye WST-8 is reduced into a
+yellow WST-8 formazan by the viable cells of the RhCE tissue construct, which is dissolved into the diluted
+WST-8 solution (46). MCTT HCE™ EIT uses the WST-1 assay. In the MCTT HCE™ EIT, the RhCE tissue
+construct sample is placed in 0.3 mL of diluted WST-1 solution, prepared according to the standard
+operating procedures (47), for 180 minutes at standard culture conditions and the vital dye WST-1 is
+reduced into a yellow WST-1 formazan by the viable cells of the RhCE tissue construct, which is dissolved
+into the diluted WST-1 solution (47). The concurrently tested negative and positive control substances
+should be treated similarly to the tested chemical. In the VRM1 and VRM2, the extracted MTT formazan
+may be quantified either by a standard absorbance (OD) measurement at 570 nm using a filter band pass
+of maximum ± 30 nm or by using an HPLC/UPLC-spectrophotometry procedure (see paragraph 44)
+(10)(48). In the LabCyte CORNEA-MODEL24 EIT, and MCTT HCE™ EIT, the WST-8/-1 formazan may
+be directly quantified (i.e. without the need of an extraction procedure) either by a standard absorbance
+(OD) measurement at 450 nm using a filter band pass of maximum ±30 nm or by using an HPLC/UPLC-
+spectrophotometry procedure (see paragraph 44).
+38. Optical properties of the test chemical or its chemical action on TD (MTT for VRM1 and VRM2,
+WST-8 for LabCyte CORNEA-MODEL24 EIT or WST-1 for MCTT HCE™ EIT) may interfere with the
+measurement of FD leading to a false estimate of tissue viability, i.e., under-prediction of eye irritation.
+Test chemicals may interfere with the measurement of FD by direct reduction of the TD into coloured FD
+(blue MTT formazan or yellow WST-8/-1 formazan) and/or by colour interference if the test chemical
+absorbs, naturally or due to treatment procedures, in the same OD range as FD (i.e., MTT formazan:
+around 570 nm; WST-8/-1 formazan: around 450 nm). Potential of chemicals to directly reduce TD and/or
+interfere with colour measurement (only necessary for coloured test chemicals) should be checked before
+testing (for VRM1, VRM2, LabCyte CORNEA-MODEL24 EIT and MCTT HCE™ EIT). In case of FD
+interference, additional controls should be used to correct for potential interference from such test
+chemicals (see paragraphs 39-43 and Annexes 3-6). This is especially important when a specific test
+chemical is not completely removed from the RhCE tissue construct by rinsing or when it penetrates the
+cornea-like epithelium and is therefore present in the RhCE tissue constructs when the TD assay is
+performed. For test chemicals absorbing light in the same range as FD (naturally or after treatment), which
+are not compatible with the standard absorbance (OD) measurement of FD due to strong interference, i.e.,
+strong absorption at 570±30 nm (with MTT formazan) or 450±30 nm (with WST-8/-1 formazan), an
+HPLC/UPLC-spectrophotometry procedure to measure FD may be employed (see paragraphs 43 and 44)
+(10)(48). A detailed description of how to detect and correct for direct TD reduction and interferences by
+colouring agents is available in the test methods’ respective SOPs (44)(45)(46)(47). Illustrative flowcharts
+providing guidance on how to identify and handle direct TD-reducers and/or colour interfering chemicals
+for VRM1, VRM2, LabCyte CORNEA-MODEL24 EIT, and MCTT HCE™ EIT are also provided in Annexes
+III, IV, V and VI respectively.
+39. To identify potential interference by test chemicals absorbing light in the same range as FD
+(naturally or after treatment) and decide on the need for additional controls, the test chemical is added to
+water and/or isopropanol and incubated for an appropriate time at room temperature (see Annex II,
+(44)(45)(46)(47). If the test chemical in water and/or isopropanol absorbs sufficient light in the range of
+570±20 nm for VRM1 (see Annex III), or if a coloured solution is obtained when mixing the test chemical
+with water for VRM2 (see Annex IV), LabCyte CORNEA-MODEL24 EIT(see Annex V), and MCTT HCE™
+EIT (see Annex VI), the test chemical is presumed to interfere with the standard absorbance (OD)
+measurement of FD and further colorant controls should be performed or, alternatively, an HPLC/UPLC-
+spectrophotometry procedure should be used in which case these controls are not required (see
+
+-- 14 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+14
+paragraphs 43 and 44 and Annexes III, IV, V and VI) (44)(45)(46)(47). When performing the standard
+absorbance (OD) measurement, each interfering test chemical should be applied on at least two viable
+tissue replicates, which undergo the entire testing procedure but are incubated with medium instead of TD
+solution during the TD incubation step, to generate a non-specific colour in living tissues (NSCliving) control
+(44)(45)(46)(47). The NSCliving control needs to be performed concurrently to the testing of the coloured
+test chemical and, in case of multiple testing, an independent NSCliving control needs to be conducted
+with each test performed (in each run) due to the inherent biological variability of living tissues. True tissue
+viability is calculated as: the percent tissue viability obtained with living tissues exposed to the interfering
+test chemical and incubated with the MTT or WST-8/-1 solution (%Viabilitytest) minus the percent non-
+specific colour obtained with living tissues exposed to the interfering test chemical and incubated with
+medium without MTT or WST-8/-1, run concurrently to the test being corrected (%NSCliving), i.e., True
+tissue viability = [%Viabilitytest] - [%NSCliving].
+40. To identify direct MTT or WST-8/-1 reducers, each test chemical should be added to freshly
+prepared TD. An appropriate amount of test chemical is added to a TD solution and the mixture is incubated
+for approximately 3 or 4 hours at standard culture conditions (see Annexes III, IV, V and VI)
+(44)(45)(46)(47) . If the TD mixture containing the test chemical (or suspension for insoluble test chemicals)
+turns blue/purple (for MTT solution) or yellow/orange (for WST-8/-1 solution), the test chemical is presumed
+to directly reduce the TD and a further functional check on non-viable RhCE tissue constructs should be
+performed, independently of using the standard absorbance (OD) measurement or an HPLC/UPLC-
+spectrophotometry procedure. This additional functional check employs killed tissues that possess only
+residual metabolic activity but absorb and retain the test chemical in a similar way as viable tissues. Killed
+tissues of VRM1, and MCTT HCE™ EIT are prepared by exposure to low temperature ("freeze-killed").
+Killed tissues of VRM2 are prepared by prolonged incubation (e.g., at least 24±1 hours) in water followed
+by storage to low temperature ("water-killed"). Killed tissues of LabCyte CORNEA-MODEL24 EIT are
+prepared by freezing tissues at -80°C or below, for 30 minutes twice (“freeze-killed”). Each TD reducing
+test chemical is applied on at least two killed tissue replicates, which undergo the entire testing procedure,
+to generate a non-specific TD reduction (NSMTT or NSWST) control (44)(45)(46)(47) . A single NSMTT
+or NSWST control is sufficient per test chemical regardless of the number of independent tests/runs
+performed. True tissue viability is calculated as: the percent tissue viability obtained with living tissues
+exposed to the TD reducer (%Viabilitytest) minus the percent non-specific TD reduction obtained with the
+killed tissues exposed to the same reducer, calculated relative to the negative control run concurrently to
+the test being corrected (%NSMTT or %NSWST), i.e. true tissue viability = [%Viabilitytest] - [%NSMTT
+or %NSWST].
+41. Test chemicals that are identified as producing both colour interference (see paragraph 39) and
+direct TD reduction (see paragraph 40) will also require a third set of controls when performing the standard
+absorbance (OD) measurement, apart from the NSMTT or NSWST, and NSCliving controls described in
+the previous paragraphs. This is usually the case with darkly coloured test chemicals absorbing light in the
+range of 570±30 nm for MTT formazan (e.g., blue, purple, black) or with lightly coloured test chemicals
+absorbing light in the range of 450±30 nm for WST-8/-1 formazan (e.g. yellow, orange) because their
+intrinsic colour impedes the assessment of their capacity to directly reduce MTT or WST-8/-1 as described
+in paragraph 40. This forces the use of NSMTT or NSWST controls, by default, together with the NSCliving
+controls. Test chemicals for which both NSMTT or NSWST, and NSCliving controls are performed may be
+absorbed and retained by both living and killed tissues. Therefore, in this case, the NSMTT or NSWST
+control may not only correct for potential direct TD reduction by the test chemical, but also for colour
+interference arising from the absorption and retention of the test chemical by killed tissues. This could lead
+to double correction for colour interference since the NSCliving control already corrects for colour
+interference arising from the absorption and retention of the test chemical by living tissues. To avoid a
+
+-- 15 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+15
+possible double correction for colour interference, a third control for non-specific colour in killed tissues
+(NSCkilled) needs to be performed (see Annexes III, IV, V and VI) (44)(45)(46)(47). In this additional
+control, the test chemical is applied on at least two killed tissue replicates, which undergo the entire testing
+procedure but are incubated with medium instead of TD solution during the TD incubation step. A single
+NSCkilled control is sufficient per test chemical regardless of the number of independent tests/runs
+performed, but should be performed concurrently to the NSMTT or NSWST control and with the same
+tissue batch. True tissue viability is calculated as: the percent tissue viability obtained with living tissues
+exposed to the test chemical (%Viabilitytest) minus %NSMTT or %NSWST minus %NSCliving plus the
+percent non-specific colour obtained with killed tissues exposed to the interfering test chemical and
+incubated with medium without TD, calculated relative to the negative control ran concurrently to the test
+being corrected (%NSCkilled), i.e., True tissue viability = [%Viabilitytest] - [%NSMTT or %NSWST] -
+[%NSCliving] + [%NSCkilled].
+42. It is important to note that non-specific TD reduction and non-specific colour interferences may
+increase the OD (when performing standard absorbance measurements) of the sample above the linearity
+range of the spectrophotometer and that non-specific TD reduction can also increase the FD peak area
+(when performing HPLC/UPLC- spectrophotometry measurements) of the sample above the linearity
+range of the spectrophotometer. On this basis, when using RhCEs, it is important for each laboratory to
+determine the OD/peak area linearity range of their spectrophotometer with MTT formazan (CAS RN.
+57360-69-7) which is commercially available from e.g., Sigma-Aldrich (Cat# M2003), WST-8 formazan
+(CAS RN 193149-76-7), commercially available from Dojindo Molecular Technologies or WST-1 formazan
+(CAS RN 150849-53-9), available from e.g., Toronto Research Chemicals (Cat# I718750).
+43. The standard absorbance (OD) measurement using a spectrophotometer is appropriate to assess
+direct TD-reducers and colour interfering test chemicals, when the observed interference with the
+measurement of FD is not strong (i.e., the ODs of the samples obtained with the test chemical without any
+correction for direct TD reduction and/or colour interference are within the linear range of the
+spectrophotometer). Nevertheless, results for test chemicals producing %NSMTT or %NSWST and/or
+%NSCliving ≥ 60% (VRM1, and VRM2 for liquids protocol, and MCTT HCE™ EIT for solids) or 50% (VRM2
+for solids protocol) or 40% (LabCyte CORNEA-MODEL24 EIT) or 35% (MCTT HCE™ EIT for liquids) of
+the negative control should be taken with caution as this is the established cut-off used in the VRMs to
+distinguish classified from not classified chemicals (see paragraph 46). Standard absorbance (OD) can
+however not be measured when the interference with the measurement of FD is strong (i.e., leading to
+uncorrected ODs of the test samples falling outside of the linear range of the spectrophotometer). Coloured
+test chemicals or test chemicals that become coloured in contact with water or isopropanol that interfere
+strongly with the standard absorbance (OD) measurement of FD may still be assessed using HPLC/UPLC-
+spectrophotometry (see Annexes III, IV,V and VI). This is because the HPLC/UPLC system allows for the
+separation of the FD from the chemical before its quantification (48). For this reason, NSCliving or
+NSCkilled controls are never required when using HPLC/UPLC-spectrophotometry, independently of the
+chemical being tested. NSMTT or NSWST controls should nevertheless be used if the test chemical is
+suspected to directly reduce TD (following the procedure described in paragraph 40). NSMTT or NSWST
+controls should also be used with test chemicals having a colour (intrinsic or appearing when in water) that
+impedes the assessment of their capacity to directly reduce TD as described in paragraph 40. When using
+HPLC/UPLC-spectrophotometry to measure FD, the percent tissue viability is calculated as percent FD
+peak area obtained with living tissues exposed to the test chemical relative to the FD peak obtained with
+the concurrent negative control. For test chemicals able to directly reduce TD, true tissue viability is
+calculated as: %Viabilitytest minus %NSMTT or %NSWST, as described in the last sentence of
+paragraph 39. Finally, it should be noted that direct TD-reducers or direct TD-reducers that are also colour
+interfering, which are retained in the tissues after treatment and reduce TD so strongly that they lead to
+ODs (using standard OD measurement) or peak areas (using UPLC/HPLC- spectrophotometry) of the
+
+-- 16 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+16
+tested samples that fall outside of the linearity range of the spectrophotometer cannot be assessed with
+RhCE test methods, although these are expected to occur in only very rare situations.
+44. HPLC/UPLC-spectrophotometry may be used with all types of test chemicals (coloured, non-
+coloured, TD-reducers and non-TD reducers) for measurement of FD (10)(48). Due to the diversity of
+HPLC/UPLC-spectrophotometry systems, it is not feasible for each user to establish the exact same
+system conditions. As such, qualification of the HPLC/UPLC-spectrophotometry system should be
+demonstrated before its use to quantify TD from samples by meeting the acceptance criteria for a set of
+standard qualification parameters based on those described in the U.S. Food and Drug Administration
+guidance for industry on bioanalytical method validation (48)(49). These key parameters and their
+acceptance criteria are shown in Annex VII. Once the acceptance criteria defined in Annex VII have been
+met, the HPLC/UPLC-spectrophotometry system is considered qualified and ready to measure FD under
+the experimental conditions described in this Test Guideline.
+Acceptance Criteria
+45. For each run using RhCE tissue batches that met the quality control (see paragraph 32), tissues
+treated with the negative control substance should exhibit OD reflecting the quality of the tissues that
+followed shipment, receipt steps and all protocol processes and should not be outside the historically
+established boundaries described in Table 2 (see paragraph 28). Similarly, tissues treated with the positive
+control substance, i.e., methyl acetate (for VRM1, VRM2, and MCTT HCE™ EIT), ethanol (for LabCyte
+CORNEA-MODEL24 EIT with liquid protocol) or lauric acid (LabCyte CORNEA-MODEL24 EIT with solid
+protocol), should show a mean tissue viability < 50% relative to the negative control in the VRM1 with either
+the liquids or the solids protocols, ≤ 30% (liquids protocol) or ≤ 20% (solids protocol) relative to the negative
+control in the VRM2, ≤ 35% relative to the negative control in the MCTT HCE™ EIT and ≤ 40% relative to
+the negative control in the LabCyte CORNEA-MODEL24 EIT, thus reflecting the ability of the tissues to
+respond to an irritant test chemical under the conditions of the test method (44)(45)(46)(47). The variability
+between tissue replicates of test chemicals and control substances should fall within the accepted limits
+(i.e., the difference of viability between two tissue replicates should be less than 20% or the standard
+deviation (SD) between three tissue replicates should not exceed 18%). If either the negative control or
+positive control included in a run is outside of the accepted ranges, the run is considered "non-qualified"
+and should be repeated. If the variability between tissue replicates of a test chemical is outside of the
+accepted range, the test must be considered "non-qualified" and the test chemical should be re-tested.
+Interpretation of Results and Prediction Model
+46. The OD values/peak areas obtained with the replicate samples for each test chemical should be
+used to calculate the mean percent tissue viability (mean between tissue replicates) normalised to the
+negative control, which is set at 100%. The percentage tissue viability cut-off value for identifying test
+chemicals not requiring classification for eye irritation or serious eye damage (UN GHS No Category) is
+given in Table 4. Results should thus be interpreted as follows:
+• The test chemical is identified as not requiring classification and labelling according to UN GHS
+(No Category) if the mean percent tissue viability after exposure and post-exposure incubation is
+more than (>) the established percentage tissue viability cut-off value, as shown in Table 4. In this
+case no further testing in other test methods is required.
+• If the mean percent tissue viability after exposure and post-exposure incubation is less than or
+equal (≤) to the established percentage tissue viability cut-off value, no prediction can be made
+from this result in isolation, as shown in Table 4. This is because in case of a true positive, the
+
+-- 17 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+17
+methods cannot resolve between UN GHS Categories 1 and 2 (see paragraph 19). Furthermore,
+RhCE test methods show a high percentage of false positive results (see paragraphs 14-17). In
+both cases, further information will be required for classification purposes according to the IATA
+guidance document (3).
+Table 4. Prediction Models according to UN GHS classification
+Test Method No Category No prediction can be made
+EpiOcular™ EIT
+(for both protocols)
+Mean tissue viability>
+60% Mean tissue viability ≤ 60%
+SkinEthic™HCE EIT
+(for the liquids’ protocol)
+Mean tissue viability>
+60%
+Mean tissue viability ≤ 60%
+SkinEthic™HCE EIT
+(for the solids’ protocol)
+Mean tissue viability>
+50%
+Mean tissue viability ≤ 50%
+LabCyteCORNEA-
+MODEL24 EIT
+(for both protocols)
+Mean tissue viability >
+40%
+Mean tissue viability ≤ 40%
+MCTT HCE™ EIT
+(for the liquids’ protocol)
+Mean tissue viability >
+35%
+Mean tissue viability ≤ 35%
+MCTT HCE™ EIT
+(for the solids’ protocol)
+Mean tissue viability >
+60%
+Mean tissue viability ≤ 60%
+47. A single test composed of at least two tissue replicates should be sufficient for a test chemical
+when the result is unequivocal. However, in cases of borderline results, such as non-concordant replicate
+measurements and/or mean percent tissue viability equal to 60±5% (VRM1, and VRM2 for liquids’ protocol,
+and MCTT HCE™ EIT for solids’ protocol), 50±5% (VRM2 for solids’ protocol), 40±5% (LabCyte CORNEA-
+MODEL24 EIT), or 35±5% (MCTT HCE™ EIT for liquids’ protocol), a second test should be considered,
+as well as a third one in case of discordant results between the first two tests.
+Benchmark chemicals may be useful for evaluating the serious eye damage/eye irritation potential of
+unknown test chemicals, or product class, or for evaluating the relative ocular toxicity potential of a
+classified chemical within a specific range of positive response
+DATA AND REPORTING
+Data
+48. Data from individual replicate tissues in a run (e.g., OD values/FD peak areas and calculated
+percent tissue viability data for the test chemical and controls, and the final RhCE test method prediction)
+should be reported in tabular form for each test chemical, including data from repeat tests, as appropriate.
+In addition, mean percent tissue viability and difference of viability between two tissue replicates (if n=2
+replicate tissues) or SD (if n≥3 replicate tissues) for each individual test chemical and control should be
+reported. Any observed interferences of a test chemical with the measurement of FD through direct TD
+reduction and/or coloured interference should be reported for each tested chemical.
+
+-- 18 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+18
+Test report
+49. The test report should include the following information:
+Test chemical
+Mono-constituent substance
+• Chemical identification, such as IUPAC or CAS name(s), CAS registry number(s), SMILES or InChI
+code, structural formula, and/or other identifiers;
+o Physical state, volatility, pH, LogP, molecular weight, chemical class, and additional relevant
+physicochemical properties relevant to the conduct of the study, to the extent available;
+o Purity, chemical identity of impurities as appropriate and practically feasible, etc.;
+o Treatment prior to testing, if applicable (e.g., warming, grinding);
+o Storage conditions and stability to the extent available.
+• Multi-constituent substance, UVCB and mixture
+o Characterisation as far as possible by e.g., chemical identity (see above), purity, quantitative
+occurrence and relevant physicochemical properties (see above) of the constituents, to the
+extent available;
+o Physical state and additional relevant physicochemical properties relevant to the conduct
+of the study, to the extent available;
+o Purity, chemical identity of impurities as appropriate and practically feasible, etc.;
+o Treatment prior to testing, if applicable (e.g., warming, grinding);
+o Storage conditions and stability to the extent available.
+Positive and Negative Control Substances
+• Chemical identification, such as IUPAC or CAS name(s), CAS registry number(s), SMILES or InChI
+code, structural formula, and/or other identifiers;
+• Physical state, volatility, molecular weight, chemical class, and additional relevant physicochemical
+properties relevant to the conduct of the study, to the extent available;
+• Purity, chemical identity of impurities as appropriate and practically feasible, etc.;
+• Treatment prior to testing, if applicable (e.g., warming, grinding);
+• Storage conditions and stability to the extent available;
+• Justification for the use of a different negative control than those referenced in Annex II , if
+applicable;
+• Justification for the use of a different positive control than those referenced in Annex II , if
+applicable;
+• Reference to historical positive and negative control results demonstrating suitable run acceptance
+criteria.
+Information Concerning the Sponsor and the Test Facility
+• Name and address of the sponsor, test facility and study director.
+
+-- 19 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+19
+RhCE Tissue Construct and Protocol Used (providing rationale for the choices, if applicable)
+Test Method Conditions
+• RhCE tissue construct used, including batch number;
+• Wavelength and band pass (if applicable) used for quantifying FD, and linearity range of measuring
+device (e.g., spectrophotometer);
+• Description of the method used to quantify FD
+• Description of the HPLC/UPLC-spectrophotometry system used, if applicable;
+• Complete supporting information for the specific RhCE tissue construct used including its
+performance. This should include, but is not limited to:
+i. Viability quality control (supplier)
+ii. Viability under test method conditions (user);
+iii. Barrier function quality control (for positive and negative control);
+iv. Morphology, if available;
+v. Other quality controls (QC) of the RhCE tissue construct, if available;
+• Reference to historical data of the RhCE tissue construct. This should include, but is not limited to:
+Acceptability of the QC data with reference to historical batch data;
+• Statement that the testing facility has demonstrated proficiency in the use of the test method before
+routine use by testing of the proficiency chemicals;
+Run and Test Acceptance Criteria
+• Positive and negative control means and acceptance ranges based on historical data;
+• Acceptable variability between tissue replicates for positive and negative controls;
+• Acceptable variability between tissue replicates for the test chemical;
+Test Procedure:
+• Details of the test procedure used;
+• Doses of test chemical and control substances used;
+• Duration and temperature of exposure, post-exposure immersion and post-exposure incubation
+periods (where applicable);
+• Description of any modifications to the test procedure;
+• Indication of controls used for direct TD-reducers and/or colouring test chemicals, if applicable;
+• Number of tissue replicates used per test chemical and controls (positive control, negative control,
+NSMTT or NSWST, NSCliving and NSCkilled, if applicable);
+Results:
+• Tabulation of data from individual test chemicals and control substances for each run (including
+repeat experiments where applicable) and each replicate measurement, including OD value or FD
+peak area, percent tissue viability, mean percent tissue viability, Difference between tissue
+replicates or SD, and final prediction;
+
+-- 20 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+20
+• If applicable, results of controls used for direct TD-reducers and/or coloured test chemicals,
+including OD value or FD peak area, %NSMTT or %NSWST, %NSCliving, %NSCkilled, Difference
+between tissue replicates or SD, final correct percent tissue viability, and final prediction;
+• Results obtained with the test chemical(s) and control substances in relation to the define run and
+test acceptance criteria;
+• Description of other effects observed, e.g., colouration of the tissues by a coloured test chemical;
+Discussion of the results
+Conclusion
+
+-- 21 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+21
+LITERATURE
+1. UN (2017). United Nations Globally Harmonized System of Classification and Labelling of
+Chemicals (GHS). ST/SG/AC.10/30/Rev.7, Seventh Revised Edition, New York and Geneva:
+United Nations. Available at:
+[http://www.unece.org/fileadmin/DAM/trans/danger/publi/ghs/ghs_rev07/English/ST-SG-AC10-30-
+Rev7e.pdf].
+2. OECD (2012). Guideline for Testing of Chemicals No. 405: Acute Eye Irritation/Corrosion.
+Organisation for Economic Cooperation and Development, Paris. Available at:
+[http://www.oecd.org/env/testguidelines].
+3. OECD (2018). Guidance Document on an Integrated Approach on Testing and Assessment for
+Serious Eye Damage and Eye irritation. Series on Testing and Assessment No.263. ENV
+Publications, Organisation for Economic Cooperation and Development, Paris.
+4. OECD (2013). Guideline for Testing of Chemicals No. 437: Bovine Corneal Opacity and
+Permeability Test Method for Identifying i) Chemicals Inducing Serious Eye Damage and ii)
+Chemicals Not Requiring Classification for Eye Irritation or Serious Eye Damage. Organisation for
+Economic Cooperation and Development, Paris. Available at:
+[http://www.oecd.org/env/testguidelines].
+5. OECD (2013). Guideline for Testing of Chemicals No. 438: Isolated Chicken Eye Test Method for
+Identifying i) Chemicals Inducing Serious Eye Damage and ii) Chemicals Not Requiring
+Classification. Organisation for Economic Cooperation and Development, Paris. Available at:
+[http://www.oecd.org/env/testguidelines].
+6. OECD (2012). Guideline for Testing of Chemicals No. 460: Fluorescein Leakage Test Method for
+Identifying Ocular Corrosives and Severe Irritants. Organisation for Economic Co-operation and
+Development, Paris. Available at: [http://www.oecd.org/env/testguidelines].
+7. OECD (2015). Guideline for Testing of Chemicals No. 491: Short Time Exposure In Vitro Test
+Method for Identifying i) Chemicals Inducing Serious Eye Damage and ii) Chemicals Not Requiring
+Classification for Eye Irritation or Serious Eye Damage. Organisation for Economic Co-operation
+and Development, Paris. Available at: [http://www.oecd.org/env/testguidelines].
+8. Freeman, S.J., Alépée N., Barroso, J., Cole, T., Compagnoni, A., Rubingh, C., Eskes, C.,
+Lammers, J., McNamee, P., Pfannenbecker, U., Zuang, V. (2010). Prospective Validation Study of
+Reconstructed Human Tissue Models for Eye Irritation Testing. ALTEX 27, Special Issue 2010,
+261- 266.
+9. EC EURL ECVAM. (2014). The EURL ECVAM - Cosmetics Europe prospective validation study of
+Reconstructed human Cornea-like Epithelium (RhCE)-based test methods for identifying
+chemicals not requiring classification and labelling for serious eye damage/eye irritation: Validation
+Study Report. EUR 28125 EN; doi:10.2787/41680. Available at:
+[http://publications.jrc.ec.europa.eu/repository/handle/JRC100280].
+10. EURL ECVAM Science Advisory Committee. (2014). ESAC Opinion on the EURL ECVAM Eye
+Irritation Validation Study (EIVS) on EpiOcularTM EIT and SkinEthicTM HCE and a related
+Cosmetics Europe study on HPLC/UPLC-spectrophotometry as an alternative endpoint detection
+system for MTT-formazan. ESAC opinion No. 2014-03 of 17 November 2014; EUR 28173 EN; doi:
+10.2787/043697. Available at: [http://publications.jrc.ec.europa.eu/repository/handle/JRC103702].
+11. Alépée, N., Leblanc, V., Adriaens, E., Grandidier, M.H., Lelièvre, D, Meloni, M., Nardelli, L., Roper,
+C.S, Santirocco, E., Toner, F., Van Rompay, A., Vinall, J., Cotovio, J. (2016). Multi- laboratory
+
+-- 22 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+22
+validation of SkinEthic HCE test method for testing serious eye damage/eye irritation using liquid
+chemicals. Toxicol. In Vitro 31, 43-53.
+12. Alépée, N., Adriaens, E., Grandidier, M.H., Meloni, M., Nardelli, L., Vinall, C.J., Toner, F., Roper,
+C.S, Van Rompay, A.R., Leblanc, V., Cotovio, J. (2016). Multi-laboratory evaluation of SkinEthic
+HCE test method for testing serious eye damage/eye irritation using solid chemicals and overall
+performance of the test method with regard to solid and liquid chemicals testing. Toxicol. In Vitro
+34, 55-70.
+13. EURL ECVAM Science Advisory Committee. (2016). ESAC Opinion on the SkinEthic™ Human
+Corneal Epithelium (HCE) Eye Irritation Test (EIT). ESAC Opinion No. 2016-02 of 24 June
+2016;EUR 28175 EN; doi : 10.2787/390390. Available at:
+[http://publications.jrc.ec.europa.eu/repository/handle/JRC103704].
+14. Me-too validation report – Validation study for LabCyte CORENA-MODEL24 EYE IRRITATION
+TEST, February 2017, available at: http://www.jacvam.jp/files/doc/06_11/06_11_D1.pdf.
+15. Lim, S.E., Ha, S.J., Jang, W.H., Jung, K.M., Jung, M.S., Yeo, K.W., Kim, J.S., Jeong, T.C., Kang,
+M.J., Lee, S.H., Ko, K.Y., Kim, T.S., Park, K.S., Bae, S. and Lim, K.M. Me-Too validation study for
+in vitro eye irritation test with 3D-reconstructed human cornea epithelium, MCTT HCE™. Toxicol.
+In Vitro 55, 173-184.
+16. OECD (2018). Peer Review Report on Validation status of the LabCyte CORNEA-MODEL24 EYE
+IRRITATION TEST, OECD Series on Testing and Assessment No.282. ENV Publications,
+Organisation for Economic Cooperation and Development, Paris.
+17. Peer Review Report on Validation status of the MCTT HCE™ EYE IRRITATION TEST,
+unpublished.
+18. Draize, J.H., Woodard, G., Calvery, H.O. (1944). Methods for the Study of Irritation and Toxicity of
+Substances Applied Topically to the Skin and Mucous Membranes. Journal of Pharmacol. and Exp.
+Therapeutics 82, 377-390.
+19. Scott, L., Eskes, C., Hoffmann, S., Adriaens, E., Alépée, N., Bufo, M., Clothier, R., Facchini, D.,
+Faller, C., Guest, R., Harbell, J., Hartung, T., Kamp, H., Le Varlet, B., Meloni, M., McNamee, P.,
+Osborne, R., Pape, W., Pfannenbecker, U., Prinsen, M., Seaman, C., Spielman, H., Stokes, W.,
+Trouba, K., Van den Berghe, C., Van Goethem, F., Vassallo, M., Vinardell, P., Zuang, V. (2010). A
+Proposed Eye Irritation Testing Strategy to Reduce and Replace In Vivo Studies Using Bottom-Up
+and Top-Down Approaches. Toxicol. In Vitro 24, 1-9.
+20. Mosmann, T. (1983). Rapid Colorimetric Assay for Cellular Growth and Survival: Application to
+Proliferation and Cytotoxicity Assays. J. Immunol. Methods 65, 55-63.
+21. Tominaga, H., Ishiyama, M., Ohseto. F., Sasamoto, K., Hamamoto, T., Suzuki, K., Watanabe, M.,
+(1999). A water-soluble tetrazolium salt useful for colorimetric cell viability assay. Anal. Commun.
+36, 47–50.
+22. Ishiyama, M., Shiga, M., Sasamoto, K., Mizoguchi, M., & He, P. G. (1993). A new sulfonated
+tetrazolium salt that produces a highly water-soluble formazan dye. Chem. Pharm. Bull. (Tokyo),
+41(6), 1118-1122.
+23. OECD (2016). Series on Testing and Assessment No. 216: Performance Standards for the
+Assessment of Proposed Similar or Modified In Vitro Reconstructed Human Cornea-Like
+Epithelium (RhCE) Test Methods for Identifying Chemicals not Requiring Classification and
+Labelling for Eye Irritation or Serious Eye Damage, Based on the Validated Reference Methods
+EpiOcular™ EIT and SkinEthic™ HCE EIT described in TG 492. Organisation for Economic
+Cooperation and Development, Paris. Available at: [http://www.oecd.org/env/testguidelines].
+
+-- 23 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+23
+24. OECD (2005). Series on Testing and Assessment No. 34: Guidance Document on the Validation
+and International Acceptance of New or Updated Test Methods for Hazard Assessment.
+Organisation for Economic Cooperation and Development, Paris. Available
+at: [http://www.oecd.org/env/testguidelines].
+25. Kaluzhny, Y., Kandárová, H., Hayden, P., Kubilus, J., d'Argembeau-Thornton, L., Klausner, M.
+(2011). Development of the EpiOcular™ Eye Irritation Test for Hazard Identification and Labelling
+of Eye Irritating Chemicals in Response to the Requirements of the EU Cosmetics Directive and
+REACH Legislation. Altern. Lab. Anim. 39, 339-364.
+26. Nguyen, D.H., Beuerman, R.W., De Wever, B., Rosdy, M. (2003). Three-dimensional construct of
+the human corneal epithelium for in vitro toxicology. In: Salem, H., Katz, S.A. (Eds), Alternative
+Toxicological Methods, CRC Press, pp. 147-159.
+27. Katoh, M., Uemura, N., Hamajima, F., Ogasawar,a T., Hata, K. (2012). Morphological
+characterization of a reconstructed human corneal epithelial model (LabCyte CORNEA-MODEL)
+as an alternative to the draize eye test for the assessment of eye irritation. AATEX. 17, 22-28.
+28. Jung, K. M., Lee, S. H., Ryu, Y. H., Jang, W. H., Jung, H. S., Han, J. H., Seok, S. H., Park, J. H.,
+Son, Y., Park, Y. H. and Lim, K. M. (2011). A new 3D reconstituted human corneal epithelium
+model as an alternative method for the eye irritation test. Toxicol In Vitro 25, 403-410.
+29. Pfannenbecker, U., Bessou-Touya, S., Faller, C., Harbell, J., Jacob, T., Raabe, H., Tailhardat, M.,
+Alépée, N., De Smedt, A., De Wever, B., Jones, P., Kaluzhny, Y., Le Varlet, B., McNamee, P.,
+Marrec-Fairley, M., Van Goethem, F. (2013). Cosmetics Europe multi-laboratory pre-validation of
+the EpiOcular™ reconstituted Human Tissue Test Method for the Prediction of Eye Irritation.
+Toxicol. In Vitro 27, 619-626.
+30. Alépée, N., Bessou-Touya, S., Cotovio, J., de Smedt, A., de Wever, B., Faller, C., Jones, P., Le
+Varlet, B., Marrec-Fairley, M., Pfannenbecker, U., Tailhardat, M., van Goethem, F., McNamee, P.
+(2013). Cosmetics Europe Multi-Laboratory Pre-Validation of the SkinEthic™ Reconstituted
+Human Corneal Epithelium Test Method for the Prediction of Eye Irritation. Toxicol. In Vitro 27,
+1476- 1488.
+31. Katoh, M., Hamajima, F., Ogasawar,a T., Hata, K.. (2013). Establishment of a new in vitro test
+method for evaluation of eye irritancy using a reconstructed human corneal epithelial model,
+LabCyte CORNEA-MODEL. Toxicol. In Vitro. 27, 2184-2192.
+32. Yang, H., Kim, D. E., Jang, W. H., An, S., Cho, S. A., Jung, M. S., Lee, J. E., Yeo, K. W., Koh, S.
+B., Jeong, T. C., Kang, M. J., Chun, Y. J., Lee, S. H., Lim, K. M. and Bae, S. (2017). Prevalidation
+trial for a novel in vitro eye irritation test using the reconstructed human cornea-like epithelial model,
+MCTT HCE. Toxicol. In Vitro 39, 58-67.
+33. Kolle, S.N., Moreno, M.C.R., Mayer, W., van Cott, A., van Ravenzwaay, B., Landsiedel, R. (2015).
+The EpiOcular™ Eye Irritation Test is the Method of Choice for In Vitro Eye Irritation Testing of
+Agrochemical Formulations: Correlation Analysis of EpiOcular™ Eye Irritation Test and BCOP Test
+Data to UN GHS, US EPA and Brazil ANIVSA Classifications. Altern. Lab. Anim. 43, 1-18.
+34. Adriaens, E., Barroso, J., Eskes, C., Hoffmann, S., McNamee, P., Alépée, N., Bessou-Touya, S.,
+De Smedt, A., De Wever, B., Pfannenbecker, U., Tailhardat, M., Zuang, V. (2014). Retrospective
+Analysis of the Draize Test for Serious Eye Damage/Eye Irritation: Importance of Understanding
+the in vivo Endpoints Under UN GHS/EU CLP for the Development and Evaluation of In Vitro Test
+Methods. Arch. Toxicol. 88, 701-723.
+35. Meloni, M., De Servi, B., Marasco, D., Del Prete, S. (2011). Molecular mechanism of ocular surface
+damage: Application to an in vitro dry eye model on human corneal epithelium. Molecular Vision
+17, 113-126.
+
+-- 24 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+24
+36. Hackett, R.B., McDonald, T.O. (1991). Eye Irritation. In Advances in Modern Toxicology:
+Dermatoxicology Marzulli F.N.and Maibach H.I. (Eds.), 4th Edition, pp. 749–815. Washington, DC,
+USA: Hemisphere Publishing Corporation.
+37. Fox, D.A., Boyes, W.K. (2008). Toxic Responses of the Ocular and Visual System. In Cassaret
+and Doull’s Toxicology: The Basic Science of Poisons Klaassen C.D.(Ed.), 7th Edition, pp. 665–
+697. Withby, ON, Canada: McGraw-Hill Ryerson.
+38. Jester, J.V., Li, H.F., Petroll, W.M., Parker, R.D., Cavanagh, H.D., Carr, G.J., Smith, B., Maurer,
+39. J.K. (1998). Area and Depth of Surfactant Induced Corneal Injury Correlates with Cell Death.
+Invest. Ophthalmol. Vis. Sci. 39, 922–936.
+40. Maurer, J.K., Parker, R.D., Jester, J.V. (2002). Extent of Corneal Injury as the Mechanistic Basis
+for Ocular Irritation: Key Findings and Recommendations for the Development of Alternative
+Assays. Reg. Tox. Pharmacol. 36, 106-117.
+41. Jester, J.V., Li, L., Molai, A., Maurer, J.K. (2001). Extent of Corneal Injury as a Mechanistic Basis
+for Alternative Eye Irritation Tests. Toxicol. In Vitro 15, 115–130.
+42. Jester, J.V., Petroll, W.M., Bean, J., Parker, R.D., Carr, G.J., Cavanagh, H.D., Maurer, J.K. (1998).
+Area and Depth of Surfactant-Induced Corneal Injury Predicts Extent of Subsequent Ocular
+Responses. Invest. Ophthalmol. Vis. Sci. 39, 2610–2625.
+43. Jester, J.V. (2006). Extent of Corneal Injury as a Biomarker for Hazard Assessment and the
+Development of Alternative Models to the Draize Rabbit Eye Test. Cutan. Ocul. Toxicol. 25, 41–
+54.
+44. Barroso, J., Pfannenbecker, U., Adriaens, E., Alépée, N., Cluzel, M., De Smedt, A., Hibatallah, J.,
+Klaric, M., Mewes, K.R., Millet, M., Templier, M., McNamee, P. (2017). Cosmetics Europe
+compilation of historical serious eye damage/eye irritation in vivo data analysed by drivers of
+classification to support the selection of chemicals for development and evaluation of alternative
+methods/strategies: the Draize eye test Reference Database (DRD). Arch. Toxicol. 91, 521-547.
+45. EpiOcular™ EIT SOP, Version 8. (March 05, 2013). EpiOcular™ EIT for the Prediction of Acute
+Ocular Irritation of Chemicals. Available at: [http://www.ecvam-dbalm.jrc.ec.europa.eu/].
+46. SkinEthic™ HCE EIT SOP, Version 1. (July 20, 2015). SkinEthic™ HCE Eye Irritation Test (EITL
+for Liquids, EITS for Solids) for the Prediction of Acute Ocular Irritation of Chemicals. Available at:
+[http://www.ecvam-dbalm.jrc.ec.europa.eu/].
+47. LabCyte CORNEA-MODEL24 EIT SOP, Version 2.5.6. (February, 2017). LabCyte CORNEA-
+MODEL24 eye irritation test operation protocol. Available at:
+[http://www.jacvam.jp/files/doc/06_11/06_11_E1.pdf].
+48. MCTT HCE™ EIT SOP, Version 1.7. (August, 2018). MCTT HCE™ eye irritation test operation
+protocol. Available at: http://www.keraskin.co.kr/eng/product/mucosalmodel.asp].
+49. Alépée, N., Barroso, J., De Smedt, A., De Wever, B., Hibatallah, J., Klaric, M., Mewes, K.R., Millet,
+M., Pfannenbecker, U., Tailhardat, M., Templier, M., McNamee, P. (2015). Use of HPLC/UPLC-
+Spectrophotometry for Detection of Formazan in In Vitro Reconstructed Human Tissue (RhT)-
+Based Test Methods Employing the MTT-Reduction Assay to Expand their Applicability to Strongly
+Coloured Test Chemicals. Toxicol. In Vitro 29, 741-761.
+50. US FDA (2001). Guidance for Industry: Bioanalytical Method Validation. U.S. Department of Health
+and Human Services, Food and Drug Administration. May 2001. Available at:
+[http://www.fda.gov/downloads/Drugs/Guidances/ucm070107.pdf].
+
+-- 25 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+25
+ANNEX I - DEFINITIONS
+Accuracy: The closeness of agreement between test method results and accepted reference values. It is
+a measure of test method performance and one aspect of “relevance.” The term is often used
+interchangeably with “concordance”, to mean the proportion of correct outcomes of a test method (24).
+Benchmark chemical: A chemical used as a standard for comparison to a test chemical. A benchmark
+chemical should have the following properties: (i) consistent and reliable source(s) for its identification and
+characterisation; (ii) structural, functional and/or chemical or product class similarity to the chemical(s)
+being tested; (iii) known physicochemical characteristics; (iv) supporting data on known effects; and (v)
+known potency in the range of the desired response.
+Bottom-Up approach: Step-wise approach used for a test chemical suspected of not requiring
+classification and labelling for eye irritation or serious eye damage, which starts with the determination of
+chemicals not requiring classification and labelling (negative outcome) from other chemicals (positive
+outcome) (3).
+Chemical: A substance or mixture.
+Concordance: See "Accuracy".
+Cornea: The transparent part of the front of the eyeball that covers the iris and pupil and admits light to
+the interior.
+CV: Coefficient of Variation.
+Dev: Deviation.
+EIT: Eye Irritation Test.
+EURL ECVAM: European Union Reference Laboratory for Alternatives to Animal Testing.
+Eye irritation: Production of changes in the eye, which are fully reversible, occurring after the exposure of
+the eye to a substance or mixture. Interchangeable with “Reversible effects on the eye” and with “UN GHS
+Category 2” (1).
+ET50: Exposure time required to reduce tissue viability by 50% upon application of a benchmark chemical
+at a specified, fixed concentration.
+False negative rate: The proportion of all positive substances falsely identified by a test method as
+negative. It is one indicator of test method performance.
+False positive rate: The proportion of all negative substances that are falsely identified by a test method
+as positive. It is one indicator of test method performance.
+Formazan dye (FD): Chromogenic product of the reduction of MTT, WST-8 or WST-1.
+Hazard: Inherent property of an agent or situation having the potential to cause adverse effects when an
+organism, system or (sub) population is exposed to that agent.
+HCE: SkinEthic™ Human Corneal Epithelium
+HPLC: High Performance Liquid Chromatography.
+IC50: Concentration at which a benchmark chemical reduces the viability of the tissues by 50% following
+a fixed exposure time (e.g., 30 or 60 minutes treatment with SDS).
+Infinite dose: Amount of test chemical applied to the RhCE tissue construct exceeding the amount
+required to completely and uniformly cover the epithelial surface.
+
+-- 26 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+26
+Irreversible effects on the eye: See “Serious eye damage”.
+LLOQ: Lower Limit of Quantification.
+LogP: Logarithm of the octanol-water partitioning coefficient
+Mixture: A mixture or a solution composed of two or more substances in which they do not react (1).
+Mono-constituent substance: A substance, defined by its quantitative composition, in which one main
+constituent is present to at least 80% (w/w).
+Multi-constituent substance: A substance, defined by its quantitative composition, in which more than
+one main constituent is present in a concentration ≥ 10% (w/w) and < 80% (w/w). A multi-constituent
+substance is the result of a manufacturing process. The difference between mixture and multi-constituent
+substance is that a mixture is obtained by blending of two or more substances without chemical reaction.
+A multi-constituent substance is the result of a chemical reaction.
+MTT: 3-(4,5-Dimethylthiazol-2-yl)-2,5-diphenyltetrazolium bromide; Thiazolyl blue tetrazolium bromide.
+(CAS RN 298-93-1)
+Negative control: A sample containing all components of a test system and treated with a substance
+known not to induce a positive response in the test system. This sample is processed with test chemical-
+treated samples and other control samples and is used to determine 100% tissue viability.
+Not Classified: Chemicals that are not classified for Eye irritation (UN GHS Category 2, 2A, or 2B) or
+Serious eye damage (UN GHS Category 1). Interchangeable with “UN GHS No Category”.
+NSCkilled: Non-Specific Colour in killed tissues. NSCliving: Non-Specific Colour in living tissues. NSMTT:
+Non-Specific MTT reduction.
+NSWST: Non-Specific WST-8 or WST-1 reduction.
+OD: Optical Density.
+Performance standards: Standards, based on a validated test method which was considered scientifically
+valid, that provide a basis for evaluating the comparability of a proposed test method that is mechanistically
+and functionally similar. Included are: (i) essential test method components; (ii) a minimum list of Reference
+Chemicals selected from among the chemicals used to demonstrate the acceptable performance of the
+validated test method; and (iii) the comparable levels of accuracy and reliability, based on what was
+obtained for the validated test method, that the proposed test method should demonstrate when evaluated
+using the minimum list of Reference Chemicals (24).
+Positive control: A sample containing all components of a test system and treated with a substance known
+to induce a positive response in the test system. This sample is processed with test chemical-treated
+samples and other control samples. To ensure that variability in the positive control response across time
+can be assessed, the magnitude of the positive response should not be excessive.
+Relevance: Description of relationship of the test to the effect of interest and whether it is meaningful and
+useful for a particular purpose. It is the extent to which the test correctly measures or predicts the biological
+effect of interest. Relevance incorporates consideration of the accuracy (concordance) of a test method
+(22).
+Reliability: Measures of the extent that a test method can be performed reproducibly within and between
+laboratories over time, when performed using the same protocol. It is assessed by calculating intra- and
+inter-laboratory reproducibility and intra-laboratory repeatability (24).
+
+-- 27 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+27
+Replacement test: A test which is designed to substitute for a test that is in routine use and accepted for
+hazard identification and/or risk assessment, and which has been determined to provide equivalent or
+improved protection of human or animal health or the environment, as applicable, compared to the
+accepted test, for all possible testing situations and chemicals (24).
+Reproducibility: The agreement among results obtained from repeated testing of the same test chemical
+using the same test protocol (See "Reliability") (24).
+Reversible effects on the eye: See “Eye irritation”.
+RhCE: Reconstructed human Cornea-like Epithelium.
+Run: A run consists of one or more test chemicals tested concurrently with a negative control and with a
+positive control.
+SD: Standard Deviation.
+Sensitivity: The proportion of all positive/active test chemicals that are correctly classified by the test. It is
+a measure of accuracy for a test method that produces categorical results, and is an important
+consideration in assessing the relevance of a test method (24).
+Serious eye damage: refers to the production of tissue damage in the eye, or serious physical decay of
+vision, which is not fully reversible, occurring after exposure of the eye to a substance or mixture.
+Interchangeable with “Irreversible effects on the eye” and with “UN GHS Category 1” (1).
+Standard Operating Procedures (SOP): Formal, written procedures that describe in detail how specific
+routine, and test-specific, laboratory operations should be performed. They are required by GLP.
+Specificity: The proportion of all negative/inactive test chemicals that are correctly classified by the test.
+It is a measure of accuracy for a test method that produces categorical results and is an important
+consideration in assessing the relevance of a test method (24).
+Substance: Chemical elements and their compounds in the natural state or obtained by any production
+process, including any additive necessary to preserve the stability of the product and any impurities
+deriving from the process used, but excluding any solvent which may be separated without affecting the
+stability of the substance or changing its composition (1).
+Test: A single test chemical concurrently tested in a minimum of two tissue replicates as defined in the
+corresponding SOP.
+Tetrazolium dye (TD): Tetrazolium salts MTT, WST-8 and WST-1.
+Tissue viability: Parameter measuring total activity of a cell population in a reconstructed tissue as their
+ability to reduce the vital dye MTT, which, depending on the endpoint measured and the test design used,
+correlates with the total number and/or vitality of living cells.
+Top-Down approach: Step-wise approach used for a chemical suspected of causing serious eye damage,
+which starts with the determination of chemicals inducing serious eye damage (positive outcome) from
+other chemicals (negative outcome) (3).
+Test chemical: The term "test chemical" is used to refer to what is being tested.
+Tiered testing strategy: A stepwise testing strategy, which uses test methods in a sequential manner. All
+existing information on a test chemical is reviewed at each tier, using a weight-of-evidence process, to
+determine if sufficient information is available for a hazard classification decision, prior to progression to
+the next tier in the strategy. If the hazard potential/potency of a test chemical can be assigned based on
+the existing information at a given tier, no additional testing is required (24).
+
+-- 28 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+28
+ULOQ: Upper Limit of Quantification.
+United Nations Globally Harmonized System of Classification and Labelling of Chemicals (UN
+GHS): A system proposing the classification of chemicals (substances and mixtures) according to
+standardised types and levels of physical, health and environmental hazards, and addressing
+corresponding communication elements, such as pictograms, signal words, hazard statements,
+precautionary statements and safety data sheets, so that to convey information on their adverse effects
+with a view to protect people (including employers, workers, transporters, consumers and emergency
+responders) and the environment (1).
+UN GHS Category 1: See “Serious eye damage”.
+UN GHS Category 2: See “Eye irritation”.
+UN GHS No Category: Chemicals that do not meet the requirements for classification as UN GHS
+Category 1 or 2 (2A or 2B). Interchangeable with “Not Classified”.
+UPLC: Ultra-High Performance Liquid Chromatography.
+UVCB: substances of unknown or variable composition, complex reaction products or biological
+materials.
+Valid test method: A test method considered to have sufficient relevance and reliability for a specific
+purpose and which is based on scientifically sound principles. A test method is never valid in an absolute
+sense, but only in relation to a defined purpose (24).
+Validated test method: A test method for which validation studies have been completed to determine the
+relevance (including accuracy) and reliability for a specific purpose. It is important to note that a validated
+test method may not have sufficient performance in terms of accuracy and reliability to be found acceptable
+for the proposed purpose (24).
+VRM: Validated Reference Method.
+VRM1: EpiOcular™ EIT is referred as the Validated Reference Method 1.
+VRM2: SkinEthic™ HCE EIT is referred to as the Validated Reference Method 2.
+Weight-of-evidence: The process of considering the strengths and weaknesses of various pieces of
+information in reaching and supporting a conclusion concerning the hazard potential of a test chemical.
+WST: Water soluble tetrazolium salt.
+WST-1: Water soluble tetrazolium salt-1 [4-[3-(4-iodophenyl)-2-(4-nitrophenyl)-2H-5-tetrazolio]-1,3-
+benzene disulfonate; CAS RN 150849-52-8]
+WST-8: Water soluble tetrazolium salt-8. [2-(2-methoxy-4-nitrophenyl)-3-(4-nitrophenyl)-5-(2,4-
+disulfophenyl)-2H-tetrazolium, monosodium salt. (CAS RN 193149-74-5).
+
+-- 29 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+29
+ANNEX II - MAIN TEST METHOD COMPONENTS OF THE RhCE TEST METHODS VALIDATED FOR IDENTIFYING
+CHEMICALS NOT REQUIRING CLASSIFICATION AND LABELLING FOR EYE IRRITATION OR SERIOUS EYE
+DAMAGE
+Nr. 1 2 3 4
+Test Method
+Component
+EpiOcular™ EIT
+(VRM 1)
+SkinEthic™ HCE EIT
+(VRM 2) LabCyte CORNEA-MODEL24 EIT MCTT HCETM EIT
+Protocol1 Liquids
+(pipetteable at 37±1°C
+or lower temperatures
+for 15min)
+Solids
+(not pipetteable)
+Liquids and viscous
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Model surface 0.6 cm2 0.6 cm2 0.5 cm2 0.5 cm2 0.3 cm2 0.3 cm2 0.6 cm2 0.6 cm2
+Number of
+tissue
+replicates
+At least 2 At least 2 At least 2 At least 2 3 tissues 3 tissues At least 2 At least 2
+1 For details of the protocol, the latest version of the Standard Operating Procedures (SOP) for each test method should be consulted. The references of the SOP
+are available in the bibliography.
+
+-- 30 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+30
+Nr. 1 2 3 4
+Test Method
+Component
+EpiOcular™ EIT
+(VRM 1)
+SkinEthic™ HCE EIT
+(VRM 2) LabCyte CORNEA-MODEL24 EIT MCTT HCETM EIT
+Protocol1 Liquids
+(pipetteable at 37±1°C
+or lower temperatures
+for 15min)
+Solids
+(not pipetteable)
+Liquids and viscous
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Precheck
+for
+colour
+interferen
+ce
+50 μL + 1 mL H2O
+for 60 min at
+37±2ºC, 5±1%
+CO2,
+≥95% RH (non-
+coloured
+test chemicals), or
+50 μL + 2 mL
+isopropanol mixed
+for 2-3h at RT
+(coloured test
+chemicals)
+→ If the OD of the
+test chemical at
+570±20 nm, after
+subtraction of the
+OD for isopropanol
+or water is
+> 0.08 (which
+corresponds to
+approximately 5% of
+the mean OD of the
+negative control),
+living adapted
+controls should be
+performed.
+50 mg + 1 mL
+H2O for 60 min
+at 37±2ºC,
+5±1% CO2,
+≥95% RH
+(non-coloured
+test chemicals)
+and/or
+50 mg + 2 mL
+isopropanol
+mixed for 2-3h at
+RT (coloured
+and non-
+coloured test
+chemicals)
+→ If the OD of the
+test chemical at
+570±20 nm after
+subtraction of the
+OD for isopropanol
+or water is > 0.08
+(which
+corresponds to
+approximately 5%
+of the mean OD of
+the negative
+control), living
+adapted controls
+should be
+performed.
+10 μL + 90 μL H2O
+mixed for 30±2 min
+at Room
+Temperature (RT,
+18-28oC)
+→ If test chemical is
+coloured, living
+adapted controls
+should be performed
+10 mg + 90 μL
+H2O mixed for
+30±2 min at RT
+→ If test chemical
+is coloured, living
+adapted controls
+should be
+performed
+50 μL + 0.5 mL
+H2O water mixed
+for 15 minutes at
+37±2ºC, 5±1%
+CO2, ≥95% RH.
+If test chemical is
+coloured, living
+adapted controls
+should be
+performed
+10 mg + 0.5 mL
+H2O mixed for 15
+minutes at 37±2ºC,
+5±1% CO2, ≥95%
+RH.
+If test chemical is
+coloured, living
+adapted controls
+should be
+performed
+40 μL + 1 mL H2O
+mixed for 60
+minutes at 37±2ºC,
+5±1% CO2, ≥95%
+RH.
+→ If the OD of the
+test chemical at
+450±20 nm after
+subtraction of the
+OD for water is >
+0.1 (which
+corresponds to
+approximately 5%
+of the mean OD of
+the negative
+control), living
+adapted controls
+should be
+performed.
+40 mg + 1 mL H2O
+mixed for 60
+minutes at 37±2ºC,
+5±1% CO2, ≥95%
+RH.
+→ If the OD of the
+test chemical at
+450±20 nm after
+subtraction of the
+OD for water is >
+0.1 (which
+corresponds to
+approximately 5%
+of the mean OD of
+the negative
+control), living
+adapted controls
+should be
+performed.
+
+-- 31 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+31
+Nr. 1 2 3 4
+Test Method
+Component
+EpiOcular™ EIT
+(VRM 1)
+SkinEthic™ HCE EIT
+(VRM 2) LabCyte CORNEA-MODEL24 EIT MCTT HCETM EIT
+Protocol1 Liquids
+(pipetteable at 37±1°C
+or lower temperatures
+for 15min)
+Solids
+(not pipetteable)
+Liquids and viscous
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Pre- check for
+direct
+tetrazolium
+reduction
+50 μL + 1 mL MTT 1
+mg/mL solution for
+180±15 min
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+→ if solution turns
+blue/purple,freeze-
+killed adapted
+controls should be
+performed (50 μL of
+sterile deionized
+water in MTT solution
+is used as negative
+control)
+50 mg + 1 mL MTT
+1 mg/mL solution
+for 180±15 min
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+→ if solution turns
+blue/purple, freeze-
+killed adapted
+controls should be
+performed
+(50 μL of sterile
+deionized water in
+MTT solution is
+used as negative
+control)
+30 μL + 300 μL MTT
+1 mg/mL solution for
+180± 15 min at
+37±2ºC, 5±1% CO2,
+≥95% RH
+→ if solution turns
+blue/purple, water-
+killed adapted
+controls should be
+performed (30 μL of
+sterile deionized
+water in MTT solution
+is used as negative
+control)
+30 mg + 300 μL
+MTT
+1 mg/mL solution
+for 180± 15 min at
+37±2ºC, 5±1%
+CO2, ≥95% RH
+→ if solution turns
+blue/purple, water-
+killed adapted
+controls should be
+performed (30 μL
+of sterile deionized
+water in MTT
+solution is used as
+negative control)
+50 μL + 300 μL
+diluted WST-8
+solution for 240±20
+min at 37±2ºC,
+5±1% CO2, ≥95%
+RH
+→ If solution turns
+yellow, freeze-killed
+adapted controls
+should be
+performed.
+10 mg + 300 μL
+diluted WST-8
+solution for 240±20
+min at 37±2ºC,
+5±1% CO2, ≥95%
+RH
+→ If solution turns
+yellow, freeze-killed
+adapted controls
+should be
+performed.
+40 μL + 1 mL
+diluted WST-1
+solution for 180±10
+min at 37±2ºC,
+5±1% CO2, ≥95%
+RH
+→ If solution turns
+yellow, freeze-killed
+adapted controls
+should be
+performed.
+40 mg + 1 mL
+diluted WST-1
+solution for 180±10
+min at 37±2ºC,
+5±1% CO2, ≥95%
+RH
+→ If solution turns
+yellow, freeze-killed
+adapted controls
+should be
+performed.
+Pre-treatment 20 μL Ca2+/Mg2+-
+free DPBS
+for 30±2 min at
+37±2ºC, 5±1% CO2,
+≥95% RH, protected
+from light.
+20 μL Ca2+/Mg2+
+-free DPBS
+for 30±2 min at
+37±2ºC, 5±1%
+CO2, ≥95% RH,
+protected from
+light.
+- - - - - -
+Treatment
+doses and
+application
+50 μL (83.3 μL/cm2) 50 mg (83.3
+mg/cm2) using a
+calibrated tool
+(e.g., a levelled
+spoonful calibrated
+to hold 50 mg of
+sodium chloride).
+10 μL Ca2+/Mg2+-
+free DPBS
++ 30±2 μL (60
+μL/cm2)
+For viscous, use a
+nylon mesh
+30 μL Ca2+/Mg2+-
+free DPBS
++ 30±2 mg
+(60mg/cm2)
+50 μL (167 μL/cm2) 10 mg (33 mg/cm2) 40 μL (67 μL/cm2) 40 μL
+Ca2+/Mg2+-free
+DPBS + 40 ±1 mg
+(67 mg/cm2)
+
+-- 32 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+32
+Nr. 1 2 3 4
+Test Method
+Component
+EpiOcular™ EIT
+(VRM 1)
+SkinEthic™ HCE EIT
+(VRM 2) LabCyte CORNEA-MODEL24 EIT MCTT HCETM EIT
+Protocol1 Liquids
+(pipetteable at 37±1°C
+or lower temperatures
+for 15min)
+Solids
+(not pipetteable)
+Liquids and viscous
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Exposure time
+and
+temperature
+30 min (±2 min)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+6 hours (±0.25 h)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+30 min (±2 min)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+4 hours (± 0.1 h)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+1 min (± 5 second)
+in culture medium
+at RT
+24 hours (± 1 hr)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+10 min (±1 min)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+3 hours (± 5min)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+Rinsing at room
+temperature
+3 times in 100 mL
+of Ca2+/Mg2+-free
+DPBS
+3 times in 100 mL
+of Ca2+/Mg2+-free
+DPBS
+20 mL
+of Ca2+/Mg2+-free
+DPBS
+25 mL
+of Ca2+/Mg2+-free
+DPBS
+10 times or over by
+stream of
+Ca2+/Mg2+ -free
+DPBS
+10 times or over by
+stream of
+Ca2+/Mg2+ -free
+DPBS
+4 time with DPBS 4 times with 10 mL
+of DPBS and
+shaking in 30 mL
+of DPBS in the
+beaker
+Post-exposure
+immersion
+12 min (±2 min) at RT
+in culture medium
+25 min (±2 min) at
+RT in culture
+medium
+30 min (±2 min) at
+37oC, 5% CO2, 95%
+RH in culture
+medium
+30 min (±2 min) at
+RT in culture
+medium - - - -
+Post-
+exposure
+incubation
+120 min (±15 min)
+in culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+18 h (±0.25 h) in
+culture medium
+at 37±2ºC,
+5±1% CO2,
+≥95% RH
+none 18 h (± 0.5 h) in
+culture medium
+at 37±2ºC,
+5±1% CO2,
+≥95% RH
+24 h (± 1 h) in
+culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+none 16 h (± 1 h) in
+culture medium
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+16 h (± 1 h) in
+culture medium
+at 37±2ºC,
+5±1% CO2,
+≥95% RH
+Negative
+control
+50 μL H2O Tested
+concurrently
+50 μL H2O
+Tested
+concurrently
+30 ± 2μL
+Ca2+/Mg2+-free
+DPBS Tested
+concurrently
+30 ± 2μL
+Ca2+/Mg2+-free
+DPBS Tested
+concurrently
+50 μL
+Ca2+/Mg2+-free
+DPBS Tested
+concurrently
+No treatment
+Tested
+concurrently
+40 μL
+Ca2+/Mg2+-free
+DPBS Tested
+concurrently
+40 μL
+Ca2+/Mg2+-free
+DPBS Tested
+concurrently
+Positive
+control
+50 μL Methyl
+acetate
+Tested
+concurrently
+50 μL Methyl
+acetate
+Tested
+concurrently
+30 ± 2μL Methyl
+acetate
+Tested
+concurrently
+30 ± 2μL Methyl
+acetate
+Tested
+concurrently
+50 μL Ethanol
+Tested
+concurrently
+10 mg Lauric
+acid
+Tested
+concurrently
+40 μL Methyl
+acetate or 2%
+SDS Tested
+concurrently
+40 μL Methyl
+acetate or 2%
+SDS Tested
+concurrently
+Tetrasolium
+salt solution
+300 μL 1 mg/mL 300 μL 1 mg/mL 300 μL 1 mg/mL 300 μL 1 mg/mL 300 μL of diluted
+WST-8 solution
+(10 fold dilution
+300 μL of diluted
+WST-8 solution
+(10 fold dilution
+300 μL of diluted
+WST-1 solution
+(25 fold dilution
+300 μL of diluted
+WST-1 solution
+(25 fold dilution
+
+-- 33 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+33
+Nr. 1 2 3 4
+Test Method
+Component
+EpiOcular™ EIT
+(VRM 1)
+SkinEthic™ HCE EIT
+(VRM 2) LabCyte CORNEA-MODEL24 EIT MCTT HCETM EIT
+Protocol1 Liquids
+(pipetteable at 37±1°C
+or lower temperatures
+for 15min)
+Solids
+(not pipetteable)
+Liquids and viscous
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+of CCK-8) of CCK-8) of WST-1) of WST-1)
+Tetrazolium
+salt
+incubation
+and
+temperature
+180 min (±15 min)
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+180 min (±15
+min) at 37±2ºC,
+5±1% CO2,
+≥95% RH
+180 min (±15 min)
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+180 min (±15
+min) at 37±2ºC,
+5±1% CO2,
+≥95% RH
+240 minutes (±
+15 minutes) at
+37±2ºC, 5±1%
+CO2, ≥95% RH
+240 minutes (±
+15 minutes) at
+37±2ºC, 5±1%
+CO2, ≥95% RH
+180 min (±5 min)
+at 37±2ºC, 5±1%
+CO2, ≥95% RH
+180 min (±5
+min) at 37±2ºC,
+5±1% CO2,
+≥95% RH
+Extraction
+solvent
+2 mL isopropanol
+(extraction from
+top and bottom of
+insert by piercing
+the tissue)
+2 mL
+isopropanol
+(extraction from
+top and bottom
+of insert by
+piercing the
+tissue)
+1.5 mL
+isopropanol
+(extraction from
+top and bottom of
+insert)
+1.5 mL
+isopropanol
+(extraction from
+top and bottom
+of insert)
+Not required Not required Not required Not required
+Extraction
+time and
+temperature
+2-3 h with shaking
+(~120 rpm) at RT
+or overnight at 4-
+10°C
+2-3 h with
+shaking (~120
+rpm) at RT or
+overnight at 4-
+10°C
+4 h with shaking
+(~120
+rpm) at RT or at
+least overnight
+without shaking at
+4-10°C
+At least 2 h with
+shaking (~120
+rpm) at RT
+Not required Not required Not required Not required
+OD reading 570 nm (550 - 590
+nm)
+without reference
+filter
+570 nm (550 -
+590 nm)
+without
+reference filter
+570 nm (540 - 600
+nm)
+without reference
+filter
+570 nm (540 -
+600 nm)
+without
+reference filter
+450 nm
+with reference
+filter (650 nm)
+450 nm
+with reference
+filter (650 nm)
+450 nm (420-
+480 nm) without
+reference filter
+450 nm (420-
+480 nm) without
+reference filter
+
+-- 34 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+34
+Nr. 1 2 3 4
+Test Method
+Component
+EpiOcular™ EIT
+(VRM 1)
+SkinEthic™ HCE EIT
+(VRM 2) LabCyte CORNEA-MODEL24 EIT MCTT HCETM EIT
+Protocol1 Liquids
+(pipetteable at 37±1°C
+or lower temperatures
+for 15min)
+Solids
+(not pipetteable)
+Liquids and viscous
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Liquid
+(pipetteable)
+Solids
+(not pipetteable)
+Tissue
+Quality
+Control
+Treatment with
+100 μL of 0.3%
+(v/v) Triton X-100
+12.2 min ≤ ET50 ≤
+37.5 min
+Treatment with
+100 μL of 0.3%
+(v/v) Triton X-
+100
+12.2 min ≤ ET50
+≤ 37.5 min
+30 min treatment
+with SDS (50 μL)
+1.0 mg/mL ≤ IC50
+≤ 3.5 mg/mL
+30 min
+treatment with
+SDS (50 μL)
+1.0 mg/mL ≤
+IC50 ≤ 3.5
+mg/mL
+60 minutes
+treatment with
+SDS (25 μL)
+1.0 mg/mL ≤
+IC50 ≤ 4.0
+mg/mL
+60 minutes
+treatment with
+SDS (25 μL)
+1.0 mg/mL ≤
+IC50 ≤ 4.0
+mg/mL
+Treatment with
+50 μL of 0.3%
+(v/v) Triton X-
+100
+17.6 min ≤ ET50
+≤ 41.0 min
+Treatment with
+50 μL of 0.3%
+(v/v) Triton X-
+100
+17.6 min ≤ ET50
+≤ 41.0 min
+Acceptance
+Criteria
+1. Mean OD of the
+tissue replicates
+treated with the
+negative control
+should be > 0.8
+and < 2.8
+2. Mean viability of
+the tissue
+replicates
+exposed for 30
+minutes with the
+positive control,
+expressed as % of
+the negative
+control, should be
+< 50%
+3. The difference
+of viability
+between two
+tissue replicates
+should be less
+than 20%.
+1. Mean OD of
+the tissue
+replicates
+treated with the
+negative control
+should be > 0.8
+and < 2.8
+2. Mean viability
+of the tissue
+replicates
+exposed for 30
+minutes with the
+positive control,
+expressed as %
+of the negative
+control, should
+be < 50%
+3. The
+difference of
+viability
+between two
+tissue replicates
+should be less
+than 20%.
+1. Mean OD of the
+tissue replicates
+treated with the
+negative control
+should be > 1.0
+and ≤ 2.5
+2. Mean viability of
+the tissue
+replicates
+exposed for 30
+minutes with the
+positive control,
+expressed as % of
+the negative
+control, should be
+≤ 30%
+3. The difference
+of viability
+between two
+tissue replicates
+should be less
+than 20%.
+1. Mean OD of
+the tissue
+replicates
+treated with the
+negative control
+should be > 1.0
+and ≤ 2.5
+2. Mean viability
+of the tissue
+replicates
+exposed for 4
+hours with the
+positive control,
+expressed as %
+of the negative
+control, should
+be ≤ 20%
+3. The
+difference of
+viability
+between two
+tissue replicates
+should be less
+than 20%.
+1. Mean OD of
+the tissue
+replicates
+treated with the
+negative control
+should be ≥ 0.5
+and ≤ 1.3.
+2. Mean viability
+of the tissue
+replicates
+treated with the
+positive control
+should be ≤ 40%
+3. The standard
+deviation (SD)
+between three
+tissue replicates
+should not
+exceed 18%
+1. Mean OD of
+the tissue
+replicates
+treated with the
+negative control
+should be ≥ 0.5
+and ≤ 1.3.
+2. Mean viability
+of the tissue
+replicates
+treated with the
+positive control
+should be ≤ 40%
+3. The standard
+deviation (SD)
+between three
+tissue replicates
+should not
+exceed 18%
+1. Mean OD of
+the tissue
+replicates
+treated with the
+negative control
+should be ≥ 1.6
+and ≤ 3.0.
+2. Mean viability
+of the tissue
+replicates
+treated with the
+positive control
+should be ≤ 35%
+3. The difference
+of viability
+between two
+tissue replicates
+should not
+exceed 20%
+1. Mean OD of
+the tissue
+replicates
+treated with the
+negative control
+should be ≥ 1.6
+and ≤ 3.0.
+2. Mean viability
+of the tissue
+replicates
+treated with the
+positive control
+should be ≤ 35%
+3. The
+difference of
+viability
+between two
+tissue replicates
+should not
+exceed 20%
+
+-- 35 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+35
+ANNEX III - ILLUSTRATIVE FLOWCHART PROVIDING GUIDANCE ON HOW TO
+IDENTIFY AND HANDLE DIRECT MTT-REDUCERS AND/OR COLOUR
+INTERFERING CHEMICALS, BASED ON THE VRM1 SOP
+
+-- 36 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+36
+ANNEX IV - ILLUSTRATIVE FLOWCHART PROVIDING GUIDANCE ON HOW TO
+IDENTIFY AND HANDLE DIRECT MTT-REDUCERS AND/OR COLOUR
+INTERFERING CHEMICALS, BASED ON THE VRM2 SOP
+
+-- 37 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+37
+ANNEX V - ILLUSTRATIVE FLOWCHART PROVIDING GUIDANCE ON HOW TO
+IDENTIFY AND HANDLE DIRECT WST-REDUCERS AND/OR COLOUR
+INTERFERING CHEMICALS, BASED ON THE LABCYTE CORNEA-MODEL24 EIT
+SOP
+PRE-CHECK FOR
+COLOUR INTERFERENCE
+Incubate 50 μL or 10 mg
+of test chemical in 300
+μL of water for 15
+minutes at room
+temperature
+PRE-CHECK FOR
+DIRECT WST REDUCTION
+Does the mixture turn
+coloured?
+Incubate 50 μL or 10 mg of
+test chemical in 300 μL of
+WST-8 solution for 4 hours
+at standard culture condition
+No Yes
+Is the colour of the
+chemical too strong to
+allow a conclusive pre-
+check for direct WST-8
+reduction?
+No
+Does the mixture turn
+yellow?
+Incubate 50 μL or 10 mg
+of test chemical in 300
+μL of WST-8 solution for
+4 hours at standard
+culture condition
+PRE-CHECK
+FOR DIRECT
+WST
+REDUCTION
+Does the mixture turn
+yellow?
+No Yes Yes
+Consider one of the two
+following options
+No
+Use OD or
+HPLC/UPLC-
+spectrophotometry
+Use OD or
+HPLC/UPLC-
+spectrophotometry
+Use HPLC/UPLC-
+spectrophotometry Use OD Use OD Use HPLC/UPLC-
+spectrophotometry
+Perform living-tissue control
+concurrently with every test
+performed, following full testing
+procedure but incubating with
+medium instead of WST-8
+(= %NSCliving)
+Perform living-tissue control
+concurrently with every test
+performed, following full testing
+procedure but incubating with
+medium instead of WST-8
+(= %NSCliving)
+Perform killed-tissue control following
+full testing procedure (= %NSWST)(one
+is sufficient to correct multiple tests)
+Perform killed-tissue control
+following full testing procedure
+(= %NSWST)(one is sufficient to
+correct multiple tests)
+Perform killed-tissue control
+following full testing procedure but
+incubating with medium instead of
+WST-8 (= %NSCkilled)(one is
+sufficient to correct multiple tests)
+No controls
+are required
+Final % viability =
+%uncorrected test viability - %NSWST
+Final% viability =
+%uncorrected viability -
+%NSCliving - %NSWST
+Final% viability =
+%uncorrected viability - %NSClivind
+No controls
+are required
+
+-- 38 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+38
++ %NSCkilled
+ANNEX VI - ILLUSTRATIVE FLOWCHART PROVIDING GUIDANCE ON HOW TO
+IDENTIFY AND HANDLE DIRECT WST-REDUCERS AND/OR COLOUR
+INTERFERING CHEMICALS, BASED ON THE MCTT HCETM EIT SOP
+
+-- 39 of 40 --
+
+OECD/OCDE 492
+© OECD (2025)
+39
+ANNEX VII - KEY PARAMETERS AND ACCEPTANCE CRITERIA FOR
+QUALIFICATION OF AN HPLC/UPLC-SPECTROPHOTOMETRY SYSTEM FOR
+MEASUREMENT OF MTT FORMAZAN EXTRACTED FROM RhCE TISSUE
+CONSTRUCTS
+Parameter Protocol Derived from FDA Guidance (43)(45) Acceptance Criteria
+Selectivity Analysis of isopropanol, living blank (isopropanol
+extract from living RhCE tissue constructs without any
+treatment), dead blank (isopropanol extract from
+killed RhCE tissue constructs without any treatment),
+and of a dye (e.g., methylene blue)
+Areainterference ≤ 20% of
+AreaLLOQ1
+Precision Quality Controls (i.e., MTT formazan at 1.6 μg/mL, 16
+μg/mL and 160 μg/mL ) in isopropanol (n=5)
+CV ≤ 15% or ≤ 20% for
+the LLOQ
+Accuracy Quality Controls in isopropanol (n=5) %Dev ≤ 15% or ≤ 20%
+for LLOQ
+Matrix Effect Quality Controls in living blank (n=5) 85% ≤ %Matrix Effect
+≤ 115%
+Carryover Analysis of isopropanol after an ULOQ2 standard Areainterference ≤ 20% of
+AreaLLOQ
+Reproducibility
+(intra-day)
+3 independent calibration curves (based on 6
+consecutive 1/3 dilutions of MTT formazan in
+isopropanol starting at ULOQ, i.e., 200 μg/mL);
+Quality Controls in isopropanol (n=5)
+Calibration Curves:
+%Dev ≤ 15% or ≤ 20%
+for LLOQ
+Quality Controls: %Dev
+≤ 15% and CV ≤ 15%	Reproducibility
+(inter-day)
+Day 1: 1 calibration curve and Quality Controls in
+isopropanol (n=3)
+Day 2: 1 calibration curve and Quality Controls in
+isopropanol (n=3)
+Day 3: 1 calibration curve and Quality Controls in
+isopropanol (n=3)
+Short Term Stability
+of MTT Formazan in
+RhCE Tissue Extract
+Quality Controls in living blank (n=3) analysed the day
+of the preparation and after 24 hours of storage at
+room temperature
+%Dev ≤ 15%
+Long Term Stability of
+MTT Formazan in
+RhCE Tissue Extract, if
+required
+Quality Controls in living blank (n=3) analysed the day
+of
+the preparation and after several days of storage at -
+20°C
+%Dev ≤ 15%
+1LLOQ: Lower Limit of Quantification, defined to cover 1-2% tissue viability, i.e., 0.8 μg/mL.
+2ULOQ: Upper Limit of Quantification, defined to be at least two times higher than the highest expected
+MTT formazan concentration in isopropanol extracts from negative controls (~70 μg/mL in the VRM),
+i.e., 200 μg/mL.
+
+-- 40 of 40 --
+

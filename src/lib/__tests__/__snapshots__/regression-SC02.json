@@ -1,0 +1,76 @@
+{
+  "scenario_id": "SC02",
+  "scenario_title": "단회 + 4주 DRF + 13주 본시험 + 13주 TK (함량분석 7회 자동)",
+  "options": {
+    "excipientCount": 0,
+    "priceStandard": "MFDS",
+    "discountRate": 0,
+    "currency": "KRW"
+  },
+  "lines": [
+    {
+      "kind": "prep_analysis",
+      "testItemKey": null,
+      "testName": "투여물질의 조제물 분석 — in vivo (동물 투여 시험 — 본시험·DRF·TK·회복)",
+      "adminRoute": null,
+      "unitPrice": 10000000,
+      "quantity": 1,
+      "subtotal": 10000000,
+      "linkRelation": null,
+      "note": "포함 시험: 설치류 13주 반복투여 독성, 설치류 4주 DRF 외 1건"
+    },
+    {
+      "kind": "analysis",
+      "testItemKey": null,
+      "testName": "투여물질의 함량 분석",
+      "adminRoute": null,
+      "unitPrice": 1000000,
+      "quantity": 6,
+      "subtotal": 6000000,
+      "linkRelation": null,
+      "note": "(1) 설치류 13주 반복투여 독성 : 2회\n(2) 설치류 4주 DRF : 2회\n(3) 설치류 13주 TK(2회) 6pt : 2회"
+    },
+    {
+      "kind": "test",
+      "testItemKey": "독성시험_항목_마스터_추가정규화_v2.xlsx#시험항목 마스터#19@경구__경구",
+      "testName": "설치류 13주 반복투여 독성",
+      "adminRoute": "경구",
+      "unitPrice": 112000000,
+      "quantity": 1,
+      "subtotal": 112000000,
+      "linkRelation": null,
+      "note": null
+    },
+    {
+      "kind": "test",
+      "testItemKey": "독성시험_항목_마스터_추가정규화_v2.xlsx#시험항목 마스터#6@경구__경구",
+      "testName": "설치류 4주 DRF",
+      "adminRoute": "경구",
+      "unitPrice": 20000000,
+      "quantity": 1,
+      "subtotal": 20000000,
+      "linkRelation": "DRF(예비)",
+      "note": null
+    },
+    {
+      "kind": "test",
+      "testItemKey": "독성시험_항목_마스터_추가정규화_v2.xlsx#시험항목 마스터#21@경구__경구",
+      "testName": "설치류 13주 TK(2회) 6pt",
+      "adminRoute": "경구",
+      "unitPrice": 88000000,
+      "quantity": 1,
+      "subtotal": 88000000,
+      "linkRelation": "TK(독성동태)",
+      "note": null
+    }
+  ],
+  "warnings": [],
+  "totals": {
+    "totalBeforeDiscount": 236000000,
+    "discountAmount": 0,
+    "totalAfterDiscount": 236000000,
+    "vatAmount": 23600000,
+    "grandTotal": 259600000,
+    "currency": "KRW"
+  }
+}

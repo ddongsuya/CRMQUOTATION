@@ -1,0 +1,791 @@
+[SOURCE URL] https://www.oecd.org/content/dam/oecd/en/publications/reports/2019/06/test-no-432-in-vitro-3t3-nru-phototoxicity-test_g1gh4b69/9789264071162-en.pdf
+[CHARS] 44680
+
+Test Guideline No. 432
+In Vitro 	3T3 NRU Phototoxicity Test
+18 June 2019
+OECD Guidelines for the
+Testing of Chemicals
+Section 4
+Health effects
+
+-- 1 of 20 --
+
+OECD/OCDE 432
+Adopted:
+18 June 2019
+© OECD, (2019)
+You are free to use this material subject to the terms and conditions available at http://www.oecd.org/termsandconditions/.
+OECD GUIDELINE FOR TESTING OF CHEMICALS
+In Vitro 3T3 NRU Phototoxicity Test
+INTRODUCTION
+Phototoxicity is defined as a toxic response elicited by topically or systemically
+administered photoreactive chemicals after the exposure of the body to environmental light.
+The in vitro 3T3 Neutral Red Uptake (NRU) phototoxicity test is used to identify the
+phototoxic potential of a test chemical activated by exposure to light. The test evaluates
+photo-cytotoxicity by the relative reduction in viability of cells exposed to the test chemical
+in the presence versus absence of light. Chemicals identified as positive in this test may be
+phototoxic in vivo, following topical application or systemic application and distribution to
+the skin and/or eyes.
+Definitions used in this Test Guideline are provided in Annex A.
+INITIAL CONSIDERATION
+Many types of chemicals have been reported to induce phototoxic effects (1)(2)(3)(4).
+Their common feature is their ability to absorb light energy within the sunlight range.
+Photoreactions require sufficient absorption of light quanta. Thus, before testing is
+considered, a UV/vis absorption spectrum of the test chemical may be determined according
+to OECD Test Guideline 101. It has been reported that if the molar extinction/absorption
+coefficient (MEC) is less than 1000 L mol-1 cm-1 (measured in methanol), the chemical is
+unlikely to be photoreactive (5)(6). Such chemicals may not need to be tested in the in vitro
+3T3 NRU phototoxicity test or any other biological test for adverse photochemical effects
+(1)(7). In general, this principle applies to all test chemicals, however, depending on the
+intended use of the chemical or potential exposure conditions, more specific guidelines may
+apply (such as ICH S10 for pharmaceuticals) (5). See also Annex B.
+
+-- 2 of 20 --
+
+2 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+The reliability and relevance of the in vitro 3T3 NRU phototoxicity test was evaluated
+(8)(9)(10)(11). The in vitro 3T3 NRU phototoxicity test was shown to be predictive of acute
+phototoxicity effects in animals and humans in vivo. The test is not designed to predict other
+adverse effects that may arise from combined action of a chemical and light, e.g., it does not
+address photogenotoxicity, photoallergy, or photocarcinogenicity, per se. Furthermore, the
+test has not been designed to address indirect mechanisms of phototoxicity, effects of
+metabolites of the test chemical, or effects of mixtures. However, in some cases, a negative
+in vitro 3T3 NRU phototoxicity test may obviate the need for other testing, e.g.
+photogenotoxicity (see Note 2 (6) (12)(13) ).
+The in vitro 3T3 NRU phototoxicity test does not need to be performed with a
+metabolic activation system, because at this time, there is no evidence that any phototoxicants
+would be missed in the absence of metabolic activation toxicants (13).
+PRINCIPLE OF THE TEST METHOD
+The in vitro 3T3 NRU phototoxicity test is based on a comparison of the cytotoxicity
+of a chemical when tested in the presence and in the absence of exposure to a non-cytotoxic
+dose of simulated solar light. Cytotoxicity in this test is expressed as a concentration-
+dependent reduction of the uptake of the vital dye Neutral Red (NR) when measured 18-24
+hours after treatment with the test chemical and irradiation (14). NR is a weak cationic dye
+that readily penetrates cell membranes by non-ionic diffusion and accumulates intracellularly
+in lysosomes. NR is not charged at close-to-neutral pH of the cytoplasm but becomes
+positively charged and trapped in low pH of lysosomal lumen. The low pH of lysosomal
+lumen is actively maintained, requires ATP, and is dependent on integrity of the lysosomal
+membrane. Phototoxins can induce cell damage through formation of Reactive Oxygen
+Species (ROS) and other mechanisms that lead to increased permeability of the lysosomal
+membrane, reduction in the pH gradient, and other changes that gradually become
+irreversible (15)(16). Such changes brought about by the action of xenobiotics result in a
+decreased uptake and binding of NR. It is thus possible to distinguish between viable and
+damaged or dead cells.
+BALB/c 3T3 cells are maintained in culture for 18-24 h for formation of monolayers.
+Two 96-well plates per test chemical are pre-incubated with eight different concentrations of
+the test chemical for 1 h. Thereafter one of the two plates is exposed to an irradiation dose
+whereas the other plate is kept in the dark. In both plates, the treatment buffer is then replaced
+with fresh culture medium and cell viability is determined by NRU after an 18-24 h
+incubation. Cell viability is expressed as percentage of test chemical-treated NRU values
+compared with solvent controls, and is calculated for each test concentration. To predict the
+phototoxic potential, the concentration-responses obtained in the presence and in the absence
+of irradiation are compared, including the concentration reducing cell viability to 50 %
+compared to the solvent controls (i.e., IC50).
+
+-- 3 of 20 --
+
+OECD/OCDE 432 │ 3
+©OECD 2019
+DESCRIPTION OF THE TEST METHOD
+Preparations
+Cells
+An immortalised mouse fibroblast cell line, BALB/c 3T3, clone A31, obtained from
+either the American Type Culture Collection (ATCC), Manassas, VA, USA, or from the
+European Collection of Cell Cultures (ECACC), Salisbury, Wiltshire, UK, was used in the
+validation study. It is recommended that cells be obtained from a recognised cell depository
+(23). Other cells or cell lines may be used with the same test procedure if culture conditions
+are adapted to the specific needs of the cells, but equivalency must be demonstrated (i.e.,
+appropriate responses to reference chemicals), in accordance with the principles of Guidance
+Document No. 34 (22).
+Cells should be checked for mycoplasma contamination upon arrival in the laboratory
+(see (17) for recommendations) and only used if none is found (18).
+It is important that UV sensitivity of the cells is checked regularly according to the
+quality control procedure described in this guideline. Because the UVA sensitivity of cells
+may increase with the number of passages, BALB/c 3T3 cells with a total passage number
+preferably less than 100 should be used in the assay (see paragraph 29 and Annex C). If cells
+of a higher passage numbers are used data must be available to demonstrate that cells adhere
+to the quality parameters in this guideline.
+Media and culture conditions
+Appropriate culture media and incubation conditions should be used for routine cell
+passage and during the test procedure, e.g., for BALB/c 3T3 cells these are DMEM
+(Dulbecco’s Modified Eagle’s Medium) supplemented with 10% new-born calf serum, 4 mM
+glutamine, penicillin (100 IU), and streptomycin (100 g/mL), and humidified incubation at
+370 C, targeting 5-7.5% CO2 depending on the buffer (see paragraph 17). Depending on
+buffer used, the CO2 levels may be adjusted. It is important that cell culture conditions assure
+a cell division cycle time within the normal historical range of the cells or cell line used.
+Preparation of cultures
+Cells from frozen stock cultures are seeded in culture medium at an appropriate
+density and subcultured at least once before they are used in the in vitro 3T3 NRU
+phototoxicity test.
+Cells used for the phototoxicity test are seeded in culture medium at the appropriate
+density so that cultures will not reach confluence by the end of the test, i.e., when cell viability
+is determined 48 h after seeding of the cells. For BALB/c 3T3 cells grown in 96-well plates,
+the recommended cell seeding density is 1 x 104 cells per well.
+For each test chemical cells are seeded identically in two separate 96-well plates.
+Both plates are then taken concurrently through the entire test procedure under identical
+culture conditions except for the time period where one of the plates is irradiated (+Irr) and
+the other one is kept in the dark (-Irr).
+
+-- 4 of 20 --
+
+4 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+Preparation of test chemical
+Test chemicals must be prepared fresh on the day of testing unless data demonstrate
+their stability in storage. It is recommended that all chemical handling and the initial
+treatment of cells be performed under conditions that would avoid photoactivation or
+degradation of the test chemical prior to irradiation.
+Ideally, test chemicals shall be dissolved in buffered salt solutions, e.g. Earle´s or
+Hanks’ Balanced Salt Solution (EBSS or HBSS), or other physiologically balanced buffer
+solutions, which must be free from protein components and light absorbing components (e.g.,
+pH indicators such as phenol red and vitamins) to avoid interference during irradiation. Since
+during irradiation, cells are kept for about 50 minutes outside of the CO2 incubator, care has
+to be taken to avoid alkalisation. If the cells are incubated at 5% CO2 only, a stronger buffer
+should be selected.
+Test chemicals of limited solubility in water should be dissolved in an appropriate
+solvent. If a solvent is used it must be present at a constant volume in all cultures (i.e., in the
+solvent controls, as well as in all concentrations of the test chemical) and be non-cytotoxic at
+that concentration.
+If the materials are not aqueous soluble, then dimethylsulphoxide (DMSO) or ethanol
+(EtOH) are the recommended solvents. Other solvents of low cytotoxicity may be appropriate
+if the material is poorly soluble in water, DMSO or ethanol. Prior to use, all solvents should
+be assessed for specific properties (e.g., reaction with the test chemical, induce phototoxicity,
+quenching of the phototoxic effect, radical scavenging properties and/or chemical stability in
+the solvent). For test chemicals dissolved in the organic solvents DMSO or ethanol, a dilution
+series of eight dilutions will be prepared in the same solvent, and the eight stock solutions
+prepared in organic solvent will be transferred into the aqueous vehicle (e.g., EBSS or HBSS)
+for application to the cells. The stock solution for each test chemical should be prepared at
+the highest soluble concentration in DMSO or ethanol to achieve a maximum concentration
+of 1000 μg/mL in the aqueous vehicle. The final solvent concentration in the aqueous vehicle
+should be kept constant in all of the eight test concentrations (generally 1% (v/v)). Test
+chemicals prepared in the organic solvent may precipitate upon transfer into the aqueous
+vehicle. Accordingly, the aqueous dosing dilutions should be evaluated for solubility and the
+observations recorded.
+Vortex mixing, sonication, and/or warming to appropriate temperatures may be used
+to aid solubilisation unless this compromises the stability of the test chemical.
+Irradiation Conditions
+Light source: The choice of an appropriate light source (e.g. a solar simulator) and
+filters is a crucial factor in phototoxicity testing. Light of the UVA and visible regions is
+usually associated with phototoxic reactions in vivo (3)(19), whereas generally UVB is of
+less relevance but is highly cytotoxic; the cytotoxicity increases 1000-fold as the wavelength
+goes from 313 to 280 nm (20). Acceptable light sources emit the entire solar spectrum (290
+nm through 700 nm). Adjustment of the spectrum can be performed using filters to attenuate
+UVB while allowing transmittance of UVA and visible light (see
+Annex C). Furthermore, the wavelengths, doses employed, and light source equipment used
+(e.g., open or closed system) should not be unduly deleterious to the test system (e.g., from
+emission of heat/ wavelengths in the infrared region).
+Simulation of sunlight with solar simulators is considered the optimal artificial light
+source. The irradiation power distribution of the filtered solar simulator should be close to
+
+-- 5 of 20 --
+
+OECD/OCDE 432 │ 5
+©OECD 2019
+that of outdoor daylight given in (21). Both xenon arcs and (doped) mercury-metal halide
+arcs are used as solar simulators (22). The latter have the advantage of emitting less heat and
+being cheaper, but the match to sunlight is not as good as that provided by xenon arcs. All
+solar simulators emit significant quantities of UVB and should be suitably filtered to
+attenuate the highly cytotoxic UVB wavelengths (Annex A). Because cell culture plastic
+materials contain UV stabilisers, the transmitted spectrum should be measured through the
+same type of 96-well plate lid as will be used in the assay. Irrespective of measures taken to
+attenuate parts of the spectrum by filtering or by unavoidable filter effects of the equipment,
+the spectrum recorded below these filters should not deviate from standardised outdoor
+daylight (21). External light standard D65, the internationally recognized emission standard
+for outdoor daylight, is provided in ISO DIS 18909:2006. An example of the spectral
+irradiance distribution of the filtered solar simulator used in the validation study of the in
+vitro 3T3 NRU phototoxicity test is given in (10)(23). See also Annex C Figure 1.
+Dosimetry: The intensity of light (irradiance) should be regularly checked before
+each phototoxicity test using a suitable broadband UVA-meter (Annex A). Irradiance should
+be measured through the same type of 96-well plate lid as will be used in the assay. The
+UVA-meter must have been calibrated to the light source. At greater intervals, an externally
+calibrated reference UV-vis spectroradiometer should be used to measure spectral irradiance
+of the filtered light source on-site and to adjust the calibration of the broadband UVA-meter
+if needed. Alternatively, regular calibration of the UVA-meter could be performed at a
+central calibration laboratory provided that this facility is equipped with an identical light
+source/filter combination.
+A dose of 5 J/cm2 (as measured in the UVA range) was determined to be non-
+cytotoxic to BALB/c 3T3 cells and sufficiently potent to excite chemicals to elicit phototoxic
+reactions (6)(24). To achieve 5 J/cm2 within a time period of 50 min, irradiance was adjusted
+to 1.7 mW/cm2. See Annex C, Figure 2. Alternate exposure times and/or irradiance values
+may be used to achieve 5 J/cm2 using the formula:
+Wsec)	1	J	(1
+60	)	(mW/cm	irradiance
+1000	)	(J/cm	dose	n	irradiatio
+(min)	t 2
+2
+
+
+
+
+Similarly, if another cell line or a different light source is used, the irradiation should
+be calibrated so that a dose regimen can be selected that is not deleterious to the cells but
+sufficient to excite standard phototoxins (e.g., proficiency chemicals described in Table 1)
+(28).
+Test conditions
+Test chemical concentrations
+The ranges of concentrations of a chemical tested in the presence (+Irr) and in the
+absence
+(-Irr) of light should be adequately determined in dose range-finding experiments. It may be
+useful to assess solubility initially and at 60 min (or whatever treatment time is to be used),
+as solubility can change during the course of exposure. To avoid toxicity induced by
+improper culture conditions or by highly acidic or alkaline chemicals, the pH of the cell
+cultures with added test chemical should be in the range 6.5 to 7.8.
+
+-- 6 of 20 --
+
+6 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+The highest concentration of the test chemical should be within physiological test
+conditions (e.g., osmotic and pH stress should be avoided). Depending on the test chemical,
+it may be necessary to consider other physio-chemical properties as factors limiting the
+highest test concentration. For relatively insoluble chemicals that are not toxic at
+concentrations up to the saturation point, the highest achievable concentration should be
+tested. For non-cytotoxic chemicals (no IC50 value up to precipitation), it might be useful to
+demonstrate the solubility limit under assay conditions. In this case, including two or three
+concentrations in the main experiment that will likely show precipitation may be useful.
+These concentration(s) should then be excluded from phototoxicity analyses. The maximum
+concentration of a test chemical should not exceed 1000 μg/mL. In many cases, the
+maximum concentration can be reduced to 100 μg/mL, since compounds without any
+significant cytotoxicity (under irradiation) up to this limit can be considered as being devoid
+of relevant phototoxicity (5). A higher maximum concentration, without irradiation, might
+still be considered to establish IC50 values for Photo Irritation Factor (PIF) calculation. A
+geometric dilution series of 8 test chemical concentrations with a constant dilution factor
+should be used (see paragraph 47).
+If there is information (from a range finding experiment) that the test chemical is not
+cytotoxic up to the limit concentration in the dark experiment (-Irr), but is highly cytotoxic
+when irradiated (+Irr), the concentration ranges to be selected for the (+Irr) experiment may
+differ from those selected for the (–Irr) experiment to fulfil the requirement of adequate data
+quality.
+Controls
+Radiation sensitivity of the cells, establishing of historical data: A working bank of
+cells may be checked at least once for sensitivity to the light source by assessing their viability
+following exposure to increasing doses of irradiation. UV sensitivity should be demonstrated
+on the highest cell passage number in use. Several doses of irradiation, including levels
+greater than those used for the in vitro 3T3 NRU phototoxicity test should be used in this
+assessment. These doses are quantitated easier by measurements of UV parts of the light
+source. Cells are seeded at the same density used in the in vitro 3T3 NRU phototoxicity test
+and irradiated the next day (see Test procedure section). Cell viability is then determined
+on the third day using Neutral Red uptake. It should be demonstrated that the resulting highest
+non-cytotoxic dose (e.g., in the validation study: 5 J/cm2 [UVA]) was sufficient to classify
+the proficiency chemicals (Table 1) correctly.
+Radiation sensitivity, check of current test: The test meets the quality criteria if the
+irradiated solvent controls show a viability of more than 80% when compared with non-
+irradiated solvent control.
+Viability of solvent controls: The absolute optical density (OD540±10 NRU) of the
+Neutral Red extracted from the solvent controls indicates whether the 1x104 cells seeded per
+well have grown with a normal doubling time during the two days of the assay. A test meets
+the acceptance criteria if the mean OD540±10 NRU of the solvent controls is  0.4 (i.e.,
+approximately twenty times the background solvent absorbance).
+Attention should be paid to crystallisation of the Neutral Red (NR) solution during
+the incubation with the cells, since crystals may lead to high variability. A shift in the pH of
+the neutral red solution may trigger formation of NR crystals. Addition of pH stabilisers (e.g.,
+HEPES) to the cell culture medium may prevent crystallization (29). It is recommended to
+pre-qualify the stock Neutral Red before use in the experiments since the quality from various
+
+-- 7 of 20 --
+
+OECD/OCDE 432 │ 7
+©OECD 2019
+suppliers may differ. Filtration or centrifugation of the solution of Neutral Red in the cell
+culture media is highly recommended.
+Positive control: A known phototoxic chemical shall be tested concurrently with each
+in vitro 3T3 NRU phototoxicity test. Chlorpromazine (CPZ) is recommended. For CPZ
+tested with the standard protocol in the in vitro 3T3 NRU phototoxicity test, the following
+test acceptance criteria were defined: CPZ irradiated (+Irr): IC50 = 0.1 to 2.0 g/mL; CPZ
+non-irradiated (-Irr): IC50 = 7.0 to 90.0 g/mL. The Photo Irritation Factor (PIF), should be
+> 6. The historical performance of the positive control should be monitored. Each laboratory
+performing this assay should establish its own historical databases including Mean Photo
+Effect (MPE) to monitor the performance over time (Table 1).
+Other phototoxic chemicals, suitable for the chemical class or solubility
+characteristics of the chemical being evaluated, may be used as the concurrent positive
+controls in place of chlorpromazine (Table 1).
+Test procedure (8)(9)(10)(22)(23)(24):
+1st day:
+Dispense 100 L culture medium into the peripheral wells of a 96-well tissue culture
+microtiter plate (= blanks). In the remaining wells, dispense 100 L of a cell suspension of
+1xl05 cells/mL in culture medium (= 1x104 cells/well). Two plates should be prepared for
+each series of individual test chemical concentrations, including the solvent controls.
+Similarly, two plates should be prepared for the positive controls, including solvent controls.
+Incubate cells for 18-24 h (see paragraph 12) until they form an approximately half
+confluent monolayer. This incubation period allows for cell recovery, adherence, and
+exponential growth.
+2nd day:
+After incubation, decant culture medium from the cells and wash gently with 150 L
+of the buffer solution used for incubation (see paragraph 17). Add 100 L of the buffer
+containing the appropriate concentration of test chemical or solvent (solvent control). Apply
+8 different concentrations of the test chemical to both plates. Incubate cells with the test
+chemical in the dark for 60 minutes.
+From the two plates prepared for each series of 8 test chemical concentrations and
+the controls, one plate is selected for the determination of cytotoxicity (-Irr) (i.e., the control
+plate), and one (the treatment plate) for the determination of photocytotoxicity (+Irr).
+To perform the +Irr exposure, irradiate the cells at room temperature for
+approximately 50 minutes through the lid of the 96-well plate with the highest dose of
+radiation that is non-cytotoxic (i.e., 5 J/cm2; see also Annex C). Keep non-irradiated plates (-
+Irr) at room temperature in dark conditions for approximately 50 min (= light exposure time).
+Decant test solution and carefully wash twice with 150 L of the buffer solution used
+for incubation, but not containing the test material. Replace the buffer with culture medium
+and incubate overnight (18-24 h; see paragraph 12).
+
+-- 8 of 20 --
+
+8 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+3rd day:
+Microscopic evaluation
+Cells should be examined for growth, morphology, and integrity of the monolayer
+using a phase contrast microscope. Changes in cell morphology and effects on cell growth
+should be recorded.
+Neutral Red Uptake test
+Wash the cells with 150 L of the pre-warmed (37oC) buffer solution. Remove the
+buffer solution. Add 100 L of a 50 μg/mL Neutral Red (NR) (3-amino-7-dimethylamino-
+2-methylphenazine hydrochloride, CAS number 553-24-2; C.I. 50040) in medium without
+serum (23) and incubate (as described in paragraph 12) for 3 h.
+After incubation, remove the NR medium, and wash cells with 150 L of the buffer.
+Decant and remove excess buffer by blotting or centrifugation.
+Add exactly 150 L NR desorb solution (freshly prepared 49 parts water + 50 parts
+ethanol + 1 part acetic acid).
+Shake the microtiter plate gently on a microtiter plate shaker for at least 10 min until
+NR has been extracted from the cells and has formed a homogeneous solution.
+Measure the optical density of the NR extract at 540±10 nm in a spectrophotometer,
+using blanks as a reference. Save data in an appropriate electronic file format for subsequent
+analysis.
+DATA AND REPORTING:
+Quality and quantity of data
+Appropriate concentrations which capture the concentration-responses in the
+presence and absence of irradiation should be selected to allow meaningful analysis of the
+data, and if possible a determination of the concentration of test chemical by which cell
+viability is reduced to 50% (IC50). If cytotoxicity is observed, the ranges of concentrations
+tested may be updated to capture the range of concentration-responses (e.g., those
+concentrations which result in viabilities above and below 50%).
+For both clearly positive and clearly negative results (see paragraph 53), the primary
+experiment, supported by one or more preliminary concentration range-finding
+experiment(s), may be sufficient.
+Equivocal, borderline, or unclear results should be clarified by further testing (see
+also paragraph 56). In such cases, modification of experimental conditions should be
+considered. Experimental conditions that might be modified include the concentration range
+or spacing, the incubation time, and the irradiation-exposure time. A shorter exposure time
+may be appropriate for water-unstable chemicals.
+Evaluation of results
+To enable evaluation of the data, a Photo-Irritation-Factor (PIF) or Mean Photo Effect
+(MPE) should be calculated.
+
+-- 9 of 20 --
+
+OECD/OCDE 432 │ 9
+©OECD 2019
+For the calculation of the measures of photocytotoxicity (see below) the set of
+discrete concentration-response values has to be approximated by an appropriate continuous
+concentration-response curve (model). Fitting of the curve to the data is commonly
+performed by a non-linear regression method (25). To assess the influence of data variability
+on the fitted curve a bootstrap procedure is recommended.
+A Photo-Irritation-Factor (PIF) is calculated using the following formula:
+If an IC50 in the presence or absence of light cannot be calculated, a PIF cannot be determined for the
+test material.
+The Mean Photo Effect (MPE) is based on comparison of the complete concentration
+response curves (26). It is defined as the weighted average across a representative set of photo
+effect values
+The photo effect (PEc) at any concentration (C) is defined as the product of the response effect (REc)
+and the dose effect (DEc) i.e., PEc = REc x DEc. The response effect (REc) is the difference between
+the responses observed in the absence and presence of light, i.e,. REc = Rc (-Irr) – Rc (+Irr). The dose-
+effect is given by
+DEc =
+where C* represents the equivalence concentration, i.e., the concentration at which the +Irr response
+equals the –Irr response at concentration C. If C* cannot be determined because the response values
+of the +Irr curve are systematically higher or lower than RC(-Irr) the dose effect is set to 1. The
+weighting factors wi are given by the highest response value, i.e., wi = MAX {Ri (+Irr), Ri (-Irr)}.
+The concentration grid Ci is chosen such that the same number of points falls into each of the
+concentration intervals defined by the concentration values used in the experiment. The calculation
+of MPE is restricted to the maximum concentration value at which at least one of the two curves still
+exhibits a response value of at least 10%. If this maximum concentration is higher than the highest
+concentration used in the +Irr experiment the residual part of the +Irr curve is set to the response
+value “0”. The chemical is classified as phototoxic depending on whether the MPE value is larger
+than a properly chosen cut-off value (MPEc> 0.15).
+A software package for the calculation of the PIF and MPE is available from the
+OECD Secretariat (27).
+Irr)	(	IC
+(-Irr)	IC
+PIF 50
+50
+
+
+1	*	C/C
+-1	*	C/C
+
+w
+PE	w
+MPE n
+1	i
+i
+c
+n
+1	i
+i i
+
+
+
+
+
+
+-- 10 of 20 --
+
+10 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+Interpretation of Results
+Based on the validation study (10), a test chemical with a PIF < 2 or an MPE < 0.1
+predicts: “no phototoxicity”. A PIF >2 and < 5 or an MPE > 0.1 and < 0.15 predicts:
+“equivocal” phototoxicity and a PIF > 5 or an MPE > 0.15 predicts: “phototoxicity”. Further
+guidance specific to pharmaceutical chemicals other guidelines may be helpful (6).
+Prediction PIF MPE
+No phototoxicity PIF < 2 or MPE < 0.1
+Equivocal phototoxicity* PIF > 2 and <5 or MPE > 0.1 and < 0.15
+Phototoxicity PIF > 5 or MPE > 0.15
+Note: * In the pharmaceutical sector, chemicals in this category are of questionable relevance for systemic drugs and
+generally do not warrant further photosafety evaluation (6).
+For any laboratory initially establishing this assay, the proficiency chemicals listed
+in Table 1 should be tested to establish proficiency prior to the routine testing of test
+chemicals for phototoxicity. PIF or MPE values should be close to the values mentioned in
+Table 1 (9)(10)(11).
+
+-- 11 of 20 --
+
+OECD/OCDE 432 │ 11
+©OECD 2019
+Table 1. Proficiency chemicals
+Chemical CAS No. PIF MPE Phototoxic Absorption Peak
+Amiodarone
+HCL
+19774-
+82-4
+>3.25 0.27-
+0.54
+Yes 242 nm
+300 nm (shoulder) in
+ethanol
+Chloropromazine
+HCL
+69-09-0 >14.4 0.33-
+0.63
+Yes 309 nm in ethanol
+Norfloxacin 70458-
+96-7
+>71.6 0.34-
+0.90
+Yes 316 nm in
+acetonitrile
+Anthracene 120-12-7 >18.5 0.19-
+0.81
+Yes 356 nm in
+acetonitrile
+Protoporphyrin IX,
+Disodium
+50865-
+01-5
+>45.3 0.54-
+0.74
+Yes 402 nm in ethanol
+L – Histidine 7006-35-
+1
+no
+PIF
+0.05-
+0.10
+No 211 nm in water
+Hexachlorophene 70-30-4 1.1-
+1.7
+0.00-
+0.05
+No 299 nm
+317 nm (shoulder) in
+ethanol
+Sodium lauryl
+sulfate
+151-21-3 1.0-
+1.9
+0.00-
+0.05
+No no absorption in
+water
+Source: Values from Spielmann et al. 1998 (9).
+Interpretation of data
+If phototoxic effects are observed only at the highest test concentration, (especially
+for water soluble test chemicals) additional considerations may be necessary for assessment
+of hazard. These may include data on skin absorption, and accumulation of the chemical in
+the skin and / or data from other tests, e.g., testing of the chemical in the ROS assay, in vitro
+animal or human skin assays, or skin models.
+Test Report
+The test report should include the following information:
+Test chemical:
+- identification data, common generic names and IUPAC and CAS number, if known;
+- physical nature and purity;
+- physicochemical properties relevant to conduct of the study;
+- UV/vis absorption spectrum;
+- stability and photostability, if known.
+Solvent:
+- justification for choice of solvent;
+- solubility of the test chemical in solvent;
+- percentage of solvent present in treatment medium.
+
+-- 12 of 20 --
+
+12 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+Cells:
+- type and source of cells;
+- absence of mycoplasma and other contamination;
+- cell passage number,
+- Radiation sensitivity of cells from a particular passage range, determined with the irradiation
+equipment used in the in vitro 3T3 NRU phototoxicity test.
+Test conditions (1); incubation before and after treatment:
+- type and composition of culture medium;
+- incubation conditions (CO2 concentration; temperature; humidity);
+- duration of incubation (pre-treatment; post-treatment).
+Test conditions (2); treatment with the chemical:
+- rationale for selection of concentrations of the test chemical used in the presence and in the
+absence of irradiation;
+- in case of limited solubility of the test chemical and absence of cytotoxicity: rationale for the
+highest concentration tested;
+- type and composition of treatment medium (buffered salt solution);
+- duration of the chemical treatment.
+Test conditions (3); irradiation:
+- rationale for selection of the light source used;
+- manufacturer and type of light source and radiometer
+- spectral irradiance characteristics of the light source;
+- transmission and absorption characteristics of the filter(s) used;
+- characteristics of the radiometer and details on its calibration;
+- distance of the light source from the test system;
+- UVA irradiance at this distance, expressed in mW/cm2;
+- duration of the UV/vis light exposure;
+- UVA dose (irradiance x time), expressed in J/cm2;
+- temperature of cell cultures during irradiation and cell cultures concurrently kept in the dark.
+Test conditions (4); Neutral Red viability test:
+- composition of Neutral Red treatment medium;
+- duration of Neutral Red incubation;
+- incubation conditions (CO2 concentration; temperature; humidity);
+- Neutral Red extraction conditions (extractant; duration);
+- wavelength used for spectrophotometric reading of Neutral Red optical density;
+- second wavelength (reference), if used;
+- content of spectrophotometer blank, if used.
+Results:
+- cell viability obtained at each concentration of the test chemical, expressed in percent
+viability of mean, concurrent solvent controls;
+- concentration response curves (test chemical concentration vs. relative cell viability) obtained
+in concurrent +Irr and -Irr experiments;
+- analysis of the concentration-response curves: if possible, computation/calculation of IC50
+(+Irr) and IC50 (-Irr);
+
+-- 13 of 20 --
+
+OECD/OCDE 432 │ 13
+©OECD 2019
+- comparison of the two concentration response curves obtained in the presence and in the
+absence of irradiation, either by calculation of the Photo-Inhibition-Factor (PIF), and/or by
+calculation of the Mean-Photo-Effect (MPE) depending on the dose-response curve;
+- test acceptance criteria; concurrent solvent control:
+- absolute viability (optical density of Neutral Red extract) of irradiated and non-irradiated
+cells;
+- historic negative and solvent control data; means and standard deviations.
+- test acceptance criteria; concurrent positive control:
+- IC50(+Irr) and IC50(-Irr) and PIF/MPE of positive control chemical;
+- historic positive control chemical data: IC50(+Irr) and IC50(-Irr) and PIF/MPE; means and
+standard deviations.
+Discussion of the results.
+Conclusions.
+LITERATURE
+(1) Lovell W.W. (1993). A scheme for in vitro screening of substances for photoallergenic potential.
+Toxic. In Vitro 7: 95-102.
+(2) Santamaria, L. and Prino, G. (1972). List of the photodynamic substances. In “Research Progress in
+Organic, Biological and Medicinal Chemistry” Vol. 3 part 1. North Holland Publishing Co.
+Amsterdam. p XI-XXXV.
+(3) Spielmann, H., Lovell, W.W., Hölzle, E., Johnson, B.E., Maurer, T., Miranda, M.A., Pape, W.J.W.,
+Sapora, O., and Sladowski, D. (1994). In vitro phototoxicity testing: The report and recommendations
+of ECVAM Workshop 2. ATLA, 22, 314-348.
+(4) Spikes, J.D. (1989). Photosensitization. In “The science of Photobiology” Edited by K.C. Smith.
+Plenum Press, New York. 2nd edition, p 79-110.
+(5) Bauer D, Averett LA, De Smedt A, Kleinman MH, Muster W, Pettersen BA, Robles C. (2014).
+Standardized UV-vis spectra as the foundation for a threshold-based, integrated photosafety
+evaluation. Regul Toxicol Pharmacol, 68: 70-75.
+(6) ICH S10 Photosafety Evaluation of Pharmaceuticals. Guidance for Industry. January 2015.
+https://www.fda.gov/Drugs/GuidanceComplianceRegulatoryInformation/Guidances/ucm06500
+7.htm
+(7) OECD (1997) Environmental Health and Safety Publications, Series on Testing and Assessment No.
+7 ”Guidance Document On Direct Phototransformation Of Chemicals In Water” Environment
+Directorate, OECD, Paris
+(8) Spielmann, H., Balls, M., Döring, B., Holzhütter, H.G., Kalweit, S., Klecak, G., L’Eplattenier, H.,
+Liebsch, M., Lovell, W.W., Maurer, T., Moldenhauer. F. Moore. L., Pape, W., Pfannbecker, U.,
+
+-- 14 of 20 --
+
+14 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+Potthast, J., De Silva, O., Steiling, W., and Willshaw, A. (1994). EEC/COLIPA project on in vitro
+phototoxicity testing: First results obtained with a BALB/c 3T3 cell phototoxicity assay. Toxic. In
+Vitro 8, 793-796.
+(9) Anon (1998). Statement on the scientific validity of the 3T3 NRU PT test (an in vitro test for
+phototoxicity), European Commission, Joint Research Centre: ECVAM and DGXI/E/2, 3 November
+1997, ATLA, 26, 7-8.
+(10) Spielmann, H., Balls, M., Dupuis, J., Pape, W.J.W., Pechovitch, G. De Silva, O., Holzhütter, H.G.,
+Clothier, R., Desolle, P., Gerberick, F., Liebsch, M., Lovell, W.W., Maurer, T., Pfannenbecker, U.,
+Potthast, J. M., Csato, M., Sladowski, D., Steiling, W., and Brantom, P. (1998). The international
+EU/COLIPA In vitro phototoxicity validation study: results of phase II (blind trial), part 1: the 3T3
+NRU phototoxicity test. Toxic. In Vitro 12, 305-327.
+(11) OECD (2002) Extended Expert Consultation Meeting on The In Vitro 3T3 NRU Phototoxicity Test
+Guideline Proposal, Berlin, 30th – 31st October 2001, Secretariat's Final Summary Report, 15th March
+2002, OECD ENV/EHS, available upon request from the Secretariat
+(12) Lynch AM, Guzzie PJ, Bauer D, Gocke E, Itoh S, Jacobs A, Frul CA, Schepky A, Tanaka N, Kasper
+P. (2011) Consideration on photochemical genotoxicity. II: report of the 2009 International Workshop
+on Genotoxicity Testing Working Group. Mutat Res 723: 91-100.
+(13) Ceridono M, Tellner Par, Bauer D, Barroso J, Alépée N, Corvi R, De Smedt A, Fellows MD, Gibbs
+NK, Heisler E, Jacobs A, Jirova D, Jones D, Kanádarová H, Kasper P, Akunda JK, Krul C, Learn D,
+Liebsch M, Lynch AM, Muster W, Nakamura K, Nash JF, Pfannenbecker U, Phillips G, Robles C,
+Rogiers V, Van De Water F, Liminga UW, Vohr HW, Wattrelos O, Woods J, Zuang V, Kreysa J,
+Wilcox P. (2012) The 3T3 neutral red uptate photoxiticity test: practical experience and implications
+for phototoxicity Testing – The report of an ECVAM-EFPIA workshop. Reg Tox Pharm. 63: 480-
+488.
+(14) Borenfreund, E., and Puerner, J.A. (1985). Toxicity determination in vitro by morphological
+alterations and neutral red absorption. Toxicology Lett., 24, 119-124.
+(15) Brunk UT, Svensson I (1999) Oxidative stress, growth factor starvation and Fas activation may all
+cause apoptosis through lysosomal leak. Redox Report; 4(1-2): 3-11.
+(16) Johansson A-C, Appelqvist H, Nilsson C, Kågedal K, Roberg K, Öllinger K. (2010) Regulation of
+apoptosis-associated lysosomal membrane permeabilization. Apoptosis.;15(5):527-540.
+doi:10.1007/s10495-009-0452-5)
+(17) OECD (2018). Guidance Document on Good In Vitro Methods Practices (GIVIMP). OECD Series
+on Testing and Assessment No. 286. https://www.oecd-ilibrary.org/environment/guidance-document-
+on-good-in-vitro-method-practices-givimp_9789264304796-en
+(18) Hay, R.J. (1988) The seed stock concept and quality control for cell lines. Analytical Biochemistry
+171, 225-237.
+
+-- 15 of 20 --
+
+OECD/OCDE 432 │ 15
+©OECD 2019
+(19) Lambert L.A, Wamer W.G., and Kornhauser A. (1996) Animal models for phototoxicity testing. In
+“Dermatotoxicology”, edited by F.N. Marzulli and H.I. Maibach. Taylor & Francis, Washington DC.
+5th Edition, p 515-530.
+(20) Tyrrell R.M., Pidoux M (1987) Action spectra for human skin cells: estimates of the relative
+cytotoxicity of the middle ultraviolet, near ultraviolet and violet regions of sunlight on epidermal
+keratinocytes. Cancer Res., 47, 1825-1829.
+(21) ISO 10977. (1993). Photography - Processed photographic colour films and paper prints - Methods
+for measuring image stability.
+(22) Sunscreen Testing (UV.B) TECHNICALREPORT, CIE, International Commission on Illumnation,
+Publication No. 90, Vienna, 1993, ISBN 3 900 734 275
+(23) ZEBET/ECVAM/COLIPA - Standard Operating Procedure: In Vitro 3T3 NRU Phototoxicity Test.
+Final Version, 7 September, 1998. 18 pgs.
+(24) Spielmann, H., Balls, M., Dupuis, J., Pape, W.J.W., De Silva, O., Holzhütter, H.G., Gerberick, F.,
+Liebsch, M., Lovell, W.W., and Pfannenbecker, U. (1998) A study on UV filter chemicals from Annex
+VII of the European Union Directive 76/768/EEC, in the in vitro 3T3 NRU phototoxicity test. ATLA
+26, 679-708.
+(25) Holzhütter, H.G., and Quedenau, J. (1995) Mathematical modeling of cellular responses to external
+signals. J. Biol. Systems 3, 127-138.
+(26) Holzhütter, H.G. (1997). A general measure of in vitro phototoxicity derived from pairs of dose-
+response curves and its use for predicting the in vivo phototoxicity of chemicals. ATLA, 25, 445-462.
+(27) Software to be used with TG 432: phototox version 2.0
+http://www.oecd.org/env/ehs/testing/section4software.htm
+(28) INVITTOX Protocol 78. 3T3 Neutral Red Uptake (NRU) Phototoxicity Assay. ECVAM DB-ALM;
+2008. http://ecvam-dbalm.jrc.ec.europa.eu/
+(29) Baker C. S., 1998. Crystallization of neutral red vital stain from minimum essential medium due to
+pH instability. In Vitro Cell Dev Biol Anim. 1998 Sep;34(8):607-8
+
+-- 16 of 20 --
+
+16 │ 432 OECD/OCDE
+D 2019
+©OECD 2019
+Annex A. DEFINITIONS
+Mixture: A mixture or a solution composed of two or more chemicals in which they do not
+react (4).
+Irradiance: the intensity of ultraviolet (UV) or visible light incident on a surface, measured
+in W/m2 or mW/cm2.
+Dose of light: the quantity (= intensity x time) of ultraviolet (UV) or visible radiation incident
+on a surface, expressed in Joules (= W x s) per surface area, e.g., J/m2 or J/cm2.
+UV light wavebands: the designations recommended by the CIE (Commission
+Internationale de L’Eclairage) are: UVA (315-400nm) UVB (280-315nm) and UVC (100-
+280nm). Other designations are also used; the division between UVB and UVA is often
+placed at 320nm, and the UVA may be divided into UV-A1 and UV-A2 with a division made
+at about 340nm.
+Cell viability: parameter measuring total activity of a cell population (e.g., uptake of the vital
+dye Neutral Red into cellular lysosomes), which, depending on the endpoint measured and
+the test design used, correlates with the total number and/or vitality of the cells.
+Relative cell viability: cell viability expressed in relation to solvent (negative) controls
+which have been taken through the whole test procedure (either +Irr or -Irr) but not treated
+with test chemical.
+MEC (Molar Extinction/absorption Coefficient): a constant for any given molecule under a
+specific set of conditions (e.g. solvent, temperature, and wavelength) and reflects the
+efficiency with which a molecule can absorb a photon (typically expressed as L⋅mol-1⋅cm-1).
+PIF (Photo-Irritation-Factor): factor generated by comparing two equally effective cytotoxic
+concentrations (IC50) of the test chemical obtained in the absence (-Irr) and in the presence
+(+Irr) of a non-cytotoxic irradiation with UVA/vis light.
+IC50: the concentration of the test chemical by which the cell viability is reduced by 50%
+MPE (Mean-Photo-Effect): measurement derived from mathematical analysis of the
+concentration response curves obtained in the absence (-Irr) and in the presence (+Irr) of a
+non-cytotoxic irradiation with UVA/vis light.
+Phototoxicity: acute toxic response that is elicited after the first exposure of skin to certain
+chemicals and subsequent exposure to light, or that is induced similarly by skin irradiation
+after systemic administration of a chemical.
+
+-- 17 of 20 --
+
+OECD/OCDE 432 │ 17
+©OECD 2019
+Annex B. The role of the 3T3 NRU test in a sequential approach to the
+phototoxicity testing of chemicals.
+Note: In some regulatory guidelines, older threshold MEC values may have been used. The MEC > 1000
+L mole-1cm-1 is based on scientific data (5), but when in doubt, regulatory authorities should be consulted.
+UV/vis
+absorption spectra
+in appropriate solvent
+(e.g. OECD
+TG 101)
+Absorption
+[i.e., MEC >1000 L mol-1 cm-1 (5)]
+No absorption
+[i.e., MEC < 1000 L mol-1 cm-1 (5)]
+Phototoxicity Testing
+not considered
+necessary
+Initial Evaluation of the Physical, Chemical, and Toxicological Properties of the Test Chemical
+• Physico-chemical properties
+• Chemical structure, structural alerts
+• UV/vis - absorption
+• QSAR - photochemistry
+• General toxicity (including kinetics and metabolism)
+In Vitro 3T3 NRU Phototoxicity Test
+and/or other methods if necessary
+
+-- 18 of 20 --
+
+18 │ 432 OECD/OCDE
+©OECD 2019
+Annex C.
+Figure 1. Spectral power distribution of a filtered solar simulator.
+See paragraph 22. Figure 1 gives an example of an acceptable spectral power distribution of a filtered solar
+simulator. It is from the doped metal halide source used in the validation trial of the 3T3 NRU PT (6)(8)(17).
+The effect of two different filters and the additional filtering effect of the lid of a 96-well cell culture plate are
+shown. The H2 filter was only used with test systems that can tolerate a higher amount of UVB (skin model
+test and red blood cell photo-hemolysis test). In the 3T3 NRU-PT the H1 filter was used. The figure shows that
+additional filtering effect of the plate lid is mainly observed in the UVB range, still leaving enough UVB in the
+irradiation spectrum to excite chemicals typically absorbing in the UVB range, like Amiodarone (see Table 2).
+
+-- 19 of 20 --
+
+OECD/OCDE 432 │ 19
+©OECD 2019
+Figure 2. Irradiation sensitivity of BALB/c 3T3 (as measured in the UVA range)
+See paragraphs 24, 28, 29. Sensitivity of BALB/c 3T3 cells to irradiation with the solar simulator used in the
+validation trial of the 3T3NRU-Phototoxicity Test, as measured in the UVA range. Figure shows the results
+obtained in 7 different laboratories in the pre-validation study (1). While the two curves with open symbols
+were obtained with cells from a high passage number that were replaced with new cell stocks, the curves with
+bold symbols show cells with acceptable irradiation tolerance. From these data the highest non-cytotoxic
+irradiation dose of 5 J/cm² was derived (vertical dashed line). The horizontal dashed line shows in addition the
+maximum acceptable irradiation effect given in paragraph 29.
+
+-- 20 of 20 --
+

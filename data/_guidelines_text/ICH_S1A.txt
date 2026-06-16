@@ -1,0 +1,248 @@
+[SOURCE URL] https://database.ich.org/sites/default/files/S1A_Guideline.pdf
+[CHARS] 14536
+
+INTERNATIONAL 	CONFERENCE 	ON 	HARMONISATION 	OF 	TECHNICAL
+REQUIREMENTS FOR REGISTRATION OF PHARMACEUTICALS FOR HUMAN
+USE
+ICH HARMONISED TRIPARTITE G UIDELINE
+GUIDELINE ON THE NEED FOR CARCINOGENICITY STUDIES
+OF P HARMACEUTICALS
+S1A
+Current Step 4 version
+dated 29 November 1995
+This Guideline has been developed by the appropriate ICH Expert Working Group and
+has been subject to consultation by the regulatory parties, in accordance with the ICH
+Process. 	At Step 4 of the Process the final draft is recommended for adoption to the
+regulatory bodies of the European Union, Japan and USA.
+
+-- 1 of 8 --
+
+S1A
+Document History
+First
+Codification History 	Date
+New
+Codification
+November
+2005
+S1A 	Approval by the Steering Committee under Step 2
+and release for public consultation.
+30
+March
+1995
+S1A
+Current Step 4 version
+S1A 	Approval by the Steering Committee under Step 4 and
+recommendation 	for 	adoption 	to 	the 	three 	ICH
+regulatory bodies.
+29
+November
+1995
+S1A
+
+-- 2 of 8 --
+
+GUIDELINE ON THE NEED FOR CARCINOGENICITY STUDIES OF
+P HARMACEUTICALS
+ICH Harmonised Tripartite Guideline
+Having reached Step 4 of the ICH Process at the ICH Steering Committee meeting
+on 29 November 1995, this guideline is recommended for adoption
+to the three regulatory parties to ICH
+TABLE OF CONTENTS
+1. 	Introduction.............................................................................................................1
+2. 	Historical Background ..........................................................................................1
+3. 	Objective of the guideline.....................................................................................1
+4. 	Factors to consider for carcinogenicity testing ..............................................2
+4.1 	Duration and Exposure ..................................................................................2
+4.2 	Cause for Concern ..........................................................................................2
+4.3 	Genotoxicity ....................................................................................................2
+4.4 	Indication and Patient Population ................................................................2
+4.5 	Route of Exposure...........................................................................................3
+4.6 	Extent of Systemic Exposure .........................................................................3
+4.7 	Endogenous Peptides and Protein Substances or Their Analogs ................3
+5. 	Need for Additional Testing .................................................................................4
+i
+
+-- 3 of 8 --
+
+
+
+-- 4 of 8 --
+
+GUIDELINE ON THE NEED FOR CARCINOGENICITY STUDIES OF
+P HARMACEUTICALS
+1. 	I NTRODUCTION
+The objectives of carcinogenicity studies are to identify a tumorigenic potential in
+animals and to assess the relevant risk in humans. 	Any cause for concern derived
+from laboratory investigations, animal toxicology studies, and data in humans may
+lead to a need for carcinogenicity studies. 	The practice of requiring carcinogenicity
+studies in rodents was instituted for pharmaceuticals that were expected to be
+administered regularly over a substantial part of a patient's lifetime. The design and
+interpretation of the results from these studies preceded much of the available
+current technology to test for genotoxic potential and the more recent advances in
+technologies to assess systemic exposure. 	These studies also preceded our current
+understanding of tumorigenesis with non-genotoxic agents. Results from genotoxicity
+studies, toxicokinetics, and mechanistic studies can now be routinely applied in
+preclinical safety assessment. 	These additional data are important not only in
+considering whether to perform carcinogenicity studies but for interpreting study
+outcomes with respect to relevance for human safety. 	Since carcinogenicity studies
+are time consuming and resource intensive they should only be performed when
+human exposure warrants the need for information from life-time studies in animals
+in order to assess carcinogenic potential.
+2. 	H ISTORICAL B ACKGROUND
+In Japan, according to the 1990 “Guidelines for Toxicity Studies of Drugs Manual”,
+carcinogenicity studies were needed if the clinical use was expected to be continuously
+for 6 months or longer. 	If there was cause for concern, pharmaceuticals generally
+used continuously for less than 6 months may have needed carcinogenicity studies. In
+the United States, most pharmaceuticals were tested in animals for their carcinogenic
+potential before widespread use in humans. 	According to the US Food and Drug
+Administration, pharmaceuticals generally used for 3 months or more required
+carcinogenicity studies. 	In Europe, the Rules Governing Medicinal Products in the
+European Community defined the circumstances when carcinogenicity studies were
+required. 	These circumstances included administration over a substantial period of
+life, i.e., continuously during a minimum period of 6 months or frequently in an
+intermittent manner so that the total exposure was similar.
+3. 	O BJECTIVE OF THE GUIDELINE
+The objective of this guideline is to define the conditions under which carcinogenicity
+studies, should be conducted to avoid the unnecessary use of animals in testing, and
+to provide consistency in worldwide regulatory assessments of applications. 	It is
+expected that these studies will be performed in a manner that reflects currently
+accepted scientific standards.
+The fundamental considerations in assessing the need for carcinogenicity studies are
+the maximum duration of patient treatment and any perceived cause for concern
+arising from other investigations. 	Other factors may also be considered such as the
+intended patient population, prior assessment of carcinogenic potential, the extent of
+systemic exposure, the (dis)similarity to endogenous substances, the appropriate
+study design, or the timing of study performance relative to clinical development.
+1
+
+-- 5 of 8 --
+
+Need for Carcinogenicity Studies
+4. 	FACTORS TO CONSIDER FOR CARCINOGENICITY TESTING
+4.1 	Duration and Exposure
+Carcinogenicity studies should be performed for any pharmaceutical whose expected
+clinical use is continuous for at least 6 months (see Note 1).
+Certain classes of compounds may not be used continuously over a minimum of 6
+months but may be expected to be used repeatedly in an intermittent manner. 	It is
+difficult to determine and to justify scientifically what time represents a clinically
+relevant treatment periods for frequent use with regard to carcinogenic potential,
+especially for discontinuous treatment periods. 	For pharmaceuticals used frequently
+in an intermittent manner in the treatment of chronic or recurrent conditions,
+carcinogenicity studies are generally needed. 	Examples of such conditions include
+allergic rhinitis, depression, and anxiety. Carcinogenicity studies may also need to be
+considered for certain delivery systems which may result in prolonged exposures.
+Pharmaceuticals administered infrequently or for short duration of exposure (e.g.,
+anaesthetics and radiolabelled imaging agents) do not need carcinogenicity studies
+unless there is cause for concern.
+4.2 	Cause for Concern
+Carcinogenicity studies may be recommended for some pharmaceuticals if there is
+concern about their carcinogenic potential. Criteria for defining these cases should be
+very carefully considered because this is the most important reason to conduct
+carcinogenicity studies for most categories of pharmaceuticals. Several factors which
+could be considered may include: (1) previous demonstration of carcinogenic potential
+in the product class that is considered relevant to humans; (2) structure-activity
+relationship suggesting carcinogenic risk; (3) evidence of preneoplastic lesions in
+repeated dose toxicity studies; and (4) long-term tissue retention of parent compound
+or 	metabolite(s) 	resulting 	in 	local 	tissue 	reactions 	or 	other 	pathophysiological
+responses.
+4.3 	Genotoxicity
+Unequivocally genotoxic compounds, in the absence of other data, are presumed to be
+trans-species carcinogens, implying a hazard to humans. 	Such compounds need not
+be subjected to long-term carcinogenicity studies. However, if such a drug is intended
+to be administered chronically to humans a chronic toxicity study (up to one year)
+may be necessary to detect early tumorigenic effects.
+Assessment of the genotoxic potential of a compound should take into account the
+totality of the findings and acknowledge the intrinsic value and limitations of both in
+vitro and in vivo tests. 	The test battery approach of in vitro and in vivo tests is
+designed to reduce the risk of false negative results for compounds with genotoxic
+potential. 	A single positive result in any assay for genotoxicity does not necessarily
+mean that the test compound poses a genotoxic hazard to humans (ICH Guidance on
+Specific Aspects of Regulatory Genotoxicity Tests).
+4.4 	Indication and Patient Population
+When carcinogenicity studies are required they usually need to be completed before
+application for marketing approval. 	However, completed rodent carcinogenicity
+studies are not needed in advance of the conduct of large scale clinical trials, unless
+there is special concern for the patient population.
+2
+
+-- 6 of 8 --
+
+Need for Carcinogenicity Studies
+For pharmaceuticals developed to treat certain serious diseases, carcinogenicity
+testing need not be conducted before market approval although these studies should
+be conducted post-approval. 	This speeds the availability of pharmaceuticals for life-
+threatening 	or 	severely 	debilitating 	diseases, 	especially 	where 	no 	satisfactory
+alternative therapy exists.
+In instances where the life-expectancy in the indicated population is short (i.e., less
+than 2 - 3 years) no long-term carcinogenicity studies may be required. For example,
+oncolytic agents intended for treatment of advanced systemic disease do not generally
+need carcinogenicity studies. 	In cases where the therapeutic agent for cancer is
+generally successful and life is significantly prolonged there may be later concerns
+regarding secondary cancers. 	When such pharmaceuticals are intended for adjuvant
+therapy in tumour free patients or for prolonged use in noncancer indications,
+carcinogenicity studies are usually needed.
+4.5 	Route of Exposure
+The route of exposure in animals should be the same as the intended clinical route
+when feasible (ICH Dose Selection for Carcinogenicity Studies of Pharmaceuticals). If
+similar metabolism and systemic exposure can be demonstrated by differing routes of
+administration, then carcinogenicity studies should only be conducted by a single
+route, recognising that it is important that relevant organs for the clinical route (e.g.,
+lung for inhalational agents) be adequately exposed to the test material. Evidence of
+adequate exposure may be derived from pharmacokinetic data (ICH Guidance on
+Repeated Dose Tissue Distribution Studies).
+4.6 	Extent of Systemic Exposure
+Pharmaceuticals applied topically (e.g., dermal and ocular routes of administration)
+may need carcinogenicity studies. 	Pharmaceuticals showing poor systemic exposure
+from topical routes in humans may not need studies by the oral route to assess the
+carcinogenic potential to internal organs. 	Where there is cause for concern for
+photocarcinogenic potential carcinogenicity studies by dermal application (generally
+in mice) may be needed. 	Pharmaceuticals administered by the ocular route may not
+require carcinogenicity studies unless there is cause for concern or unless there is
+significant systemic exposure.
+For different salts, acids, or bases of the same therapeutic moiety, where prior
+carcinogenicity studies are available, evidence should be provided that there are no
+significant changes in pharmacokinetics, pharmacodynamics, or toxicity. 	When
+changes in exposure and consequent toxicity are noted, then additional bridging
+studies may be used to determine whether additional carcinogenicity studies are
+needed. 	For esters and complex derivatives, similar data would be valuable in
+assessing the need for an additional carcinogenicity study, but this should be
+considered on a case-by-case basis.
+4.7 	Endogenous Peptides and Protein Substances or Their Analogs
+Endogenous peptides or proteins and their analogs, produced by chemical synthesis,
+by 	extraction/purification 	from 	an 	animal/human 	source 	or 	by 	biotechnological
+methods such as recombinant DNA technology may require special considerations.
+Carcinogenicity studies are not generally needed for endogenous substances given
+essentially as replacement therapy (i.e., physiological levels), particularly where there
+is previous clinical experience with similar products (for example, animal insulins,
+pituitary-derived growth hormone, and calcitonin).
+3
+
+-- 7 of 8 --
+
+Need for Carcinogenicity Studies
+Although not usually necessary, long-term carcinogenicity studies in rodent species
+should be considered for the other biotechnology products noted above, if indicated by
+the 	treatment 	duration, 	clinical 	indication, 	or 	patient 	population 	(providing
+neutralising antibodies are not elicited to such an extent in repeated dose studies as
+to invalidate the results). Conduct of carcinogenicity studies may be important in the
+following circumstances: (1) For products where there are significant differences in
+biological effects to the natural counterpart(s); (2) for products where modifications
+lead to significant changes in structure compared to the natural counterpart; and (3)
+for products resulting in humans in a significant increase over the existing local or
+systemic concentration (i.e., pharmacological levels).
+5. 	N EED FOR A DDITIONAL TESTING
+The 	relevance 	of 	the 	results 	obtained 	from 	animal 	carcinogenicity 	studies 	for
+assessment of human safety are often cause for debate. 	Further research may be
+needed, investigating the mode of action, which may result in confirming the presence
+or the lack of carcinogenic potential for humans. 	Mechanistic studies are useful to
+evaluate the relevance of tumour findings in animals for human safety.
+Supplementary Note
+Note 1: It is expected that most pharmaceuticals indicated for 3 months treatment
+would also likely be used for 6 months. In an inquiry to a number of pharmaceutical
+research and regulatory groups no cases were identified in which a pharmaceutical
+would be used only for 3 months.
+4
+
+-- 8 of 8 --
+
