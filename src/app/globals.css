@@ -1,16 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --fg: #0f172a;
-  --bg: #f8fafc;
+  --fg: #2B2620;        /* 웜 다크 텍스트 */
+  --bg: #FBF8F3;        /* 따뜻한 크림 배경 */
 }
 
 html, body {
   color: var(--fg);
   background: var(--bg);
-  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  font-family: 'Noto Sans KR', 'Pretendard', system-ui, sans-serif;
   text-rendering: optimizeLegibility;
 }
 
@@ -25,18 +27,18 @@ html, body {
 /* Scrollbars */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgb(203 213 225); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
-::-webkit-scrollbar-thumb:hover { background: rgb(148 163 184); background-clip: padding-box; border: 2px solid transparent; }
+::-webkit-scrollbar-thumb { background: rgb(176 166 150); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: rgb(138 126 108); background-clip: padding-box; border: 2px solid transparent; }
 
-/* Focus ring consistency */
+/* Focus ring consistency — 테라코타 */
 @layer base {
   *:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2);
-    border-color: rgb(99 102 241);
+    box-shadow: 0 0 0 3px rgb(226 86 10 / 0.18);
+    border-color: rgb(226 86 10);
   }
   button:focus-visible {
-    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.25);
+    box-shadow: 0 0 0 3px rgb(226 86 10 / 0.22);
   }
 }
 
@@ -44,13 +46,13 @@ html, body {
 @layer components {
   .card {
     @apply rounded-2xl bg-white border border-slate-200/70;
-    box-shadow: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.04);
+    box-shadow: 0 1px 2px 0 rgb(43 38 32 / 0.04), 0 1px 3px 0 rgb(43 38 32 / 0.05);
   }
   .card-hover {
     @apply transition-shadow;
   }
   .card-hover:hover {
-    box-shadow: 0 4px 12px -2px rgb(15 23 42 / 0.08), 0 2px 6px -1px rgb(15 23 42 / 0.04);
+    box-shadow: 0 4px 14px -2px rgb(43 38 32 / 0.10), 0 2px 6px -1px rgb(43 38 32 / 0.05);
   }
   .input {
     @apply w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm placeholder:text-slate-400 transition-colors;

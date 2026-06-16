@@ -33,3 +33,5 @@ yarn-error.log*
 
 # 임시 Excel 잠금 파일
 ~$*.xlsx
+design/
+public/_design.html
