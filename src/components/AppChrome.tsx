@@ -126,11 +126,16 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
 
 function UserCard() {
   const { data: session, status } = useSession();
+  // ⚠️ DEMO(임시): 로그인 OFF — 세션 없을 때 로그인 링크 대신 데모 표시.
   if (status === 'loading') return <div className="h-16" />;
   if (!session) {
     return (
-      <div className="m-3">
-        <Link href="/login" className="btn-outline w-full justify-center text-sm">로그인</Link>
+      <div className="border-t border-slate-200/70 px-4 py-3 flex items-center gap-2.5">
+        <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-100 text-brand-700 font-bold text-sm flex-shrink-0">데</span>
+        <div className="leading-tight min-w-0 flex-1">
+          <div className="text-sm font-semibold text-ink truncate">데모 사용자</div>
+          <div className="text-[11px] text-ink-subtle truncate">시연 모드 · 로그인 없음</div>
+        </div>
       </div>
     );
   }

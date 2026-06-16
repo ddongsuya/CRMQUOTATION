@@ -21,7 +21,7 @@ export default async function Home() {
   const maxCount = modalityRows.length ? modalityRows[0][1] : 1;
 
   const session = await getServerSession(authOptions);
-  const name = session?.user?.name ?? '게스트';
+  const name = session?.user?.name ?? '데모 사용자';  // DEMO(임시): 로그인 OFF
 
   let quotes: Array<{ id: number; quoteNumber: string; customerCompany: string | null; modality: string; status: string; grandTotal: number | null }> = [];
   try {
