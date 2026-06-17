@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import clsx from 'clsx';
-import { Search, Pencil, Trash2, Plus, Loader2, Database } from 'lucide-react';
+import { Search, Pencil, Trash2, Plus, Loader2, Database, Layers } from 'lucide-react';
 import { toast } from '@/lib/toast';
 import { ItemEditorModal, ItemAdminBar } from './_components/CatalogAdmin';
 
@@ -73,13 +74,18 @@ export default function CatalogPage() {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-          <Database className="w-6 h-6 text-brand-500" /> 시험항목·가격 마스터
-        </h1>
-        <p className="text-sm text-ink-muted mt-0.5">
-          전체 {data.items.length}개 항목 · 견적 엔진의 가격 원천 데이터. 편집은 즉시 견적에 반영됩니다.
-        </p>
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <Database className="w-6 h-6 text-brand-500" /> 시험항목·가격 마스터
+          </h1>
+          <p className="text-sm text-ink-muted mt-0.5">
+            전체 {data.items.length}개 항목 · 견적 엔진의 가격 원천 데이터. 편집은 즉시 견적에 반영됩니다.
+          </p>
+        </div>
+        <Link href="/catalog/modalities" className="btn-ghost text-sm">
+          <Layers className="w-4 h-4" /> 모달리티 구성 편집
+        </Link>
       </div>
 
       {isAdmin && <ItemAdminBar onImported={load} />}

@@ -240,3 +240,8 @@ export const COMING_SOON_MODALITIES = [
 export function isComingSoon(modality: string): boolean {
   return (COMING_SOON_MODALITIES as readonly string[]).includes(modality);
 }
+
+/** 유효한 모달리티 key 전체 (모달리티 템플릿 편집기에서 선택 가능한 후보) */
+export function allModalityKeys(): string[] {
+  return [...Object.keys(MODALITY_PLAN_CONFIG), ...COMING_SOON_MODALITIES];
+}

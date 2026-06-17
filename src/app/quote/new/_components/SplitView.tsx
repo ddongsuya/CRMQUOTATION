@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Printer, Save } from 'lucide-react';
 import { useWizard } from '@/lib/store';
+import type { TemplateCategory } from '@/lib/modality-templates';
 import SectionProject from './SectionProject';
 import SectionModality from './SectionModality';
 import SectionPlan from './SectionPlan';
@@ -19,7 +20,7 @@ const STEP_META = [
   { n: 5, title: '통화 · 할인', subtitle: '최종 견적 조건을 설정합니다' },
 ];
 
-export default function SplitView({ modalities }: { modalities: string[] }) {
+export default function SplitView({ modalityTree }: { modalityTree: TemplateCategory[] }) {
   const s = useWizard();
   const meta = STEP_META[s.step - 1];
 
@@ -90,7 +91,7 @@ export default function SplitView({ modalities }: { modalities: string[] }) {
 
             <div className="p-6 animate-slide-up">
               {s.step === 1 && <SectionProject />}
-              {s.step === 2 && <SectionModality />}
+              {s.step === 2 && <SectionModality tree={modalityTree} />}
               {s.step === 3 && <SectionPlan />}
               {s.step === 4 && <SectionSelections />}
               {s.step === 5 && <SectionPricing />}

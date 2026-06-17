@@ -1,16 +1,16 @@
 import { Suspense } from 'react';
-import { listModalities } from '@/lib/data';
+import { loadModalityTemplates } from '@/lib/modality-templates';
 import SplitView from './_components/SplitView';
 import QuoteLoader from './_components/QuoteLoader';
 
 export default function NewQuotePage() {
-  const modalities = listModalities();
+  const modalityTree = loadModalityTemplates();   // 마스터데이터에서 모달리티 구성 로드
   return (
     <>
       <Suspense fallback={null}>
         <QuoteLoader />
       </Suspense>
-      <SplitView modalities={modalities} />
+      <SplitView modalityTree={modalityTree} />
     </>
   );
 }
