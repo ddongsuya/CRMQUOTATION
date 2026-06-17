@@ -13,7 +13,7 @@ import Stepper from './Stepper';
 
 const STEP_META = [
   { n: 1, title: '프로젝트 정보', subtitle: '의뢰자·시험물질 정보를 입력하세요' },
-  { n: 2, title: '모달리티 · 가격 기준', subtitle: '제품 종류와 가격 기준을 선택하세요' },
+  { n: 2, title: '모달리티 선택', subtitle: '대분류 → 중분류 → 소분류 순으로 선택하세요' },
   { n: 3, title: '임상 계획 · 자동 구성', subtitle: '시험 패키지를 자동으로 구성합니다' },
   { n: 4, title: '선택된 시험 · 부형제', subtitle: '항목과 부형제 종수를 확인·조정하세요' },
   { n: 5, title: '통화 · 할인', subtitle: '최종 견적 조건을 설정합니다' },
@@ -36,12 +36,18 @@ export default function SplitView({ modalities }: { modalities: string[] }) {
   }, [s.projectName, s.selections.length]);
 
   const canGoNext = (): boolean => {
-    if (s.step === 1) return s.projectName.trim().length > 0;
+    if (s.step === 1) return s.customerCompany.trim().length > 0;
     if (s.step === 2) return !!s.modality;
     if (s.step === 3) return true;
     if (s.step === 4) return s.selections.length > 0;
     return false;
   };
+
+  // 실시간 견적 표시 조건:
+  //  - step 1·2: 항상 숨김 (입력·선택에만 집중)
+  //  - step 3: "자동 구성" 실행(planApplied) 후부터 표시
+  //  - step 4·5: 항상 표시
+  const showPreview = s.step >= 4 || (s.step === 3 && s.planApplied);
 
   return (
     <div className="space-y-6">
@@ -64,7 +70,9 @@ export default function SplitView({ modalities }: { modalities: string[] }) {
         <Stepper />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,_1fr)_minmax(0,_1.05fr)] gap-6">
+      <div className={showPreview
+        ? 'grid grid-cols-1 lg:grid-cols-[minmax(0,_1fr)_minmax(0,_1.05fr)] gap-6'
+        : 'max-w-3xl mx-auto'}>
         {/* LEFT — current step */}
         <div className="no-print">
           <section className="card overflow-hidden animate-fade-in" key={s.step}>
@@ -82,7 +90,7 @@ export default function SplitView({ modalities }: { modalities: string[] }) {
 
             <div className="p-6 animate-slide-up">
               {s.step === 1 && <SectionProject />}
-              {s.step === 2 && <SectionModality modalities={modalities} />}
+              {s.step === 2 && <SectionModality />}
               {s.step === 3 && <SectionPlan />}
               {s.step === 4 && <SectionSelections />}
               {s.step === 5 && <SectionPricing />}
@@ -122,10 +130,12 @@ export default function SplitView({ modalities }: { modalities: string[] }) {
           </section>
         </div>
 
-        {/* RIGHT — preview */}
-        <div className="lg:sticky lg:top-20 self-start">
-          <LivePreview />
-        </div>
+        {/* RIGHT — preview (자동 구성 이후부터 표시) */}
+        {showPreview && (
+          <div className="lg:sticky lg:top-20 self-start">
+            <LivePreview />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -61,8 +61,13 @@ type WizardState = {
   customerName: string;
   customerCompany: string;
   customerEmail: string;
+  customerPhone: string;       // 담당자 연락처
+  indication: string;          // 적응증
+  submissionTarget: string;    // 제출처 (한국/미국/유럽 규제기관)
   modality: string;
   priceStandard: PriceStandard;
+  /** 임상계획에서 "자동 구성"을 실행했는지 — 실시간 견적 표시 여부를 가른다 */
+  planApplied: boolean;
   plan: Plan;
   selections: Selection[];
   excipientCount: number;
@@ -113,8 +118,12 @@ const initial: Omit<WizardState, Actions> = {
   customerName: '',
   customerCompany: '',
   customerEmail: '',
+  customerPhone: '',
+  indication: '',
+  submissionTarget: '한국 (MFDS)',
   modality: '',
   priceStandard: 'MFDS',
+  planApplied: false,
   plan: {
     route: '경구',
     phase: 'IND1',
@@ -141,6 +150,7 @@ export const useWizard = create<WizardState>()(persist((set) => ({
   setModality: (m) => set((st) => ({
     modality: m,
     plan: { ...st.plan, ...defaultsFor(m) },
+    planApplied: false,   // 모달리티 변경 시 자동구성 재실행 필요
   })),
   patchPlan: (p) => set((st) => ({ plan: { ...st.plan, ...p } })),
   toggleDuration: (d) => set((st) => {
@@ -164,7 +174,7 @@ export const useWizard = create<WizardState>()(persist((set) => ({
   setSelectionOverride: (key, patch) => set((st) => ({
     selections: st.selections.map(x => x.key === key ? { ...x, ...patch } : x),
   })),
-  replaceSelections: (items) => set({ selections: items }),
+  replaceSelections: (items) => set({ selections: items, planApplied: items.length > 0 }),
   reset: () => set(initial),
 }), {
   name: 'chemon-quote-draft',
@@ -177,8 +187,12 @@ export const useWizard = create<WizardState>()(persist((set) => ({
     customerName: state.customerName,
     customerCompany: state.customerCompany,
     customerEmail: state.customerEmail,
+    customerPhone: state.customerPhone,
+    indication: state.indication,
+    submissionTarget: state.submissionTarget,
     modality: state.modality,
     priceStandard: state.priceStandard,
+    planApplied: state.planApplied,
     plan: state.plan,
     selections: state.selections,
     excipientCount: state.excipientCount,
