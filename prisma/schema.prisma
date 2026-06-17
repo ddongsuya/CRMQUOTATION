@@ -1,7 +1,8 @@
 // Chemon Quotation — Prisma schema (PostgreSQL — Neon, 로컬·배포 공용)
 //
-// Catalog data (TestItem / GuidelineBlock / ModalityPreset) stays in JSON files
-// under data/. The DB persists only operational data: users + quotes.
+// Catalog data (TestItem / GuidelineBlock / ModalityPreset) seeds from JSON files
+// under data/. The DB persists operational data (users + quotes) AND, via DataBlob,
+// any master-data edited at runtime so admin edits survive on serverless (read-only FS).
 
 generator client {
   provider = "prisma-client-js"
@@ -108,4 +109,17 @@ model QuoteItem {
   customNote            String?  // 자유 메모 (견적서 비고란 출력)
 
   @@index([quoteId])
+}
+
+// ─────────────────────────────────────────────────────────
+// Master-data overlay (runtime-edited catalog/templates/knowledge)
+// ─────────────────────────────────────────────────────────
+// One row per logical dataset (key = 'test_items', 'quote_templates',
+// 'modality_templates', 'knowledge:guidelines', …). `json` holds the whole
+// array/object — same shape the file-backed editors already write. When a row
+// exists it overrides the bundled JSON seed; absent → loader falls back to file.
+model DataBlob {
+  key       String   @id
+  json      Json
+  updatedAt DateTime @updatedAt
 }

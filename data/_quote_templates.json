@@ -1,0 +1,8 @@
+{
+  "_meta": {
+    "purpose": "견적 템플릿(프리셋) — 모달리티별로 미리 짜둔 시험 구성. 새 견적 작성 시 모달리티를 고르면 해당 템플릿 카드가 뜨고, 고르면 tests 가 견적에 채워진다.",
+    "updated": "2026-06-17",
+    "note": "관리자 편집기(/catalog/modalities)에서 직접 구성. 런타임 편집은 DB(DataBlob 'quote_templates')에 영속(서버리스 대응), 로컬은 이 파일에도 best-effort 로 기록. tests[].key 는 test_items 의 항목 key. 기존 modality_presets.json(31개)은 참고용."
+  },
+  "templates": []
+}

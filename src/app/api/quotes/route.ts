@@ -6,6 +6,7 @@ import { nextQuoteNumber } from '@/lib/quote-number';
 import { getItemByKey } from '@/lib/data';
 import { assembleQuoteLines } from '@/engine/assemble';
 import { computeTotals } from '@/engine/pricing';
+import { ensureHydrated } from '@/lib/hydrate';
 
 async function currentUserId(): Promise<number | null> {
   const session = await getServerSession(authOptions);
@@ -66,6 +67,7 @@ export async function GET() {
 
 /** POST /api/quotes — create or update. */
 export async function POST(req: Request) {
+  await ensureHydrated();
   const body = await req.json() as SaveBody;
 
   // Hydrate + compute totals so we store an authoritative snapshot

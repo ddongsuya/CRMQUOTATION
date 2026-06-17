@@ -4,6 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { writeBlob } from './blob-store';
 
 export type TestItem = {
   key: string;
@@ -66,35 +67,53 @@ export type ModalityPreset = {
   defaultTests: PresetTest[];
 };
 
-let cache: {
-  testItems: TestItem[];
-  blocks: GuidelineBlock[];
-  presets: ModalityPreset[];
-} | null = null;
+type DataCache = { testItems: TestItem[]; blocks: GuidelineBlock[]; presets: ModalityPreset[] };
+
+// fileCache: 번들 JSON seed (런타임 불변, 1회 읽고 유지).
+// cache: 유효 데이터 = fileCache 에 DB blob overlay 적용한 결과. hydrate() 가 갱신.
+let fileCache: DataCache | null = null;
+let cache: DataCache | null = null;
 
 function dataDir() { return path.resolve(process.cwd(), 'data'); }
 
-export function loadData() {
-  if (cache) return cache;
+function readFiles(): DataCache {
+  if (fileCache) return fileCache;
   const dir = dataDir();
   const testItems = JSON.parse(fs.readFileSync(path.join(dir, 'test_items.json'), 'utf8')) as TestItem[];
   const blocks = JSON.parse(fs.readFileSync(path.join(dir, 'guideline_blocks.json'), 'utf8')) as GuidelineBlock[];
   const presets = JSON.parse(fs.readFileSync(path.join(dir, 'modality_presets.json'), 'utf8')) as ModalityPreset[];
-  cache = { testItems, blocks, presets };
-  return cache;
+  fileCache = { testItems, blocks, presets };
+  return fileCache;
 }
 
-/** 인-프로세스 캐시 무효화 — 쓰기 후 다음 loadData 가 디스크에서 다시 읽도록 한다.
- *  엔진(assemble·suggest)·검색이 모두 loadData 를 통하므로 편집 즉시 반영된다. */
-export function invalidateData() { cache = null; }
+export function loadData(): DataCache { return cache ?? readFiles(); }
+
+/** DB blob 을 파일 seed 위에 overlay 한다. ensureHydrated() 가 요청 시작 시 호출.
+ *  blob 이 없는 데이터셋은 파일값을 유지한다. */
+export function hydrateData(blobs: Record<string, unknown>): void {
+  const base = readFiles();
+  const ti = blobs['test_items'];
+  const gb = blobs['guideline_blocks'];
+  const mp = blobs['modality_presets'];
+  cache = {
+    testItems: Array.isArray(ti) ? (ti as TestItem[]) : base.testItems,
+    blocks:    Array.isArray(gb) ? (gb as GuidelineBlock[]) : base.blocks,
+    presets:   Array.isArray(mp) ? (mp as ModalityPreset[]) : base.presets,
+  };
+}
+
+/** 인-프로세스 캐시 무효화 — 쓰기 후 다음 loadData/hydrate 가 다시 읽도록 한다. */
+export function invalidateData() { cache = null; fileCache = null; }
 
 /**
  * test_items.json(시험항목·가격 마스터) 전체를 다시 쓴다 — flat array 형식 유지.
- * 검증은 호출부(API)에서 zod 로 끝낸 뒤 호출할 것. 쓰기 후 캐시 무효화.
+ * DB(blob)에 upsert 하여 서버리스에서도 영속. 로컬에선 파일에도 best-effort 로 써서
+ * git diff 검토 워크플로를 유지한다. 검증은 호출부(API)에서 zod 로 끝낸 뒤 호출할 것.
  */
-export function writeTestItems(items: TestItem[]): void {
-  const full = path.join(dataDir(), 'test_items.json');
-  fs.writeFileSync(full, JSON.stringify(items, null, 2) + '\n', 'utf8');
+export async function writeTestItems(items: TestItem[]): Promise<void> {
+  try { fs.writeFileSync(path.join(dataDir(), 'test_items.json'), JSON.stringify(items, null, 2) + '\n', 'utf8'); }
+  catch { /* 읽기전용 FS(Vercel) — DB 로만 영속 */ }
+  await writeBlob('test_items', items);
   invalidateData();
 }
 

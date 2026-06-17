@@ -10,6 +10,7 @@ import { getAdmin } from '@/lib/admin';
 import { loadData, writeTestItems, type TestItem } from '@/lib/data';
 import { validateTestItems, type TestItemRecord } from '@/lib/test-items-schema';
 import { parseTestItemsWorkbook } from '@/lib/test-items-xlsx';
+import { ensureHydrated } from '@/lib/hydrate';
 
 const nfc = (s: unknown) => String(s ?? '').trim().normalize('NFC');
 
@@ -58,6 +59,7 @@ function mergePreserving(current: TestItemRecord[], next: TestItemRecord[]): Tes
 }
 
 export async function POST(req: Request) {
+  await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 가져올 수 있습니다.' }, { status: 403 });
 
@@ -90,6 +92,6 @@ export async function POST(req: Request) {
   }
 
   const merged = mergePreserving(cur, validated.data);
-  writeTestItems(merged as unknown as TestItem[]);
+  await writeTestItems(merged as unknown as TestItem[]);
   return NextResponse.json({ ok: true, mode: 'apply', summary });
 }

@@ -7,6 +7,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { writeBlob } from './blob-store';
 
 export type Guideline = {
   code: string;
@@ -43,11 +44,10 @@ export type DesignRule = {
   'TK': string;
 };
 
-let cache: {
-  guidelines: Guideline[];
-  modalities: ModalityGuideline[];
-  designRules: DesignRule[];
-} | null = null;
+type KnowledgeCache = { guidelines: Guideline[]; modalities: ModalityGuideline[]; designRules: DesignRule[] };
+
+let fileCache: KnowledgeCache | null = null;
+let cache: KnowledgeCache | null = null;
 
 /** 데이터셋 ↔ 소스 파일/래퍼키 매핑 (단일 진실원천: data/*.json) */
 export const KNOWLEDGE_FILES = {
@@ -60,8 +60,8 @@ export type KnowledgeDataset = keyof typeof KNOWLEDGE_FILES;
 
 function dataDir() { return path.resolve(process.cwd(), 'data'); }
 
-export function loadKnowledge() {
-  if (cache) return cache;
+function readFiles(): KnowledgeCache {
+  if (fileCache) return fileCache;
   const dir = dataDir();
   const read = (f: string) => {
     try { return JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); }
@@ -70,32 +70,48 @@ export function loadKnowledge() {
   const g = read(KNOWLEDGE_FILES.guidelines.file);
   const m = read(KNOWLEDGE_FILES.modalities.file);
   const d = read(KNOWLEDGE_FILES.designRules.file);
-  cache = {
+  fileCache = {
     guidelines: (g?.guidelines ?? []) as Guideline[],
     modalities: (m?.modalities ?? []) as ModalityGuideline[],
     designRules: (d?.rules ?? []) as DesignRule[],
   };
-  return cache;
+  return fileCache;
 }
 
-/** 인-프로세스 캐시 무효화 — 쓰기 후 다음 loadKnowledge 가 디스크에서 다시 읽도록 한다. */
-export function invalidateKnowledge() { cache = null; }
+export function loadKnowledge(): KnowledgeCache { return cache ?? readFiles(); }
+
+/** DB blob('knowledge:<dataset>')을 파일 seed 위에 overlay. ensureHydrated() 가 호출. */
+export function hydrateKnowledge(blobs: Record<string, unknown>): void {
+  const base = readFiles();
+  const g = blobs['knowledge:guidelines'];
+  const m = blobs['knowledge:modalities'];
+  const d = blobs['knowledge:designRules'];
+  cache = {
+    guidelines:  Array.isArray(g) ? (g as Guideline[]) : base.guidelines,
+    modalities:  Array.isArray(m) ? (m as ModalityGuideline[]) : base.modalities,
+    designRules: Array.isArray(d) ? (d as DesignRule[]) : base.designRules,
+  };
+}
+
+/** 인-프로세스 캐시 무효화 — 쓰기 후 다음 loadKnowledge/hydrate 가 다시 읽도록 한다. */
+export function invalidateKnowledge() { cache = null; fileCache = null; }
 
 /**
- * 한 데이터셋(가이드라인/모달리티/설계규칙)의 배열 전체를 소스 JSON 에 다시 쓴다.
- * 파일의 `_meta` 래퍼는 보존하고, `lastModified` 만 갱신한다.
- * 쓰기 후 캐시를 무효화한다. (검증은 호출부에서 zod 로 끝낸 뒤 호출할 것)
+ * 한 데이터셋(가이드라인/모달리티/설계규칙)의 배열 전체를 다시 쓴다.
+ * DB(blob 'knowledge:<dataset>')에 upsert 하여 서버리스에서도 영속. 로컬 파일에도
+ * best-effort 로 _meta 래퍼 보존하며 쓴다(git diff 검토용). 검증은 호출부 zod.
  */
-export function writeKnowledgeDataset(dataset: KnowledgeDataset, items: unknown[]): void {
+export async function writeKnowledgeDataset(dataset: KnowledgeDataset, items: unknown[]): Promise<void> {
   const { file, key } = KNOWLEDGE_FILES[dataset];
-  const full = path.join(dataDir(), file);
-  let wrapper: Record<string, unknown> = {};
-  try { wrapper = JSON.parse(fs.readFileSync(full, 'utf8')); } catch { wrapper = {}; }
-  const meta = (wrapper._meta && typeof wrapper._meta === 'object') ? { ...wrapper._meta as object } : {};
-  (meta as Record<string, unknown>).count = items.length;
-  const next = { _meta: meta, [key]: items };
-  // pretty-print + 한글 유지 (ensureAscii 없음) — 사람이 git diff 로 검토 가능하게
-  fs.writeFileSync(full, JSON.stringify(next, null, 2) + '\n', 'utf8');
+  try {
+    const full = path.join(dataDir(), file);
+    let wrapper: Record<string, unknown> = {};
+    try { wrapper = JSON.parse(fs.readFileSync(full, 'utf8')); } catch { wrapper = {}; }
+    const meta = (wrapper._meta && typeof wrapper._meta === 'object') ? { ...wrapper._meta as object } : {};
+    (meta as Record<string, unknown>).count = items.length;
+    fs.writeFileSync(full, JSON.stringify({ _meta: meta, [key]: items }, null, 2) + '\n', 'utf8');
+  } catch { /* 읽기전용 FS(Vercel) — DB 로만 영속 */ }
+  await writeBlob(`knowledge:${dataset}`, items);
   invalidateKnowledge();
 }
 

@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import { loadData, getItemByKey, itemsForModality, listModalities } from '@/lib/data';
 import { getAdmin } from '@/lib/admin';
+import { ensureHydrated } from '@/lib/hydrate';
 
 export async function GET(req: Request) {
+  await ensureHydrated();
   const { searchParams } = new URL(req.url);
   const keys = searchParams.get('keys');
   const modality = searchParams.get('modality');

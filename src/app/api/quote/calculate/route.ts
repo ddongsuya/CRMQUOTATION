@@ -4,11 +4,13 @@ import { matchGuidelineCodes } from '@/lib/knowledge';
 // Engine is JS + JSDoc; allowJs in tsconfig picks it up.
 import { assembleQuoteLines } from '@/engine/assemble';
 import { computeTotals } from '@/engine/pricing';
+import { ensureHydrated } from '@/lib/hydrate';
 
 // price for the synthetic 함량분석 aggregate line — policy value, tweak here
 const PRICE_ANALYSIS_UNIT = 1_000_000;
 
 export async function POST(req: Request) {
+  await ensureHydrated();
   const body = await req.json() as {
     selections: Array<{
       key: string;

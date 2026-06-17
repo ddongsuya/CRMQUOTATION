@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { loadData } from '@/lib/data';
+import { ensureHydrated } from '@/lib/hydrate';
 
 export async function POST(req: Request) {
+  await ensureHydrated();
   const body = await req.json() as { keys: string[] };
   const { testItems } = loadData();
   const map = new Map(testItems.map(it => [it.key, it]));
@@ -14,6 +16,8 @@ export async function POST(req: Request) {
       category: it.category,
       adminRoute: it.adminRoute,
       studyWeeks: it.studyWeeks,
+      priceMfds: it.priceMfds ?? null,
+      priceOecd: it.priceOecd ?? null,
       detail: it.detail ?? null,
       notice: it.notice ?? null,
       quoteText: it.quoteText ?? null,

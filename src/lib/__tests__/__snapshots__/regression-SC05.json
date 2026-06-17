@@ -11,7 +11,7 @@
     {
       "kind": "test",
       "testItemKey": "복합제_항목_마스터_추가정규화_v2.xlsx#복합제 시험항목 마스터#2__",
-      "testName": "조제물분석",
+      "testName": "조제물분석 (개별분석)",
       "adminRoute": null,
       "unitPrice": 30000000,
       "quantity": 1,

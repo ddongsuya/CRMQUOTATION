@@ -3,6 +3,7 @@ import AppChrome from '@/components/AppChrome';
 import Providers from '@/components/Providers';
 import Toaster from '@/components/Toaster';
 import { loadData } from '@/lib/data';
+import { ensureHydrated } from '@/lib/hydrate';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
   description: '비임상시험 견적서 작성 — 개발 중',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  await ensureHydrated();
   const { testItems, presets, blocks } = loadData();
   const modalities = new Set<string>();
   for (const it of testItems) for (const m of it.modalityPool) modalities.add(m);

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { loadData } from '@/lib/data';
+import { ensureHydrated } from '@/lib/hydrate';
 
 /** Modality-specific masters that don't tag themselves in modalityPool. */
 const MODALITY_SOURCE_PREFIX: Record<string, string> = {
@@ -21,6 +22,7 @@ export async function POST(req: Request) {
     excipientCount?: number;
     limit?: number;
   };
+  await ensureHydrated();
   const { testItems } = loadData();
   const q = (body.query ?? '').trim().toLowerCase();
   const limit = Math.min(body.limit ?? 50, 200);

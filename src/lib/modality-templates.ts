@@ -7,35 +7,48 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { writeBlob } from './blob-store';
 
 export type TemplateModality = { key: string; label: string; desc?: string; source?: string };
 export type TemplateCategory = { id: string; label: string; modalities: TemplateModality[] };
 
 const FILE = '_modality_templates.json';
+const BLOB_KEY = 'modality_templates';
 function full() { return path.join(path.resolve(process.cwd(), 'data'), FILE); }
 
+let fileCache: TemplateCategory[] | null = null;
 let cache: TemplateCategory[] | null = null;
 
-export function loadModalityTemplates(): TemplateCategory[] {
-  if (cache) return cache;
+function readFile(): TemplateCategory[] {
+  if (fileCache) return fileCache;
   try {
     const j = JSON.parse(fs.readFileSync(full(), 'utf8'));
-    cache = (Array.isArray(j?.categories) ? j.categories : []) as TemplateCategory[];
+    fileCache = (Array.isArray(j?.categories) ? j.categories : []) as TemplateCategory[];
   } catch {
-    cache = [];
+    fileCache = [];
   }
-  return cache;
+  return fileCache;
 }
 
-export function invalidateModalityTemplates() { cache = null; }
+export function loadModalityTemplates(): TemplateCategory[] { return cache ?? readFile(); }
 
-/** 전체 categories 를 다시 쓴다(_meta 보존). 검증은 호출부에서. */
-export function writeModalityTemplates(categories: TemplateCategory[]): void {
-  let wrapper: Record<string, unknown> = {};
-  try { wrapper = JSON.parse(fs.readFileSync(full(), 'utf8')); } catch { wrapper = {}; }
-  const meta = (wrapper._meta && typeof wrapper._meta === 'object') ? { ...wrapper._meta as object } : {};
-  const next = { _meta: meta, categories };
-  fs.writeFileSync(full(), JSON.stringify(next, null, 2) + '\n', 'utf8');
+/** DB blob('modality_templates')을 파일 seed 위에 overlay. ensureHydrated() 가 호출. */
+export function hydrateModalityTemplates(blobs: Record<string, unknown>): void {
+  const b = blobs[BLOB_KEY];
+  cache = Array.isArray(b) ? (b as TemplateCategory[]) : readFile();
+}
+
+export function invalidateModalityTemplates() { cache = null; fileCache = null; }
+
+/** 전체 categories 를 다시 쓴다 — DB(blob) upsert + 로컬 파일 best-effort(_meta 보존). 검증은 호출부. */
+export async function writeModalityTemplates(categories: TemplateCategory[]): Promise<void> {
+  try {
+    let wrapper: Record<string, unknown> = {};
+    try { wrapper = JSON.parse(fs.readFileSync(full(), 'utf8')); } catch { wrapper = {}; }
+    const meta = (wrapper._meta && typeof wrapper._meta === 'object') ? { ...wrapper._meta as object } : {};
+    fs.writeFileSync(full(), JSON.stringify({ _meta: meta, categories }, null, 2) + '\n', 'utf8');
+  } catch { /* 읽기전용 FS(Vercel) — DB 로만 영속 */ }
+  await writeBlob(BLOB_KEY, categories);
   invalidateModalityTemplates();
 }
 

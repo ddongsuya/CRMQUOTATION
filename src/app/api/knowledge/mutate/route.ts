@@ -13,6 +13,7 @@ import { NextResponse } from 'next/server';
 import { getAdmin } from '@/lib/admin';
 import { loadKnowledge, writeKnowledgeDataset, type KnowledgeDataset } from '@/lib/knowledge';
 import { validateDataset, ID_FIELD, type KnowledgeRecord } from '@/lib/knowledge-schema';
+import { ensureHydrated } from '@/lib/hydrate';
 
 const DATASETS: KnowledgeDataset[] = ['guidelines', 'modalities', 'designRules'];
 
@@ -24,6 +25,7 @@ function currentItems(dataset: KnowledgeDataset): KnowledgeRecord[] {
 }
 
 export async function POST(req: Request) {
+  await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 편집할 수 있습니다.' }, { status: 403 });
 
@@ -66,6 +68,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: '검증 실패', details: valid.errors }, { status: 422 });
   }
 
-  writeKnowledgeDataset(dataset, valid.data);
+  await writeKnowledgeDataset(dataset, valid.data);
   return NextResponse.json({ ok: true, dataset, count: valid.data.length, items: valid.data });
 }

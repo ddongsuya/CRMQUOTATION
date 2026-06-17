@@ -6,8 +6,10 @@ import { NextResponse } from 'next/server';
 import { getAdmin } from '@/lib/admin';
 import { loadModalityTemplates, writeModalityTemplates, type TemplateCategory } from '@/lib/modality-templates';
 import { allModalityKeys } from '@/lib/modality-config';
+import { ensureHydrated } from '@/lib/hydrate';
 
 export async function GET() {
+  await ensureHydrated();
   const admin = await getAdmin();
   return NextResponse.json({
     categories: loadModalityTemplates(),
@@ -17,6 +19,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 편집할 수 있습니다.' }, { status: 403 });
 
@@ -50,6 +53,6 @@ export async function POST(req: Request) {
 
   if (errors.length) return NextResponse.json({ error: '검증 실패', details: errors }, { status: 422 });
 
-  writeModalityTemplates(clean);
+  await writeModalityTemplates(clean);
   return NextResponse.json({ ok: true, categories: clean });
 }

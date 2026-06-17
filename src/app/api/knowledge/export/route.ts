@@ -6,8 +6,12 @@ import { NextResponse } from 'next/server';
 import { getAdmin } from '@/lib/admin';
 import { loadKnowledge } from '@/lib/knowledge';
 import { buildKnowledgeWorkbook } from '@/lib/knowledge-xlsx';
+import { ensureHydrated } from '@/lib/hydrate';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
+  await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 내보낼 수 있습니다.' }, { status: 403 });
 

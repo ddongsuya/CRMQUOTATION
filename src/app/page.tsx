@@ -4,6 +4,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { loadData } from '@/lib/data';
+import { ensureHydrated } from '@/lib/hydrate';
+
+// 통계·최근견적을 매 요청 갱신 (런타임 DB 반영). 정적 프리렌더 금지.
+export const dynamic = 'force-dynamic';
 
 const STATUS: Record<string, { label: string; cls: string }> = {
   DRAFT: { label: '작성중', cls: 'bg-slate-200 text-ink-muted' },
@@ -14,6 +18,7 @@ const STATUS: Record<string, { label: string; cls: string }> = {
 };
 
 export default async function Home() {
+  await ensureHydrated();
   const { testItems, presets, blocks } = loadData();
   const byModality: Record<string, number> = {};
   for (const it of testItems) for (const m of it.modalityPool) byModality[m] = (byModality[m] || 0) + 1;
