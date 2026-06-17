@@ -8,7 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-export type TemplateModality = { key: string; label: string; desc?: string };
+export type TemplateModality = { key: string; label: string; desc?: string; source?: string };
 export type TemplateCategory = { id: string; label: string; modalities: TemplateModality[] };
 
 const FILE = '_modality_templates.json';

@@ -1,52 +1,52 @@
 {
   "_meta": {
-    "purpose": "새 견적 작성의 모달리티 선택 위저드 구성 (대분류 → 모달리티). 모달리티 key 는 견적서 템플릿(소스 마스터)에 대응하며 suggest/modality-config 의 key 와 일치해야 한다.",
+    "purpose": "새 견적 작성의 모달리티 선택 위저드 구성 (대분류 → 모달리티). 모달리티 key 는 견적서 템플릿(소스 마스터)에 대응하며 suggest/modality-config 의 key 와 일치해야 한다. source = 해당 모달리티의 템플릿 항목(시험)을 test_items 에서 식별하는 prefix/식별자.",
     "updated": "2026-06-17",
-    "note": "전용 견적서 템플릿이 없던 가짜 모달리티(생물의약품·펩타이드·ADC·이중특이항체·바이오시밀러·항암제·방사성의약품·유전자치료제·핵산치료제)는 제거됨. 관리자 화면에서 직접 편집 가능."
+    "note": "전용 견적서 템플릿이 없던 가짜 모달리티(생물의약품·펩타이드·ADC·이중특이항체·바이오시밀러·항암제·방사성의약품·유전자치료제·핵산치료제)는 제거됨. 관리자 화면에서 분류·모달리티·템플릿 항목을 직접 편집 가능."
   },
   "categories": [
     {
       "id": "drug-tox",
       "label": "의약품 독성",
       "modalities": [
-        { "key": "합성신약", "label": "의약품 일반독성 (표준)", "desc": "단일 성분 신약 표준 패키지 (합성·생물·항암 공통)" },
-        { "key": "복합제", "label": "복합제", "desc": "2~4 성분" }
+        { "key": "합성신약", "label": "의약품 일반독성 (표준)", "desc": "단일 성분 신약 표준 패키지 (합성·생물·항암 공통)", "source": "독성시험" },
+        { "key": "복합제", "label": "복합제", "desc": "2~4 성분", "source": "복합제_" }
       ]
     },
     {
       "id": "bio-atmp",
       "label": "생물·첨단바이오",
       "modalities": [
-        { "key": "백신", "label": "백신", "desc": "" },
-        { "key": "세포치료제", "label": "세포치료제", "desc": "" }
+        { "key": "백신", "label": "백신", "desc": "", "source": "백신_" },
+        { "key": "세포치료제", "label": "세포치료제", "desc": "", "source": "SEND_CTD" }
       ]
     },
     {
       "id": "non-drug",
       "label": "비의약품·식품",
       "modalities": [
-        { "key": "의료기기(ISO10993)", "label": "의료기기", "desc": "ISO 10993" },
-        { "key": "화장품", "label": "화장품", "desc": "기능성" },
-        { "key": "건강기능식품", "label": "건강기능식품", "desc": "" }
+        { "key": "의료기기(ISO10993)", "label": "의료기기", "desc": "ISO 10993", "source": "의료기기_" },
+        { "key": "화장품", "label": "화장품", "desc": "기능성", "source": "화장품_" },
+        { "key": "건강기능식품", "label": "건강기능식품", "desc": "", "source": "건기식_" }
       ]
     },
     {
       "id": "screening",
       "label": "스크리닝·분석",
       "modalities": [
-        { "key": "스크리닝", "label": "스크리닝", "desc": "" },
-        { "key": "심혈관계스크리닝", "label": "심혈관계 스크리닝", "desc": "" },
-        { "key": "in vitro 대사·PK", "label": "in vitro 대사·PK", "desc": "DMPK" }
+        { "key": "스크리닝", "label": "스크리닝", "desc": "", "source": "스크리닝_" },
+        { "key": "심혈관계스크리닝", "label": "심혈관계 스크리닝", "desc": "", "source": "심혈관계스크리닝_" },
+        { "key": "in vitro 대사·PK", "label": "in vitro 대사·PK", "desc": "DMPK", "source": "대사PK_" }
       ]
     },
     {
       "id": "coming-soon",
       "label": "준비 중",
       "modalities": [
-        { "key": "화학물질(K-REACH)", "label": "화학물질", "desc": "K-REACH" },
-        { "key": "살생물제(K-BPR)", "label": "살생물제", "desc": "K-BPR" },
-        { "key": "농약", "label": "농약", "desc": "" },
-        { "key": "인축독성", "label": "인축독성", "desc": "" }
+        { "key": "화학물질(K-REACH)", "label": "화학물질", "desc": "K-REACH", "source": "" },
+        { "key": "살생물제(K-BPR)", "label": "살생물제", "desc": "K-BPR", "source": "" },
+        { "key": "농약", "label": "농약", "desc": "", "source": "" },
+        { "key": "인축독성", "label": "인축독성", "desc": "", "source": "" }
       ]
     }
   ]

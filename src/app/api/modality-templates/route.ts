@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       if (!valid.has(key)) { errors.push(`'${label}' 의 모달리티 key "${key}" 가 유효하지 않습니다.`); continue; }
       if (seenKeys.has(key)) { errors.push(`모달리티 key "${key}" 가 중복되었습니다.`); continue; }
       seenKeys.add(key);
-      cleanMods.push({ key, label: String(m.label ?? key).trim() || key, desc: String(m.desc ?? '').trim() });
+      cleanMods.push({ key, label: String(m.label ?? key).trim() || key, desc: String(m.desc ?? '').trim(), source: String(m.source ?? '').trim() });
     }
     clean.push({ id: id || `cat-${ci + 1}`, label, modalities: cleanMods });
   });

@@ -10,10 +10,10 @@ type Rec = Record<string, unknown>;
 
 // ─────────────── 편집/생성 모달 ───────────────
 export function ItemEditorModal({
-  record, onClose, onSaved,
-}: { record: Rec | null; onClose: () => void; onSaved: () => void }) {
+  record, createDefaults, onClose, onSaved,
+}: { record: Rec | null; createDefaults?: Rec; onClose: () => void; onSaved: () => void }) {
   const isCreate = record == null;
-  const [form, setForm] = useState<Record<string, string>>(() => recordToForm(record));
+  const [form, setForm] = useState<Record<string, string>>(() => recordToForm(record ?? createDefaults ?? null));
   const [saving, setSaving] = useState(false);
   const set = (field: string, v: string) => setForm(f => ({ ...f, [field]: v }));
 
