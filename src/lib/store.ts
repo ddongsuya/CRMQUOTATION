@@ -199,7 +199,15 @@ export const useWizard = create<WizardState>()(persist((set) => ({
     currency: state.currency,
     exchangeRate: state.exchangeRate,
     discountRate: state.discountRate,
-    step: state.step,
+    // step 은 저장하지 않음 → /quote/new 재진입 시 항상 1단계(프로젝트)부터 시작
   } as Partial<WizardState>),
-  version: 1,
+  version: 2,
+  // v1 저장본에 남아있던 step 을 제거 (재진입 시 모달리티 등 중간 단계부터 시작하던 문제)
+  migrate: (persisted) => {
+    if (persisted && typeof persisted === 'object') {
+      const { step: _drop, ...rest } = persisted as Record<string, unknown>;
+      return rest as Partial<WizardState>;
+    }
+    return persisted as Partial<WizardState>;
+  },
 }));
