@@ -23,13 +23,13 @@ const mk = (o) => ({
 const opts = (over = {}) => ({ excipientCount: 0, priceStandard: 'MFDS', priceAnalysisUnit: 1_000_000, priceFormulationAnalysisUnit: 10_000_000, ...over });
 
 test('hamryangCountForWeeks — 회사 합의 룰', () => {
-    assert.equal(hamryangCountForWeeks(null), 1);
-    assert.equal(hamryangCountForWeeks(0), 1);
-    assert.equal(hamryangCountForWeeks(1), 1);
-    assert.equal(hamryangCountForWeeks(2), 1);
+    assert.equal(hamryangCountForWeeks(null), 1); // 단회 fallback
+    assert.equal(hamryangCountForWeeks(0), 1);    // 단회
+    assert.equal(hamryangCountForWeeks(1), 2);    // 1주 ~ 13주 = 2회
+    assert.equal(hamryangCountForWeeks(2), 2);
     assert.equal(hamryangCountForWeeks(4), 2);
     assert.equal(hamryangCountForWeeks(13), 2);
-    assert.equal(hamryangCountForWeeks(26), 6);
+    assert.equal(hamryangCountForWeeks(26), 6);   // 만성 4주당 1회
     assert.equal(hamryangCountForWeeks(39), 9);
     assert.equal(hamryangCountForWeeks(52), 13);
 });
@@ -381,7 +381,7 @@ test('[fc] sum of test-line subtotals equals Σ priceMfds × quantity', () => {
 });
 
 test('[fc] 함량분석 회수 = Σ count(weeks) × qty × max(부형제, 1)', () => {
-    const validWeeks = [null, 0, 4, 13, 26, 39, 52];
+    const validWeeks = [null, 0, 1, 2, 4, 13, 26, 39, 52];
     fc.assert(fc.property(
         fc.array(fc.record({
             weeks: fc.constantFrom(...validWeeks),

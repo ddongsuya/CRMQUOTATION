@@ -13,10 +13,9 @@
  *         가격 없는 항목 → 0 (라인은 표시, "협의" 표기)
  *
  *   R2. 함량분석 회수 (per study)
- *         단회·1주·2주     → 1회
- *         4주              → 2회 (2주 간격)
- *         13주             → 2회 (회사 합의 — 4주룰 예외)
- *         26주 이상        → floor(weeks / 4) 회 (26→6, 39→9, 52→13)
+ *         단회             → 1회
+ *         1주 ~ 13주       → 2회
+ *         26주 이상(만성)  → 4주당 1회 = floor(weeks / 4) (26→6, 39→9, 52→13)
  *         in vitro (유전독성·안전성약리) → studyWeeks 없으면 1회 (hamryangCountForWeeks(null)=1)
  *
  *   R3. 누가 함량분석에 포함되나
@@ -249,11 +248,9 @@ function assembleQuoteLines(selections, opts) {
  * @returns {number}
  */
 function hamryangCountForWeeks(weeks) {
-    if (weeks == null || weeks === 0) return 1; // 단회
-    if (weeks <= 2) return 1;
-    if (weeks <= 4) return 2;
-    if (weeks <= 13) return 2;            // 13주는 회사 합의로 2회 (4주룰 예외)
-    return Math.floor(weeks / 4);          // 26주↑ : 4주마다 1회
+    if (weeks == null || weeks === 0) return 1; // 단회 — 1회
+    if (weeks <= 13) return 2;                  // 1주 ~ 13주 — 2회
+    return Math.floor(weeks / 4);               // 만성(26주↑) — 4주당 1회
 }
 
 /**
