@@ -40,9 +40,8 @@ for (const it of arr) {
   const isCombo = it.sourceFile && it.sourceFile.includes('복합제');
   if (!isCombo) { out.push(it); continue; }
 
-  // ① modalityPool 에 복합제 추가
-  if (!Array.isArray(it.modalityPool)) it.modalityPool = [];
-  if (!it.modalityPool.includes('복합제')) it.modalityPool = ['복합제', ...it.modalityPool];
+  // ① modalityPool = [복합제] 전용 (합성신약 태그 제거 — 합성신약 견적으로 누수 방지)
+  it.modalityPool = ['복합제'];
 
   // 분석민감 항목인지 (현재 testName 의 개별 베이스명으로 매칭)
   const baseName = it.testName.replace(/\s*\((개별|동시)분석\)$/, '').replace(/·(개별|동시)\)$/, ')');

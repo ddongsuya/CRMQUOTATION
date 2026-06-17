@@ -18,23 +18,16 @@
     },
     "categories": {}
   },
-  "hit_count": 5,
+  "hit_count": 4,
   "notes": [],
-  "total_unit_price": 587000000,
+  "total_unit_price": 457000000,
   "sample_hits": [
-    {
-      "testName": "조제물분석 (개별분석)",
-      "adminRoute": null,
-      "priority": "필수",
-      "tag": "조제물분석 (Validation)",
-      "unitPrice": 30000000
-    },
     {
       "testName": "설치류 4주 DRF",
       "adminRoute": "경구",
       "priority": "필수",
       "tag": "DRF (13주용)",
-      "unitPrice": 33000000
+      "unitPrice": 20000000
     },
     {
       "testName": "비설치류 4주 DRF",
@@ -48,7 +41,7 @@
       "adminRoute": "경구",
       "priority": "필수",
       "tag": "13주 본시험",
-      "unitPrice": 199000000
+      "unitPrice": 112000000
     },
     {
       "testName": "비설치류 13주 반복투여 독성",

@@ -59,30 +59,36 @@ test('[suggest] 합성신약 + 경구 + 13주 + full addons → 13+ hits, prices
   }
 });
 
-test('[suggest] 합성신약 + excipientCount=3 → 복합제 tier 적용', async (t) => {
+// 복합제는 독립 모달리티(findComboPackage). 종수별 priceTiers = 2종 28M / 3종 33M / 4종 40M (DRF)
+test('[suggest] 복합제 모달리티 — 종수별 tier 적용 (DRF 28/33/40M)', async (t) => {
+  if (await skipIfOffline()) return t.skip();
+  const comboDrf = async (jong) => {
+    const d = await suggest({
+      modality: '복합제', priceStandard: 'MFDS', excipientCount: jong,
+      plan: { route: '경구', durations: [], phase: 'IND1',
+              species: { rodent: true, nonRodent: false },
+              addons: { drf: true, recovery: false, tk: false },
+              categories: {}, tk, comboAnalysis: '개별' },
+    });
+    return d.hits.find(h => h.testName === '설치류 4주 DRF');
+  };
+  assert.equal((await comboDrf(2)).unitPrice, 28_000_000, '2종 tier 28M');
+  assert.equal((await comboDrf(3)).unitPrice, 33_000_000, '3종 tier 33M');
+  assert.equal((await comboDrf(4)).unitPrice, 40_000_000, '4종 tier 40M');
+});
+
+// 합성신약(단일제)은 복합제 마스터를 끌어오지 않는다 (누수 회귀 방지)
+test('[suggest] 합성신약 — 복합제 항목 누수 없음', async (t) => {
   if (await skipIfOffline()) return t.skip();
   const d = await suggest({
-    modality: '합성신약', priceStandard: 'MFDS', excipientCount: 3,
-    plan: { route: '경구', durations: ['W13'], phase: 'IND1',
-            species: { rodent: true, nonRodent: false },
-            addons: { drf: true, recovery: false, tk: false, genotox: false, safetyPharm: false },
-            categories: {}, tk },
-  });
-  const drf = d.hits.find(h => h.testName === '설치류 4주 DRF');
-  assert.ok(drf, '설치류 4주 DRF should be present');
-  // 복합제 master row 4: 2종=28M / 3종=33M / 4종=40M  (true xlsx values; replaces the
-  // off-by-one corrupted prices that previously appeared in this slot)
-  assert.equal(drf.unitPrice, 33_000_000, `expected 3종 tier 33M, got ${drf.unitPrice}`);
-  // Single-component baseline (excipientCount=0) should fall back to 단일제 master (20M)
-  const single = await suggest({
     modality: '합성신약', priceStandard: 'MFDS', excipientCount: 0,
     plan: { route: '경구', durations: ['W13'], phase: 'IND1',
             species: { rodent: true, nonRodent: false },
-            addons: { drf: true, recovery: false, tk: false, genotox: false, safetyPharm: false },
+            addons: { drf: true, recovery: true, tk: true, genotox: true, safetyPharm: true },
             categories: {}, tk },
   });
-  const singleDrf = single.hits.find(h => h.testName === '설치류 4주 DRF');
-  assert.equal(singleDrf.unitPrice, 20_000_000);
+  const leaked = d.hits.filter(h => h.key.includes('복합제'));
+  assert.equal(leaked.length, 0, `복합제 누수: ${leaked.map(h => h.testName).join(', ')}`);
 });
 
 // ───── 백신 ─────

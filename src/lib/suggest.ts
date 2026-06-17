@@ -458,9 +458,8 @@ export function suggestFromPlan({ modality, plan, priceStandard, excipientCount 
     }
     if (plan.addons.genotox) out.push(...findGenotoxStandard(testItems, modality, plan.route, priceStandard));
     if (plan.addons.safetyPharm) out.push(...findSafetyPharmStandard(testItems, modality, plan.route, priceStandard));
-    // 신약군: 복합제 마스터(부형제 2종 이상) 또는 독성시험 마스터에서 Validation 1건
-    out.push(...findValidation(testItems, modality, plan.route, priceStandard,
-      typeof excipientCount === 'number' && excipientCount >= 2 ? '복합제_' : undefined));
+    // 신약군: 조제물분석은 엔진(R8)이 부형제 그룹별 자동 산출 → findValidation 미사용.
+    //   (복합제 전용 고정단가는 '복합제' 모달리티 + findComboPackage 로만 적용)
   }
 
   // sort

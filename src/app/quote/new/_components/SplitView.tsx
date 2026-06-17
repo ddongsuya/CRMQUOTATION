@@ -13,7 +13,7 @@ import Stepper from './Stepper';
 
 const STEP_META = [
   { n: 1, title: '프로젝트 정보', subtitle: '의뢰자·시험물질 정보를 입력하세요' },
-  { n: 2, title: '모달리티 선택', subtitle: '대분류 → 중분류 → 소분류 순으로 선택하세요' },
+  { n: 2, title: '모달리티 선택', subtitle: '대분류 → 중분류 순으로 선택하세요' },
   { n: 3, title: '임상 계획 · 자동 구성', subtitle: '시험 패키지를 자동으로 구성합니다' },
   { n: 4, title: '선택된 시험 · 부형제', subtitle: '항목과 부형제 종수를 확인·조정하세요' },
   { n: 5, title: '통화 · 할인', subtitle: '최종 견적 조건을 설정합니다' },

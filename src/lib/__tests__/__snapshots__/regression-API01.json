@@ -18,17 +18,10 @@
     },
     "categories": {}
   },
-  "hit_count": 15,
+  "hit_count": 14,
   "notes": [],
-  "total_unit_price": 874500000,
+  "total_unit_price": 844500000,
   "sample_hits": [
-    {
-      "testName": "조제물분석 (개별분석)",
-      "adminRoute": null,
-      "priority": "필수",
-      "tag": "조제물분석 (Validation)",
-      "unitPrice": 30000000
-    },
     {
       "testName": "설치류 4주 DRF",
       "adminRoute": "경구",
@@ -56,6 +49,13 @@
       "priority": "필수",
       "tag": "13주 본시험",
       "unitPrice": 241000000
+    },
+    {
+      "testName": "설치류 13주 반복 4주 회복",
+      "adminRoute": "경구",
+      "priority": "권장",
+      "tag": "13주 + 4주 회복군",
+      "unitPrice": 32000000
     }
   ]
 }
