@@ -168,9 +168,22 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
   const [scenario, setScenario] = useState(tpl?.scenario ?? '');
   const [picked, setPicked] = useState<Set<string>>(() => new Set((tpl?.tests ?? []).map(t => t.key)));
   const [q, setQ] = useState('');
+  const [hideNoPrice, setHideNoPrice] = useState(false);
 
-  const filtered = q.trim() ? candidates.filter(c => String(c.testName ?? '').toLowerCase().includes(q.trim().toLowerCase())) : candidates;
+  const hasPrice = (c: Rec) => c.priceMfds != null || c.priceOecd != null;
+  const noPriceCount = candidates.filter(c => !hasPrice(c)).length;
+  const filtered = candidates.filter(c => {
+    if (hideNoPrice && !hasPrice(c) && !picked.has(String(c.key ?? ''))) return false; // 선택된 건 숨겨도 유지
+    if (q.trim() && !String(c.testName ?? '').toLowerCase().includes(q.trim().toLowerCase())) return false;
+    return true;
+  });
   const togglePick = (k: string) => setPicked(s => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; });
+
+  const fmtWeeks = (w: unknown) => w == null ? '' : Number(w) === 0 ? '단회' : `${w}주`;
+  const fmtPrice = (c: Rec) => {
+    const p = c.priceMfds ?? c.priceOecd;
+    return p != null && Number(p) > 0 ? `₩${Number(p).toLocaleString()}` : '협의';
+  };
 
   const save = () => {
     if (!name.trim()) { toast.error('템플릿 이름을 입력하세요.'); return; }
@@ -195,12 +208,20 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
           <input className="input w-full" value={scenario} onChange={e => setScenario(e.target.value)} placeholder="한 줄 설명 (선택, 예: 1상 임상 개시용 최소 구성)" />
         </div>
 
-        <div className="px-5 py-3 flex items-center justify-between gap-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-subtle" />
-            <input className="input pl-8 text-sm" value={q} onChange={e => setQ(e.target.value)} placeholder="시험 검색" />
+        <div className="px-5 py-3 space-y-2">
+          <div className="flex items-center justify-between gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-subtle" />
+              <input className="input pl-8 text-sm" value={q} onChange={e => setQ(e.target.value)} placeholder="시험 검색" />
+            </div>
+            <span className="text-xs text-brand-700 font-semibold whitespace-nowrap">{picked.size}개 선택</span>
           </div>
-          <span className="text-xs text-brand-700 font-semibold whitespace-nowrap">{picked.size}개 선택</span>
+          {noPriceCount > 0 && (
+            <label className="flex items-center gap-1.5 text-xs text-ink-muted cursor-pointer select-none w-fit">
+              <input type="checkbox" checked={hideNoPrice} onChange={e => setHideNoPrice(e.target.checked)} className="rounded border-slate-300 text-brand-600 focus:ring-brand-500" />
+              가격 미입력(협의) 항목 숨기기 <span className="text-ink-subtle">({noPriceCount}건)</span>
+            </label>
+          )}
         </div>
 
         <div className="flex-1 overflow-auto px-5 pb-2">
@@ -209,11 +230,17 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
             {filtered.slice(0, 200).map((c, i) => {
               const key = String(c.key ?? '');
               const on = picked.has(key);
+              const priced = hasPrice(c);
+              const period = fmtWeeks(c.studyWeeks);
+              const route = c.adminRoute ? String(c.adminRoute) : '';
               return (
                 <button key={key || i} onClick={() => togglePick(key)} className="w-full flex items-center gap-2.5 py-2 text-left hover:bg-slate-50/50 px-1 rounded">
                   <span className={clsx('inline-flex items-center justify-center w-5 h-5 rounded border-2 flex-shrink-0', on ? 'bg-brand-600 border-brand-600 text-white' : 'border-slate-300')}>{on && <Check className="w-3 h-3" />}</span>
-                  <span className="flex-1 min-w-0 truncate text-sm text-ink">{String(c.testName ?? '(이름없음)')}</span>
-                  <span className="text-[11px] text-ink-subtle">{c.studyWeeks != null ? `${c.studyWeeks}주` : c.adminRoute ? String(c.adminRoute) : ''}</span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block truncate text-sm text-ink">{String(c.testName ?? '(이름없음)')}</span>
+                    {(period || route) && <span className="block text-[11px] text-ink-subtle truncate">{[period, route].filter(Boolean).join(' · ')}</span>}
+                  </span>
+                  <span className={clsx('text-[11px] font-medium whitespace-nowrap flex-shrink-0 tabular-nums', priced ? 'text-ink-muted' : 'text-amber-600')}>{fmtPrice(c)}</span>
                 </button>
               );
             })}
