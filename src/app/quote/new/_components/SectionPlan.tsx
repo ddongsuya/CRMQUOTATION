@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Sparkles, Info, Loader2, AlertTriangle, BookOpen, ShieldCheck } from 'lucide-react';
 import { useWizard, type Duration, type Selection } from '@/lib/store';
@@ -25,6 +25,18 @@ export default function SectionPlan() {
   const [notes, setNotes] = useState<string[]>([]);
   const [advisories, setAdvisories] = useState<Advisory[]>([]);
   const [modalityBasis, setModalityBasis] = useState<ModalityBasis | null>(null);
+
+  // 모달리티 선택 즉시 규제근거 + 필수시험구성을 가져와 상단에 표시 (자동구성 전).
+  useEffect(() => {
+    setModalityBasis(null);
+    if (!s.modality) return;
+    let alive = true;
+    fetch(`/api/modality-basis?modality=${encodeURIComponent(s.modality)}`)
+      .then(r => r.json())
+      .then(d => { if (alive) setModalityBasis(d.basis ?? null); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [s.modality]);
 
   if (!s.modality) {
     return (
@@ -54,7 +66,6 @@ export default function SectionPlan() {
     setLoading(true);
     setNotes([]);
     setAdvisories([]);
-    setModalityBasis(null);
     try {
       const res = await fetch('/api/plan/suggest', {
         method: 'POST',
@@ -100,6 +111,10 @@ export default function SectionPlan() {
   const durs = DURATIONS.filter(d => !cfg.durationsAvailable || cfg.durationsAvailable.includes(d.v));
   const isDrugMode = cfg.mode === 'drug';
 
+  // 가이드라인 표준 = 이 모달리티의 권장 기본 구성 (기간 + 기본 ON addon)
+  const defaultDurLabels = (cfg.defaultDurations ?? []).map(v => DURATIONS.find(d => d.v === v)?.lbl ?? String(v));
+  const defaultAddonLabels = cfg.addons.filter(a => a.defaultOn).map(a => a.label);
+
   const canApply = isDrugMode
     ? (cfg.showRoute ? !!s.plan.route : true) && (cfg.showDurations ? s.plan.durations.length > 0 : Object.values(s.plan.addons).some(Boolean))
     : Object.values(s.plan.categories).some(Boolean);
@@ -110,6 +125,45 @@ export default function SectionPlan() {
         <div className="flex gap-2 px-3 py-2 rounded-lg bg-brand-50/60 border border-brand-100/60 text-xs text-brand-800">
           <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-brand-500" />
           <span>{cfg.note}</span>
+        </div>
+      )}
+
+      {/* 가이드라인 기준 — 모달리티 선택 즉시 표시 (자동구성 전). 실제 구성은 아래 임상 설계값으로 진행. */}
+      {modalityBasis && (
+        <div className="rounded-xl border border-brand-200 bg-brand-50/40 p-3.5 text-xs space-y-2.5">
+          <div className="font-semibold flex items-center gap-1.5 text-ink">
+            <BookOpen className="w-3.5 h-3.5 text-brand-500" />
+            {modalityBasis.모달리티} — 가이드라인 기준 구성
+            {modalityBasis.하위분류 && modalityBasis.하위분류 !== '—' && (
+              <span className="text-ink-subtle font-normal">· {modalityBasis.하위분류}</span>
+            )}
+          </div>
+          {modalityBasis.규제근거.length > 0 && (
+            <div>
+              <div className="text-[10px] font-semibold text-ink-subtle uppercase tracking-wide mb-0.5">규제 근거</div>
+              <ul className="list-disc pl-4 space-y-0.5 text-ink-muted">
+                {modalityBasis.규제근거.map((g, i) => <li key={i}>{g}</li>)}
+              </ul>
+            </div>
+          )}
+          {modalityBasis.필수시험구성 && (
+            <div>
+              <div className="text-[10px] font-semibold text-ink-subtle uppercase tracking-wide mb-0.5">필수 시험구성 (가이드라인)</div>
+              <p className="text-ink-muted leading-relaxed">{modalityBasis.필수시험구성}</p>
+            </div>
+          )}
+          {(defaultDurLabels.length > 0 || defaultAddonLabels.length > 0) && (
+            <div>
+              <div className="text-[10px] font-semibold text-ink-subtle uppercase tracking-wide mb-1">권장 기본 구성 · 이미 적용됨</div>
+              <div className="flex flex-wrap gap-1">
+                {defaultDurLabels.map(l => <span key={`d-${l}`} className="pill bg-white border border-brand-200 text-brand-700">{l}</span>)}
+                {defaultAddonLabels.map(l => <span key={`a-${l}`} className="pill bg-white border border-brand-200 text-brand-700">{l}</span>)}
+              </div>
+              <p className="text-[11px] text-ink-subtle mt-1.5 leading-relaxed">
+                아래에서 <b className="text-ink-muted">투여경로·본시험 기간</b>을 임상 설계대로 정하고 “자동 구성”을 누르면, 이 가이드라인 기준에 맞춰 시험이 구성됩니다.
+              </p>
+            </div>
+          )}
         </div>
       )}
 
@@ -282,27 +336,6 @@ export default function SectionPlan() {
         </div>
       )}
 
-      {modalityBasis && (
-        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 text-xs">
-          <div className="font-semibold mb-2 flex items-center gap-1.5 text-ink">
-            <BookOpen className="w-3.5 h-3.5 text-brand-500" />
-            {modalityBasis.모달리티} — 규제 근거
-            {modalityBasis.하위분류 && modalityBasis.하위분류 !== '—' && (
-              <span className="text-ink-subtle font-normal">· {modalityBasis.하위분류}</span>
-            )}
-          </div>
-          {modalityBasis.규제근거.length > 0 && (
-            <ul className="list-disc pl-4 space-y-0.5 text-ink-muted mb-2">
-              {modalityBasis.규제근거.map((g, i) => <li key={i}>{g}</li>)}
-            </ul>
-          )}
-          {modalityBasis.필수시험구성 && (
-            <div className="text-ink-muted">
-              <span className="font-semibold text-ink">필수 시험구성</span> — {modalityBasis.필수시험구성}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }
