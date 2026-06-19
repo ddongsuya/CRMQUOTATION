@@ -235,11 +235,38 @@ function assembleQuoteLines(selections, opts) {
         }
     }
 
-    // 4) 정렬: 조제물분석 → 함량분석 → 본시험류 (대략 표시 순서)
+    // 4) 정렬: 조제물분석 → 함량분석 → 본시험류
+    //    본시험류(test) 내부는 설치류 → 비설치류 → 유전독성 → 안전성약리 순.
+    //    같은 그룹 내에서는 안정 정렬로 삽입(기간) 순서를 유지한다.
     const KIND_ORDER = { prep_analysis: 0, analysis: 1, test: 2 };
-    lines.sort((a, b) => (KIND_ORDER[a.kind] ?? 99) - (KIND_ORDER[b.kind] ?? 99));
+    lines.sort((a, b) => {
+        const ka = KIND_ORDER[a.kind] ?? 99;
+        const kb = KIND_ORDER[b.kind] ?? 99;
+        if (ka !== kb) return ka - kb;
+        if (a.kind === 'test' && b.kind === 'test') {
+            return testGroupOrder(a.testName) - testGroupOrder(b.testName);
+        }
+        return 0;
+    });
 
     return { lines, warnings };
+}
+
+/**
+ * 견적서 본시험(test) 라인의 표시 그룹 순서.
+ *   0 설치류 시험 → 1 비설치류 시험 → 2 유전독성 → 3 안전성약리 → 1.5 미분류
+ * 유전독성·안전성약리는 종(설치류/비설치류)보다 먼저 판정해야 한다(예: 소핵시험=설치류 in vivo 지만 유전독성).
+ * 같은 그룹 내 순서는 호출부의 안정 정렬이 삽입(기간) 순서로 유지한다.
+ * @param {string} name testName
+ * @returns {number}
+ */
+function testGroupOrder(name) {
+    const n = String(name || '');
+    if (/유전독성|에임스|\bAmes\b|소핵|염색체이상|코멧|\bComet\b|\bMLA\b|Pig-?a|복귀돌연변이|TG\s?4[789]\d/i.test(n)) return 2; // 유전독성
+    if (/안전성\s*약리|hERG|중추신경|호흡기|심혈관|텔레메|Telemetry|\bCNS\b|\bQT\b|IKr/i.test(n)) return 3;                  // 안전성약리
+    if (/비\s*설치류|비글|비-?글|\bdog\b|개\b|원숭이|monkey|cyno|토끼|rabbit|미니피그|mini-?pig|non-?rodent/i.test(n)) return 1; // 비설치류
+    if (/설치류|랫드|랫\b|마우스|\bmouse\b|\brat\b|rodent/i.test(n)) return 0;                                              // 설치류
+    return 1.5; // 미분류 — 종 시험과 유전독성 사이
 }
 
 /**
