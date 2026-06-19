@@ -6,7 +6,7 @@ import { useWizard } from '@/lib/store';
 import type { TemplateCategory } from '@/lib/modality-templates';
 import SectionProject from './SectionProject';
 import SectionModality from './SectionModality';
-import SectionTemplate from './SectionTemplate';
+import SectionPlan from './SectionPlan';
 import SectionSelections from './SectionSelections';
 import SectionPricing from './SectionPricing';
 import LivePreview from './LivePreview';
@@ -15,7 +15,7 @@ import Stepper from './Stepper';
 const STEP_META = [
   { n: 1, title: '프로젝트 정보', subtitle: '의뢰자·시험물질 정보를 입력하세요' },
   { n: 2, title: '모달리티 선택', subtitle: '대분류 → 중분류 순으로 선택하세요' },
-  { n: 3, title: '템플릿 선택', subtitle: '모달리티 템플릿을 고르면 시험이 채워집니다' },
+  { n: 3, title: '임상 계획 · 자동 구성', subtitle: '투여경로·기간 등 설계값으로 시험을 자동 구성합니다' },
   { n: 4, title: '선택된 시험 · 부형제', subtitle: '항목과 부형제 종수를 확인·조정하세요' },
   { n: 5, title: '통화 · 할인', subtitle: '최종 견적 조건을 설정합니다' },
 ];
@@ -92,7 +92,7 @@ export default function SplitView({ modalityTree }: { modalityTree: TemplateCate
             <div className="p-6 animate-slide-up">
               {s.step === 1 && <SectionProject />}
               {s.step === 2 && <SectionModality tree={modalityTree} />}
-              {s.step === 3 && <SectionTemplate />}
+              {s.step === 3 && <SectionPlan />}
               {s.step === 4 && <SectionSelections />}
               {s.step === 5 && <SectionPricing />}
             </div>
