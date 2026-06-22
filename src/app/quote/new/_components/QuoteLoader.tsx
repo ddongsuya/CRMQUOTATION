@@ -12,6 +12,28 @@ import { toast } from '@/lib/toast';
 export default function QuoteLoader() {
   const params = useSearchParams();
   const id = params.get('id');
+  const dealId = params.get('dealId');
+
+  // CRM 안건에서 진입(?dealId) — 안건·고객 정보 프리필 + dealId 저장
+  useEffect(() => {
+    if (!dealId) return;
+    fetch(`/api/crm/deals/${dealId}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        const deal = d?.deal;
+        if (!deal) return;
+        useWizard.setState({
+          dealId: Number(dealId),
+          customerCompany: deal.contact?.company?.name ?? useWizard.getState().customerCompany,
+          customerName: deal.contact?.name ?? useWizard.getState().customerName,
+          modality: deal.modality ?? useWizard.getState().modality,
+          indication: deal.indication ?? useWizard.getState().indication,
+          submissionTarget: deal.submissionTarget ?? useWizard.getState().submissionTarget,
+        });
+        toast.info(`안건 "${deal.title}" 에 연결된 견적을 작성합니다.`);
+      })
+      .catch(() => {});
+  }, [dealId]);
 
   useEffect(() => {
     if (!id) return;

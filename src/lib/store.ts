@@ -66,6 +66,8 @@ type WizardState = {
   submissionTarget: string;    // 제출처 (한국/미국/유럽 규제기관)
   modality: string;
   priceStandard: PriceStandard;
+  /** CRM 안건 연결 (?dealId 로 진입 시) — 저장되는 견적이 해당 안건에 묶인다 */
+  dealId: number | null;
   /** 임상계획에서 "자동 구성"을 실행했는지 — 실시간 견적 표시 여부를 가른다 */
   planApplied: boolean;
   plan: Plan;
@@ -123,6 +125,7 @@ const initial: Omit<WizardState, Actions> = {
   submissionTarget: '한국 (MFDS)',
   modality: '',
   priceStandard: 'MFDS',
+  dealId: null,
   planApplied: false,
   plan: {
     route: '경구',

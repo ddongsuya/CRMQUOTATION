@@ -25,6 +25,7 @@ type SaveBody = {
   customerEmail?: string;
   modality: string;
   priceStandard: 'MFDS' | 'OECD';
+  dealId?: number | null;          // CRM 안건 연결
   plan: object;
   selections: {
     key: string;
@@ -104,6 +105,7 @@ export async function POST(req: Request) {
     customerEmail: body.customerEmail ?? null,
     modality: body.modality,
     priceStandard: body.priceStandard,
+    dealId: body.dealId ?? null,
     planJson: JSON.stringify(body.plan),
     excipientCount: body.excipientCount,
     currency: body.currency,

@@ -1,4 +1,5 @@
 /**
+ * GET    /api/crm/deals/[id]  — 안건 전체 상세 (고객·견적·계약·시험·변경견적)
  * PATCH  /api/crm/deals/[id]  — 안건 수정 (단계·상태·메모 등)
  * DELETE /api/crm/deals/[id]  — 안건 삭제
  */
@@ -13,6 +14,22 @@ async function ownedDeal(id: number) {
   const d = await prisma.deal.findUnique({ where: { id } });
   if (!d || !owners.includes(d.ownerId)) return null;
   return d;
+}
+
+export async function GET(_req: Request, { params }: { params: { id: string } }) {
+  const id = Number(params.id);
+  if (!(await ownedDeal(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
+  const deal = await prisma.deal.findUnique({
+    where: { id },
+    include: {
+      contact: { include: { company: true } },
+      quotes: { orderBy: { createdAt: 'desc' }, select: { id: true, quoteNumber: true, grandTotal: true, currency: true, status: true, sentAt: true, accepted: true, createdAt: true } },
+      contract: { include: { paymentTerms: { orderBy: { seq: 'asc' } } } },
+      studies: { orderBy: { createdAt: 'asc' } },
+      changeQuotes: { orderBy: { createdAt: 'desc' } },
+    },
+  });
+  return NextResponse.json({ deal });
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {

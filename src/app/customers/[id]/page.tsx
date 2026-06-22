@@ -98,12 +98,12 @@ export default function CompanyDetailPage() {
                 {ct.deals.map(d => {
                   const st = STAGE[d.stage] ?? STAGE.INQUIRY;
                   return (
-                    <div key={d.id} className="flex items-center gap-2 py-1.5 px-2 -mx-1 rounded-lg">
+                    <Link key={d.id} href={`/deals/${d.id}`} className="flex items-center gap-2 py-1.5 px-2 -mx-1 rounded-lg hover:bg-slate-50/70 group">
                       <Briefcase className="w-3.5 h-3.5 text-ink-subtle flex-shrink-0" />
                       <span className="flex-1 min-w-0 text-sm text-ink truncate">{d.title}{d.modality && <span className="text-ink-subtle text-xs ml-1.5">{d.modality}</span>}</span>
                       <span className={clsx('pill', st.cls)}>{st.label}</span>
                       {d.status === 'LOST' && <span className="pill bg-red-100 text-red-700">중단</span>}
-                    </div>
+                    </Link>
                   );
                 })}
                 <button onClick={() => setDealModal({ contactId: ct.id })} className="inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 py-1"><Plus className="w-3.5 h-3.5" /> 안건 추가</button>

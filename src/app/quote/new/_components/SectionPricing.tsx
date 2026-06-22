@@ -26,6 +26,7 @@ export default function SectionPricing() {
           customerEmail: s.customerEmail,
           modality: s.modality,
           priceStandard: s.priceStandard,
+          dealId: s.dealId,
           plan: s.plan,
           selections: s.selections.map(x => ({ key: x.key, quantity: x.quantity, tag: x.tag, priority: x.priority, source: x.source })),
           excipientCount: s.excipientCount,

@@ -113,11 +113,82 @@ model Deal {
   status               String    @default("ACTIVE")  // ACTIVE·WON·LOST
   lostReason           String?
   quotes               Quote[]
+  contract             Contract?
+  studies              Study[]
+  changeQuotes         ChangeQuote[]
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
   @@index([ownerId])
   @@index([contactId])
+}
+
+// ─────────────────────────────────────────────────────────
+// CRM — 계약 / 지급회차 / 시험추적 / 변경견적 (Phase 2)
+// ─────────────────────────────────────────────────────────
+model Contract {
+  id               Int           @id @default(autoincrement())
+  deal             Deal          @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  dealId           Int           @unique
+  quoteId          Int?                                   // 기반 견적
+  status           String        @default("DRAFT")        // DRAFT·SENT·REVIEWED·APPROVED·SIGNED
+  costEstimateSentAt DateTime?                            // 예정원가·세금계산서안분 사업지원팀 송부
+  draftSentAt      DateTime?                              // 초안 송부
+  approvedAt       DateTime?                              // 초안 승인
+  signedAt         DateTime?                              // 최종 날인
+  contractNumber   String?                                // 계약번호 (사업지원팀 부여)
+  paymentTerms     PaymentTerm[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model PaymentTerm {
+  id          Int       @id @default(autoincrement())
+  contract    Contract  @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  contractId  Int
+  seq         Int       @default(1)                       // 회차 순번
+  kind        String    @default("ADVANCE")               // ADVANCE(선금)·INTERIM(중도금)·BALANCE(잔금)
+  ratio       Float?                                      // 비율(0.5) 또는 amount
+  amount      Float?
+  condition   String?                                     // 계약체결시·최종보고서안 발행+30일 등
+  studyId     Int?                                        // 시험번호별 설정 시
+  dueAt       DateTime?
+  paidAt      DateTime?
+
+  @@index([contractId])
+}
+
+model Study {
+  id                  Int       @id @default(autoincrement())
+  deal                Deal      @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  dealId              Int
+  studyNumber         String?                             // 시험번호
+  director            String?                             // 시험책임자
+  itemName            String?                             // 시험 항목명
+  requestSentAt       DateTime?                           // 시험관리팀 접수요청
+  intakeCompletedAt   DateTime?                           // 접수완료 안내
+  reportDraftDueAt    DateTime?                           // 최종보고서(안) 발행 예정 ★
+  reportDraftIssuedAt DateTime?                           // 실제 발행
+  invoiceRequestedAt  DateTime?                           // 세금계산서 발행요청
+  invoiceIssuedAt     DateTime?                           // 발행 완료
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  @@index([dealId])
+}
+
+model ChangeQuote {
+  id        Int      @id @default(autoincrement())
+  deal      Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+  dealId    Int
+  studyId   Int?
+  kind      String                                       // DEDUCT(감가)·ADD(추가금)
+  amount    Float
+  reason    String
+  quoteId   Int?
+  createdAt DateTime @default(now())
+
+  @@index([dealId])
 }
 
 // ─────────────────────────────────────────────────────────
