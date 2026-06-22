@@ -21,10 +21,103 @@ model User {
   id            Int       @id @default(autoincrement())
   email         String    @unique
   name          String
-  role          String    @default("user")   // user / admin
+  role          String    @default("user")   // user / admin / (CRM: MEMBER·TEAM_LEAD·CENTER_LEAD·ADMIN)
   passwordHash  String
   createdAt     DateTime  @default(now())
   quotes        Quote[]
+
+  // ─── CRM: 조직 계층 + 소유 ───
+  team          Team?     @relation(fields: [teamId], references: [id])
+  teamId        Int?
+  center        Center?   @relation(fields: [centerId], references: [id])
+  centerId      Int?
+  companies     Company[]
+  deals         Deal[]
+
+  @@index([teamId])
+  @@index([centerId])
+}
+
+// ─────────────────────────────────────────────────────────
+// CRM — 조직 계층 (요구 #2). role(User.role)로 조회범위 확장.
+// ─────────────────────────────────────────────────────────
+model Center {
+  id        Int      @id @default(autoincrement())
+  name      String
+  teams     Team[]
+  users     User[]
+  createdAt DateTime @default(now())
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String
+  center    Center?  @relation(fields: [centerId], references: [id])
+  centerId  Int?
+  users     User[]
+  createdAt DateTime @default(now())
+
+  @@index([centerId])
+}
+
+// ─────────────────────────────────────────────────────────
+// CRM — 고객사 → 의뢰자 → 안건 (Phase 1)
+// ─────────────────────────────────────────────────────────
+model Company {
+  id          Int       @id @default(autoincrement())
+  owner       User      @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  name        String
+  bizRegNo    String?                          // 사업자등록번호
+  industry    String?
+  address     String?
+  isNewClient Boolean   @default(true)          // 첫 거래 여부 (등록 완료 시 false)
+  memo        String?
+  contacts    Contact[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([ownerId])
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId Int
+  name      String
+  email     String?
+  phone     String?
+  position  String?                            // 직책
+  memo      String?
+  deals     Deal[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([companyId])
+}
+
+model Deal {
+  id                   Int       @id @default(autoincrement())
+  owner                User      @relation(fields: [ownerId], references: [id])
+  ownerId              Int
+  contact              Contact   @relation(fields: [contactId], references: [id])
+  contactId            Int
+  title                String
+  modality             String?
+  indication           String?                 // 적응증
+  clinicalDesign       String?                 // 임상 예정 디자인 메모
+  submissionTarget     String?                 // 제출처 (MFDS/US FDA/EMA…)
+  reportLanguage       String    @default("KO") // KO / EN
+  translationRequested Boolean   @default(false)
+  stage                String    @default("INQUIRY") // INQUIRY·QUOTE·INTAKE·CONTRACT·STUDY·INVOICE·DONE
+  status               String    @default("ACTIVE")  // ACTIVE·WON·LOST
+  lostReason           String?
+  quotes               Quote[]
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@index([ownerId])
+  @@index([contactId])
 }
 
 // ─────────────────────────────────────────────────────────
@@ -38,6 +131,13 @@ model Quote {
   // ownership
   user                User?      @relation(fields: [userId], references: [id])
   userId              Int?
+
+  // CRM: 안건 연결 (Phase 1) + 견적 생애주기
+  deal                Deal?      @relation(fields: [dealId], references: [id])
+  dealId              Int?
+  sentAt              DateTime?                    // 견적 송부일
+  reviewedAt          DateTime?                    // 의뢰자 검토일
+  accepted            Boolean?                     // 진행 수락 여부
 
   // customer
   customerName        String?
@@ -77,6 +177,7 @@ model Quote {
 
   @@index([userId])
   @@index([status])
+  @@index([dealId])
 }
 
 model QuoteItem {
