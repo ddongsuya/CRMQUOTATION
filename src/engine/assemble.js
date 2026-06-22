@@ -14,8 +14,9 @@
  *
  *   R2. 함량분석 회수 (per study)
  *         단회             → 1회
- *         1주 ~ 13주       → 2회
- *         26주 이상(만성)  → 4주당 1회 = floor(weeks / 4) (26→6, 39→9, 52→13)
+ *         ~4주             → 1회
+ *         13주 (5~13주)    → 2회
+ *         13주 초과(만성)  → 4주당 1회 = floor(weeks / 4) (26→6, 39→9, 52→13)
  *         in vitro (유전독성·안전성약리) → studyWeeks 없으면 1회 (hamryangCountForWeeks(null)=1)
  *
  *   R3. 누가 함량분석에 포함되나
@@ -276,8 +277,9 @@ function testGroupOrder(name) {
  */
 function hamryangCountForWeeks(weeks) {
     if (weeks == null || weeks === 0) return 1; // 단회 — 1회
-    if (weeks <= 13) return 2;                  // 1주 ~ 13주 — 2회
-    return Math.floor(weeks / 4);               // 만성(26주↑) — 4주당 1회
+    if (weeks <= 4) return 1;                   // ~4주 — 1회
+    if (weeks <= 13) return 2;                  // 5~13주 — 2회
+    return Math.floor(weeks / 4);               // 13주 초과(만성) — 4주당 1회
 }
 
 /**

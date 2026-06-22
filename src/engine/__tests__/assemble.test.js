@@ -25,11 +25,11 @@ const opts = (over = {}) => ({ excipientCount: 0, priceStandard: 'MFDS', priceAn
 test('hamryangCountForWeeks — 회사 합의 룰', () => {
     assert.equal(hamryangCountForWeeks(null), 1); // 단회 fallback
     assert.equal(hamryangCountForWeeks(0), 1);    // 단회
-    assert.equal(hamryangCountForWeeks(1), 2);    // 1주 ~ 13주 = 2회
-    assert.equal(hamryangCountForWeeks(2), 2);
-    assert.equal(hamryangCountForWeeks(4), 2);
-    assert.equal(hamryangCountForWeeks(13), 2);
-    assert.equal(hamryangCountForWeeks(26), 6);   // 만성 4주당 1회
+    assert.equal(hamryangCountForWeeks(1), 1);    // ~4주 = 1회
+    assert.equal(hamryangCountForWeeks(2), 1);
+    assert.equal(hamryangCountForWeeks(4), 1);
+    assert.equal(hamryangCountForWeeks(13), 2);   // 5~13주 = 2회
+    assert.equal(hamryangCountForWeeks(26), 6);   // 13주 초과 4주당 1회
     assert.equal(hamryangCountForWeeks(39), 9);
     assert.equal(hamryangCountForWeeks(52), 13);
 });
@@ -57,7 +57,7 @@ test('26주 본시험 1건 → 함량분석 6회', () => {
     assert.equal(analysis.subtotal, 6_000_000);
 });
 
-test('단회 + 4주 DRF + 13주 본시험 + 13주 TK → 1+2+2+2 = 7회', () => {
+test('단회 + 4주 DRF + 13주 본시험 + 13주 TK → 1+1+2+2 = 6회', () => {
     const single = mk({ key: 'S__경구', testName: '설치류 단회 투여 독성시험', studyWeeks: 0 });
     const drf = mk({ key: 'D__경구', testName: '설치류 4주 DRF', studyWeeks: 4, linkRelation: 'DRF' });
     const main = mk({ key: 'M__경구', testName: '설치류 13주 반복투여 독성', studyWeeks: 13 });
@@ -67,7 +67,7 @@ test('단회 + 4주 DRF + 13주 본시험 + 13주 TK → 1+2+2+2 = 7회', () => 
         opts({ excipientCount: 0 }),
     );
     const analysis = lines.find(l => l.kind === 'analysis');
-    assert.equal(analysis.quantity, 7);
+    assert.equal(analysis.quantity, 6); // 단회1 + 4주1 + 13주2 + 13주2
     assert.equal(warnings.length, 0);
 });
 
@@ -276,7 +276,7 @@ test('부형제 0종에도 최소 1배 적용', () => {
     const item = mk({ key: 'M__경구', testName: '설치류 4주 반복투여', studyWeeks: 4 });
     const { lines } = assembleQuoteLines([{ item }], opts({ excipientCount: 0 }));
     const analysis = lines.find(l => l.kind === 'analysis');
-    assert.equal(analysis.quantity, 2);
+    assert.equal(analysis.quantity, 1); // 4주 = 1회 × 최소 1배
 });
 
 test('조제물분석 항목 자체는 함량분석 누적에서 제외 (라인엔 자기 자신으로)', () => {
@@ -341,7 +341,7 @@ test('중복 key 머지 — quantity 합산', () => {
     assert.equal(testLine.quantity, 5);
     assert.equal(testLine.subtotal, 2500);
     const analysis = lines.find(l => l.kind === 'analysis');
-    assert.equal(analysis.quantity, 2 * 5);
+    assert.equal(analysis.quantity, 1 * 5); // 4주 = 1회 × quantity 5
 });
 
 test('가격 없는 항목 → 0 + note', () => {

@@ -103,12 +103,14 @@ function findRepeatMain(items: TestItem[], modality: string, route: string, week
     .map(it => ({ item: it, priority: '필수' as const, tag: `${weeks}주 본시험` }));
 }
 
-function findSingleDose(items: TestItem[], modality: string, route: string, sp: Plan['species']): Hit[] {
+function findSingleDose(items: TestItem[], modality: string, route: string, _sp: Plan['species']): Hit[] {
+  // 단회는 회사 표준상 (설치류) 예비시험 1건만 — 비설치류 단회/DE법/스크리닝 변형은 제외.
+  // (matchSpecies 는 "비설치류"가 "설치류"를 부분포함해 구분 불가 → 명시적으로 비설치류 배제.
+  //  종 표기 없는 단회(건기식 등)는 유지하려고 "설치류 요구"가 아니라 "비설치류 제외"로 처리.)
   return items
     .filter(it =>
       matchModality(it, modality) && matchRoute(it, route) &&
-      /단회|일회|급성/.test(it.testName) && !/회복|DRF/.test(it.testName) &&
-      matchSpecies(it.testName, sp),
+      /단회|일회|급성/.test(it.testName) && !/회복|DRF|스크리닝|비\s*설치류/.test(it.testName),
     )
     .map(it => ({ item: it, priority: '필수' as const, tag: '단회투여' }));
 }

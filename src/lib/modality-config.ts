@@ -54,8 +54,8 @@ export type ModalityPlanConfig = {
 const DRUG_FULL: ModalityPlanConfig = {
   mode: 'drug',
   showRoute: true, showDurations: true, showSpecies: true, showPhase: true,
-  // IND 1상 표준 = 13주 반복 (기본). User 가 단회/4주/26주 등 추가 선택 가능.
-  defaultDurations: ['W13'],
+  // IND 1상 표준 = 단회(설치류 예비) + 13주 반복 (기본). User 가 4주/26주 등 추가 선택 가능.
+  defaultDurations: ['SINGLE', 'W13'],
   addons: [
     { id: 'drf', label: 'DRF (용량결정)', defaultOn: true },
     { id: 'recovery', label: '회복군', defaultOn: true },
