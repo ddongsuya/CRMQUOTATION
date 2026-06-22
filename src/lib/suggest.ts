@@ -54,18 +54,22 @@ function pickPricedCandidate(cands: TestItem[], route: string | null, priceStand
 }
 
 function uniq(arr: Hit[], priceStandard: 'MFDS' | 'OECD', excipientCount: number | undefined): Hit[] {
+  const priceOf = (h: Hit) => {
+    const v = priceStandard === 'MFDS' ? h.item.priceMfds : h.item.priceOecd;
+    return v != null && Number.isFinite(v) && Number(v) > 0 ? Number(v) : Infinity;
+  };
+  const hasPrice = (h: Hit) => priceOf(h) !== Infinity;
+
+  // 1) 동일 시험명 통합 — 같은 이름 = 같은 시험(경로 변형·하위시트 중복 제거).
+  //    종 구분(설치류/비설치류)은 이름이 다르므로 쌍은 보존된다.
   const groups = new Map<string, Hit[]>();
   for (const h of arr) {
-    const k = `${h.item.testName}|${h.item.adminRoute ?? ''}`;
+    const k = (h.item.testName ?? '').normalize('NFC').trim();
     const list = groups.get(k);
     if (list) list.push(h); else groups.set(k, [h]);
   }
-  const hasPrice = (h: Hit) => {
-    const v = priceStandard === 'MFDS' ? h.item.priceMfds : h.item.priceOecd;
-    return v != null && Number.isFinite(v) && Number(v) > 0;
-  };
   const preferTiers = typeof excipientCount === 'number' && excipientCount >= 2;
-  const out: Hit[] = [];
+  let out: Hit[] = [];
   const seenKey = new Set<string>();
   for (const list of groups.values()) {
     const tiered = preferTiers ? list.find(h => h.item.priceTiers) : undefined;
@@ -74,6 +78,16 @@ function uniq(arr: Hit[], priceStandard: 'MFDS' | 'OECD', excipientCount: number
     if (seenKey.has(winner.item.key)) continue;
     seenKey.add(winner.item.key);
     out.push(winner);
+  }
+
+  // 2) 단회(급성)는 견적당 1건 — 마스터 하위유형/경로 변형으로 여러 개면 최저가 대표만 남긴다.
+  //    (예: 건기식 = 급성 경구독성 vs 설치류 단회 / 화장품 = 단회 경구·경피)
+  //    시험명 기준(태그가 아닌)으로 판정 — category 모달리티도 포함. '급성전신독성' 등은 제외.
+  const isSingle = (h: Hit) => /단회\s*투여|급성\s*경구/.test(h.item.testName ?? '');
+  const singles = out.filter(isSingle);
+  if (singles.length > 1) {
+    const keep = singles.reduce((a, b) => (priceOf(b) < priceOf(a) ? b : a));
+    out = out.filter(h => !isSingle(h) || h.item.key === keep.item.key);
   }
   return out;
 }

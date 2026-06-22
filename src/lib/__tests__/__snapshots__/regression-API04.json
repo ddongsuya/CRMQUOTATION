@@ -19,9 +19,9 @@
       "repeatDermal": false
     }
   },
-  "hit_count": 12,
+  "hit_count": 9,
   "notes": [],
-  "total_unit_price": 125500000,
+  "total_unit_price": 99700000,
   "sample_hits": [
     {
       "testName": "광감작(Harber)",
@@ -45,18 +45,18 @@
       "unitPrice": 3200000
     },
     {
-      "testName": "단회투여(경구)",
+      "testName": "소핵시험(TG474)",
       "adminRoute": "경구",
       "priority": "필수",
-      "tag": "화장품·singleDose",
-      "unitPrice": 3200000
+      "tag": "화장품·genotox",
+      "unitPrice": 18000000
     },
     {
-      "testName": "단회투여(경피)",
-      "adminRoute": "경피",
+      "testName": "안점막자극(RhCE)",
+      "adminRoute": null,
       "priority": "필수",
-      "tag": "화장품·singleDose",
-      "unitPrice": 4600000
+      "tag": "화장품·eyeIrritation",
+      "unitPrice": 11000000
     }
   ]
 }

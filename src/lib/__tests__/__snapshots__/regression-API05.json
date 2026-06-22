@@ -21,9 +21,9 @@
       "hemocompat": false
     }
   },
-  "hit_count": 14,
+  "hit_count": 13,
   "notes": [],
-  "total_unit_price": 121500000,
+  "total_unit_price": 119000000,
   "sample_hits": [
     {
       "testName": "구강점막 자극성",
@@ -40,13 +40,6 @@
       "unitPrice": 2500000
     },
     {
-      "testName": "급성전신독성",
-      "adminRoute": "복강",
-      "priority": "필수",
-      "tag": "의료기기(ISO10993)·systemicToxicity",
-      "unitPrice": 2500000
-    },
-    {
       "testName": "복귀돌연변이",
       "adminRoute": null,
       "priority": "필수",
@@ -55,6 +48,13 @@
     },
     {
       "testName": "세포독성-용출물",
+      "adminRoute": null,
+      "priority": "필수",
+      "tag": "의료기기(ISO10993)·cytotoxicity",
+      "unitPrice": 3000000
+    },
+    {
+      "testName": "세포독성-직접접촉",
       "adminRoute": null,
       "priority": "필수",
       "tag": "의료기기(ISO10993)·cytotoxicity",

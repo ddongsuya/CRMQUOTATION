@@ -17,9 +17,9 @@
     },
     "categories": {}
   },
-  "hit_count": 9,
+  "hit_count": 8,
   "notes": [],
-  "total_unit_price": 198400000,
+  "total_unit_price": 195200000,
   "sample_hits": [
     {
       "testName": "투여물질의 조제물 분석",
@@ -27,13 +27,6 @@
       "priority": "필수",
       "tag": "조제물분석 (Validation)",
       "unitPrice": 26000000
-    },
-    {
-      "testName": "설치류 단회 투여 독성시험",
-      "adminRoute": "경구",
-      "priority": "필수",
-      "tag": "단회투여",
-      "unitPrice": 3200000
     },
     {
       "testName": "급성 경구독성시험",
@@ -55,6 +48,13 @@
       "priority": "필수",
       "tag": "13주 본시험",
       "unitPrice": 92000000
+    },
+    {
+      "testName": "설치류 13주 반복 4주 회복",
+      "adminRoute": "경구",
+      "priority": "권장",
+      "tag": "13주 + 4주 회복군",
+      "unitPrice": 26000000
     }
   ]
 }
