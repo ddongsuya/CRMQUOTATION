@@ -27,6 +27,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
       contract: { include: { paymentTerms: { orderBy: { seq: 'asc' } } } },
       studies: { orderBy: { createdAt: 'asc' } },
       changeQuotes: { orderBy: { createdAt: 'desc' } },
+      notes: { orderBy: { occurredAt: 'desc' } },
     },
   });
   return NextResponse.json({ deal });

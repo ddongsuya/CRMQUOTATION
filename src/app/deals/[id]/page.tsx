@@ -12,11 +12,12 @@ type PaymentTerm = { id: number; seq: number; kind: string; ratio: number | null
 type Contract = { id: number; status: string; contractNumber: string | null; costEstimateSentAt: string | null; draftSentAt: string | null; approvedAt: string | null; signedAt: string | null; paymentTerms: PaymentTerm[] };
 type Study = { id: number; itemName: string | null; studyNumber: string | null; director: string | null; requestSentAt: string | null; intakeCompletedAt: string | null; reportDraftDueAt: string | null; reportDraftIssuedAt: string | null; invoiceRequestedAt: string | null; invoiceIssuedAt: string | null };
 type ChangeQuote = { id: number; kind: string; amount: number; reason: string; createdAt: string };
+type Note = { id: number; type: string; title: string | null; body: string; occurredAt: string };
 type Deal = {
   id: number; title: string; modality: string | null; indication: string | null; clinicalDesign: string | null;
   submissionTarget: string | null; reportLanguage: string; translationRequested: boolean; stage: string; status: string; lostReason: string | null;
   contact: { id: number; name: string; position: string | null; company: { id: number; name: string; isNewClient: boolean } };
-  quotes: Quote[]; contract: Contract | null; studies: Study[]; changeQuotes: ChangeQuote[];
+  quotes: Quote[]; contract: Contract | null; studies: Study[]; changeQuotes: ChangeQuote[]; notes: Note[];
 };
 
 const STAGES = [
@@ -87,7 +88,46 @@ export default function DealDetailPage() {
       <SectionContract deal={deal} reload={load} />
       <SectionStudies deal={deal} reload={load} />
       <SectionChangeQuotes deal={deal} reload={load} />
+      <SectionNotes deal={deal} reload={load} />
     </div>
+  );
+}
+
+function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState({ type: 'MEETING', body: '' });
+  const add = async () => {
+    if (!f.body.trim()) { toast.error('내용을 입력하세요.'); return; }
+    const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...f, dealId: deal.id, contactId: deal.contact.id }) });
+    if (res.ok) { setF({ type: 'MEETING', body: '' }); setOpen(false); reload(); } else toast.error('실패');
+  };
+  const del = async (id: number) => { const res = await fetch(`/api/crm/notes/${id}`, { method: 'DELETE' }); if (res.ok) reload(); };
+  const TLABEL: Record<string, string> = { MEETING: '미팅', CALL: '통화', MEMO: '메모' };
+  return (
+    <Card icon={<FileText className="w-4 h-4 text-brand-500" />} title={`기록 ${deal.notes.length}건`}
+      action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 기록 추가</button>}>
+      {open && (
+        <div className="space-y-2 mb-3">
+          <div className="flex gap-1.5">{['MEETING', 'CALL', 'MEMO'].map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{TLABEL[t]}</button>)}</div>
+          <textarea className="input w-full min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="미팅·상담 내용…" autoFocus />
+          <div className="flex justify-end"><button onClick={add} className="btn-primary text-sm"><Save className="w-4 h-4" /> 저장</button></div>
+        </div>
+      )}
+      {deal.notes.length === 0 ? <div className="text-xs text-ink-subtle py-1">기록 없음.</div> : (
+        <ul className="space-y-2">
+          {deal.notes.map(n => (
+            <li key={n.id} className="flex items-start gap-2 group">
+              <span className="pill bg-slate-100 text-ink-muted flex-shrink-0 mt-0.5">{TLABEL[n.type] ?? '메모'}</span>
+              <div className="flex-1 min-w-0">
+                <div className="text-sm text-ink-muted whitespace-pre-wrap">{n.body}</div>
+                <div className="text-[11px] text-ink-subtle mt-0.5">{n.occurredAt.slice(0, 10)}</div>
+              </div>
+              <button onClick={() => del(n.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3.5 h-3.5" /></button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Card>
   );
 }
 

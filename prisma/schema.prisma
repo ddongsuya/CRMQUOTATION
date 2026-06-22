@@ -33,6 +33,8 @@ model User {
   centerId      Int?
   companies     Company[]
   deals         Deal[]
+  notes         Note[]
+  events        CalendarEvent[]
 
   @@index([teamId])
   @@index([centerId])
@@ -90,6 +92,8 @@ model Contact {
   position  String?                            // 직책
   memo      String?
   deals     Deal[]
+  notes     Note[]
+  events    CalendarEvent[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -116,6 +120,8 @@ model Deal {
   contract             Contract?
   studies              Study[]
   changeQuotes         ChangeQuote[]
+  notes                Note[]
+  events               CalendarEvent[]
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
@@ -294,4 +300,47 @@ model DataBlob {
   key       String   @id
   json      Json
   updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────────────────
+// CRM — 기록(미팅·상담) / 일정(캘린더·알람) (Phase 3)
+// ─────────────────────────────────────────────────────────
+model Note {
+  id         Int      @id @default(autoincrement())
+  owner      User     @relation(fields: [ownerId], references: [id])
+  ownerId    Int
+  contact    Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  contactId  Int?
+  deal       Deal?    @relation(fields: [dealId], references: [id], onDelete: SetNull)
+  dealId     Int?
+  type       String   @default("MEMO")            // MEETING·CALL·MEMO
+  title      String?
+  body       String
+  occurredAt DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([ownerId])
+  @@index([contactId])
+  @@index([dealId])
+}
+
+model CalendarEvent {
+  id        Int       @id @default(autoincrement())
+  owner     User      @relation(fields: [ownerId], references: [id])
+  ownerId   Int
+  contact   Contact?  @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  contactId Int?
+  deal      Deal?     @relation(fields: [dealId], references: [id], onDelete: SetNull)
+  dealId    Int?
+  title     String
+  type      String    @default("MEETING")         // MEETING·DEADLINE·MILESTONE·REMINDER
+  startAt   DateTime
+  endAt     DateTime?
+  allDay    Boolean   @default(true)
+  done      Boolean   @default(false)
+  source    String    @default("MANUAL")          // MANUAL·AUTO
+  createdAt DateTime  @default(now())
+
+  @@index([ownerId])
+  @@index([startAt])
 }

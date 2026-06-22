@@ -5,6 +5,7 @@ import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { loadData } from '@/lib/data';
 import { ensureHydrated } from '@/lib/hydrate';
+import DashboardAlarms from '@/components/DashboardAlarms';
 
 // 통계·최근견적을 매 요청 갱신 (런타임 DB 반영). 정적 프리렌더 금지.
 export const dynamic = 'force-dynamic';
@@ -50,6 +51,9 @@ export default async function Home() {
         <StatCard icon={<BookOpen className="w-4 h-4" />} label="가이드라인 블록" value={blocks.length} unit="개" />
         <StatCard icon={<Boxes className="w-4 h-4" />} label="모달리티" value={modalityRows.length} unit="종" />
       </div>
+
+      {/* CRM 알람 · 예정 일정 */}
+      <DashboardAlarms />
 
       <div className="grid lg:grid-cols-2 gap-4">
         {/* 최근 견적 */}
