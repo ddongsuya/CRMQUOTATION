@@ -38,6 +38,17 @@ export default function SectionPlan() {
     return () => { alive = false; };
   }, [s.modality]);
 
+  // 하위유형(건기식 등) 기본값 — 모달리티에 하위유형이 있으면 첫 유형으로, 없으면 초기화
+  useEffect(() => {
+    const c = getModalityConfig(s.modality);
+    if (c.subtypes?.length) {
+      if (!c.subtypes.some(st => st.id === s.plan.subtype)) s.patchPlan({ subtype: c.subtypes[0].id });
+    } else if (s.plan.subtype) {
+      s.patchPlan({ subtype: undefined });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [s.modality]);
+
   if (!s.modality) {
     return (
       <div className="text-center py-8 text-sm text-ink-subtle">
@@ -165,6 +176,16 @@ export default function SectionPlan() {
             </div>
           )}
         </div>
+      )}
+
+      {cfg.subtypes && cfg.subtypes.length > 0 && (
+        <Row label="하위유형" hint="유형별로 시험 구성이 다릅니다 (예: 프로바이오틱스는 유전독성 없음)">
+          <div className="flex flex-wrap gap-1.5">
+            {cfg.subtypes.map(st => (
+              <button key={st.id} onClick={() => s.patchPlan({ subtype: st.id })} className={clsx('chip', s.plan.subtype === st.id ? 'chip-active' : 'chip-inactive')}>{st.label}</button>
+            ))}
+          </div>
+        </Row>
       )}
 
       {cfg.showRoute && (

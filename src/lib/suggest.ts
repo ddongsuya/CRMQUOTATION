@@ -145,7 +145,9 @@ function findDRF(items: TestItem[], modality: string, route: string, weeks: numb
 function findRecovery(items: TestItem[], modality: string, route: string, weeks: number, sp: Plan['species']): Hit[] {
   const recWeeks = weeks === 4 ? 2 : 4;
   const rxBody = new RegExp(`${weeks}\\s*주\\s*반복`);
-  const rxRec = new RegExp(`${recWeeks}\\s*주\\s*회복`);
+  // 회복 매칭은 완화 — 본시험 기간(rxBody)이 같으면 "N주 회복"·"회복시험" 둘 다 인정.
+  //   (건기식 개별인정형은 "13주 반복 회복시험", 한시적식품은 "13주 반복 4주 회복")
+  const rxRec = /회복/;
   return items
     .filter(it =>
       matchModality(it, modality) && matchRoute(it, route) &&
@@ -433,17 +435,21 @@ export function suggestFromPlan({ modality, plan, priceStandard, excipientCount 
   } else if (modality === '건강기능식품') {
     if (!plan.route) notes.push('투여 경로를 선택하세요.');
     if (plan.durations.length === 0) notes.push('본시험 기간을 1개 이상 선택하세요.');
+    // 하위유형(개별인정형/프로바이오틱스/한시적식품) 필터 — 미선택 시 개별인정형 기준
+    const sub = plan.subtype || '개별인정형';
+    if (!plan.subtype) notes.push('하위유형 미선택 — 개별인정형 기준으로 구성했습니다.');
+    const items = testItems.filter(it => it.key.includes(`#${sub}#`));
     const sp = { rodent: true, nonRodent: false };
-    if (plan.durations.includes('SINGLE')) out.push(...findSingleDose(testItems, modality, plan.route, sp));
+    if (plan.durations.includes('SINGLE')) out.push(...findSingleDose(items, modality, plan.route, sp));
     for (const d of plan.durations) {
       if (d === 'SINGLE') continue;
       const w = DURATION_WEEKS[d];
-      out.push(...findRepeatMain(testItems, modality, plan.route, w, sp));
-      if (plan.addons.drf) out.push(...findDRF(testItems, modality, plan.route, w, sp));
-      if (plan.addons.recovery) out.push(...findRecovery(testItems, modality, plan.route, w, sp));
+      out.push(...findRepeatMain(items, modality, plan.route, w, sp));
+      if (plan.addons.drf) out.push(...findDRF(items, modality, plan.route, w, sp));
+      if (plan.addons.recovery) out.push(...findRecovery(items, modality, plan.route, w, sp));
     }
-    if (plan.addons.genotox) out.push(...findGenotoxStandard(testItems, modality, plan.route, priceStandard));
-    out.push(...findValidation(testItems, modality, plan.route, priceStandard, '건기식_'));
+    if (plan.addons.genotox) out.push(...findGenotoxStandard(items, modality, plan.route, priceStandard));
+    out.push(...findValidation(items, modality, plan.route, priceStandard, '건기식_'));
   } else if (modality === '세포치료제') {
     if (!plan.route) notes.push('투여 경로를 선택하세요.');
     if (plan.durations.length === 0) notes.push('본시험/관찰 기간을 1개 이상 선택하세요.');

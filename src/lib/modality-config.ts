@@ -47,6 +47,9 @@ export type ModalityPlanConfig = {
   addons: AddonDef[];
   /** test categories (only for mode=category) */
   categories?: CategoryDef[];
+  /** 하위유형 — 한 마스터에 여러 프리셋 변형이 있을 때(예: 건기식 개별인정형/프로바이오틱스/한시적식품).
+   *  id 는 test_items key 의 하위시트명(#id#)과 일치. 선택 시 그 하위유형 항목만으로 구성. */
+  subtypes?: { id: string; label: string }[];
   /** human-readable note */
   note?: string;
 };
@@ -134,7 +137,13 @@ export const MODALITY_PLAN_CONFIG: Record<string, ModalityPlanConfig> = {
       { id: 'recovery', label: '회복군', defaultOn: true },
       { id: 'genotox', label: '유전독성 3종', defaultOn: true },
     ],
-    note: '설치류 단독. 안전성약리·TK 표준 없음',
+    // 하위유형별 구성 차이: 프로바이오틱스는 설치류 단회·유전독성 없음
+    subtypes: [
+      { id: '개별인정형', label: '개별인정형' },
+      { id: '프로바이오틱스', label: '프로바이오틱스' },
+      { id: '한시적식품', label: '한시적식품' },
+    ],
+    note: '설치류 단독. 안전성약리·TK 표준 없음. 하위유형을 선택하세요',
   },
 
   // ─── 화장품 — 대체법(in vitro) 카테고리 ─────────────────

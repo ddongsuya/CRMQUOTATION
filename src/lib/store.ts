@@ -53,6 +53,8 @@ export type Plan = {
   vaccineGroups?: number;
   /** 복합제 분석방식(개별/동시) — 조제물·함량·TK분석 단가를 가른다. */
   comboAnalysis?: '개별' | '동시';
+  /** 하위유형 — 마스터에 여러 변형이 있는 모달리티(건기식 개별인정형/프로바이오틱스/한시적식품). */
+  subtype?: string;
 };
 
 type WizardState = {
