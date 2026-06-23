@@ -16,6 +16,7 @@ export async function POST(req: Request) {
       category: it.category,
       adminRoute: it.adminRoute,
       studyWeeks: it.studyWeeks,
+      quoteWeeks: it.quoteWeeks ?? null,
       priceMfds: it.priceMfds ?? null,
       priceOecd: it.priceOecd ?? null,
       detail: it.detail ?? null,

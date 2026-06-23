@@ -20,6 +20,7 @@ export type TestItem = {
   routeGroup: 'A' | 'B' | 'SPECIAL' | 'NONE';
   adminDuration: string | null;
   studyWeeks: number | null;
+  quoteWeeks?: number | null;      // 견적 기간(순화+동물+보고서) — 간트 스케줄용
   priceMfds: number | null;
   priceOecd: number | null;
   /** Tiered prices for combo-drug masters (e.g. 복합제: { '2': 20M, '3': 30M, '4': 40M }).

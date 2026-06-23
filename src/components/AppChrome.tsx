@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import {
   Beaker, Home as HomeIcon, FileText, List, LogOut, BookOpen, Database, Plus,
-  HelpCircle, CircleDot, Users, NotebookPen, CalendarDays,
+  HelpCircle, CircleDot, Users, NotebookPen, CalendarDays, GanttChartSquare,
 } from 'lucide-react';
 
 export type ChromeStats = { items: number; presets: number; blocks: number; modalities: number };
@@ -15,6 +15,7 @@ const NAV = [
   { href: '/customers', label: '고객 관리', icon: Users },
   { href: '/notes', label: '개인 기록', icon: NotebookPen },
   { href: '/calendar', label: '캘린더', icon: CalendarDays },
+  { href: '/gantt', label: '시험 일정', icon: GanttChartSquare },
   { href: '/quotes', label: '견적 목록', icon: List },
   { href: '/guidelines', label: '가이드라인', icon: BookOpen },
   { href: '/catalog', label: '항목·가격', icon: Database },
@@ -26,6 +27,7 @@ const PAGE_LABEL: Record<string, string> = {
   '/customers': '고객 관리',
   '/notes': '개인 기록',
   '/calendar': '캘린더',
+  '/gantt': '시험 일정 간트차트',
   '/quotes': '견적 목록',
   '/guidelines': '가이드라인',
   '/catalog': '항목·가격 마스터',

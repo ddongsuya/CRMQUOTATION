@@ -17,7 +17,7 @@ const dataDir = path.resolve(__dirname, '..', 'data');
 const on = (...keys) => Object.fromEntries(keys.map(k => [k, true]));
 const PLAN = [
   { key: '합성신약', name: 'IND 1상 표준', scenario: '단회·DRF·13주 반복·회복군·TK·유전독성·안전성약리 (가이드라인 표준)',
-    plan: { route: '경구', durations: ['W13'], species: { rodent: true, nonRodent: true }, addons: on('drf','recovery','tk','genotox','safetyPharm') } },
+    plan: { route: '경구', durations: ['SINGLE', 'W13'], species: { rodent: true, nonRodent: true }, addons: on('drf','recovery','tk','genotox','safetyPharm') } },
   { key: '복합제', name: '복합제 13주 표준', scenario: '설치류 13주 · 2성분 · 개별분석',
     plan: { route: '경구', durations: ['W13'], addons: on('drf','recovery','tk'), comboAnalysis: '개별' }, excipientCount: 2 },
   { key: '백신', name: '백신 표준', scenario: '4주(3회) 반복 + 회복군 + 면역원성 · 2군',
