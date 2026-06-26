@@ -51,7 +51,8 @@ export async function GET() {
   const userId = await currentUserId();
   const session = await getServerSession(authOptions);
   const role = (session?.user as { role?: string } | undefined)?.role;
-  const where = role === 'admin' ? {} : userId ? { userId } : { id: -1 }; // unauthed sees nothing
+  // ⚠️ DEMO(로그인 OFF): 세션 없으면 전체 노출. 정식 인증(Phase 5) 시 { id: -1 }(=본인만)로 복구.
+  const where = role === 'admin' ? {} : userId ? { userId } : {};
   const rows = await prisma.quote.findMany({
     where,
     orderBy: { updatedAt: 'desc' },
