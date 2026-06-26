@@ -4,16 +4,17 @@
  */
 
 .print-doc {
-  --ink: #0f172a;
-  --ink-muted: #475569;
-  --ink-subtle: #94a3b8;
-  --line: #e2e8f0;
-  --line-strong: #cbd5e1;
-  --brand: #4f46e5;
-  --brand-deep: #312e81;
-  --brand-50: #eef2ff;
+  /* 테라코타·웜 톤 (Claude 디자인) — 앱 테마와 통일 */
+  --ink: #3A3733;
+  --ink-muted: #6F685D;
+  --ink-subtle: #A29C94;
+  --line: #EDE9E5;
+  --line-strong: #D8D4CD;
+  --brand: #B26F58;
+  --brand-deep: #9A6450;
+  --brand-50: #FBF1EC;
   --bg: #ffffff;
-  background: #f1f5f9;
+  background: #F4EFEA;
   min-height: 100vh;
   padding: 24px 0;
 }
@@ -39,7 +40,7 @@
 .print-doc .cover { padding: 0; overflow: hidden; }
 
 .print-doc .cover-band {
-  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 50%, #312e81 100%);
+  background: linear-gradient(135deg, #C8826A 0%, #B26F58 52%, #9A6450 100%);
   color: white;
   padding: 22mm 14mm 18mm;
   position: relative;
@@ -110,7 +111,7 @@
   padding: 5mm 6mm;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: linear-gradient(180deg, #f8fafc 0%, transparent 100%);
+  background: linear-gradient(180deg, #FBF9F8 0%, transparent 100%);
 }
 .print-doc .meta-block { padding: 1mm 0; }
 .print-doc .meta-label {
@@ -265,7 +266,7 @@
   font-weight: 600;
   color: var(--brand-deep);
   background: var(--brand-50);
-  border: 1px solid #c7d2fe;
+  border: 1px solid var(--line-strong);
   border-radius: 3px;
   padding: 1px 5px;
   letter-spacing: 0.02em;
@@ -276,7 +277,7 @@
 .print-doc .totals-block {
   margin-left: auto;
   width: 65%;
-  background: #f8fafc;
+  background: #FBF9F8;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 5mm 6mm;
@@ -306,7 +307,7 @@
 /* ─── TERMS ─────────────────────── */
 .print-doc .terms {
   margin-top: 8mm;
-  background: #f8fafc;
+  background: #FBF9F8;
   border-left: 3px solid var(--brand);
   padding: 4mm 5mm;
   border-radius: 0 6px 6px 0;

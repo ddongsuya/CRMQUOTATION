@@ -84,8 +84,8 @@ export default function PrintLayout({ data }: { data: PrintData }) {
                 <Beaker className="w-5 h-5" />
               </span>
               <div>
-                <div className="cover-brand-name">코아스템켐온</div>
-                <div className="cover-brand-sub">CHEMON · Preclinical Toxicology</div>
+                <div className="cover-brand-name">Corestemchemon</div>
+                <div className="cover-brand-sub">Enterprise placing human and life at the top</div>
               </div>
             </div>
             <div className="cover-quote-no">{data.meta.quoteNo}</div>
