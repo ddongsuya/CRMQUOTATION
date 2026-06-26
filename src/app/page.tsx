@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FlaskConical, BookOpen, Layers, Boxes, ArrowRight, Receipt, FileText } from 'lucide-react';
+import { FlaskConical, Clock, Coins, Boxes, ArrowRight, Receipt, FileText } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -20,7 +20,7 @@ const STATUS: Record<string, { label: string; cls: string }> = {
 
 export default async function Home() {
   await ensureHydrated();
-  const { testItems, presets, blocks } = loadData();
+  const { testItems } = loadData();
   const byModality: Record<string, number> = {};
   for (const it of testItems) for (const m of it.modalityPool) byModality[m] = (byModality[m] || 0) + 1;
   const modalityRows = Object.entries(byModality).sort((a, b) => b[1] - a[1]);
@@ -30,12 +30,26 @@ export default async function Home() {
   const name = session?.user?.name ?? '데모 사용자';  // DEMO(임시): 로그인 OFF
 
   let quotes: Array<{ id: number; quoteNumber: string; customerCompany: string | null; modality: string; status: string; grandTotal: number | null }> = [];
+  // 업무 KPI (이번 달 견적 · 진행 중 · 수주 금액/수주율 · 진행 시험)
+  let kpi = { thisMonth: 0, inProgress: 0, wonAmt: 0, wonRate: 0, runningStudies: 0 };
   try {
     quotes = await prisma.quote.findMany({
       orderBy: { createdAt: 'desc' }, take: 6,
       select: { id: true, quoteNumber: true, customerCompany: true, modality: true, status: true, grandTotal: true },
     });
-  } catch { /* DB 미연결 시 빈 목록 */ }
+    const all = await prisma.quote.findMany({ select: { status: true, grandTotal: true, createdAt: true } });
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const won = all.filter(q => q.status === 'ACCEPTED');
+    kpi = {
+      thisMonth: all.filter(q => q.createdAt >= monthStart).length,
+      inProgress: all.filter(q => ['DRAFT', 'ISSUED', 'SENT'].includes(q.status)).length,
+      wonAmt: won.reduce((s, q) => s + (q.grandTotal ?? 0), 0),
+      wonRate: all.length ? Math.round(won.length / all.length * 100) : 0,
+      runningStudies: await prisma.study.count({ where: { reportDraftIssuedAt: null } }),
+    };
+  } catch { /* DB 미연결 시 0 */ }
+  const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : `₩${n.toLocaleString()}`;
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -44,12 +58,12 @@ export default async function Home() {
         <p className="text-sm text-ink-muted mt-0.5">실제 시험 항목 마스터와 프리셋 기반으로 견적을 구성하세요.</p>
       </div>
 
-      {/* 통계 카드 */}
+      {/* 업무 KPI 카드 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard icon={<FlaskConical className="w-4 h-4" />} label="시험 항목 마스터" value={testItems.length} unit="개" />
-        <StatCard icon={<Layers className="w-4 h-4" />} label="프리셋" value={presets.length} unit="종" />
-        <StatCard icon={<BookOpen className="w-4 h-4" />} label="가이드라인 블록" value={blocks.length} unit="개" />
-        <StatCard icon={<Boxes className="w-4 h-4" />} label="모달리티" value={modalityRows.length} unit="종" />
+        <StatCard icon={<Receipt className="w-4 h-4" />} label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" sub="이번 달 작성" />
+        <StatCard icon={<Clock className="w-4 h-4" />} label="진행 중" value={`${kpi.inProgress}`} unit="건" sub="작성·발행·발송" />
+        <StatCard icon={<Coins className="w-4 h-4" />} label="수주 금액" value={fmtM(kpi.wonAmt)} sub={`수주율 ${kpi.wonRate}%`} />
+        <StatCard icon={<FlaskConical className="w-4 h-4" />} label="진행 시험" value={`${kpi.runningStudies}`} unit="건" sub="보고서안 발행 전" />
       </div>
 
       {/* CRM 알람 · 예정 일정 */}
@@ -121,7 +135,7 @@ export default async function Home() {
   );
 }
 
-function StatCard({ icon, label, value, unit }: { icon: React.ReactNode; label: string; value: number; unit: string }) {
+function StatCard({ icon, label, value, unit, sub }: { icon: React.ReactNode; label: string; value: string; unit?: string; sub?: string }) {
   return (
     <div className="card card-hover p-4">
       <div className="flex items-center gap-2 text-ink-subtle mb-1.5">
@@ -129,9 +143,10 @@ function StatCard({ icon, label, value, unit }: { icon: React.ReactNode; label: 
         <span className="text-xs font-medium">{label}</span>
       </div>
       <div className="flex items-baseline gap-1">
-        <span className="text-3xl font-bold text-ink tabular-nums tracking-tight">{value.toLocaleString()}</span>
-        <span className="text-xs text-ink-subtle">{unit}</span>
+        <span className="text-3xl font-bold text-ink tabular-nums tracking-tight">{value}</span>
+        {unit && <span className="text-xs text-ink-subtle">{unit}</span>}
       </div>
+      {sub && <div className="text-[11px] text-ink-subtle mt-0.5">{sub}</div>}
     </div>
   );
 }
