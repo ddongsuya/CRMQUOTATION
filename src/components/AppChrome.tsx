@@ -1,11 +1,12 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import {
   Beaker, Home as HomeIcon, FileText, List, LogOut, BookOpen, Database, Plus,
-  HelpCircle, CircleDot, Users, NotebookPen, CalendarDays, GanttChartSquare,
+  HelpCircle, CircleDot, Users, NotebookPen, CalendarDays, GanttChartSquare, Menu, X,
 } from 'lucide-react';
 
 export type ChromeStats = { items: number; presets: number; blocks: number; modalities: number };
@@ -40,6 +41,10 @@ const PAGE_LABEL: Record<string, string> = {
  */
 export default function AppChrome({ children, stats }: { children: React.ReactNode; stats?: ChromeStats }) {
   const pathname = usePathname() ?? '';
+  const [drawer, setDrawer] = useState(false);
+  // 경로 변경 시 모바일 드로어 닫기
+  useEffect(() => { setDrawer(false); }, [pathname]);
+
   const bare = pathname.startsWith('/quote/print') || pathname.startsWith('/login') || pathname.startsWith('/register');
   if (bare) return <>{children}</>;
 
@@ -52,8 +57,14 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
       </div>
 
       <div className="flex flex-1 min-h-0">
-        {/* ─── 사이드바 ─── */}
-        <aside className="w-60 flex-shrink-0 bg-white border-r border-slate-200/80 flex flex-col no-print">
+        {/* 모바일 드로어 배경 */}
+        {drawer && <div className="fixed inset-0 z-30 bg-black/40 lg:hidden no-print" onClick={() => setDrawer(false)} />}
+
+        {/* ─── 사이드바 (lg+ 고정 / 모바일 드로어) ─── */}
+        <aside className={`fixed inset-y-0 left-0 z-40 w-60 flex-shrink-0 bg-white border-r border-slate-200/80 flex flex-col no-print transform transition-transform duration-200 lg:static lg:translate-x-0 lg:z-auto ${drawer ? 'translate-x-0' : '-translate-x-full'}`}>
+          <button onClick={() => setDrawer(false)} className="lg:hidden absolute top-3 right-3 p-1.5 rounded-lg text-ink-subtle hover:bg-slate-100" aria-label="메뉴 닫기">
+            <X className="w-4 h-4" />
+          </button>
           <Link href="/" className="flex items-center gap-2.5 px-5 py-5 group">
             <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-sm group-hover:shadow-glow transition-shadow">
               <Beaker className="w-5 h-5" />
@@ -107,17 +118,20 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
 
         {/* ─── 메인 ─── */}
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="flex-shrink-0 h-14 bg-white/70 backdrop-blur border-b border-slate-200/70 px-6 flex items-center justify-between no-print">
-            <div className="text-sm text-ink-muted">
-              <span className="text-ink-subtle">코아스템켐온</span>
-              <span className="mx-1.5 text-ink-subtle/60">/</span>
-              <span className="font-semibold text-ink">{label}</span>
+          <header className="flex-shrink-0 h-14 bg-white/70 backdrop-blur border-b border-slate-200/70 px-4 sm:px-6 flex items-center justify-between no-print">
+            <div className="flex items-center gap-2 text-sm text-ink-muted min-w-0">
+              <button onClick={() => setDrawer(true)} className="lg:hidden p-1.5 -ml-1 rounded-lg text-ink-muted hover:bg-slate-100" aria-label="메뉴 열기">
+                <Menu className="w-5 h-5" />
+              </button>
+              <span className="text-ink-subtle hidden sm:inline">코아스템켐온</span>
+              <span className="mx-1.5 text-ink-subtle/60 hidden sm:inline">/</span>
+              <span className="font-semibold text-ink truncate">{label}</span>
             </div>
-            <div className="flex items-center gap-4 text-xs text-ink-subtle">
+            <div className="flex items-center gap-4 text-xs text-ink-subtle flex-shrink-0">
               <span className="inline-flex items-center gap-1.5">
-                <CircleDot className="w-3.5 h-3.5 text-emerald-500" /> 자동 저장됨
+                <CircleDot className="w-3.5 h-3.5 text-emerald-500" /> <span className="hidden sm:inline">자동 저장됨</span>
               </span>
-              <span className="inline-flex items-center gap-1 text-ink-muted">
+              <span className="hidden sm:inline-flex items-center gap-1 text-ink-muted">
                 <HelpCircle className="w-3.5 h-3.5" /> 도움말
               </span>
             </div>
