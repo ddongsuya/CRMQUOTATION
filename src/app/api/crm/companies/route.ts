@@ -10,11 +10,19 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const owners = await visibleOwnerIds();
-  const companies = await prisma.company.findMany({
+  const rows = await prisma.company.findMany({
     where: { ownerId: { in: owners } },
     orderBy: { updatedAt: 'desc' },
-    include: { _count: { select: { contacts: true } } },
+    include: {
+      _count: { select: { contacts: true } },
+      contacts: { select: { _count: { select: { deals: true } } } },
+    },
   });
+  // 회사별 안건 수 = 소속 의뢰자들의 안건 합. contacts 페이로드는 집계 후 제거.
+  const companies = rows.map(({ contacts, ...c }) => ({
+    ...c,
+    dealCount: contacts.reduce((s, ct) => s + ct._count.deals, 0),
+  }));
   return NextResponse.json({ companies });
 }
 

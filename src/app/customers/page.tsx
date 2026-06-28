@@ -1,21 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Users, Plus, Loader2, Building2, ChevronRight, X, Save, Sparkles } from 'lucide-react';
+import { Users, Plus, Loader2, Building2, ChevronRight, X, Save, Sparkles, Search } from 'lucide-react';
 import { toast } from '@/lib/toast';
 
 type Company = {
   id: number; name: string; bizRegNo: string | null; industry: string | null;
-  isNewClient: boolean; updatedAt: string; _count: { contacts: number };
+  isNewClient: boolean; updatedAt: string; _count: { contacts: number }; dealCount?: number;
 };
 
 export default function CustomersPage() {
   const [companies, setCompanies] = useState<Company[] | null>(null);
   const [creating, setCreating] = useState(false);
+  const [q, setQ] = useState('');
 
   const load = () => fetch('/api/crm/companies').then(r => r.json()).then(d => setCompanies(d.companies ?? [])).catch(() => setCompanies([]));
   useEffect(() => { load(); }, []);
+
+  const filtered = useMemo(() => (companies ?? []).filter(c =>
+    !q.trim() || c.name.toLowerCase().includes(q.toLowerCase()) || (c.industry ?? '').toLowerCase().includes(q.toLowerCase())
+  ), [companies, q]);
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -27,6 +32,13 @@ export default function CustomersPage() {
         <button onClick={() => setCreating(true)} className="btn-primary"><Plus className="w-4 h-4" /> 새 고객사</button>
       </div>
 
+      {companies && companies.length > 0 && (
+        <div className="relative max-w-xs">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-subtle" />
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="회사명·업종 검색" className="input pl-9 w-full" />
+        </div>
+      )}
+
       {companies === null ? (
         <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>
       ) : companies.length === 0 ? (
@@ -35,18 +47,24 @@ export default function CustomersPage() {
           <div className="text-sm font-medium text-ink">아직 등록된 고객사가 없습니다.</div>
           <button onClick={() => setCreating(true)} className="btn-ghost text-xs mt-3"><Plus className="w-3.5 h-3.5" /> 첫 고객사 등록</button>
         </div>
+      ) : filtered.length === 0 ? (
+        <div className="card p-10 text-center text-sm text-ink-muted">검색 결과가 없습니다.</div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {companies.map(c => (
+          {filtered.map(c => (
             <Link key={c.id} href={`/customers/${c.id}`} className="card card-hover p-4 flex items-start gap-3 group">
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-brand-50 text-brand-500 flex-shrink-0"><Building2 className="w-5 h-5" /></span>
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-brand-100 text-brand-700 font-bold text-sm flex-shrink-0">{c.name.charAt(0)}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="font-semibold text-ink truncate">{c.name}</span>
                   {c.isNewClient && <span className="pill bg-amber-100 text-amber-800 inline-flex items-center gap-0.5"><Sparkles className="w-2.5 h-2.5" />첫거래</span>}
                 </div>
                 <div className="text-xs text-ink-subtle mt-0.5 truncate">{c.industry || '업종 미지정'}</div>
-                <div className="text-[11px] text-ink-muted mt-1.5">의뢰자 {c._count.contacts}명</div>
+                <div className="text-[11px] text-ink-muted mt-1.5 flex items-center gap-2">
+                  <span>의뢰자 {c._count.contacts}명</span>
+                  <span className="text-ink-subtle/50">·</span>
+                  <span>안건 {c.dealCount ?? 0}건</span>
+                </div>
               </div>
               <ChevronRight className="w-4 h-4 text-ink-subtle group-hover:text-brand-500 flex-shrink-0 mt-1" />
             </Link>
