@@ -71,7 +71,7 @@ export default async function Home() {
 
       <div className="grid lg:grid-cols-2 gap-4">
         {/* 최근 견적 */}
-        <section className="card p-5">
+        <section className="card p-5 min-w-0">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-sm font-bold text-ink flex items-center gap-1.5">
               <Receipt className="w-4 h-4 text-brand-500" /> 최근 견적
@@ -96,15 +96,18 @@ export default async function Home() {
                 const st = STATUS[q.status] ?? STATUS.DRAFT;
                 return (
                   <li key={q.id}>
-                    <Link href={`/quote/print?id=${q.id}`} className="flex items-center gap-3 py-2.5 hover:bg-slate-50/60 -mx-2 px-2 rounded-lg transition-colors">
-                      <span className="text-xs text-ink-subtle font-mono w-28 flex-shrink-0">{q.quoteNumber}</span>
-                      <span className="flex-1 min-w-0 text-sm text-ink truncate">
+                    <Link href={`/quote/print?id=${q.id}`} className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3 py-2.5 hover:bg-slate-50/60 -mx-2 px-2 rounded-lg transition-colors">
+                      <span className="hidden sm:block text-xs text-ink-subtle font-mono w-28 flex-shrink-0 truncate">{q.quoteNumber}</span>
+                      <span className="order-1 sm:order-none flex-1 min-w-0 text-sm text-ink truncate">
                         {q.customerCompany || '(고객사 미지정)'} · <span className="text-ink-muted">{q.modality}</span>
                       </span>
-                      <span className={`pill ${st.cls} flex-shrink-0`}>{st.label}</span>
-                      <span className="text-sm font-semibold text-ink tabular-nums w-32 text-right flex-shrink-0">
-                        ₩{(q.grandTotal ?? 0).toLocaleString()}
-                      </span>
+                      <div className="order-2 sm:order-none flex items-center gap-2 min-w-0 sm:contents">
+                        <span className="sm:hidden text-[11px] text-ink-subtle font-mono truncate">{q.quoteNumber}</span>
+                        <span className={`pill ${st.cls} flex-shrink-0 ml-auto sm:ml-0`}>{st.label}</span>
+                        <span className="text-sm font-semibold text-ink tabular-nums sm:w-32 sm:text-right flex-shrink-0 whitespace-nowrap">
+                          ₩{(q.grandTotal ?? 0).toLocaleString()}
+                        </span>
+                      </div>
                     </Link>
                   </li>
                 );
@@ -114,7 +117,7 @@ export default async function Home() {
         </section>
 
         {/* 모달리티별 항목 수 (막대) */}
-        <section className="card p-5">
+        <section className="card p-5 min-w-0">
           <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
             <Boxes className="w-4 h-4 text-brand-500" /> 모달리티별 항목 수
           </h2>
