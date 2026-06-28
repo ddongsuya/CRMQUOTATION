@@ -27,13 +27,44 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
         include: {
           deals: {
             orderBy: { updatedAt: 'desc' },
-            select: { id: true, title: true, modality: true, stage: true, status: true, updatedAt: true },
+            include: {
+              quotes: { select: { id: true, quoteNumber: true, status: true, grandTotal: true, createdAt: true } },
+              contract: true,
+              studies: { orderBy: { createdAt: 'asc' } },
+              notes: { orderBy: { occurredAt: 'desc' } },
+              events: { orderBy: { startAt: 'asc' } },
+            },
           },
         },
       },
     },
   });
-  return NextResponse.json({ company });
+  if (!company) return NextResponse.json({ error: 'not found' }, { status: 404 });
+
+  // 회사 단위 집계 — 모든 의뢰자의 모든 안건을 가로질러 평탄화 (각 탭의 데이터원)
+  type DealRel = (typeof company.contacts)[number]['deals'][number];
+  const flatDeals = company.contacts.flatMap(ct =>
+    ct.deals.map(d => ({ ...d, contactName: ct.name, contactId: ct.id })));
+  const dealMeta = (d: DealRel) => ({ dealId: d.id, dealTitle: d.title, modality: d.modality, stage: d.stage });
+
+  const allQuotes = flatDeals.flatMap(d => d.quotes);
+  const contracts = flatDeals.filter(d => d.contract).map(d => ({ ...d.contract!, ...dealMeta(d) }));
+  const studies = flatDeals.flatMap(d => d.studies.map(s => ({ ...s, ...dealMeta(d) })));
+  const notes = flatDeals.flatMap(d => d.notes.map(n => ({ ...n, ...dealMeta(d), contactName: d.contactName })))
+    .sort((a, b) => +new Date(b.occurredAt) - +new Date(a.occurredAt));
+  const events = flatDeals.flatMap(d => d.events.map(e => ({ ...e, ...dealMeta(d) })))
+    .sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
+
+  const kpi = {
+    quoteCount: allQuotes.length,
+    quoteAmount: allQuotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0),
+    wonAmount: allQuotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0),
+    dealCount: flatDeals.length,
+    activeDeals: flatDeals.filter(d => d.status === 'ACTIVE').length,
+    activeStudies: studies.filter(s => !s.reportDraftIssuedAt).length,
+  };
+
+  return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, quoteCount: d.quotes.length, quoteAmount: d.quotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0) })), contracts, studies, notes, events, kpi } });
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
