@@ -58,7 +58,7 @@ html, body {
     @apply w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm placeholder:text-slate-400 transition-colors;
   }
   .btn {
-    @apply inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all;
+    @apply inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all;
   }
   .btn-primary {
     @apply btn bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-700 disabled:bg-slate-200 disabled:text-ink-subtle disabled:cursor-not-allowed shadow-sm hover:shadow;

@@ -120,10 +120,10 @@ export default function CatalogPage() {
 
       {/* 테이블 */}
       <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+        <div className="overflow-x-auto -mx-1 px-1">
+          <table className="w-full min-w-[680px] text-xs">
             <thead className="bg-slate-50 border-b border-slate-200 text-ink-muted">
-              <tr>
+              <tr className="whitespace-nowrap">
                 <th className="px-3 py-2.5 text-left font-semibold">시험명</th>
                 <th className="px-2 py-2.5 text-left font-semibold w-32">모달리티</th>
                 <th className="px-2 py-2.5 text-left font-semibold w-16">경로</th>

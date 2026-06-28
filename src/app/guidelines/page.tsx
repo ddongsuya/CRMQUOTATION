@@ -89,13 +89,13 @@ export default function GuidelinesPage() {
 
       {/* 탭 + 검색 */}
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <div className="inline-flex p-1 bg-slate-100 rounded-xl">
+        <div className="flex p-1 bg-slate-100 rounded-xl max-w-full overflow-x-auto">
           {tabs.map(t => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
               className={clsx(
-                'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all',
+                'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap shrink-0',
                 tab === t.id ? 'bg-white text-ink shadow-sm' : 'text-ink-muted hover:text-ink',
               )}
             >

@@ -199,9 +199,9 @@ export default function SectionSelections() {
       ) : (
         <div className="rounded-xl border border-slate-200 overflow-hidden bg-white">
           <div className="max-h-96 overflow-auto">
-            <table className="w-full text-xs">
+            <table className="w-full min-w-[440px] text-xs">
               <thead className="sticky top-0 bg-slate-50/95 backdrop-blur border-b border-slate-200 z-10">
-                <tr>
+                <tr className="whitespace-nowrap">
                   <th className="px-3 py-2 text-left font-semibold text-ink-muted w-24">분류</th>
                   <th className="px-3 py-2 text-left font-semibold text-ink-muted">시험명</th>
                   <th className="px-3 py-2 text-left font-semibold text-ink-muted w-16">경로</th>

@@ -64,14 +64,14 @@ export default function GanttPage() {
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><GanttChartSquare className="w-6 h-6 text-brand-500" /> 시험 일정 간트차트</h1>
           <p className="text-sm text-ink-muted mt-0.5">시험 구성·기간을 입력하면 동물실험 일정을 자동 배치합니다. 프리셋에서 시작해 직접 편집하세요.</p>
         </div>
-        <div className="flex items-center gap-2">
-          <select className="input text-sm" defaultValue="" onChange={e => { if (e.target.value) loadPreset(e.target.value); e.target.value = ''; }}>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
+          <select className="input text-sm w-full sm:w-auto" defaultValue="" onChange={e => { if (e.target.value) loadPreset(e.target.value); e.target.value = ''; }}>
             <option value="">프리셋 불러오기…</option>
             {MODALITIES.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
           <div className="flex items-center gap-1.5 text-sm">
-            <span className="text-ink-subtle text-xs">시작일</span>
-            <input type="date" className="input text-sm" value={startDate} onChange={e => setStartDate(e.target.value)} />
+            <span className="text-ink-subtle text-xs shrink-0">시작일</span>
+            <input type="date" className="input text-sm flex-1 sm:flex-none" value={startDate} onChange={e => setStartDate(e.target.value)} />
           </div>
         </div>
       </div>
@@ -85,9 +85,9 @@ export default function GanttPage() {
         {tasks.length === 0 ? (
           <div className="py-8 text-center text-sm text-ink-subtle">{loading ? <Loader2 className="w-5 h-5 mx-auto animate-spin" /> : '프리셋을 불러오거나 시험을 추가하세요.'}</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead><tr className="text-[11px] text-ink-subtle text-left border-b border-slate-100">
+          <div className="overflow-x-auto -mx-1 px-1">
+            <table className="w-full min-w-[460px] text-sm">
+              <thead><tr className="text-[11px] text-ink-subtle text-left border-b border-slate-100 whitespace-nowrap">
                 <th className="py-1.5 pr-2 font-medium">시험명</th><th className="py-1.5 px-2 font-medium w-28">역할</th>
                 <th className="py-1.5 px-2 font-medium w-24">동물기간(주)</th><th className="py-1.5 px-2 font-medium w-24">보고서(주)</th><th className="w-8"></th>
               </tr></thead>

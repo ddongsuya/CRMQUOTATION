@@ -132,9 +132,9 @@ export default function LivePreview() {
           )}
 
           <div className="max-h-[55vh] overflow-auto">
-            <table className="w-full text-xs">
+            <table className="w-full min-w-[420px] text-xs">
               <thead className="sticky top-0 bg-white/95 backdrop-blur border-b border-slate-100">
-                <tr>
+                <tr className="whitespace-nowrap">
                   <th className="px-4 py-2.5 text-left font-semibold text-ink-muted">항목</th>
                   <th className="px-2 py-2.5 text-left font-semibold text-ink-muted w-14">경로</th>
                   <th className="px-2 py-2.5 text-right font-semibold text-ink-muted w-24">단가</th>

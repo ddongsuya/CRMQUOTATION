@@ -45,12 +45,12 @@ export default function CalendarPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><CalendarDays className="w-6 h-6 text-brand-500" /> 캘린더</h1>
-        <div className="flex items-center gap-2">
-          <button onClick={() => setCur(c => ({ y: c.m === 0 ? c.y - 1 : c.y, m: c.m === 0 ? 11 : c.m - 1 }))} className="btn-outline p-2"><ChevronLeft className="w-4 h-4" /></button>
-          <span className="font-semibold text-ink w-28 text-center tabular-nums">{cur.y}년 {cur.m + 1}월</span>
-          <button onClick={() => setCur(c => ({ y: c.m === 11 ? c.y + 1 : c.y, m: c.m === 11 ? 0 : c.m + 1 }))} className="btn-outline p-2"><ChevronRight className="w-4 h-4" /></button>
-          <button onClick={() => { const d = new Date(); setCur({ y: d.getFullYear(), m: d.getMonth() }); }} className="btn-ghost text-xs">오늘</button>
-          <button onClick={() => setAdding(todayKey)} className="btn-primary text-sm"><Plus className="w-4 h-4" /> 일정</button>
+        <div className="flex items-center gap-2 flex-wrap">
+          <button onClick={() => setCur(c => ({ y: c.m === 0 ? c.y - 1 : c.y, m: c.m === 0 ? 11 : c.m - 1 }))} className="btn-outline p-2 shrink-0"><ChevronLeft className="w-4 h-4" /></button>
+          <span className="font-semibold text-ink w-28 text-center tabular-nums shrink-0">{cur.y}년 {cur.m + 1}월</span>
+          <button onClick={() => setCur(c => ({ y: c.m === 11 ? c.y + 1 : c.y, m: c.m === 11 ? 0 : c.m + 1 }))} className="btn-outline p-2 shrink-0"><ChevronRight className="w-4 h-4" /></button>
+          <button onClick={() => { const d = new Date(); setCur({ y: d.getFullYear(), m: d.getMonth() }); }} className="btn-ghost text-xs shrink-0 whitespace-nowrap">오늘</button>
+          <button onClick={() => setAdding(todayKey)} className="btn-primary text-sm shrink-0 whitespace-nowrap"><Plus className="w-4 h-4" /> 일정</button>
         </div>
       </div>
 
