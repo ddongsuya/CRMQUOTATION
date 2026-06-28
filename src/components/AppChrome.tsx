@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import {
   Beaker, Home as HomeIcon, FileText, List, LogOut, BookOpen, Database, Plus,
-  HelpCircle, CircleDot, Users, NotebookPen, CalendarDays, GanttChartSquare, Menu, X,
+  HelpCircle, CircleDot, Users, NotebookPen, CalendarDays, GanttChartSquare, X, MoreHorizontal,
 } from 'lucide-react';
 
 export type ChromeStats = { items: number; presets: number; blocks: number; modalities: number };
@@ -21,6 +21,14 @@ const NAV = [
   { href: '/guidelines', label: '가이드라인', icon: BookOpen },
   { href: '/catalog', label: '항목·가격', icon: Database },
   { href: '/quote/new', label: '새 견적', icon: FileText },
+];
+
+// 모바일 하단 탭바 (디자인: 홈·견적·고객·일정·더보기). '더보기'는 전체 메뉴 드로어를 연다.
+const BOTTOM_NAV = [
+  { href: '/', label: '홈', icon: HomeIcon, exact: true },
+  { href: '/quotes', label: '견적', icon: List },
+  { href: '/customers', label: '고객', icon: Users },
+  { href: '/calendar', label: '일정', icon: CalendarDays },
 ];
 
 const PAGE_LABEL: Record<string, string> = {
@@ -120,9 +128,6 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
         <div className="flex-1 flex flex-col min-w-0">
           <header className="flex-shrink-0 h-14 bg-white/70 backdrop-blur border-b border-slate-200/70 px-4 sm:px-6 flex items-center justify-between no-print">
             <div className="flex items-center gap-2 text-sm text-ink-muted min-w-0">
-              <button onClick={() => setDrawer(true)} className="lg:hidden p-1.5 -ml-1 rounded-lg text-ink-muted hover:bg-slate-100" aria-label="메뉴 열기">
-                <Menu className="w-5 h-5" />
-              </button>
               <span className="text-ink-subtle hidden sm:inline">코아스템켐온</span>
               <span className="mx-1.5 text-ink-subtle/60 hidden sm:inline">/</span>
               <span className="font-semibold text-ink truncate">{label}</span>
@@ -137,11 +142,28 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
             </div>
           </header>
 
-          <main className="flex-1 overflow-auto px-6 py-7">
+          <main className="flex-1 overflow-auto px-4 sm:px-6 pt-6 sm:pt-7 pb-24 lg:pb-7">
             <div className="mx-auto max-w-[1280px]">{children}</div>
           </main>
         </div>
       </div>
+
+      {/* ─── 모바일 하단 탭바 (lg 미만) ─── */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 flex no-print" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        {BOTTOM_NAV.map(({ href, label: l, icon: Icon, exact }) => {
+          const active = exact ? pathname === href : pathname === href || pathname.startsWith(href + '/');
+          return (
+            <Link key={href} href={href} className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-medium transition-colors ${active ? 'text-brand-600' : 'text-ink-subtle hover:text-ink'}`}>
+              <Icon className="w-5 h-5" />
+              {l}
+            </Link>
+          );
+        })}
+        <button onClick={() => setDrawer(true)} className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-medium text-ink-subtle hover:text-ink transition-colors">
+          <MoreHorizontal className="w-5 h-5" />
+          더보기
+        </button>
+      </nav>
     </div>
   );
 }
