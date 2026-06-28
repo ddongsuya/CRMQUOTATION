@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FlaskConical, Clock, Coins, Boxes, ArrowRight, Receipt, FileText } from 'lucide-react';
+import { FlaskConical, Clock, Coins, Boxes, ArrowRight, Receipt, FileText, TrendingUp, AlarmClock, Activity, FileSignature, NotebookPen } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
@@ -32,6 +32,9 @@ export default async function Home() {
   let quotes: Array<{ id: number; quoteNumber: string; customerCompany: string | null; modality: string; status: string; grandTotal: number | null }> = [];
   // 업무 KPI (이번 달 견적 · 진행 중 · 수주 금액/수주율 · 진행 시험)
   let kpi = { thisMonth: 0, inProgress: 0, wonAmt: 0, wonRate: 0, runningStudies: 0 };
+  let dueStudies: { id: number; name: string; company: string; dueAt: string }[] = [];
+  let monthly: { label: string; amount: number }[] = [];
+  let activity: { id: string; kind: string; text: string; sub: string; at: string }[] = [];
   try {
     quotes = await prisma.quote.findMany({
       orderBy: { createdAt: 'desc' }, take: 6,
@@ -48,6 +51,32 @@ export default async function Home() {
       wonRate: all.length ? Math.round(won.length / all.length * 100) : 0,
       runningStudies: await prisma.study.count({ where: { reportDraftIssuedAt: null } }),
     };
+
+    // 마감 임박 시험 (보고서안 발행 예정·미발행, 가까운 순)
+    const studies = await prisma.study.findMany({
+      where: { reportDraftIssuedAt: null, reportDraftDueAt: { not: null } },
+      orderBy: { reportDraftDueAt: 'asc' }, take: 6,
+      select: { id: true, itemName: true, reportDraftDueAt: true, deal: { select: { title: true, contact: { select: { company: { select: { name: true } } } } } } },
+    });
+    dueStudies = studies.map(s => ({ id: s.id, name: s.itemName || s.deal.title, company: s.deal.contact?.company?.name ?? '', dueAt: s.reportDraftDueAt!.toISOString() }));
+
+    // 월별 수주 추이 (최근 6개월 ACCEPTED 합)
+    const buckets: { y: number; m: number; amount: number }[] = [];
+    for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); buckets.push({ y: d.getFullYear(), m: d.getMonth(), amount: 0 }); }
+    for (const q of won) { const b = buckets.find(x => x.y === q.createdAt.getFullYear() && x.m === q.createdAt.getMonth()); if (b) b.amount += q.grandTotal ?? 0; }
+    monthly = buckets.map(b => ({ label: `${b.m + 1}월`, amount: b.amount }));
+
+    // 최근 활동 (견적·계약·노트 통합 타임라인)
+    const [rQuotes, rContracts, rNotes] = await Promise.all([
+      prisma.quote.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, quoteNumber: true, customerCompany: true, status: true, createdAt: true } }),
+      prisma.contract.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, status: true, createdAt: true, deal: { select: { title: true } } } }),
+      prisma.note.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, type: true, title: true, createdAt: true, deal: { select: { title: true } } } }),
+    ]);
+    activity = [
+      ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: STATUS[q.status]?.label ?? q.status, at: q.createdAt })),
+      ...rContracts.map(c => ({ id: `c${c.id}`, kind: '계약', text: c.deal?.title ?? '계약', sub: c.status, at: c.createdAt })),
+      ...rNotes.map(n => ({ id: `n${n.id}`, kind: '노트', text: n.title || n.deal?.title || '메모', sub: n.type, at: n.createdAt })),
+    ].sort((a, b) => +b.at - +a.at).slice(0, 7).map(x => ({ ...x, at: x.at.toISOString() }));
   } catch { /* DB 미연결 시 0 */ }
   const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : `₩${n.toLocaleString()}`;
 
@@ -68,6 +97,40 @@ export default async function Home() {
 
       {/* CRM 알람 · 예정 일정 */}
       <DashboardAlarms />
+
+      {/* 월별 수주 추이 + 마감 임박 시험 */}
+      <div className="grid lg:grid-cols-3 gap-4">
+        <section className="card p-5 min-w-0 lg:col-span-2">
+          <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
+            <TrendingUp className="w-4 h-4 text-brand-500" /> 월별 수주 추이 <span className="text-xs font-normal text-ink-subtle">최근 6개월 · 단위 ₩M</span>
+          </h2>
+          <MonthlyChart data={monthly} />
+        </section>
+
+        <section className="card p-5 min-w-0">
+          <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
+            <AlarmClock className="w-4 h-4 text-brand-500" /> 마감 임박 시험
+          </h2>
+          {dueStudies.length === 0 ? (
+            <div className="py-8 text-center text-sm text-ink-subtle">예정된 보고서안 발행이 없습니다.</div>
+          ) : (
+            <ul className="divide-y divide-slate-100">
+              {dueStudies.map(s => {
+                const dd = ddayLabel(s.dueAt);
+                return (
+                  <li key={s.id} className="flex items-center gap-2 py-2.5">
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-sm text-ink truncate">{s.name}</span>
+                      <span className="block text-[11px] text-ink-subtle truncate">{s.company || '고객사 미지정'}</span>
+                    </span>
+                    <span className={`pill flex-shrink-0 ${dd.cls}`}>{dd.label}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+      </div>
 
       <div className="grid lg:grid-cols-2 gap-4">
         {/* 최근 견적 */}
@@ -134,6 +197,67 @@ export default async function Home() {
           </ul>
         </section>
       </div>
+
+      {/* 최근 활동 */}
+      <section className="card p-5 min-w-0">
+        <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
+          <Activity className="w-4 h-4 text-brand-500" /> 최근 활동
+        </h2>
+        {activity.length === 0 ? (
+          <div className="py-8 text-center text-sm text-ink-subtle">최근 활동이 없습니다.</div>
+        ) : (
+          <ul className="space-y-3">
+            {activity.map(a => {
+              const ic = ACTIVITY_ICON[a.kind] ?? Activity;
+              const Icon = ic;
+              return (
+                <li key={a.id} className="flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-brand-50 text-brand-500 flex-shrink-0"><Icon className="w-4 h-4" /></span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-sm text-ink truncate">{a.text}</span>
+                    <span className="block text-[11px] text-ink-subtle">{a.kind} · {a.sub}</span>
+                  </span>
+                  <span className="text-[11px] text-ink-subtle tabular-nums flex-shrink-0">{fmtDay(a.at)}</span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
+}
+
+const ACTIVITY_ICON: Record<string, typeof Activity> = { 견적: Receipt, 계약: FileSignature, 노트: NotebookPen };
+
+function ddayLabel(iso: string): { label: string; cls: string } {
+  const days = Math.ceil((new Date(iso).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
+  if (days === 0) return { label: 'D-DAY', cls: 'bg-red-100 text-red-700' };
+  if (days < 0) return { label: `D+${-days}`, cls: 'bg-slate-200 text-ink-subtle' };
+  return { label: `D-${days}`, cls: days <= 7 ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-ink-muted' };
+}
+
+function fmtDay(iso: string): string {
+  return new Date(iso).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' });
+}
+
+function MonthlyChart({ data }: { data: { label: string; amount: number }[] }) {
+  const max = Math.max(1, ...data.map(d => d.amount));
+  const hasData = data.some(d => d.amount > 0);
+  return (
+    <div>
+      <div className="flex items-end justify-between gap-2 h-36">
+        {data.map((d, i) => (
+          <div key={i} className="flex-1 h-full flex flex-col justify-end items-center gap-1 min-w-0">
+            <span className="text-[9px] text-ink-subtle tabular-nums">{d.amount > 0 ? Math.round(d.amount / 1_000_000) : ''}</span>
+            <div className="w-full max-w-[40px] rounded-t bg-gradient-to-t from-brand-500 to-brand-300" style={{ height: `${Math.max(2, (d.amount / max) * 100)}%` }} title={`${d.label}: ₩${d.amount.toLocaleString()}`} />
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between gap-2 mt-1.5">
+        {data.map((d, i) => <span key={i} className="flex-1 text-center text-[10px] text-ink-subtle">{d.label}</span>)}
+      </div>
+      {!hasData && <div className="text-center text-[11px] text-ink-subtle mt-2">아직 수주(ACCEPTED) 견적이 없습니다.</div>}
     </div>
   );
 }
