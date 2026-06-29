@@ -1,0 +1,63 @@
+/**
+ * 견적 엔진 v2 — 저장. 서버에서 재구성·재평가한 권위 스냅샷을 Quote 테이블에 영속.
+ *  POST /api/quote-v2/save  body: { category, standard, route, plan, customer*, dealId, issueNow, ... }
+ */
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { nextQuoteNumber } from '@/lib/quote-number';
+import { currentUserId } from '@/lib/current-user';
+import { evaluateQuote } from '@/lib/quote-engine/engine';
+import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/quote-engine/compose';
+import { getItem } from '@/lib/quote-engine/master';
+import type { LineItem } from '@/lib/quote-engine/types';
+
+export const dynamic = 'force-dynamic';
+
+type Body = {
+  category: string; standard: 'MFDS' | 'OECD'; route: string; plan: ComposePlan;
+  customerConditions?: Record<string, boolean>; requestedAddons?: Record<string, boolean>; combinationCount?: number;
+  projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string;
+  dealId?: number | null; issueNow?: boolean;
+};
+
+export async function POST(req: Request) {
+  const b = (await req.json().catch(() => null)) as Body | null;
+  if (!b?.category || !b.plan) return NextResponse.json({ error: 'category·plan 필요' }, { status: 400 });
+
+  const plan = { ...b.plan, modality: b.category, standard: b.standard ?? 'MFDS', route: b.route ?? '경구' };
+  const composed = composeFromPlan(plan);
+  const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
+  const extraLines: LineItem[] = composeAnalysisLines(plan, masterItems);
+  const quote = evaluateQuote({
+    category: b.category, standard: b.standard ?? 'MFDS', route: b.route ?? '경구',
+    selectedItems: composed.map(c => ({ id: c.id })), extraLines,
+    customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {}, combinationCount: b.combinationCount,
+  });
+
+  const subtotal = quote.totals.subtotalKrw;
+  const itemRows = quote.lineItems.map((li, i) => ({
+    testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route, category: b.category,
+    tag: [...li.appliedRules, ...(li.isPrereq ? ['선행'] : [])].join(',') || null,
+    unitPrice: li.unitPrice ?? 0, quantity: li.quantity, subtotal: li.amount ?? 0,
+    source: li.isPrereq ? 'auto' : 'engine', priority: null, displayOrder: i,
+  }));
+
+  const userId = await currentUserId();
+  const quoteNumber = await nextQuoteNumber();
+  const created = await prisma.quote.create({
+    data: {
+      quoteNumber, userId, dealId: b.dealId ?? null,
+      projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
+      substanceName: b.substanceName ?? null,
+      customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null,
+      modality: b.category, priceStandard: b.standard ?? 'MFDS',
+      planJson: JSON.stringify({ ...plan, engine: 'v2' }),
+      excipientCount: plan.excipientCount ?? 0, currency: 'KRW', discountRate: 0,
+      totalBeforeDiscount: subtotal, totalAfterDiscount: subtotal, vatAmount: subtotal * 0.1, grandTotal: subtotal * 1.1,
+      ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
+      items: { create: itemRows },
+    },
+    select: { id: true, quoteNumber: true },
+  });
+  return NextResponse.json({ quote: created });
+}

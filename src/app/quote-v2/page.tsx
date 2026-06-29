@@ -46,25 +46,44 @@ export default function QuoteV2Page() {
   const [quote, setQuote] = useState<Quote | null>(null);
   const [composed, setComposed] = useState<{ id: string; testName: string | null }[]>([]);
   const [loading, setLoading] = useState(false);
+  // 고객 정보 + 안건연동 + 저장
+  const [cust, setCust] = useState({ company: '', name: '', email: '', projectName: '', substanceName: '' });
+  const [dealId, setDealId] = useState<number | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [savedNo, setSavedNo] = useState<string | null>(null);
 
   useEffect(() => { fetch('/api/quote-v2').then(r => r.json()).then(setMeta); }, []);
+  useEffect(() => { const d = new URLSearchParams(window.location.search).get('dealId'); if (d) setDealId(Number(d)); }, []);
+
+  const buildPlan = () => ({
+    durations: [...durations], species, addons,
+    tk: { points: tk.points, sampleOnly: tk.sampleOnly, sessions: tk.sessions },
+    componentCount: isCombo ? comboCount : undefined, comboAnalysis: isCombo ? comboAnal : undefined,
+    excipientCount: excipient, submissionTarget, cellType,
+    vaccineGroups: category === '백신' ? vaccineGroups : undefined,
+    subtype: category === '건강기능식품' ? healthSubtype : undefined,
+  });
+  const saveQuote = async (issueNow: boolean) => {
+    setSaving(true); setSavedNo(null);
+    try {
+      const res = await fetch('/api/quote-v2/save', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined,
+          projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, dealId, issueNow }),
+      });
+      const d = await res.json();
+      if (d.quote?.quoteNumber) setSavedNo(d.quote.quoteNumber);
+    } finally { setSaving(false); }
+  };
   const toggleSet = (s: Set<string>, k: string) => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; };
   const isCombo = category === '복합제';
 
   const generate = async () => {
-    setLoading(true); setQuote(null);
+    setLoading(true); setQuote(null); setSavedNo(null);
     try {
-      const plan = {
-        durations: [...durations], species, addons,
-        tk: { points: tk.points, sampleOnly: tk.sampleOnly, sessions: tk.sessions },
-        componentCount: isCombo ? comboCount : undefined, comboAnalysis: isCombo ? comboAnal : undefined,
-        excipientCount: excipient, submissionTarget, cellType,
-        vaccineGroups: category === '백신' ? vaccineGroups : undefined,
-        subtype: category === '건강기능식품' ? healthSubtype : undefined,
-      };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ category, standard, route, plan, customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined }),
+        body: JSON.stringify({ category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined }),
       });
       const d = await res.json();
       setQuote(d.quote ?? null); setComposed(d.composed ?? []);
@@ -161,7 +180,29 @@ export default function QuoteV2Page() {
         )}
       </div>
 
+      {/* 고객 정보 */}
+      <section className="card p-4">
+        <div className="flex items-center justify-between mb-2">
+          <div className="label !mb-0">고객 정보</div>
+          {dealId && <span className="pill bg-violet-100 text-violet-700">안건 #{dealId} 연동</span>}
+        </div>
+        <div className="grid sm:grid-cols-4 gap-2">
+          <Field label="고객사"><input className="input" value={cust.company} onChange={e => setCust(c => ({ ...c, company: e.target.value }))} placeholder="㈜OOO" /></Field>
+          <Field label="담당자"><input className="input" value={cust.name} onChange={e => setCust(c => ({ ...c, name: e.target.value }))} /></Field>
+          <Field label="이메일"><input className="input" value={cust.email} onChange={e => setCust(c => ({ ...c, email: e.target.value }))} /></Field>
+          <Field label="물질명"><input className="input" value={cust.substanceName} onChange={e => setCust(c => ({ ...c, substanceName: e.target.value }))} /></Field>
+        </div>
+      </section>
+
       {quote && <QuoteResult quote={quote} composedCount={composed.length} />}
+
+      {quote && (
+        <div className="flex items-center justify-end gap-2">
+          {savedNo && <span className="text-sm text-emerald-600 font-medium">저장됨 · {savedNo}</span>}
+          <button onClick={() => saveQuote(false)} disabled={saving} className="btn-ghost">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시저장</button>
+          <button onClick={() => saveQuote(true)} disabled={saving} className="btn-primary">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Receipt className="w-4 h-4" />} 발행</button>
+        </div>
+      )}
     </div>
   );
 }
