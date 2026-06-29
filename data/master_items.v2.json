@@ -3,7 +3,7 @@
   "version": "v2-보강완료",
   "count": 426,
   "built": "2026-06-29",
-  "note": "통합 시험항목 마스터 v1(복원본) + 가격 보강(의약품 OECD=613, 복합제 개별/동시=2023, 환경=2025원본). 단일진실원천 후보. 앱 미연결(엔진 재구축 전).",
+  "note": "통합 시험항목 마스터 v1(복원본) + 가격 보강(의약품 OECD=613, 복합제 개별/동시=2023, 환경=2025원본). 단일진실원천 후보. 앱 미연결(엔진 재구축 전). | SEND/CTD/번역 80항목을 세포치료제→SEND·CTD·번역 카테고리로 재분류(2026-06-29).",
   "priceModel": "경로그룹(경구피하근육=경구·피하·근육 / 정맥경피=정맥·경피·복강) × 제출처(MFDS/OECD). 정맥경피 비어있으면 단일가→경구피하근육 적용(어떤 경로든)."
  },
  "items": [
@@ -4565,7 +4565,7 @@
   },
   {
    "id": "cell-136",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "광감작성 번역",
    "species": null,
@@ -4599,7 +4599,7 @@
   },
   {
    "id": "cell-137",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "광감작성 CTD",
    "species": null,
@@ -4633,7 +4633,7 @@
   },
   {
    "id": "cell-138",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "광독성 번역",
    "species": null,
@@ -4667,7 +4667,7 @@
   },
   {
    "id": "cell-139",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "광독성 CTD",
    "species": null,
@@ -4735,7 +4735,7 @@
   },
   {
    "id": "cell-141",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "단회투여독성",
    "testName": "단회 독성 SEND",
    "species": null,
@@ -4769,7 +4769,7 @@
   },
   {
    "id": "cell-142",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "발암성",
    "testName": "발암성 번역",
    "species": null,
@@ -4803,7 +4803,7 @@
   },
   {
    "id": "cell-143",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "발암성",
    "testName": "발암성 CTD",
    "species": null,
@@ -4837,7 +4837,7 @@
   },
   {
    "id": "cell-144",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "배태자 발생(랫드) SEND",
    "species": null,
@@ -4871,7 +4871,7 @@
   },
   {
    "id": "cell-145",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "배태자 발생(토끼) SEND",
    "species": "토끼",
@@ -4905,7 +4905,7 @@
   },
   {
    "id": "cell-146",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "배태자(Rabbit) 번역",
    "species": null,
@@ -4939,7 +4939,7 @@
   },
   {
    "id": "cell-147",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "배태자(Rabbit) CTD",
    "species": null,
@@ -4973,7 +4973,7 @@
   },
   {
    "id": "cell-148",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "배태자(Rat) 번역",
    "species": null,
@@ -5007,7 +5007,7 @@
   },
   {
    "id": "cell-149",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "배태자(Rat) CTD",
    "species": null,
@@ -5041,7 +5041,7 @@
   },
   {
    "id": "cell-150",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "복귀돌연변이 번역",
    "species": null,
@@ -5075,7 +5075,7 @@
   },
   {
    "id": "cell-151",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "복귀돌연변이 CTD",
    "species": null,
@@ -5109,7 +5109,7 @@
   },
   {
    "id": "cell-152",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "단회투여독성",
    "testName": "비설치류 단회 번역",
    "species": "비설치류",
@@ -5143,7 +5143,7 @@
   },
   {
    "id": "cell-153",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "단회투여독성",
    "testName": "비설치류 단회 CTD",
    "species": "비설치류",
@@ -5177,7 +5177,7 @@
   },
   {
    "id": "cell-154",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "DRF(용량결정)",
    "testName": "비설치류 DRF 번역",
    "species": "비설치류",
@@ -5211,7 +5211,7 @@
   },
   {
    "id": "cell-155",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "DRF(용량결정)",
    "testName": "비설치류 DRF CTD",
    "species": "비설치류",
@@ -5245,7 +5245,7 @@
   },
   {
    "id": "cell-156",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "단회투여독성",
    "testName": "설치류 단회 번역",
    "species": "설치류",
@@ -5279,7 +5279,7 @@
   },
   {
    "id": "cell-157",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "단회투여독성",
    "testName": "설치류 단회 CTD",
    "species": "설치류",
@@ -5313,7 +5313,7 @@
   },
   {
    "id": "cell-158",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "DRF(용량결정)",
    "testName": "설치류 DRF 번역",
    "species": "설치류",
@@ -5347,7 +5347,7 @@
   },
   {
    "id": "cell-159",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "DRF(용량결정)",
    "testName": "설치류 DRF CTD",
    "species": "설치류",
@@ -5381,7 +5381,7 @@
   },
   {
    "id": "cell-160",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "소핵시험 번역",
    "species": null,
@@ -5415,7 +5415,7 @@
   },
   {
    "id": "cell-161",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "소핵시험 CTD",
    "species": null,
@@ -5449,7 +5449,7 @@
   },
   {
    "id": "cell-162",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "소핵시험 SEND",
    "species": null,
@@ -5483,7 +5483,7 @@
   },
   {
    "id": "cell-163",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "수동피부 아나필락시스 번역",
    "species": null,
@@ -5517,7 +5517,7 @@
   },
   {
    "id": "cell-164",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "수동피부 아나필락시스 CTD",
    "species": null,
@@ -5551,7 +5551,7 @@
   },
   {
    "id": "cell-165",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "수태능 번역",
    "species": null,
@@ -5585,7 +5585,7 @@
   },
   {
    "id": "cell-166",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "수태능 CTD",
    "species": null,
@@ -5619,7 +5619,7 @@
   },
   {
    "id": "cell-167",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "아나필락시스 쇼크 번역",
    "species": null,
@@ -5653,7 +5653,7 @@
   },
   {
    "id": "cell-168",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "아나필락시스 쇼크 CTD",
    "species": null,
@@ -5687,7 +5687,7 @@
   },
   {
    "id": "cell-169",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "안점막자극 번역",
    "species": null,
@@ -5721,7 +5721,7 @@
   },
   {
    "id": "cell-170",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "안점막자극 CTD",
    "species": null,
@@ -5755,7 +5755,7 @@
   },
   {
    "id": "cell-171",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "염색체이상 번역",
    "species": null,
@@ -5789,7 +5789,7 @@
   },
   {
    "id": "cell-172",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "염색체이상 CTD",
    "species": null,
@@ -5823,7 +5823,7 @@
   },
   {
    "id": "cell-173",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "일반약리 번역",
    "species": null,
@@ -5857,7 +5857,7 @@
   },
   {
    "id": "cell-174",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "조제물·함량분석",
    "testName": "조제물분석 번역",
    "species": null,
@@ -5891,7 +5891,7 @@
   },
   {
    "id": "cell-175",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "조제물·함량분석",
    "testName": "조제물분석 CTD",
    "species": null,
@@ -5959,7 +5959,7 @@
   },
   {
    "id": "cell-177",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "보고서·서비스",
    "testName": "조합시험 번역",
    "species": null,
@@ -5993,7 +5993,7 @@
   },
   {
    "id": "cell-178",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "중추신경계 번역",
    "species": null,
@@ -6027,7 +6027,7 @@
   },
   {
    "id": "cell-179",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "중추신경계 CTD",
    "species": null,
@@ -6061,7 +6061,7 @@
   },
   {
    "id": "cell-180",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "출생전후 번역",
    "species": null,
@@ -6095,7 +6095,7 @@
   },
   {
    "id": "cell-181",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "출생전후 CTD",
    "species": null,
@@ -6129,7 +6129,7 @@
   },
   {
    "id": "cell-182",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "피부감작성 번역",
    "species": null,
@@ -6163,7 +6163,7 @@
   },
   {
    "id": "cell-183",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "피부감작성 CTD",
    "species": null,
@@ -6197,7 +6197,7 @@
   },
   {
    "id": "cell-184",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "피부자극 번역",
    "species": null,
@@ -6231,7 +6231,7 @@
   },
   {
    "id": "cell-185",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
    "testName": "피부자극 CTD",
    "species": null,
@@ -6265,7 +6265,7 @@
   },
   {
    "id": "cell-186",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "호흡기계 번역",
    "species": null,
@@ -6299,7 +6299,7 @@
   },
   {
    "id": "cell-187",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "호흡기계 CTD",
    "species": null,
@@ -6333,7 +6333,7 @@
   },
   {
    "id": "cell-188",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "호흡기계 SEND",
    "species": null,
@@ -6367,7 +6367,7 @@
   },
   {
    "id": "cell-189",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "생식독성",
    "testName": "화학물질 생식 스크리닝 번역",
    "species": null,
@@ -6401,7 +6401,7 @@
   },
   {
    "id": "cell-190",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "회복군",
    "testName": "회복군 추가 번역",
    "species": null,
@@ -6435,7 +6435,7 @@
   },
   {
    "id": "cell-191",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "회복군",
    "testName": "회복군 추가 CTD",
    "species": null,
@@ -6469,7 +6469,7 @@
   },
   {
    "id": "cell-192",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "유전독성",
    "testName": "Comet assay SEND",
    "species": null,
@@ -6503,7 +6503,7 @@
   },
   {
    "id": "cell-193",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "DRF(용량결정)",
    "testName": "DRF SEND",
    "species": null,
@@ -6537,7 +6537,7 @@
   },
   {
    "id": "cell-194",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "hERG 번역",
    "species": null,
@@ -6571,7 +6571,7 @@
   },
   {
    "id": "cell-195",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "hERG CTD",
    "species": null,
@@ -6605,7 +6605,7 @@
   },
   {
    "id": "cell-196",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "TK(독성동태)",
    "testName": "PK/TK 분석 번역",
    "species": null,
@@ -6639,7 +6639,7 @@
   },
   {
    "id": "cell-197",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "TK(독성동태)",
    "testName": "PK/TK 분석 CTD",
    "species": null,
@@ -6673,7 +6673,7 @@
   },
   {
    "id": "cell-198",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "조제물·함량분석",
    "testName": "PK/TK Validation 번역",
    "species": null,
@@ -6707,7 +6707,7 @@
   },
   {
    "id": "cell-199",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "조제물·함량분석",
    "testName": "PK/TK Validation CTD",
    "species": null,
@@ -6809,7 +6809,7 @@
   },
   {
    "id": "cell-202",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "Telemetry 번역",
    "species": null,
@@ -6843,7 +6843,7 @@
   },
   {
    "id": "cell-203",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "Telemetry CTD",
    "species": null,
@@ -6877,7 +6877,7 @@
   },
   {
    "id": "cell-204",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "안전성약리",
    "testName": "Telemetry SEND",
    "species": null,
@@ -6911,7 +6911,7 @@
   },
   {
    "id": "cell-205",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "TK(독성동태)",
    "testName": "TK SEND",
    "species": null,
@@ -6945,7 +6945,7 @@
   },
   {
    "id": "cell-206",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "회복군",
    "testName": "4주 회복 SEND",
    "species": null,
@@ -6979,7 +6979,7 @@
   },
   {
    "id": "cell-207",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "비설치류 4주 반복 SEND",
    "species": "비설치류",
@@ -7013,7 +7013,7 @@
   },
   {
    "id": "cell-208",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "설치류 4주 반복 SEND",
    "species": "설치류",
@@ -7047,7 +7047,7 @@
   },
   {
    "id": "cell-209",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "비설치류 13주 반복 SEND",
    "species": "비설치류",
@@ -7081,7 +7081,7 @@
   },
   {
    "id": "cell-210",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "비설치류 4/13주 반복 번역",
    "species": "비설치류",
@@ -7115,7 +7115,7 @@
   },
   {
    "id": "cell-211",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "비설치류 4/13주 반복 CTD",
    "species": "비설치류",
@@ -7149,7 +7149,7 @@
   },
   {
    "id": "cell-212",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "설치류 4/13주 반복 번역",
    "species": "설치류",
@@ -7183,7 +7183,7 @@
   },
   {
    "id": "cell-213",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "설치류 4/13주 반복 CTD",
    "species": "설치류",
@@ -7217,7 +7217,7 @@
   },
   {
    "id": "cell-214",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "비설치류 26주 반복 SEND",
    "species": "비설치류",
@@ -7251,7 +7251,7 @@
   },
   {
    "id": "cell-215",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "설치류 26주 반복 번역",
    "species": "설치류",
@@ -7285,7 +7285,7 @@
   },
   {
    "id": "cell-216",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "설치류 26주 반복 CTD",
    "species": "설치류",
@@ -7319,7 +7319,7 @@
   },
   {
    "id": "cell-217",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "설치류 26주 반복 SEND",
    "species": "설치류",
@@ -7387,7 +7387,7 @@
   },
   {
    "id": "cell-219",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "비설치류 26/39주 반복 번역",
    "species": "비설치류",
@@ -7421,7 +7421,7 @@
   },
   {
    "id": "cell-220",
-   "category": "세포치료제",
+   "category": "SEND·CTD·번역",
    "testClass": "반복투여독성",
    "testName": "비설치류 26/39주 반복 CTD",
    "species": "비설치류",
