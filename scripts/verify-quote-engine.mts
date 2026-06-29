@@ -54,7 +54,7 @@ check('PR 마우스발암성 트리거', q6.ruleLog.some(l => l.step==='PR'), `p
 const nonrod = find(i => i.testName === '비설치류 13주 반복투여 독성');
 const base7 = evaluateQuote({ category:'의약품', standard:'MFDS', route:'경구', selectedItems:[{id:nonrod!.id}] });
 const q7 = evaluateQuote({ category:'의약품', standard:'MFDS', route:'경구', selectedItems:[{id:nonrod!.id}], customerConditions:{ catheter_oral_administration:true } });
-check('SB 카테터→정맥가격', q7.lineItems[0].unitPrice===nonrod!.prices['정맥경피'].MFDS && q7.lineItems[0].unitPrice!==base7.lineItems[0].unitPrice, `경구=${base7.lineItems[0].unitPrice}→카테터=${q7.lineItems[0].unitPrice}`);
+const q7line = q7.lineItems.find((l:any)=>l.id===nonrod!.id); const b7line = base7.lineItems.find((l:any)=>l.id===nonrod!.id); check('SB 카테터→정맥가격', q7line.unitPrice===nonrod!.prices['정맥경피'].MFDS && q7line.unitPrice!==b7line.unitPrice, `경구=${b7line.unitPrice}→카테터=${q7line.unitPrice}`);
 
 console.log(`
 결과: ${pass} pass / ${fail} fail`);
