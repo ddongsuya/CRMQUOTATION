@@ -52,15 +52,25 @@ type QuoteInput = {
 has_prior_4week_data · non_daily_dosing · catheter_oral_administration · foreign_suture ·
 simultaneous_analysis_feasible · subacute · subchronic · non_absorbable · absorbable
 
-## 5. 가격 결정 (핵심)
+## 5. 가격 결정 (핵심 — 사용자 확정 2026-06-29)
 
 ```
 routeGroup(route) = 경구|피하|근육 → "경구피하근육" / 정맥|경피|복강 → "정맥경피" / 그외 → "경구피하근육"
-price(item, route, std) =
-   item.prices[routeGroup][std]
-   ?? item.prices["경구피하근육"][std]     // 단일가 폴백(정맥경피 빈 항목 = 어떤 경로든 동일가)
-   ?? item.prices[routeGroup]["MFDS"]      // OECD 없으면 MFDS 폴백
+
+box = (item.prices[routeGroup] 에 값이 하나라도 있으면 그것, 아니면 item.prices["경구피하근육"])
+       // ↑ 단일가 폴백: 정맥경피가 비면 경구피하근육 가격 사용
+val = box[standard]
+
+line.route = 사용자가 고른 경로 그대로 표시 (피하·정맥 등)   // 폴백해도 라벨은 선택 경로
+line.price = val
+
+if val == null:
+   if standard == "OECD":  → MISSING_INFO("OECD 가격 미정 — 사용자 확인 필요")
+                              // ⚠️ 자동 MFDS 폴백 금지. 사용자가 직접 판단.
+   else:                   → MISSING_INFO("가격 미정 / 협의")
 ```
+- 단일가 항목(정맥경피 빈): 어떤 경로든 경구피하근육 가격, **라벨은 선택 경로로 표시**.
+- OECD 빈칸: 절대 자동 채우지 말 것 → missing_info로 사용자에게 되묻기.
 - 복합제: (componentCount × analysisMethod)로 행 선택 후 위 규칙.
 
 ## 6. 8단계 파이프라인 (POC 유지)
