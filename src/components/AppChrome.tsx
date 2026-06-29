@@ -20,6 +20,7 @@ const NAV = [
   { href: '/quotes', label: '견적 목록', icon: List },
   { href: '/guidelines', label: '가이드라인', icon: BookOpen },
   { href: '/catalog', label: '항목·가격', icon: Database },
+  { href: '/quote-v2', label: '견적 엔진(신)', icon: Beaker },
   { href: '/quote/new', label: '새 견적', icon: FileText },
 ];
 
@@ -40,6 +41,7 @@ const PAGE_LABEL: Record<string, string> = {
   '/quotes': '견적 목록',
   '/guidelines': '가이드라인',
   '/catalog': '항목·가격 마스터',
+  '/quote-v2': '견적 엔진 v2 (실험)',
   '/quote/new': '새 견적 작성',
 };
 
