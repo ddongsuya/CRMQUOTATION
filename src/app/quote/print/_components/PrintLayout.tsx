@@ -54,6 +54,12 @@ export type PrintData = {
     quoteText?: string | null;
     guideline?: string | null;
     missing?: boolean;
+    // 견적 엔진 v2 상세 보강
+    species?: string | null;            // 동물종
+    groupComposition?: string | null;   // 군구성
+    dosingPeriod?: string | null;       // 투여기간
+    purpose?: string | null;            // 시험 목적
+    checklist?: Array<{ label: string; value: string }>;  // 시험 설계(평가항목 등)
   }>;
 };
 
@@ -71,7 +77,7 @@ export default function PrintLayout({ data }: { data: PrintData }) {
       const d = data.details.find(x => x.key === l.testItemKey);
       return { line: l, detail: d };
     })
-    .filter(({ detail }) => detail && (detail.detail || detail.notice || detail.quoteText || detail.guideline));
+    .filter(({ detail }) => detail && (detail.detail || detail.notice || detail.quoteText || detail.guideline || detail.purpose || (detail.checklist && detail.checklist.length > 0) || detail.species));
   const detailPages = paginateDetails(lineDetails);
 
   return (
@@ -250,7 +256,9 @@ type LineEntry = PrintData['lines'][number];
 /** 상세 카드 높이(mm) 추정 → A4(가용 ~230mm) 단위로 묶어 페이지 분할 */
 function paginateDetails(lineDetails: { line: LineEntry; detail?: DetailEntry }[]): { line: LineEntry; detail?: DetailEntry }[][] {
   const textMm = (s?: string | null) => (s ? 7 + Math.ceil(s.length / 95) * 4.6 : 0);
-  const estMm = (d?: DetailEntry) => 16 + textMm(d?.quoteText) + textMm(d?.detail) + textMm(d?.guideline) + textMm(d?.notice) + 6;
+  const estMm = (d?: DetailEntry) => 16 + textMm(d?.purpose) + (d?.species || d?.groupComposition || d?.dosingPeriod ? 8 : 0)
+    + (d?.checklist ?? []).reduce((s, c) => s + textMm(c.value), 0)
+    + textMm(d?.detail) + textMm(d?.guideline) + textMm(d?.notice) + 6;
   const pages: { line: LineEntry; detail?: DetailEntry }[][] = [];
   let cur: { line: LineEntry; detail?: DetailEntry }[] = [];
   let h = 0;
@@ -276,6 +284,25 @@ function DetailCard({ line, detail, no, symbol }: { line: LineEntry; detail?: De
         </div>
         <div className="detail-price">{line.unitPrice === 0 ? '협의' : `${symbol}${line.unitPrice.toLocaleString()}`}</div>
       </header>
+      {(detail?.species || detail?.groupComposition || detail?.dosingPeriod) && (
+        <div className="detail-block"><div className="detail-block-label">시험 개요</div>
+          <div className="detail-grid">
+            {detail?.species && <span><b>동물종</b> {detail.species}</span>}
+            {detail?.groupComposition && <span><b>군구성</b> {detail.groupComposition}</span>}
+            {detail?.dosingPeriod && <span><b>투여기간</b> {detail.dosingPeriod}</span>}
+          </div>
+        </div>
+      )}
+      {detail?.purpose && (
+        <div className="detail-block"><div className="detail-block-label">시험 목적</div><p className="detail-text">{detail.purpose}</p></div>
+      )}
+      {detail?.checklist && detail.checklist.length > 0 && (
+        <div className="detail-block"><div className="detail-block-label">시험 설계 · 평가항목</div>
+          <dl className="detail-spec">
+            {detail.checklist.map((c, k) => <div key={k}><dt>{c.label}</dt><dd>{c.value}</dd></div>)}
+          </dl>
+        </div>
+      )}
       {detail?.quoteText && (
         <div className="detail-block"><div className="detail-block-label">시험 개요</div><p className="detail-text">{detail.quoteText}</p></div>
       )}

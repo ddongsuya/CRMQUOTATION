@@ -335,6 +335,14 @@
 
 /* ─── DETAIL CARDS ─────────────────────── */
 .print-doc .details-list { display: flex; flex-direction: column; gap: 6mm; }
+/* 시험 개요(동물종·군구성·투여기간) */
+.print-doc .detail-grid { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 10.5px; color: var(--ink-muted); }
+.print-doc .detail-grid b { color: var(--ink-subtle); font-weight: 600; margin-right: 3px; }
+/* 시험 설계·평가항목 spec 리스트 */
+.print-doc .detail-spec { display: flex; flex-direction: column; gap: 2px; margin: 0; }
+.print-doc .detail-spec > div { display: grid; grid-template-columns: 64px 1fr; gap: 8px; align-items: baseline; }
+.print-doc .detail-spec dt { font-size: 9.5px; font-weight: 600; color: var(--ink-subtle); margin: 0; }
+.print-doc .detail-spec dd { font-size: 10px; color: var(--ink-muted); margin: 0; line-height: 1.5; }
 .print-doc .detail-card {
   border: 1px solid var(--line);
   border-radius: 8px;
