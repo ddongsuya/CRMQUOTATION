@@ -38,7 +38,6 @@ export default function QuoteV2Page() {
   const [comboAnal, setComboAnal] = useState<'개별' | '동시'>('개별');
   const [excipient, setExcipient] = useState(1);
   const [submissionTarget, setSubmissionTarget] = useState('국내');
-  const [cellType, setCellType] = useState<'adult' | 'esc_ipsc'>('adult');
   const [vaccineGroups, setVaccineGroups] = useState(2);
   const [healthSubtype, setHealthSubtype] = useState('개별인정형');
   const [conds, setConds] = useState<Record<string, boolean>>({});
@@ -46,6 +45,10 @@ export default function QuoteV2Page() {
   const [quote, setQuote] = useState<Quote | null>(null);
   const [composed, setComposed] = useState<{ id: string; testName: string | null }[]>([]);
   const [loading, setLoading] = useState(false);
+  // 배터리형(체크리스트) 모달리티 — 제안 시험항목을 사용자가 직접 선택
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [items, setItems] = useState<any[]>([]);
+  const [picked, setPicked] = useState<Set<string>>(new Set());
   // 고객 정보 + 안건연동 + 저장
   const [cust, setCust] = useState({ company: '', name: '', email: '', projectName: '', substanceName: '' });
   const [dealId, setDealId] = useState<number | null>(null);
@@ -59,17 +62,21 @@ export default function QuoteV2Page() {
     durations: [...durations], species, addons,
     tk: { points: tk.points, sampleOnly: tk.sampleOnly, sessions: tk.sessions },
     componentCount: isCombo ? comboCount : undefined, comboAnalysis: isCombo ? comboAnal : undefined,
-    excipientCount: excipient, submissionTarget, cellType,
+    excipientCount: excipient, submissionTarget,
     vaccineGroups: category === '백신' ? vaccineGroups : undefined,
     subtype: category === '건강기능식품' ? healthSubtype : undefined,
   });
   const saveQuote = async (issueNow: boolean) => {
     setSaving(true); setSavedNo(null);
     try {
+      const common = { category, standard, route, customerConditions: conds, requestedAddons: reqAddons,
+        projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, dealId, issueNow };
+      const body = isBattery
+        ? { ...common, selectedItemIds: [...picked] }
+        : { ...common, plan: buildPlan(), combinationCount: isCombo ? comboCount : undefined };
       const res = await fetch('/api/quote-v2/save', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined,
-          projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, dealId, issueNow }),
+        body: JSON.stringify(body),
       });
       const d = await res.json();
       if (d.quote?.quoteNumber) setSavedNo(d.quote.quoteNumber);
@@ -77,16 +84,31 @@ export default function QuoteV2Page() {
   };
   const toggleSet = (s: Set<string>, k: string) => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; };
   const isCombo = category === '복합제';
+  // 의약품·복합제·백신·건기식만 파라메트릭, 나머지는 배터리형 체크리스트
+  const isBattery = !['의약품', '복합제', '백신', '건강기능식품'].includes(category);
+  const priceOf = (it: { priceA?: { MFDS: number | null; OECD: number | null }; priceB?: { MFDS: number | null; OECD: number | null } }) => it.priceA?.[standard] ?? it.priceB?.[standard] ?? null;
+  const togglePick = (id: string) => setPicked(p => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const selectPriced = () => setPicked(new Set(items.filter(priceOf).map(it => it.id)));
+
+  // 배터리형 모달리티 선택 시 제안 시험항목 로드
+  useEffect(() => {
+    if (!isBattery) { setItems([]); setPicked(new Set()); return; }
+    fetch('/api/quote-v2?category=' + encodeURIComponent(category)).then(r => r.json()).then(d => { setItems(d.items ?? []); setPicked(new Set()); });
+  }, [category, isBattery]);
 
   const generate = async () => {
     setLoading(true); setQuote(null); setSavedNo(null);
     try {
+      const body = isBattery
+        ? { category, standard, route, selectedItems: [...picked].map(id => ({ id })), customerConditions: conds, requestedAddons: reqAddons }
+        : { category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined }),
+        body: JSON.stringify(body),
       });
       const d = await res.json();
-      setQuote(d.quote ?? null); setComposed(d.composed ?? []);
+      setQuote(d.quote ?? null);
+      setComposed(d.composed?.length ? d.composed : (isBattery ? [...picked].map(id => ({ id, testName: null })) : []));
     } finally { setLoading(false); }
   };
 
@@ -105,17 +127,40 @@ export default function QuoteV2Page() {
             <Field label="투여경로"><select className="input" value={route} onChange={e => setRoute(e.target.value)}>{ROUTES.map(r => <option key={r}>{r}</option>)}</select></Field>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          {!isBattery && <div className="grid grid-cols-2 gap-2">
             <Field label="제출 대상 (안전성약리 hERG)"><select className="input" value={submissionTarget} onChange={e => setSubmissionTarget(e.target.value)}><option>국내</option><option>USFDA</option><option>EMA</option></select></Field>
-            {category === '세포치료제' && <Field label="세포 유형"><div className="flex gap-1.5">
-              <Chip on={cellType === 'adult'} onClick={() => setCellType('adult')}>성체(26주)</Chip>
-              <Chip on={cellType === 'esc_ipsc'} onClick={() => setCellType('esc_ipsc')}>ESC/iPSC(52주)</Chip>
-            </div></Field>}
             {category === '백신' && <Field label="군 구성"><div className="flex gap-1.5">{[2, 3, 4, 5].map(g => <Chip key={g} on={vaccineGroups === g} onClick={() => setVaccineGroups(g)}>{g}군</Chip>)}</div></Field>}
             {category === '건강기능식품' && <Field label="하위유형"><select className="input" value={healthSubtype} onChange={e => setHealthSubtype(e.target.value)}><option>개별인정형</option><option>프로바이오틱스</option><option>한시적식품</option></select></Field>}
-          </div>
+          </div>}
 
-          {!isCombo && <>
+          {isBattery && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="label !mb-0">제안 시험항목 <span className="text-ink-subtle font-normal">({picked.size}/{items.length} 선택)</span></div>
+                <div className="flex gap-1.5 text-xs">
+                  <button type="button" className="px-2 py-0.5 rounded border border-slate-200 hover:bg-slate-50" onClick={selectPriced}>가격 있는 항목 전체</button>
+                  <button type="button" className="px-2 py-0.5 rounded border border-slate-200 hover:bg-slate-50" onClick={() => setPicked(new Set())}>전체 해제</button>
+                </div>
+              </div>
+              <div className="max-h-[22rem] overflow-auto rounded-lg border border-slate-200 divide-y divide-slate-100">
+                {Object.entries(items.reduce((g: Record<string, typeof items>, it) => { (g[it.testClass ?? '기타'] ??= []).push(it); return g; }, {})).map(([cls, its]) => (
+                  <div key={cls} className="p-2">
+                    <div className="text-[11px] font-semibold text-ink-subtle mb-1">{cls}</div>
+                    {(its as typeof items).map(it => { const pr = priceOf(it); return (
+                      <label key={it.id} className={`flex items-center gap-2 py-0.5 text-xs ${pr == null ? 'opacity-50' : 'cursor-pointer'}`}>
+                        <input type="checkbox" disabled={pr == null} checked={picked.has(it.id)} onChange={() => togglePick(it.id)} className="rounded border-slate-300 text-brand-600" />
+                        <span className="flex-1">{it.testName}</span>
+                        <span className="tabular-nums text-ink-muted">{won(pr)}</span>
+                      </label>
+                    ); })}
+                  </div>
+                ))}
+                {items.length === 0 && <div className="p-4 text-center text-xs text-ink-subtle">불러오는 중…</div>}
+              </div>
+            </div>
+          )}
+
+          {!isCombo && !isBattery && <>
             <Field label="본시험 기간 (복수)">
               <div className="flex flex-wrap gap-1.5">{DURATIONS.map(d => <Chip key={d.key} on={durations.has(d.key)} onClick={() => setDurations(s => toggleSet(s, d.key))}>{d.label}</Chip>)}</div>
             </Field>

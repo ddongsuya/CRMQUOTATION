@@ -14,7 +14,7 @@ import type { LineItem } from '@/lib/quote-engine/types';
 export const dynamic = 'force-dynamic';
 
 type Body = {
-  category: string; standard: 'MFDS' | 'OECD'; route: string; plan: ComposePlan;
+  category: string; standard: 'MFDS' | 'OECD'; route: string; plan?: ComposePlan; selectedItemIds?: string[];
   customerConditions?: Record<string, boolean>; requestedAddons?: Record<string, boolean>; combinationCount?: number;
   projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string;
   dealId?: number | null; issueNow?: boolean;
@@ -22,15 +22,28 @@ type Body = {
 
 export async function POST(req: Request) {
   const b = (await req.json().catch(() => null)) as Body | null;
-  if (!b?.category || !b.plan) return NextResponse.json({ error: 'category·plan 필요' }, { status: 400 });
+  if (!b?.category || (!b.plan && !b.selectedItemIds?.length)) return NextResponse.json({ error: 'category + (plan 또는 selectedItemIds) 필요' }, { status: 400 });
 
-  const plan = { ...b.plan, modality: b.category, standard: b.standard ?? 'MFDS', route: b.route ?? '경구' };
-  const composed = composeFromPlan(plan);
-  const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
-  const extraLines: LineItem[] = composeAnalysisLines(plan, masterItems);
+  const std = b.standard ?? 'MFDS';
+  const route = b.route ?? '경구';
+  // 배터리형(체크리스트): 선택 id 직접 / 파라메트릭: plan 자동구성
+  let selectedItems: { id: string }[];
+  let extraLines: LineItem[] = [];
+  let planForSnapshot: ComposePlan | { modality: string; selectedItemIds: string[] };
+  if (b.plan) {
+    const plan = { ...b.plan, modality: b.category, standard: std, route };
+    const composed = composeFromPlan(plan);
+    selectedItems = composed.map(c => ({ id: c.id }));
+    const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
+    extraLines = composeAnalysisLines(plan, masterItems);
+    planForSnapshot = plan;
+  } else {
+    selectedItems = (b.selectedItemIds ?? []).map(id => ({ id }));
+    planForSnapshot = { modality: b.category, selectedItemIds: b.selectedItemIds ?? [] };
+  }
   const quote = evaluateQuote({
-    category: b.category, standard: b.standard ?? 'MFDS', route: b.route ?? '경구',
-    selectedItems: composed.map(c => ({ id: c.id })), extraLines,
+    category: b.category, standard: std, route,
+    selectedItems, extraLines,
     customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {}, combinationCount: b.combinationCount,
   });
 
@@ -50,9 +63,9 @@ export async function POST(req: Request) {
       projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
       substanceName: b.substanceName ?? null,
       customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null,
-      modality: b.category, priceStandard: b.standard ?? 'MFDS',
-      planJson: JSON.stringify({ ...plan, engine: 'v2' }),
-      excipientCount: plan.excipientCount ?? 0, currency: 'KRW', discountRate: 0,
+      modality: b.category, priceStandard: std,
+      planJson: JSON.stringify({ ...planForSnapshot, engine: 'v2' }),
+      excipientCount: (b.plan?.excipientCount) ?? 0, currency: 'KRW', discountRate: 0,
       totalBeforeDiscount: subtotal, totalAfterDiscount: subtotal, vatAmount: subtotal * 0.1, grandTotal: subtotal * 1.1,
       ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
       items: { create: itemRows },
