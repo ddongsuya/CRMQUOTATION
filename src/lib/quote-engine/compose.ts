@@ -109,15 +109,19 @@ function composeCombo(items: MasterItem[], plan: ComposePlan): MasterItem[] {
   return items.filter(it => it.componentCount === want && it.analysisMethod === anal);
 }
 
-/** 그 외 모달리티 — 단일가 표준 시험(본시험·단회·유전독성 등)을 기간·종으로 느슨히 구성 */
+/** 그 외 모달리티 — 카테고리 표준 배터리. 가격 있는 시험만(서비스·주석·외부대행·단위요금 제외).
+ *  기간이 있는 모달리티(점안제·화학물질)는 단회+선택기간+기간무관(유전독성 등)만. 없으면 전체 배터리. */
 function composeGeneric(items: MasterItem[], plan: ComposePlan): MasterItem[] {
   const sp = plan.species;
-  return items.filter(it => {
-    if (cls(it, '보고서', '서비스')) return false;
-    if (plan.durations.includes('SINGLE') && cls(it, '단회')) return speciesMatch(it, sp);
-    for (const d of plan.durations) { const w = DUR_WEEKS[d]; if (w && it.studyWeeks === w) return speciesMatch(it, sp); }
-    if (plan.addons.genotox && cls(it, '유전독성')) return true;
-    return false;
+  const usable = items.filter(it =>
+    it.prices['경구피하근육'].MFDS != null &&
+    !/번역|CTD|SEND|Module/i.test(it.testName ?? '') &&
+    !['주석', '외부대행', '단위요금'].includes(it.reviewStatus ?? ''));
+  const hasWeeks = usable.some(it => it.studyWeeks != null && it.studyWeeks > 0);
+  if (!hasWeeks) return usable.filter(it => speciesMatch(it, sp));   // 기간무관 표준 배터리(화장품·의료기기 등)
+  return usable.filter(it => {
+    if (it.studyWeeks == null || it.studyWeeks === 0) return cls(it, '단회') ? plan.durations.includes('SINGLE') && speciesMatch(it, sp) : speciesMatch(it, sp);
+    return plan.durations.some(d => DUR_WEEKS[d] === it.studyWeeks) && speciesMatch(it, sp);
   });
 }
 
