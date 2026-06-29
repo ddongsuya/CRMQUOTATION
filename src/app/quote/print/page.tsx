@@ -33,6 +33,26 @@ function PrintPage() {
         try {
           const qRes = await fetch(`/api/quotes/${quoteId}`).then(r => r.json());
           const q = qRes.quote;
+          // 견적 엔진 v2 견적: 저장된 항목(권위 스냅샷)을 직접 렌더 (구 엔진 재평가 불가 — 새 마스터 키)
+          let isV2 = false;
+          try { isV2 = JSON.parse(q.planJson ?? '{}').engine === 'v2'; } catch { /* noop */ }
+          if (isV2) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const lines = (q.items as any[]).map((it) => ({
+              kind: (it.testItemKey?.startsWith('_prep') ? 'prep_analysis' : it.testItemKey?.startsWith('_hamryang') ? 'analysis' : 'test') as 'test' | 'analysis' | 'prep_analysis',
+              testName: it.testNameSnapshot, adminRoute: it.adminRouteSnap ?? null,
+              unitPrice: it.unitPrice, quantity: it.quantity, subtotal: it.subtotal, testItemKey: it.testItemKey,
+            }));
+            setData({
+              meta: { quoteNo: q.quoteNumber, issuedAt: q.issuedAt ? new Date(q.issuedAt) : new Date(q.createdAt), validUntilDays: 60 },
+              project: { projectName: q.projectName, substanceName: q.substanceName ?? '', modality: q.modality, customerCompany: q.customerCompany ?? '', customerName: q.customerName ?? '', customerEmail: q.customerEmail ?? '' },
+              settings: { priceStandard: q.priceStandard, currency: q.currency, discountRate: q.discountRate, excipientCount: q.excipientCount },
+              lines,
+              totals: { totalBeforeDiscount: q.totalBeforeDiscount ?? 0, discountAmount: (q.totalBeforeDiscount ?? 0) - (q.totalAfterDiscount ?? 0), totalAfterDiscount: q.totalAfterDiscount ?? 0, vatAmount: q.vatAmount ?? 0, grandTotal: q.grandTotal ?? 0 },
+              warnings: [], details: [],
+            });
+            return;
+          }
           const calc = await fetch('/api/quote/calculate', {
             method: 'POST', headers: { 'content-type': 'application/json' },
             body: JSON.stringify({
