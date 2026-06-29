@@ -6,6 +6,7 @@
 import { NextResponse } from 'next/server';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { loadMaster, loadRules } from '@/lib/quote-engine/master';
+import { composeFromPlan, type ComposePlan } from '@/lib/quote-engine/compose';
 import type { QuoteInput } from '@/lib/quote-engine/types';
 
 export const dynamic = 'force-dynamic';
@@ -39,16 +40,26 @@ export function GET(req: Request) {
   return NextResponse.json({ categories, items, conditionKeys: [...cond], addonOptions: addons });
 }
 
+type Body = Partial<QuoteInput> & { plan?: ComposePlan };
+
 export async function POST(req: Request) {
-  const input = (await req.json().catch(() => null)) as QuoteInput | null;
-  if (!input || !input.category || !Array.isArray(input.selectedItems)) {
-    return NextResponse.json({ error: 'category·selectedItems 필요' }, { status: 400 });
+  const body = (await req.json().catch(() => null)) as Body | null;
+  if (!body || !body.category) return NextResponse.json({ error: 'category 필요' }, { status: 400 });
+
+  // 파라메트릭 plan 이 오면 자동구성, 아니면 직접 선택한 selectedItems 사용
+  let composed: { id: string; testName: string | null }[] = [];
+  let selectedItems = body.selectedItems ?? [];
+  if (body.plan) {
+    composed = composeFromPlan({ ...body.plan, modality: body.category, standard: body.standard ?? 'MFDS', route: body.route ?? '경구' });
+    selectedItems = composed.map(c => ({ id: c.id }));
   }
+  if (selectedItems.length === 0) return NextResponse.json({ error: '구성된 시험이 없습니다 (조건을 확인하세요)', composed }, { status: 200 });
+
   const quote = evaluateQuote({
-    category: input.category, standard: input.standard ?? 'MFDS', route: input.route ?? '경구',
-    submissionTarget: input.submissionTarget, selectedItems: input.selectedItems,
-    customerConditions: input.customerConditions ?? {}, requestedAddons: input.requestedAddons ?? {},
-    combinationCount: input.combinationCount,
+    category: body.category, standard: body.standard ?? 'MFDS', route: body.route ?? '경구',
+    submissionTarget: body.submissionTarget, selectedItems,
+    customerConditions: body.customerConditions ?? {}, requestedAddons: body.requestedAddons ?? {},
+    combinationCount: body.combinationCount,
   });
-  return NextResponse.json({ quote });
+  return NextResponse.json({ quote, composed });
 }
