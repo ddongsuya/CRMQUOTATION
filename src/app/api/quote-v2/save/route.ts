@@ -16,6 +16,7 @@ export const dynamic = 'force-dynamic';
 type Body = {
   category: string; standard: 'MFDS' | 'OECD'; route: string; plan?: ComposePlan; selectedItemIds?: string[];
   customerConditions?: Record<string, boolean>; requestedAddons?: Record<string, boolean>; combinationCount?: number;
+  currency?: 'KRW' | 'USD'; discountRate?: number; exchangeRate?: number;
   projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string;
   dealId?: number | null; issueNow?: boolean;
 };
@@ -48,6 +49,8 @@ export async function POST(req: Request) {
   });
 
   const subtotal = quote.totals.subtotalKrw;
+  const discountRate = Math.min(Math.max(b.discountRate ?? 0, 0), 0.9);
+  const afterDiscount = subtotal * (1 - discountRate);
   const itemRows = quote.lineItems.map((li, i) => ({
     testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route, category: b.category,
     tag: [...li.appliedRules, ...(li.isPrereq ? ['선행'] : [])].join(',') || null,
@@ -65,8 +68,9 @@ export async function POST(req: Request) {
       customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null,
       modality: b.category, priceStandard: std,
       planJson: JSON.stringify({ ...planForSnapshot, engine: 'v2' }),
-      excipientCount: (b.plan?.excipientCount) ?? 0, currency: 'KRW', discountRate: 0,
-      totalBeforeDiscount: subtotal, totalAfterDiscount: subtotal, vatAmount: subtotal * 0.1, grandTotal: subtotal * 1.1,
+      excipientCount: (b.plan?.excipientCount) ?? 0,
+      currency: b.currency ?? 'KRW', exchangeRate: b.currency === 'USD' ? (b.exchangeRate ?? 1400) : null, discountRate,
+      totalBeforeDiscount: subtotal, totalAfterDiscount: afterDiscount, vatAmount: afterDiscount * 0.1, grandTotal: afterDiscount * 1.1,
       ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
       items: { create: itemRows },
     },
