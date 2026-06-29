@@ -72,6 +72,7 @@ export default function PrintLayout({ data }: { data: PrintData }) {
       return { line: l, detail: d };
     })
     .filter(({ detail }) => detail && (detail.detail || detail.notice || detail.quoteText || detail.guideline));
+  const detailPages = paginateDetails(lineDetails);
 
   return (
     <div className="print-doc print-root font-sans text-ink">
@@ -225,60 +226,75 @@ export default function PrintLayout({ data }: { data: PrintData }) {
       </section>
 
       {/* ─────────── PAGE 3+: 항목별 상세 ─────────── */}
-      {lineDetails.length > 0 && (
-        <section className="page page-break">
-          <PageHeader title="시험 항목 상세 안내" quoteNo={data.meta.quoteNo} pageNum={3} />
-          <div className="details-list">
-            {lineDetails.map(({ line, detail }, i) => (
-              <article key={i} className="detail-card">
-                <header className="detail-head">
-                  <div className="detail-no">{String(i + 1).padStart(2, '0')}</div>
-                  <div>
-                    <h3 className="detail-title">{line.testName}</h3>
-                    <div className="detail-subtitle">
-                      {[detail?.category, line.adminRoute, detail?.studyWeeks ? `${detail.studyWeeks}주` : null]
-                        .filter(Boolean).join(' · ') || '—'}
-                    </div>
-                  </div>
-                  <div className="detail-price">{line.unitPrice === 0 ? '협의' : `${symbol}${line.unitPrice.toLocaleString()}`}</div>
-                </header>
-                {detail?.quoteText && (
-                  <div className="detail-block">
-                    <div className="detail-block-label">시험 개요</div>
-                    <p className="detail-text">{detail.quoteText}</p>
-                  </div>
-                )}
-                {detail?.detail && detail.detail !== detail?.quoteText && (
-                  <div className="detail-block">
-                    <div className="detail-block-label">상세 설명</div>
-                    <p className="detail-text">{detail.detail}</p>
-                  </div>
-                )}
-                {(detail?.guideline || (line.guidelineCodes && line.guidelineCodes.length > 0)) && (
-                  <div className="detail-block">
-                    <div className="detail-block-label">가이드라인</div>
-                    {line.guidelineCodes && line.guidelineCodes.length > 0 && (
-                      <div className="guideline-codes">
-                        {line.guidelineCodes.map(c => (
-                          <span key={c} className="gl-code">{c}</span>
-                        ))}
-                      </div>
-                    )}
-                    {detail?.guideline && <p className="detail-text small">{detail.guideline}</p>}
-                  </div>
-                )}
-                {detail?.notice && (
-                  <div className="detail-block notice">
-                    <div className="detail-block-label">주의사항 · 협의</div>
-                    <p className="detail-text small">{detail.notice}</p>
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* 상세는 A4 페이지 단위로 분할 — 화면도 인쇄처럼 페이지별로 보이고, 카드는 페이지 경계서 안 잘림 */}
+      {detailPages.map((pageItems, p) => {
+        const startNo = detailPages.slice(0, p).reduce((s, pg) => s + pg.length, 0);
+        return (
+          <section className="page page-break" key={`det-${p}`}>
+            <PageHeader title={`시험 항목 상세 안내${detailPages.length > 1 ? ` (${p + 1}/${detailPages.length})` : ''}`} quoteNo={data.meta.quoteNo} pageNum={3 + p} />
+            <div className="details-list">
+              {pageItems.map(({ line, detail }, j) => (
+                <DetailCard key={j} line={line} detail={detail} no={startNo + j + 1} symbol={symbol} />
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </div>
+  );
+}
+
+type DetailEntry = PrintData['details'][number];
+type LineEntry = PrintData['lines'][number];
+
+/** 상세 카드 높이(mm) 추정 → A4(가용 ~230mm) 단위로 묶어 페이지 분할 */
+function paginateDetails(lineDetails: { line: LineEntry; detail?: DetailEntry }[]): { line: LineEntry; detail?: DetailEntry }[][] {
+  const textMm = (s?: string | null) => (s ? 7 + Math.ceil(s.length / 95) * 4.6 : 0);
+  const estMm = (d?: DetailEntry) => 16 + textMm(d?.quoteText) + textMm(d?.detail) + textMm(d?.guideline) + textMm(d?.notice) + 6;
+  const pages: { line: LineEntry; detail?: DetailEntry }[][] = [];
+  let cur: { line: LineEntry; detail?: DetailEntry }[] = [];
+  let h = 0;
+  for (const ld of lineDetails) {
+    const ch = estMm(ld.detail);
+    if (cur.length && h + ch > 230) { pages.push(cur); cur = []; h = 0; }
+    cur.push(ld); h += ch;
+  }
+  if (cur.length) pages.push(cur);
+  return pages;
+}
+
+function DetailCard({ line, detail, no, symbol }: { line: LineEntry; detail?: DetailEntry; no: number; symbol: string }) {
+  return (
+    <article className="detail-card">
+      <header className="detail-head">
+        <div className="detail-no">{String(no).padStart(2, '0')}</div>
+        <div>
+          <h3 className="detail-title">{line.testName}</h3>
+          <div className="detail-subtitle">
+            {[detail?.category, line.adminRoute, detail?.studyWeeks ? `${detail.studyWeeks}주` : null].filter(Boolean).join(' · ') || '—'}
+          </div>
+        </div>
+        <div className="detail-price">{line.unitPrice === 0 ? '협의' : `${symbol}${line.unitPrice.toLocaleString()}`}</div>
+      </header>
+      {detail?.quoteText && (
+        <div className="detail-block"><div className="detail-block-label">시험 개요</div><p className="detail-text">{detail.quoteText}</p></div>
+      )}
+      {detail?.detail && detail.detail !== detail?.quoteText && (
+        <div className="detail-block"><div className="detail-block-label">상세 설명</div><p className="detail-text">{detail.detail}</p></div>
+      )}
+      {(detail?.guideline || (line.guidelineCodes && line.guidelineCodes.length > 0)) && (
+        <div className="detail-block">
+          <div className="detail-block-label">가이드라인</div>
+          {line.guidelineCodes && line.guidelineCodes.length > 0 && (
+            <div className="guideline-codes">{line.guidelineCodes.map(c => <span key={c} className="gl-code">{c}</span>)}</div>
+          )}
+          {detail?.guideline && <p className="detail-text small">{detail.guideline}</p>}
+        </div>
+      )}
+      {detail?.notice && (
+        <div className="detail-block notice"><div className="detail-block-label">주의사항 · 협의</div><p className="detail-text small">{detail.notice}</p></div>
+      )}
+    </article>
   );
 }
 

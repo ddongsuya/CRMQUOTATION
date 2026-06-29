@@ -43,13 +43,19 @@ function PrintPage() {
               testName: it.testNameSnapshot, adminRoute: it.adminRouteSnap ?? null,
               unitPrice: it.unitPrice, quantity: it.quantity, subtotal: it.subtotal, testItemKey: it.testItemKey,
             }));
+            // 시험 항목 상세(인쇄 부록) — 새 마스터에서 조회
+            const det = await fetch('/api/quote-v2/details', {
+              method: 'POST', headers: { 'content-type': 'application/json' },
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              body: JSON.stringify({ ids: (q.items as any[]).map(it => it.testItemKey) }),
+            }).then(r => r.json()).catch(() => ({ details: [] }));
             setData({
               meta: { quoteNo: q.quoteNumber, issuedAt: q.issuedAt ? new Date(q.issuedAt) : new Date(q.createdAt), validUntilDays: 60 },
               project: { projectName: q.projectName, substanceName: q.substanceName ?? '', modality: q.modality, customerCompany: q.customerCompany ?? '', customerName: q.customerName ?? '', customerEmail: q.customerEmail ?? '' },
               settings: { priceStandard: q.priceStandard, currency: q.currency, discountRate: q.discountRate, excipientCount: q.excipientCount },
               lines,
               totals: { totalBeforeDiscount: q.totalBeforeDiscount ?? 0, discountAmount: (q.totalBeforeDiscount ?? 0) - (q.totalAfterDiscount ?? 0), totalAfterDiscount: q.totalAfterDiscount ?? 0, vatAmount: q.vatAmount ?? 0, grandTotal: q.grandTotal ?? 0 },
-              warnings: [], details: [],
+              warnings: [], details: det.details ?? [],
             });
             return;
           }
