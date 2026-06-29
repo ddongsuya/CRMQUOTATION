@@ -143,10 +143,22 @@ export default function QuoteV2Page() {
           </>}
 
           {isCombo && (
-            <div className="grid grid-cols-2 gap-2">
-              <Field label="종수"><div className="flex gap-1.5">{[2, 3, 4].map(n => <Chip key={n} on={comboCount === n} onClick={() => setComboCount(n)}>{n}종</Chip>)}</div></Field>
-              <Field label="분석방식"><div className="flex gap-1.5">{(['개별', '동시'] as const).map(a => <Chip key={a} on={comboAnal === a} onClick={() => setComboAnal(a)}>{a}</Chip>)}</div></Field>
-            </div>
+            <>
+              <div className="grid grid-cols-2 gap-2">
+                <Field label="종수"><div className="flex gap-1.5">{[2, 3, 4].map(n => <Chip key={n} on={comboCount === n} onClick={() => setComboCount(n)}>{n}종</Chip>)}</div></Field>
+                <Field label="분석방식"><div className="flex gap-1.5">{(['개별', '동시'] as const).map(a => <Chip key={a} on={comboAnal === a} onClick={() => setComboAnal(a)}>{a}</Chip>)}</div></Field>
+              </div>
+              <Field label="TK (독성동태)">
+                <div className="flex flex-wrap gap-2 items-center text-xs">
+                  <Chip on={!!addons.tk} onClick={() => setAddons(p => ({ ...p, tk: !p.tk }))}>TK 포함</Chip>
+                  {addons.tk && <>
+                    <span className="ml-1">포인트</span>{[6, 8].map(p => <Chip key={p} on={tk.points === p} onClick={() => setTk(t => ({ ...t, points: p }))}>{p}pt</Chip>)}
+                    <Chip on={tk.sampleOnly} onClick={() => setTk(t => ({ ...t, sampleOnly: !t.sampleOnly }))}>채혈만</Chip>
+                    <span className="text-ink-muted">{tk.sampleOnly ? '(채혈만)' : '(채혈+분석)'}</span>
+                  </>}
+                </div>
+              </Field>
+            </>
           )}
 
           <button onClick={generate} disabled={loading} className="btn-primary w-full justify-center">

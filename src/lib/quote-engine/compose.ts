@@ -33,6 +33,23 @@ function speciesMatch(it: MasterItem, sp: { rodent: boolean; nonRodent: boolean 
 }
 const cls = (it: MasterItem, ...names: string[]) => names.some(n => (it.testClass ?? '').includes(n));
 
+/** TK(독성동태) 항목 식별 — testClass 또는 testName 기준 */
+const isTk = (it: MasterItem) => /독성동태/.test(it.testClass ?? '') || /\bTK\b/.test(it.testName ?? '');
+
+/**
+ * TK 후보 중 "점(6/8pt) + 모드(채혈만/채혈+분석)" 일치 세트만 선택 — 어느 모달리티든 공용.
+ * addons.tk 가 꺼져 있으면 TK 제외. 데이터에 점/모드가 없으면 가능한 범위로 폴백.
+ */
+function pickTk(tkItems: MasterItem[], plan: ComposePlan): MasterItem[] {
+  if (!tkItems.length || !plan.addons.tk) return [];
+  const wantPts = `${plan.tk?.points ?? 8}point`;
+  const wantMode = plan.tk?.sampleOnly ? '채혈만' : '채혈+분석';
+  const byPts = tkItems.filter(it => it.tkPoints === wantPts);
+  const pool = byPts.length ? byPts : tkItems;                       // 점 데이터 없으면 전체
+  const byMode = pool.filter(it => it.tkMode == null || it.tkMode === wantMode);
+  return byMode.length ? byMode : pool;                              // 모드 데이터 없으면 점만
+}
+
 /** 신약군(의약품 등) 풀패키지 구성 */
 function composeDrug(items: MasterItem[], plan: ComposePlan): MasterItem[] {
   const out: MasterItem[] = [];
@@ -102,11 +119,13 @@ function composeCell(items: MasterItem[], plan: ComposePlan): MasterItem[] {
   return out;
 }
 
-/** 복합제 — 종수 × 분석방식으로 패키지 선택 */
+/** 복합제 — 종수 × 분석방식 패키지. TK는 점/모드 일치 1세트만(데이터에 6/8pt × 채혈만/채혈+분석 4변형). */
 function composeCombo(items: MasterItem[], plan: ComposePlan): MasterItem[] {
   const want = `${plan.componentCount ?? 2}종`;
   const anal = plan.comboAnalysis ?? '개별';
-  return items.filter(it => it.componentCount === want && it.analysisMethod === anal);
+  const pkg = items.filter(it => it.componentCount === want && it.analysisMethod === anal);
+  const rest = pkg.filter(it => !isTk(it));
+  return [...rest, ...pickTk(pkg.filter(isTk), plan)];
 }
 
 /** 그 외 모달리티 — 카테고리 표준 배터리. 가격 있는 시험만(서비스·주석·외부대행·단위요금 제외).
@@ -118,11 +137,16 @@ function composeGeneric(items: MasterItem[], plan: ComposePlan): MasterItem[] {
     !/번역|CTD|SEND|Module/i.test(it.testName ?? '') &&
     !['주석', '외부대행', '단위요금'].includes(it.reviewStatus ?? ''));
   const hasWeeks = usable.some(it => it.studyWeeks != null && it.studyWeeks > 0);
-  if (!hasWeeks) return usable.filter(it => speciesMatch(it, sp));   // 기간무관 표준 배터리(화장품·의료기기 등)
-  return usable.filter(it => {
-    if (it.studyWeeks == null || it.studyWeeks === 0) return cls(it, '단회') ? plan.durations.includes('SINGLE') && speciesMatch(it, sp) : speciesMatch(it, sp);
-    return plan.durations.some(d => DUR_WEEKS[d] === it.studyWeeks) && speciesMatch(it, sp);
-  });
+  const base = !hasWeeks
+    ? usable.filter(it => speciesMatch(it, sp))   // 기간무관 표준 배터리(화장품·의료기기 등)
+    : usable.filter(it => {
+      if (it.studyWeeks == null || it.studyWeeks === 0) return cls(it, '단회') ? plan.durations.includes('SINGLE') && speciesMatch(it, sp) : speciesMatch(it, sp);
+      return plan.durations.some(d => DUR_WEEKS[d] === it.studyWeeks) && speciesMatch(it, sp);
+    });
+  // TK가 배터리에 있으면 점/모드 일치 변형만 남긴다 (어느 모달리티든 구분)
+  const tkItems = base.filter(isTk);
+  if (!tkItems.length) return base;
+  return [...base.filter(it => !isTk(it)), ...pickTk(tkItems, plan)];
 }
 
 // ── 함량분석(R2)·조제물분석(R8) — assemble.js 확정 규칙 포팅 ──
