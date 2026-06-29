@@ -1,9 +1,9 @@
 {
  "_meta": {
   "version": "v2-보강완료",
-  "count": 426,
+  "count": 446,
   "built": "2026-06-29",
-  "note": "통합 시험항목 마스터 v1(복원본) + 가격 보강(의약품 OECD=613, 복합제 개별/동시=2023, 환경=2025원본). 단일진실원천 후보. 앱 미연결(엔진 재구축 전). | SEND/CTD/번역 80항목을 세포치료제→SEND·CTD·번역 카테고리로 재분류(2026-06-29).",
+  "note": "통합 시험항목 마스터 v1(복원본) + 가격 보강(의약품 OECD=613, 복합제 개별/동시=2023, 환경=2025원본). 단일진실원천 후보. 앱 미연결(엔진 재구축 전). | SEND/CTD/번역 80항목을 세포치료제→SEND·CTD·번역 카테고리로 재분류(2026-06-29). | 백신 군구성 12·건기식 하위유형 21 백필(2026-06-30, test_items 2025).",
   "priceModel": "경로그룹(경구피하근육=경구·피하·근육 / 정맥경피=정맥·경피·복강) × 제출처(MFDS/OECD). 정맥경피 비어있으면 단일가→경구피하근육 적용(어떤 경로든)."
  },
  "items": [
@@ -4462,108 +4462,6 @@
    "srcRow": 132
   },
   {
-   "id": "vac-133",
-   "category": "백신",
-   "testClass": "면역원성",
-   "testName": "항체형성 확인시험",
-   "species": null,
-   "dosingPeriod": "4주(3회)",
-   "studyWeeks": null,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 10800000,
-     "OECD": 10800000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": null,
-   "hamryangCount": null,
-   "guidelineCode": "ICH S6(R1)",
-   "detail": "- 암수 각각 5마리/군, 총 2군\n- 대조군 1, 백신군 1\n\n채혈 시점:\n1. 투여 전\n2. 2차 투여 전\n3. 3차 투여 전\n4. 투여 종료 후 2주\n5. 투여 종료 후 4주\n\n- 혈액시료 의뢰자에게 전달",
-   "guidelineSummary": "투여 전/중/후 채혈하여 항체 형성 여부 확인. 혈액시료 의뢰자 전달 · ICH: ICH S6(R1) · MFDS: 독성시험기준 제6조",
-   "notice": null,
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 133
-  },
-  {
-   "id": "vac-134",
-   "category": "백신",
-   "testClass": "회복군",
-   "testName": "설치류 4주(3회) 4주 회복",
-   "species": "설치류",
-   "dosingPeriod": "4주(3회)",
-   "studyWeeks": 4,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 30800000,
-     "OECD": 30800000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "X",
-   "hamryangCount": "0회",
-   "guidelineCode": "ICH M3(R2)",
-   "detail": "- 암수 각각 5마리/군, 총 2군\n- 대조군 1, 백신군 1",
-   "guidelineSummary": "백신 본시험 후 4주 회복기 가역성 평가 · OECD TG: OECD TG 407 · ICH: ICH S6(R1), ICH M3(R2) · MFDS: 독성시험기준 제6조",
-   "notice": null,
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 134
-  },
-  {
-   "id": "vac-135",
-   "category": "백신",
-   "testClass": "반복투여독성",
-   "testName": "설치류 4주(3회) 반복투여 독성",
-   "species": "설치류",
-   "dosingPeriod": "4주(3회)",
-   "studyWeeks": 4,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 56000000,
-     "OECD": 56000000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "2회",
-   "guidelineCode": "OECD TG 407, ICH M3(R2)",
-   "detail": "- 암수 각각 10마리/군, 총 2군\n- 대조군 1, 백신군 1\n- 1회/2주, 총 3회 투여\n\n1. 체중, 일반증상\n2. 사료/음용수 섭취량\n3. 뇨/안검사\n4. 부검 및 장기중량, 혈액학, 생화학, 응고검사\n5. 조직병리 검사",
-   "guidelineSummary": "백신 반복투여(1회/2주, 총3회) 독성시험. 2군(대조+백신) · OECD TG: OECD TG 407 · ICH: ICH S6(R1), ICH M3(R2) · MFDS: 독성시험기준 제6조",
-   "notice": "[🤝 협의필요] → 군 구성 여부 확인 후 금액 조정\n[🤝 협의필요] 1. 1회/2주, 총 3회투여 → 확인 후 금액 조정",
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 135
-  },
-  {
    "id": "cell-136",
    "category": "SEND·CTD·번역",
    "testClass": "국소·생물학적안전성",
@@ -7486,346 +7384,6 @@
    "reviewStatus": null,
    "memo": null,
    "srcRow": 221
-  },
-  {
-   "id": "hfood-222",
-   "category": "건강기능식품",
-   "testClass": "단회투여독성",
-   "testName": "급성 경구독성시험",
-   "species": null,
-   "dosingPeriod": "1회",
-   "studyWeeks": 0,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 2700000,
-     "OECD": 2700000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "1회",
-   "guidelineCode": "OECD TG 420",
-   "detail": "- 독성등급법(TG423)\n- 일반증상, 체중 및 부검\n- 14일간 관찰",
-   "guidelineSummary": "독성등급법으로 단회 경구투여 후 14일간 관찰 · OECD TG: OECD TG 423 · MFDS: 식품의약품안전처 고시",
-   "notice": null,
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 222
-  },
-  {
-   "id": "hfood-223",
-   "category": "건강기능식품",
-   "testClass": "단회투여독성",
-   "testName": "설치류 단회 투여 독성시험",
-   "species": "설치류",
-   "dosingPeriod": "1회",
-   "studyWeeks": 0,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 3200000,
-     "OECD": 3200000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "1회",
-   "guidelineCode": "OECD TG 420, ICH M3(R2)",
-   "detail": "- 암수 각각 5마리/군\n- 대조군 1, 시험군 3",
-   "guidelineSummary": "단회 경구투여 후 14일간 관찰 · OECD TG: OECD TG 420/423/425 · MFDS: 식품의약품안전처 고시",
-   "notice": null,
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 223
-  },
-  {
-   "id": "hfood-224",
-   "category": "건강기능식품",
-   "testClass": "유전독성",
-   "testName": "유전독성: 소핵시험(TG474)",
-   "species": null,
-   "dosingPeriod": "단회",
-   "studyWeeks": 0,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 15500000,
-     "OECD": 15500000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "1회",
-   "guidelineCode": "OECD TG 474, ICH S2(R1)",
-   "detail": "- 6마리/군, 총 5군\n- 골수 미성숙 적혈구내 소핵관찰\n- 예비시험 포함",
-   "guidelineSummary": "설치류 골수 적혈구 소핵시험 · OECD TG: OECD TG 474 · ICH: ICH S2(R1) · MFDS: 식품의약품안전처 고시",
-   "notice": null,
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 224
-  },
-  {
-   "id": "hfood-225",
-   "category": "건강기능식품",
-   "testClass": "유전독성",
-   "testName": "유전독성: 염색체이상(TG473)",
-   "species": null,
-   "dosingPeriod": "단회",
-   "studyWeeks": 0,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 13000000,
-     "OECD": 13000000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "1회",
-   "guidelineCode": "OECD TG 473, ICH S2(R1)",
-   "detail": "- CHL 세포\n- 구조/수적 이상 관찰\n- 예비시험 포함",
-   "guidelineSummary": "CHL 세포 염색체이상시험 · OECD TG: OECD TG 473 · ICH: ICH S2(R1) · MFDS: 식품의약품안전처 고시",
-   "notice": null,
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 225
-  },
-  {
-   "id": "hfood-226",
-   "category": "건강기능식품",
-   "testClass": "유전독성",
-   "testName": "유전독성: Ames(TG471)",
-   "species": null,
-   "dosingPeriod": "단회",
-   "studyWeeks": 0,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 5600000,
-     "OECD": 5600000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "1회",
-   "guidelineCode": "OECD TG 471, ICH S2(R1)",
-   "detail": "- 5개 균주(TA100,TA1535,TA98,TA1537,WP2uvrA)\n- 복귀돌연변이 집락 수 관찰\n- 예비시험 포함",
-   "guidelineSummary": "5개 균주 복귀돌연변이시험 · OECD TG: OECD TG 471 · ICH: ICH S2(R1) · MFDS: 식품의약품안전처 고시",
-   "notice": "[💰 추가비용] - 재현성 확인을 위한 추가시험 진행 시 비용추가\n[💰 추가비용] (추가금액 2,000,000원)",
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 226
-  },
-  {
-   "id": "hfood-227",
-   "category": "건강기능식품",
-   "testClass": "조제물·함량분석",
-   "testName": "투여물질의 조제물 분석",
-   "species": null,
-   "dosingPeriod": "단회",
-   "studyWeeks": 0,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 26000000,
-     "OECD": 26000000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "X",
-   "hamryangCount": "0회",
-   "guidelineCode": null,
-   "detail": "- 조제물분석법 Validation\n- HPLC 분석\n- 균질성, 안전성 및 함량 측정\n- 분석법 및 표준품 의뢰자 제공",
-   "guidelineSummary": "투여 조제물의 균질성, 안정성 및 함량을 HPLC 등으로 분석 · MFDS: 건강기능식품 기능성 및 안전성 평가 가이드",
-   "notice": "[✏️ 견적수정] 투여물질의 조제물 분석 <견적 시마다 계산하여 수정할 것>",
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 227
-  },
-  {
-   "id": "hfood-228",
-   "category": "건강기능식품",
-   "testClass": "DRF(용량결정)",
-   "testName": "설치류 4주 DRF",
-   "species": "설치류",
-   "dosingPeriod": "4주",
-   "studyWeeks": 4,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 14400000,
-     "OECD": 14400000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "2회",
-   "guidelineCode": "ICH M3(R2)",
-   "detail": "- 암수 각각 5마리/군\n- 대조군 1, 시험군 3",
-   "guidelineSummary": "13주 본시험의 용량 설정을 위한 DRF · OECD TG: OECD TG 407 · ICH: ICH M3(R2), ICH S4 · MFDS: 식품의약품안전처 고시",
-   "notice": "[💰 추가비용] *설치류 반복투여 독성 개정 고시 추가 시험\n[💰 추가비용] * 성호르몬( testosterone, oestradiol, follicle stimulating hormone, luteinizing hormone )은 필요에 따라 측정할 수 있음 : 추가 비용 발생",
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 228
-  },
-  {
-   "id": "hfood-229",
-   "category": "건강기능식품",
-   "testClass": "회복군",
-   "testName": "설치류 13주 반복 4주 회복",
-   "species": "설치류",
-   "dosingPeriod": "13주",
-   "studyWeeks": 13,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 26000000,
-     "OECD": 26000000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "X",
-   "hamryangCount": "0회",
-   "guidelineCode": "OECD TG 407, OECD TG 408, ICH M3(R2)",
-   "detail": "- 암수 각각 5마리/군, 대조군 1, 시험군 1\n- 회복군: 20마리\n\n*TG408 개정 추가*\n1. 호르몬: T4, T3, TSH\n2. 혈액생화학: LDL, HDL\n3. 암컷 성주기 검사",
-   "guidelineSummary": "본시험 후 4주 회복기 가역성 평가. TG408 개정 반영 · OECD TG: OECD TG 408 · ICH: ICH M3(R2), ICH S4 · MFDS: 식품의약품안전처 고시",
-   "notice": "[💰 추가비용] * 설치류 반복투여 독성 개정 고시 추가 시험\n[💰 추가비용] * 성호르몬( testosterone, oestradiol, follicle stimulating hormone, luteinizing hormone )은 필요에 따라 측정할 수 있음 : 추가 비용 발생",
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 229
-  },
-  {
-   "id": "hfood-230",
-   "category": "건강기능식품",
-   "testClass": "회복군",
-   "testName": "설치류 13주 반복 회복시험",
-   "species": "설치류",
-   "dosingPeriod": "13주",
-   "studyWeeks": 13,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 5600000,
-     "OECD": 5600000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "X",
-   "hamryangCount": "0회",
-   "guidelineCode": "OECD TG 408, ICH M3(R2)",
-   "detail": "- 회복시험 진행여부 선택",
-   "guidelineSummary": "본시험 후 4주 회복기 가역성 평가 · OECD TG: OECD TG 408 · ICH: ICH M3(R2), ICH S4 · MFDS: 식품의약품안전처 고시",
-   "notice": "[📋 참고] * 설치류 반복 투여 회복시험 진행여부",
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 230
-  },
-  {
-   "id": "hfood-231",
-   "category": "건강기능식품",
-   "testClass": "반복투여독성",
-   "testName": "설치류 13주 반복투여 독성",
-   "species": "설치류",
-   "dosingPeriod": "13주",
-   "studyWeeks": 13,
-   "componentCount": null,
-   "analysisMethod": null,
-   "tkPoints": null,
-   "tkMode": null,
-   "groupComposition": null,
-   "prices": {
-    "경구피하근육": {
-     "MFDS": 92000000,
-     "OECD": 92000000
-    },
-    "정맥경피": {
-     "MFDS": null,
-     "OECD": null
-    }
-   },
-   "hamryangApply": "O",
-   "hamryangCount": "2회",
-   "guidelineCode": "OECD TG 408, ICH M3(R2)",
-   "detail": "- 암수 각각 10마리/군, 대조군 1, 시험군 3\n- 주요군: 80마리\n\n*TG408 개정 추가*\n1. 호르몬: T4, T3, TSH\n2. 혈액생화학: LDL, HDL\n3. 암컷 성주기 검사",
-   "guidelineSummary": "13주간 반복투여 아만성독성 평가. TG408 개정 반영 · OECD TG: OECD TG 408 · ICH: ICH M3(R2), ICH S4 · MFDS: 식품의약품안전처 고시",
-   "notice": "[💰 추가비용] *설치류 반복투여 독성 개정 고시 추가 시험\n[💰 추가비용] * 성호르몬( testosterone, oestradiol, follicle stimulating hormone, luteinizing hormone )은 필요에 따라 측정할 수 있음 : 추가 비용 발생",
-   "dataSource": "2026",
-   "reviewStatus": null,
-   "memo": null,
-   "srcRow": 231
   },
   {
    "id": "cosm-232",
@@ -14490,6 +14048,1161 @@
    "reviewStatus": null,
    "memo": "복합제 동시분석 복원(2023 원본). 가격=동시 단가",
    "srcRow": "132_동시"
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-19062",
+   "category": "백신",
+   "testClass": "반복투여독성",
+   "testName": "설치류 4주(3회) 반복투여 독성 (2군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "2군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 56000000,
+     "OECD": 56000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 2군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#2__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-1051",
+   "category": "백신",
+   "testClass": "반복투여독성",
+   "testName": "설치류 4주(3회) 반복투여 독성 (3군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "3군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 84000000,
+     "OECD": 84000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 3군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#2_백신군3__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-77530",
+   "category": "백신",
+   "testClass": "반복투여독성",
+   "testName": "설치류 4주(3회) 반복투여 독성 (4군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "4군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 112000000,
+     "OECD": 112000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 4군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#2_백신군4__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-54009",
+   "category": "백신",
+   "testClass": "반복투여독성",
+   "testName": "설치류 4주(3회) 반복투여 독성 (5군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "5군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 140000000,
+     "OECD": 140000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 5군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#2_백신군5__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-42583",
+   "category": "백신",
+   "testClass": "회복군",
+   "testName": "설치류 4주(3회) 4주 회복 (2군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "2군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 30800000,
+     "OECD": 30800000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 2군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#3__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-14556",
+   "category": "백신",
+   "testClass": "회복군",
+   "testName": "설치류 4주(3회) 4주 회복 (3군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "3군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 46200000,
+     "OECD": 46200000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 3군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#3_백신군3__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-91035",
+   "category": "백신",
+   "testClass": "회복군",
+   "testName": "설치류 4주(3회) 4주 회복 (4군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "4군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 61600000,
+     "OECD": 61600000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 4군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#3_백신군4__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-67514",
+   "category": "백신",
+   "testClass": "회복군",
+   "testName": "설치류 4주(3회) 4주 회복 (5군)",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "5군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 77000000,
+     "OECD": 77000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 5군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#3_백신군5__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-66104",
+   "category": "백신",
+   "testClass": "면역원성",
+   "testName": "항체형성 확인시험 (2군)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": null,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "2군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 10800000,
+     "OECD": 10800000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 2군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#4__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-28061",
+   "category": "백신",
+   "testClass": "면역원성",
+   "testName": "항체형성 확인시험 (3군)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": null,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "3군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 16200000,
+     "OECD": 16200000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 3군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#4_백신군3__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-4540",
+   "category": "백신",
+   "testClass": "면역원성",
+   "testName": "항체형성 확인시험 (4군)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": null,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "4군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 21600000,
+     "OECD": 21600000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 4군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#4_백신군4__근육",
+   "subtype": null
+  },
+  {
+   "id": "vac-bf-백신항목마스터추가정규화v2xlsx백신-81019",
+   "category": "백신",
+   "testClass": "면역원성",
+   "testName": "항체형성 확인시험 (5군)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": null,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "5군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 27000000,
+     "OECD": 27000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "백신 5군",
+   "srcRow": "백신_항목_마스터_추가정규화_v2.xlsx#백신 시험항목 마스터#4_백신군5__근육",
+   "subtype": null
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-52569",
+   "category": "건강기능식품",
+   "testClass": "조제물·함량분석",
+   "testName": "투여물질의 조제물 분석",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 26000000,
+     "OECD": 26000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#2__",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-67913",
+   "category": "건강기능식품",
+   "testClass": "단회투여독성",
+   "testName": "급성 경구독성시험",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 2700000,
+     "OECD": 2700000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#3__경구",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-44392",
+   "category": "건강기능식품",
+   "testClass": "DRF(용량결정)",
+   "testName": "설치류 4주 DRF",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 14400000,
+     "OECD": 14400000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#4__경구",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-20871",
+   "category": "건강기능식품",
+   "testClass": "반복투여독성",
+   "testName": "설치류 13주 반복투여 독성",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 13,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 92000000,
+     "OECD": 92000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#5__경구",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-97350",
+   "category": "건강기능식품",
+   "testClass": "회복군",
+   "testName": "설치류 13주 반복 회복시험",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 13,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 5600000,
+     "OECD": 5600000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#6__경구",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-47764",
+   "category": "건강기능식품",
+   "testClass": "유전독성",
+   "testName": "유전독성: Ames(TG471)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 5600000,
+     "OECD": 5600000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#7__",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-46803",
+   "category": "건강기능식품",
+   "testClass": "유전독성",
+   "testName": "유전독성: 염색체이상(TG473)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 13000000,
+     "OECD": 13000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#8__",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-26787",
+   "category": "건강기능식품",
+   "testClass": "유전독성",
+   "testName": "유전독성: 소핵시험(TG474)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 15500000,
+     "OECD": 15500000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 개별인정형",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#9__경구",
+   "subtype": "개별인정형"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-88202",
+   "category": "건강기능식품",
+   "testClass": "조제물·함량분석",
+   "testName": "투여물질의 조제물 분석",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 26000000,
+     "OECD": 26000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 프로바이오틱스",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#프로바이오틱스#2__",
+   "subtype": "프로바이오틱스"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-49606",
+   "category": "건강기능식품",
+   "testClass": "단회투여독성",
+   "testName": "설치류 단회 투여 독성시험",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 3200000,
+     "OECD": 3200000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 프로바이오틱스",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#프로바이오틱스#3__경구",
+   "subtype": "프로바이오틱스"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-73127",
+   "category": "건강기능식품",
+   "testClass": "DRF(용량결정)",
+   "testName": "설치류 4주 DRF",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 14400000,
+     "OECD": 14400000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 프로바이오틱스",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#프로바이오틱스#4__경구",
+   "subtype": "프로바이오틱스"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-96648",
+   "category": "건강기능식품",
+   "testClass": "반복투여독성",
+   "testName": "설치류 13주 반복투여 독성",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 13,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 92000000,
+     "OECD": 92000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 프로바이오틱스",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#프로바이오틱스#5__경구",
+   "subtype": "프로바이오틱스"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-20169",
+   "category": "건강기능식품",
+   "testClass": "회복군",
+   "testName": "설치류 13주 반복 4주 회복",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 13,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 26000000,
+     "OECD": 26000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 프로바이오틱스",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#프로바이오틱스#6__경구",
+   "subtype": "프로바이오틱스"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-52093",
+   "category": "건강기능식품",
+   "testClass": "조제물·함량분석",
+   "testName": "투여물질의 조제물 분석",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 26000000,
+     "OECD": 26000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#2__",
+   "subtype": "한시적식품"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-37811",
+   "category": "건강기능식품",
+   "testClass": "단회투여독성",
+   "testName": "급성 경구독성시험",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 2700000,
+     "OECD": 2700000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#3__경구",
+   "subtype": "한시적식품"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-61332",
+   "category": "건강기능식품",
+   "testClass": "DRF(용량결정)",
+   "testName": "설치류 4주 DRF",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 4,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 14400000,
+     "OECD": 14400000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#4__경구",
+   "subtype": "한시적식품"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-84853",
+   "category": "건강기능식품",
+   "testClass": "반복투여독성",
+   "testName": "설치류 13주 반복투여 독성",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 13,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 92000000,
+     "OECD": 92000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#5__경구",
+   "subtype": "한시적식품"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-8374",
+   "category": "건강기능식품",
+   "testClass": "회복군",
+   "testName": "설치류 13주 반복 4주 회복",
+   "species": "설치류",
+   "dosingPeriod": null,
+   "studyWeeks": 13,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 26000000,
+     "OECD": 26000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#6__경구",
+   "subtype": "한시적식품"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-47288",
+   "category": "건강기능식품",
+   "testClass": "유전독성",
+   "testName": "유전독성: Ames(TG471)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 5600000,
+     "OECD": 5600000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#7__",
+   "subtype": "한시적식품"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-46327",
+   "category": "건강기능식품",
+   "testClass": "유전독성",
+   "testName": "유전독성: 염색체이상(TG473)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 13000000,
+     "OECD": 13000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#8__",
+   "subtype": "한시적식품"
+  },
+  {
+   "id": "hfood-bf-건기식항목마스터통합추가정규화v2xls-78937",
+   "category": "건강기능식품",
+   "testClass": "유전독성",
+   "testName": "유전독성: 소핵시험(TG474)",
+   "species": null,
+   "dosingPeriod": null,
+   "studyWeeks": 0,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": null,
+   "prices": {
+    "경구피하근육": {
+     "MFDS": 15500000,
+     "OECD": 15500000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": null
+    }
+   },
+   "hamryangApply": null,
+   "hamryangCount": null,
+   "guidelineCode": null,
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "백필(test_items 2025)",
+   "reviewStatus": null,
+   "memo": "하위유형 한시적식품",
+   "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#한시적식품#9__경구",
+   "subtype": "한시적식품"
   }
  ]
 }

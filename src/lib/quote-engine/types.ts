@@ -32,6 +32,7 @@ export type MasterItem = {
   reviewStatus: string | null;
   memo: string | null;
   srcRow: number | string;
+  subtype?: string | null;          // 건기식 하위유형(개별인정형/프로바이오틱스/한시적식품)
 };
 
 export type QuoteInput = {

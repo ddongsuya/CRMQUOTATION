@@ -39,6 +39,8 @@ export default function QuoteV2Page() {
   const [excipient, setExcipient] = useState(1);
   const [submissionTarget, setSubmissionTarget] = useState('국내');
   const [cellType, setCellType] = useState<'adult' | 'esc_ipsc'>('adult');
+  const [vaccineGroups, setVaccineGroups] = useState(2);
+  const [healthSubtype, setHealthSubtype] = useState('개별인정형');
   const [conds, setConds] = useState<Record<string, boolean>>({});
   const [reqAddons, setReqAddons] = useState<Record<string, boolean>>({});
   const [quote, setQuote] = useState<Quote | null>(null);
@@ -57,6 +59,8 @@ export default function QuoteV2Page() {
         tk: { points: tk.points, sampleOnly: tk.sampleOnly, sessions: tk.sessions },
         componentCount: isCombo ? comboCount : undefined, comboAnalysis: isCombo ? comboAnal : undefined,
         excipientCount: excipient, submissionTarget, cellType,
+        vaccineGroups: category === '백신' ? vaccineGroups : undefined,
+        subtype: category === '건강기능식품' ? healthSubtype : undefined,
       };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
@@ -88,6 +92,8 @@ export default function QuoteV2Page() {
               <Chip on={cellType === 'adult'} onClick={() => setCellType('adult')}>성체(26주)</Chip>
               <Chip on={cellType === 'esc_ipsc'} onClick={() => setCellType('esc_ipsc')}>ESC/iPSC(52주)</Chip>
             </div></Field>}
+            {category === '백신' && <Field label="군 구성"><div className="flex gap-1.5">{[2, 3, 4, 5].map(g => <Chip key={g} on={vaccineGroups === g} onClick={() => setVaccineGroups(g)}>{g}군</Chip>)}</div></Field>}
+            {category === '건강기능식품' && <Field label="하위유형"><select className="input" value={healthSubtype} onChange={e => setHealthSubtype(e.target.value)}><option>개별인정형</option><option>프로바이오틱스</option><option>한시적식품</option></select></Field>}
           </div>
 
           {!isCombo && <>

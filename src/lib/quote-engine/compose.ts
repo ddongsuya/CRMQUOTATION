@@ -20,6 +20,7 @@ export type ComposePlan = {
   excipientCount?: number;          // 부형제(비히클) 종수 — 함량/조제물분석 곱
   submissionTarget?: string;        // 국내 / USFDA / EMA — 안전성약리 hERG 변형 선택
   cellType?: 'adult' | 'esc_ipsc';  // 세포치료제 — 성체(26주) / ESC·iPSC(52주)
+  vaccineGroups?: number;           // 백신 군구성(2~5군)
 };
 
 const DUR_WEEKS: Record<string, number> = { W2: 2, W4: 4, W13: 13, W26: 26, W39: 39, W52: 52 };
@@ -80,11 +81,13 @@ function composeDrug(items: MasterItem[], plan: ComposePlan): MasterItem[] {
   return out;
 }
 
-/** 백신 — 4주(3회) 반복 + 회복(옵션) + 면역원성. ※군구성(2~5군) 단가는 426 미복원(데이터 갭). */
+/** 백신 — 군구성(2~5군)별 4주(3회) 반복 + 회복(옵션) + 면역원성. */
 function composeVaccine(items: MasterItem[], plan: ComposePlan): MasterItem[] {
-  const out = items.filter(it => cls(it, '반복투여독성'));
-  if (plan.addons.recovery) out.push(...items.filter(it => cls(it, '회복군')));
-  if (plan.addons.immunogenicity !== false) out.push(...items.filter(it => cls(it, '면역원성')));
+  const g = `${plan.vaccineGroups ?? 2}군`;
+  const byGroup = (arr: MasterItem[]) => arr.filter(it => (it.groupComposition ?? '') === g);
+  const out = byGroup(items.filter(it => cls(it, '반복투여독성')));
+  if (plan.addons.recovery) out.push(...byGroup(items.filter(it => cls(it, '회복군'))));
+  if (plan.addons.immunogenicity !== false) out.push(...byGroup(items.filter(it => cls(it, '면역원성'))));
   return out;
 }
 
@@ -182,8 +185,12 @@ export function composeFromPlan(plan: ComposePlan): { id: string; testName: stri
   if (plan.modality === '복합제') picked = composeCombo(items, plan);
   else if (plan.modality === '백신') picked = composeVaccine(items, plan);
   else if (plan.modality === '세포치료제') picked = composeCell(items, plan);
-  // 의약품·건강기능식품은 신약군 풀패키지 로직 공유(본시험·DRF·회복·TK·유전독성·단회)
-  else if (plan.modality === '의약품' || plan.modality === '건강기능식품') picked = composeDrug(items, plan);
+  else if (plan.modality === '건강기능식품') {
+    // 하위유형(개별인정형/프로바이오틱스/한시적식품)으로 먼저 거른 뒤 신약군 로직
+    const sub = plan.subtype ?? '개별인정형';
+    picked = composeDrug(items.filter(it => !it.subtype || it.subtype === sub), plan);
+  }
+  else if (plan.modality === '의약품') picked = composeDrug(items, plan);
   else picked = composeGeneric(items, plan);
   // 중복 제거
   const seen = new Set<string>();
