@@ -37,6 +37,8 @@ export default function QuoteV2Page() {
   const [comboCount, setComboCount] = useState(2);
   const [comboAnal, setComboAnal] = useState<'개별' | '동시'>('개별');
   const [excipient, setExcipient] = useState(1);
+  const [submissionTarget, setSubmissionTarget] = useState('국내');
+  const [cellType, setCellType] = useState<'adult' | 'esc_ipsc'>('adult');
   const [conds, setConds] = useState<Record<string, boolean>>({});
   const [reqAddons, setReqAddons] = useState<Record<string, boolean>>({});
   const [quote, setQuote] = useState<Quote | null>(null);
@@ -54,7 +56,7 @@ export default function QuoteV2Page() {
         durations: [...durations], species, addons,
         tk: { points: tk.points, sampleOnly: tk.sampleOnly, sessions: tk.sessions },
         componentCount: isCombo ? comboCount : undefined, comboAnalysis: isCombo ? comboAnal : undefined,
-        excipientCount: excipient,
+        excipientCount: excipient, submissionTarget, cellType,
       };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
@@ -78,6 +80,14 @@ export default function QuoteV2Page() {
             <Field label="모달리티"><select className="input" value={category} onChange={e => setCategory(e.target.value)}>{meta?.categories.map(c => <option key={c}>{c}</option>)}</select></Field>
             <Field label="제출처"><select className="input" value={standard} onChange={e => setStandard(e.target.value as 'MFDS' | 'OECD')}><option>MFDS</option><option>OECD</option></select></Field>
             <Field label="투여경로"><select className="input" value={route} onChange={e => setRoute(e.target.value)}>{ROUTES.map(r => <option key={r}>{r}</option>)}</select></Field>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            <Field label="제출 대상 (안전성약리 hERG)"><select className="input" value={submissionTarget} onChange={e => setSubmissionTarget(e.target.value)}><option>국내</option><option>USFDA</option><option>EMA</option></select></Field>
+            {category === '세포치료제' && <Field label="세포 유형"><div className="flex gap-1.5">
+              <Chip on={cellType === 'adult'} onClick={() => setCellType('adult')}>성체(26주)</Chip>
+              <Chip on={cellType === 'esc_ipsc'} onClick={() => setCellType('esc_ipsc')}>ESC/iPSC(52주)</Chip>
+            </div></Field>}
           </div>
 
           {!isCombo && <>
