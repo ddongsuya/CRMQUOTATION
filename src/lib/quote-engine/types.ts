@@ -40,7 +40,8 @@ export type QuoteInput = {
   route: string;                    // 투여경로 (경구·피하·정맥·경피 등)
   submissionTarget?: string;        // 국내 / USFDA / EMA
   selectedItems: { id: string; quantity?: number }[];
-  customerConditions?: Record<string, boolean>;
+  customerConditions?: Record<string, boolean>;   // WV/SB/CG 트리거 토글
+  requestedAddons?: Record<string, boolean>;      // AD(optional) 채택 여부
   combinationCount?: number;        // 복합제 종수
 };
 
@@ -56,11 +57,18 @@ export type LineItem = {
 };
 
 export type MissingInfo = { id?: string; level: 'blocker' | 'warning'; message: string };
+export type WaivedItem = { id: string; testName: string; ruleId: string; reason: string };
+export type Addon = { ruleId: string; name: string; price: number; optional: boolean; note?: string };
+export type DocRequirement = { ruleId: string; document: string; mandatory: boolean };
 
 export type Quote = {
   input: QuoteInput;
   lineItems: LineItem[];
-  totals: { subtotalKrw: number };
+  waivedItems: WaivedItem[];
+  addons: Addon[];
+  prerequisitesAdded: LineItem[];
+  documentRequirements: DocRequirement[];
+  totals: { lineItemsKrw: number; addonsKrw: number; subtotalKrw: number };
   missingInfo: MissingInfo[];
   metaNotes: string[];
   ruleLog: { step: string; msg: string }[];
