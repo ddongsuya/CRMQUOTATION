@@ -40,6 +40,12 @@ export function evaluateQuote(input: QuoteInput): Quote {
     s.lineItems.push(li);
   }
 
+  // ── 계산 산출 라인(함량분석·조제물분석 R2/R8) — 마스터 항목 아님, 가격 산출됨 ──
+  for (const li of input.extraLines ?? []) {
+    s.lineItems.push(li);
+    s.ruleLog.push({ step: 'analysis', msg: `${li.appliedRules.join(',')}: ${li.testName} (${(li.unitPrice ?? 0).toLocaleString()})` });
+  }
+
   // ── WV → SB → CG → PR → AD → PF ──
   runRuleStages(s);
 

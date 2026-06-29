@@ -36,6 +36,7 @@ export default function QuoteV2Page() {
   const [tk, setTk] = useState({ points: 8, sessions: 2, sampleOnly: false });
   const [comboCount, setComboCount] = useState(2);
   const [comboAnal, setComboAnal] = useState<'개별' | '동시'>('개별');
+  const [excipient, setExcipient] = useState(1);
   const [conds, setConds] = useState<Record<string, boolean>>({});
   const [reqAddons, setReqAddons] = useState<Record<string, boolean>>({});
   const [quote, setQuote] = useState<Quote | null>(null);
@@ -53,6 +54,7 @@ export default function QuoteV2Page() {
         durations: [...durations], species, addons,
         tk: { points: tk.points, sampleOnly: tk.sampleOnly, sessions: tk.sessions },
         componentCount: isCombo ? comboCount : undefined, comboAnalysis: isCombo ? comboAnal : undefined,
+        excipientCount: excipient,
       };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
@@ -90,6 +92,9 @@ export default function QuoteV2Page() {
             </Field>
             <Field label="부가 시험">
               <div className="flex flex-wrap gap-1.5">{ADDONS.map(a => <Chip key={a.key} on={!!addons[a.key]} onClick={() => setAddons(p => ({ ...p, [a.key]: !p[a.key] }))}>{a.label}</Chip>)}</div>
+            </Field>
+            <Field label="부형제(비히클) 종수 — 함량·조제물분석 곱">
+              <div className="flex gap-1.5">{[1, 2, 3].map(n => <Chip key={n} on={excipient === n} onClick={() => setExcipient(n)}>{n}종</Chip>)}</div>
             </Field>
             {addons.tk && (
               <Field label="TK 사양">

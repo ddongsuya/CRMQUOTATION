@@ -43,6 +43,7 @@ export type QuoteInput = {
   customerConditions?: Record<string, boolean>;   // WV/SB/CG 트리거 토글
   requestedAddons?: Record<string, boolean>;      // AD(optional) 채택 여부
   combinationCount?: number;        // 복합제 종수
+  extraLines?: LineItem[];          // 계산 산출 라인(함량분석·조제물분석 R2/R8) — 마스터 항목 아님
 };
 
 export type LineItem = {
