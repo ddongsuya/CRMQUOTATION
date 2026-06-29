@@ -55,6 +55,7 @@ export type LineItem = {
   amount: number | null;
   appliedRules: string[];
   notes: string[];
+  isPrereq?: boolean;               // 선행 자동추가 라인
 };
 
 export type MissingInfo = { id?: string; level: 'blocker' | 'warning'; message: string };

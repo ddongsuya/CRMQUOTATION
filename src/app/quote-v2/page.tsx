@@ -168,9 +168,9 @@ function QuoteResult({ quote, composedCount }: { quote: Quote; composedCount: nu
             <th className="py-1.5 pr-2">시험명</th><th className="py-1.5 px-2 w-14">경로</th><th className="py-1.5 px-2 w-28 text-right">단가</th><th className="py-1.5 px-2">적용 규칙/비고</th>
           </tr></thead>
           <tbody>
-            {[...quote.lineItems, ...quote.prerequisitesAdded].map((li: any, i: number) => (
+            {quote.lineItems.map((li: any, i: number) => (
               <tr key={i} className="border-b border-slate-50">
-                <td className="py-1.5 pr-2 text-ink">{li.testName}{quote.prerequisitesAdded.includes(li) && <span className="pill bg-violet-100 text-violet-700 ml-1">선행</span>}</td>
+                <td className="py-1.5 pr-2 text-ink">{li.testName}{li.isPrereq && <span className="pill bg-violet-100 text-violet-700 ml-1">선행</span>}</td>
                 <td className="py-1.5 px-2 text-ink-muted">{li.route}</td>
                 <td className="py-1.5 px-2 text-right tabular-nums font-medium">{won(li.unitPrice)}</td>
                 <td className="py-1.5 px-2 text-[11px] text-ink-subtle">{[...li.appliedRules, ...li.notes].join(' · ')}</td>

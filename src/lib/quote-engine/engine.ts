@@ -8,6 +8,7 @@ import type { QuoteInput, Quote, LineItem, MissingInfo } from './types';
 import { getItem } from './master';
 import { resolvePrice } from './pricing';
 import { runRuleStages, type RuleState } from './rules';
+import { sortLines } from './ordering';
 
 export function evaluateQuote(input: QuoteInput): Quote {
   const s: RuleState = {
@@ -57,13 +58,13 @@ export function evaluateQuote(input: QuoteInput): Quote {
   ];
   s.ruleLog.push({ step: 'GR', msg: 'GR-001~003 메타룰 적용' });
 
-  // ── 합계 (라인 + 선행추가 + 추가옵션) ──
-  const allLines = [...s.lineItems, ...s.prerequisitesAdded];
-  const lineItemsKrw = allLines.reduce((sum, li) => sum + (li.amount ?? 0), 0);
+  // ── 선행추가 라인 병합(플래그) + 정립 순서 정렬 + 합계 ──
+  const lineItems = sortLines([...s.lineItems, ...s.prerequisitesAdded.map(li => ({ ...li, isPrereq: true }))]);
+  const lineItemsKrw = lineItems.reduce((sum, li) => sum + (li.amount ?? 0), 0);
   const addonsKrw = s.addons.reduce((sum, a) => sum + a.price, 0);
 
   return {
-    input, lineItems: s.lineItems, waivedItems: s.waivedItems, addons: s.addons,
+    input, lineItems, waivedItems: s.waivedItems, addons: s.addons,
     prerequisitesAdded: s.prerequisitesAdded, documentRequirements: s.documentRequirements,
     totals: { lineItemsKrw, addonsKrw, subtotalKrw: lineItemsKrw + addonsKrw },
     missingInfo: s.missingInfo, metaNotes, ruleLog: s.ruleLog,
