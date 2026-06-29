@@ -20,8 +20,8 @@ const NAV = [
   { href: '/quotes', label: '견적 목록', icon: List },
   { href: '/guidelines', label: '가이드라인', icon: BookOpen },
   { href: '/catalog', label: '항목·가격', icon: Database },
-  { href: '/quote-v2', label: '견적 엔진(신)', icon: Beaker },
-  { href: '/quote/new', label: '새 견적', icon: FileText },
+  { href: '/quote-v2', label: '새 견적', icon: FileText },
+  { href: '/quote/new', label: '새 견적(구)', icon: Beaker },
 ];
 
 // 모바일 하단 탭바 (디자인: 홈·견적·고객·일정·더보기). '더보기'는 전체 메뉴 드로어를 연다.
@@ -41,8 +41,8 @@ const PAGE_LABEL: Record<string, string> = {
   '/quotes': '견적 목록',
   '/guidelines': '가이드라인',
   '/catalog': '항목·가격 마스터',
-  '/quote-v2': '견적 엔진 v2 (실험)',
-  '/quote/new': '새 견적 작성',
+  '/quote-v2': '새 견적 작성',
+  '/quote/new': '새 견적 작성 (구)',
 };
 
 /**
@@ -106,7 +106,7 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
           </nav>
 
           <div className="px-3 mt-4">
-            <Link href="/quote/new" className="btn-primary w-full justify-center py-2.5 text-sm">
+            <Link href="/quote-v2" className="btn-primary w-full justify-center py-2.5 text-sm">
               <Plus className="w-4 h-4" /> 새 견적 작성
             </Link>
           </div>

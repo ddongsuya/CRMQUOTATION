@@ -79,7 +79,7 @@ export default function QuotesListPage() {
           <h1 className="text-2xl font-bold tracking-tight">견적 목록</h1>
           <p className="text-sm text-ink-muted mt-0.5">발행·발송·수주 상태를 한눈에 추적하세요.</p>
         </div>
-        <Link href="/quote/new" className="btn-primary"><Plus className="w-4 h-4" /> 새 견적</Link>
+        <Link href="/quote-v2" className="btn-primary"><Plus className="w-4 h-4" /> 새 견적</Link>
       </div>
 
       {/* 통계 카드 */}
@@ -109,7 +109,7 @@ export default function QuotesListPage() {
         <div className="card p-12 text-center">
           <FileText className="w-10 h-10 mx-auto text-ink-subtle/40 mb-3" />
           <div className="text-sm text-ink-muted font-medium">{quotes.length === 0 ? '저장된 견적이 없습니다.' : '조건에 맞는 견적이 없습니다.'}</div>
-          {quotes.length === 0 && <Link href="/quote/new" className="btn-primary mt-4 inline-flex"><Plus className="w-4 h-4" /> 첫 견적 작성하기</Link>}
+          {quotes.length === 0 && <Link href="/quote-v2" className="btn-primary mt-4 inline-flex"><Plus className="w-4 h-4" /> 첫 견적 작성하기</Link>}
         </div>
       ) : (
         <div className="card overflow-x-auto">
@@ -131,7 +131,7 @@ export default function QuotesListPage() {
                 <tr key={qr.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50/40 transition-colors">
                   <td className="px-4 py-3 font-mono text-xs tabular-nums text-brand-700">{qr.quoteNumber}</td>
                   <td className="px-4 py-3">
-                    <Link href={`/quote/new?id=${qr.id}`} className="font-medium text-ink hover:text-brand-600">{qr.projectName}</Link>
+                    <Link href={`/quote/print?id=${qr.id}`} className="font-medium text-ink hover:text-brand-600">{qr.projectName}</Link>
                     {qr.customerCompany && <div className="text-[11px] text-ink-subtle">{qr.customerCompany}</div>}
                   </td>
                   <td className="px-4 py-3 text-xs text-ink-muted">{qr.modality}</td>

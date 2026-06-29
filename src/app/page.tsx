@@ -149,7 +149,7 @@ export default async function Home() {
                 <FileText className="w-5 h-5" />
               </div>
               <div className="text-sm text-ink-muted">아직 저장된 견적이 없습니다.</div>
-              <Link href="/quote/new" className="btn-primary text-xs mt-3">
+              <Link href="/quote-v2" className="btn-primary text-xs mt-3">
                 <FileText className="w-3.5 h-3.5" /> 첫 견적 작성하기
               </Link>
             </div>

@@ -146,7 +146,7 @@ function Card({ icon, title, action, children }: { icon: React.ReactNode; title:
 function SectionQuotes({ deal }: { deal: Deal }) {
   return (
     <Card icon={<FileText className="w-4 h-4 text-brand-500" />} title={`견적서 ${deal.quotes.length}건`}
-      action={<Link href={`/quote/new?dealId=${deal.id}`} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 이 안건으로 견적 작성</Link>}>
+      action={<Link href={`/quote-v2?dealId=${deal.id}`} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 이 안건으로 견적 작성</Link>}>
       {deal.quotes.length === 0 ? <div className="text-xs text-ink-subtle py-1">아직 견적이 없습니다.</div> : (
         <ul className="divide-y divide-slate-50">
           {deal.quotes.map(q => (
