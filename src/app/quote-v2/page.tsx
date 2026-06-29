@@ -54,6 +54,7 @@ export default function QuoteV2Page() {
   const [dealId, setDealId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [savedNo, setSavedNo] = useState<string | null>(null);
+  const [savedId, setSavedId] = useState<number | null>(null);
 
   useEffect(() => { fetch('/api/quote-v2').then(r => r.json()).then(setMeta); }, []);
   useEffect(() => { const d = new URLSearchParams(window.location.search).get('dealId'); if (d) setDealId(Number(d)); }, []);
@@ -79,7 +80,7 @@ export default function QuoteV2Page() {
         body: JSON.stringify(body),
       });
       const d = await res.json();
-      if (d.quote?.quoteNumber) setSavedNo(d.quote.quoteNumber);
+      if (d.quote?.quoteNumber) { setSavedNo(d.quote.quoteNumber); setSavedId(d.quote.id ?? null); }
     } finally { setSaving(false); }
   };
   const toggleSet = (s: Set<string>, k: string) => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; };
@@ -97,7 +98,7 @@ export default function QuoteV2Page() {
   }, [category, isBattery]);
 
   const generate = async () => {
-    setLoading(true); setQuote(null); setSavedNo(null);
+    setLoading(true); setQuote(null); setSavedNo(null); setSavedId(null);
     try {
       const body = isBattery
         ? { category, standard, route, selectedItems: [...picked].map(id => ({ id })), customerConditions: conds, requestedAddons: reqAddons }
@@ -256,6 +257,7 @@ export default function QuoteV2Page() {
       {quote && (
         <div className="flex items-center justify-end gap-2">
           {savedNo && <span className="text-sm text-emerald-600 font-medium">저장됨 · {savedNo}</span>}
+          {savedId && <a href={`/quote/print?id=${savedId}`} target="_blank" rel="noreferrer" className="btn-ghost"><FileText className="w-4 h-4" /> PDF 출력</a>}
           <button onClick={() => saveQuote(false)} disabled={saving} className="btn-ghost">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시저장</button>
           <button onClick={() => saveQuote(true)} disabled={saving} className="btn-primary">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Receipt className="w-4 h-4" />} 발행</button>
         </div>
