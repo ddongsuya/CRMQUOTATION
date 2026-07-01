@@ -155,10 +155,10 @@ export default function CompanyDetailPage() {
       {tab === '연락처' && (
         <ContactsTab company={company} onAdd={() => setContactModal({ contact: null })} onEdit={c => setContactModal({ contact: c })} onDel={delContact} onAddDeal={cid => setDealModal({ contactId: cid })} />
       )}
-      {tab === '계약' && <ContractsTab agg={agg} />}
-      {tab === '시험' && <StudiesTab agg={agg} />}
-      {tab === '노트' && <NotesTab agg={agg} />}
-      {tab === '일정' && <ScheduleTab agg={agg} />}
+      {tab === '계약' && <ContractsTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
+      {tab === '시험' && <StudiesTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
+      {tab === '노트' && <NotesTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
+      {tab === '일정' && <ScheduleTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
 
       {editCompany && <CompanyEditModal company={company} onClose={() => setEditCompany(false)} onSaved={() => { setEditCompany(false); load(); }} />}
       {contactModal && <ContactModal companyId={company.id} contact={contactModal.contact} onClose={() => setContactModal(null)} onSaved={() => { setContactModal(null); load(); }} />}
@@ -187,6 +187,19 @@ function SectionCard({ title, icon, count, children, action }: { title: string; 
       {children}
     </section>
   );
+}
+
+type DealOpt = Agg['deals'];
+function DealSelect({ deals, value, onChange }: { deals: DealOpt; value: number | ''; onChange: (v: number) => void }) {
+  return (
+    <select className="input text-sm" value={value} onChange={e => onChange(Number(e.target.value))}>
+      <option value="">안건 선택…</option>
+      {deals.map(d => <option key={d.id} value={d.id}>{d.title}{d.contactName ? ` · ${d.contactName}` : ''}</option>)}
+    </select>
+  );
+}
+function AddToggle({ open, onToggle, label }: { open: boolean; onToggle: () => void; label: string }) {
+  return <button onClick={onToggle} className="btn-ghost text-xs">{open ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />} {open ? '취소' : label}</button>;
 }
 
 function Empty({ children }: { children: React.ReactNode }) {
@@ -353,10 +366,31 @@ function ContactsTab({ company, onAdd, onEdit, onDel, onAddDeal }: {
 }
 
 // ─── 계약 ───
-function ContractsTab({ agg }: { agg: Agg | null }) {
+function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; reload: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [dealId, setDealId] = useState<number | ''>('');
+  const [busy, setBusy] = useState(false);
+  const noContractDeals = deals.filter(d => !(agg?.contracts ?? []).some(c => c.dealId === d.id));
+  const start = async () => {
+    if (!dealId) { toast.error('안건을 선택하세요.'); return; }
+    setBusy(true);
+    const res = await fetch('/api/crm/contracts', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ dealId }) });
+    setBusy(false);
+    if (res.ok) { toast.success('계약 시작 — 기본 지급조건(선금50/잔금50) 생성'); setDealId(''); setOpen(false); reload(); } else toast.error('실패 — 견적이 있는 안건인지 확인하세요.');
+  };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
-    <SectionCard title="계약" icon={<FileSignature className="w-4 h-4 text-brand-500" />} count={agg.contracts.length}>
+    <SectionCard title="계약" icon={<FileSignature className="w-4 h-4 text-brand-500" />} count={agg.contracts.length}
+      action={noContractDeals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="계약 시작" />}>
+      {open && (
+        <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
+          <p className="text-[11px] text-ink-subtle">견적 기반으로 계약을 시작합니다(선금 50% + 잔금 50%). 계약번호·회차는 딜 상세에서 편집.</p>
+          <div className="flex gap-2">
+            <DealSelect deals={noContractDeals} value={dealId} onChange={setDealId} />
+            <button onClick={start} disabled={busy} className="btn-primary text-sm shrink-0">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 시작</button>
+          </div>
+        </div>
+      )}
       {agg.contracts.length === 0 ? <Empty>등록된 계약이 없습니다.</Empty> : (
         <div className="overflow-x-auto -mx-1 px-1">
           <table className="w-full min-w-[480px] text-sm">
@@ -385,10 +419,28 @@ function ContractsTab({ agg }: { agg: Agg | null }) {
 }
 
 // ─── 시험 ───
-function StudiesTab({ agg }: { agg: Agg | null }) {
+function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; reload: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState<{ dealId: number | ''; itemName: string }>({ dealId: '', itemName: '' });
+  const [busy, setBusy] = useState(false);
+  const add = async () => {
+    if (!f.dealId || !f.itemName.trim()) { toast.error('안건·시험 항목명을 입력하세요.'); return; }
+    setBusy(true);
+    const res = await fetch('/api/crm/studies', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ dealId: f.dealId, itemName: f.itemName }) });
+    setBusy(false);
+    if (res.ok) { toast.success('시험 추가됨'); setF({ dealId: '', itemName: '' }); setOpen(false); reload(); } else toast.error('저장 실패');
+  };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
-    <SectionCard title="시험" icon={<FlaskConical className="w-4 h-4 text-brand-500" />} count={agg.studies.length}>
+    <SectionCard title="시험" icon={<FlaskConical className="w-4 h-4 text-brand-500" />} count={agg.studies.length}
+      action={deals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="시험 추가" />}>
+      {open && (
+        <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
+          <DealSelect deals={deals} value={f.dealId} onChange={v => setF(s => ({ ...s, dealId: v }))} />
+          <input className="input text-sm w-full" placeholder="시험 항목명 (예: 설치류 13주 반복투여 독성)" value={f.itemName} onChange={e => setF(s => ({ ...s, itemName: e.target.value }))} />
+          <div className="flex justify-end"><button onClick={add} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 추가</button></div>
+        </div>
+      )}
       {agg.studies.length === 0 ? <Empty>등록된 시험이 없습니다.</Empty> : (
         <div className="overflow-x-auto -mx-1 px-1">
           <table className="w-full min-w-[560px] text-sm">
@@ -421,10 +473,32 @@ function StudiesTab({ agg }: { agg: Agg | null }) {
 }
 
 // ─── 노트 ───
-function NotesTab({ agg }: { agg: Agg | null }) {
+function NotesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; reload: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState<{ dealId: number | ''; type: string; title: string; body: string }>({ dealId: '', type: 'MEMO', title: '', body: '' });
+  const [busy, setBusy] = useState(false);
+  const add = async () => {
+    if (!f.dealId || !f.body.trim()) { toast.error('안건·내용을 입력하세요.'); return; }
+    setBusy(true);
+    const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ dealId: f.dealId, type: f.type, title: f.title || null, body: f.body }) });
+    setBusy(false);
+    if (res.ok) { toast.success('기록 추가됨'); setF({ dealId: '', type: 'MEMO', title: '', body: '' }); setOpen(false); reload(); } else toast.error('저장 실패');
+  };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
-    <SectionCard title="노트" icon={<NotebookPen className="w-4 h-4 text-brand-500" />} count={agg.notes.length}>
+    <SectionCard title="노트" icon={<NotebookPen className="w-4 h-4 text-brand-500" />} count={agg.notes.length}
+      action={deals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="기록 추가" />}>
+      {open && (
+        <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            <DealSelect deals={deals} value={f.dealId} onChange={v => setF(s => ({ ...s, dealId: v }))} />
+            <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{Object.entries(NOTE_T).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select>
+          </div>
+          <input className="input text-sm w-full" placeholder="제목(선택)" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
+          <textarea className="input text-sm w-full min-h-[64px]" placeholder="내용" value={f.body} onChange={e => setF(s => ({ ...s, body: e.target.value }))} />
+          <div className="flex justify-end"><button onClick={add} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 저장</button></div>
+        </div>
+      )}
       {agg.notes.length === 0 ? <Empty>기록된 노트가 없습니다.</Empty> : (
         <ul className="space-y-4">
           {agg.notes.map(n => (
@@ -446,11 +520,33 @@ function NotesTab({ agg }: { agg: Agg | null }) {
 }
 
 // ─── 일정 ───
-function ScheduleTab({ agg }: { agg: Agg | null }) {
+function ScheduleTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; reload: () => void }) {
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState<{ dealId: number | ''; title: string; startAt: string; type: string }>({ dealId: '', title: '', startAt: '', type: 'MEETING' });
+  const [busy, setBusy] = useState(false);
+  const add = async () => {
+    if (!f.dealId || !f.title.trim() || !f.startAt) { toast.error('안건·제목·날짜를 입력하세요.'); return; }
+    setBusy(true);
+    const res = await fetch('/api/crm/events', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ dealId: f.dealId, title: f.title, startAt: new Date(f.startAt).toISOString(), type: f.type, allDay: true }) });
+    setBusy(false);
+    if (res.ok) { toast.success('일정 추가됨'); setF({ dealId: '', title: '', startAt: '', type: 'MEETING' }); setOpen(false); reload(); } else toast.error('저장 실패');
+  };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   const sorted = [...agg.events].sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
   return (
-    <SectionCard title="일정" icon={<CalendarDays className="w-4 h-4 text-brand-500" />} count={sorted.length}>
+    <SectionCard title="일정" icon={<CalendarDays className="w-4 h-4 text-brand-500" />} count={sorted.length}
+      action={deals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="일정 추가" />}>
+      {open && (
+        <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            <DealSelect deals={deals} value={f.dealId} onChange={v => setF(s => ({ ...s, dealId: v }))} />
+            <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].map(k => <option key={k} value={k}>{k === 'MEETING' ? '미팅' : k === 'DEADLINE' ? '마감' : k === 'MILESTONE' ? '마일스톤' : '리마인더'}</option>)}</select>
+          </div>
+          <input className="input text-sm w-full" placeholder="일정 제목" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
+          <input type="date" className="input text-sm w-full" value={f.startAt} onChange={e => setF(s => ({ ...s, startAt: e.target.value }))} />
+          <div className="flex justify-end"><button onClick={add} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 저장</button></div>
+        </div>
+      )}
       {sorted.length === 0 ? <Empty>등록된 일정이 없습니다.</Empty> : (
         <ul className="divide-y divide-slate-100">
           {sorted.map(e => {
