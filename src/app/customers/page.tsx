@@ -128,52 +128,49 @@ function DetailPanel({ companyId }: { companyId: number }) {
 
   return (
     <div className="space-y-4 min-w-0">
-      {/* 프로필 헤더 */}
-      <div className="card p-5">
-        <div className="flex items-start justify-between gap-3 flex-wrap">
-          <div className="flex items-start gap-3 min-w-0">
-            <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 text-ink font-bold text-lg shrink-0">{c.name.charAt(0)}</span>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h2 className="text-lg font-bold text-ink tracking-tight">{c.name}</h2>
-                {c.isNewClient && <span className="pill bg-brand-100 text-brand-700 inline-flex items-center gap-0.5"><Sparkles className="w-2.5 h-2.5" />신규</span>}
-              </div>
-              <div className="text-xs text-ink-muted mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
-                {c.industry && <span>{c.industry}</span>}{c.address && <span>{c.address}</span>}{c.bizRegNo && <span>사업자 {c.bizRegNo}</span>}
+      {/* 프로필 헤더 + 담당자 탭 바(통합, 상단 노출) */}
+      <div className="card overflow-hidden">
+        <div className="p-5">
+          <div className="flex items-start justify-between gap-3 flex-wrap">
+            <div className="flex items-start gap-3 min-w-0">
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 text-ink font-bold text-lg shrink-0">{c.name.charAt(0)}</span>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-lg font-bold text-ink tracking-tight">{c.name}</h2>
+                  {c.isNewClient && <span className="pill bg-brand-100 text-brand-700 inline-flex items-center gap-0.5"><Sparkles className="w-2.5 h-2.5" />신규</span>}
+                </div>
+                <div className="text-xs text-ink-muted mt-1 flex flex-wrap gap-x-3 gap-y-0.5">
+                  {c.industry && <span>{c.industry}</span>}{c.address && <span>{c.address}</span>}{c.bizRegNo && <span>사업자 {c.bizRegNo}</span>}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-center gap-1.5 shrink-0">
-            <Link href={`/gantt?company=${c.id}`} className="btn-outline text-xs"><GanttChartSquare className="w-3.5 h-3.5" /> 시험 일정 보기</Link>
-            <Link href={`/customers/${c.id}`} className="btn-ghost text-xs">전체 관리 <ArrowRight className="w-3.5 h-3.5" /></Link>
+            <div className="flex items-center gap-1.5 shrink-0">
+              <Link href={`/gantt?company=${c.id}`} className="btn-outline text-xs"><GanttChartSquare className="w-3.5 h-3.5" /> 시험 일정 보기</Link>
+              <Link href={`/customers/${c.id}`} className="btn-ghost text-xs">전체 관리 <ArrowRight className="w-3.5 h-3.5" /></Link>
+            </div>
           </div>
         </div>
+
+        {/* 담당자 탭 바 — 회사 전체 ↔ 담당자별 (바로 판단 가능하게 헤더에 노출) */}
+        {contacts.length > 0 && (
+          <div className="px-4 pb-3 pt-1 border-t border-slate-100 bg-slate-50/40">
+            <div className="text-[10px] font-mono font-medium uppercase tracking-wider text-ink-subtle mb-1.5 mt-2">담당자별 보기</div>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <TabBtn active={scope === 'all'} onClick={() => setScope('all')} icon={<Building2 className="w-3.5 h-3.5" />}>회사 전체</TabBtn>
+              {contacts.map(ct => (
+                <TabBtn key={ct.id} active={scope === ct.id} onClick={() => setScope(ct.id)} sub={ct.position}>{ct.name}</TabBtn>
+              ))}
+            </div>
+            {activeContact && (
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2.5 text-xs text-ink-muted">
+                {activeContact.email ? <span className="inline-flex items-center gap-1"><Mail className="w-3 h-3" />{activeContact.email}</span> : null}
+                {activeContact.phone ? <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" />{activeContact.phone}</span> : null}
+                {!activeContact.email && !activeContact.phone && <span className="text-ink-subtle">연락처 미등록 — ‘전체 관리’에서 추가</span>}
+              </div>
+            )}
+          </div>
+        )}
       </div>
-
-      {/* 담당자 세그먼트 — 회사 전체 ↔ 담당자별 스코프 */}
-      {contacts.length > 0 && (
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="font-mono text-[10px] font-medium uppercase tracking-wider text-ink-subtle mr-1">담당자</span>
-          <button onClick={() => setScope('all')} className={clsx('pill', scope === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-ink-muted hover:bg-slate-200')}>회사 전체</button>
-          {contacts.map(ct => <button key={ct.id} onClick={() => setScope(ct.id)} className={clsx('pill', scope === ct.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-ink-muted hover:bg-slate-200')}>{ct.name}</button>)}
-        </div>
-      )}
-
-      {/* 선택 담당자 프로필 */}
-      {activeContact && (
-        <div className="card p-4 flex items-center gap-3 border-brand-200 bg-brand-50/30">
-          <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-ink font-bold shrink-0 border border-brand-200">{activeContact.name.charAt(0)}</span>
-          <div className="min-w-0 flex-1">
-            <div className="text-sm font-bold text-ink">{activeContact.name}{activeContact.position && <span className="text-ink-subtle font-normal"> · {activeContact.position}</span>}</div>
-            <div className="text-xs text-ink-muted flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5">
-              {activeContact.email && <span className="inline-flex items-center gap-1"><Mail className="w-3 h-3" />{activeContact.email}</span>}
-              {activeContact.phone && <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" />{activeContact.phone}</span>}
-              {!activeContact.email && !activeContact.phone && <span>연락처 미등록</span>}
-            </div>
-          </div>
-          <span className="pill bg-brand-600 text-white shrink-0">담당자 스코프</span>
-        </div>
-      )}
 
       {/* KPI — 누적수주 블랙 반전 (스코프 반영) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -244,6 +241,17 @@ function DetailPanel({ companyId }: { companyId: number }) {
   );
 }
 
+function TabBtn({ active, onClick, children, icon, sub }: { active: boolean; onClick: () => void; children: React.ReactNode; icon?: React.ReactNode; sub?: string | null }) {
+  return (
+    <button onClick={onClick} className={clsx('inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border',
+      active ? 'bg-white text-ink border-brand-300 ring-1 ring-brand-200 shadow-sm' : 'bg-transparent text-ink-muted border-transparent hover:bg-white/70 hover:text-ink')}>
+      {active && <span className="w-1.5 h-1.5 rounded-full bg-brand-500 shrink-0" />}
+      {icon}
+      <span>{children}</span>
+      {sub && <span className="text-[10px] text-ink-subtle font-normal">· {sub}</span>}
+    </button>
+  );
+}
 function Kpi({ label, value, unit, sub }: { label: string; value: string; unit?: string; sub?: string }) {
   return <div className="card p-4"><div className="text-xs text-ink-subtle mb-1">{label}</div><div className="flex items-baseline gap-1"><span className="text-xl font-bold text-ink tabular-nums tracking-tight">{value}</span>{unit && <span className="text-xs text-ink-subtle">{unit}</span>}</div>{sub && <div className="text-[11px] text-ink-subtle mt-0.5">{sub}</div>}</div>;
 }
