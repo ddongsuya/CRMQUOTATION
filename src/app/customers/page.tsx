@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { Users, Plus, Loader2, Building2, X, Save, Sparkles, Search, GanttChartSquare, ArrowRight, Briefcase, Receipt, FlaskConical, NotebookPen, CalendarDays, User } from 'lucide-react';
+import { Users, Plus, Loader2, Building2, X, Save, Sparkles, Search, GanttChartSquare, ArrowRight, Briefcase, Receipt, FlaskConical, NotebookPen, CalendarDays, User, Mail, Phone } from 'lucide-react';
 import { toast } from '@/lib/toast';
 
 type Company = {
@@ -100,13 +100,31 @@ type Agg = any;
 function DetailPanel({ companyId }: { companyId: number }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<{ company: any; agg: Agg } | null>(null);
-  useEffect(() => { setData(null); fetch(`/api/crm/companies/${companyId}`).then(r => r.json()).then(setData).catch(() => {}); }, [companyId]);
+  const [scope, setScope] = useState<number | 'all'>('all'); // 'all'=회사 전체, number=담당자 스코프
+  useEffect(() => { setData(null); setScope('all'); fetch(`/api/crm/companies/${companyId}`).then(r => r.json()).then(setData).catch(() => {}); }, [companyId]);
   if (!data) return <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
   const { company: c, agg } = data;
-  const kpi = agg?.kpi ?? { wonAmount: 0, quoteAmount: 0, quoteCount: 0, dealCount: 0, activeDeals: 0 };
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const contacts: any[] = c.contacts ?? [];
+  const scoped = (arr: any[]) => (scope === 'all' ? arr : arr.filter((x: any) => x.contactId === scope));
+  const scopedDeals = scoped(agg?.deals ?? []);
+  const scopedNotes = scoped(agg?.notes ?? []);
+  const scopedEvents = scoped(agg?.events ?? []);
+  const dealIds = new Set(scopedDeals.map((d: any) => d.id));
+  const scopedStudies = (agg?.studies ?? []).filter((s: any) => dealIds.has(s.dealId));
+  const kpi = scope === 'all' ? (agg?.kpi ?? { wonAmount: 0, quoteAmount: 0, quoteCount: 0, dealCount: 0, activeDeals: 0, activeStudies: 0 }) : {
+    wonAmount: scopedDeals.reduce((s: number, d: any) => s + (d.wonAmount ?? 0), 0),
+    quoteAmount: scopedDeals.reduce((s: number, d: any) => s + (d.quoteAmount ?? 0), 0),
+    quoteCount: scopedDeals.reduce((s: number, d: any) => s + (d.quoteCount ?? 0), 0),
+    dealCount: scopedDeals.length,
+    activeDeals: scopedDeals.filter((d: any) => d.status === 'ACTIVE').length,
+    activeStudies: scopedStudies.filter((s: any) => !s.reportDraftIssuedAt).length,
+  };
   const wonRate = kpi.quoteAmount > 0 ? Math.round((kpi.wonAmount / kpi.quoteAmount) * 100) : 0;
-  const activeDeals = (agg?.deals ?? []).filter((d: any) => d.status === 'ACTIVE'); // eslint-disable-line @typescript-eslint/no-explicit-any
-  const nextEvent = [...(agg?.events ?? [])].filter((e: any) => !e.done && new Date(e.startAt) >= new Date(new Date().toDateString())).sort((a: any, b: any) => +new Date(a.startAt) - +new Date(b.startAt))[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  const activeDeals = scopedDeals.filter((d: any) => d.status === 'ACTIVE');
+  const nextEvent = [...scopedEvents].filter((e: any) => !e.done && new Date(e.startAt) >= new Date(new Date().toDateString())).sort((a: any, b: any) => +new Date(a.startAt) - +new Date(b.startAt))[0];
+  const activeContact = scope === 'all' ? null : contacts.find(ct => ct.id === scope);
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   return (
     <div className="space-y-4 min-w-0">
@@ -132,7 +150,32 @@ function DetailPanel({ companyId }: { companyId: number }) {
         </div>
       </div>
 
-      {/* KPI — 누적수주 블랙 반전 */}
+      {/* 담당자 세그먼트 — 회사 전체 ↔ 담당자별 스코프 */}
+      {contacts.length > 0 && (
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="font-mono text-[10px] font-medium uppercase tracking-wider text-ink-subtle mr-1">담당자</span>
+          <button onClick={() => setScope('all')} className={clsx('pill', scope === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-ink-muted hover:bg-slate-200')}>회사 전체</button>
+          {contacts.map(ct => <button key={ct.id} onClick={() => setScope(ct.id)} className={clsx('pill', scope === ct.id ? 'bg-slate-900 text-white' : 'bg-slate-100 text-ink-muted hover:bg-slate-200')}>{ct.name}</button>)}
+        </div>
+      )}
+
+      {/* 선택 담당자 프로필 */}
+      {activeContact && (
+        <div className="card p-4 flex items-center gap-3 border-brand-200 bg-brand-50/30">
+          <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-ink font-bold shrink-0 border border-brand-200">{activeContact.name.charAt(0)}</span>
+          <div className="min-w-0 flex-1">
+            <div className="text-sm font-bold text-ink">{activeContact.name}{activeContact.position && <span className="text-ink-subtle font-normal"> · {activeContact.position}</span>}</div>
+            <div className="text-xs text-ink-muted flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5">
+              {activeContact.email && <span className="inline-flex items-center gap-1"><Mail className="w-3 h-3" />{activeContact.email}</span>}
+              {activeContact.phone && <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" />{activeContact.phone}</span>}
+              {!activeContact.email && !activeContact.phone && <span>연락처 미등록</span>}
+            </div>
+          </div>
+          <span className="pill bg-brand-600 text-white shrink-0">담당자 스코프</span>
+        </div>
+      )}
+
+      {/* KPI — 누적수주 블랙 반전 (스코프 반영) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="rounded-xl bg-slate-900 p-4 text-white">
           <div className="text-xs text-white/60 mb-1">누적 수주</div>
@@ -157,11 +200,11 @@ function DetailPanel({ companyId }: { companyId: number }) {
               ))}
             </div>}
           </Card>
-          {/* 최근 활동 */}
-          <Card icon={<NotebookPen className="w-4 h-4 text-brand-500" />} title="최근 활동" count={(agg?.notes ?? []).length}>
-            {(agg?.notes ?? []).length === 0 ? <Empty>기록된 활동이 없습니다.</Empty> : (
+          {/* 최근 활동 (스코프 반영) */}
+          <Card icon={<NotebookPen className="w-4 h-4 text-brand-500" />} title="최근 활동" count={scopedNotes.length}>
+            {scopedNotes.length === 0 ? <Empty>기록된 활동이 없습니다.</Empty> : (
               <ul className="space-y-3">
-                {(agg.notes.slice(0, 5)).map((n: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                {(scopedNotes.slice(0, 5)).map((n: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
                   <li key={n.id} className="relative pl-4 border-l-2 border-slate-100">
                     <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-brand-300" />
                     <div className="text-[11px] text-ink-subtle">{new Date(n.occurredAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })} · {n.dealTitle}</div>
@@ -183,14 +226,15 @@ function DetailPanel({ companyId }: { companyId: number }) {
               <div className="text-[11px] text-white/60 mt-0.5">{new Date(nextEvent.startAt).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })} · {nextEvent.dealTitle}</div>
             </> : <div className="text-sm text-white/50">예정된 팔로업이 없습니다.</div>}
           </div>
-          {/* 담당자 */}
-          <Card icon={<User className="w-4 h-4 text-brand-500" />} title="담당자" count={c.contacts?.length ?? 0}>
-            {(c.contacts ?? []).length === 0 ? <Empty>등록된 담당자가 없습니다.</Empty> : <div className="space-y-2">
-              {c.contacts.map((ct: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
-                <div key={ct.id} className="flex items-center gap-2">
+          {/* 담당자 — 클릭 시 그 담당자로 스코프 */}
+          <Card icon={<User className="w-4 h-4 text-brand-500" />} title="담당자" count={contacts.length}>
+            {contacts.length === 0 ? <Empty>등록된 담당자가 없습니다.</Empty> : <div className="space-y-1">
+              {contacts.map((ct: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                <button key={ct.id} onClick={() => setScope(scope === ct.id ? 'all' : ct.id)} className={clsx('w-full flex items-center gap-2 text-left rounded-lg px-2 py-1.5 transition-colors', scope === ct.id ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50')}>
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 text-ink text-xs font-semibold shrink-0">{ct.name.charAt(0)}</span>
-                  <span className="min-w-0"><span className="block text-sm text-ink truncate">{ct.name}{ct.position ? ` · ${ct.position}` : ''}</span><span className="block text-[11px] text-ink-subtle truncate">{[ct.email, ct.phone].filter(Boolean).join(' · ') || '연락처 없음'}</span></span>
-                </div>
+                  <span className="min-w-0 flex-1"><span className="block text-sm text-ink truncate">{ct.name}{ct.position ? ` · ${ct.position}` : ''}</span><span className="block text-[11px] text-ink-subtle truncate">{[ct.email, ct.phone].filter(Boolean).join(' · ') || '연락처 없음'}</span></span>
+                  {scope === ct.id && <span className="pill bg-brand-600 text-white shrink-0">보는 중</span>}
+                </button>
               ))}
             </div>}
           </Card>
