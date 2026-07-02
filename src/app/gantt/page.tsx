@@ -41,18 +41,24 @@ export default function GanttPage() {
   const [loading, setLoading] = useState(true);
   const [sel, setSel] = useState<number | null>(null);
   const [seg, setSeg] = useState<'all' | 'active' | 'done'>('all');
+  const [companyId, setCompanyId] = useState<number | null>(null);
 
   useEffect(() => {
     const url = new URLSearchParams(window.location.search);
     const pre = url.get('deal') || url.get('project');
+    const co = url.get('company');
+    if (co) setCompanyId(Number(co));
     fetch('/api/crm/projects').then(r => r.json()).then(d => {
       const ps: Project[] = d.projects ?? [];
       setProjects(ps);
-      setSel(pre ? Number(pre) : (ps[0]?.id ?? null));
+      const scoped = co ? ps.filter(p => p.companyId === Number(co)) : ps;
+      setSel(pre ? Number(pre) : (scoped[0]?.id ?? ps[0]?.id ?? null));
     }).finally(() => setLoading(false));
   }, []);
 
-  const filtered = useMemo(() => projects.filter(p => seg === 'all' || (seg === 'done' ? projectDone(p) : !projectDone(p))), [projects, seg]);
+  const filtered = useMemo(() => projects
+    .filter(p => companyId == null || p.companyId === companyId)
+    .filter(p => seg === 'all' || (seg === 'done' ? projectDone(p) : !projectDone(p))), [projects, seg, companyId]);
   const current = projects.find(p => p.id === sel) ?? null;
 
   return (
@@ -62,10 +68,17 @@ export default function GanttPage() {
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><GanttChartSquare className="w-6 h-6 text-brand-500" /> 시험 일정</h1>
           <p className="text-sm text-ink-muted mt-0.5">프로젝트별 비임상 시험 타임라인 — 좌측 프로젝트를 선택하세요.</p>
         </div>
-        <div className="inline-flex rounded-lg bg-slate-100 p-0.5 text-xs">
+        <div className="flex items-center gap-2">
+          {companyId != null && (
+            <button onClick={() => setCompanyId(null)} className="pill bg-brand-100 text-brand-700 inline-flex items-center gap-1">
+              {projects.find(p => p.companyId === companyId)?.companyName ?? '회사'} 필터 <span className="text-brand-500">✕</span>
+            </button>
+          )}
+          <div className="inline-flex rounded-lg bg-slate-100 p-0.5 text-xs">
           {([['all', '전체'], ['active', '진행'], ['done', '완료']] as const).map(([k, l]) => (
             <button key={k} onClick={() => setSeg(k)} className={clsx('px-3 py-1.5 rounded-md font-medium transition-colors', seg === k ? 'bg-white text-ink shadow-sm' : 'text-ink-muted hover:text-ink')}>{l}</button>
           ))}
+          </div>
         </div>
       </div>
 

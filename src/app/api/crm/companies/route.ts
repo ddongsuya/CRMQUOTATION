@@ -15,14 +15,24 @@ export async function GET() {
     orderBy: { updatedAt: 'desc' },
     include: {
       _count: { select: { contacts: true } },
-      contacts: { select: { _count: { select: { deals: true } } } },
+      contacts: { select: { deals: { select: { status: true, quotes: { select: { grandTotal: true, status: true } } } } } },
     },
   });
-  // 회사별 안건 수 = 소속 의뢰자들의 안건 합. contacts 페이로드는 집계 후 제거.
-  const companies = rows.map(({ contacts, ...c }) => ({
-    ...c,
-    dealCount: contacts.reduce((s, ct) => s + ct._count.deals, 0),
-  }));
+  // 회사별 집계 = 소속 의뢰자들의 안건·견적 합. contacts 페이로드는 집계 후 제거.
+  const companies = rows.map(({ contacts, ...c }) => {
+    const deals = contacts.flatMap(ct => ct.deals);
+    const quotes = deals.flatMap(d => d.quotes);
+    const wonAmount = quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0);
+    return {
+      ...c,
+      dealCount: deals.length,
+      activeDeals: deals.filter(d => d.status === 'ACTIVE').length,
+      quoteCount: quotes.length,
+      quoteAmount: quotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0),
+      wonAmount,
+      vip: wonAmount >= 50_000_000,   // 파생: 누적수주 5천만↑
+    };
+  });
   return NextResponse.json({ companies });
 }
 
