@@ -87,7 +87,7 @@ export default function QuotesListPage() {
         <StatCard icon={<Receipt className="w-4 h-4" />} label="전체 견적" value={`${stats.total}건`} sub="누적" />
         <StatCard icon={<Clock className="w-4 h-4" />} label="진행 중" value={`${stats.inProgress}건`} sub="작성·발행·발송" />
         <StatCard icon={<Trophy className="w-4 h-4" />} label="수주" value={`${stats.won}건`} sub={`수주율 ${stats.wonRate}%`} />
-        <StatCard icon={<Coins className="w-4 h-4" />} label="수주 금액" value={fmtM(stats.wonAmt)} sub={`전체 ${fmtM(stats.totalAmt)}`} />
+        <StatCard icon={<Coins className="w-4 h-4" />} label="수주 금액" value={fmtM(stats.wonAmt)} sub={`전체 ${fmtM(stats.totalAmt)}`} invert />
       </div>
 
       {/* 필터 + 검색 */}
@@ -156,7 +156,16 @@ export default function QuotesListPage() {
   );
 }
 
-function StatCard({ icon, label, value, sub }: { icon: React.ReactNode; label: string; value: string; sub: string }) {
+function StatCard({ icon, label, value, sub, invert }: { icon: React.ReactNode; label: string; value: string; sub: string; invert?: boolean }) {
+  if (invert) {
+    return (
+      <div className="rounded-xl bg-slate-900 p-4 text-white">
+        <div className="flex items-center gap-2 text-white/60 mb-1.5">{icon}<span className="text-xs font-medium">{label}</span></div>
+        <div className="text-2xl font-bold tabular-nums tracking-tight">{value}</div>
+        <div className="text-[11px] text-white/60 mt-0.5">{sub}</div>
+      </div>
+    );
+  }
   return (
     <div className="card card-hover p-4">
       <div className="flex items-center gap-2 text-ink-subtle mb-1.5">{icon}<span className="text-xs font-medium">{label}</span></div>
