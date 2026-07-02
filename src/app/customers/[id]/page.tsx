@@ -35,25 +35,25 @@ type Agg = {
 const STAGE: Record<string, { label: string; cls: string }> = {
   INQUIRY: { label: '문의접수', cls: 'bg-slate-200 text-ink-muted' },
   QUOTE: { label: '견적', cls: 'bg-brand-100 text-brand-700' },
-  INTAKE: { label: '시험접수', cls: 'bg-violet-100 text-violet-700' },
+  INTAKE: { label: '시험접수', cls: 'bg-[#e5f3f2] text-[#207a76]' },
   CONTRACT: { label: '계약', cls: 'bg-amber-100 text-amber-800' },
-  STUDY: { label: '시험진행', cls: 'bg-sky-100 text-sky-700' },
+  STUDY: { label: '시험진행', cls: 'bg-[#eaf0f8] text-[#3f6098]' },
   INVOICE: { label: '세금계산서', cls: 'bg-emerald-100 text-emerald-700' },
   DONE: { label: '완료', cls: 'bg-emerald-100 text-emerald-700' },
 };
 const CONTRACT_ST: Record<string, { label: string; cls: string }> = {
   DRAFT: { label: '초안', cls: 'bg-slate-200 text-ink-muted' },
   SENT: { label: '송부', cls: 'bg-amber-100 text-amber-800' },
-  REVIEWED: { label: '검토', cls: 'bg-sky-100 text-sky-700' },
+  REVIEWED: { label: '검토', cls: 'bg-[#eaf0f8] text-[#3f6098]' },
   APPROVED: { label: '승인', cls: 'bg-brand-100 text-brand-700' },
   SIGNED: { label: '체결', cls: 'bg-emerald-100 text-emerald-700' },
 };
 const NOTE_T: Record<string, { label: string; cls: string }> = {
   MEETING: { label: '미팅', cls: 'bg-brand-100 text-brand-700' },
-  CALL: { label: '통화', cls: 'bg-sky-100 text-sky-700' },
+  CALL: { label: '통화', cls: 'bg-[#eaf0f8] text-[#3f6098]' },
   MEMO: { label: '메모', cls: 'bg-slate-200 text-ink-muted' },
 };
-const EVENT_T: Record<string, string> = { MEETING: 'bg-brand-400', DEADLINE: 'bg-red-400', MILESTONE: 'bg-violet-400', REMINDER: 'bg-amber-400' };
+const EVENT_T: Record<string, string> = { MEETING: 'bg-brand-400', DEADLINE: 'bg-red-400', MILESTONE: 'bg-[#2a9d99]', REMINDER: 'bg-amber-400' };
 
 const fmtWon = (n: number | null | undefined) => `₩${(n ?? 0).toLocaleString()}`;
 const fmtWonM = (n: number) => (n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : `₩${n.toLocaleString()}`);
@@ -459,7 +459,7 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
                     <td className="py-2.5 px-2 text-ink-muted">{s.director || '—'}</td>
                     <td className="py-2.5 px-2 text-ink-muted tabular-nums">{fmtDate(s.reportDraftDueAt)}</td>
                     <td className="py-2.5 pl-2 text-right">
-                      {s.reportDraftIssuedAt ? <span className="pill bg-emerald-100 text-emerald-700">발행</span> : dd ? <span className={clsx('pill', dd.cls)}>{dd.label}</span> : <span className="pill bg-sky-100 text-sky-700">진행</span>}
+                      {s.reportDraftIssuedAt ? <span className="pill bg-emerald-100 text-emerald-700">발행</span> : dd ? <span className={clsx('pill', dd.cls)}>{dd.label}</span> : <span className="pill bg-[#eaf0f8] text-[#3f6098]">진행</span>}
                     </td>
                   </tr>
                 );

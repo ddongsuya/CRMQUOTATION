@@ -1,16 +1,11 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import clsx from 'clsx';
 import { GanttChartSquare, Plus, Trash2, Loader2 } from 'lucide-react';
 import { schedule, totalWeeks, classifyRole, defaultDurations, ROLE_LABEL, type GanttTask, type GanttRole } from '@/lib/gantt-schedule';
 import { toast } from '@/lib/toast';
 
 const ROLES: GanttRole[] = ['PREP', 'SINGLE', 'DRF', 'REPEAT', 'TK', 'GENOTOX', 'SAFETY', 'OTHER'];
-const ROLE_COLOR: Record<GanttRole, string> = {
-  PREP: 'bg-slate-400', SINGLE: 'bg-amber-500', DRF: 'bg-sky-500', REPEAT: 'bg-brand-500',
-  TK: 'bg-violet-500', GENOTOX: 'bg-emerald-500', SAFETY: 'bg-rose-500', OTHER: 'bg-slate-400',
-};
 const MODALITIES = ['합성신약', '복합제', '백신', '세포치료제', '건강기능식품', '의료기기(ISO10993)', '화장품', '스크리닝', '심혈관계스크리닝', 'in vitro 대사·PK'];
 
 let _id = 0;
@@ -131,13 +126,13 @@ export default function GanttPage() {
                   <div key={b.id} className="flex items-center h-7">
                     <div className="text-xs text-ink truncate pr-2" style={{ width: 200 }} title={b.name}>{b.name}</div>
                     <div className="relative flex-1 h-5">
-                      {/* TK validation 블록 */}
+                      {/* 분석(TK validation) — 오렌지 */}
                       {b.validationStart != null && (
-                        <div className="absolute h-5 rounded bg-violet-300 border border-violet-400" style={{ left: b.validationStart * PX, width: 4 * PX }} title="생체시료분석(TK validation) 4주" />
+                        <div className="absolute h-5 rounded bg-brand-300 border border-brand-400" style={{ left: b.validationStart * PX, width: 4 * PX }} title="생체시료분석(TK validation) 4주" />
                       )}
-                      {/* 동물실험 바 */}
-                      <div className={clsx('absolute h-5 rounded text-white text-[10px] flex items-center px-1 overflow-hidden', ROLE_COLOR[b.role])} style={{ left: b.startWeek * PX, width: Math.max(b.animalWeeks * PX, 8) }} title={`${b.name} — 동물 ${b.animalWeeks}주`}>{b.animalWeeks}주</div>
-                      {/* 보고서 꼬리 */}
+                      {/* 본시험(동물실험) 바 — ink(polarity) */}
+                      <div className="absolute h-5 rounded bg-slate-900 text-white text-[10px] flex items-center px-1 overflow-hidden" style={{ left: b.startWeek * PX, width: Math.max(b.animalWeeks * PX, 8) }} title={`${b.name} — 동물 ${b.animalWeeks}주`}>{b.animalWeeks}주</div>
+                      {/* 보고서 꼬리 — 예정(회색) */}
                       {b.reportWeeks > 0 && (
                         <div className="absolute h-5 rounded bg-slate-200 border border-slate-300" style={{ left: b.endWeek * PX, width: b.reportWeeks * PX }} title={`보고서 ${b.reportWeeks}주`} />
                       )}
@@ -149,9 +144,9 @@ export default function GanttPage() {
           </div>
           {/* 범례 */}
           <div className="flex flex-wrap gap-3 mt-3 text-[11px] text-ink-muted">
-            {ROLES.map(r => <span key={r} className="inline-flex items-center gap-1"><span className={clsx('w-2.5 h-2.5 rounded-sm', ROLE_COLOR[r])} />{ROLE_LABEL[r]}</span>)}
-            <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-violet-300 border border-violet-400" />TK validation</span>
-            <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-slate-200 border border-slate-300" />보고서</span>
+            <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-slate-900" />본시험 진행</span>
+            <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-brand-300 border border-brand-400" />분석·평가</span>
+            <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-slate-200 border border-slate-300" />예정·보고서</span>
           </div>
         </div>
       )}

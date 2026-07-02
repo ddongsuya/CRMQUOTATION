@@ -9,7 +9,7 @@ type Item = { date: string; kind: 'event' | 'milestone'; type: string; title: st
 
 const ymd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const TYPE_CLS: Record<string, string> = {
-  MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-violet-500', REMINDER: 'bg-amber-500',
+  MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[#2a9d99]',
 };
 
 export default function CalendarPage() {
@@ -56,7 +56,7 @@ export default function CalendarPage() {
 
       <div className="card p-3">
         <div className="grid grid-cols-7 gap-1 mb-1">
-          {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-xs font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-sky-500' : 'text-ink-muted')}>{d}</div>)}
+          {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-xs font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-[#5b86c4]' : 'text-ink-subtle')}>{d}</div>)}
         </div>
         {loading ? <div className="py-16 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div> : (
           <div className="grid grid-cols-7 gap-1">
@@ -66,8 +66,8 @@ export default function CalendarPage() {
               const dayItems = byDay[key] ?? [];
               return (
                 <button key={i} onClick={() => setAdding(key)} className={clsx('min-h-[84px] rounded-lg border p-1.5 text-left align-top transition-colors',
-                  inMonth ? 'border-slate-100 hover:bg-slate-50/70' : 'border-transparent bg-slate-50/40', key === todayKey && 'ring-2 ring-brand-300')}>
-                  <div className={clsx('text-[11px] font-medium mb-1', !inMonth ? 'text-ink-subtle/50' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-sky-500' : 'text-ink-muted')}>{d.getDate()}</div>
+                  key === todayKey ? 'border-brand-200 bg-brand-50' : inMonth ? 'border-slate-100 hover:bg-slate-50/70' : 'border-transparent bg-slate-50/40')}>
+                  <div className={clsx('text-[11px] font-medium mb-1 tabular-nums', key === todayKey ? 'text-brand-600 font-bold' : !inMonth ? 'text-ink-subtle/50' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[#5b86c4]' : 'text-ink-muted')}>{d.getDate()}</div>
                   <div className="space-y-0.5">
                     {dayItems.slice(0, 3).map((it, j) => (
                       <div key={j} className={clsx('text-[10px] leading-tight rounded px-1 py-0.5 truncate text-white', TYPE_CLS[it.type] ?? 'bg-slate-400', it.done && 'opacity-40 line-through')} title={`${it.title}${it.company ? ` · ${it.company}` : ''}`}>{it.title}</div>

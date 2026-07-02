@@ -56,7 +56,7 @@ export default function DealDetailPage() {
               {deal.modality && <span>{deal.modality}</span>}
               {deal.indication && <span>적응증: {deal.indication}</span>}
               {deal.submissionTarget && <span>{deal.submissionTarget}</span>}
-              <span className={clsx('pill', deal.reportLanguage === 'EN' ? 'bg-sky-100 text-sky-700' : 'bg-slate-100 text-ink-muted')}>{deal.reportLanguage === 'EN' ? '영문보고서' : '국문보고서'}</span>
+              <span className={clsx('pill', deal.reportLanguage === 'EN' ? 'bg-[#eaf0f8] text-[#3f6098]' : 'bg-slate-100 text-ink-muted')}>{deal.reportLanguage === 'EN' ? '영문보고서' : '국문보고서'}</span>
             </div>
             {deal.clinicalDesign && <div className="text-xs text-ink-subtle mt-2 whitespace-pre-wrap">{deal.clinicalDesign}</div>}
           </div>

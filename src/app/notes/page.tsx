@@ -14,7 +14,7 @@ type Note = {
 
 const TYPE: Record<string, { label: string; cls: string; icon: React.ReactNode }> = {
   MEETING: { label: '미팅', cls: 'bg-brand-100 text-brand-700', icon: <Users className="w-3 h-3" /> },
-  CALL: { label: '통화', cls: 'bg-sky-100 text-sky-700', icon: <Phone className="w-3 h-3" /> },
+  CALL: { label: '통화', cls: 'bg-[#e5f3f2] text-[#207a76]', icon: <Phone className="w-3 h-3" /> },
   MEMO: { label: '메모', cls: 'bg-slate-100 text-ink-muted', icon: <MessageSquare className="w-3 h-3" /> },
 };
 const today = () => new Date().toISOString().slice(0, 10);

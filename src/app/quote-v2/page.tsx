@@ -186,7 +186,7 @@ export default function QuoteV2Page() {
           <div className="p-5 space-y-3.5">
             {/* STEP 1 — 프로젝트 정보 */}
             {step === 1 && <>
-              {dealId && <div className="pill bg-violet-100 text-violet-700 mb-1">안건 #{dealId} 연동</div>}
+              {dealId && <div className="pill bg-[#e5f3f2] text-[#207a76] mb-1">안건 #{dealId} 연동</div>}
               <div className="grid sm:grid-cols-2 gap-2">
                 <Field label="고객사 *"><input className="input" value={cust.company} onChange={e => setCust(c => ({ ...c, company: e.target.value }))} placeholder="㈜OOO" /></Field>
                 <Field label="담당자"><input className="input" value={cust.name} onChange={e => setCust(c => ({ ...c, name: e.target.value }))} /></Field>
@@ -385,7 +385,7 @@ function QuoteResult({ quote, composedCount }: { quote: Quote; composedCount: nu
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {quote.lineItems.map((li: any, i: number) => (
               <tr key={i} className="border-b border-slate-50">
-                <td className="py-1.5 pr-2 text-ink">{li.testName}{li.isPrereq && <span className="pill bg-violet-100 text-violet-700 ml-1">선행</span>}</td>
+                <td className="py-1.5 pr-2 text-ink">{li.testName}{li.isPrereq && <span className="pill bg-[#e5f3f2] text-[#207a76] ml-1">선행</span>}</td>
                 <td className="py-1.5 px-2 text-ink-muted">{li.route}</td>
                 <td className="py-1.5 px-2 text-right tabular-nums font-medium">{won(li.unitPrice)}</td>
                 <td className="py-1.5 px-2 text-[11px] text-ink-subtle">{[...li.appliedRules, ...li.notes].join(' · ')}</td>
