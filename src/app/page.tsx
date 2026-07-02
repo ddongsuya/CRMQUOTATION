@@ -91,7 +91,7 @@ export default async function Home() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard icon={<Receipt className="w-4 h-4" />} label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" sub="이번 달 작성" />
         <StatCard icon={<Clock className="w-4 h-4" />} label="진행 중" value={`${kpi.inProgress}`} unit="건" sub="작성·발행·발송" />
-        <StatCard icon={<Coins className="w-4 h-4" />} label="수주 금액" value={fmtM(kpi.wonAmt)} sub={`수주율 ${kpi.wonRate}%`} />
+        <StatCard icon={<Coins className="w-4 h-4" />} label="수주 금액" value={fmtM(kpi.wonAmt)} sub={`수주율 ${kpi.wonRate}%`} invert />
         <StatCard icon={<FlaskConical className="w-4 h-4" />} label="진행 시험" value={`${kpi.runningStudies}`} unit="건" sub="보고서안 발행 전" />
       </div>
 
@@ -100,9 +100,9 @@ export default async function Home() {
 
       {/* 월별 수주 추이 + 마감 임박 시험 */}
       <div className="grid lg:grid-cols-3 gap-4">
-        <section className="card p-5 min-w-0 lg:col-span-2">
-          <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
-            <TrendingUp className="w-4 h-4 text-brand-500" /> 월별 수주 추이 <span className="text-xs font-normal text-ink-subtle">최근 6개월 · 단위 ₩M</span>
+        <section className="rounded-xl bg-slate-900 p-5 min-w-0 lg:col-span-2 text-white">
+          <h2 className="text-sm font-bold flex items-center gap-1.5 mb-3">
+            <TrendingUp className="w-4 h-4 text-brand-400" /> 월별 수주 추이 <span className="text-xs font-normal text-white/50">최근 6개월 · 단위 ₩M</span>
           </h2>
           <MonthlyChart data={monthly} />
         </section>
@@ -249,20 +249,33 @@ function MonthlyChart({ data }: { data: { label: string; amount: number }[] }) {
       <div className="flex items-end justify-between gap-2 h-36">
         {data.map((d, i) => (
           <div key={i} className="flex-1 h-full flex flex-col justify-end items-center gap-1 min-w-0">
-            <span className="text-[9px] text-ink-subtle tabular-nums">{d.amount > 0 ? Math.round(d.amount / 1_000_000) : ''}</span>
-            <div className="w-full max-w-[40px] rounded-t bg-gradient-to-t from-brand-500 to-brand-300" style={{ height: `${Math.max(2, (d.amount / max) * 100)}%` }} title={`${d.label}: ₩${d.amount.toLocaleString()}`} />
+            <span className="text-[9px] text-white/70 tabular-nums">{d.amount > 0 ? Math.round(d.amount / 1_000_000) : ''}</span>
+            <div className={`w-full max-w-[40px] rounded-t ${i === data.length - 1 ? 'bg-brand-500' : 'bg-white/20'}`} style={{ height: `${Math.max(2, (d.amount / max) * 100)}%` }} title={`${d.label}: ₩${d.amount.toLocaleString()}`} />
           </div>
         ))}
       </div>
       <div className="flex justify-between gap-2 mt-1.5">
-        {data.map((d, i) => <span key={i} className="flex-1 text-center text-[10px] text-ink-subtle">{d.label}</span>)}
+        {data.map((d, i) => <span key={i} className="flex-1 text-center text-[10px] text-white/50">{d.label}</span>)}
       </div>
-      {!hasData && <div className="text-center text-[11px] text-ink-subtle mt-2">아직 수주(ACCEPTED) 견적이 없습니다.</div>}
+      {!hasData && <div className="text-center text-[11px] text-white/50 mt-2">아직 수주(ACCEPTED) 견적이 없습니다.</div>}
     </div>
   );
 }
 
-function StatCard({ icon, label, value, unit, sub }: { icon: React.ReactNode; label: string; value: string; unit?: string; sub?: string }) {
+function StatCard({ icon, label, value, unit, sub, invert }: { icon: React.ReactNode; label: string; value: string; unit?: string; sub?: string; invert?: boolean }) {
+  // 강조 KPI는 컬러가 아니라 블랙 반전(polarity flip)으로 (Notion 원칙)
+  if (invert) {
+    return (
+      <div className="rounded-xl bg-slate-900 p-4 text-white">
+        <div className="flex items-center gap-2 text-white/60 mb-1.5">{icon}<span className="text-xs font-medium">{label}</span></div>
+        <div className="flex items-baseline gap-1">
+          <span className="text-3xl font-bold tabular-nums tracking-tight">{value}</span>
+          {unit && <span className="text-xs text-white/60">{unit}</span>}
+        </div>
+        {sub && <div className="text-[11px] text-white/60 mt-0.5">{sub}</div>}
+      </div>
+    );
+  }
   return (
     <div className="card card-hover p-4">
       <div className="flex items-center gap-2 text-ink-subtle mb-1.5">

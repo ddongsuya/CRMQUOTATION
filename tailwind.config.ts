@@ -5,49 +5,50 @@ export default {
   theme: {
     extend: {
       colors: {
-        // CHEMON 디자인 — 테라코타(burnt orange) 브랜드
+        // Notion-스타일 · 오렌지 단일 액센트 (#F5811F). 오렌지는 CTA·활성·링크에만.
         brand: {
-          DEFAULT: '#E2560A',
-          50: '#FFF6EF',
-          100: '#FFF1E6',
-          200: '#FBDCC4',
-          300: '#F7BC8E',
-          400: '#F2964F',
-          500: '#F26F21',
-          600: '#E2560A',
-          700: '#C25510',
-          800: '#9A5418',
-          900: '#7C4415',
-          light: '#F2964F',
-          accent: '#C25510',
+          DEFAULT: '#F5811F',
+          50: '#FEF5EC',
+          100: '#FCE8D3',   // 오렌지 틴트 배경(활성 나브·필·진행바 트랙)
+          200: '#F9CFA6',
+          300: '#F7B476',
+          400: '#F69B49',
+          500: '#F5811F',   // accent
+          600: '#F5811F',   // 1차 CTA
+          700: '#E06A12',   // hover/press
+          800: '#B9560F',
+          900: '#8A4210',
+          light: '#FF9D4D',
+          accent: '#E06A12',
         },
         ink: {
-          DEFAULT: '#2B2620',
-          muted: '#5C5447',
-          subtle: '#8A7E6C',
+          DEFAULT: '#211f1c',  // 헤드라인·주요 텍스트(웜 near-black)
+          muted: '#615d59',    // 본문·보조
+          subtle: '#a39e98',   // 캡션·플레이스홀더·메타
         },
-        // slate 를 따뜻한 토프/아이보리로 재정의 → 앱 전체 그레이가 웜톤으로
+        // slate → Notion 웜 중립색(헤어라인·크림면·바닥). 앱 전역 그레이가 이 팔레트로.
         slate: {
-          50: '#FBF8F3',
-          100: '#F6F2EB',
-          200: '#EFE9E0',
-          300: '#E6DDD0',
-          400: '#CDBFA9',
-          500: '#B0A696',
-          600: '#8A7E6C',
-          700: '#6E665A',
-          800: '#5C5447',
-          900: '#2B2620',
+          50: '#f6f5f4',   // floor(페이지 바닥, 웜 페이퍼) · hover
+          100: '#f1f1ef',  // card-cream(아바타·칩·세그먼트 트랙·부드러운 필)
+          200: '#e6e6e6',  // hairline(1px 경계)
+          300: '#dcdbd7',
+          400: '#c3c0bb',  // 플레이스홀더
+          500: '#a39e98',  // muted-soft
+          600: '#615d59',  // muted
+          700: '#4a4640',
+          800: '#31302e',  // body
+          900: '#191918',  // dark surface(반전 카드) · near-black
         },
       },
       fontFamily: {
-        sans: ['"Noto Sans KR"', '"Pretendard"', '"Apple SD Gothic Neo"', 'system-ui', 'sans-serif'],
-        mono: ['"Roboto Mono"', 'ui-monospace', 'monospace'],
+        sans: ['Inter', '"Noto Sans KR"', '"Pretendard"', '"Apple SD Gothic Neo"', 'system-ui', 'sans-serif'],
+        mono: ['"Roboto Mono"', '"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
-        card: '0 1px 2px 0 rgb(43 38 32 / 0.04), 0 1px 3px 0 rgb(43 38 32 / 0.05)',
-        'card-hover': '0 4px 14px -2px rgb(43 38 32 / 0.10), 0 2px 6px -1px rgb(43 38 32 / 0.05)',
-        glow: '0 0 0 4px rgb(226 86 10 / 0.14)',
+        // Notion: 그림자 거의 없음. depth = 1px 헤어라인 + 색면.
+        card: '0 1px 0 0 rgb(17 17 17 / 0.02)',
+        'card-hover': '0 1px 3px 0 rgb(17 17 17 / 0.06)',
+        glow: '0 0 0 3px rgb(245 129 31 / 0.16)',
       },
       borderRadius: {
         '4xl': '2rem',

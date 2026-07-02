@@ -76,12 +76,10 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
             <X className="w-4 h-4" />
           </button>
           <Link href="/" className="flex items-center gap-2.5 px-5 py-5 group">
-            <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-sm group-hover:shadow-glow transition-shadow">
-              <Beaker className="w-5 h-5" />
-            </span>
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-900 text-white text-[15px] font-bold leading-none">코</span>
             <div className="leading-tight">
-              <div className="text-[10px] tracking-wide uppercase text-ink-subtle font-semibold">코아스템켐온</div>
-              <div className="text-[15px] font-bold text-ink">비임상 견적</div>
+              <div className="text-[15px] font-bold text-ink tracking-tight">코아스템켐온</div>
+              <div className="text-[11px] text-ink-subtle">비임상 통합관리</div>
             </div>
           </Link>
 
@@ -93,11 +91,11 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
                 <Link
                   key={href}
                   href={href}
-                  className={`relative flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    active ? 'bg-brand-50 text-brand-700' : 'text-ink-muted hover:bg-slate-100 hover:text-ink'
+                  className={`relative flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    active ? 'bg-slate-100 text-ink' : 'text-ink-muted hover:bg-slate-100/70 hover:text-ink'
                   }`}
                 >
-                  {active && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 rounded-r-full bg-brand-600" />}
+                  {active && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full bg-brand-600" />}
                   <Icon className="w-4 h-4" />
                   {l}
                 </Link>
@@ -114,10 +112,10 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
           <div className="flex-1" />
 
           {stats && (
-            <div className="mx-3 mb-3 rounded-xl bg-brand-50/70 border border-brand-100 px-3.5 py-3">
-              <div className="text-[11px] font-semibold text-brand-800">시험 항목 마스터</div>
-              <div className="mt-0.5 flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold text-brand-700 tabular-nums">{stats.items}</span>
+            <div className="mx-3 mb-3 rounded-xl bg-slate-100 px-3.5 py-3">
+              <div className="font-mono text-[10px] font-medium uppercase tracking-wider text-ink-subtle">시험 항목 마스터</div>
+              <div className="mt-1 flex items-baseline gap-1.5">
+                <span className="text-2xl font-bold text-ink tabular-nums tracking-tight">{stats.items}</span>
                 <span className="text-[11px] text-ink-subtle">개 · 프리셋 {stats.presets}종</span>
               </div>
             </div>
