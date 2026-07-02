@@ -10,11 +10,11 @@
   --ink-subtle: #A29C94;
   --line: #EDE9E5;
   --line-strong: #D8D4CD;
-  --brand: #B26F58;
-  --brand-deep: #9A6450;
-  --brand-50: #FBF1EC;
+  --brand: #F5811F;
+  --brand-deep: #E06A12;
+  --brand-50: #FEF5EC;
   --bg: #ffffff;
-  background: #F4EFEA;
+  background: #f6f5f4;
   min-height: 100vh;
   padding: 24px 0;
 }
@@ -40,7 +40,7 @@
 .print-doc .cover { padding: 0; overflow: hidden; }
 
 .print-doc .cover-band {
-  background: linear-gradient(135deg, #C8826A 0%, #B26F58 52%, #9A6450 100%);
+  background: #F5811F;
   color: white;
   padding: 22mm 14mm 18mm;
   position: relative;
