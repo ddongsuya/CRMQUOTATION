@@ -23,7 +23,7 @@
   width: 210mm;
   min-height: 297mm;
   margin: 0 auto 16px;
-  padding: 13mm 14mm;
+  padding: 11mm 14mm;
   background: var(--bg);
   box-shadow: 0 4px 24px -4px rgb(15 23 42 / 0.12);
   position: relative;
@@ -186,11 +186,11 @@
 .print-doc .page-head {
   display: flex; justify-content: space-between; align-items: flex-end;
   border-bottom: 2px solid var(--brand);
-  padding-bottom: 4mm;
-  margin-bottom: 8mm;
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
 }
 .print-doc .page-head-brand { font-size: 10px; font-weight: 600; color: var(--ink-subtle); }
-.print-doc .page-head-title { font-size: 18px; font-weight: 700; color: var(--ink); margin-top: 2px; letter-spacing: -0.01em; }
+.print-doc .page-head-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-top: 1px; letter-spacing: -0.01em; }
 .print-doc .page-head-right { text-align: right; font-size: 10px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .print-doc .page-num { font-size: 9px; color: var(--ink-subtle); }
 
@@ -334,21 +334,23 @@
 .print-doc .warn-title { font-weight: 700; margin-bottom: 2px; }
 
 /* ─── DETAIL CARDS ─────────────────────── */
-.print-doc .details-list { display: flex; flex-direction: column; gap: 7mm; }
+.print-doc .details-list { display: flex; flex-direction: column; gap: 5mm; }
 /* 시험 개요(동물종·군구성·투여기간) */
 .print-doc .detail-grid { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11px; color: var(--ink-muted); }
 .print-doc .detail-grid b { color: var(--ink-subtle); font-weight: 600; margin-right: 3px; }
 /* 시험 설계·평가항목 spec 리스트 */
-.print-doc .detail-spec { display: flex; flex-direction: column; gap: 3px; margin: 0; }
+.print-doc .detail-spec { display: flex; flex-direction: column; gap: 2px; margin: 0; }
 .print-doc .detail-spec > div { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: baseline; }
 .print-doc .detail-spec dt { font-size: 10px; font-weight: 600; color: var(--ink-subtle); margin: 0; }
-.print-doc .detail-spec dd { font-size: 10.5px; color: var(--ink-muted); margin: 0; line-height: 1.55; }
+.print-doc .detail-spec dd { font-size: 10.5px; color: var(--ink-muted); margin: 0; line-height: 1.5; }
 .print-doc .detail-card {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 6mm;
   page-break-inside: avoid;
   background: white;
+  min-height: 125mm;          /* 모든 카드 박스 높이 통일 — 짧은 카드는 하단 여백 */
+  box-sizing: border-box;
 }
 .print-doc .detail-head {
   display: grid;

@@ -254,27 +254,11 @@ type DetailEntry = PrintData['details'][number];
 type LineEntry = PrintData['lines'][number];
 
 /** 상세 카드 높이(mm) 추정 → A4(가용 ~230mm) 단위로 묶어 페이지 분할 */
+// 카드 높이를 통일(.detail-card min-height)하므로 페이지당 고정 2장으로 분할 → 배치가 균일.
+const CARDS_PER_PAGE = 2;
 function paginateDetails(lineDetails: { line: LineEntry; detail?: DetailEntry }[]): { line: LineEntry; detail?: DetailEntry }[][] {
-  // 실측 보정(카드 80~115mm). 페이지 가용 ≈ 248mm (A4 297 − 상하패딩 32 − 헤더 17).
-  const lines = (s?: string | null, cpl = 96) => (s ? Math.max(1, Math.ceil(s.length / cpl)) : 0);
-  const blockMm = (s?: string | null, cpl = 96) => (s ? 6 + lines(s, cpl) * 4.6 : 0);
-  const estMm = (d?: DetailEntry) => 32
-    + (d?.species || d?.groupComposition || d?.dosingPeriod ? 8 : 0)
-    + blockMm(d?.purpose)
-    + ((d?.checklist?.length ?? 0) > 0 ? 6 + d!.checklist!.reduce((s, c) => s + lines(c.value, 80) * 5, 0) : 0)
-    + blockMm(d?.detail)
-    + blockMm(d?.guideline)
-    + blockMm(d?.notice, 90);
-  const BUDGET = 256;
   const pages: { line: LineEntry; detail?: DetailEntry }[][] = [];
-  let cur: { line: LineEntry; detail?: DetailEntry }[] = [];
-  let h = 0;
-  for (const ld of lineDetails) {
-    const ch = estMm(ld.detail);
-    if (cur.length && h + ch > BUDGET) { pages.push(cur); cur = []; h = 0; }
-    cur.push(ld); h += ch;
-  }
-  if (cur.length) pages.push(cur);
+  for (let i = 0; i < lineDetails.length; i += CARDS_PER_PAGE) pages.push(lineDetails.slice(i, i + CARDS_PER_PAGE));
   return pages;
 }
 
