@@ -61,7 +61,7 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
   const label = PAGE_LABEL[pathname] ?? Object.entries(PAGE_LABEL).find(([h]) => h !== '/' && pathname.startsWith(h))?.[1] ?? '';
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50">
+    <div className="flex flex-col h-screen bg-white">
       <div className="dev-banner px-4 py-1.5 text-center text-xs no-print flex-shrink-0">
         🚧 개발 중 · 프로덕션 데이터 입력 금지 (2026-04-24)
       </div>

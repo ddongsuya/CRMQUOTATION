@@ -87,15 +87,17 @@ export default async function Home() {
   } catch { /* DB 미연결 시 0 */ }
   const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : `₩${n.toLocaleString()}`;
 
+  const todayStr = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-7 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">안녕하세요, {name}님 👋</h1>
-        <p className="text-sm text-ink-muted mt-0.5">실제 시험 항목 마스터와 프리셋 기반으로 견적을 구성하세요.</p>
+        <h1 className="text-display text-ink">안녕하세요, {name}님 👋</h1>
+        <p className="text-subhead text-ink-muted mt-2">{todayStr} · 진행 중인 견적 {kpi.inProgress}건과 마감이 임박한 시험 {dueStudies.length}건이 있습니다.</p>
       </div>
 
       {/* 업무 KPI 카드 */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard icon={<Receipt className="w-4 h-4" />} label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" sub="전월 대비" delta={kpi.quoteDelta} />
         <StatCard icon={<Clock className="w-4 h-4" />} label="진행 중" value={`${kpi.inProgress}`} unit="건" sub="작성·발행·발송" />
         <StatCard icon={<Coins className="w-4 h-4" />} label="수주 금액" value={fmtM(kpi.wonAmt)} sub={`수주율 ${kpi.wonRate}%`} invert />
@@ -107,15 +109,15 @@ export default async function Home() {
 
       {/* 월별 수주 추이 + 마감 임박 시험 */}
       <div className="grid lg:grid-cols-3 gap-4">
-        <section className="rounded-xl bg-slate-900 p-5 min-w-0 lg:col-span-2 text-white">
-          <h2 className="text-sm font-bold flex items-center gap-1.5 mb-3">
+        <section className="rounded-[12px] bg-slate-900 p-[22px] min-w-0 lg:col-span-2 text-white">
+          <h2 className="text-card-title flex items-center gap-2 mb-4">
             <TrendingUp className="w-4 h-4 text-brand-400" /> 월별 수주 추이 <span className="text-xs font-normal text-white/50">최근 6개월 · 단위 ₩M</span>
           </h2>
           <MonthlyChart data={monthly} />
         </section>
 
-        <section className="card p-5 min-w-0">
-          <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
+        <section className="card p-[22px] min-w-0">
+          <h2 className="text-card-title text-ink flex items-center gap-2 mb-4">
             <AlarmClock className="w-4 h-4 text-brand-500" /> 마감 임박 시험
           </h2>
           {dueStudies.length === 0 ? (
@@ -141,10 +143,10 @@ export default async function Home() {
 
       <div className="grid lg:grid-cols-2 gap-4">
         {/* 최근 견적 */}
-        <section className="card p-5 min-w-0">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-bold text-ink flex items-center gap-1.5">
-              <Receipt className="w-4 h-4 text-brand-500" /> 최근 견적
+        <section className="card p-[22px] min-w-0">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-card-title text-ink flex items-center gap-2">
+              <Receipt className="w-5 h-5 text-brand-500" /> 최근 견적
             </h2>
             <Link href="/quotes" className="text-xs text-brand-600 hover:underline inline-flex items-center gap-0.5">
               전체 보기 <ArrowRight className="w-3 h-3" />
@@ -187,8 +189,8 @@ export default async function Home() {
         </section>
 
         {/* 모달리티별 항목 수 (막대) */}
-        <section className="card p-5 min-w-0">
-          <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
+        <section className="card p-[22px] min-w-0">
+          <h2 className="text-card-title text-ink flex items-center gap-2 mb-4">
             <Boxes className="w-4 h-4 text-brand-500" /> 모달리티별 항목 수
           </h2>
           <ul className="space-y-2 max-h-[320px] overflow-auto pr-1">
@@ -206,8 +208,8 @@ export default async function Home() {
       </div>
 
       {/* 최근 활동 */}
-      <section className="card p-5 min-w-0">
-        <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3">
+      <section className="card p-[22px] min-w-0">
+        <h2 className="text-card-title text-ink flex items-center gap-2 mb-4">
           <Activity className="w-4 h-4 text-brand-500" /> 최근 활동
         </h2>
         {activity.length === 0 ? (
@@ -278,27 +280,27 @@ function StatCard({ icon, label, value, unit, sub, invert, delta }: { icon: Reac
   // 강조 KPI는 컬러가 아니라 블랙 반전(polarity flip)으로 (Notion 원칙)
   if (invert) {
     return (
-      <div className="rounded-xl bg-slate-900 p-4 text-white">
-        <div className="flex items-center gap-2 text-white/60 mb-1.5">{icon}<span className="text-xs font-medium">{label}</span></div>
-        <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-bold tabular-nums tracking-tight">{value}</span>
-          {unit && <span className="text-xs text-white/60">{unit}</span>}
+      <div className="rounded-[12px] bg-slate-900 pt-[22px] px-[22px] pb-5 text-white">
+        <div className="flex items-center gap-2 text-white/60 mb-3">{icon}<span className="text-[12.5px] font-semibold">{label}</span></div>
+        <div className="flex items-baseline gap-1.5">
+          <span className="text-kpi tabular-nums">{value}</span>
+          {unit && <span className="text-[14px] text-white/60">{unit}</span>}
         </div>
-        {sub && <div className="text-[11px] text-white/60 mt-0.5">{sub}</div>}
+        {(sub || delta != null) && <div className="text-[12.5px] font-semibold text-white/60 mt-2 flex items-center gap-1.5">{delta != null && <Delta v={delta} />}{sub}</div>}
       </div>
     );
   }
   return (
-    <div className="card card-hover p-4">
-      <div className="flex items-center gap-2 text-ink-subtle mb-1.5">
+    <div className="card pt-[22px] px-[22px] pb-5">
+      <div className="flex items-center gap-2 text-ink-muted mb-3">
         {icon}
-        <span className="text-xs font-medium">{label}</span>
+        <span className="text-[12.5px] font-semibold">{label}</span>
       </div>
-      <div className="flex items-baseline gap-1">
-        <span className="text-3xl font-bold text-ink tabular-nums tracking-tight">{value}</span>
-        {unit && <span className="text-xs text-ink-subtle">{unit}</span>}
+      <div className="flex items-baseline gap-1.5">
+        <span className="text-kpi text-ink tabular-nums">{value}</span>
+        {unit && <span className="text-[14px] text-ink-muted">{unit}</span>}
       </div>
-      {(sub || delta != null) && <div className="text-[11px] text-ink-subtle mt-0.5 flex items-center gap-1.5">{delta != null && <Delta v={delta} />}{sub}</div>}
+      {(sub || delta != null) && <div className="text-[12.5px] font-semibold text-ink-muted mt-2 flex items-center gap-1.5">{delta != null && <Delta v={delta} />}{sub}</div>}
     </div>
   );
 }

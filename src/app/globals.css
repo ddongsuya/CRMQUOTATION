@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-  --fg: #211f1c;        /* ink — 웜 near-black */
-  --bg: #f6f5f4;        /* floor — 웜 페이퍼 바닥 */
+  --fg: #31302E;        /* text-body — 본문 */
+  --bg: #FFFFFF;        /* app 배경 — 흰색(실측) */
 }
 
 html, body {
@@ -17,9 +17,11 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 헤드라인·디스플레이 수치 — Inter 700, 음의 자간 (Notion 스타일) */
+/* 헤드라인·대형 수치 — Inter 700, 음의 자간 -0.022em (실측) */
 h1, h2, h3, .headline { letter-spacing: -0.022em; }
 .tabular { font-variant-numeric: tabular-nums; }
+/* 모노 대문자 마이크로 라벨 (메뉴·테이블 헤더 등) */
+.eyebrow { font-family: theme('fontFamily.mono'); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: theme('colors.ink.subtle'); }
 
 /* Cleaner dev banner */
 .dev-banner {
@@ -49,50 +51,54 @@ h1, h2, h3, .headline { letter-spacing: -0.022em; }
 
 /* Reusable component classes */
 @layer components {
-  /* 콘텐츠 카드 — 12px radius · 1px 헤어라인 · 그림자 없음(색면 우선) */
+  /* 콘텐츠 카드 — radius 12px · 1px 헤어라인 · 그림자 없음(실측) */
   .card {
-    @apply rounded-xl bg-white border border-slate-200;
+    @apply rounded-[12px] bg-white border border-slate-200;
   }
   .card-hover {
     @apply transition-colors;
   }
   .card-hover:hover {
-    @apply border-slate-300 bg-slate-50/40;
+    @apply border-slate-300 bg-slate-50;
   }
-  /* 인풋 — 4px radius */
+  /* 인풋 — height 40px · radius 8px · 14px (실측) */
   .input {
-    @apply w-full px-3 py-2 rounded border border-slate-200 bg-white text-sm text-ink placeholder:text-slate-400 transition-colors focus:border-brand-500;
+    @apply w-full h-10 px-3 rounded-lg border border-slate-200 bg-white text-[14px] text-ink placeholder:text-slate-400 transition-colors focus:border-brand-500;
   }
+  textarea.input { @apply h-auto py-2.5; }
+  /* 버튼 — radius 10px · 14px/600 · padding 10px 16px (실측) */
   .btn {
-    @apply inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors;
+    @apply inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-[10px] text-[14px] font-semibold whitespace-nowrap transition-colors;
   }
-  /* 1차 CTA — 오렌지 풀필(9999px) */
   .btn-primary {
-    @apply btn rounded-full bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-700 disabled:bg-slate-200 disabled:text-ink-subtle disabled:cursor-not-allowed;
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 active:translate-y-px disabled:bg-slate-200 disabled:text-ink-subtle disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply btn bg-slate-100 text-ink hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed;
   }
   .btn-ghost {
     @apply btn text-ink-muted hover:bg-slate-100 hover:text-ink disabled:opacity-40 disabled:cursor-not-allowed;
   }
-  /* 유틸 버튼 — 8px radius · 헤어라인 */
   .btn-outline {
     @apply btn border border-slate-200 bg-white text-ink-muted hover:bg-slate-50 hover:text-ink disabled:opacity-40 disabled:cursor-not-allowed;
   }
+  /* 필터 칩(알약) — 활성 ink 반전, 비활성 헤어라인 (README) */
   .chip {
-    @apply inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap;
+    @apply inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[13px] font-semibold border transition-colors whitespace-nowrap;
   }
-  /* 필터칩 활성 — 컬러 대신 블랙 반전(polarity flip) */
   .chip-active {
     @apply bg-slate-900 text-white border-slate-900;
   }
   .chip-inactive {
     @apply bg-white text-ink-muted border-slate-200 hover:border-slate-300 hover:text-ink;
   }
+  /* 상태 배지/필 — height 22px · 999px · 12px/600 (실측) */
   .pill {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium;
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[12px] font-semibold leading-[22px];
   }
-  /* 필드/섹션 라벨 — 모노 대문자 아이브로 */
+  /* 필드/KPI 라벨 — 12.5px/600 muted (실측, 대문자 아님) */
   .label {
-    @apply block font-mono text-[11px] font-medium uppercase tracking-wider text-ink-subtle mb-1.5;
+    @apply block text-[12.5px] font-semibold text-ink-muted mb-1.5;
   }
 }
 

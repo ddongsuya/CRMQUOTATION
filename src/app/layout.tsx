@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="ko">
-      <body className="antialiased bg-slate-50 text-ink">
+      <body className="antialiased bg-white text-ink-body">
         <Providers>
           <AppChrome stats={stats}>{children}</AppChrome>
           <Toaster />
