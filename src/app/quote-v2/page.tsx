@@ -70,7 +70,7 @@ export default function QuoteV2Page() {
   const isCombo = category === '복합제';
   const isBattery = !['의약품', '복합제', '백신', '건강기능식품'].includes(category);
 
-  useEffect(() => { fetch('/api/quote-v2').then(r => r.json()).then(setMeta); }, []);
+  useEffect(() => { fetch('/api/quote-v2').then(r => r.json()).then((m: Meta) => { setMeta(m); const c = new URLSearchParams(window.location.search).get('category'); if (c && m.categories?.includes(c)) setCategory(c); }); }, []);
   useEffect(() => { const d = new URLSearchParams(window.location.search).get('dealId'); if (d) setDealId(Number(d)); }, []);
 
   const buildPlan = () => ({

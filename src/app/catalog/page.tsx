@@ -24,6 +24,8 @@ export default function CatalogPage() {
     fetch('/api/test-items').then(r => r.json()).then(setData).catch(() => {});
   }, []);
   useEffect(() => { load(); }, [load]);
+  // 가이드라인 등에서 ?q= 로 진입 시 초기 검색어
+  useEffect(() => { const p = new URLSearchParams(window.location.search).get('q'); if (p) setQ(p); }, []);
 
   const isAdmin = !!data?.isAdmin;
 
@@ -138,8 +140,10 @@ export default function CatalogPage() {
               {shown.map((it, i) => {
                 const pool = (Array.isArray(it.modalityPool) ? it.modalityPool : []) as string[];
                 return (
-                  <tr key={String(it.key ?? i)} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50">
-                    <td className="px-3 py-2 text-ink font-medium">{String(it.testName ?? '')}</td>
+                  <tr key={String(it.key ?? i)} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50 group/row">
+                    <td className="px-3 py-2 text-ink font-medium">
+                      <Link href={`/quote-v2${pool[0] ? `?category=${encodeURIComponent(pool[0])}` : ''}`} className="hover:text-brand-600" title="이 항목으로 견적 마법사 열기">{String(it.testName ?? '')}</Link>
+                    </td>
                     <td className="px-2 py-2 text-ink-subtle">
                       {pool.length === 0 ? '—' : <span title={pool.join(', ')}>{pool[0]}{pool.length > 1 ? ` +${pool.length - 1}` : ''}</span>}
                     </td>
