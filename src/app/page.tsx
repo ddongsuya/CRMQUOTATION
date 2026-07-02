@@ -31,7 +31,7 @@ export default async function Home() {
 
   let quotes: Array<{ id: number; quoteNumber: string; customerCompany: string | null; modality: string; status: string; grandTotal: number | null }> = [];
   // 업무 KPI (이번 달 견적 · 진행 중 · 수주 금액/수주율 · 진행 시험)
-  let kpi = { thisMonth: 0, inProgress: 0, wonAmt: 0, wonRate: 0, runningStudies: 0 };
+  let kpi = { thisMonth: 0, inProgress: 0, wonAmt: 0, wonRate: 0, runningStudies: 0, quoteDelta: 0, wonDelta: 0 };
   let dueStudies: { id: number; name: string; company: string; dueAt: string }[] = [];
   let monthly: { label: string; amount: number }[] = [];
   let activity: { id: string; kind: string; text: string; sub: string; at: string }[] = [];
@@ -43,13 +43,20 @@ export default async function Home() {
     const all = await prisma.quote.findMany({ select: { status: true, grandTotal: true, createdAt: true } });
     const now = new Date();
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
     const won = all.filter(q => q.status === 'ACCEPTED');
+    const thisMonthN = all.filter(q => q.createdAt >= monthStart).length;
+    const lastMonthN = all.filter(q => q.createdAt >= lastMonthStart && q.createdAt < monthStart).length;
+    const wonThis = won.filter(q => q.createdAt >= monthStart).reduce((s, q) => s + (q.grandTotal ?? 0), 0);
+    const wonLast = won.filter(q => q.createdAt >= lastMonthStart && q.createdAt < monthStart).reduce((s, q) => s + (q.grandTotal ?? 0), 0);
     kpi = {
-      thisMonth: all.filter(q => q.createdAt >= monthStart).length,
+      thisMonth: thisMonthN,
       inProgress: all.filter(q => ['DRAFT', 'ISSUED', 'SENT'].includes(q.status)).length,
       wonAmt: won.reduce((s, q) => s + (q.grandTotal ?? 0), 0),
       wonRate: all.length ? Math.round(won.length / all.length * 100) : 0,
       runningStudies: await prisma.study.count({ where: { reportDraftIssuedAt: null } }),
+      quoteDelta: thisMonthN - lastMonthN,
+      wonDelta: wonThis - wonLast,
     };
 
     // 마감 임박 시험 (보고서안 발행 예정·미발행, 가까운 순)
@@ -89,7 +96,7 @@ export default async function Home() {
 
       {/* 업무 KPI 카드 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard icon={<Receipt className="w-4 h-4" />} label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" sub="이번 달 작성" />
+        <StatCard icon={<Receipt className="w-4 h-4" />} label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" sub="전월 대비" delta={kpi.quoteDelta} />
         <StatCard icon={<Clock className="w-4 h-4" />} label="진행 중" value={`${kpi.inProgress}`} unit="건" sub="작성·발행·발송" />
         <StatCard icon={<Coins className="w-4 h-4" />} label="수주 금액" value={fmtM(kpi.wonAmt)} sub={`수주율 ${kpi.wonRate}%`} invert />
         <StatCard icon={<FlaskConical className="w-4 h-4" />} label="진행 시험" value={`${kpi.runningStudies}`} unit="건" sub="보고서안 발행 전" />
@@ -262,7 +269,12 @@ function MonthlyChart({ data }: { data: { label: string; amount: number }[] }) {
   );
 }
 
-function StatCard({ icon, label, value, unit, sub, invert }: { icon: React.ReactNode; label: string; value: string; unit?: string; sub?: string; invert?: boolean }) {
+function Delta({ v }: { v: number }) {
+  if (!v) return null;
+  const up = v > 0;
+  return <span className={`inline-flex items-center gap-0.5 text-[11px] font-semibold ${up ? 'text-emerald-500' : 'text-red-500'}`}>{up ? '▲' : '▼'}{Math.abs(v)}</span>;
+}
+function StatCard({ icon, label, value, unit, sub, invert, delta }: { icon: React.ReactNode; label: string; value: string; unit?: string; sub?: string; invert?: boolean; delta?: number }) {
   // 강조 KPI는 컬러가 아니라 블랙 반전(polarity flip)으로 (Notion 원칙)
   if (invert) {
     return (
@@ -286,7 +298,7 @@ function StatCard({ icon, label, value, unit, sub, invert }: { icon: React.React
         <span className="text-3xl font-bold text-ink tabular-nums tracking-tight">{value}</span>
         {unit && <span className="text-xs text-ink-subtle">{unit}</span>}
       </div>
-      {sub && <div className="text-[11px] text-ink-subtle mt-0.5">{sub}</div>}
+      {(sub || delta != null) && <div className="text-[11px] text-ink-subtle mt-0.5 flex items-center gap-1.5">{delta != null && <Delta v={delta} />}{sub}</div>}
     </div>
   );
 }
