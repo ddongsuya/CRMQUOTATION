@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import clsx from 'clsx';
-import { CalendarDays, ChevronLeft, ChevronRight, Plus, Loader2, X, Save } from 'lucide-react';
+import { CalendarDays, ChevronLeft, ChevronRight, Plus, Loader2, X, Save, ArrowRight, GanttChartSquare } from 'lucide-react';
 import { toast } from '@/lib/toast';
 
 type Item = { date: string; kind: 'event' | 'milestone'; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; eventId?: number; done?: boolean };
@@ -16,7 +17,8 @@ export default function CalendarPage() {
   const [cur, setCur] = useState(() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; });
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
-  const [adding, setAdding] = useState<string | null>(null); // 클릭한 날짜
+  const [adding, setAdding] = useState<string | null>(null); // 추가 모달 날짜
+  const [selected, setSelected] = useState<string>(() => ymd(new Date())); // 선택된 날짜(아젠다)
 
   const load = useCallback(() => {
     setLoading(true);
@@ -54,39 +56,90 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      <div className="card p-3">
-        <div className="grid grid-cols-7 gap-1 mb-1">
-          {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-xs font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-[#5b86c4]' : 'text-ink-subtle')}>{d}</div>)}
-        </div>
-        {loading ? <div className="py-16 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div> : (
-          <div className="grid grid-cols-7 gap-1">
-            {cells.map((d, i) => {
-              const key = ymd(d);
-              const inMonth = d.getMonth() === cur.m;
-              const dayItems = byDay[key] ?? [];
-              return (
-                <button key={i} onClick={() => setAdding(key)} className={clsx('min-h-[84px] rounded-lg border p-1.5 text-left align-top transition-colors',
-                  key === todayKey ? 'border-brand-200 bg-brand-50' : inMonth ? 'border-slate-100 hover:bg-slate-50/70' : 'border-transparent bg-slate-50/40')}>
-                  <div className={clsx('text-[11px] font-medium mb-1 tabular-nums', key === todayKey ? 'text-brand-600 font-bold' : !inMonth ? 'text-ink-subtle/50' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[#5b86c4]' : 'text-ink-muted')}>{d.getDate()}</div>
-                  <div className="space-y-0.5">
-                    {dayItems.slice(0, 3).map((it, j) => (
-                      <div key={j} className={clsx('text-[10px] leading-tight rounded px-1 py-0.5 truncate text-white', TYPE_CLS[it.type] ?? 'bg-slate-400', it.done && 'opacity-40 line-through')} title={`${it.title}${it.company ? ` · ${it.company}` : ''}`}>{it.title}</div>
-                    ))}
-                    {dayItems.length > 3 && <div className="text-[10px] text-ink-subtle px-1">+{dayItems.length - 3}</div>}
-                  </div>
-                </button>
-              );
-            })}
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-4">
+        <div className="card p-3">
+          <div className="grid grid-cols-7 gap-1 mb-1">
+            {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-xs font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-[#5b86c4]' : 'text-ink-subtle')}>{d}</div>)}
           </div>
-        )}
-        <div className="flex flex-wrap gap-3 mt-3 px-1 text-[11px] text-ink-muted">
-          {Object.entries({ MEETING: '미팅/일정', DEADLINE: '마감(잔금 등)', MILESTONE: '보고서안 예정', REMINDER: '견적 팔로업' }).map(([k, l]) => (
-            <span key={k} className="inline-flex items-center gap-1"><span className={clsx('w-2.5 h-2.5 rounded-sm', TYPE_CLS[k])} />{l}</span>
-          ))}
+          {loading ? <div className="py-16 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div> : (
+            <div className="grid grid-cols-7 gap-1">
+              {cells.map((d, i) => {
+                const key = ymd(d);
+                const inMonth = d.getMonth() === cur.m;
+                const dayItems = byDay[key] ?? [];
+                const isSel = key === selected;
+                return (
+                  <button key={i} onClick={() => setSelected(key)} className={clsx('min-h-[84px] rounded-lg border p-1.5 text-left align-top transition-colors',
+                    isSel ? 'border-brand-400 ring-1 ring-brand-400 bg-brand-50' : key === todayKey ? 'border-brand-200 bg-brand-50/60' : inMonth ? 'border-slate-100 hover:bg-slate-50/70' : 'border-transparent bg-slate-50/40')}>
+                    <div className={clsx('text-[11px] font-medium mb-1 tabular-nums flex items-center gap-1', key === todayKey ? 'text-brand-600 font-bold' : !inMonth ? 'text-ink-subtle/50' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[#5b86c4]' : 'text-ink-muted')}>
+                      {d.getDate()}{key === todayKey && <span className="pill bg-brand-600 text-white !text-[9px] !px-1">오늘</span>}
+                    </div>
+                    <div className="space-y-0.5">
+                      {dayItems.slice(0, 3).map((it, j) => (
+                        <div key={j} className={clsx('text-[10px] leading-tight rounded px-1 py-0.5 truncate flex items-center gap-1', it.done && 'opacity-40 line-through')} title={`${it.title}${it.company ? ` · ${it.company}` : ''}`}>
+                          <span className={clsx('w-1.5 h-1.5 rounded-full shrink-0', TYPE_CLS[it.type] ?? 'bg-slate-400')} /><span className="truncate text-ink-muted">{it.title}</span>
+                        </div>
+                      ))}
+                      {dayItems.length > 3 && <div className="text-[10px] text-ink-subtle px-1">+{dayItems.length - 3}</div>}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          <div className="flex flex-wrap gap-3 mt-3 px-1 text-[11px] text-ink-muted">
+            {Object.entries({ MEETING: '미팅/일정', DEADLINE: '마감(잔금 등)', MILESTONE: '보고서안 예정', REMINDER: '견적 팔로업' }).map(([k, l]) => (
+              <span key={k} className="inline-flex items-center gap-1"><span className={clsx('w-2.5 h-2.5 rounded-sm', TYPE_CLS[k])} />{l}</span>
+            ))}
+          </div>
         </div>
+
+        {/* 아젠다 패널 */}
+        <AgendaPanel date={selected} items={byDay[selected] ?? []} onAdd={() => setAdding(selected)} />
       </div>
 
       {adding && <EventModal date={adding} onClose={() => setAdding(null)} onSaved={() => { setAdding(null); load(); }} />}
+    </div>
+  );
+}
+
+const TYPE_LABEL: Record<string, string> = { MEETING: '미팅', DEADLINE: '마감', MILESTONE: '보고서안', REMINDER: '팔로업' };
+function AgendaPanel({ date, items, onAdd }: { date: string; items: Item[]; onAdd: () => void }) {
+  const d = new Date(date + 'T00:00:00');
+  const label = d.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
+  // 이벤트 → 연동 화면
+  const linkOf = (it: Item): string | null => {
+    if (it.kind === 'milestone' && it.dealId) return `/gantt?deal=${it.dealId}`;
+    if (it.dealId) return `/deals/${it.dealId}`;
+    return null;
+  };
+  return (
+    <div className="card p-4 self-start lg:sticky lg:top-4">
+      <div className="flex items-center justify-between mb-3">
+        <div><div className="text-sm font-bold text-ink">{label}</div><div className="text-[11px] text-ink-subtle">{items.length}건 일정</div></div>
+        <button onClick={onAdd} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 추가</button>
+      </div>
+      {items.length === 0 ? <div className="py-8 text-center text-xs text-ink-subtle">이 날짜에 일정이 없습니다.</div> : (
+        <ul className="space-y-1.5">
+          {items.map((it, i) => {
+            const href = linkOf(it);
+            const inner = (
+              <div className={clsx('flex items-start gap-2.5 p-2.5 rounded-lg transition-colors', href ? 'hover:bg-slate-50 cursor-pointer' : '', it.done && 'opacity-50')}>
+                <span className={clsx('w-2.5 h-2.5 rounded-full mt-1 shrink-0', TYPE_CLS[it.type] ?? 'bg-slate-400')} />
+                <div className="min-w-0 flex-1">
+                  <div className={clsx('text-sm text-ink', it.done && 'line-through')}>{it.title}</div>
+                  <div className="text-[11px] text-ink-subtle flex items-center gap-1.5 mt-0.5">
+                    <span>{TYPE_LABEL[it.type] ?? it.type}</span>
+                    {it.company && <><span className="text-ink-subtle/40">·</span><span className="truncate">{it.company}</span></>}
+                  </div>
+                </div>
+                {href && (it.kind === 'milestone' ? <GanttChartSquare className="w-3.5 h-3.5 text-ink-subtle shrink-0 mt-0.5" /> : <ArrowRight className="w-3.5 h-3.5 text-ink-subtle shrink-0 mt-0.5" />)}
+              </div>
+            );
+            return href ? <li key={i}><Link href={href}>{inner}</Link></li> : <li key={i}>{inner}</li>;
+          })}
+        </ul>
+      )}
     </div>
   );
 }
