@@ -78,7 +78,7 @@ export default function CatalogPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2">
             <Database className="w-6 h-6 text-brand-500" /> 시험항목·가격 마스터
           </h1>
           <p className="text-sm text-ink-muted mt-0.5">

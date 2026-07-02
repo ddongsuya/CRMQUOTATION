@@ -46,7 +46,7 @@ export default function CalendarPage() {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
-        <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><CalendarDays className="w-6 h-6 text-brand-500" /> 캘린더</h1>
+        <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><CalendarDays className="w-6 h-6 text-brand-500" /> 캘린더</h1>
         <div className="flex items-center gap-2 flex-wrap">
           <button onClick={() => setCur(c => ({ y: c.m === 0 ? c.y - 1 : c.y, m: c.m === 0 ? 11 : c.m - 1 }))} className="btn-outline p-2 shrink-0"><ChevronLeft className="w-4 h-4" /></button>
           <span className="font-semibold text-ink w-28 text-center tabular-nums shrink-0">{cur.y}년 {cur.m + 1}월</span>

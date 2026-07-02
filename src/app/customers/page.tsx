@@ -39,7 +39,7 @@ export default function CustomersPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><Users className="w-6 h-6 text-brand-500" /> 고객 관리</h1>
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><Users className="w-6 h-6 text-brand-500" /> 고객 관리</h1>
           <p className="text-sm text-ink-muted mt-0.5">고객사·의뢰자·거래 현황을 한 화면에서 관리합니다.</p>
         </div>
         <button onClick={() => setCreating(true)} className="btn-primary"><Plus className="w-4 h-4" /> 새 고객사</button>
@@ -174,10 +174,10 @@ function DetailPanel({ companyId }: { companyId: number }) {
 
       {/* KPI — 누적수주 블랙 반전 (스코프 반영) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="rounded-xl bg-slate-900 p-4 text-white">
-          <div className="text-xs text-white/60 mb-1">누적 수주</div>
-          <div className="text-xl font-bold tabular-nums tracking-tight">{fmtM(kpi.wonAmount)}</div>
-          <div className="text-[11px] text-white/60 mt-0.5">수주율 {wonRate}%</div>
+        <div className="rounded-[12px] bg-slate-900 pt-[22px] px-[22px] pb-5 text-white">
+          <div className="text-[12.5px] font-semibold text-white/60 mb-3">누적 수주</div>
+          <div className="text-kpi tabular-nums">{fmtM(kpi.wonAmount)}</div>
+          <div className="text-[12.5px] font-semibold text-white/60 mt-2">수주율 {wonRate}%</div>
         </div>
         <Kpi label="진행 딜" value={`${kpi.activeDeals}`} unit="건" sub={`전체 ${kpi.dealCount}`} />
         <Kpi label="누적 견적" value={fmtM(kpi.quoteAmount)} sub={`${kpi.quoteCount}건`} />
@@ -253,7 +253,7 @@ function TabBtn({ active, onClick, children, icon, sub }: { active: boolean; onC
   );
 }
 function Kpi({ label, value, unit, sub }: { label: string; value: string; unit?: string; sub?: string }) {
-  return <div className="card p-4"><div className="text-xs text-ink-subtle mb-1">{label}</div><div className="flex items-baseline gap-1"><span className="text-xl font-bold text-ink tabular-nums tracking-tight">{value}</span>{unit && <span className="text-xs text-ink-subtle">{unit}</span>}</div>{sub && <div className="text-[11px] text-ink-subtle mt-0.5">{sub}</div>}</div>;
+  return <div className="card pt-[22px] px-[22px] pb-5"><div className="text-[12.5px] font-semibold text-ink-muted mb-3">{label}</div><div className="flex items-baseline gap-1.5"><span className="text-kpi text-ink tabular-nums">{value}</span>{unit && <span className="text-[14px] text-ink-muted">{unit}</span>}</div>{sub && <div className="text-[12.5px] font-semibold text-ink-muted mt-2">{sub}</div>}</div>;
 }
 function Card({ icon, title, count, children }: { icon: React.ReactNode; title: string; count?: number; children: React.ReactNode }) {
   return <section className="card p-5"><div className="flex items-center gap-1.5 mb-3"><h3 className="text-sm font-bold text-ink flex items-center gap-1.5">{icon}{title}</h3>{count != null && <span className="text-xs text-ink-subtle">{count}</span>}</div>{children}</section>;

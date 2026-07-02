@@ -76,7 +76,7 @@ export default function QuotesListPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">견적 목록</h1>
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1]">견적 목록</h1>
           <p className="text-sm text-ink-muted mt-0.5">발행·발송·수주 상태를 한눈에 추적하세요.</p>
         </div>
         <Link href="/quote-v2" className="btn-primary"><Plus className="w-4 h-4" /> 새 견적</Link>
@@ -136,7 +136,7 @@ export default function QuotesListPage() {
                   </td>
                   <td className="px-4 py-3 text-xs text-ink-muted">{qr.modality}</td>
                   <td className="px-4 py-3 text-center text-xs tabular-nums text-ink-muted">{qr._count.items}</td>
-                  <td className="px-4 py-3 text-right tabular-nums text-ink font-semibold">{qr.grandTotal != null ? `${qr.currency === 'USD' ? '$' : '₩'}${qr.grandTotal.toLocaleString()}` : '—'}</td>
+                  <td className="px-4 py-3 text-right text-amount text-ink tabular-nums">{qr.grandTotal != null ? `${qr.currency === 'USD' ? '$' : '₩'}${qr.grandTotal.toLocaleString()}` : '—'}</td>
                   <td className="px-4 py-3 text-center"><span className={clsx('pill text-[10px]', STATUS_STYLE[qr.status] ?? 'bg-slate-100')}>{STATUS_LABEL[qr.status] ?? qr.status}</span></td>
                   <td className="px-4 py-3 text-[11px] text-ink-subtle tabular-nums">{new Date(qr.updatedAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}</td>
                   <td className="px-2 py-3 text-right">
@@ -159,18 +159,18 @@ export default function QuotesListPage() {
 function StatCard({ icon, label, value, sub, invert }: { icon: React.ReactNode; label: string; value: string; sub: string; invert?: boolean }) {
   if (invert) {
     return (
-      <div className="rounded-xl bg-slate-900 p-4 text-white">
-        <div className="flex items-center gap-2 text-white/60 mb-1.5">{icon}<span className="text-xs font-medium">{label}</span></div>
-        <div className="text-2xl font-bold tabular-nums tracking-tight">{value}</div>
-        <div className="text-[11px] text-white/60 mt-0.5">{sub}</div>
+      <div className="rounded-[12px] bg-slate-900 pt-[22px] px-[22px] pb-5 text-white">
+        <div className="flex items-center gap-2 text-white/60 mb-3">{icon}<span className="text-[12.5px] font-semibold">{label}</span></div>
+        <div className="text-kpi tabular-nums">{value}</div>
+        <div className="text-[12.5px] font-semibold text-white/60 mt-2">{sub}</div>
       </div>
     );
   }
   return (
-    <div className="card card-hover p-4">
-      <div className="flex items-center gap-2 text-ink-subtle mb-1.5">{icon}<span className="text-xs font-medium">{label}</span></div>
-      <div className="text-2xl font-bold text-ink tabular-nums tracking-tight">{value}</div>
-      <div className="text-[11px] text-ink-subtle mt-0.5">{sub}</div>
+    <div className="card pt-[22px] px-[22px] pb-5">
+      <div className="flex items-center gap-2 text-ink-muted mb-3">{icon}<span className="text-[12.5px] font-semibold">{label}</span></div>
+      <div className="text-kpi text-ink tabular-nums">{value}</div>
+      <div className="text-[12.5px] font-semibold text-ink-muted mt-2">{sub}</div>
     </div>
   );
 }

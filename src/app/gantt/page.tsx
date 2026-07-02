@@ -65,7 +65,7 @@ export default function GanttPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><GanttChartSquare className="w-6 h-6 text-brand-500" /> 시험 일정</h1>
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><GanttChartSquare className="w-6 h-6 text-brand-500" /> 시험 일정</h1>
           <p className="text-sm text-ink-muted mt-0.5">프로젝트별 비임상 시험 타임라인 — 좌측 프로젝트를 선택하세요.</p>
         </div>
         <div className="flex items-center gap-2">

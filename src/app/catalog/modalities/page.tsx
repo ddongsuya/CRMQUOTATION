@@ -67,7 +67,7 @@ export default function ModalityTemplatesAdmin() {
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
           <Link href="/catalog" className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink mb-1"><ArrowLeft className="w-3.5 h-3.5" /> 항목·가격</Link>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><Layers className="w-6 h-6 text-brand-500" /> 모달리티 · 템플릿 구성</h1>
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><Layers className="w-6 h-6 text-brand-500" /> 모달리티 · 템플릿 구성</h1>
           <p className="text-sm text-ink-muted mt-0.5">분류·모달리티 구성과, 각 모달리티의 견적 템플릿(프리셋)을 직접 만듭니다. 템플릿은 새 견적 작성에서 선택해 사용합니다.</p>
         </div>
         {isAdmin && <button onClick={saveCfg} disabled={savingCfg} className="btn-primary">{savingCfg ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 구성 저장</button>}

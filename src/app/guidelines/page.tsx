@@ -79,7 +79,7 @@ export default function GuidelinesPage() {
   return (
     <div className="space-y-5 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">가이드라인 지식베이스</h1>
+        <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1]">가이드라인 지식베이스</h1>
         <p className="text-sm text-ink-muted mt-0.5">
           시험 가이드라인 {data.counts.guidelines}종 · 설계규칙 {data.counts.designRules}종 · 모달리티 {data.counts.modalities}종 — 공식 원문 기반, 견적의 근거 자료
         </p>

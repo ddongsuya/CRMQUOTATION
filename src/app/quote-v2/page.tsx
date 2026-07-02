@@ -150,7 +150,7 @@ export default function QuoteV2Page() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><FlaskConical className="w-6 h-6 text-brand-500" /> 새 견적 작성 <span className="pill bg-brand-100 text-brand-700">엔진 v2</span></h1>
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><FlaskConical className="w-6 h-6 text-brand-500" /> 새 견적 작성 <span className="pill bg-brand-100 text-brand-700">엔진 v2</span></h1>
           <p className="text-sm text-ink-muted mt-0.5">5단계로 견적을 구성하고 PDF로 출력합니다.</p>
         </div>
       </div>

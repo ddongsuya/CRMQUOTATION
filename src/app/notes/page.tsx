@@ -65,7 +65,7 @@ export default function NotebookPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2"><NotebookPen className="w-6 h-6 text-brand-500" /> 개인 기록</h1>
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><NotebookPen className="w-6 h-6 text-brand-500" /> 개인 기록</h1>
           <p className="text-sm text-ink-muted mt-0.5">오늘의 포커스·팔로업·업무 메모를 한 곳에서.</p>
         </div>
         <button onClick={() => setAdding(v => !v)} className="btn-primary"><Plus className="w-4 h-4" /> 새 메모</button>

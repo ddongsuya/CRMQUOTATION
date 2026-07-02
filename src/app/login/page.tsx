@@ -49,7 +49,7 @@ export default function LoginPage() {
           <span className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-lg mb-3">
             <Beaker className="w-6 h-6" />
           </span>
-          <h1 className="text-2xl font-bold tracking-tight">{mode === 'signin' ? '로그인' : '계정 만들기'}</h1>
+          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1]">{mode === 'signin' ? '로그인' : '계정 만들기'}</h1>
           <p className="text-sm text-ink-muted mt-1">코아스템켐온 비임상시험 견적 시스템</p>
         </div>
 
