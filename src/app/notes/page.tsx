@@ -3,16 +3,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { NotebookPen, Plus, Loader2, Trash2, Users, Briefcase, Phone, MessageSquare, Target, ListChecks, ArrowRight, Receipt, GanttChartSquare, CalendarDays, Check } from 'lucide-react';
+import { Plus, Loader2, Trash2, Briefcase, Check } from 'lucide-react';
+import Icon, { type IconName } from '@/components/Icon';
 import { toast } from '@/lib/toast';
 
 type Note = { id: number; type: string; title: string | null; body: string; occurredAt: string; contact: { company: { id: number; name: string }; name: string } | null; deal: { id: number; title: string } | null };
 type Ev = { id: number; title: string; type: string; startAt: string; done: boolean; dealId: number | null; dealTitle: string | null };
 
-const TYPE: Record<string, { label: string; cls: string; dot: string; icon: React.ReactNode }> = {
-  MEETING: { label: '미팅', cls: 'bg-brand-100 text-brand-700', dot: 'bg-brand-500', icon: <Users className="w-3 h-3" /> },
-  CALL: { label: '통화', cls: 'bg-[#e5f3f2] text-[#207a76]', dot: 'bg-[#2a9d99]', icon: <Phone className="w-3 h-3" /> },
-  MEMO: { label: '메모', cls: 'bg-slate-100 text-ink-muted', dot: 'bg-slate-400', icon: <MessageSquare className="w-3 h-3" /> },
+const TYPE: Record<string, { label: string; cls: string; dot: string }> = {
+  MEETING: { label: '미팅', cls: 'bg-brand-100 text-brand-700', dot: 'bg-brand-500' },
+  CALL: { label: '통화', cls: 'tone-sent', dot: 'bg-[var(--status-sent)]' },
+  MEMO: { label: '메모', cls: 'bg-slate-100 text-ink-muted', dot: 'bg-slate-400' },
 };
 const today = () => new Date().toISOString().slice(0, 10);
 const dayKey = (d: Date) => d.toISOString().slice(0, 10);
@@ -24,7 +25,7 @@ function urgency(startAt: string): { key: string; label: string; cls: string; or
   const diff = Math.round((s.getTime() - t.getTime()) / 86400_000);
   if (diff < 0) return { key: 'overdue', label: '지연', cls: 'bg-red-100 text-red-700', order: 0 };
   if (diff === 0) return { key: 'today', label: '오늘', cls: 'bg-brand-100 text-brand-700', order: 1 };
-  if (diff === 1) return { key: 'tomorrow', label: '내일', cls: 'bg-[#fce8d3] text-brand-800', order: 2 };
+  if (diff === 1) return { key: 'tomorrow', label: '내일', cls: 'tone-accent', order: 2 };
   if (diff <= 7) return { key: 'week', label: '이번주', cls: 'bg-slate-100 text-ink-muted', order: 3 };
   return { key: 'later', label: `${diff}일`, cls: 'bg-slate-100 text-ink-subtle', order: 4 };
 }
@@ -65,8 +66,8 @@ export default function NotebookPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><NotebookPen className="w-6 h-6 text-brand-500" /> 개인 기록</h1>
-          <p className="text-sm text-ink-muted mt-0.5">오늘의 포커스·팔로업·업무 메모를 한 곳에서.</p>
+          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">개인 기록</h1>
+          <p className="text-subhead text-ink-body mt-2">오늘의 할 일·팔로업·메모를 모아보는 나만의 작업 공간.</p>
         </div>
         <button onClick={() => setAdding(v => !v)} className="btn-primary"><Plus className="w-4 h-4" /> 새 메모</button>
       </div>
@@ -75,10 +76,10 @@ export default function NotebookPage() {
         {/* 좌 */}
         <div className="space-y-4 min-w-0">
           {/* 오늘의 포커스 */}
-          <section className="card p-5">
+          <section className="card pt-5 px-[22px] pb-5">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-bold text-ink flex items-center gap-1.5"><Target className="w-4 h-4 text-brand-500" /> 오늘의 포커스</h2>
-              <span className="text-xs text-ink-subtle tabular-nums">{focusDone}/{todayFocus.length} 완료</span>
+              <h2 className="text-[22px] font-bold text-ink tracking-tight">오늘의 포커스</h2>
+              <span className="text-[13px] text-ink-subtle tabular-nums">{focusDone}/{todayFocus.length} 완료</span>
             </div>
             <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden mb-3">
               <div className="h-full bg-brand-500 rounded-full transition-all" style={{ width: `${todayFocus.length ? (focusDone / todayFocus.length) * 100 : 0}%` }} />
@@ -97,15 +98,15 @@ export default function NotebookPage() {
           </section>
 
           {/* 팔로업 큐 */}
-          <section className="card p-5">
-            <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3"><ListChecks className="w-4 h-4 text-brand-500" /> 팔로업 큐</h2>
+          <section className="card pt-5 px-[22px] pb-5">
+            <h2 className="text-[22px] font-bold text-ink tracking-tight mb-3">팔로업 큐</h2>
             {followups.length === 0 ? <div className="py-4 text-center text-xs text-ink-subtle">예정된 팔로업이 없습니다.</div> : (
               <ul className="divide-y divide-slate-100">
                 {followups.map(e => { const u = urgency(e.startAt); return (
                   <li key={e.id} className="flex items-center gap-2.5 py-2.5">
                     <span className={clsx('pill shrink-0', u.cls)}>{u.label}</span>
                     <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{e.title}</span><span className="block text-[11px] text-ink-subtle">{new Date(e.startAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}{e.dealTitle ? ` · ${e.dealTitle}` : ''}</span></span>
-                    {e.dealId && <Link href={`/deals/${e.dealId}`} className="text-ink-subtle hover:text-brand-600"><ArrowRight className="w-4 h-4" /></Link>}
+                    {e.dealId && <Link href={`/deals/${e.dealId}`} className="text-ink-subtle hover:text-brand-600"><Icon name="arrow-right" className="w-4 h-4" /></Link>}
                   </li>
                 ); })}
               </ul>
@@ -113,8 +114,8 @@ export default function NotebookPage() {
           </section>
 
           {/* 업무 메모 */}
-          <section className="card p-5">
-            <h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-3"><MessageSquare className="w-4 h-4 text-brand-500" /> 업무 메모 {notes && <span className="text-xs font-normal text-ink-subtle">{notes.length}</span>}</h2>
+          <section className="card pt-5 px-[22px] pb-5">
+            <h2 className="text-[22px] font-bold text-ink tracking-tight mb-3">업무 메모 {notes && <span className="text-[14px] font-normal text-ink-subtle">{notes.length}</span>}</h2>
             {adding && (
               <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2 mb-3">
                 <div className="flex gap-2 flex-wrap items-center">
@@ -148,32 +149,31 @@ export default function NotebookPage() {
 
         {/* 우측 레일 */}
         <div className="space-y-4">
-          {/* 이번주 요약 — 다크 카드 */}
-          <div className="rounded-xl bg-slate-900 p-4 text-white">
-            <div className="text-xs text-white/60 mb-2">이번 주 처리</div>
-            <div className="text-3xl font-bold tabular-nums tracking-tight">{weekDone}<span className="text-base font-normal text-white/60 ml-1">건 완료</span></div>
-            <div className="mt-2 flex gap-4 text-[11px] text-white/60">
+          {/* 이번주 요약 — 피처 다크 카드(#191919) */}
+          <div className="rounded-[12px] bg-slate-900 pt-5 px-[22px] pb-5 text-white">
+            <div className="text-[13px] text-white/60 mb-2">이번 주 처리</div>
+            <div className="text-[34px] font-bold tabular-nums tracking-tight leading-none">{weekDone}<span className="text-base font-normal text-white/60 ml-1.5">건 완료</span></div>
+            <div className="mt-3 flex gap-4 text-[12px] text-white/60">
               <span>팔로업 {events.filter(e => !e.done).length}</span>
               <span>메모 {notes?.length ?? 0}</span>
             </div>
           </div>
           {/* 빠른 이동 */}
-          <section className="card p-4">
-            <div className="label !mb-2">빠른 이동</div>
+          <section className="card pt-4 px-4 pb-4">
+            <div className="text-[15px] font-semibold text-ink mb-2.5">빠른 이동</div>
             <div className="space-y-0.5">
-              {[['/quotes', '견적 목록', Receipt], ['/customers', '고객 관리', Users], ['/gantt', '시험 일정', GanttChartSquare], ['/calendar', '캘린더', CalendarDays]].map(([href, label, Icon]) => {
-                const I = Icon as React.ElementType;
-                return <Link key={href as string} href={href as string} className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm text-ink-muted hover:bg-slate-50 hover:text-ink"><I className="w-4 h-4 text-brand-500" />{label as string}<ArrowRight className="w-3.5 h-3.5 ml-auto text-ink-subtle" /></Link>;
-              })}
+              {([['/quotes', '견적 목록', 'list'], ['/customers', '고객 관리', 'users'], ['/gantt', '시험 일정', 'gantt'], ['/calendar', '캘린더', 'calendar']] as [string, string, IconName][]).map(([href, label, icon]) => (
+                <Link key={href} href={href} className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm text-ink-muted hover:bg-slate-100 hover:text-ink"><Icon name={icon} className="w-4 h-4 text-ink-subtle" />{label}<Icon name="arrow-right" className="w-3.5 h-3.5 ml-auto text-ink-subtle" /></Link>
+              ))}
             </div>
           </section>
-          {/* 최근 본 (최근 메모의 딜) */}
-          <section className="card p-4">
-            <div className="label !mb-2">최근 활동</div>
+          {/* 최근 활동 */}
+          <section className="card pt-4 px-4 pb-4">
+            <div className="text-[15px] font-semibold text-ink mb-2.5">최근 활동</div>
             {notes && notes.filter(n => n.deal).slice(0, 5).length > 0 ? (
               <div className="space-y-0.5">
                 {[...new Map(notes.filter(n => n.deal).map(n => [n.deal!.id, n.deal!])).values()].slice(0, 5).map(dl => (
-                  <Link key={dl.id} href={`/deals/${dl.id}`} className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-ink-muted hover:bg-slate-50 hover:text-ink"><Briefcase className="w-3.5 h-3.5 text-ink-subtle" /><span className="truncate">{dl.title}</span></Link>
+                  <Link key={dl.id} href={`/deals/${dl.id}`} className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-ink-muted hover:bg-slate-100 hover:text-ink"><Briefcase className="w-3.5 h-3.5 text-ink-subtle" /><span className="truncate">{dl.title}</span></Link>
                 ))}
               </div>
             ) : <div className="py-3 text-center text-xs text-ink-subtle">최근 활동이 없습니다.</div>}

@@ -79,7 +79,7 @@ export default function SplitView({ modalityTree }: { modalityTree: TemplateCate
           <section className="card overflow-hidden animate-fade-in" key={s.step}>
             <header className="px-6 py-5 border-b border-slate-100">
               <div className="flex items-center gap-3">
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white text-sm font-bold shadow-sm">
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-brand-600 text-white text-sm font-bold tabular-nums">
                   {s.step}
                 </span>
                 <div className="leading-tight">

@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
-import { BookOpen, FlaskConical, Boxes, Search, ExternalLink, ChevronDown, Loader2, Pencil, Trash2, Plus } from 'lucide-react';
+import { ExternalLink, ChevronDown, Loader2, Pencil, Trash2, Plus } from 'lucide-react';
+import Icon from '@/components/Icon';
 import type { Guideline, ModalityGuideline, DesignRule, KnowledgeDataset } from '@/lib/knowledge';
 import { ID_FIELD } from '@/lib/knowledge-schema';
 import { toast } from '@/lib/toast';
@@ -70,64 +71,59 @@ export default function GuidelinesPage() {
     );
   }
 
-  const tabs: { id: Tab; label: string; icon: React.ReactNode; count: number }[] = [
-    { id: 'guidelines', label: '가이드라인 사전', icon: <BookOpen className="w-4 h-4" />, count: data.counts.guidelines },
-    { id: 'design', label: '시험설계 규칙', icon: <FlaskConical className="w-4 h-4" />, count: data.counts.designRules },
-    { id: 'modality', label: '모달리티별 가이드라인', icon: <Boxes className="w-4 h-4" />, count: data.counts.modalities },
+  const tabs: { id: Tab; label: string; count: number }[] = [
+    { id: 'guidelines', label: '가이드라인 사전', count: data.counts.guidelines },
+    { id: 'design', label: '시험설계 규칙', count: data.counts.designRules },
+    { id: 'modality', label: '모달리티별 가이드라인', count: data.counts.modalities },
   ];
 
   return (
     <div className="space-y-5 animate-fade-in">
       <div>
-        <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1]">가이드라인 지식베이스</h1>
-        <p className="text-sm text-ink-muted mt-0.5">
+        <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">가이드라인</h1>
+        <p className="text-subhead text-ink-body mt-2">
           시험 가이드라인 {data.counts.guidelines}종 · 설계규칙 {data.counts.designRules}종 · 모달리티 {data.counts.modalities}종 — 공식 원문 기반, 견적의 근거 자료
         </p>
       </div>
 
       {isAdmin && <AdminBar onImported={load} />}
 
-      {/* 탭 + 검색 */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
-        <div className="flex p-1 bg-slate-100 rounded-xl max-w-full overflow-x-auto">
-          {tabs.map(t => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={clsx(
-                'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap shrink-0',
-                tab === t.id ? 'bg-white text-ink shadow-sm' : 'text-ink-muted hover:text-ink',
-              )}
-            >
-              {t.icon}{t.label}
-              <span className="text-[10px] text-ink-subtle tabular-nums">{t.count}</span>
-            </button>
-          ))}
-        </div>
-        <div className="flex items-center gap-2">
+      {/* 좌: 카테고리 레일(220) · 우: 내용 */}
+      <div className="grid lg:grid-cols-[220px_minmax(0,1fr)] gap-5">
+        <div className="self-start space-y-3">
+          <div className="flex items-center gap-2.5 h-[38px] px-[13px] rounded-lg bg-slate-50 border border-slate-200">
+            <Icon name="search" className="w-[15px] h-[15px] text-ink-subtle flex-shrink-0" />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder="검색 (시험명·코드)" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
+          </div>
+          <nav className="space-y-0.5">
+            {tabs.map(t => (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className={clsx(
+                  'relative w-full flex items-center gap-2.5 h-[38px] px-3 rounded-lg text-[15px] transition-colors',
+                  tab === t.id ? 'bg-slate-100 text-ink font-medium' : 'text-ink-muted hover:bg-slate-100 hover:text-ink',
+                )}
+              >
+                {tab === t.id && <span className="absolute left-0 top-[9px] bottom-[9px] w-0.5 rounded-full bg-brand-600" />}
+                <span className="flex-1 text-left">{t.label}</span>
+                <span className="text-[12px] text-ink-subtle tabular-nums">{t.count}</span>
+              </button>
+            ))}
+          </nav>
           {isAdmin && (
-            <button
-              onClick={() => setEditing({ dataset: TAB_DATASET[tab], record: null })}
-              className="btn-ghost text-sm"
-            >
+            <button onClick={() => setEditing({ dataset: TAB_DATASET[tab], record: null })} className="btn-ghost w-full">
               <Plus className="w-4 h-4" /> 새 항목
             </button>
           )}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-subtle" />
-            <input
-              value={q}
-              onChange={e => setQ(e.target.value)}
-              placeholder="검색 (시험명·코드·내용)"
-              className="input pl-9 w-64"
-            />
-          </div>
+        </div>
+
+        <div className="min-w-0">
+          {tab === 'guidelines' && <GuidelineList items={data.guidelines} q={q} admin={admin} />}
+          {tab === 'design' && <DesignRuleList items={data.designRules} q={q} admin={admin} />}
+          {tab === 'modality' && <ModalityList items={data.modalities} q={q} admin={admin} />}
         </div>
       </div>
-
-      {tab === 'guidelines' && <GuidelineList items={data.guidelines} q={q} admin={admin} />}
-      {tab === 'design' && <DesignRuleList items={data.designRules} q={q} admin={admin} />}
-      {tab === 'modality' && <ModalityList items={data.modalities} q={q} admin={admin} />}
 
       {editing && (
         <EditorModal

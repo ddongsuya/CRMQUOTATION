@@ -1,27 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap');
+@import './tokens.css';   /* 색·타이포·간격·radius 유일 정답. 컴포넌트는 var(--*)만 사용. */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --fg: #31302E;        /* text-body — 본문 */
-  --bg: #FFFFFF;        /* app 배경 — 흰색(실측) */
-}
-
 html, body {
-  color: var(--fg);
-  background: var(--bg);
-  font-family: 'Inter', 'Noto Sans KR', 'Pretendard', system-ui, sans-serif;
+  color: var(--body);
+  background: var(--floor);
+  font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-/* 헤드라인·대형 수치 — Inter 700, 음의 자간 -0.022em (실측) */
-h1, h2, h3, .headline { letter-spacing: -0.022em; }
+/* 헤드라인·대형 수치 — Inter 700, 음의 자간 -0.022em (tokens) */
+h1, h2, h3, .headline { letter-spacing: var(--tracking-tight); color: var(--ink); }
 .tabular { font-variant-numeric: tabular-nums; }
-/* 모노 대문자 마이크로 라벨 (메뉴·테이블 헤더 등) */
-.eyebrow { font-family: theme('fontFamily.mono'); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: theme('colors.ink.subtle'); }
+/* 모노 대문자 마이크로 라벨 (메뉴·테이블 헤더) */
+.eyebrow { font-family: var(--font-mono); font-size: var(--fs-eyebrow); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-eyebrow); color: var(--muted-soft); }
 
 /* Cleaner dev banner */
 .dev-banner {
@@ -41,65 +37,104 @@ h1, h2, h3, .headline { letter-spacing: -0.022em; }
 @layer base {
   *:focus { outline: none; }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    box-shadow: 0 0 0 3px rgb(245 129 31 / 0.18);
-    border-color: rgb(245 129 31);
+    box-shadow: 0 0 0 3px var(--accent-tint);
+    border-color: var(--accent);
   }
   button:focus-visible {
-    box-shadow: 0 0 0 3px rgb(245 129 31 / 0.20);
+    box-shadow: 0 0 0 3px var(--accent-tint);
   }
 }
 
-/* Reusable component classes */
+/* 재사용 컴포넌트 — components.css 규칙 그대로 매핑. 색은 var(--*)만. */
 @layer components {
-  /* 콘텐츠 카드 — radius 12px · 1px 헤어라인 · 그림자 없음(실측) */
+  /* 콘텐츠 카드 — radius 12px(--r-card) · 1px 헤어라인 · 그림자 없음 */
   .card {
-    @apply rounded-[12px] bg-white border border-slate-200;
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-card);
   }
-  .card-hover {
-    @apply transition-colors;
+  .card-pad { padding: var(--card-pad); }   /* 22px */
+  /* 폴라리티 플립 카드 — 강조 KPI·차트 밴드. 항상 #191919 */
+  .card-dark {
+    background: var(--dark-surface);
+    color: var(--on-dark);
+    border: none;
+    border-radius: var(--r-card);
   }
-  .card-hover:hover {
-    @apply border-slate-300 bg-slate-50;
-  }
-  /* 인풋 — height 40px · radius 8px · 14px (실측) */
+  .card-hover { @apply transition-colors; }
+  .card-hover:hover { background: var(--card-cream); border-color: var(--hairline); }
+  /* 인풋 — height 40px · radius 8px(--r-util) · 14px */
   .input {
-    @apply w-full h-10 px-3 rounded-lg border border-slate-200 bg-white text-[14px] text-ink placeholder:text-slate-400 transition-colors focus:border-brand-500;
+    @apply w-full flex items-center;
+    height: 40px; padding: 0 13px;
+    border: 1px solid var(--hairline); border-radius: var(--r-util);
+    background: var(--card); color: var(--body);
+    font-size: 14px; transition: border-color .12s;
   }
-  textarea.input { @apply h-auto py-2.5; }
-  /* 버튼 — radius 10px · 14px/600 · padding 10px 16px (실측) */
+  .input::placeholder { color: var(--muted-soft); }
+  .input:focus, .input:focus-within { border-color: var(--accent); }
+  textarea.input { height: auto; padding: 9px 13px; }
+  /* 버튼 — CTA는 풀필(--r-pill), 유틸은 8px(--r-util) */
   .btn {
-    @apply inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-[10px] text-[14px] font-semibold whitespace-nowrap transition-colors;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors;
+    cursor: pointer;
   }
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-700 active:translate-y-px disabled:bg-slate-200 disabled:text-ink-subtle disabled:cursor-not-allowed;
+    @apply btn; height: 40px; padding: 0 18px;
+    border-radius: var(--r-pill); background: var(--accent); color: #fff;
+    font-size: 14px; font-weight: 600;
   }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-primary:disabled { background: var(--card-cream); color: var(--muted-soft); cursor: not-allowed; }
   .btn-secondary {
-    @apply btn bg-slate-100 text-ink hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed;
+    @apply btn; height: 38px; padding: 0 15px;
+    border-radius: var(--r-util); background: var(--card-cream); color: var(--ink);
+    font-size: 13px; font-weight: 500;
   }
-  .btn-ghost {
-    @apply btn text-ink-muted hover:bg-slate-100 hover:text-ink disabled:opacity-40 disabled:cursor-not-allowed;
+  .btn-secondary:hover { background: var(--hairline); }
+  .btn-ghost, .btn-outline {
+    @apply btn; height: 38px; padding: 0 15px;
+    border-radius: var(--r-util); background: var(--card);
+    border: 1px solid var(--hairline); color: var(--body);
+    font-size: 13px; font-weight: 500;
   }
-  .btn-outline {
-    @apply btn border border-slate-200 bg-white text-ink-muted hover:bg-slate-50 hover:text-ink disabled:opacity-40 disabled:cursor-not-allowed;
-  }
-  /* 필터 칩(알약) — 활성 ink 반전, 비활성 헤어라인 (README) */
+  .btn-ghost:hover, .btn-outline:hover { background: var(--card-cream); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  /* 필터 칩(알약) — 활성 ink 반전, 비활성 헤어라인 */
   .chip {
-    @apply inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-[13px] font-semibold border transition-colors whitespace-nowrap;
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap transition-colors;
+    padding: 7px 16px; border-radius: var(--r-pill);
+    font-size: 12.5px; font-weight: 500;
+    border: 1px solid var(--hairline); color: var(--muted); background: transparent;
   }
-  .chip-active {
-    @apply bg-slate-900 text-white border-slate-900;
-  }
-  .chip-inactive {
-    @apply bg-white text-ink-muted border-slate-200 hover:border-slate-300 hover:text-ink;
-  }
-  /* 상태 배지/필 — height 22px · 999px · 12px/600 (실측) */
+  .chip-active { background: var(--ink); color: var(--floor); border-color: var(--ink); }
+  .chip-inactive:hover { background: var(--card-cream); color: var(--ink); }
+  /* 상태 배지/필 — 999px · 12px/600 */
   .pill {
-    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[12px] font-semibold leading-[22px];
+    @apply inline-flex items-center gap-1.5;
+    padding: 2px 9px; border-radius: var(--r-pill);
+    font-size: 12px; font-weight: 600; line-height: 18px;
   }
-  /* 필드/KPI 라벨 — 12.5px/600 muted (실측, 대문자 아님) */
-  .label {
-    @apply block text-[12.5px] font-semibold text-ink-muted mb-1.5;
+  /* 태그 — 크림 배경 부드러운 필 */
+  .tag {
+    @apply inline-flex items-center;
+    padding: 3px 9px; border-radius: var(--r-pill);
+    background: var(--card-cream); color: var(--muted);
+    font-size: 12px; font-weight: 500;
   }
+  /* VIP 배지 — accent 배경 흰색 (components.css) */
+  .badge-vip {
+    @apply inline-flex items-center;
+    padding: 2px 9px; border-radius: var(--r-pill);
+    background: var(--accent); color: #fff;
+    font-size: 11px; font-weight: 700;
+  }
+  /* 필드/KPI 라벨 — 13px/500 muted */
+  .label { @apply block mb-1.5; font-size: 13px; font-weight: 500; color: var(--muted); }
+  /* 상태 톤(배지/필) — 전부 토큰 파생. raw hex 대체용. */
+  .tone-sent   { background: color-mix(in srgb, var(--status-sent) 13%, transparent); color: var(--status-sent); }
+  .tone-blue   { background: color-mix(in srgb, var(--sat) 14%, transparent); color: var(--sat); }
+  .tone-accent { background: var(--accent-tint); color: var(--accent-press); }
 }
 
 /* ─── Print layout ───────────── */

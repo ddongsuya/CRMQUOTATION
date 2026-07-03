@@ -7,7 +7,7 @@ import { Bell, AlertTriangle, CalendarClock, Loader2 } from 'lucide-react';
 
 type Item = { date: string; kind: string; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; contact?: string; eventId?: number; done?: boolean };
 
-const TYPE_DOT: Record<string, string> = { MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[#2a9d99]' };
+const TYPE_DOT: Record<string, string> = { MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]' };
 const dayDiff = (d: string, now: Date) => Math.round((new Date(d.slice(0, 10)).getTime() - new Date(now.toISOString().slice(0, 10)).getTime()) / 86400_000);
 
 export default function DashboardAlarms() {

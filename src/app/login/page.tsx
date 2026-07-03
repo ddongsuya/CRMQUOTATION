@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { Beaker, LogIn, UserPlus, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from '@/lib/toast';
 
 export default function LoginPage() {
@@ -46,10 +46,8 @@ export default function LoginPage() {
     <div className="min-h-[calc(100vh-100px)] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
-          <span className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-lg mb-3">
-            <Beaker className="w-6 h-6" />
-          </span>
-          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1]">{mode === 'signin' ? '로그인' : '계정 만들기'}</h1>
+          <span className="inline-flex items-center justify-center w-12 h-12 rounded-[12px] bg-ink text-slate-50 text-[22px] font-bold leading-none mb-3">코</span>
+          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">{mode === 'signin' ? '로그인' : '계정 만들기'}</h1>
           <p className="text-sm text-ink-muted mt-1">코아스템켐온 비임상시험 견적 시스템</p>
         </div>
 
@@ -69,7 +67,7 @@ export default function LoginPage() {
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} className="input" placeholder="6자 이상" autoComplete={mode === 'signin' ? 'current-password' : 'new-password'} />
           </label>
           <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-2.5">
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : (mode === 'signin' ? <LogIn className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />)}
+            {loading && <Loader2 className="w-4 h-4 animate-spin" />}
             {mode === 'signin' ? '로그인' : '가입하기'}
           </button>
           <div className="text-center text-xs text-ink-muted pt-1">

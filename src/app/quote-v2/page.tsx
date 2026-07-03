@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FlaskConical, Loader2, Receipt, Ban, PlusCircle, AlertTriangle, FileText, ChevronLeft, ChevronRight, Check, Printer } from 'lucide-react';
+import { Loader2, Receipt, Ban, PlusCircle, AlertTriangle, FileText, ChevronLeft, ChevronRight, Check, Printer } from 'lucide-react';
+import Icon from '@/components/Icon';
+import { toast } from '@/lib/toast';
 
 const DURATIONS = [
   { key: 'SINGLE', label: '단회' }, { key: 'W4', label: '4주' }, { key: 'W13', label: '13주' },
@@ -25,7 +27,7 @@ const STEPS = [
   { n: 2, title: '모달리티 선택', sub: '시험 분류·제출처·투여경로를 고르세요' },
   { n: 3, title: '시험 구성', sub: '설계값으로 시험을 자동 구성합니다' },
   { n: 4, title: '조건·부형제', sub: '규칙 조건·부형제·추가옵션을 조정하세요' },
-  { n: 5, title: '통화·할인·발행', sub: '최종 조건 설정 후 저장·출력합니다' },
+  { n: 5, title: '통화·할인', sub: '최종 조건을 설정하면 우측 견적이 즉시 갱신됩니다' },
 ];
 const won = (n: number | null | undefined) => (n == null ? '—' : `₩${n.toLocaleString()}`);
 type Meta = { categories: string[]; conditionKeys: string[]; addonOptions: { key: string; label: string; price: number }[] };
@@ -133,7 +135,15 @@ export default function QuoteV2Page() {
       });
       const d = await res.json();
       if (d.quote?.quoteNumber) { setSavedNo(d.quote.quoteNumber); setSavedId(d.quote.id ?? null); }
+      return d.quote?.id ?? null;
     } finally { setSaving(false); }
+  };
+
+  // 견적 완성 — 발행 저장 후 견적서(표지·견적명세·항목별 상세)로 이동
+  const completeQuote = async () => {
+    const id = await saveQuote(true);
+    if (id) window.location.href = `/quote/print?id=${id}`;
+    else toast.error('견적 저장에 실패했습니다. 다시 시도해 주세요.');
   };
 
   const canNext = (): boolean => {
@@ -150,8 +160,8 @@ export default function QuoteV2Page() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><FlaskConical className="w-6 h-6 text-brand-500" /> 새 견적 작성 <span className="pill bg-brand-100 text-brand-700">엔진 v2</span></h1>
-          <p className="text-sm text-ink-muted mt-0.5">5단계로 견적을 구성하고 PDF로 출력합니다.</p>
+          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">새 견적 작성</h1>
+          <p className="text-subhead text-ink-body mt-2">5단계로 견적을 구성하고 PDF로 출력합니다.</p>
         </div>
       </div>
 
@@ -179,14 +189,14 @@ export default function QuoteV2Page() {
         {/* LEFT — 현재 단계 */}
         <section className="card overflow-hidden self-start">
           <header className="px-5 py-4 border-b border-slate-100 flex items-center gap-3">
-            <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white text-sm font-bold">{step}</span>
+            <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-brand-600 text-white text-sm font-bold">{step}</span>
             <div><h2 className="font-semibold text-ink">{meta1.title}</h2><p className="text-xs text-ink-muted mt-0.5">{meta1.sub}</p></div>
           </header>
 
           <div className="p-5 space-y-3.5">
             {/* STEP 1 — 프로젝트 정보 */}
             {step === 1 && <>
-              {dealId && <div className="pill bg-[#e5f3f2] text-[#207a76] mb-1">안건 #{dealId} 연동</div>}
+              {dealId && <div className="pill tone-sent mb-1">안건 #{dealId} 연동</div>}
               <div className="grid sm:grid-cols-2 gap-2">
                 <Field label="고객사 *"><input className="input" value={cust.company} onChange={e => setCust(c => ({ ...c, company: e.target.value }))} placeholder="㈜OOO" /></Field>
                 <Field label="담당자"><input className="input" value={cust.name} onChange={e => setCust(c => ({ ...c, name: e.target.value }))} /></Field>
@@ -305,22 +315,30 @@ export default function QuoteV2Page() {
               <p className="text-xs text-ink-subtle">변경하면 오른쪽 견적이 자동 갱신됩니다.</p>
             </>}
 
-            {/* STEP 5 — 통화·할인·발행 */}
+            {/* STEP 5 — 가격 기준·통화·할인 */}
             {step === 5 && <>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="통화"><div className="flex gap-1.5">{(['KRW', 'USD'] as const).map(c => <Chip key={c} on={currency === c} onClick={() => setCurrency(c)}>{c}</Chip>)}</div></Field>
-                {currency === 'USD' && <Field label="환율 (₩/$)"><input type="number" className="input" value={exchangeRate} onChange={e => setExchangeRate(Number(e.target.value))} /></Field>}
-              </div>
+              <Field label="가격 기준">
+                <div className="segmented inline-flex gap-[3px] p-[3px] rounded-lg bg-slate-100">
+                  {([['MFDS', 'MFDS (국내)'], ['OECD', 'OECD (해외)']] as const).map(([k, l]) => (
+                    <button key={k} type="button" onClick={() => setStandard(k)} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-colors ${standard === k ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink'}`}>{l}</button>
+                  ))}
+                </div>
+                <p className="text-xs text-ink-subtle mt-1.5">{standard === 'MFDS' ? '국내 식약처(MFDS) 제출 기준 단가' : '해외(OECD) 제출 기준 단가'}</p>
+              </Field>
+              <Field label="통화">
+                <div className="segmented inline-flex gap-[3px] p-[3px] rounded-lg bg-slate-100">
+                  {([['KRW', 'KRW ₩'], ['USD', 'USD $']] as const).map(([k, l]) => (
+                    <button key={k} type="button" onClick={() => setCurrency(k)} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-colors ${currency === k ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink'}`}>{l}</button>
+                  ))}
+                </div>
+                <p className="text-xs text-ink-subtle mt-1.5">{currency === 'KRW' ? '원화 견적 · VAT 10% 별도 합산' : `달러 견적 · 환율 ₩${exchangeRate}/$`}</p>
+                {currency === 'USD' && <input type="number" className="input mt-2" value={exchangeRate} onChange={e => setExchangeRate(Number(e.target.value))} placeholder="환율 ₩/$" />}
+              </Field>
               <Field label={`할인율 — ${(discountRate * 100).toFixed(0)}%`}>
                 <input type="range" min={0} max={0.3} step={0.01} value={discountRate} onChange={e => setDiscountRate(Number(e.target.value))} className="w-full accent-brand-600" />
+                <div className="flex justify-between text-[11px] text-ink-subtle mt-1"><span>0%</span><span>15%</span><span>30%</span></div>
               </Field>
-              {quote && <TotalsBox subtotal={quote.totals.subtotalKrw} discountRate={discountRate} currency={currency} exchangeRate={exchangeRate} />}
-              <div className="flex items-center justify-end gap-2 pt-1 flex-wrap">
-                {savedNo && <span className="text-sm text-emerald-600 font-medium">저장됨 · {savedNo}</span>}
-                {savedId && <a href={`/quote/print?id=${savedId}`} target="_blank" rel="noreferrer" className="btn-ghost"><Printer className="w-4 h-4" /> PDF 출력</a>}
-                <button onClick={() => saveQuote(false)} disabled={saving} className="btn-outline">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시저장</button>
-                <button onClick={() => saveQuote(true)} disabled={saving} className="btn-primary">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Receipt className="w-4 h-4" />} 발행</button>
-              </div>
+              {savedNo && <div className="text-[13px] text-emerald-600 font-medium">임시 저장됨 · {savedNo}</div>}
             </>}
           </div>
 
@@ -329,14 +347,16 @@ export default function QuoteV2Page() {
             <span className="text-[11px] text-ink-subtle font-medium tabular-nums">{step} / {STEPS.length}</span>
             {step < STEPS.length
               ? <button onClick={() => setStep(s => s + 1)} disabled={!canNext()} className="btn-primary">다음 <ChevronRight className="w-4 h-4" /></button>
-              : <span className="w-16" />}
+              : <button onClick={completeQuote} disabled={saving || !quote} className="inline-flex items-center justify-center gap-2 h-10 px-[18px] rounded-full text-white font-semibold text-[14px] whitespace-nowrap transition-colors disabled:opacity-50" style={{ background: 'var(--success)' }}>
+                  {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Icon name="check" className="w-4 h-4" />} 견적 완성 <ChevronRight className="w-4 h-4" />
+                </button>}
           </footer>
         </section>
 
-        {/* RIGHT — LivePreview (3단계 자동구성 이후) */}
+        {/* RIGHT — 실시간 견적 (3단계 자동구성 이후) */}
         {showPreview && (
           <div className="lg:sticky lg:top-4 self-start">
-            <QuoteResult quote={quote} composedCount={composed.length} />
+            <QuoteResult quote={quote} composedCount={composed.length} onSaveDraft={() => saveQuote(false)} onComplete={completeQuote} saving={saving} standard={standard} />
           </div>
         )}
       </div>
@@ -371,10 +391,14 @@ function Row({ label, value, muted }: { label: string; value: string; muted?: bo
   return <div className={`flex justify-between ${muted ? 'text-ink-subtle text-xs' : 'text-ink-muted'}`}><span>{label}</span><span className="tabular-nums">{value}</span></div>;
 }
 
-function QuoteResult({ quote, composedCount }: { quote: Quote; composedCount: number }) {
+function QuoteResult({ quote, composedCount, onSaveDraft, onComplete, saving, standard }: { quote: Quote; composedCount: number; onSaveDraft?: () => void; onComplete?: () => void; saving?: boolean; standard?: 'MFDS' | 'OECD' }) {
   return (
     <section className="card p-5 space-y-4 animate-fade-in">
-      <h2 className="text-lg font-bold flex items-center gap-2"><Receipt className="w-5 h-5 text-brand-500" /> 견적 미리보기 <span className="text-xs font-normal text-ink-subtle">자동구성 {composedCount}건</span></h2>
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="text-[22px] font-bold text-ink tracking-tight">실시간 견적</h2>
+        <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-muted"><span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--success)' }} />동기화</span>
+      </div>
+      {standard && <span className="tag">{standard}</span>}
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[560px]">
@@ -385,7 +409,7 @@ function QuoteResult({ quote, composedCount }: { quote: Quote; composedCount: nu
             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {quote.lineItems.map((li: any, i: number) => (
               <tr key={i} className="border-b border-slate-50">
-                <td className="py-1.5 pr-2 text-ink">{li.testName}{li.isPrereq && <span className="pill bg-[#e5f3f2] text-[#207a76] ml-1">선행</span>}</td>
+                <td className="py-1.5 pr-2 text-ink">{li.testName}{li.isPrereq && <span className="pill tone-sent ml-1">선행</span>}</td>
                 <td className="py-1.5 px-2 text-ink-muted">{li.route}</td>
                 <td className="py-1.5 px-2 text-right tabular-nums font-medium">{won(li.unitPrice)}</td>
                 <td className="py-1.5 px-2 text-[11px] text-ink-subtle">{[...li.appliedRules, ...li.notes].join(' · ')}</td>
@@ -414,6 +438,14 @@ function QuoteResult({ quote, composedCount }: { quote: Quote; composedCount: nu
           <div className="text-2xl font-bold text-ink tabular-nums">{won(quote.totals.subtotalKrw)} <span className="text-xs font-normal text-ink-subtle">(VAT 별도)</span></div>
         </div>
       </div>
+
+      {/* 저장 · 발행 — 시안: 임시 저장 / PDF 발행(견적서 생성) */}
+      {(onSaveDraft || onComplete) && (
+        <div className="grid grid-cols-2 gap-2 pt-1">
+          <button onClick={onSaveDraft} disabled={saving} className="btn-outline justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시 저장</button>
+          <button onClick={onComplete} disabled={saving} className="btn-primary justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />} PDF 발행</button>
+        </div>
+      )}
     </section>
   );
 }

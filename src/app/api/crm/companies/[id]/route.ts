@@ -48,6 +48,9 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   const dealMeta = (d: DealRel) => ({ dealId: d.id, dealTitle: d.title, modality: d.modality, stage: d.stage });
 
   const allQuotes = flatDeals.flatMap(d => d.quotes);
+  // 최근 견적 목록 (시안 고객상세 '최근 견적' 카드) — 딜/담당자 메타 포함, 최신순
+  const quotes = flatDeals.flatMap(d => d.quotes.map(q => ({ ...q, ...dealMeta(d), contactId: d.contactId })))
+    .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt));
   const contracts = flatDeals.filter(d => d.contract).map(d => ({ ...d.contract!, ...dealMeta(d) }));
   const studies = flatDeals.flatMap(d => d.studies.map(s => ({ ...s, ...dealMeta(d) })));
   const notes = flatDeals.flatMap(d => d.notes.map(n => ({ ...n, ...dealMeta(d), contactName: d.contactName, contactId: d.contactId })))
@@ -64,7 +67,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
     activeStudies: studies.filter(s => !s.reportDraftIssuedAt).length,
   };
 
-  return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, contactId: d.contactId, quoteCount: d.quotes.length, quoteAmount: d.quotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0), wonAmount: d.quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0) })), contracts, studies, notes, events, kpi } });
+  return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, contactId: d.contactId, quoteCount: d.quotes.length, quoteAmount: d.quotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0), wonAmount: d.quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0) })), quotes, contracts, studies, notes, events, kpi } });
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {

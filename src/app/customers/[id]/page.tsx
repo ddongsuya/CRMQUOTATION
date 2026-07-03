@@ -4,10 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import clsx from 'clsx';
-import {
-  ArrowLeft, Loader2, Plus, Pencil, Trash2, X, Save, User, Mail, Phone, Briefcase,
-  Sparkles, FileSignature, FlaskConical, NotebookPen, CalendarDays, Receipt,
-} from 'lucide-react';
+import { Loader2, Pencil, Trash2, Save, Briefcase, Sparkles, FileSignature, FlaskConical, NotebookPen, Receipt } from 'lucide-react';
+import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 
 type Quote = { id: number; quoteNumber: string; status: string; grandTotal: number | null; createdAt: string };
@@ -35,25 +33,25 @@ type Agg = {
 const STAGE: Record<string, { label: string; cls: string }> = {
   INQUIRY: { label: '문의접수', cls: 'bg-slate-200 text-ink-muted' },
   QUOTE: { label: '견적', cls: 'bg-brand-100 text-brand-700' },
-  INTAKE: { label: '시험접수', cls: 'bg-[#e5f3f2] text-[#207a76]' },
+  INTAKE: { label: '시험접수', cls: 'tone-sent' },
   CONTRACT: { label: '계약', cls: 'bg-amber-100 text-amber-800' },
-  STUDY: { label: '시험진행', cls: 'bg-[#eaf0f8] text-[#3f6098]' },
+  STUDY: { label: '시험진행', cls: 'tone-blue' },
   INVOICE: { label: '세금계산서', cls: 'bg-emerald-100 text-emerald-700' },
   DONE: { label: '완료', cls: 'bg-emerald-100 text-emerald-700' },
 };
 const CONTRACT_ST: Record<string, { label: string; cls: string }> = {
   DRAFT: { label: '초안', cls: 'bg-slate-200 text-ink-muted' },
   SENT: { label: '송부', cls: 'bg-amber-100 text-amber-800' },
-  REVIEWED: { label: '검토', cls: 'bg-[#eaf0f8] text-[#3f6098]' },
+  REVIEWED: { label: '검토', cls: 'tone-blue' },
   APPROVED: { label: '승인', cls: 'bg-brand-100 text-brand-700' },
   SIGNED: { label: '체결', cls: 'bg-emerald-100 text-emerald-700' },
 };
 const NOTE_T: Record<string, { label: string; cls: string }> = {
   MEETING: { label: '미팅', cls: 'bg-brand-100 text-brand-700' },
-  CALL: { label: '통화', cls: 'bg-[#eaf0f8] text-[#3f6098]' },
+  CALL: { label: '통화', cls: 'tone-blue' },
   MEMO: { label: '메모', cls: 'bg-slate-200 text-ink-muted' },
 };
-const EVENT_T: Record<string, string> = { MEETING: 'bg-brand-400', DEADLINE: 'bg-red-400', MILESTONE: 'bg-[#2a9d99]', REMINDER: 'bg-amber-400' };
+const EVENT_T: Record<string, string> = { MEETING: 'bg-brand-400', DEADLINE: 'bg-red-400', MILESTONE: 'bg-[var(--status-sent)]', REMINDER: 'bg-amber-400' };
 
 const fmtWon = (n: number | null | undefined) => `₩${(n ?? 0).toLocaleString()}`;
 const fmtWonM = (n: number) => (n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : `₩${n.toLocaleString()}`);
@@ -99,17 +97,17 @@ export default function CompanyDetailPage() {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <Link href="/customers" className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink"><ArrowLeft className="w-3.5 h-3.5" /> 고객 관리</Link>
+      <Link href="/customers" className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink"><Icon name="chevron-left" className="w-3.5 h-3.5" /> 고객 관리</Link>
 
       {/* 고객사 헤더 + KPI */}
-      <div className="card p-5">
+      <div className="card p-[22px]">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="flex items-start gap-3 min-w-0">
-            <span className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-brand-100 text-brand-700 font-bold text-lg flex-shrink-0">{company.name.charAt(0)}</span>
+            <span className="inline-flex items-center justify-center w-12 h-12 rounded-[10px] bg-brand-100 text-brand-700 font-bold text-lg flex-shrink-0">{company.name.charAt(0)}</span>
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-xl font-bold text-ink break-keep">{company.name}</h1>
-                {company.isNewClient && <span className="pill bg-amber-100 text-amber-800 inline-flex items-center gap-0.5"><Sparkles className="w-2.5 h-2.5" />첫거래</span>}
+                <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1] break-keep">{company.name}</h1>
+                {company.isNewClient && <span className="pill tone-accent inline-flex items-center gap-0.5"><Sparkles className="w-2.5 h-2.5" />첫거래</span>}
               </div>
               <div className="text-xs text-ink-muted mt-1 flex flex-wrap gap-x-4 gap-y-0.5">
                 {company.industry && <span>{company.industry}</span>}
@@ -121,7 +119,7 @@ export default function CompanyDetailPage() {
           </div>
           <div className="flex items-center gap-1.5 flex-shrink-0">
             <button onClick={() => setEditCompany(true)} className="btn-outline text-xs"><Pencil className="w-3.5 h-3.5" /> 수정</button>
-            {firstContactId && <button onClick={() => setDealModal({ contactId: firstContactId })} className="btn-primary text-xs"><Plus className="w-3.5 h-3.5" /> 안건</button>}
+            {firstContactId && <button onClick={() => setDealModal({ contactId: firstContactId })} className="btn-primary text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 안건</button>}
           </div>
         </div>
 
@@ -169,19 +167,19 @@ export default function CompanyDetailPage() {
 
 function KpiCell({ icon, label, value, sub }: { icon: React.ReactNode; label: string; value: string; sub: string }) {
   return (
-    <div className="rounded-xl bg-slate-50/70 border border-slate-100 px-3 py-2.5 min-w-0">
-      <div className="flex items-center gap-1 text-ink-subtle text-[11px]">{icon}<span className="truncate">{label}</span></div>
-      <div className="text-lg font-bold text-ink tabular-nums mt-0.5 truncate">{value}</div>
-      <div className="text-[10px] text-ink-subtle truncate">{sub}</div>
+    <div className="rounded-[12px] bg-ink text-white px-3 py-2.5 min-w-0">
+      <div className="flex items-center gap-1 text-white/60 text-[11px]">{icon}<span className="truncate">{label}</span></div>
+      <div className="text-lg font-bold text-white tabular-nums mt-0.5 truncate">{value}</div>
+      <div className="text-[10px] text-white/60 truncate">{sub}</div>
     </div>
   );
 }
 
-function SectionCard({ title, icon, count, children, action }: { title: string; icon: React.ReactNode; count?: number; children: React.ReactNode; action?: React.ReactNode }) {
+function SectionCard({ title, count, children, action }: { title: string; count?: number; children: React.ReactNode; action?: React.ReactNode }) {
   return (
-    <section className="card p-5 min-w-0">
+    <section className="card p-[22px] min-w-0">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-bold text-ink flex items-center gap-1.5">{icon} {title}{count != null && <span className="text-xs text-ink-subtle font-normal">{count}</span>}</h2>
+        <h2 className="text-[15px] font-semibold text-ink flex items-center gap-1.5">{title}{count != null && <span className="text-xs text-ink-subtle font-normal">{count}</span>}</h2>
         {action}
       </div>
       {children}
@@ -199,7 +197,7 @@ function DealSelect({ deals, value, onChange }: { deals: DealOpt; value: number 
   );
 }
 function AddToggle({ open, onToggle, label }: { open: boolean; onToggle: () => void; label: string }) {
-  return <button onClick={onToggle} className="btn-ghost text-xs">{open ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />} {open ? '취소' : label}</button>;
+  return <button onClick={onToggle} className="btn-ghost text-xs">{open ? <Icon name="x" className="w-3.5 h-3.5" /> : <Icon name="plus" className="w-3.5 h-3.5" />} {open ? '취소' : label}</button>;
 }
 
 function Empty({ children }: { children: React.ReactNode }) {
@@ -233,11 +231,11 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
   const upcoming = agg.events.filter(e => !e.done && new Date(e.startAt) >= new Date(new Date().setHours(0, 0, 0, 0))).slice(0, 5);
   return (
     <div className="grid lg:grid-cols-2 gap-4">
-      <SectionCard title="진행 중 딜" icon={<Briefcase className="w-4 h-4 text-brand-500" />} count={activeDeals.length}>
+      <SectionCard title="진행 중 딜" count={activeDeals.length}>
         {activeDeals.length === 0 ? <Empty>진행 중인 딜이 없습니다.</Empty> : <div className="divide-y divide-slate-100">{activeDeals.map(d => <DealLine key={d.id} d={d} />)}</div>}
       </SectionCard>
 
-      <SectionCard title="시험 진행" icon={<FlaskConical className="w-4 h-4 text-brand-500" />} count={runningStudies.length}>
+      <SectionCard title="시험 진행" count={runningStudies.length}>
         {runningStudies.length === 0 ? <Empty>진행 중인 시험이 없습니다.</Empty> : (
           <ul className="divide-y divide-slate-100">
             {runningStudies.map(s => {
@@ -256,7 +254,7 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
         )}
       </SectionCard>
 
-      <SectionCard title="담당자" icon={<User className="w-4 h-4 text-brand-500" />} count={company.contacts.length}>
+      <SectionCard title="담당자" count={company.contacts.length}>
         {company.contacts.length === 0 ? <Empty>등록된 의뢰자가 없습니다.</Empty> : (
           <ul className="space-y-2.5">
             {company.contacts.map(c => (
@@ -272,7 +270,7 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
         )}
       </SectionCard>
 
-      <SectionCard title="예정 일정" icon={<CalendarDays className="w-4 h-4 text-brand-500" />} count={upcoming.length}>
+      <SectionCard title="예정 일정" count={upcoming.length}>
         {upcoming.length === 0 ? <Empty>예정된 일정이 없습니다.</Empty> : (
           <ul className="divide-y divide-slate-100">
             {upcoming.map(e => {
@@ -289,7 +287,7 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
         )}
       </SectionCard>
 
-      <SectionCard title="최근 노트" icon={<NotebookPen className="w-4 h-4 text-brand-500" />} count={recentNotes.length}>
+      <SectionCard title="최근 노트" count={recentNotes.length}>
         {recentNotes.length === 0 ? <Empty>기록된 노트가 없습니다.</Empty> : (
           <ul className="space-y-3">
             {recentNotes.map(n => (
@@ -312,7 +310,7 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
 function DealsTab({ agg }: { agg: Agg | null }) {
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
-    <SectionCard title="전체 딜" icon={<Briefcase className="w-4 h-4 text-brand-500" />} count={agg.deals.length}>
+    <SectionCard title="전체 딜" count={agg.deals.length}>
       {agg.deals.length === 0 ? <Empty>등록된 딜이 없습니다.</Empty> : <div className="divide-y divide-slate-100">{agg.deals.map(d => <DealLine key={d.id} d={d} />)}</div>}
     </SectionCard>
   );
@@ -325,19 +323,19 @@ function ContactsTab({ company, onAdd, onEdit, onDel, onAddDeal }: {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-bold text-ink flex items-center gap-1.5"><User className="w-4 h-4 text-brand-500" /> 의뢰자 {company.contacts.length}명</h2>
-        <button onClick={onAdd} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 의뢰자 추가</button>
+        <h2 className="text-[15px] font-semibold text-ink flex items-center gap-1.5">의뢰자 {company.contacts.length}명</h2>
+        <button onClick={onAdd} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 의뢰자 추가</button>
       </div>
       {company.contacts.length === 0 ? (
         <div className="card p-8 text-center text-sm text-ink-subtle">등록된 의뢰자가 없습니다.</div>
       ) : company.contacts.map(ct => (
-        <div key={ct.id} className="card p-4 min-w-0">
+        <div key={ct.id} className="card p-[22px] min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="font-semibold text-ink flex items-center gap-2 flex-wrap">{ct.name}{ct.position && <span className="text-xs font-normal text-ink-subtle">{ct.position}</span>}</div>
               <div className="text-xs text-ink-muted mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5">
-                {ct.email && <span className="inline-flex items-center gap-1 min-w-0"><Mail className="w-3 h-3 flex-shrink-0" /><span className="truncate">{ct.email}</span></span>}
-                {ct.phone && <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" />{ct.phone}</span>}
+                {ct.email && <span className="inline-flex items-center gap-1 min-w-0"><Icon name="mail" className="w-3 h-3 flex-shrink-0" /><span className="truncate">{ct.email}</span></span>}
+                {ct.phone && <span className="inline-flex items-center gap-1"><Icon name="phone" className="w-3 h-3" />{ct.phone}</span>}
               </div>
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
@@ -357,7 +355,7 @@ function ContactsTab({ company, onAdd, onEdit, onDel, onAddDeal }: {
                 </Link>
               );
             })}
-            <button onClick={() => onAddDeal(ct.id)} className="inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 py-1"><Plus className="w-3.5 h-3.5" /> 안건 추가</button>
+            <button onClick={() => onAddDeal(ct.id)} className="inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 py-1"><Icon name="plus" className="w-3.5 h-3.5" /> 안건 추가</button>
           </div>
         </div>
       ))}
@@ -380,7 +378,7 @@ function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt;
   };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
-    <SectionCard title="계약" icon={<FileSignature className="w-4 h-4 text-brand-500" />} count={agg.contracts.length}
+    <SectionCard title="계약" count={agg.contracts.length}
       action={noContractDeals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="계약 시작" />}>
       {open && (
         <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
@@ -432,7 +430,7 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
   };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
-    <SectionCard title="시험" icon={<FlaskConical className="w-4 h-4 text-brand-500" />} count={agg.studies.length}
+    <SectionCard title="시험" count={agg.studies.length}
       action={deals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="시험 추가" />}>
       {open && (
         <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
@@ -459,7 +457,7 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
                     <td className="py-2.5 px-2 text-ink-muted">{s.director || '—'}</td>
                     <td className="py-2.5 px-2 text-ink-muted tabular-nums">{fmtDate(s.reportDraftDueAt)}</td>
                     <td className="py-2.5 pl-2 text-right">
-                      {s.reportDraftIssuedAt ? <span className="pill bg-emerald-100 text-emerald-700">발행</span> : dd ? <span className={clsx('pill', dd.cls)}>{dd.label}</span> : <span className="pill bg-[#eaf0f8] text-[#3f6098]">진행</span>}
+                      {s.reportDraftIssuedAt ? <span className="pill bg-emerald-100 text-emerald-700">발행</span> : dd ? <span className={clsx('pill', dd.cls)}>{dd.label}</span> : <span className="pill tone-blue">진행</span>}
                     </td>
                   </tr>
                 );
@@ -486,7 +484,7 @@ function NotesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; rel
   };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
-    <SectionCard title="노트" icon={<NotebookPen className="w-4 h-4 text-brand-500" />} count={agg.notes.length}
+    <SectionCard title="노트" count={agg.notes.length}
       action={deals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="기록 추가" />}>
       {open && (
         <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
@@ -534,7 +532,7 @@ function ScheduleTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; 
   if (!agg) return <Empty>불러오는 중…</Empty>;
   const sorted = [...agg.events].sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
   return (
-    <SectionCard title="일정" icon={<CalendarDays className="w-4 h-4 text-brand-500" />} count={sorted.length}
+    <SectionCard title="일정" count={sorted.length}
       action={deals.length > 0 && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="일정 추가" />}>
       {open && (
         <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
@@ -572,10 +570,10 @@ function ScheduleTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; 
 function Modal({ title, onClose, children, footer }: { title: string; onClose: () => void; children: React.ReactNode; footer: React.ReactNode }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
+      <div className="bg-white rounded-[12px] border border-slate-200 w-full max-w-md max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
           <div className="font-semibold text-ink">{title}</div>
-          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-5 h-5" /></button>
         </header>
         <div className="px-5 py-4 space-y-3 overflow-auto">{children}</div>
         <footer className="px-5 py-3 border-t border-slate-100 flex justify-end gap-2">{footer}</footer>

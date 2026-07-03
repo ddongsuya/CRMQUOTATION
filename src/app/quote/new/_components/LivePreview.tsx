@@ -73,7 +73,7 @@ export default function LivePreview() {
 
   return (
     <div className="print-root rounded-2xl bg-white border border-slate-200/70 shadow-card overflow-hidden">
-      <header className="px-6 py-5 bg-gradient-to-br from-brand-600 via-brand-700 to-brand-800 text-white relative overflow-hidden">
+      <header className="px-6 py-5 bg-brand-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.15),transparent_60%)]" />
         <div className="relative flex items-start justify-between gap-4">
           <div>
@@ -196,7 +196,7 @@ export default function LivePreview() {
           </div>
 
           {totals && (
-            <div className="border-t border-slate-100 px-6 py-5 bg-gradient-to-b from-slate-50/40 to-slate-50/80">
+            <div className="border-t border-slate-100 px-6 py-5 bg-slate-50">
               <dl className="space-y-1.5 text-sm">
                 <Row label="소계" value={fmt(totals.totalBeforeDiscount)} />
                 {s.discountRate > 0 && (

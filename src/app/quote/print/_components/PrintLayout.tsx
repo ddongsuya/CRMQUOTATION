@@ -1,7 +1,5 @@
 'use client';
 
-import { Beaker } from 'lucide-react';
-
 export type PrintData = {
   meta: {
     quoteNo: string;
@@ -87,9 +85,7 @@ export default function PrintLayout({ data }: { data: PrintData }) {
         <div className="cover-band">
           <div className="cover-band-inner">
             <div className="cover-brand">
-              <span className="cover-logo">
-                <Beaker className="w-5 h-5" />
-              </span>
+              <span className="cover-logo">코</span>
               <div>
                 <div className="cover-brand-name">Corestemchemon</div>
                 <div className="cover-brand-sub">Enterprise placing human and life at the top</div>

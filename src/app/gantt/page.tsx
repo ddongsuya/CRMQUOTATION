@@ -18,9 +18,9 @@ type Project = {
 const STAGE: Record<string, { label: string; cls: string }> = {
   INQUIRY: { label: '문의', cls: 'bg-slate-200 text-ink-muted' },
   QUOTE: { label: '견적', cls: 'bg-brand-100 text-brand-700' },
-  INTAKE: { label: '접수', cls: 'bg-[#e5f3f2] text-[#207a76]' },
-  CONTRACT: { label: '계약', cls: 'bg-[#eaf0f8] text-[#3f6098]' },
-  STUDY: { label: '시험진행', cls: 'bg-slate-900 text-white' },
+  INTAKE: { label: '접수', cls: 'tone-sent' },
+  CONTRACT: { label: '계약', cls: 'tone-blue' },
+  STUDY: { label: '시험진행', cls: 'bg-ink text-white' },
   INVOICE: { label: '정산', cls: 'bg-emerald-100 text-emerald-700' },
   DONE: { label: '완료', cls: 'bg-emerald-100 text-emerald-700' },
 };
@@ -62,11 +62,11 @@ export default function GanttPage() {
   const current = projects.find(p => p.id === sel) ?? null;
 
   return (
-    <div className="space-y-5 animate-fade-in">
-      <div className="flex items-end justify-between flex-wrap gap-3">
+    <div className="animate-fade-in">
+      <div className="flex items-end justify-between flex-wrap gap-3 mb-6">
         <div>
-          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><GanttChartSquare className="w-6 h-6 text-brand-500" /> 시험 일정</h1>
-          <p className="text-sm text-ink-muted mt-0.5">프로젝트별 비임상 시험 타임라인 — 좌측 프로젝트를 선택하세요.</p>
+          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">시험 일정</h1>
+          <p className="text-subhead text-ink-body mt-2">고객사·담당자별 진행 프로젝트를 선택하면 해당 프로젝트의 시험 타임라인을 볼 수 있습니다.</p>
         </div>
         <div className="flex items-center gap-2">
           {companyId != null && (
@@ -76,7 +76,7 @@ export default function GanttPage() {
           )}
           <div className="inline-flex rounded-lg bg-slate-100 p-0.5 text-xs">
           {([['all', '전체'], ['active', '진행'], ['done', '완료']] as const).map(([k, l]) => (
-            <button key={k} onClick={() => setSeg(k)} className={clsx('px-3 py-1.5 rounded-md font-medium transition-colors', seg === k ? 'bg-white text-ink shadow-sm' : 'text-ink-muted hover:text-ink')}>{l}</button>
+            <button key={k} onClick={() => setSeg(k)} className={clsx('px-3 py-1.5 rounded-md font-medium transition-colors', seg === k ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink')}>{l}</button>
           ))}
           </div>
         </div>
@@ -168,14 +168,14 @@ function StudyGantt({ studies }: { studies: Study[] }) {
 
   const PHASE = {
     done: { bar: 'bg-slate-200 border border-slate-300', text: 'text-ink-muted' },
-    active: { bar: 'bg-slate-900', text: 'text-white' },
+    active: { bar: 'bg-ink', text: 'text-white' },
     planned: { bar: 'bg-brand-200 border border-brand-300', text: 'text-brand-800' },
   } as const;
 
   return (
     <div className="card p-4">
       <div className="flex flex-wrap gap-3 mb-3 text-[11px] text-ink-muted">
-        <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-slate-900" />진행(In-life)</span>
+        <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-ink" />진행(In-life)</span>
         <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-brand-200 border border-brand-300" />예정</span>
         <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-slate-200 border border-slate-300" />완료</span>
       </div>

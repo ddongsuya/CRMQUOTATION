@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import clsx from 'clsx';
-import { ArrowLeft, Loader2, Plus, Trash2, FileText, FileSignature, FlaskConical, TrendingDown, TrendingUp, Check, Building2, Briefcase, Save } from 'lucide-react';
+import { Loader2, Trash2, TrendingDown, TrendingUp } from 'lucide-react';
+import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 
 type Quote = { id: number; quoteNumber: string; grandTotal: number | null; currency: string; status: string; sentAt: string | null; accepted: boolean | null; createdAt: string };
@@ -44,19 +45,19 @@ export default function DealDetailPage() {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <Link href={`/customers/${deal.contact.company.id}`} className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink"><ArrowLeft className="w-3.5 h-3.5" /> {deal.contact.company.name}</Link>
+      <Link href={`/customers/${deal.contact.company.id}`} className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink"><Icon name="chevron-left" className="w-3.5 h-3.5" /> {deal.contact.company.name}</Link>
 
       {/* 헤더 */}
-      <div className="card p-5">
+      <div className="card p-[22px]">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div className="min-w-0">
-            <h1 className="text-xl font-bold text-ink flex items-center gap-2"><Briefcase className="w-5 h-5 text-brand-500" />{deal.title}</h1>
-            <div className="text-xs text-ink-muted mt-1 flex flex-wrap gap-x-4 gap-y-0.5">
-              <span className="inline-flex items-center gap-1"><Building2 className="w-3 h-3" />{deal.contact.company.name} · {deal.contact.name}{deal.contact.position ? ` (${deal.contact.position})` : ''}</span>
+            <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">{deal.title}</h1>
+            <div className="text-xs text-ink-muted mt-2 flex flex-wrap gap-x-4 gap-y-0.5">
+              <span>{deal.contact.company.name} · {deal.contact.name}{deal.contact.position ? ` (${deal.contact.position})` : ''}</span>
               {deal.modality && <span>{deal.modality}</span>}
               {deal.indication && <span>적응증: {deal.indication}</span>}
               {deal.submissionTarget && <span>{deal.submissionTarget}</span>}
-              <span className={clsx('pill', deal.reportLanguage === 'EN' ? 'bg-[#eaf0f8] text-[#3f6098]' : 'bg-slate-100 text-ink-muted')}>{deal.reportLanguage === 'EN' ? '영문보고서' : '국문보고서'}</span>
+              <span className={clsx('pill', deal.reportLanguage === 'EN' ? 'tone-blue' : 'bg-slate-100 text-ink-muted')}>{deal.reportLanguage === 'EN' ? '영문보고서' : '국문보고서'}</span>
             </div>
             {deal.clinicalDesign && <div className="text-xs text-ink-subtle mt-2 whitespace-pre-wrap">{deal.clinicalDesign}</div>}
           </div>
@@ -67,7 +68,10 @@ export default function DealDetailPage() {
                 <button onClick={() => { const r = prompt('진행 불가 사유:'); if (r != null) patchDeal({ status: 'LOST', lostReason: r }); }} className="btn-ghost text-xs text-red-600">중단</button>
               </>
             ) : (
-              <span className={clsx('pill', deal.status === 'WON' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700')}>{deal.status === 'WON' ? '수주' : `중단${deal.lostReason ? ` · ${deal.lostReason}` : ''}`}</span>
+              <span className="pill bg-slate-100 text-ink-body">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: deal.status === 'WON' ? 'var(--success)' : 'var(--error)' }} />
+                {deal.status === 'WON' ? '수주' : `중단${deal.lostReason ? ` · ${deal.lostReason}` : ''}`}
+              </span>
             )}
           </div>
         </div>
@@ -77,8 +81,8 @@ export default function DealDetailPage() {
           {STAGES.map((s, i) => (
             <button key={s.k} onClick={() => patchDeal({ stage: s.k })}
               className={clsx('flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors',
-                i < curIdx ? 'bg-brand-50 text-brand-600' : i === curIdx ? 'bg-brand-600 text-white shadow-sm' : 'text-ink-subtle hover:bg-slate-100')}>
-              {i < curIdx ? <Check className="w-3 h-3" /> : <span className="w-4 text-center">{i + 1}</span>}{s.label}
+                i < curIdx ? 'bg-brand-50 text-brand-600' : i === curIdx ? 'bg-brand-600 text-white' : 'text-ink-subtle hover:bg-slate-100')}>
+              {i < curIdx ? <Icon name="check" className="w-3 h-3" /> : <span className="w-4 text-center">{i + 1}</span>}{s.label}
             </button>
           ))}
         </div>
@@ -104,13 +108,13 @@ function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
   const del = async (id: number) => { const res = await fetch(`/api/crm/notes/${id}`, { method: 'DELETE' }); if (res.ok) reload(); };
   const TLABEL: Record<string, string> = { MEETING: '미팅', CALL: '통화', MEMO: '메모' };
   return (
-    <Card icon={<FileText className="w-4 h-4 text-brand-500" />} title={`기록 ${deal.notes.length}건`}
-      action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 기록 추가</button>}>
+    <Card title={`기록 ${deal.notes.length}건`}
+      action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 기록 추가</button>}>
       {open && (
         <div className="space-y-2 mb-3">
           <div className="flex gap-1.5">{['MEETING', 'CALL', 'MEMO'].map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{TLABEL[t]}</button>)}</div>
           <textarea className="input w-full min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="미팅·상담 내용…" autoFocus />
-          <div className="flex justify-end"><button onClick={add} className="btn-primary text-sm"><Save className="w-4 h-4" /> 저장</button></div>
+          <div className="flex justify-end"><button onClick={add} className="btn-primary text-sm">저장</button></div>
         </div>
       )}
       {deal.notes.length === 0 ? <div className="text-xs text-ink-subtle py-1">기록 없음.</div> : (
@@ -131,11 +135,11 @@ function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
   );
 }
 
-function Card({ icon, title, action, children }: { icon: React.ReactNode; title: string; action?: React.ReactNode; children: React.ReactNode }) {
+function Card({ title, action, children }: { title: string; action?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="card p-4">
+    <div className="card p-[22px]">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-bold text-ink flex items-center gap-1.5">{icon}{title}</h2>
+        <h2 className="text-[15px] font-semibold text-ink">{title}</h2>
         {action}
       </div>
       {children}
@@ -145,16 +149,16 @@ function Card({ icon, title, action, children }: { icon: React.ReactNode; title:
 
 function SectionQuotes({ deal }: { deal: Deal }) {
   return (
-    <Card icon={<FileText className="w-4 h-4 text-brand-500" />} title={`견적서 ${deal.quotes.length}건`}
-      action={<Link href={`/quote-v2?dealId=${deal.id}`} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 이 안건으로 견적 작성</Link>}>
+    <Card title={`견적서 ${deal.quotes.length}건`}
+      action={<Link href={`/quote-v2?dealId=${deal.id}`} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 이 안건으로 견적 작성</Link>}>
       {deal.quotes.length === 0 ? <div className="text-xs text-ink-subtle py-1">아직 견적이 없습니다.</div> : (
-        <ul className="divide-y divide-slate-50">
+        <ul className="divide-y divide-slate-300">
           {deal.quotes.map(q => (
             <li key={q.id}>
-              <Link href={`/quote/print?id=${q.id}`} className="flex items-center gap-3 py-2 hover:bg-slate-50/60 -mx-1 px-1 rounded">
+              <Link href={`/quote/print?id=${q.id}`} className="flex items-center gap-3 py-2 hover:bg-slate-50 -mx-1 px-1 rounded-lg">
                 <span className="text-xs text-ink-subtle font-mono w-32 truncate">{q.quoteNumber}</span>
                 <span className="flex-1 text-sm font-semibold text-ink tabular-nums">{fmtMoney(q.grandTotal, q.currency)}</span>
-                {q.accepted && <span className="pill bg-emerald-100 text-emerald-700">수락</span>}
+                {q.accepted && <span className="pill bg-slate-100 text-ink-body"><span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--success)' }} />수락</span>}
                 <span className="pill bg-slate-100 text-ink-muted">{q.status}</span>
               </Link>
             </li>
@@ -184,13 +188,13 @@ function SectionContract({ deal, reload }: { deal: Deal; reload: () => void }) {
   };
 
   if (!c) return (
-    <Card icon={<FileSignature className="w-4 h-4 text-brand-500" />} title="계약">
-      <button onClick={start} disabled={busy} className="btn-ghost text-xs">{busy ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />} 계약 시작 (견적 기반)</button>
+    <Card title="계약">
+      <button onClick={start} disabled={busy} className="btn-ghost text-xs">{busy ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Icon name="plus" className="w-3.5 h-3.5" />} 계약 시작 (견적 기반)</button>
     </Card>
   );
 
   return (
-    <Card icon={<FileSignature className="w-4 h-4 text-brand-500" />} title="계약">
+    <Card title="계약">
       <div className="grid sm:grid-cols-2 gap-3">
         <Labeled label="상태">
           <select className="input w-full text-sm" value={c.status} onChange={e => patch({ status: e.target.value })}>
@@ -209,9 +213,9 @@ function SectionContract({ deal, reload }: { deal: Deal; reload: () => void }) {
           {c.paymentTerms.map(t => (
             <li key={t.id} className="flex items-center gap-2 text-xs text-ink-muted">
               <span className="pill bg-brand-50 text-brand-700">{KIND_LABEL[t.kind] ?? t.kind}</span>
-              <span className="font-semibold text-ink">{t.ratio != null ? `${Math.round(t.ratio * 100)}%` : t.amount != null ? `₩${t.amount.toLocaleString()}` : '-'}</span>
+              <span className="font-semibold text-ink tabular-nums">{t.ratio != null ? `${Math.round(t.ratio * 100)}%` : t.amount != null ? `₩${t.amount.toLocaleString()}` : '-'}</span>
               <span>· {t.condition ?? ''}</span>
-              {t.paidAt && <span className="pill bg-emerald-100 text-emerald-700">입금완료</span>}
+              {t.paidAt && <span className="pill bg-slate-100 text-ink-body"><span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--success)' }} />입금완료</span>}
             </li>
           ))}
         </ul>
@@ -235,18 +239,18 @@ function SectionStudies({ deal, reload }: { deal: Deal; reload: () => void }) {
   const del = async (sid: number) => { if (!confirm('이 시험을 삭제할까요?')) return; const res = await fetch(`/api/crm/studies/${sid}`, { method: 'DELETE' }); if (res.ok) reload(); };
 
   return (
-    <Card icon={<FlaskConical className="w-4 h-4 text-brand-500" />} title={`시험 추적 ${deal.studies.length}건`}
-      action={<button onClick={() => setAdding(v => !v)} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 시험 추가</button>}>
+    <Card title={`시험 추적 ${deal.studies.length}건`}
+      action={<button onClick={() => setAdding(v => !v)} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 시험 추가</button>}>
       {adding && (
         <div className="flex gap-2 mb-3">
           <input className="input flex-1 text-sm" value={itemName} onChange={e => setItemName(e.target.value)} placeholder="시험 항목명 (예: 설치류 13주 반복투여 독성)" autoFocus />
-          <button onClick={add} className="btn-primary text-sm"><Save className="w-4 h-4" /> 추가</button>
+          <button onClick={add} className="btn-primary text-sm">추가</button>
         </div>
       )}
       {deal.studies.length === 0 ? <div className="text-xs text-ink-subtle py-1">등록된 시험이 없습니다. (시험관리팀 접수 후 시험번호별 추가)</div> : (
         <div className="space-y-3">
           {deal.studies.map(s => (
-            <div key={s.id} className="rounded-xl border border-slate-100 p-3">
+            <div key={s.id} className="rounded-[12px] border border-slate-200 p-3">
               <div className="flex items-center gap-2 mb-2">
                 <input className="input flex-1 text-sm font-medium" defaultValue={s.itemName ?? ''} onBlur={e => e.target.value !== (s.itemName ?? '') && patch(s.id, { itemName: e.target.value })} placeholder="시험 항목명" />
                 <button onClick={() => del(s.id)} className="p-1.5 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50"><Trash2 className="w-3.5 h-3.5" /></button>
@@ -276,22 +280,22 @@ function SectionChangeQuotes({ deal, reload }: { deal: Deal; reload: () => void 
   const del = async (cid: number) => { const res = await fetch(`/api/crm/change-quotes/${cid}`, { method: 'DELETE' }); if (res.ok) reload(); };
 
   return (
-    <Card icon={<TrendingUp className="w-4 h-4 text-brand-500" />} title={`변경 견적 ${deal.changeQuotes.length}건`}
-      action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 감가/추가금</button>}>
+    <Card title={`변경 견적 ${deal.changeQuotes.length}건`}
+      action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 감가/추가금</button>}>
       {open && (
         <div className="flex flex-wrap gap-2 mb-3 items-center">
           <select className="input text-sm w-24" value={f.kind} onChange={e => setF(p => ({ ...p, kind: e.target.value }))}><option value="ADD">추가금</option><option value="DEDUCT">감가</option></select>
           <input className="input text-sm w-32" type="number" value={f.amount} onChange={e => setF(p => ({ ...p, amount: e.target.value }))} placeholder="금액" />
           <input className="input text-sm flex-1 min-w-[140px]" value={f.reason} onChange={e => setF(p => ({ ...p, reason: e.target.value }))} placeholder="사유" />
-          <button onClick={add} className="btn-primary text-sm"><Save className="w-4 h-4" /> 추가</button>
+          <button onClick={add} className="btn-primary text-sm">추가</button>
         </div>
       )}
       {deal.changeQuotes.length === 0 ? <div className="text-xs text-ink-subtle py-1">변경 내역 없음.</div> : (
         <ul className="space-y-1.5">
           {deal.changeQuotes.map(c => (
             <li key={c.id} className="flex items-center gap-2 text-sm">
-              {c.kind === 'DEDUCT' ? <TrendingDown className="w-4 h-4 text-red-500" /> : <TrendingUp className="w-4 h-4 text-emerald-600" />}
-              <span className={clsx('font-semibold tabular-nums', c.kind === 'DEDUCT' ? 'text-red-600' : 'text-emerald-700')}>{c.kind === 'DEDUCT' ? '-' : '+'}₩{c.amount.toLocaleString()}</span>
+              {c.kind === 'DEDUCT' ? <TrendingDown className="w-4 h-4" style={{ color: 'var(--error)' }} /> : <TrendingUp className="w-4 h-4" style={{ color: 'var(--success)' }} />}
+              <span className="font-semibold tabular-nums" style={{ color: c.kind === 'DEDUCT' ? 'var(--error)' : 'var(--success)' }}>{c.kind === 'DEDUCT' ? '-' : '+'}₩{c.amount.toLocaleString()}</span>
               <span className="flex-1 text-ink-muted truncate">{c.reason}</span>
               <button onClick={() => del(c.id)} className="p-1 rounded text-ink-subtle hover:text-red-600"><Trash2 className="w-3.5 h-3.5" /></button>
             </li>

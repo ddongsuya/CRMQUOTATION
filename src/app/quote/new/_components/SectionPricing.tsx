@@ -56,7 +56,7 @@ export default function SectionPricing() {
               onClick={() => s.patch({ currency: c })}
               className={clsx(
                 'px-4 py-1.5 rounded-md text-xs font-semibold transition-all',
-                s.currency === c ? 'bg-white text-ink shadow-sm' : 'text-ink-muted hover:text-ink',
+                s.currency === c ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink',
               )}
             >
               {c}

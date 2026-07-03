@@ -28,7 +28,7 @@ export default function Stepper() {
       {/* progress track */}
       <div className="absolute top-4 left-4 right-4 h-0.5 bg-slate-200 rounded-full" />
       <div
-        className="absolute top-4 left-4 h-0.5 bg-gradient-to-r from-brand-500 to-brand-600 rounded-full transition-all duration-500 ease-out"
+        className="absolute top-4 left-4 h-0.5 bg-brand-500 rounded-full transition-all duration-500 ease-out"
         style={{ width: `calc(${progress}% - ${progress > 0 ? '0' : '0'}px)`, maxWidth: 'calc(100% - 2rem)' }}
       />
 
@@ -46,8 +46,8 @@ export default function Stepper() {
                   'inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold border-2 transition-all',
                   active && 'bg-brand-600 text-white border-brand-600 shadow-glow scale-110',
                   done && !active && 'bg-brand-600 text-white border-brand-600',
-                  !active && !done && reachable && 'bg-white text-ink-muted border-slate-300 hover:border-brand-400 hover:text-ink',
-                  !reachable && 'bg-white text-ink-subtle border-slate-200 cursor-not-allowed',
+                  !active && !done && reachable && 'bg-[var(--card)] text-ink-muted border-slate-300 hover:border-brand-400 hover:text-ink',
+                  !reachable && 'bg-[var(--card)] text-ink-subtle border-slate-200 cursor-not-allowed',
                 )}
               >
                 {done ? <Check className="w-4 h-4" /> : st.n}

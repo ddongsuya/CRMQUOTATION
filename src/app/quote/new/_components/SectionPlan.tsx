@@ -418,7 +418,7 @@ function ToggleCard({ checked, onChange, label }: { checked: boolean; onChange: 
       className={clsx(
         'flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium transition-all text-left',
         checked
-          ? 'bg-brand-50 border-brand-300 text-brand-800 shadow-sm'
+          ? 'bg-brand-50 border-brand-300 text-brand-800'
           : 'bg-white border-slate-200 text-ink-muted hover:border-slate-300 hover:bg-slate-50',
       )}
     >

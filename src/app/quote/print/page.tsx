@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Printer } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useWizard } from '@/lib/store';
 import { toast } from '@/lib/toast';
@@ -160,9 +161,9 @@ function PrintPage() {
       <div className="fixed top-4 right-4 z-50 no-print">
         <button
           onClick={() => window.print()}
-          className="btn-primary shadow-lg"
+          className="btn-primary"
         >
-          🖨 인쇄 / PDF 저장
+          <Printer className="w-4 h-4" /> 인쇄 / PDF 저장
         </button>
       </div>
       <PrintLayout data={data} />

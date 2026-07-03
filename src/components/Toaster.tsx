@@ -26,7 +26,7 @@ export default function Toaster() {
         <div
           key={t.id}
           className={clsx(
-            'flex items-start gap-2 px-3 py-2 rounded-xl border shadow-md backdrop-blur animate-slide-up text-sm',
+            'flex items-start gap-2 px-3 py-2 rounded-xl border shadow-[var(--shadow-float)] backdrop-blur animate-slide-up text-sm',
             STYLE[t.kind],
           )}
         >

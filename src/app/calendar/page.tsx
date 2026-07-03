@@ -10,7 +10,7 @@ type Item = { date: string; kind: 'event' | 'milestone'; type: string; title: st
 
 const ymd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const TYPE_CLS: Record<string, string> = {
-  MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[#2a9d99]',
+  MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]',
 };
 
 export default function CalendarPage() {
@@ -46,7 +46,10 @@ export default function CalendarPage() {
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
-        <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><CalendarDays className="w-6 h-6 text-brand-500" /> 캘린더</h1>
+        <div>
+          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">캘린더</h1>
+          <p className="text-subhead text-ink-body mt-2">날짜를 선택하면 오른쪽에 그날 일정이 열리고, 일정을 누르면 관련 화면으로 이동합니다.</p>
+        </div>
         <div className="flex items-center gap-2 flex-wrap">
           <button onClick={() => setCur(c => ({ y: c.m === 0 ? c.y - 1 : c.y, m: c.m === 0 ? 11 : c.m - 1 }))} className="btn-outline p-2 shrink-0"><ChevronLeft className="w-4 h-4" /></button>
           <span className="font-semibold text-ink w-28 text-center tabular-nums shrink-0">{cur.y}년 {cur.m + 1}월</span>
@@ -56,10 +59,10 @@ export default function CalendarPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-[minmax(0,1fr)_320px] gap-4">
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-4">
         <div className="card p-3">
           <div className="grid grid-cols-7 gap-1 mb-1">
-            {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-xs font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-[#5b86c4]' : 'text-ink-subtle')}>{d}</div>)}
+            {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-xs font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-[var(--sat)]' : 'text-ink-subtle')}>{d}</div>)}
           </div>
           {loading ? <div className="py-16 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div> : (
             <div className="grid grid-cols-7 gap-1">
@@ -71,7 +74,7 @@ export default function CalendarPage() {
                 return (
                   <button key={i} onClick={() => setSelected(key)} className={clsx('min-h-[84px] rounded-lg border p-1.5 text-left align-top transition-colors',
                     isSel ? 'border-brand-400 ring-1 ring-brand-400 bg-brand-50' : key === todayKey ? 'border-brand-200 bg-brand-50/60' : inMonth ? 'border-slate-100 hover:bg-slate-50/70' : 'border-transparent bg-slate-50/40')}>
-                    <div className={clsx('text-[11px] font-medium mb-1 tabular-nums flex items-center gap-1', key === todayKey ? 'text-brand-600 font-bold' : !inMonth ? 'text-ink-subtle/50' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[#5b86c4]' : 'text-ink-muted')}>
+                    <div className={clsx('text-[11px] font-medium mb-1 tabular-nums flex items-center gap-1', key === todayKey ? 'text-brand-600 font-bold' : !inMonth ? 'text-ink-subtle/50' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[var(--sat)]' : 'text-ink-muted')}>
                       {d.getDate()}{key === todayKey && <span className="pill bg-brand-600 text-white !text-[9px] !px-1">오늘</span>}
                     </div>
                     <div className="space-y-0.5">

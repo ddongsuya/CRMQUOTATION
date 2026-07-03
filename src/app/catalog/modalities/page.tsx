@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { Loader2, Plus, Trash2, Save, GripVertical, ArrowLeft, Layers, ChevronDown, Pencil, FileStack, Search, X, Check } from 'lucide-react';
+import { Loader2, Trash2, Save, GripVertical, ChevronDown, Pencil, FileStack } from 'lucide-react';
+import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 
 type Mod = { key: string; label: string; desc?: string; source?: string };
@@ -66,14 +67,14 @@ export default function ModalityTemplatesAdmin() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
-          <Link href="/catalog" className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink mb-1"><ArrowLeft className="w-3.5 h-3.5" /> 항목·가격</Link>
-          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2"><Layers className="w-6 h-6 text-brand-500" /> 모달리티 · 템플릿 구성</h1>
-          <p className="text-sm text-ink-muted mt-0.5">분류·모달리티 구성과, 각 모달리티의 견적 템플릿(프리셋)을 직접 만듭니다. 템플릿은 새 견적 작성에서 선택해 사용합니다.</p>
+          <Link href="/catalog" className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-ink mb-1"><Icon name="chevron-left" className="w-3.5 h-3.5" /> 항목·가격</Link>
+          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">모달리티 · 템플릿 구성</h1>
+          <p className="text-subhead text-ink-body mt-2">분류·모달리티 구성과, 각 모달리티의 견적 템플릿(프리셋)을 직접 만듭니다. 템플릿은 새 견적 작성에서 선택해 사용합니다.</p>
         </div>
         {isAdmin && <button onClick={saveCfg} disabled={savingCfg} className="btn-primary">{savingCfg ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 구성 저장</button>}
       </div>
 
-      {!isAdmin && <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-3 text-xs text-amber-900">읽기 전용 — 관리자만 편집할 수 있습니다.</div>}
+      {!isAdmin && <div className="rounded-[12px] border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">읽기 전용 — 관리자만 편집할 수 있습니다.</div>}
 
       <div className="space-y-4">
         {cats.map((cat, ci) => (
@@ -89,8 +90,8 @@ export default function ModalityTemplatesAdmin() {
                 const tpls = templates.filter(t => t.modality === m.key);
                 const open = expanded.has(m.key);
                 return (
-                  <div key={m.key} className="rounded-xl border border-slate-200 overflow-hidden">
-                    <div className="flex items-center gap-2 flex-wrap p-2.5 bg-slate-50/50">
+                  <div key={m.key} className="rounded-[12px] border border-slate-200 overflow-hidden">
+                    <div className="flex items-center gap-2 flex-wrap p-2.5 bg-slate-50">
                       <span className="pill bg-slate-100 text-ink-subtle font-mono">{m.key}</span>
                       <input className="input flex-1 min-w-[120px]" value={m.label} disabled={!isAdmin} onChange={e => update(d => { d[ci].modalities[mi].label = e.target.value; return d; })} placeholder="표시명" />
                       {isAdmin && (
@@ -105,7 +106,7 @@ export default function ModalityTemplatesAdmin() {
                     </div>
 
                     {open && (
-                      <div className="p-3 border-t border-slate-100 space-y-2">
+                      <div className="p-3 border-t border-slate-200 space-y-2">
                         {tpls.length === 0 && <div className="text-xs text-ink-subtle py-1">아직 템플릿이 없습니다. 새 템플릿을 만들어 보세요.</div>}
                         {tpls.map(t => (
                           <div key={t.id} className="flex items-center gap-2 rounded-lg border border-slate-100 p-2 hover:bg-slate-50/50">
@@ -122,7 +123,7 @@ export default function ModalityTemplatesAdmin() {
                             )}
                           </div>
                         ))}
-                        {isAdmin && <button onClick={() => setBuilder({ mod: m, tpl: null })} className="btn-ghost text-xs"><Plus className="w-3.5 h-3.5" /> 새 템플릿</button>}
+                        {isAdmin && <button onClick={() => setBuilder({ mod: m, tpl: null })} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 새 템플릿</button>}
                       </div>
                     )}
                   </div>
@@ -136,7 +137,7 @@ export default function ModalityTemplatesAdmin() {
 
       {isAdmin && (
         <div className="flex items-center gap-3 flex-wrap">
-          <button onClick={() => update(d => [...d, { id: `cat-${d.length + 1}`, label: '새 분류', modalities: [] }])} className="btn-ghost text-sm"><Plus className="w-4 h-4" /> 분류 추가</button>
+          <button onClick={() => update(d => [...d, { id: `cat-${d.length + 1}`, label: '새 분류', modalities: [] }])} className="btn-ghost text-sm"><Icon name="plus" className="w-4 h-4" /> 분류 추가</button>
           {unused.length > 0 && cats.length > 0 && (
             <div className="flex items-center gap-2 text-sm">
               <span className="text-ink-subtle text-xs">미배치 모달리티:</span>
@@ -196,14 +197,14 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
-        <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" onClick={onClose}>
+      <div className="bg-white rounded-[12px] border border-slate-200 w-full max-w-2xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <header className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
           <div className="font-semibold text-ink">{tpl ? '템플릿 수정' : '새 템플릿'} <span className="text-ink-subtle text-xs ml-1">· {mod.label}</span></div>
-          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-5 h-5" /></button>
         </header>
 
-        <div className="px-5 py-4 space-y-3 border-b border-slate-100">
+        <div className="px-5 py-4 space-y-3 border-b border-slate-200">
           <input className="input w-full" value={name} onChange={e => setName(e.target.value)} placeholder="템플릿 이름 (예: IND 1상 최소 패키지)" />
           <input className="input w-full" value={scenario} onChange={e => setScenario(e.target.value)} placeholder="한 줄 설명 (선택, 예: 1상 임상 개시용 최소 구성)" />
         </div>
@@ -211,7 +212,7 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
         <div className="px-5 py-3 space-y-2">
           <div className="flex items-center justify-between gap-2">
             <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-subtle" />
+              <Icon name="search" className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-subtle" />
               <input className="input pl-8 text-sm" value={q} onChange={e => setQ(e.target.value)} placeholder="시험 검색" />
             </div>
             <span className="text-xs text-brand-700 font-semibold whitespace-nowrap">{picked.size}개 선택</span>
@@ -235,7 +236,7 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
               const route = c.adminRoute ? String(c.adminRoute) : '';
               return (
                 <button key={key || i} onClick={() => togglePick(key)} className="w-full flex items-center gap-2.5 py-2 text-left hover:bg-slate-50/50 px-1 rounded">
-                  <span className={clsx('inline-flex items-center justify-center w-5 h-5 rounded border-2 flex-shrink-0', on ? 'bg-brand-600 border-brand-600 text-white' : 'border-slate-300')}>{on && <Check className="w-3 h-3" />}</span>
+                  <span className={clsx('inline-flex items-center justify-center w-5 h-5 rounded border-2 flex-shrink-0', on ? 'bg-brand-600 border-brand-600 text-white' : 'border-slate-300')}>{on && <Icon name="check" className="w-3 h-3" />}</span>
                   <span className="flex-1 min-w-0">
                     <span className="block truncate text-sm text-ink">{String(c.testName ?? '(이름없음)')}</span>
                     {(period || route) && <span className="block text-[11px] text-ink-subtle truncate">{[period, route].filter(Boolean).join(' · ')}</span>}
@@ -247,7 +248,7 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
           </div>
         </div>
 
-        <footer className="px-5 py-3 border-t border-slate-100 flex justify-end gap-2">
+        <footer className="px-5 py-3 border-t border-slate-200 flex justify-end gap-2">
           <button onClick={onClose} className="btn-ghost text-sm">취소</button>
           <button onClick={save} className="btn-primary text-sm"><Save className="w-4 h-4" /> 저장</button>
         </footer>

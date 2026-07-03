@@ -94,7 +94,7 @@ export default function SectionSelections() {
   return (
     <div className="space-y-5">
       {/* 부형제 종수 */}
-      <div className="rounded-xl bg-gradient-to-br from-brand-50/40 to-transparent border border-brand-100/60 p-4">
+      <div className="rounded-xl bg-slate-50 border border-brand-100/60 p-4">
         <div className="flex items-center justify-between gap-4">
           <div>
             <div className="text-xs font-semibold text-ink mb-0.5">부형제 종수</div>

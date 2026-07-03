@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { Search, Pencil, Trash2, Plus, Loader2, Database, Layers } from 'lucide-react';
+import { Pencil, Trash2, Plus, Loader2, Layers } from 'lucide-react';
+import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { ItemEditorModal, ItemAdminBar } from './_components/CatalogAdmin';
 
@@ -16,8 +17,8 @@ const fmt = (n: unknown) => (typeof n === 'number' && Number.isFinite(n) && n > 
 export default function CatalogPage() {
   const [data, setData] = useState<Catalog | null>(null);
   const [q, setQ] = useState('');
-  const [modality, setModality] = useState('');
-  const [priceFilter, setPriceFilter] = useState<'all' | 'priced' | 'unpriced'>('all');
+  const [cat, setCat] = useState('');                             // 분류 필터 ('' = 전체)
+  const [submit, setSubmit] = useState<'MFDS' | 'OECD'>('MFDS');   // 제출처(단가 기준)
   const [editing, setEditing] = useState<{ record: Rec | null } | null>(null);
 
   const load = useCallback(() => {
@@ -46,23 +47,27 @@ export default function CatalogPage() {
     }
   }, [load]);
 
+  // 분류(category)별 개수 — 필터칩용 (많은 순)
+  const catCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    (data?.items ?? []).forEach(it => { const c = String(it.category ?? '기타'); m.set(c, (m.get(c) ?? 0) + 1); });
+    return [...m.entries()].sort((a, b) => b[1] - a[1]);
+  }, [data]);
+
+  const priceOf = useCallback((it: Rec) => (submit === 'MFDS' ? it.priceMfds : it.priceOecd), [submit]);
+
   const filtered = useMemo(() => {
     if (!data) return [];
     const s = q.trim().toLowerCase();
     return data.items.filter(it => {
-      if (modality && !(Array.isArray(it.modalityPool) && (it.modalityPool as string[]).includes(modality))) return false;
-      if (priceFilter !== 'all') {
-        const hasPrice = !!(it.priceMfds || it.priceOecd || it.priceTiers);
-        if (priceFilter === 'priced' && !hasPrice) return false;
-        if (priceFilter === 'unpriced' && hasPrice) return false;
-      }
+      if (cat && String(it.category ?? '') !== cat) return false;
       if (s) {
         const hay = `${it.testName ?? ''} ${it.category ?? ''} ${it.adminRoute ?? ''} ${it.key ?? ''}`.toLowerCase();
         if (!hay.includes(s)) return false;
       }
       return true;
-    });
-  }, [data, q, modality, priceFilter]);
+    }).sort((a, b) => (Number(submit === 'MFDS' ? b.priceMfds : b.priceOecd) || 0) - (Number(submit === 'MFDS' ? a.priceMfds : a.priceOecd) || 0));  // 금액 큰 순
+  }, [data, q, cat, submit]);
 
   if (!data) {
     return (
@@ -78,84 +83,77 @@ export default function CatalogPage() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
-          <h1 className="text-[34px] font-bold tracking-[-0.022em] leading-[1.1] flex items-center gap-2">
-            <Database className="w-6 h-6 text-brand-500" /> 시험항목·가격 마스터
-          </h1>
-          <p className="text-sm text-ink-muted mt-0.5">
-            전체 {data.items.length}개 항목 · 견적 엔진의 가격 원천 데이터. 편집은 즉시 견적에 반영됩니다.
+          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">항목·가격 카탈로그</h1>
+          <p className="text-subhead text-ink-body mt-2">
+            {data.items.length}개 시험 항목의 MFDS·OECD 단가 마스터. 편집은 즉시 견적에 반영됩니다.
           </p>
         </div>
-        <Link href="/catalog/modalities" className="btn-ghost text-sm">
-          <Layers className="w-4 h-4" /> 모달리티 구성 편집
-        </Link>
+        {/* 제출처 세그먼트 — 단가 기준 */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <div className="segmented inline-flex gap-[3px] p-[3px] rounded-lg bg-slate-100">
+            {(['MFDS', 'OECD'] as const).map(s => (
+              <button key={s} onClick={() => setSubmit(s)} className={clsx('px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-colors', submit === s ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink')}>{s}</button>
+            ))}
+          </div>
+          <Link href="/catalog/modalities" className="btn-ghost"><Layers className="w-4 h-4" /> 모달리티 구성 편집</Link>
+        </div>
       </div>
 
       {isAdmin && <ItemAdminBar onImported={load} />}
 
-      {/* 필터 */}
+      {/* 분류 필터칩 + 검색 */}
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-subtle" />
-            <input value={q} onChange={e => setQ(e.target.value)} placeholder="검색 (시험명·분류·경로·key)" className="input pl-9 w-64" />
-          </div>
-          <select value={modality} onChange={e => setModality(e.target.value)} className="input">
-            <option value="">전체 모달리티</option>
-            {data.modalities.map(m => <option key={m} value={m}>{m}</option>)}
-          </select>
-          <select value={priceFilter} onChange={e => setPriceFilter(e.target.value as typeof priceFilter)} className="input">
-            <option value="all">가격 전체</option>
-            <option value="priced">가격 있음</option>
-            <option value="unpriced">가격 없음</option>
-          </select>
+        <div className="flex flex-wrap gap-2">
+          <button onClick={() => setCat('')} className={clsx('chip', cat === '' ? 'chip-active' : 'chip-inactive')}>전체 <span className="tabular-nums opacity-70">{data.items.length}</span></button>
+          {catCounts.map(([c, n]) => (
+            <button key={c} onClick={() => setCat(c)} className={clsx('chip', cat === c ? 'chip-active' : 'chip-inactive')}>{c} <span className="tabular-nums opacity-70">{n}</span></button>
+          ))}
         </div>
-        {isAdmin && (
-          <button onClick={() => setEditing({ record: null })} className="btn-ghost text-sm">
-            <Plus className="w-4 h-4" /> 새 항목
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5 h-[38px] px-[13px] rounded-lg bg-slate-50 border border-slate-200 w-56">
+            <Icon name="search" className="w-[15px] h-[15px] text-ink-subtle flex-shrink-0" />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder="시험명·분류 검색" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
+          </div>
+          {isAdmin && <button onClick={() => setEditing({ record: null })} className="btn-ghost"><Plus className="w-4 h-4" /> 새 항목</button>}
+        </div>
       </div>
 
-      <div className="text-xs text-ink-subtle">
-        {filtered.length}개 표시 중{filtered.length > MAX_ROWS ? ` (상위 ${MAX_ROWS}개만 — 검색으로 좁히세요)` : ''}
+      <div className="text-[12px] text-ink-subtle">
+        표시 {Math.min(filtered.length, MAX_ROWS)}건 · {submit === 'MFDS' ? '국내 식약처(MFDS)' : '해외(OECD)'} 제출 기준 단가 · 금액 큰 순{filtered.length > MAX_ROWS ? ` (상위 ${MAX_ROWS}개)` : ''}
       </div>
 
       {/* 테이블 */}
       <div className="card overflow-hidden">
-        <div className="overflow-x-auto -mx-1 px-1">
-          <table className="w-full min-w-[680px] text-xs">
-            <thead className="bg-slate-50 border-b border-slate-200 text-ink-muted">
-              <tr className="whitespace-nowrap">
-                <th className="px-3 py-2.5 text-left font-semibold">시험명</th>
-                <th className="px-2 py-2.5 text-left font-semibold w-32">모달리티</th>
-                <th className="px-2 py-2.5 text-left font-semibold w-16">경로</th>
-                <th className="px-2 py-2.5 text-center font-semibold w-12">주수</th>
-                <th className="px-2 py-2.5 text-right font-semibold w-24">MFDS</th>
-                <th className="px-2 py-2.5 text-right font-semibold w-24">OECD</th>
-                <th className="px-2 py-2.5 text-center font-semibold w-14">종수별</th>
-                {isAdmin && <th className="px-2 py-2.5 text-center font-semibold w-16">관리</th>}
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[760px]">
+            <thead>
+              <tr className="whitespace-nowrap text-[12px] font-medium text-ink-subtle">
+                <th className="px-6 py-[14px] text-left font-medium">시험 항목</th>
+                <th className="px-3 py-[14px] text-left font-medium w-36">분류</th>
+                <th className="px-3 py-[14px] text-center font-medium w-20">투여경로</th>
+                <th className="px-3 py-[14px] text-center font-medium w-14">기간</th>
+                <th className="px-3 py-[14px] text-right font-medium w-32">단가 ({submit})</th>
+                {isAdmin && <th className="px-3 py-[14px] text-center font-medium w-16">관리</th>}
               </tr>
             </thead>
             <tbody>
               {shown.map((it, i) => {
                 const pool = (Array.isArray(it.modalityPool) ? it.modalityPool : []) as string[];
                 return (
-                  <tr key={String(it.key ?? i)} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/50 group/row">
-                    <td className="px-3 py-2 text-ink font-medium">
+                  <tr key={String(it.key ?? i)} className="border-t border-[var(--hairline-soft)] hover:bg-slate-100 group/row">
+                    <td className="px-6 py-[13px] text-[14px] font-medium text-ink">
                       <Link href={`/quote-v2${pool[0] ? `?category=${encodeURIComponent(pool[0])}` : ''}`} className="hover:text-brand-600" title="이 항목으로 견적 마법사 열기">{String(it.testName ?? '')}</Link>
                     </td>
-                    <td className="px-2 py-2 text-ink-subtle">
-                      {pool.length === 0 ? '—' : <span title={pool.join(', ')}>{pool[0]}{pool.length > 1 ? ` +${pool.length - 1}` : ''}</span>}
+                    <td className="px-3 py-[13px] text-[16px] text-ink">{String(it.category ?? '—')}</td>
+                    <td className="px-3 py-[13px] text-center text-[13px] text-ink-muted">{String(it.adminRoute ?? '—')}</td>
+                    <td className="px-3 py-[13px] text-center text-[13px] text-ink-muted tabular-nums">{it.studyWeeks != null ? `${it.studyWeeks}주` : '—'}</td>
+                    <td className="px-3 py-[13px] text-right text-[15px] font-medium text-ink tabular-nums">
+                      {fmt(priceOf(it))}{it.priceTiers ? <span className="tag ml-1.5 align-middle">종수별</span> : ''}
                     </td>
-                    <td className="px-2 py-2 text-ink-subtle">{String(it.adminRoute ?? '—')}</td>
-                    <td className="px-2 py-2 text-center text-ink-subtle tabular-nums">{it.studyWeeks != null ? String(it.studyWeeks) : '—'}</td>
-                    <td className="px-2 py-2 text-right tabular-nums">{fmt(it.priceMfds)}</td>
-                    <td className="px-2 py-2 text-right tabular-nums">{fmt(it.priceOecd)}</td>
-                    <td className="px-2 py-2 text-center">{it.priceTiers ? <span className="pill bg-emerald-100 text-emerald-700">tiers</span> : '—'}</td>
                     {isAdmin && (
-                      <td className="px-2 py-2">
-                        <div className="flex items-center justify-center gap-1">
-                          <button onClick={() => setEditing({ record: it })} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                      <td className="px-3 py-[13px]">
+                        <div className="flex items-center justify-center gap-1 opacity-0 group-hover/row:opacity-100 transition-opacity">
+                          <button onClick={() => setEditing({ record: it })} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-slate-100" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
                           <button onClick={() => onDelete(it)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
                         </div>
                       </td>
@@ -164,7 +162,7 @@ export default function CatalogPage() {
                 );
               })}
               {shown.length === 0 && (
-                <tr><td colSpan={isAdmin ? 8 : 7} className="px-3 py-10 text-center text-ink-subtle">검색 결과가 없습니다.</td></tr>
+                <tr><td colSpan={isAdmin ? 6 : 5} className="px-3 py-10 text-center text-ink-subtle">검색 결과가 없습니다.</td></tr>
               )}
             </tbody>
           </table>

@@ -1,22 +1,27 @@
-/* ─── Modern 3-section quote PDF stylesheet ─────────────────────
- * Loaded only by /quote/print page. Tuned for A4 portrait,
- * works in both on-screen preview and the browser print dialog.
+/* ─── 견적서 PDF — Notion+오렌지 디자인 시스템 적용 ─────────────
+ * /quote/print 전용. A4 세로. 화면 미리보기 + 인쇄 다이얼로그 공용.
+ * 색·타이포·radius는 앱 디자인 토큰과 통일(무그라데이션·헤어라인·Inter).
  */
 
 .print-doc {
-  /* 테라코타·웜 톤 (Claude 디자인) — 앱 테마와 통일 */
-  --ink: #3A3733;
-  --ink-muted: #6F685D;
-  --ink-subtle: #A29C94;
-  --line: #EDE9E5;
-  --line-strong: #D8D4CD;
-  --brand: #F5811F;
-  --brand-deep: #E06A12;
-  --brand-50: #FEF5EC;
+  --ink: #191919;         /* 헤드라인·숫자 */
+  --body: #31302e;        /* 본문 */
+  --ink-muted: #615d59;   /* 보조 */
+  --ink-subtle: #a39e98;  /* 캡션·라벨 */
+  --line: #e6e6e6;        /* 헤어라인 */
+  --line-soft: #efefee;   /* 행 구분 */
+  --brand: #f5811f;       /* accent */
+  --brand-deep: #c2590f;  /* 강조 텍스트(accent-press) */
+  --brand-tint: #fdefe1;  /* 오렌지 틴트(인쇄 안정 위해 solid) */
+  --cream: #f1f1ef;
+  --floor: #f6f5f4;
+  --success: #1aae39;
   --bg: #ffffff;
-  background: #f6f5f4;
+  background: var(--floor);
   min-height: 100vh;
   padding: 24px 0;
+  font-family: 'Inter', 'Noto Sans KR', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .print-doc .page {
@@ -25,13 +30,13 @@
   margin: 0 auto 16px;
   padding: 11mm 14mm;
   background: var(--bg);
-  box-shadow: 0 4px 24px -4px rgb(15 23 42 / 0.12);
+  border: 1px solid var(--line);   /* 그림자 대신 헤어라인 */
   position: relative;
   box-sizing: border-box;
   font-size: 11px;
   line-height: 1.55;
-  color: var(--ink);
-  border-radius: 6px;
+  color: var(--body);
+  border-radius: 12px;
 }
 
 .print-doc .page-break { page-break-before: always; }
@@ -39,67 +44,65 @@
 /* ─── COVER ─────────────────────── */
 .print-doc .cover { padding: 0; overflow: hidden; }
 
+/* 레터헤드 — 솔리드 오렌지(무그라데이션) */
 .print-doc .cover-band {
-  background: #F5811F;
-  color: white;
+  background: var(--brand);
+  color: #fff;
   padding: 22mm 14mm 18mm;
-  position: relative;
-}
-.print-doc .cover-band::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top right, rgba(255,255,255,0.18), transparent 55%);
 }
 .print-doc .cover-band-inner {
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.print-doc .cover-brand { display: flex; align-items: center; gap: 10px; }
+.print-doc .cover-brand { display: flex; align-items: center; gap: 12px; }
+/* 블랙 라운드 스퀘어 "코" 모노그램 (앱 브랜드마크와 동일) */
 .print-doc .cover-logo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px; height: 36px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.25);
+  width: 40px; height: 40px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 9px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
 }
-.print-doc .cover-brand-name { font-size: 14px; font-weight: 700; letter-spacing: -0.01em; }
-.print-doc .cover-brand-sub { font-size: 9px; opacity: 0.78; letter-spacing: 0.05em; text-transform: uppercase; }
+.print-doc .cover-brand-name { font-size: 15px; font-weight: 700; letter-spacing: -0.022em; }
+.print-doc .cover-brand-sub { font-size: 9px; opacity: 0.82; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
 .print-doc .cover-quote-no {
-  font-size: 10px; font-weight: 600;
-  padding: 6px 12px;
+  font-size: 11px; font-weight: 600;
+  padding: 6px 13px;
   border-radius: 999px;
   background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.3);
-  letter-spacing: 0.05em;
+  border: 1px solid rgba(255,255,255,0.32);
+  letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
 }
 
 .print-doc .cover-body { padding: 18mm 14mm 14mm; }
 .print-doc .cover-eyebrow {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   color: var(--brand);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .print-doc .cover-title {
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
   margin: 0;
   color: var(--ink);
 }
 .print-doc .cover-substance {
-  margin-top: 6px;
-  font-size: 12px;
+  margin-top: 8px;
+  font-size: 13px;
   color: var(--ink-muted);
 }
 
@@ -107,28 +110,29 @@
   margin-top: 14mm;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4mm 8mm;
-  padding: 5mm 6mm;
+  gap: 5mm 8mm;
+  padding: 6mm;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: linear-gradient(180deg, #FBF9F8 0%, transparent 100%);
+  border-radius: 12px;
+  background: var(--cream);
 }
-.print-doc .meta-block { padding: 1mm 0; }
+.print-doc .meta-block { padding: 0; }
 .print-doc .meta-label {
   font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ink-subtle);
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
-.print-doc .meta-value { font-size: 12px; font-weight: 500; color: var(--ink); }
+.print-doc .meta-value { font-size: 13px; font-weight: 500; color: var(--ink); }
 
+/* 견적 합계 — 강조는 오렌지 틴트 면(무그라데이션) */
 .print-doc .cover-grand {
   margin-top: 12mm;
-  padding: 8mm 10mm;
-  background: linear-gradient(135deg, var(--brand-50) 0%, white 100%);
-  border: 2px solid var(--brand);
+  padding: 9mm 10mm;
+  background: var(--brand-tint);
+  border: 1px solid var(--brand);
   border-radius: 12px;
   text-align: center;
 }
@@ -137,15 +141,15 @@
   font-weight: 600;
   color: var(--brand-deep);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
 }
 .print-doc .cover-grand-value {
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--brand-deep);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-  margin-top: 4px;
+  letter-spacing: -0.022em;
+  margin-top: 6px;
 }
 
 .print-doc .cover-foot {
@@ -156,7 +160,6 @@
   border-top: 1px solid var(--line);
   padding-top: 6mm;
 }
-.print-doc .cover-foot-block {}
 .print-doc .cover-foot-label {
   font-size: 9px; font-weight: 700;
   text-transform: uppercase;
@@ -173,8 +176,8 @@
   margin-top: 2px;
 }
 .print-doc .cover-sign-box {
-  border: 1px solid var(--line-strong);
-  border-radius: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
   text-align: center;
   font-size: 9px;
   color: var(--ink-subtle);
@@ -182,15 +185,15 @@
   font-weight: 600;
 }
 
-/* ─── PAGE HEAD (shared on pp.2+) ─────────────────────── */
+/* ─── PAGE HEAD (pp.2+) ─────────────────────── */
 .print-doc .page-head {
   display: flex; justify-content: space-between; align-items: flex-end;
-  border-bottom: 2px solid var(--brand);
+  border-bottom: 2px solid var(--ink);   /* 강조=블랙 라인(오렌지 아껴쓰기) */
   padding-bottom: 2.5mm;
   margin-bottom: 4mm;
 }
 .print-doc .page-head-brand { font-size: 10px; font-weight: 600; color: var(--ink-subtle); }
-.print-doc .page-head-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-top: 1px; letter-spacing: -0.01em; }
+.print-doc .page-head-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-top: 1px; letter-spacing: -0.022em; }
 .print-doc .page-head-right { text-align: right; font-size: 10px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .print-doc .page-num { font-size: 9px; color: var(--ink-subtle); }
 
@@ -202,25 +205,25 @@
   margin-bottom: 6mm;
 }
 .print-doc .quote-table thead th {
-  background: var(--brand-50);
-  color: var(--brand-deep);
-  font-weight: 700;
+  background: var(--cream);
+  color: var(--ink-muted);
+  font-weight: 600;
   text-align: left;
-  padding: 7px 8px;
-  border-bottom: 2px solid var(--brand);
-  font-size: 10px;
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 9.5px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 .print-doc .quote-table thead th.num { text-align: right; }
 .print-doc .quote-table tbody td {
-  padding: 6px 8px;
-  border-bottom: 1px solid var(--line);
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--line-soft);
   vertical-align: top;
 }
-.print-doc .quote-table tbody tr.analysis-row { background: rgba(238, 242, 255, 0.45); }
+.print-doc .quote-table tbody tr.analysis-row { background: var(--floor); }
 .print-doc .num { text-align: right; font-variant-numeric: tabular-nums; }
-.print-doc .strong { font-weight: 700; }
+.print-doc .strong { font-weight: 700; color: var(--ink); }
 .print-doc .muted { color: var(--ink-subtle); }
 .print-doc .line-name { display: flex; align-items: center; gap: 6px; font-weight: 500; color: var(--ink); }
 .print-doc .line-note { font-size: 9px; color: var(--ink-subtle); margin-top: 2px; }
@@ -238,7 +241,7 @@
   padding-top: 3px;
   border-top: 1px dashed var(--line);
   font-weight: 600;
-  color: var(--brand);
+  color: var(--brand-deep);
 }
 .print-doc .badge-analysis {
   display: inline-block;
@@ -246,29 +249,24 @@
   font-weight: 700;
   background: var(--brand);
   color: white;
-  padding: 1px 6px;
-  border-radius: 3px;
-  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
 }
-.print-doc .badge-prep { background: #059669; }
-.print-doc .negotiate { color: #dc2626; font-weight: 700; font-size: 10px; }
+.print-doc .badge-prep { background: var(--success); }
+.print-doc .negotiate { color: var(--brand-deep); font-weight: 700; font-size: 10px; }
 
-/* 근거 가이드라인 코드 칩 (지식베이스 연결) */
-.print-doc .guideline-codes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3px;
-  margin-top: 3px;
-}
+/* 근거 가이드라인 코드 칩 */
+.print-doc .guideline-codes { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
 .print-doc .gl-code {
   display: inline-block;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   font-size: 8px;
   font-weight: 600;
   color: var(--brand-deep);
-  background: var(--brand-50);
-  border: 1px solid var(--line-strong);
-  border-radius: 3px;
-  padding: 1px 5px;
+  background: var(--brand-tint);
+  border-radius: 999px;
+  padding: 2px 7px;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
 }
@@ -277,9 +275,9 @@
 .print-doc .totals-block {
   margin-left: auto;
   width: 65%;
-  background: #FBF9F8;
+  background: var(--cream);
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 5mm 6mm;
 }
 .print-doc .totals-row {
@@ -289,104 +287,110 @@
   color: var(--ink-muted);
 }
 .print-doc .totals-row.muted { color: var(--ink-subtle); }
-.print-doc .totals-divider { border-top: 1px solid var(--line-strong); margin: 4px 0; }
+.print-doc .totals-divider { border-top: 1px solid var(--line); margin: 4px 0; }
 .print-doc .totals-grand {
   display: flex; justify-content: space-between; align-items: baseline;
   margin-top: 6px;
   padding-top: 6px;
-  border-top: 2px solid var(--brand);
+  border-top: 2px solid var(--ink);
   font-weight: 700;
   color: var(--ink);
 }
 .print-doc .totals-grand .num {
-  font-size: 18px;
-  color: var(--brand-deep);
-  letter-spacing: -0.01em;
+  font-size: 19px;
+  color: var(--ink);
+  letter-spacing: -0.022em;
 }
 
 /* ─── TERMS ─────────────────────── */
 .print-doc .terms {
   margin-top: 8mm;
-  background: #FBF9F8;
-  border-left: 3px solid var(--brand);
-  padding: 4mm 5mm;
-  border-radius: 0 6px 6px 0;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  padding: 5mm;
+  border-radius: 12px;
 }
 .print-doc .terms h3 {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   margin: 0 0 3mm 0;
-  color: var(--brand-deep);
-  letter-spacing: 0.02em;
+  color: var(--ink);
+  letter-spacing: -0.01em;
 }
 .print-doc .terms ul { margin: 0; padding-left: 14px; }
 .print-doc .terms li { font-size: 10px; color: var(--ink-muted); margin-bottom: 2px; line-height: 1.5; }
 
 .print-doc .warn-box {
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
-  border-radius: 6px;
+  background: var(--brand-tint);
+  border: 1px solid var(--brand);
+  border-radius: 8px;
   padding: 3mm 4mm;
   margin-bottom: 6mm;
   font-size: 10px;
-  color: #78350f;
+  color: var(--brand-deep);
 }
 .print-doc .warn-title { font-weight: 700; margin-bottom: 2px; }
 
 /* ─── DETAIL CARDS ─────────────────────── */
 .print-doc .details-list { display: flex; flex-direction: column; gap: 5mm; }
-/* 시험 개요(동물종·군구성·투여기간) */
 .print-doc .detail-grid { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 11px; color: var(--ink-muted); }
 .print-doc .detail-grid b { color: var(--ink-subtle); font-weight: 600; margin-right: 3px; }
-/* 시험 설계·평가항목 spec 리스트 */
 .print-doc .detail-spec { display: flex; flex-direction: column; gap: 2px; margin: 0; }
 .print-doc .detail-spec > div { display: grid; grid-template-columns: 72px 1fr; gap: 8px; align-items: baseline; }
 .print-doc .detail-spec dt { font-size: 10px; font-weight: 600; color: var(--ink-subtle); margin: 0; }
 .print-doc .detail-spec dd { font-size: 10.5px; color: var(--ink-muted); margin: 0; line-height: 1.5; }
 .print-doc .detail-card {
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 6mm;
   page-break-inside: avoid;
   background: white;
-  min-height: 125mm;          /* 모든 카드 박스 높이 통일 — 짧은 카드는 하단 여백 */
+  min-height: 125mm;          /* 카드 박스 높이 통일 */
   box-sizing: border-box;
 }
 .print-doc .detail-head {
   display: grid;
-  grid-template-columns: 36px 1fr auto;
+  grid-template-columns: 40px 1fr auto;
   align-items: start;
-  gap: 8px;
+  gap: 10px;
   padding-bottom: 3mm;
   border-bottom: 1px solid var(--line);
   margin-bottom: 3mm;
 }
+/* 상세 번호 — 블랙 라운드 스퀘어(강조=블랙 반전) */
 .print-doc .detail-no {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--brand);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
-.print-doc .detail-title { font-size: 13px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em; }
-.print-doc .detail-subtitle { font-size: 9.5px; color: var(--ink-subtle); margin-top: 2px; }
+.print-doc .detail-title { font-size: 14px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.02em; }
+.print-doc .detail-subtitle { font-size: 9.5px; color: var(--ink-subtle); margin-top: 3px; }
 .print-doc .detail-price {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--brand-deep);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 .print-doc .detail-block { margin-top: 3.5mm; }
 .print-doc .detail-block-label {
-  font-size: 9.5px;
-  font-weight: 700;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--brand);
+  color: var(--ink-subtle);
   margin-bottom: 1.5mm;
 }
-.print-doc .detail-block.notice .detail-block-label { color: #c2410c; }
+.print-doc .detail-block.notice .detail-block-label { color: var(--brand-deep); }
 .print-doc .detail-text {
   font-size: 11px;
   color: var(--ink-muted);
@@ -404,10 +408,18 @@
     padding: 0 !important;
   }
   .print-doc .page {
-    box-shadow: none !important;
+    border: none !important;
     border-radius: 0 !important;
     margin: 0 !important;
     page-break-after: always;
   }
   .print-doc .page:last-child { page-break-after: auto; }
+  /* 오렌지 밴드·틴트 면 인쇄 색 보존 */
+  .print-doc .cover-band, .print-doc .cover-logo, .print-doc .detail-no,
+  .print-doc .cover-grand, .print-doc .badge-analysis, .print-doc .gl-code,
+  .print-doc .quote-table thead th, .print-doc .totals-block, .print-doc .terms,
+  .print-doc .cover-meta-grid, .print-doc .warn-box {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
