@@ -89,8 +89,8 @@ export default async function Home() {
     <div className="animate-fade-in">
       {/* 헤더 */}
       <div className="mb-8">
-        <h1 className="text-display text-ink">안녕하세요, {name}님</h1>
-        <p className="text-subhead text-ink-body mt-3">{todayStr} · 진행 중인 견적 {kpi.inProgress}건과 마감이 임박한 시험 {dueStudies.length}건이 있습니다.</p>
+        <h1 className="text-[28px] leading-[1.15] font-bold tracking-[-0.022em] text-ink sm:text-display">안녕하세요, {name}님</h1>
+        <p className="text-[14px] sm:text-subhead text-ink-body mt-2 sm:mt-3">{todayStr} · 진행 중인 견적 {kpi.inProgress}건과 마감이 임박한 시험 {dueStudies.length}건이 있습니다.</p>
       </div>
 
       {/* KPI 4카드 — 아이콘 없음, 수주 금액은 블랙 반전(#000) */}

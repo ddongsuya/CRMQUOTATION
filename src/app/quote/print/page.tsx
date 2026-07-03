@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Printer } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useWizard } from '@/lib/store';
@@ -26,6 +26,25 @@ function PrintPage() {
   const params = useSearchParams();
   const quoteId = params.get('id');
   const [data, setData] = useState<PrintData | null>(null);
+  // 모바일 화면 미리보기 — A4(210mm) 페이지를 화면폭에 맞춰 축소(인쇄 시엔 원본 유지)
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  const [scaledH, setScaledH] = useState<number | undefined>(undefined);
+  useEffect(() => {
+    const A4_PX = (210 * 96) / 25.4; // ≈793.7px
+    const compute = () => {
+      // 실제 레이아웃 뷰포트폭 = clientWidth (window.innerWidth는 일부 환경서 부정확)
+      const w = document.documentElement.clientWidth || window.innerWidth;
+      const s = w < 820 ? Math.min(1, (w - 16) / A4_PX) : 1;
+      setScale(s);
+      setScaledH(s < 1 && innerRef.current ? innerRef.current.scrollHeight * s : undefined);
+    };
+    compute();
+    const t = setTimeout(compute, 400); // 콘텐츠 로드 후 높이 재측정
+    window.addEventListener('resize', compute);
+    return () => { clearTimeout(t); window.removeEventListener('resize', compute); };
+  }, [data]);
+  const A4_PX = (210 * 96) / 25.4;
 
   useEffect(() => {
     if (quoteId) {
@@ -166,7 +185,11 @@ function PrintPage() {
           <Printer className="w-4 h-4" /> 인쇄 / PDF 저장
         </button>
       </div>
-      <PrintLayout data={data} />
+      <div className="print-scale-outer" style={scaledH ? { height: scaledH } : undefined}>
+        <div ref={innerRef} className="print-scale-inner" style={scale < 1 ? { transform: `scale(${scale})`, transformOrigin: 'top left', width: `${A4_PX}px` } : undefined}>
+          <PrintLayout data={data} />
+        </div>
+      </div>
     </>
   );
 }

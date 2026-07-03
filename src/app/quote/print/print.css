@@ -400,9 +400,18 @@
 }
 .print-doc .detail-text.small { font-size: 10px; }
 
+/* ─── MOBILE SCREEN — A4 페이지를 화면폭에 맞춰 축소 ─────────────
+   .print-scale-inner 는 page.tsx에서 transform:scale() 인라인 적용.
+   .print-scale-outer 높이도 스케일 반영값으로 세팅됨. 인쇄 시엔 아래서 해제. */
+.print-scale-outer { position: relative; }
+.print-scale-inner { will-change: transform; }
+
 /* ─── PRINT MODE ─────────────────────── */
 @media print {
   @page { size: A4; margin: 0; }
+  /* 모바일 축소 해제 — 인쇄는 항상 원본 A4 */
+  .print-scale-outer { height: auto !important; overflow: visible !important; }
+  .print-scale-inner { transform: none !important; }
   .print-doc {
     background: white !important;
     padding: 0 !important;
