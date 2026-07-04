@@ -141,7 +141,7 @@ export default function QuotesListPage() {
 }
 
 function StatCard({ label, value, unit, note, invert }: { label: string; value: string; unit?: string; note?: string; invert?: boolean }) {
-  const box = invert ? 'bg-ink text-white' : 'card';
+  const box = invert ? 'bg-slate-900 text-white' : 'card';
   const labelC = invert ? 'text-white/85' : 'text-ink-muted';
   const numC = invert ? 'text-white' : 'text-ink';
   const noteC = invert ? 'text-white/72' : 'text-ink-muted';

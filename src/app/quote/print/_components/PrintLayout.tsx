@@ -1,5 +1,7 @@
 'use client';
 
+import { useLayoutEffect, useRef, useState } from 'react';
+
 export type PrintData = {
   meta: {
     quoteNo: string;
@@ -76,10 +78,40 @@ export default function PrintLayout({ data }: { data: PrintData }) {
       return { line: l, detail: d };
     })
     .filter(({ detail }) => detail && (detail.detail || detail.notice || detail.quoteText || detail.guideline || detail.purpose || (detail.checklist && detail.checklist.length > 0) || detail.species));
-  const detailPages = paginateDetails(lineDetails);
+
+  // 자동 페이지네이션 — 상세 카드 높이를 실측(offsetHeight)해 A4 콘텐츠 높이 기준으로 분배
+  const measureRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [detailPages, setDetailPages] = useState<typeof lineDetails[]>(() => {
+    const p: typeof lineDetails[] = [];               // 측정 전 fallback: 2장/페이지
+    for (let i = 0; i < lineDetails.length; i += 2) p.push(lineDetails.slice(i, i + 2));
+    return p;
+  });
+  const detailKey = lineDetails.map(x => x.line.testItemKey).join('|');
+  useLayoutEffect(() => {
+    if (lineDetails.length === 0) return;
+    const PAGE_PX = 950;   // A4 상세 페이지 가용 높이(px, page-head 제외 ≈ 251mm)
+    const GAP = 19;        // details-list gap ≈ 5mm
+    const heights = measureRefs.current.map(el => el?.offsetHeight ?? 320);
+    const groups: number[][] = []; let cur: number[] = []; let acc = 0;
+    heights.forEach((h, i) => {
+      if (cur.length > 0 && acc + GAP + h > PAGE_PX) { groups.push(cur); cur = []; acc = 0; }
+      acc += (cur.length ? GAP : 0) + h; cur.push(i);
+    });
+    if (cur.length) groups.push(cur);
+    setDetailPages(groups.map(g => g.map(i => lineDetails[i])));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [detailKey]);
 
   return (
     <div className="print-doc print-root font-sans text-ink">
+      {/* 측정용 숨김 렌더 — 카드 실제 높이 offsetHeight 산출 */}
+      <div aria-hidden className="no-print" style={{ position: 'absolute', left: -99999, top: 0, width: '182mm', visibility: 'hidden', pointerEvents: 'none' }}>
+        {lineDetails.map(({ line, detail }, i) => (
+          <div key={i} ref={el => { measureRefs.current[i] = el; }}>
+            <DetailCard line={line} detail={detail} no={i + 1} symbol={symbol} />
+          </div>
+        ))}
+      </div>
       {/* ─────────── PAGE 1: COVER ─────────── */}
       <section className="page cover">
         <div className="cover-band">
@@ -253,15 +285,6 @@ export default function PrintLayout({ data }: { data: PrintData }) {
 
 type DetailEntry = PrintData['details'][number];
 type LineEntry = PrintData['lines'][number];
-
-/** 상세 카드 높이(mm) 추정 → A4(가용 ~230mm) 단위로 묶어 페이지 분할 */
-// 카드 높이를 통일(.detail-card min-height)하므로 페이지당 고정 2장으로 분할 → 배치가 균일.
-const CARDS_PER_PAGE = 2;
-function paginateDetails(lineDetails: { line: LineEntry; detail?: DetailEntry }[]): { line: LineEntry; detail?: DetailEntry }[][] {
-  const pages: { line: LineEntry; detail?: DetailEntry }[][] = [];
-  for (let i = 0; i < lineDetails.length; i += CARDS_PER_PAGE) pages.push(lineDetails.slice(i, i + CARDS_PER_PAGE));
-  return pages;
-}
 
 function DetailCard({ line, detail, no, symbol }: { line: LineEntry; detail?: DetailEntry; no: number; symbol: string }) {
   return (

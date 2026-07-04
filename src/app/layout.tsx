@@ -20,6 +20,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="ko">
+      <head>
+        {/* 페인트 전 테마 적용 — FOUC 방지 */}
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}` }} />
+      </head>
       <body className="antialiased bg-slate-50 text-ink-body">
         <Providers>
           <AppChrome stats={stats}>{children}</AppChrome>

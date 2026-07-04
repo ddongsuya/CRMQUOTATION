@@ -167,7 +167,7 @@ export default function CompanyDetailPage() {
 
 function KpiCell({ icon, label, value, sub }: { icon: React.ReactNode; label: string; value: string; sub: string }) {
   return (
-    <div className="rounded-[12px] bg-ink text-white px-3 py-2.5 min-w-0">
+    <div className="rounded-[12px] bg-slate-900 text-white px-3 py-2.5 min-w-0">
       <div className="flex items-center gap-1 text-white/60 text-[11px]">{icon}<span className="truncate">{label}</span></div>
       <div className="text-lg font-bold text-white tabular-nums mt-0.5 truncate">{value}</div>
       <div className="text-[10px] text-white/60 truncate">{sub}</div>

@@ -50,6 +50,20 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
   const [drawer, setDrawer] = useState(false);
   useEffect(() => { setDrawer(false); }, [pathname]);
 
+  // 라이트/다크 테마 — data-theme 스왑 + localStorage 영속 (tokens.css가 색 자동 스왑)
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  useEffect(() => {
+    const saved = (localStorage.getItem('theme') as 'light' | 'dark' | null) ?? (document.documentElement.getAttribute('data-theme') as 'light' | 'dark' | null) ?? 'light';
+    setTheme(saved);
+    document.documentElement.setAttribute('data-theme', saved);
+  }, []);
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch { /* noop */ }
+  };
+
   const bare = pathname.startsWith('/quote/print') || pathname.startsWith('/login') || pathname.startsWith('/register');
   if (bare) return <>{children}</>;
 
@@ -126,9 +140,11 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
               <span className="mx-1.5 text-ink-subtle/60 hidden sm:inline">/</span>
               <span className="font-semibold text-ink truncate">{label}</span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-ink-subtle flex-shrink-0">
-              <Icon name="check" className="w-4 h-4 text-emerald-500" />
-              <span className="hidden sm:inline">자동 저장됨</span>
+            <div className="flex items-center gap-3 text-xs text-ink-subtle flex-shrink-0">
+              <span className="inline-flex items-center gap-2"><Icon name="check" className="w-4 h-4 text-emerald-500" /><span className="hidden sm:inline">자동 저장됨</span></span>
+              <button onClick={toggleTheme} className="inline-flex items-center justify-center w-8 h-8 rounded-full text-ink-muted hover:bg-slate-100 transition-colors" title={theme === 'dark' ? '라이트 모드' : '다크 모드'} aria-label="테마 전환">
+                <Icon name={theme === 'dark' ? 'sun' : 'moon'} className="w-[18px] h-[18px]" />
+              </button>
             </div>
           </header>
 

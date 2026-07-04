@@ -25,7 +25,7 @@ export default async function Home() {
   let kpi = { thisMonth: 0, inProgress: 0, wonAmt: 0, wonRate: 0, runningStudies: 0, quoteDelta: 0, wonDelta: 0 };
   let dueStudies: { id: number; name: string; company: string; dueAt: string; duration: string }[] = [];
   let monthly: { label: string; amount: number }[] = [];
-  let activity: { id: string; kind: string; text: string; sub: string; at: string }[] = [];
+  let activity: { id: string; kind: string; text: string; sub: string; at: string; href: string | null }[] = [];
   try {
     // 진행 중 견적(작성·발행·발송) — 좌측 리스트
     quotes = await prisma.quote.findMany({
@@ -72,13 +72,13 @@ export default async function Home() {
     // 최근 활동 (견적·계약·노트 통합 타임라인)
     const [rQuotes, rContracts, rNotes] = await Promise.all([
       prisma.quote.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, quoteNumber: true, customerCompany: true, status: true, createdAt: true } }),
-      prisma.contract.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, status: true, createdAt: true, deal: { select: { title: true } } } }),
-      prisma.note.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, type: true, title: true, createdAt: true, deal: { select: { title: true } } } }),
+      prisma.contract.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, status: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
+      prisma.note.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, type: true, title: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
     ]);
     activity = [
-      ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: STATUS[q.status]?.label ?? q.status, at: q.createdAt })),
-      ...rContracts.map(c => ({ id: `c${c.id}`, kind: '계약', text: c.deal?.title ?? '계약', sub: c.status, at: c.createdAt })),
-      ...rNotes.map(n => ({ id: `n${n.id}`, kind: '노트', text: n.title || n.deal?.title || '메모', sub: n.type, at: n.createdAt })),
+      ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: STATUS[q.status]?.label ?? q.status, at: q.createdAt, href: `/quote/print?id=${q.id}` })),
+      ...rContracts.map(c => ({ id: `c${c.id}`, kind: '계약', text: c.deal?.title ?? '계약', sub: c.status, at: c.createdAt, href: c.deal ? `/deals/${c.deal.id}` : null })),
+      ...rNotes.map(n => ({ id: `n${n.id}`, kind: '노트', text: n.title || n.deal?.title || '메모', sub: n.type, at: n.createdAt, href: n.deal ? `/deals/${n.deal.id}` : '/notes' })),
     ].sort((a, b) => +b.at - +a.at).slice(0, 6).map(x => ({ ...x, at: x.at.toISOString() }));
   } catch { /* DB 미연결 시 0 */ }
 
@@ -178,16 +178,23 @@ export default async function Home() {
             <div className="py-8 text-center text-sm text-ink-subtle">최근 활동이 없습니다.</div>
           ) : (
             <ul>
-              {activity.map(a => (
-                <li key={a.id} className="flex items-start gap-3 py-[11px] border-t border-[var(--hairline-soft)] first:border-t-0">
+              {activity.map(a => {
+                const inner = <>
                   <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-[7px]" style={{ background: ACTIVITY_DOT[a.kind] ?? 'var(--muted-soft)' }} />
                   <div className="flex-1 min-w-0">
                     <div className="text-[14px] text-ink truncate">{a.text}</div>
                     <div className="text-[12px] text-ink-subtle">{a.kind} · {a.sub}</div>
                   </div>
                   <span className="text-[12px] text-ink-subtle tabular-nums flex-shrink-0">{fmtDay(a.at)}</span>
-                </li>
-              ))}
+                </>;
+                return (
+                  <li key={a.id} className="border-t border-[var(--hairline-soft)] first:border-t-0">
+                    {a.href
+                      ? <Link href={a.href} className="flex items-start gap-3 py-[11px] -mx-2 px-2 rounded-lg hover:bg-slate-100 transition-colors">{inner}</Link>
+                      : <div className="flex items-start gap-3 py-[11px]">{inner}</div>}
+                  </li>
+                );
+              })}
             </ul>
           )}
         </section>
@@ -238,7 +245,7 @@ function Delta({ v }: { v: number }) {
 
 function StatCard({ label, value, unit, note, invert, delta }: { label: string; value: string; unit?: string; note?: string; invert?: boolean; delta?: number }) {
   // 강조 KPI = 컬러가 아니라 블랙 반전(#000, polarity flip)
-  const box = invert ? 'bg-ink text-white' : 'card';
+  const box = invert ? 'bg-slate-900 text-white' : 'card';
   const labelC = invert ? 'text-white/85' : 'text-ink-muted';
   const numC = invert ? 'text-white' : 'text-ink';
   const noteC = invert ? 'text-white/72' : 'text-ink-muted';

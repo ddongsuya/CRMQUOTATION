@@ -354,9 +354,8 @@
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 6mm;
-  page-break-inside: avoid;
+  page-break-inside: avoid;   /* 카드는 페이지 경계서 안 잘림 */
   background: white;
-  min-height: 125mm;          /* 카드 박스 높이 통일 */
   box-sizing: border-box;
 }
 .print-doc .detail-head {
