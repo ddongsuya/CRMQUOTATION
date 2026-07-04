@@ -44,11 +44,12 @@
 /* ─── COVER ─────────────────────── */
 .print-doc .cover { padding: 0; overflow: hidden; }
 
-/* 레터헤드 — 솔리드 오렌지(무그라데이션) */
+/* 레터헤드 — 흰 헤더 + 블랙 플라스크 로고 + 하단 헤어라인 */
 .print-doc .cover-band {
-  background: var(--brand);
-  color: #fff;
-  padding: 22mm 14mm 18mm;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 14mm 14mm 9mm;
+  border-bottom: 1px solid var(--line);
 }
 .print-doc .cover-band-inner {
   display: flex;
@@ -56,45 +57,48 @@
   align-items: center;
 }
 .print-doc .cover-brand { display: flex; align-items: center; gap: 12px; }
-/* 블랙 라운드 스퀘어 "코" 모노그램 (앱 브랜드마크와 동일) */
+/* 블랙 라운드 스퀘어 + 흰 플라스크 아이콘 */
 .print-doc .cover-logo {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 40px; height: 40px;
-  background: var(--ink);
+  background: var(--dark-surface, #191919);
   color: #fff;
-  border-radius: 9px;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
+  border-radius: 10px;
   flex-shrink: 0;
 }
-.print-doc .cover-brand-name { font-size: 15px; font-weight: 700; letter-spacing: -0.022em; }
-.print-doc .cover-brand-sub { font-size: 9px; opacity: 0.82; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+.print-doc .cover-logo svg { width: 20px; height: 20px; }
+.print-doc .cover-brand-name { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+.print-doc .cover-brand-sub {
+  font-size: 9px; color: var(--ink-subtle); letter-spacing: 0.08em;
+  text-transform: uppercase; margin-top: 3px;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+}
 .print-doc .cover-quote-no {
-  font-size: 11px; font-weight: 600;
+  font-size: 10.5px; font-weight: 600;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   padding: 6px 13px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.32);
+  background: var(--cream);
+  color: var(--ink-muted);
   letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
 }
 
-.print-doc .cover-body { padding: 18mm 14mm 14mm; }
+.print-doc .cover-body { padding: 14mm; }
 .print-doc .cover-eyebrow {
   font-size: 11px;
   font-weight: 600;
   font-family: 'Roboto Mono', ui-monospace, monospace;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   color: var(--brand);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .print-doc .cover-title {
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.022em;
   line-height: 1.1;
   margin: 0;
@@ -106,50 +110,55 @@
   color: var(--ink-muted);
 }
 
+/* 메타 그리드 — 헤어라인 셀(내부 구분선) */
 .print-doc .cover-meta-grid {
-  margin-top: 14mm;
+  margin-top: 12mm;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5mm 8mm;
-  padding: 6mm;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--cream);
+  border-radius: 10px;
+  overflow: hidden;
 }
-.print-doc .meta-block { padding: 0; }
+.print-doc .meta-block { padding: 5mm 6mm; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.print-doc .meta-block:nth-child(1), .print-doc .meta-block:nth-child(2) { border-top: none; }
+.print-doc .meta-block:nth-child(odd) { border-left: none; }
 .print-doc .meta-label {
   font-size: 9px;
   font-weight: 600;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ink-subtle);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 .print-doc .meta-value { font-size: 13px; font-weight: 500; color: var(--ink); }
 
-/* 견적 합계 — 강조는 오렌지 틴트 면(무그라데이션) */
+/* 견적 합계 — 강조 = 블랙 반전 카드 */
 .print-doc .cover-grand {
-  margin-top: 12mm;
-  padding: 9mm 10mm;
-  background: var(--brand-tint);
-  border: 1px solid var(--brand);
+  margin-top: 11mm;
+  padding: 8mm 9mm;
+  background: var(--dark-surface, #191919);
   border-radius: 12px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8mm;
 }
 .print-doc .cover-grand-label {
   font-size: 11px;
   font-weight: 600;
-  color: var(--brand-deep);
+  color: #fff;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
 }
+.print-doc .cover-grand-sub { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 4px; font-weight: 400; letter-spacing: 0; text-transform: none; }
 .print-doc .cover-grand-value {
   font-size: 34px;
-  font-weight: 700;
-  color: var(--brand-deep);
+  font-weight: 800;
+  color: #fff;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.022em;
-  margin-top: 6px;
+  white-space: nowrap;
 }
 
 .print-doc .cover-foot {
@@ -188,11 +197,11 @@
 /* ─── PAGE HEAD (pp.2+) ─────────────────────── */
 .print-doc .page-head {
   display: flex; justify-content: space-between; align-items: flex-end;
-  border-bottom: 2px solid var(--ink);   /* 강조=블랙 라인(오렌지 아껴쓰기) */
-  padding-bottom: 2.5mm;
-  margin-bottom: 4mm;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 3mm;
+  margin-bottom: 5mm;
 }
-.print-doc .page-head-brand { font-size: 10px; font-weight: 600; color: var(--ink-subtle); }
+.print-doc .page-head-brand { font-size: 10px; font-weight: 600; color: var(--ink-subtle); font-family: 'Roboto Mono', ui-monospace, monospace; letter-spacing: 0.04em; }
 .print-doc .page-head-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-top: 1px; letter-spacing: -0.022em; }
 .print-doc .page-head-right { text-align: right; font-size: 10px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .print-doc .page-num { font-size: 9px; color: var(--ink-subtle); }
@@ -253,7 +262,7 @@
   border-radius: 999px;
   letter-spacing: 0.04em;
 }
-.print-doc .badge-prep { background: var(--success); }
+.print-doc .badge-prep { background: var(--cream); color: var(--ink-muted); }
 .print-doc .negotiate { color: var(--brand-deep); font-weight: 700; font-size: 10px; }
 
 /* 근거 가이드라인 코드 칩 */
@@ -311,11 +320,13 @@
   border-radius: 12px;
 }
 .print-doc .terms h3 {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin: 0 0 3mm 0;
-  color: var(--ink);
-  letter-spacing: -0.01em;
+  color: var(--brand);
 }
 .print-doc .terms ul { margin: 0; padding-left: 14px; }
 .print-doc .terms li { font-size: 10px; color: var(--ink-muted); margin-bottom: 2px; line-height: 1.5; }

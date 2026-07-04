@@ -85,10 +85,12 @@ export default function PrintLayout({ data }: { data: PrintData }) {
         <div className="cover-band">
           <div className="cover-band-inner">
             <div className="cover-brand">
-              <span className="cover-logo">코</span>
+              <span className="cover-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round"><path d="M14 2v6l4.6 9.2a1 1 0 0 1-.9 1.4H6.3a1 1 0 0 1-.9-1.4L10 8V2" /><path d="M8.5 2h7" /><path d="M6.6 15h10.8" /></svg>
+              </span>
               <div>
-                <div className="cover-brand-name">Corestemchemon</div>
-                <div className="cover-brand-sub">Enterprise placing human and life at the top</div>
+                <div className="cover-brand-name">㈜코아스템켐온 · CHEMON</div>
+                <div className="cover-brand-sub">NON-CLINICAL CRO · ENTERPRISE PLACING HUMAN AND LIFE AT THE TOP</div>
               </div>
             </div>
             <div className="cover-quote-no">{data.meta.quoteNo}</div>
@@ -96,7 +98,7 @@ export default function PrintLayout({ data }: { data: PrintData }) {
         </div>
 
         <div className="cover-body">
-          <div className="cover-eyebrow">비임상시험 견적서</div>
+          <div className="cover-eyebrow">QUOTATION · 견적서</div>
           <h1 className="cover-title">{data.project.projectName || '(프로젝트명 미입력)'}</h1>
           {data.project.substanceName && (
             <div className="cover-substance">시험물질 · {data.project.substanceName}</div>
@@ -112,7 +114,10 @@ export default function PrintLayout({ data }: { data: PrintData }) {
           </div>
 
           <div className="cover-grand">
-            <div className="cover-grand-label">견적 합계 (VAT 포함)</div>
+            <div>
+              <div className="cover-grand-label">견적 합계 · VAT 포함</div>
+              <div className="cover-grand-sub">할인 및 부가세가 반영된 최종 금액입니다</div>
+            </div>
             <div className="cover-grand-value">{fmt(data.totals.grandTotal)}</div>
           </div>
 
