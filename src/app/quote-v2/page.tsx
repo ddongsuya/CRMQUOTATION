@@ -160,8 +160,8 @@ export default function QuoteV2Page() {
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">새 견적 작성</h1>
-          <p className="text-subhead text-ink-body mt-2">5단계로 견적을 구성하고 PDF로 출력합니다.</p>
+          <h1 className="text-[26px] sm:text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.15]">새 견적 작성</h1>
+          <p className="text-[14px] sm:text-subhead text-ink-body mt-1.5 sm:mt-2">5단계로 견적을 구성하고 PDF로 출력합니다.</p>
         </div>
       </div>
 
@@ -400,33 +400,31 @@ function QuoteResult({ quote, composedCount, onSaveDraft, onComplete, saving, st
       </div>
       {standard && <span className="tag">{standard}</span>}
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm min-w-[560px]">
-          <thead><tr className="text-[11px] text-ink-subtle text-left border-b border-slate-100 whitespace-nowrap">
-            <th className="py-1.5 pr-2">시험명</th><th className="py-1.5 px-2 w-14">경로</th><th className="py-1.5 px-2 w-28 text-right">단가</th><th className="py-1.5 px-2">적용 규칙/비고</th>
-          </tr></thead>
-          <tbody>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {quote.lineItems.map((li: any, i: number) => (
-              <tr key={i} className="border-b border-slate-50">
-                <td className="py-1.5 pr-2 text-ink">{li.testName}{li.isPrereq && <span className="pill tone-sent ml-1">선행</span>}</td>
-                <td className="py-1.5 px-2 text-ink-muted">{li.route}</td>
-                <td className="py-1.5 px-2 text-right tabular-nums font-medium">{won(li.unitPrice)}</td>
-                <td className="py-1.5 px-2 text-[11px] text-ink-subtle">{[...li.appliedRules, ...li.notes].join(' · ')}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* 라인아이템 — 반응형 리스트(가로 스크롤 없이 모바일 대응) */}
+      <div className="border-t border-[var(--hairline-soft)]">
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {quote.lineItems.map((li: any, i: number) => {
+          const meta = [li.route, ...li.appliedRules, ...li.notes].filter(Boolean).join(' · ');
+          return (
+            <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[var(--hairline-soft)]">
+              <div className="flex-1 min-w-0">
+                <div className="text-[14px] text-ink">{li.testName}{li.isPrereq && <span className="pill tone-sent ml-1.5">선행</span>}</div>
+                {meta && <div className="text-[11px] text-ink-subtle mt-0.5 break-keep">{meta}</div>}
+              </div>
+              <div className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">{won(li.unitPrice)}</div>
+            </div>
+          );
+        })}
       </div>
 
       {/* eslint-disable @typescript-eslint/no-explicit-any */}
-      {quote.waivedItems.length > 0 && <Note icon={<Ban className="w-4 h-4 text-red-500" />} title={`면제 (${quote.waivedItems.length})`}>{quote.waivedItems.map((w: any, i: number) => <div key={i}>• {w.testName} <span className="text-[11px] text-ink-subtle">— {w.reason}</span></div>)}</Note>}
-      {quote.addons.length > 0 && <Note icon={<PlusCircle className="w-4 h-4 text-emerald-500" />} title={`추가 옵션 (${quote.addons.length})`}>{quote.addons.map((a: any, i: number) => <div key={i} className="flex justify-between"><span>{a.name}</span><span className="tabular-nums">+{won(a.price)}</span></div>)}</Note>}
-      {quote.documentRequirements.length > 0 && <Note icon={<FileText className="w-4 h-4 text-sky-500" />} title="자료 요구">{quote.documentRequirements.map((d: any, i: number) => <div key={i}>• {d.document}{d.mandatory && <span className="text-red-500 ml-1">*</span>}</div>)}</Note>}
+      {quote.waivedItems.length > 0 && <Note icon={<Ban className="w-4 h-4" style={{ color: 'var(--error)' }} />} title={`면제 (${quote.waivedItems.length})`}>{quote.waivedItems.map((w: any, i: number) => <div key={i}>• {w.testName} <span className="text-[11px] text-ink-subtle">— {w.reason}</span></div>)}</Note>}
+      {quote.addons.length > 0 && <Note icon={<PlusCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />} title={`추가 옵션 (${quote.addons.length})`}>{quote.addons.map((a: any, i: number) => <div key={i} className="flex justify-between"><span>{a.name}</span><span className="tabular-nums">+{won(a.price)}</span></div>)}</Note>}
+      {quote.documentRequirements.length > 0 && <Note icon={<FileText className="w-4 h-4" style={{ color: 'var(--status-sent)' }} />} title="자료 요구">{quote.documentRequirements.map((d: any, i: number) => <div key={i}>• {d.document}{d.mandatory && <span className="ml-1" style={{ color: 'var(--error)' }}>*</span>}</div>)}</Note>}
       {quote.missingInfo.length > 0 && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-3">
-          <div className="text-sm font-semibold text-amber-900 flex items-center gap-1.5 mb-1"><AlertTriangle className="w-4 h-4" /> 확인 필요 ({quote.missingInfo.length})</div>
-          {quote.missingInfo.map((m: any, i: number) => <div key={i} className="text-xs text-amber-800">• {m.message}</div>)}
+        <div className="rounded-[12px] border p-3" style={{ borderColor: 'var(--accent)', background: 'var(--accent-tint)' }}>
+          <div className="text-sm font-semibold flex items-center gap-1.5 mb-1" style={{ color: 'var(--accent-press)' }}><AlertTriangle className="w-4 h-4" /> 확인 필요 ({quote.missingInfo.length})</div>
+          {quote.missingInfo.map((m: any, i: number) => <div key={i} className="text-xs" style={{ color: 'var(--accent-press)' }}>• {m.message}</div>)}
         </div>
       )}
       {/* eslint-enable @typescript-eslint/no-explicit-any */}
