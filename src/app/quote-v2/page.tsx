@@ -81,7 +81,7 @@ export default function QuoteV2Page() {
   const [items, setItems] = useState<any[]>([]);
   const [picked, setPicked] = useState<Set<string>>(new Set());
   // 고객 정보 + 안건연동 + 저장
-  const [cust, setCust] = useState({ company: '', name: '', email: '', projectName: '', substanceName: '' });
+  const [cust, setCust] = useState({ company: '', name: '', email: '', projectName: '', substanceName: '', indication: '' });
   const [dealId, setDealId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [savedNo, setSavedNo] = useState<string | null>(null);
@@ -89,6 +89,8 @@ export default function QuoteV2Page() {
   // step4 수량·삭제 조정 (라인 id 기준)
   const [qtyOverrides, setQtyOverrides] = useState<Record<string, number>>({});
   const [removedIds, setRemovedIds] = useState<string[]>([]);
+  const [companyNames, setCompanyNames] = useState<string[]>([]);  // 고객사 자동완성(CRM)
+  useEffect(() => { fetch('/api/crm/companies').then(r => r.json()).then(d => setCompanyNames((d.companies ?? []).map((c: { name: string }) => c.name))).catch(() => {}); }, []);
 
   const isCombo = category === '복합제';
   const isBattery = !['의약품', '복합제', '백신', '건강기능식품'].includes(category);
@@ -175,18 +177,10 @@ export default function QuoteV2Page() {
     if (step === 4) return !!quote;
     return false;
   };
-  const showPreview = step >= 3 && !!quote;
   const meta1 = STEPS[step - 1];
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-end justify-between flex-wrap gap-3">
-        <div>
-          <h1 className="text-[26px] sm:text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.15]">새 견적 작성</h1>
-          <p className="text-[14px] sm:text-subhead text-ink-body mt-1.5 sm:mt-2">5단계로 견적을 구성하고 PDF로 출력합니다.</p>
-        </div>
-      </div>
-
       {/* Stepper — 원형(활성/완료 오렌지, ✓) + 라벨 아래 + 연결선 */}
       <div className="card px-4 sm:px-6 py-5">
         <div className="flex items-start">
@@ -207,7 +201,7 @@ export default function QuoteV2Page() {
         </div>
       </div>
 
-      <div className={showPreview ? 'grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-5' : 'max-w-2xl mx-auto'}>
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] gap-5">
         {/* LEFT — 현재 단계 */}
         <section className="card overflow-hidden self-start">
           <header className="px-[22px] pt-[22px] pb-4">
@@ -216,15 +210,25 @@ export default function QuoteV2Page() {
           </header>
 
           <div className="px-[22px] pb-[22px] space-y-3.5">
-            {/* STEP 1 — 프로젝트 정보 */}
+            {/* STEP 1 — 프로젝트 정보 (시안: 프로젝트명 → 고객사·물질명 → 적응증·제출처) */}
             {step === 1 && <>
               {dealId && <div className="pill tone-sent mb-1">안건 #{dealId} 연동</div>}
+              <Field label="프로젝트명 *"><input className="input" value={cust.projectName} onChange={e => setCust(c => ({ ...c, projectName: e.target.value }))} placeholder="예: CT-P17 비임상 독성 평가" /></Field>
               <div className="grid sm:grid-cols-2 gap-2">
-                <Field label="고객사 *"><input className="input" value={cust.company} onChange={e => setCust(c => ({ ...c, company: e.target.value }))} placeholder="㈜OOO" /></Field>
-                <Field label="담당자"><input className="input" value={cust.name} onChange={e => setCust(c => ({ ...c, name: e.target.value }))} /></Field>
-                <Field label="이메일"><input className="input" value={cust.email} onChange={e => setCust(c => ({ ...c, email: e.target.value }))} /></Field>
-                <Field label="시험물질명"><input className="input" value={cust.substanceName} onChange={e => setCust(c => ({ ...c, substanceName: e.target.value }))} /></Field>
-                <Field label="프로젝트명"><input className="input" value={cust.projectName} onChange={e => setCust(c => ({ ...c, projectName: e.target.value }))} placeholder="(비우면 고객사+모달리티)" /></Field>
+                <Field label="고객사 *">
+                  <div className="flex items-center gap-2.5 h-10 px-2.5 rounded-lg border border-slate-200 bg-white focus-within:border-brand-500">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-100 text-ink-muted text-[11px] font-semibold flex-shrink-0">{(cust.company || '?').trim().charAt(0)}</span>
+                    <input className="flex-1 min-w-0 bg-transparent outline-none text-[14px] text-ink placeholder:text-slate-400" value={cust.company} onChange={e => setCust(c => ({ ...c, company: e.target.value }))} placeholder="고객사 (CRM)" list="crm-companies" />
+                  </div>
+                  <datalist id="crm-companies">{companyNames.map(n => <option key={n} value={n} />)}</datalist>
+                </Field>
+                <Field label="물질명"><input className="input" value={cust.substanceName} onChange={e => setCust(c => ({ ...c, substanceName: e.target.value }))} placeholder="예: CTP-17 (성분 미정)" /></Field>
+                <Field label="적응증"><input className="input" value={cust.indication} onChange={e => setCust(c => ({ ...c, indication: e.target.value }))} placeholder="예: 류마티스 관절염" /></Field>
+                <Field label="제출처"><select className="input" value={submissionTarget} onChange={e => setSubmissionTarget(e.target.value)}><option value="국내">한국 (MFDS)</option><option value="USFDA">미국 (USFDA)</option><option value="EMA">유럽 (EMA)</option></select></Field>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-2">
+                <Field label="담당자"><input className="input" value={cust.name} onChange={e => setCust(c => ({ ...c, name: e.target.value }))} placeholder="담당자 이름" /></Field>
+                <Field label="이메일"><input className="input" value={cust.email} onChange={e => setCust(c => ({ ...c, email: e.target.value }))} placeholder="email@company.com" /></Field>
               </div>
             </>}
 
@@ -327,7 +331,6 @@ export default function QuoteV2Page() {
                   <Chip on={species.rodent} onClick={() => setSpecies(s => ({ ...s, rodent: !s.rodent }))}>설치류</Chip>
                   <Chip on={species.nonRodent} onClick={() => setSpecies(s => ({ ...s, nonRodent: !s.nonRodent }))}>비설치류</Chip>
                 </div></Field>
-                <Field label="제출 대상 (안전성약리 hERG)"><div className="flex flex-wrap gap-1.5">{['국내', 'USFDA', 'EMA'].map(t => <Chip key={t} on={submissionTarget === t} onClick={() => setSubmissionTarget(t)}>{t}</Chip>)}</div></Field>
                 <Field label="부가 시험"><div className="flex flex-wrap gap-1.5">{ADDONS.map(a => <Chip key={a.key} on={!!addons[a.key]} onClick={() => setAddons(p => ({ ...p, [a.key]: !p[a.key] }))}>{a.label}</Chip>)}</div></Field>
                 {addons.tk && (
                   <Field label="TK 사양"><div className="flex flex-wrap gap-2 items-center text-xs">
@@ -468,12 +471,17 @@ export default function QuoteV2Page() {
           </footer>
         </section>
 
-        {/* RIGHT — 실시간 견적 (3단계 자동구성 이후) */}
-        {showPreview && (
-          <div className="lg:sticky lg:top-4 self-start">
-            <QuoteResult quote={quote} composedCount={composed.length} onSaveDraft={() => saveQuote(false)} onComplete={completeQuote} saving={saving} standard={standard} />
-          </div>
-        )}
+        {/* RIGHT — 실시간 견적 (항상 표시, 구성 전엔 placeholder) */}
+        <div className="lg:sticky lg:top-4 self-start">
+          <LivePanel
+            quote={quote} composedCount={composed.length}
+            projectName={cust.projectName || (cust.company ? `${cust.company} ${category}` : '(프로젝트명 미입력)')}
+            company={cust.company} modality={category} standard={standard}
+            discountRate={discountRate} currency={currency} exchangeRate={exchangeRate}
+            selectedCount={isBattery ? picked.size : composed.length}
+            onSaveDraft={() => saveQuote(false)} onComplete={completeQuote} saving={saving}
+          />
+        </div>
       </div>
     </div>
   );
@@ -506,62 +514,81 @@ function Row({ label, value, muted }: { label: string; value: string; muted?: bo
   return <div className={`flex justify-between ${muted ? 'text-ink-subtle text-xs' : 'text-ink-muted'}`}><span>{label}</span><span className="tabular-nums">{value}</span></div>;
 }
 
-function QuoteResult({ quote, composedCount, onSaveDraft, onComplete, saving, standard }: { quote: Quote; composedCount: number; onSaveDraft?: () => void; onComplete?: () => void; saving?: boolean; standard?: 'MFDS' | 'OECD' }) {
+// 우측 실시간 견적 패널 — 시안: 항상 표시. 구성 전엔 placeholder, 구성 후 라인·합계.
+function LivePanel({ quote, composedCount, projectName, company, modality, standard, discountRate, currency, exchangeRate, selectedCount, onSaveDraft, onComplete, saving }: {
+  quote: Quote | null; composedCount: number; projectName: string; company: string; modality: string; standard: 'MFDS' | 'OECD';
+  discountRate: number; currency: 'KRW' | 'USD'; exchangeRate: number; selectedCount: number;
+  onSaveDraft?: () => void; onComplete?: () => void; saving?: boolean;
+}) {
+  const conv = (n: number) => currency === 'USD' ? n / exchangeRate : n;
+  const sym = currency === 'USD' ? '$' : '₩';
+  const f = (n: number) => `${sym}${conv(n).toLocaleString(undefined, { maximumFractionDigits: currency === 'USD' ? 2 : 0 })}`;
+  const subtotal = quote?.totals.subtotalKrw ?? 0;
+  const discountAmt = subtotal * discountRate;
+  const afterDiscount = subtotal - discountAmt;
+  const vat = afterDiscount * 0.1;
+  const grand = afterDiscount + vat;
+  const lineCount = quote?.lineItems.length ?? 0;
+  const autoCount = Math.max(0, lineCount - selectedCount);
+  const dash = <span className="text-ink-subtle">—</span>;
   return (
     <section className="card p-5 space-y-4 animate-fade-in">
+      {/* 헤더 */}
       <div className="flex items-center justify-between gap-2">
-        <h2 className="text-[22px] font-bold text-ink tracking-tight">실시간 견적</h2>
-        <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-muted"><span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--success)' }} />동기화</span>
+        <h2 className="text-[15px] font-semibold text-ink flex items-center gap-1.5"><FileText className="w-4 h-4 text-ink-muted" /> 실시간 견적</h2>
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink-muted"><span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--success)' }} />동기화</span>
       </div>
-      {standard && <span className="tag">{standard}</span>}
+      {/* 프로젝트 헤더 */}
+      <div className="pt-1">
+        <div className="text-[15px] font-semibold text-ink truncate">{projectName}</div>
+        <div className="text-[12px] text-ink-subtle truncate">{[company, modality].filter(Boolean).join(' · ') || '고객사·모달리티'}</div>
+        <div className="flex items-center gap-1.5 mt-2">
+          <span className="tag">작성중</span>
+          <span className="tag">{standard}</span>
+        </div>
+      </div>
 
-      {/* 라인아이템 — 반응형 리스트(가로 스크롤 없이 모바일 대응) */}
-      <div className="border-t border-[var(--hairline-soft)]">
-        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        {quote.lineItems.map((li: any, i: number) => {
-          const meta = [li.route, ...li.appliedRules, ...li.notes].filter(Boolean).join(' · ');
-          return (
-            <div key={i} className="flex items-start gap-3 py-2.5 border-b border-[var(--hairline-soft)]">
-              <div className="flex-1 min-w-0">
-                <div className="text-[14px] text-ink">{li.testName}{li.isPrereq && <span className="pill tone-sent ml-1.5">선행</span>}</div>
-                {meta && <div className="text-[11px] text-ink-subtle mt-0.5 break-keep">{meta}</div>}
+      {/* 라인아이템 or placeholder */}
+      {!quote || lineCount === 0 ? (
+        <div className="py-8 text-center text-[13px] text-ink-subtle border-t border-[var(--hairline-soft)]">3단계에서 자동 구성하세요</div>
+      ) : (
+        <div className="border-t border-[var(--hairline-soft)] max-h-[280px] overflow-auto">
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {quote.lineItems.map((li: any, i: number) => {
+            const meta = [li.route, ...li.appliedRules, ...li.notes].filter(Boolean).join(' · ');
+            return (
+              <div key={i} className="flex items-start gap-3 py-2 border-b border-[var(--hairline-soft)]">
+                <div className="flex-1 min-w-0">
+                  <div className="text-[13px] text-ink">{li.testName}{li.isPrereq && <span className="tag ml-1.5">선행</span>}</div>
+                  {meta && <div className="text-[11px] text-ink-subtle mt-0.5 break-keep">{meta}</div>}
+                </div>
+                <div className="text-[13px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">{f(li.amount ?? 0)}</div>
               </div>
-              <div className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">{won(li.unitPrice)}</div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* eslint-disable @typescript-eslint/no-explicit-any */}
-      {quote.waivedItems.length > 0 && <Note icon={<Ban className="w-4 h-4" style={{ color: 'var(--error)' }} />} title={`면제 (${quote.waivedItems.length})`}>{quote.waivedItems.map((w: any, i: number) => <div key={i}>• {w.testName} <span className="text-[11px] text-ink-subtle">— {w.reason}</span></div>)}</Note>}
-      {quote.addons.length > 0 && <Note icon={<PlusCircle className="w-4 h-4" style={{ color: 'var(--success)' }} />} title={`추가 옵션 (${quote.addons.length})`}>{quote.addons.map((a: any, i: number) => <div key={i} className="flex justify-between"><span>{a.name}</span><span className="tabular-nums">+{won(a.price)}</span></div>)}</Note>}
-      {quote.documentRequirements.length > 0 && <Note icon={<FileText className="w-4 h-4" style={{ color: 'var(--status-sent)' }} />} title="자료 요구">{quote.documentRequirements.map((d: any, i: number) => <div key={i}>• {d.document}{d.mandatory && <span className="ml-1" style={{ color: 'var(--error)' }}>*</span>}</div>)}</Note>}
-      {quote.missingInfo.length > 0 && (
-        <div className="rounded-[12px] border p-3" style={{ borderColor: 'var(--accent)', background: 'var(--accent-tint)' }}>
-          <div className="text-sm font-semibold flex items-center gap-1.5 mb-1" style={{ color: 'var(--accent-press)' }}><AlertTriangle className="w-4 h-4" /> 확인 필요 ({quote.missingInfo.length})</div>
-          {quote.missingInfo.map((m: any, i: number) => <div key={i} className="text-xs" style={{ color: 'var(--accent-press)' }}>• {m.message}</div>)}
+            );
+          })}
         </div>
       )}
-      {/* eslint-enable @typescript-eslint/no-explicit-any */}
 
-      <div className="border-t border-slate-200 pt-3 flex items-end justify-between flex-wrap gap-2">
-        <div className="text-xs text-ink-subtle space-y-0.5">{quote.metaNotes.map((n: string, i: number) => <div key={i}>{n}</div>)}</div>
-        <div className="text-right">
-          <div className="text-xs text-ink-subtle">시험 {won(quote.totals.lineItemsKrw)} + 옵션 {won(quote.totals.addonsKrw)}</div>
-          <div className="text-2xl font-bold text-ink tabular-nums">{won(quote.totals.subtotalKrw)} <span className="text-xs font-normal text-ink-subtle">(VAT 별도)</span></div>
+      {/* 합계 — 소계/할인/VAT/합계 (시안) */}
+      <div className="border-t border-[var(--hairline-soft)] pt-3 space-y-1.5">
+        <div className="flex justify-between text-[13px] text-ink-muted"><span>소계 <span className="text-ink-subtle">({lineCount}건)</span></span><span className="tabular-nums">{quote ? f(subtotal) : dash}</span></div>
+        <div className="flex justify-between text-[13px] text-ink-muted"><span>할인 {(discountRate * 100).toFixed(0)}%</span><span className="tabular-nums">{quote && discountAmt > 0 ? `- ${f(discountAmt)}` : dash}</span></div>
+        <div className="flex justify-between text-[13px] text-ink-muted"><span>VAT 10%</span><span className="tabular-nums">{quote ? f(vat) : dash}</span></div>
+        <div className="flex justify-between items-baseline pt-2 mt-1 border-t border-[var(--hairline-soft)]">
+          <span className="text-[14px] font-bold text-ink">합계</span>
+          <span className="text-[20px] font-bold text-brand-600 tabular-nums">{quote ? f(grand) : dash}</span>
         </div>
       </div>
 
-      {/* 저장 · 발행 — 시안: 임시 저장 / PDF 발행(견적서 생성) */}
-      {(onSaveDraft || onComplete) && (
-        <div className="grid grid-cols-2 gap-2 pt-1">
-          <button onClick={onSaveDraft} disabled={saving} className="btn-outline justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시 저장</button>
-          <button onClick={onComplete} disabled={saving} className="btn-primary justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />} PDF 발행</button>
-        </div>
-      )}
+      {/* 저장 · 발행 */}
+      <div className="grid grid-cols-2 gap-2">
+        <button onClick={onSaveDraft} disabled={saving} className="btn-outline justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시 저장</button>
+        <button onClick={onComplete} disabled={saving || !quote} className="btn-primary justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />} PDF 발행</button>
+      </div>
+      {/* 푸터 */}
+      <div className="flex items-center gap-1.5 text-[11px] text-ink-subtle border-t border-[var(--hairline-soft)] pt-3">
+        <Receipt className="w-3.5 h-3.5" /> 선택 {selectedCount}건 + 자동 {autoCount}건 · 엔진 산출
+      </div>
     </section>
   );
-}
-function Note({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
-  return <div><div className="text-sm font-bold text-ink flex items-center gap-1.5 mb-1">{icon} {title}</div><div className="text-sm text-ink-muted space-y-0.5">{children}</div></div>;
 }
