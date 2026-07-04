@@ -14,6 +14,23 @@ const ADDONS = [
   { key: 'genotox', label: '유전독성 3종' }, { key: 'safetyPharm', label: '안전성약리' },
 ];
 const ROUTES = ['경구', '피하', '근육', '정맥', '경피', '복강', '도포', '점안'];
+// 모달리티 분류 그룹 (시안 step2: 1.분류 → 2.모달리티). 앱 카테고리를 도메인별 5그룹으로 묶음.
+const CAT_GROUPS: { key: string; cats: string[] }[] = [
+  { key: '의약품 독성', cats: ['의약품', '복합제'] },
+  { key: '생물·첨단바이오', cats: ['백신', '세포치료제'] },
+  { key: '비의약품·식품', cats: ['의료기기', '화장품', '건강기능식품'] },
+  { key: '스크리닝·분석', cats: ['스크리닝', '심혈관계스크리닝', 'PK·분포', 'in vitro metabolism', '점안제'] },
+  { key: '준비 중', cats: ['화학물질·환경', 'SEND·CTD·번역'] },
+];
+// 모달리티별 규제 근거·필수 구성 (시안 step3 가이드 박스)
+const GUIDELINE_BASIS: Record<string, { basis: string; required: string }> = {
+  의약품: { basis: 'ICH M3(R2) · S7A/B · S2(R1) · S3A', required: '단회+반복투여독성, 유전독성 3종, 안전성약리, TK' },
+  복합제: { basis: 'ICH M3(R2) · 복합제 가이드', required: '성분별/복합 반복투여독성, 유전독성, 상호작용' },
+  백신: { basis: 'WHO TRS · ICH S8', required: '반복투여독성(군구성), 국소내약성, 면역원성' },
+  세포치료제: { basis: 'MFDS 세포치료제 · ICH S6(R1)', required: '종양원성, 생체분포, 반복투여독성' },
+  건강기능식품: { basis: 'MFDS 기능성 원료 · OECD TG', required: '단회·반복투여독성, 유전독성 3종' },
+};
+const GUIDELINE_DEFAULT = { basis: '해당 모달리티 규제 가이드라인', required: '필수 시험 자동 구성' };
 const COND_LABEL: Record<string, string> = {
   no_uv_absorption_280_480nm: '자외부(280~480nm) 흡수 없음 → 광독성 면제',
   catheter_oral_administration: '카테터 경구투여 (정맥 가격)',
@@ -38,6 +55,7 @@ export default function QuoteV2Page() {
   const [step, setStep] = useState(1);
   const [meta, setMeta] = useState<Meta | null>(null);
   const [category, setCategory] = useState('의약품');
+  const [catGroup, setCatGroup] = useState<string | null>(null);  // step2: 선택된 분류 그룹 (null=분류 선택 단계)
   const [standard, setStandard] = useState<'MFDS' | 'OECD'>('MFDS');
   const [route, setRoute] = useState('경구');
   const [durations, setDurations] = useState<Set<string>>(new Set(['SINGLE', 'W13']));
@@ -68,6 +86,9 @@ export default function QuoteV2Page() {
   const [saving, setSaving] = useState(false);
   const [savedNo, setSavedNo] = useState<string | null>(null);
   const [savedId, setSavedId] = useState<number | null>(null);
+  // step4 수량·삭제 조정 (라인 id 기준)
+  const [qtyOverrides, setQtyOverrides] = useState<Record<string, number>>({});
+  const [removedIds, setRemovedIds] = useState<string[]>([]);
 
   const isCombo = category === '복합제';
   const isBattery = !['의약품', '복합제', '백신', '건강기능식품'].includes(category);
@@ -97,9 +118,10 @@ export default function QuoteV2Page() {
   const generate = async () => {
     setLoading(true); setSavedNo(null); setSavedId(null);
     try {
+      const edits = { quantityOverrides: qtyOverrides, removedIds };
       const body = isBattery
-        ? { category, standard, route, selectedItems: [...picked].map(id => ({ id })), customerConditions: conds, requestedAddons: reqAddons }
-        : { category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined };
+        ? { category, standard, route, selectedItems: [...picked].map(id => ({ id })), customerConditions: conds, requestedAddons: reqAddons, ...edits }
+        : { category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined, ...edits };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
         body: JSON.stringify(body),
@@ -116,14 +138,14 @@ export default function QuoteV2Page() {
     const t = setTimeout(() => { generate(); }, 350);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [excipient, JSON.stringify(reqAddons), JSON.stringify(conds)]);
+  }, [excipient, JSON.stringify(reqAddons), JSON.stringify(conds), JSON.stringify(qtyOverrides), JSON.stringify(removedIds)]);
 
   const saveQuote = async (issueNow: boolean) => {
     setSaving(true); setSavedNo(null);
     try {
       const common = {
         category, standard, route, customerConditions: conds, requestedAddons: reqAddons,
-        currency, discountRate, exchangeRate,
+        currency, discountRate, exchangeRate, quantityOverrides: qtyOverrides, removedIds,
         projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, dealId, issueNow,
       };
       const body = isBattery
@@ -206,32 +228,58 @@ export default function QuoteV2Page() {
               </div>
             </>}
 
-            {/* STEP 2 — 모달리티: 카테고리 선택 카드 */}
-            {step === 2 && <>
-              <div className="grid gap-2">
-                {meta?.categories.map(c => {
-                  const sel = category === c;
-                  const battery = !['의약품', '복합제', '백신', '건강기능식품'].includes(c);
-                  return (
-                    <button key={c} type="button" onClick={() => setCategory(c)} className={`flex items-center justify-between gap-3 px-4 py-3.5 rounded-[12px] border text-left transition-colors ${sel ? 'border-brand-400 bg-brand-50 ring-1 ring-brand-300' : 'border-slate-200 bg-white hover:bg-slate-100'}`}>
-                      <div className="min-w-0">
-                        <div className="text-[15px] font-semibold text-ink">{c}</div>
-                        <div className="text-[12px] text-ink-subtle mt-0.5">{battery ? '배터리형 — 제안 항목 직접 선택' : '파라메트릭 — 설계값 자동 구성'}</div>
-                      </div>
-                      {sel
-                        ? <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-brand-600 text-white flex-shrink-0"><Icon name="check" className="w-3.5 h-3.5" /></span>
-                        : <Icon name="chevron-right" className="w-4 h-4 text-ink-subtle flex-shrink-0" />}
-                    </button>
-                  );
-                })}
-              </div>
-              {!isBattery && (category === '백신' || category === '건강기능식품') && (
-                <div className="grid grid-cols-2 gap-2 pt-1">
-                  {category === '백신' && <Field label="군 구성"><div className="flex flex-wrap gap-1.5">{[2, 3, 4, 5].map(g => <Chip key={g} on={vaccineGroups === g} onClick={() => setVaccineGroups(g)}>{g}군</Chip>)}</div></Field>}
-                  {category === '건강기능식품' && <Field label="하위유형"><select className="input" value={healthSubtype} onChange={e => setHealthSubtype(e.target.value)}><option>개별인정형</option><option>프로바이오틱스</option><option>한시적식품</option></select></Field>}
+            {/* STEP 2 — 모달리티: 1.분류 → 2.모달리티 (2단계) */}
+            {step === 2 && (() => {
+              const avail = (cats: string[]) => cats.filter(c => meta?.categories.includes(c));
+              const groups = CAT_GROUPS.map(g => ({ ...g, list: avail(g.cats) })).filter(g => g.list.length > 0);
+              return <>
+                {/* 브레드크럼 1.분류 › 2.모달리티 */}
+                <div className="flex items-center gap-2 text-[12px] font-medium">
+                  <span className={`px-2 py-0.5 rounded-md ${!catGroup ? 'bg-slate-100 text-ink' : 'text-ink-subtle'}`}>1. 분류</span>
+                  <Icon name="chevron-right" className="w-3 h-3 text-ink-subtle" />
+                  <span className={`px-2 py-0.5 rounded-md ${catGroup ? 'bg-slate-100 text-ink' : 'text-ink-subtle'}`}>2. 모달리티</span>
                 </div>
-              )}
-            </>}
+
+                {!catGroup ? (
+                  /* 1단계: 분류 그룹 카드 */
+                  <div className="grid gap-2">
+                    {groups.map(g => (
+                      <button key={g.key} type="button" onClick={() => setCatGroup(g.key)} className="flex items-center justify-between gap-3 px-[18px] py-4 rounded-[12px] border border-slate-200 bg-white text-left hover:bg-slate-100 transition-colors">
+                        <div className="min-w-0">
+                          <div className="text-[15px] font-semibold text-ink">{g.key}</div>
+                          <div className="text-[12px] text-ink-subtle mt-0.5">{g.list.length}개 · {g.list.join(' · ')}</div>
+                        </div>
+                        <Icon name="chevron-right" className="w-4 h-4 text-ink-subtle flex-shrink-0" />
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  /* 2단계: 그룹 내 모달리티 카드 */
+                  <>
+                    <button type="button" onClick={() => setCatGroup(null)} className="inline-flex items-center gap-1 text-[13px] text-ink-muted hover:text-ink"><Icon name="chevron-left" className="w-3.5 h-3.5" /> 분류 다시 선택 <span className="text-ink-subtle">(현재: {catGroup})</span></button>
+                    <div className="grid gap-2">
+                      {(groups.find(g => g.key === catGroup)?.list ?? []).map(c => {
+                        const sel = category === c;
+                        const battery = !['의약품', '복합제', '백신', '건강기능식품'].includes(c);
+                        return (
+                          <button key={c} type="button" onClick={() => setCategory(c)} className={`flex items-center justify-between gap-3 px-[18px] py-4 rounded-[12px] border-2 text-left transition-colors ${sel ? 'border-brand-500 bg-brand-50' : 'border-slate-200 bg-white hover:bg-slate-100'}`}>
+                            <div className="min-w-0">
+                              <div className="text-[15px] font-semibold text-ink">{c}</div>
+                              <div className="text-[12px] text-ink-subtle mt-0.5">{battery ? '배터리형 — 제안 항목 직접 선택' : '파라메트릭 — 설계값 자동 구성'}</div>
+                            </div>
+                            {sel
+                              ? <span className="inline-flex items-center gap-1 text-[13px] font-semibold text-brand-600 flex-shrink-0"><Icon name="check" className="w-4 h-4" /> 선택</span>
+                              : <span className="text-[13px] text-ink-subtle flex-shrink-0">선택</span>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {category === '백신' && <Field label="군 구성"><div className="flex flex-wrap gap-1.5">{[2, 3, 4, 5].map(g => <Chip key={g} on={vaccineGroups === g} onClick={() => setVaccineGroups(g)}>{g}군</Chip>)}</div></Field>}
+                    {category === '건강기능식품' && <Field label="하위유형"><select className="input" value={healthSubtype} onChange={e => setHealthSubtype(e.target.value)}><option>개별인정형</option><option>프로바이오틱스</option><option>한시적식품</option></select></Field>}
+                  </>
+                )}
+              </>;
+            })()}
 
             {/* STEP 3 — 시험 구성 */}
             {step === 3 && <>
@@ -263,11 +311,16 @@ export default function QuoteV2Page() {
               )}
 
               {!isCombo && !isBattery && <>
-                {/* 가이드라인 기준 구성 안내 */}
-                <div className="rounded-[12px] bg-brand-50 border border-brand-100 p-3.5">
-                  <div className="text-[13px] font-semibold text-brand-800 flex items-center gap-1.5 mb-1"><Icon name="book" className="w-4 h-4" /> 가이드라인 기준 구성</div>
-                  <div className="text-[12px] text-ink-muted leading-relaxed">규제 근거에 따라 필수 시험(단회·반복투여독성, 유전독성, 안전성약리, TK)이 자동 구성됩니다. 아래 경로·기간·부가시험을 정하세요.</div>
-                </div>
+                {/* 가이드라인 기준 구성 — 모달리티별 규제 근거·필수 구성 */}
+                {(() => { const g = GUIDELINE_BASIS[category] ?? GUIDELINE_DEFAULT; return (
+                  <div className="rounded-[12px] bg-brand-50 border border-brand-100 px-3.5 py-3">
+                    <div className="text-[13px] font-semibold text-brand-800 flex items-center gap-1.5 mb-1.5"><Icon name="book" className="w-4 h-4" /> 가이드라인 기준 구성</div>
+                    <div className="text-[12px] text-ink-muted leading-relaxed">
+                      <div><b className="font-semibold text-ink">규제 근거</b> · {g.basis}</div>
+                      <div className="mt-0.5"><b className="font-semibold text-ink">필수 구성</b> · {g.required}</div>
+                    </div>
+                  </div>
+                ); })()}
                 <Field label="투여 경로"><div className="flex flex-wrap gap-1.5">{ROUTES.map(r => <Chip key={r} on={route === r} onClick={() => setRoute(r)}>{r}</Chip>)}</div></Field>
                 <Field label="본시험 기간 (복수)"><div className="flex flex-wrap gap-1.5">{DURATIONS.map(d => <Chip key={d.key} on={durations.has(d.key)} onClick={() => setDurations(s => toggleSet(s, d.key))}>{d.label}</Chip>)}</div></Field>
                 <Field label="종"><div className="flex gap-1.5">
@@ -321,24 +374,46 @@ export default function QuoteV2Page() {
               <div className="flex items-center justify-end">
                 <button type="button" onClick={() => setStep(3)} className="btn-ghost"><Icon name="chevron-left" className="w-3.5 h-3.5" /> 계획 다시 구성</button>
               </div>
-              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-              {quote && quote.lineItems?.length > 0 && (
-                <div className="rounded-[12px] border border-slate-200 overflow-hidden">
-                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                  {quote.lineItems.map((li: any, i: number) => (
-                    <div key={i} className="flex items-center gap-2.5 px-3.5 py-2.5 border-t border-[var(--hairline-soft)] first:border-t-0">
-                      {!li.isPrereq
-                        ? <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-600 text-white text-[10px] font-bold flex-shrink-0">필수</span>
-                        : <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-100 text-ink-muted text-[10px] font-medium flex-shrink-0">선행</span>}
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[14px] text-ink truncate">{li.testName}</div>
-                        <div className="text-[11px] text-ink-subtle truncate">{[li.route, ...li.notes].filter(Boolean).join(' · ')}</div>
+              {/* 구성 항목 — testClass 그룹 + 수량 스텝퍼 + 삭제 */}
+              {/* eslint-disable @typescript-eslint/no-explicit-any */}
+              {quote && quote.lineItems?.length > 0 && (() => {
+                const groups: Record<string, any[]> = {};
+                quote.lineItems.forEach((li: any) => { const k = li.testClass || '기타'; (groups[k] ??= []).push(li); });
+                return (
+                  <div className="space-y-3.5">
+                    {Object.entries(groups).map(([cls, lines]) => (
+                      <div key={cls}>
+                        <div className="text-[12px] font-semibold text-ink-subtle mb-1.5">{cls} <span className="font-normal text-ink-subtle">· {lines.length}건</span></div>
+                        <div className="rounded-[12px] border border-slate-200 overflow-hidden">
+                          {lines.map((li: any) => {
+                            const q = qtyOverrides[li.id] ?? li.quantity;
+                            return (
+                              <div key={li.id} className="flex items-center gap-2.5 px-3.5 py-2.5 border-t border-[var(--hairline-soft)] first:border-t-0">
+                                {!li.isPrereq
+                                  ? <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-600 text-white text-[10px] font-bold flex-shrink-0">필수</span>
+                                  : <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-100 text-ink-muted text-[10px] font-medium flex-shrink-0">선행</span>}
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-[14px] text-ink truncate">{li.testName}</div>
+                                  <div className="text-[11px] text-ink-subtle truncate">{[li.route, ...li.notes].filter(Boolean).join(' · ')}</div>
+                                </div>
+                                <div className="inline-flex items-center rounded-lg border border-slate-200 overflow-hidden flex-shrink-0">
+                                  <button type="button" onClick={() => setQtyOverrides(o => ({ ...o, [li.id]: Math.max(1, q - 1) }))} className="w-7 h-7 flex items-center justify-center text-ink-muted hover:bg-slate-100">−</button>
+                                  <span className="w-7 text-center text-[13px] tabular-nums">{q}</span>
+                                  <button type="button" onClick={() => setQtyOverrides(o => ({ ...o, [li.id]: q + 1 }))} className="w-7 h-7 flex items-center justify-center text-ink-muted hover:bg-slate-100">+</button>
+                                </div>
+                                <div className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0 w-24 text-right">{won(li.amount)}</div>
+                                <button type="button" onClick={() => setRemovedIds(r => [...r, li.id])} className="w-6 h-6 flex items-center justify-center rounded text-ink-subtle hover:text-red-600 hover:bg-red-50 flex-shrink-0" title="삭제"><Icon name="x" className="w-3.5 h-3.5" /></button>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                      <div className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">{won(li.unitPrice)}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                    {removedIds.length > 0 && <button type="button" onClick={() => setRemovedIds([])} className="text-[12px] text-brand-600 hover:underline">삭제한 {removedIds.length}건 복원</button>}
+                  </div>
+                );
+              })()}
+              {/* eslint-enable @typescript-eslint/no-explicit-any */}
               {!isBattery && (
                 <Field label="부형제(비히클) 종수 — 함량·조제물분석 곱"><div className="flex gap-1.5">{[1, 2, 3].map(n => <Chip key={n} on={excipient === n} onClick={() => setExcipient(n)}>{n}종</Chip>)}</div></Field>
               )}

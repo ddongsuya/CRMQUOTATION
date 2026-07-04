@@ -19,6 +19,7 @@ type Body = {
   currency?: 'KRW' | 'USD'; discountRate?: number; exchangeRate?: number;
   projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string;
   dealId?: number | null; issueNow?: boolean;
+  quantityOverrides?: Record<string, number>; removedIds?: string[];   // step4 수량·삭제 조정
 };
 
 export async function POST(req: Request) {
@@ -46,6 +47,7 @@ export async function POST(req: Request) {
     category: b.category, standard: std, route,
     selectedItems, extraLines,
     customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {}, combinationCount: b.combinationCount,
+    quantityOverrides: b.quantityOverrides, removedIds: b.removedIds,
   });
 
   const subtotal = quote.totals.subtotalKrw;

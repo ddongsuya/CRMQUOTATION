@@ -194,7 +194,7 @@ export function composeAnalysisLines(plan: ComposePlan, composed: MasterItem[]):
   const totalCount = composed.reduce((s, it) => s + (includedForHamryang(it) ? hamryangCountForWeeks(it.studyWeeks) : 0), 0);
   if (totalCount > 0) {
     const price = PRICE_HAMRYANG_UNIT * totalCount * excipient;
-    lines.push({ id: '_hamryang', testName: `함량분석 (${totalCount}회${excipient > 1 ? ` × 부형제 ${excipient}종` : ''})`, route: plan.route, unitPrice: price, quantity: 1, amount: price, appliedRules: ['R2 함량분석'], notes: [`회당 ${PRICE_HAMRYANG_UNIT.toLocaleString()} × ${totalCount}회${excipient > 1 ? ` × ${excipient}종` : ''}`] });
+    lines.push({ id: '_hamryang', testName: `함량분석 (${totalCount}회${excipient > 1 ? ` × 부형제 ${excipient}종` : ''})`, route: plan.route, testClass: '함량·조제물분석', unitPrice: price, quantity: 1, amount: price, appliedRules: ['R2 함량분석'], notes: [`회당 ${PRICE_HAMRYANG_UNIT.toLocaleString()} × ${totalCount}회${excipient > 1 ? ` × ${excipient}종` : ''}`] });
   }
   // 조제물분석 (R8): 부형제 그룹별 1000만
   const groups = new Set<string>();
@@ -202,7 +202,7 @@ export function composeAnalysisLines(plan: ComposePlan, composed: MasterItem[]):
   for (const g of ['in_vivo', 'genotox', 'safety_pharm']) {
     if (!groups.has(g)) continue;
     const price = PRICE_PREP_UNIT * excipient;
-    lines.push({ id: `_prep_${g}`, testName: `투여물질의 조제물 분석 — ${PREP_LABEL[g]}`, route: plan.route, unitPrice: price, quantity: 1, amount: price, appliedRules: ['R8 조제물분석'], notes: excipient > 1 ? [`× 부형제 ${excipient}종`] : [] });
+    lines.push({ id: `_prep_${g}`, testName: `투여물질의 조제물 분석 — ${PREP_LABEL[g]}`, route: plan.route, testClass: '함량·조제물분석', unitPrice: price, quantity: 1, amount: price, appliedRules: ['R8 조제물분석'], notes: excipient > 1 ? [`× 부형제 ${excipient}종`] : [] });
   }
   return lines;
 }

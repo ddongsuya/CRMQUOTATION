@@ -45,12 +45,15 @@ export type QuoteInput = {
   requestedAddons?: Record<string, boolean>;      // AD(optional) 채택 여부
   combinationCount?: number;        // 복합제 종수
   extraLines?: LineItem[];          // 계산 산출 라인(함량분석·조제물분석 R2/R8) — 마스터 항목 아님
+  quantityOverrides?: Record<string, number>;   // step4 수량 조정 (라인 id → 수량)
+  removedIds?: string[];            // step4 삭제한 라인 id
 };
 
 export type LineItem = {
   id: string;
   testName: string;
   route: string;                    // 사용자가 고른 경로 그대로 표시
+  testClass?: string | null;        // 시험 분류 (step4 그룹핑)
   unitPrice: number | null;
   quantity: number;
   amount: number | null;

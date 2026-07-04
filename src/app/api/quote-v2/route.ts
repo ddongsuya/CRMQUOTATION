@@ -66,6 +66,7 @@ export async function POST(req: Request) {
     submissionTarget: body.submissionTarget, selectedItems, extraLines,
     customerConditions: body.customerConditions ?? {}, requestedAddons: body.requestedAddons ?? {},
     combinationCount: body.combinationCount,
+    quantityOverrides: body.quantityOverrides, removedIds: body.removedIds,
   });
   return NextResponse.json({ quote, composed });
 }
