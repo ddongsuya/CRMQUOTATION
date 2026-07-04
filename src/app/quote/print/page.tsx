@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Printer } from 'lucide-react';
+import Link from 'next/link';
+import Icon from '@/components/Icon';
 import { useSearchParams } from 'next/navigation';
 import { useWizard } from '@/lib/store';
 import { toast } from '@/lib/toast';
@@ -177,12 +179,11 @@ function PrintPage() {
 
   return (
     <>
-      <div className="fixed top-4 right-4 z-50 no-print">
-        <button
-          onClick={() => window.print()}
-          className="btn-primary"
-        >
-          <Printer className="w-4 h-4" /> 인쇄 / PDF 저장
+      <div className="fixed top-4 right-4 z-50 no-print flex items-center gap-2">
+        <Link href="/" className="btn-ghost"><Icon name="chevron-left" className="w-4 h-4" /> <span className="hidden sm:inline">대시보드</span></Link>
+        <Link href="/quotes" className="btn-ghost"><Icon name="list" className="w-4 h-4" /> <span className="hidden sm:inline">견적 목록</span></Link>
+        <button onClick={() => window.print()} className="btn-primary">
+          <Printer className="w-4 h-4" /> <span className="hidden sm:inline">인쇄 / PDF 저장</span><span className="sm:hidden">인쇄</span>
         </button>
       </div>
       <div className="print-scale-outer" style={scaledH ? { height: scaledH } : undefined}>
