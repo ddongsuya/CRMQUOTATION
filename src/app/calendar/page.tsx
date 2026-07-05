@@ -13,27 +13,39 @@ const TYPE_CLS: Record<string, string> = {
   MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]',
 };
 
+type View = 'week' | 'biweek' | 'month';
+const VIEWS: [View, string][] = [['week', '주'], ['biweek', '2주'], ['month', '월간']];
+const startOfWeek = (d: Date) => { const s = new Date(d.getFullYear(), d.getMonth(), d.getDate()); s.setDate(s.getDate() - s.getDay()); return s; };
+const addDays = (d: Date, n: number) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+
 export default function CalendarPage() {
-  const [cur, setCur] = useState(() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; });
+  const [view, setView] = useState<View>('month');
+  const [anchor, setAnchor] = useState(() => new Date());   // 현재 기간 기준일
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
-  const [adding, setAdding] = useState<string | null>(null); // 추가 모달 날짜
-  const [selected, setSelected] = useState<string>(() => ymd(new Date())); // 선택된 날짜(아젠다)
+  const [adding, setAdding] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string>(() => ymd(new Date()));
+
+  // 뷰별 셀(날짜) 계산
+  const cells = useMemo(() => {
+    if (view === 'month') {
+      const first = new Date(anchor.getFullYear(), anchor.getMonth(), 1);
+      const start = startOfWeek(first);
+      return Array.from({ length: 42 }, (_, i) => addDays(start, i));
+    }
+    const start = startOfWeek(anchor);
+    const len = view === 'week' ? 7 : 14;
+    return Array.from({ length: len }, (_, i) => addDays(start, i));
+  }, [view, anchor]);
+
+  const first = cells[0], last = cells[cells.length - 1];
 
   const load = useCallback(() => {
     setLoading(true);
-    const from = ymd(new Date(cur.y, cur.m, 1));
-    const to = ymd(new Date(cur.y, cur.m + 1, 0));
-    fetch(`/api/crm/agenda?from=${from}&to=${to}T23:59:59`).then(r => r.json()).then(d => setItems(d.items ?? [])).catch(() => setItems([])).finally(() => setLoading(false));
-  }, [cur]);
+    fetch(`/api/crm/agenda?from=${ymd(first)}&to=${ymd(last)}T23:59:59`).then(r => r.json()).then(d => setItems(d.items ?? [])).catch(() => setItems([])).finally(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ymd(first), ymd(last)]);
   useEffect(() => { load(); }, [load]);
-
-  // 42칸 그리드 (일요일 시작)
-  const cells = useMemo(() => {
-    const first = new Date(cur.y, cur.m, 1);
-    const start = new Date(first); start.setDate(1 - first.getDay());
-    return Array.from({ length: 42 }, (_, i) => { const d = new Date(start); d.setDate(start.getDate() + i); return d; });
-  }, [cur]);
 
   const byDay = useMemo(() => {
     const m: Record<string, Item[]> = {};
@@ -42,48 +54,68 @@ export default function CalendarPage() {
   }, [items]);
 
   const todayKey = ymd(new Date());
+  const shift = (dir: number) => setAnchor(a => view === 'month' ? new Date(a.getFullYear(), a.getMonth() + dir, 1) : addDays(a, dir * (view === 'week' ? 7 : 14)));
+  const rangeLabel = view === 'month'
+    ? `${anchor.getFullYear()}년 ${anchor.getMonth() + 1}월`
+    : `${first.getMonth() + 1}월 ${first.getDate()}일 – ${last.getMonth() + 1}월 ${last.getDate()}일`;
+  // 뷰별 셀 높이·표시 이벤트 수
+  const cellH = view === 'week' ? 'min-h-[360px]' : view === 'biweek' ? 'min-h-[150px]' : 'min-h-[92px]';
+  const maxEv = view === 'week' ? 12 : view === 'biweek' ? 6 : 3;
 
   return (
     <div className="space-y-5 animate-fade-in">
       <div className="flex items-end justify-between flex-wrap gap-3">
         <div>
           <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">캘린더</h1>
-          <p className="text-subhead text-ink-body mt-2">날짜를 선택하면 오른쪽에 그날 일정이 열리고, 일정을 누르면 관련 화면으로 이동합니다.</p>
+          <p className="text-subhead text-ink-body mt-2">주·2주·월간으로 전환하고, 날짜를 선택하면 오른쪽에 그날 일정이 열립니다.</p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <button onClick={() => setCur(c => ({ y: c.m === 0 ? c.y - 1 : c.y, m: c.m === 0 ? 11 : c.m - 1 }))} className="btn-outline p-2 shrink-0"><ChevronLeft className="w-4 h-4" /></button>
-          <span className="font-semibold text-ink w-28 text-center tabular-nums shrink-0">{cur.y}년 {cur.m + 1}월</span>
-          <button onClick={() => setCur(c => ({ y: c.m === 11 ? c.y + 1 : c.y, m: c.m === 11 ? 0 : c.m + 1 }))} className="btn-outline p-2 shrink-0"><ChevronRight className="w-4 h-4" /></button>
-          <button onClick={() => { const d = new Date(); setCur({ y: d.getFullYear(), m: d.getMonth() }); }} className="btn-ghost text-xs shrink-0 whitespace-nowrap">오늘</button>
-          <button onClick={() => setAdding(todayKey)} className="btn-primary text-sm shrink-0 whitespace-nowrap"><Plus className="w-4 h-4" /> 일정</button>
+          {/* 뷰 전환 세그먼트 */}
+          <div className="segmented inline-flex gap-[3px] p-[3px] rounded-lg bg-slate-100">
+            {VIEWS.map(([v, l]) => (
+              <button key={v} onClick={() => setView(v)} className={clsx('px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors', view === v ? 'bg-[var(--card)] text-brand-600 shadow-[var(--shadow-float)]' : 'text-ink-muted hover:text-ink')}>{l}</button>
+            ))}
+          </div>
+          <div className="flex items-center gap-1">
+            <button onClick={() => shift(-1)} className="icon-btn"><ChevronLeft className="w-4 h-4" /></button>
+            <button onClick={() => setAnchor(new Date())} className="btn-ghost text-[13px] whitespace-nowrap">오늘</button>
+            <button onClick={() => shift(1)} className="icon-btn"><ChevronRight className="w-4 h-4" /></button>
+          </div>
+          <button onClick={() => setAdding(selected)} className="btn-primary text-sm shrink-0 whitespace-nowrap"><Plus className="w-4 h-4" /> 일정</button>
         </div>
       </div>
 
       <div className="grid lg:grid-cols-[minmax(0,1fr)_340px] gap-4">
-        <div className="card p-3">
+        <div className="card p-4">
+          {/* 기간 라벨 */}
+          <div className="flex items-center justify-between mb-3 px-0.5">
+            <div className="text-[17px] font-bold text-ink tracking-tight tabular-nums">{rangeLabel}</div>
+            <div className="text-[12px] text-ink-subtle">{VIEWS.find(([v]) => v === view)?.[1]} 뷰 · {items.length}건</div>
+          </div>
           <div className="grid grid-cols-7 gap-1 mb-1">
-            {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-xs font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-[var(--sat)]' : 'text-ink-subtle')}>{d}</div>)}
+            {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={d} className={clsx('text-center text-[12px] font-semibold py-1', i === 0 ? 'text-red-500' : i === 6 ? 'text-[var(--sat)]' : 'text-ink-subtle')}>{d}</div>)}
           </div>
           {loading ? <div className="py-16 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div> : (
             <div className="grid grid-cols-7 gap-1">
               {cells.map((d, i) => {
                 const key = ymd(d);
-                const inMonth = d.getMonth() === cur.m;
+                const inMonth = view !== 'month' || d.getMonth() === anchor.getMonth();
                 const dayItems = byDay[key] ?? [];
                 const isSel = key === selected;
+                const isToday = key === todayKey;
                 return (
-                  <button key={i} onClick={() => setSelected(key)} className={clsx('min-h-[84px] rounded-lg border p-1.5 text-left align-top transition-colors',
-                    isSel ? 'border-brand-400 ring-1 ring-brand-400 bg-brand-50' : key === todayKey ? 'border-brand-200 bg-brand-50/60' : inMonth ? 'border-slate-100 hover:bg-slate-50/70' : 'border-transparent bg-slate-50/40')}>
-                    <div className={clsx('text-[11px] font-medium mb-1 tabular-nums flex items-center gap-1', key === todayKey ? 'text-brand-600 font-bold' : !inMonth ? 'text-ink-subtle/50' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[var(--sat)]' : 'text-ink-muted')}>
-                      {d.getDate()}{key === todayKey && <span className="pill bg-brand-600 text-white !text-[9px] !px-1">오늘</span>}
+                  <button key={i} onClick={() => setSelected(key)} className={clsx(cellH, 'rounded-lg border p-1.5 text-left align-top transition-colors flex flex-col',
+                    isSel ? 'border-brand-500 ring-1 ring-brand-500 bg-brand-50' : isToday ? 'border-brand-300 bg-brand-50/50' : inMonth ? 'border-slate-200 hover:bg-slate-100' : 'border-transparent bg-slate-50/50')}>
+                    <div className={clsx('text-[12px] font-semibold mb-1.5 tabular-nums flex items-center justify-between', isToday ? 'text-brand-600' : !inMonth ? 'text-ink-subtle/40' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[var(--sat)]' : 'text-ink-muted')}>
+                      <span className={clsx(isToday && 'inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-600 text-white')}>{d.getDate()}</span>
                     </div>
-                    <div className="space-y-0.5">
-                      {dayItems.slice(0, 3).map((it, j) => (
-                        <div key={j} className={clsx('text-[10px] leading-tight rounded px-1 py-0.5 truncate flex items-center gap-1', it.done && 'opacity-40 line-through')} title={`${it.title}${it.company ? ` · ${it.company}` : ''}`}>
-                          <span className={clsx('w-1.5 h-1.5 rounded-full shrink-0', TYPE_CLS[it.type] ?? 'bg-slate-400')} /><span className="truncate text-ink-muted">{it.title}</span>
+                    <div className="space-y-1 flex-1 min-h-0">
+                      {dayItems.slice(0, maxEv).map((it, j) => (
+                        <div key={j} className={clsx('text-[11px] leading-tight rounded px-1.5 py-1 truncate flex items-center gap-1.5', it.done ? 'opacity-40 line-through' : 'bg-slate-100/70')} title={`${it.title}${it.company ? ` · ${it.company}` : ''}`}>
+                          <span className={clsx('w-1.5 h-1.5 rounded-full shrink-0', TYPE_CLS[it.type] ?? 'bg-slate-400')} /><span className="truncate text-ink">{it.title}</span>
                         </div>
                       ))}
-                      {dayItems.length > 3 && <div className="text-[10px] text-ink-subtle px-1">+{dayItems.length - 3}</div>}
+                      {dayItems.length > maxEv && <div className="text-[10px] text-ink-subtle px-1">+{dayItems.length - maxEv}건 더</div>}
                     </div>
                   </button>
                 );

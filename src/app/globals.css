@@ -109,6 +109,13 @@ h1, h2, h3, .headline { letter-spacing: var(--tracking-tight); color: var(--ink)
   }
   .chip-active { background: var(--ink); color: var(--floor); border-color: var(--ink); }
   .chip-inactive:hover { background: var(--card-cream); color: var(--ink); }
+  /* 아이콘 버튼 — 36px 원형 헤어라인 (components.css) */
+  .icon-btn {
+    @apply inline-flex items-center justify-center flex-shrink-0 transition-colors;
+    width: 36px; height: 36px; border-radius: var(--r-avatar);
+    border: 1px solid var(--hairline); background: var(--card); color: var(--muted);
+  }
+  .icon-btn:hover { background: var(--card-cream); color: var(--ink); }
   /* 상태 배지/필 — 999px · 12px/600 */
   .pill {
     @apply inline-flex items-center gap-1.5;
