@@ -109,6 +109,19 @@ h1, h2, h3, .headline { letter-spacing: var(--tracking-tight); color: var(--ink)
   }
   .chip-active { background: var(--ink); color: var(--floor); border-color: var(--ink); }
   .chip-inactive:hover { background: var(--card-cream); color: var(--ink); }
+  /* 세그먼트 컨트롤 — 트랙 크림, 활성 흰카드 (components.css) */
+  .segmented {
+    @apply inline-flex flex-shrink-0;
+    gap: 3px; padding: 3px; border-radius: var(--r-util);
+    background: var(--card-cream);
+  }
+  .segmented button {
+    padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--muted); background: transparent;
+    white-space: nowrap; transition: color .12s, background .12s;
+  }
+  .segmented button:hover { color: var(--ink); }
+  .segmented button.active { background: var(--card); color: var(--ink); }
   /* 아이콘 버튼 — 36px 원형 헤어라인 (components.css) */
   .icon-btn {
     @apply inline-flex items-center justify-center flex-shrink-0 transition-colors;

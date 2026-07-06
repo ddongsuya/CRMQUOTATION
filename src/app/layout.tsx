@@ -4,6 +4,7 @@ import Providers from '@/components/Providers';
 import Toaster from '@/components/Toaster';
 import { loadData } from '@/lib/data';
 import { ensureHydrated } from '@/lib/hydrate';
+import { getViewMode } from '@/lib/admin/view';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const modalities = new Set<string>();
   for (const it of testItems) for (const m of it.modalityPool) modalities.add(m);
   const stats = { items: testItems.length, presets: presets.length, blocks: blocks.length, modalities: modalities.size };
+  const { actualIsAdmin } = await getViewMode();
 
   return (
     <html lang="ko">
@@ -26,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className="antialiased bg-slate-50 text-ink-body">
         <Providers>
-          <AppChrome stats={stats}>{children}</AppChrome>
+          <AppChrome stats={stats} isAdmin={actualIsAdmin}>{children}</AppChrome>
           <Toaster />
         </Providers>
       </body>

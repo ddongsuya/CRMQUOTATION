@@ -45,7 +45,7 @@ const PAGE_LABEL: Record<string, string> = {
  * 앱 셸 — 사이드바(264) + 메인(탑바 64 + 콘텐츠). standalone 정답 레이아웃에 맞춤.
  * `/quote/print` · `/login` · `/register` 는 자체 레이아웃.
  */
-export default function AppChrome({ children, stats }: { children: React.ReactNode; stats?: ChromeStats }) {
+export default function AppChrome({ children, stats, isAdmin }: { children: React.ReactNode; stats?: ChromeStats; isAdmin?: boolean }) {
   const pathname = usePathname() ?? '';
   const [drawer, setDrawer] = useState(false);
   useEffect(() => { setDrawer(false); }, [pathname]);
@@ -64,7 +64,7 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
     try { localStorage.setItem('theme', next); } catch { /* noop */ }
   };
 
-  const bare = pathname.startsWith('/quote/print') || pathname.startsWith('/login') || pathname.startsWith('/register');
+  const bare = pathname.startsWith('/quote/print') || pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/admin');
   if (bare) return <>{children}</>;
 
   const label = PAGE_LABEL[pathname] ?? Object.entries(PAGE_LABEL).find(([h]) => h !== '/' && pathname.startsWith(h))?.[1] ?? '';
@@ -116,6 +116,19 @@ export default function AppChrome({ children, stats }: { children: React.ReactNo
               <Icon name="plus" className="w-4 h-4" /> 새 견적 작성
             </Link>
           </div>
+
+          {isAdmin && (
+            <Link href="/admin" onClick={() => { document.cookie = 'demoView=admin; path=/; max-age=31536000'; }} className="mx-3 mt-3 flex items-center justify-between rounded-lg border border-slate-200 px-3.5 py-2.5 text-[13px] hover:bg-slate-100 transition-colors group">
+              <span className="flex items-center gap-2.5 min-w-0">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-ink text-slate-50 flex-shrink-0"><Icon name="gantt" className="w-[13px] h-[13px]" /></span>
+                <span className="leading-tight min-w-0">
+                  <span className="block font-semibold text-ink truncate">관리자 콘솔</span>
+                  <span className="block text-[11px] text-ink-subtle truncate">전사 조회 · 롤업</span>
+                </span>
+              </span>
+              <Icon name="arrow-right" className="w-4 h-4 text-ink-subtle group-hover:text-brand-600 flex-shrink-0" />
+            </Link>
+          )}
 
           <div className="flex-1" />
 

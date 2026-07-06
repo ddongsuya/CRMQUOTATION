@@ -48,7 +48,22 @@ model Center {
   name      String
   teams     Team[]
   users     User[]
+  targets   Target[]
   createdAt DateTime @default(now())
+}
+
+// 수주 목표 (관리자 대시보드 목표 게이지·달성률). centerId=null → 전사 목표.
+model Target {
+  id        Int      @id @default(autoincrement())
+  center    Center?  @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  centerId  Int?
+  period    String                                  // 기간 키: "2026H1" · "2026Q1" · "2026"
+  amount    Float                                   // 목표 수주금액(원)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([centerId, period])
+  @@index([centerId])
 }
 
 model Team {
