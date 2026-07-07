@@ -5,6 +5,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
+import { useDrawer } from '@/components/admin/DrawerProvider';
 
 type QuoteRow = {
   id: number;
@@ -30,6 +31,7 @@ const FILTERS: [string, string][] = [['ALL', '전체'], ['DRAFT', '작성중'], 
 const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : (n > 0 ? `₩${n.toLocaleString()}` : '₩0');
 
 export default function QuotesListPage() {
+  const { openCompany } = useDrawer();
   const [quotes, setQuotes] = useState<QuoteRow[] | null>(null);
   const [filter, setFilter] = useState('ALL');
 
@@ -126,6 +128,7 @@ export default function QuotesListPage() {
                   </Link>
                   {/* hover 액션 — 대기 상태는 시안과 동일, hover 시에만 노출 */}
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center gap-0.5 bg-slate-100 rounded-lg px-1 py-0.5">
+                    {qr.customerCompany && <button onClick={() => openCompany(qr.customerCompany!)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="고객 상세"><Icon name="users" className="w-3.5 h-3.5" /></button>}
                     <Link href={`/quote/print?id=${qr.id}`} target="_blank" className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="PDF 출력"><Icon name="arrow-right" className="w-3.5 h-3.5" /></Link>
                     <button onClick={() => duplicate(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="복제"><Icon name="plus" className="w-3.5 h-3.5" /></button>
                     <button onClick={() => remove(qr.id, qr.projectName)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-red-600" title="삭제"><Icon name="x" className="w-3.5 h-3.5" /></button>

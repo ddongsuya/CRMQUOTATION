@@ -16,7 +16,7 @@ type Detail = {
   reports: { id: number; date: string; snippet: string }[];
 };
 
-export default function CompanyDrawer({ name, onClose }: { name: string | null; onClose: () => void }) {
+export default function CompanyDrawer({ name, onClose, showFullPage = true }: { name: string | null; onClose: () => void; showFullPage?: boolean }) {
   const open = name != null;
   const [data, setData] = useState<Detail | null>(null);
   const [loading, setLoading] = useState(false);
@@ -136,8 +136,8 @@ export default function CompanyDrawer({ name, onClose }: { name: string | null; 
           )}
         </div>
 
-        {/* 푸터 — 전체 페이지 */}
-        {name && (
+        {/* 푸터 — 전체 페이지 (관리자 뷰만) */}
+        {name && showFullPage && (
           <div className="px-5 py-3 border-t border-slate-200 flex-shrink-0">
             <Link href={`/admin/customers/${encodeURIComponent(name)}`} onClick={onClose} className="btn-primary w-full">
               전체 페이지로 열기 <Icon name="arrow-right" className="w-4 h-4" />

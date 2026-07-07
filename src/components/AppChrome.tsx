@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import Icon, { type IconName } from './Icon';
+import DrawerProvider from './admin/DrawerProvider';
 
 export type ChromeStats = { items: number; presets: number; blocks: number; modalities: number };
 
@@ -162,7 +163,7 @@ export default function AppChrome({ children, stats, isAdmin }: { children: Reac
           </header>
 
           <main className="flex-1 overflow-auto px-4 sm:px-6 lg:px-11 pt-6 lg:pt-10 pb-24 lg:pb-14">
-            <div className="mx-auto max-w-[1180px]">{children}</div>
+            <div className="mx-auto max-w-[1180px]"><DrawerProvider showFullPage={false}>{children}</DrawerProvider></div>
           </main>
         </div>
       </div>

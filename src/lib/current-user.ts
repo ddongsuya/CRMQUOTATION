@@ -6,7 +6,8 @@
  */
 import { prisma } from './prisma';
 
-const DEMO_EMAIL = process.env.DEMO_USER_EMAIL || 'admin@chemon.co.kr';
+// 데모 로그인 = 임정모(실데이터 소유자). 사용자 뷰=본인 실데이터, 관리자 뷰=전사 롤업 일관성.
+const DEMO_EMAIL = process.env.DEMO_USER_EMAIL || 'gathering@csco.co.kr';
 let demoIdCache: number | null = null;
 
 /** 현재 유저 id. DEMO 모드에선 데모 계정(없으면 생성) id 반환. */
