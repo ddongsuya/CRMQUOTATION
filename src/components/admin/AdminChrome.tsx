@@ -12,6 +12,7 @@ const MANAGE: { href: string; label: string; icon: IconName; exact?: boolean }[]
   { href: '/admin', label: '대시보드', icon: 'bar-chart', exact: true },
   { href: '/admin/analytics', label: '실적 분석', icon: 'trending-up' },
   { href: '/admin/customers', label: '고객 관리', icon: 'users' },
+  { href: '/admin/prospects', label: '잠재 고객', icon: 'search' },
   { href: '/admin/schedule', label: '시험 일정', icon: 'gantt' },
   { href: '/admin/quotes', label: '견적 현황', icon: 'list' },
   { href: '/admin/reports', label: '일일 업무', icon: 'notebook' },

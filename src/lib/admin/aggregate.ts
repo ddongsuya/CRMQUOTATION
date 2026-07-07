@@ -302,6 +302,18 @@ export async function companyNames(): Promise<string[]> {
   return cos.map((c) => c.name).filter(Boolean);
 }
 
+/** 잠재 고객 목록(영업 타겟). 전사 공유 — 스코프 무관. */
+export async function getProspects() {
+  const rows = await prisma.prospect.findMany({
+    orderBy: [{ companyId: 'asc' }, { name: 'asc' }],
+    select: {
+      id: true, name: true, pipeline: true, platform: true, stage: true, indTarget: true, croOutlook: true,
+      founded: true, location: true, ceo: true, companyType: true, note: true, companyId: true,
+    },
+  });
+  return rows;
+}
+
 /** 센터 목록(스코프 토글용). */
 export function listCenters() {
   return prisma.center.findMany({ select: { id: true, name: true }, orderBy: { id: 'asc' } });

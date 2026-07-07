@@ -36,9 +36,33 @@ model User {
   notes         Note[]
   events        CalendarEvent[]
   dailyReports  DailyReport[]
+  prospects     Prospect[]
 
   @@index([teamId])
   @@index([centerId])
+}
+
+// 잠재 고객(영업 타겟) — 임정모 Sheet2/3 리서치. 아직 고객사(Company)가 아닌 발굴 대상.
+model Prospect {
+  id           Int      @id @default(autoincrement())
+  name         String                              // 기업명
+  pipeline     String?                             // 주요 파이프라인(적응증)
+  platform     String?                             // 약물 플랫폼
+  stage        String?                             // 개발단계
+  indTarget    String?                             // IND 목표 시점
+  croOutlook   String?                             // 비임상 CRO 활용 전망
+  founded      String?                             // 설립시점
+  location     String?                             // 본사위치
+  ceo          String?                             // 대표
+  companyType  String?                             // 기업유형
+  note         String?
+  owner        User?    @relation(fields: [ownerId], references: [id])
+  ownerId      Int?
+  companyId    Int?                                // 고객으로 전환 시 연결된 Company
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([ownerId])
 }
 
 // 일일 업무보고 (임정모 '일일업무보고' 시트 — 하루=한 행). 개인 기록의 실제 형태.
