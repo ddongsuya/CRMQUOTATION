@@ -232,15 +232,19 @@ model Quote {
   accepted            Boolean?                     // 진행 수락 여부
 
   // customer
-  customerName        String?
-  customerCompany     String?
-  customerEmail       String?
+  customerName        String?                      // 의뢰자
+  customerCompany     String?                      // 의뢰기관
+  customerEmail       String?                      // 의뢰자 e-mail
+  customerPhone       String?                      // 의뢰자 연락처 (견적 현황 시트)
 
   // project / modality
-  projectName         String
+  projectName         String                       // 견적명
   substanceName       String?
+  substanceType       String?                      // 물질종류 (합성의약품·백신·화장품·미생물·의료기기 등)
   modality            String
   priceStandard       String     @default("MFDS")  // MFDS / OECD
+  testStandard        String?                      // 시험기준 (KGLP / nGLP)
+  submissionPurpose   String?                      // 제출용도 (MFDS · US FDA · EMA …)
 
   // plan snapshot (free-form JSON: route/durations/phase/species/addons/categories/tk)
   planJson            String?
@@ -255,6 +259,11 @@ model Quote {
   status              String     @default("DRAFT") // DRAFT / ISSUED / SENT / ACCEPTED / REJECTED
   issuedAt            DateTime?
   validUntil          DateTime?
+
+  // 견적 현황 추적 (임정모 견적서 시트 — 송부 후 추적 관찰)
+  contractNo          String?                      // 계약번호
+  contractAmount      Float?                       // 계약금액 (협상 후)
+  trackingNote        String?                      // 결론 / 추적 관찰 결과 (서술형, 계속 갱신)
 
   // calculated snapshot (so we can render the same totals later regardless of catalog drift)
   totalBeforeDiscount Float?

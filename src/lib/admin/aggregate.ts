@@ -332,6 +332,29 @@ export async function getQuoteList(scope: Scope, period: string) {
   };
 }
 
+/** 견적 현황(전사) — 임정모 견적서 시트 1:1 재현. 전 컬럼 + 결론 추적. */
+export async function getQuoteStatusList(scope: Scope) {
+  const uids = await scopeUserIds(scope);
+  const { userName, userCenterName } = await centerNameMap();
+  const quotes = await prisma.quote.findMany({
+    where: { userId: { in: uids } },
+    orderBy: [{ sentAt: 'desc' }, { createdAt: 'desc' }],
+    select: {
+      id: true, sentAt: true, quoteNumber: true, contractNo: true, testStandard: true,
+      projectName: true, customerCompany: true, customerName: true, customerPhone: true, customerEmail: true,
+      submissionPurpose: true, substanceType: true, userId: true,
+      totalBeforeDiscount: true, discountRate: true, grandTotal: true, contractAmount: true,
+      status: true, trackingNote: true,
+    },
+  });
+  return quotes.map((q) => ({
+    ...q,
+    owner: userName.get(q.userId ?? -1) ?? '—',
+    center: userCenterName.get(q.userId ?? -1) ?? '—',
+  }));
+}
+export type QuoteStatusRow = Awaited<ReturnType<typeof getQuoteStatusList>>[number];
+
 /** 고객 관리(전사) — 등급/활성 필터 + 고객 테이블. */
 export async function getCustomerList(scope: Scope, period: string) {
   const uids = await scopeUserIds(scope);
