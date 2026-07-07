@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
 import { parseScope, getDashboardData, getTargetGauge, getActivityHeatmap, listCenters } from '@/lib/admin/aggregate';
 import { fmtWon, splitWon, fmtPct, fmtInt } from '@/lib/admin/format';
@@ -30,6 +31,11 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
 
   const scopeName = scope.kind === 'all' ? '전사' : scope.kind === 'center' ? (centers.find((c) => c.id === scope.centerId)?.name ?? '센터') : '개인';
   const k = data.kpi;
+  // 현재 스코프를 하위 화면 링크로 이어줌
+  const carry = new URLSearchParams();
+  if (searchParams.scope) carry.set('scope', searchParams.scope);
+  if (searchParams.centerId) carry.set('centerId', searchParams.centerId);
+  const qs = carry.toString() ? `?${carry.toString()}` : '';
 
   // 델타(실데이터 파생) — 히어로 QoQ, 수주율 상·하반기 비교
   const q1 = data.monthlyWon.slice(0, 3).reduce((a, b) => a + b, 0);
@@ -168,13 +174,16 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
       {/* ── 상위 고객 + 담당자 요약 ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="card card-pad">
-          <h2 className="text-[15px] font-semibold text-ink mb-4">상위 고객</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[15px] font-semibold text-ink">상위 고객</h2>
+            <Link href={`/admin/customers${qs}`} className="link text-[13px]">전체 보기 →</Link>
+          </div>
           <table className="w-full">
             <thead><tr className="table-head text-left"><th className="pb-2 font-medium">고객사</th><th className="pb-2 font-medium">담당</th><th className="pb-2 font-medium text-right">파이프라인</th><th className="pb-2 font-medium text-right">누적 수주</th></tr></thead>
             <tbody>
               {data.topCustomers.map((c) => (
                 <tr key={c.name} className="table-row">
-                  <td className="py-2.5 text-[13px] text-ink font-medium">{c.name}<span className="block text-[11px] text-ink-subtle font-normal">{c.industry}</span></td>
+                  <td className="py-2.5 text-[13px] font-medium"><Link href={`/admin/quotes?company=${encodeURIComponent(c.name)}`} className="text-ink hover:text-brand-600 transition-colors">{c.name}</Link><span className="block text-[11px] text-ink-subtle font-normal">{c.industry}</span></td>
                   <td className="py-2.5 text-[13px] text-ink-body">{c.owner}<span className="block text-[11px] text-ink-subtle">{c.center}</span></td>
                   <td className="py-2.5 text-[13px] text-ink-body text-right tabular-nums">{fmtWon(c.pipeline)}</td>
                   <td className="py-2.5 text-[13px] text-ink font-semibold text-right tabular-nums">{fmtWon(c.won)}</td>
@@ -184,7 +193,10 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
           </table>
         </div>
         <div className="card card-pad">
-          <h2 className="text-[15px] font-semibold text-ink mb-4">담당자 요약</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-[15px] font-semibold text-ink">담당자 요약</h2>
+            <Link href={`/admin/members${qs}`} className="link text-[13px]">전체 보기 →</Link>
+          </div>
           <table className="w-full">
             <thead><tr className="table-head text-left"><th className="pb-2 font-medium">담당자</th><th className="pb-2 font-medium">직책</th><th className="pb-2 font-medium text-right">건수</th><th className="pb-2 font-medium text-right">수주</th><th className="pb-2 font-medium text-right">수주율</th></tr></thead>
             <tbody>

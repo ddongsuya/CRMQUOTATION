@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
 import { parseScope, getSchedule, listCenters } from '@/lib/admin/aggregate';
 import { fmtInt } from '@/lib/admin/format';
@@ -45,7 +46,9 @@ export default async function AdminSchedule({ searchParams }: { searchParams: SP
                 <tr key={i} className="table-row">
                   <td className="py-3">
                     <div className="text-[14px] text-ink font-semibold">{r.project}</div>
-                    <div className="text-[12px] text-ink-subtle">{r.company}</div>
+                    {r.company !== '—'
+                      ? <Link href={`/admin/quotes?company=${encodeURIComponent(r.company)}`} className="text-[12px] text-ink-subtle hover:text-brand-600 transition-colors">{r.company} →</Link>
+                      : <div className="text-[12px] text-ink-subtle">{r.company}</div>}
                   </td>
                   <td className="py-3 text-[13px] text-ink-body">{r.owner}</td>
                   <td className="py-3 text-[13px] text-ink-body">{r.center}</td>

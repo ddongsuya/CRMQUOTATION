@@ -332,12 +332,12 @@ export async function getQuoteList(scope: Scope, period: string) {
   };
 }
 
-/** 견적 현황(전사) — 임정모 견적서 시트 1:1 재현. 전 컬럼 + 결론 추적. */
-export async function getQuoteStatusList(scope: Scope) {
+/** 견적 현황(전사) — 임정모 견적서 시트 1:1 재현. 전 컬럼 + 결론 추적. company=고객사 필터. */
+export async function getQuoteStatusList(scope: Scope, company?: string) {
   const uids = await scopeUserIds(scope);
   const { userName, userCenterName } = await centerNameMap();
   const quotes = await prisma.quote.findMany({
-    where: { userId: { in: uids } },
+    where: { userId: { in: uids }, ...(company ? { customerCompany: company } : {}) },
     orderBy: [{ sentAt: 'desc' }, { createdAt: 'desc' }],
     select: {
       id: true, sentAt: true, quoteNumber: true, contractNo: true, testStandard: true,

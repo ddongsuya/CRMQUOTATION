@@ -1,7 +1,9 @@
+import Link from 'next/link';
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
 import { parseScope, getMemberList, listCenters } from '@/lib/admin/aggregate';
 import { roleLabel, isAdminRole } from '@/lib/admin/roles';
 import { fmtWon, fmtInt, fmtPct } from '@/lib/admin/format';
+import Icon from '@/components/Icon';
 import AdminHeader from '@/components/admin/AdminHeader';
 import AddMemberButton from '@/components/admin/AddMemberButton';
 
@@ -46,7 +48,10 @@ export default async function AdminMembers({ searchParams }: { searchParams: SP 
                   <td className="py-3">
                     <div className="flex items-center gap-2.5">
                       <span className="avatar sm">{m.name.charAt(0)}</span>
-                      <span className="text-[13px] text-ink font-medium">{m.name}</span>
+                      <Link href={`/admin/quotes?scope=user&userId=${m.id}`} className="text-[13px] text-ink font-medium hover:text-brand-600 inline-flex items-center gap-1 group" title="이 담당자의 견적 보기">
+                        {m.name}
+                        <Icon name="arrow-right" className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 text-brand-600 transition-opacity" />
+                      </Link>
                     </div>
                   </td>
                   <td className="py-3 text-[13px] text-ink-body">{roleLabel(m.role)}</td>

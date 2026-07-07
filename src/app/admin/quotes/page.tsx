@@ -1,12 +1,14 @@
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
 import { parseScope, getQuoteList, getQuoteStatusList, listCenters } from '@/lib/admin/aggregate';
 import { fmtWon, fmtInt, fmtPct } from '@/lib/admin/format';
+import Link from 'next/link';
+import Icon from '@/components/Icon';
 import AdminHeader from '@/components/admin/AdminHeader';
 import QuoteUploadButton from '@/components/admin/QuoteUploadButton';
 import QuoteStatusTable, { type Row } from '@/components/admin/QuoteStatusTable';
 
 export const dynamic = 'force-dynamic';
-type SP = { scope?: string; centerId?: string; userId?: string };
+type SP = { scope?: string; centerId?: string; userId?: string; company?: string };
 
 const ymd = (d: Date | null) => (d ? d.toISOString().slice(0, 10) : null);
 
@@ -15,9 +17,10 @@ export default async function AdminQuotes({ searchParams }: { searchParams: SP }
   const me = await getCurrentUser();
   const scope = parseScope(searchParams, { isAdminView: view.isAdminView, selfId: me.id, selfCenterId: me.centerId });
   const centers = await listCenters();
+  const company = searchParams.company?.trim() || undefined;
   const [{ stats }, statusRows] = await Promise.all([
     getQuoteList(scope, '2026H1'),
-    getQuoteStatusList(scope),
+    getQuoteStatusList(scope, company),
   ]);
   const scopeName = scope.kind === 'all' ? '전사' : scope.kind === 'center' ? (centers.find((c) => c.id === scope.centerId)?.name ?? '센터') : '개인';
   const rows: Row[] = statusRows.map((r) => ({ ...r, sentAt: ymd(r.sentAt) }));
@@ -33,8 +36,16 @@ export default async function AdminQuotes({ searchParams }: { searchParams: SP }
         <Stat label="수주율" value={fmtPct(stats.winRate, 0)} />
       </div>
 
-      <div className="flex items-center justify-between mb-3">
-        <p className="text-[13px] text-ink-subtle">행을 클릭하지 않고 <b className="text-ink-body">결론</b> 칸을 눌러 추적 결과를 바로 입력·수정할 수 있습니다.</p>
+      <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
+        <div className="flex items-center gap-2.5">
+          {company ? (
+            <Link href="/admin/quotes" className="chip chip-active gap-1.5">
+              고객사: {company} <Icon name="x" className="w-3.5 h-3.5" />
+            </Link>
+          ) : (
+            <p className="text-[13px] text-ink-subtle"><b className="text-ink-body">결론</b> 칸을 눌러 추적 결과를 바로 입력·수정할 수 있습니다.</p>
+          )}
+        </div>
         <QuoteUploadButton />
       </div>
 
