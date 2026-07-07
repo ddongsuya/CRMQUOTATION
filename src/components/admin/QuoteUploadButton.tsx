@@ -4,8 +4,8 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '../Icon';
 
-/** 견적 현황 엑셀 업로드 — '견적서' 시트 형식 파일 선택 → 파싱→upsert. */
-export default function QuoteUploadButton() {
+/** 엑셀 업로드 버튼 — endpoint로 견적/일일보고 등 재사용. */
+export default function QuoteUploadButton({ endpoint = '/api/admin/quotes/import', label = '엑셀 업로드' }: { endpoint?: string; label?: string }) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -17,7 +17,7 @@ export default function QuoteUploadButton() {
     setBusy(true); setMsg('');
     const fd = new FormData();
     fd.append('file', file);
-    const res = await fetch('/api/admin/quotes/import', { method: 'POST', body: fd });
+    const res = await fetch(endpoint, { method: 'POST', body: fd });
     const j = await res.json().catch(() => null);
     setBusy(false);
     if (inputRef.current) inputRef.current.value = '';
@@ -31,7 +31,7 @@ export default function QuoteUploadButton() {
       {msg && <span className="text-[12px] text-ink-muted">{msg}</span>}
       <input ref={inputRef} type="file" accept=".xlsx,.xls" className="hidden" onChange={onFile} />
       <button onClick={() => inputRef.current?.click()} disabled={busy} className="btn-ghost">
-        <Icon name="plus" className="w-4 h-4" /> {busy ? '업로드 중…' : '엑셀 업로드'}
+        <Icon name="plus" className="w-4 h-4" /> {busy ? '업로드 중…' : label}
       </button>
     </div>
   );

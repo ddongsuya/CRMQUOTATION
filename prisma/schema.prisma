@@ -35,9 +35,28 @@ model User {
   deals         Deal[]
   notes         Note[]
   events        CalendarEvent[]
+  dailyReports  DailyReport[]
 
   @@index([teamId])
   @@index([centerId])
+}
+
+// 일일 업무보고 (임정모 '일일업무보고' 시트 — 하루=한 행). 개인 기록의 실제 형태.
+model DailyReport {
+  id             Int      @id @default(autoincrement())
+  owner          User     @relation(fields: [ownerId], references: [id])
+  ownerId        Int
+  date           DateTime                          // 업무 날짜(일 단위)
+  workContent    String?                           // 업무내용(고객관리/업무관리/시험관리)
+  contractPlan   String?                           // 계약 예정(접수)
+  activityNote   String?                           // 고객관리/업체방문/내사/대관 · 미팅록 등
+  contractAmount Float?                            // 계약금액
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([ownerId, date])
+  @@index([ownerId])
+  @@index([date])
 }
 
 // ─────────────────────────────────────────────────────────

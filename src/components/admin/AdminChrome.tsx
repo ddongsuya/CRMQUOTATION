@@ -14,6 +14,7 @@ const MANAGE: { href: string; label: string; icon: IconName; exact?: boolean }[]
   { href: '/admin/customers', label: '고객 관리', icon: 'users' },
   { href: '/admin/schedule', label: '시험 일정', icon: 'gantt' },
   { href: '/admin/quotes', label: '견적 현황', icon: 'list' },
+  { href: '/admin/reports', label: '일일 업무', icon: 'notebook' },
 ];
 const ORG: { href: string; label: string; icon: IconName }[] = [
   { href: '/admin/members', label: '구성원 관리', icon: 'users' },

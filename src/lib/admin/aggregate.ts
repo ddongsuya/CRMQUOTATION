@@ -283,6 +283,25 @@ export async function getTargetGauge(scope: Scope, period: string) {
   return { actual, target: goal, rate: goal && goal > 0 ? actual / goal : null, period, hasTarget: !!target };
 }
 
+/** 일일 업무보고 목록(스코프 담당자, 날짜 내림차순). */
+export async function getDailyReports(scope: Scope, limit = 120) {
+  const uids = await scopeUserIds(scope);
+  const { userName } = await centerNameMap();
+  const reports = await prisma.dailyReport.findMany({
+    where: { ownerId: { in: uids } },
+    orderBy: { date: 'desc' },
+    take: limit,
+    select: { id: true, ownerId: true, date: true, workContent: true, contractPlan: true, activityNote: true, contractAmount: true },
+  });
+  return reports.map((r) => ({ ...r, owner: userName.get(r.ownerId) ?? '—' }));
+}
+
+/** 고객사명 목록(일일보고 본문 자동 링크용). */
+export async function companyNames(): Promise<string[]> {
+  const cos = await prisma.company.findMany({ select: { name: true }, orderBy: { name: 'asc' } });
+  return cos.map((c) => c.name).filter(Boolean);
+}
+
 /** 센터 목록(스코프 토글용). */
 export function listCenters() {
   return prisma.center.findMany({ select: { id: true, name: true }, orderBy: { id: 'asc' } });
