@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { fmtWon, fmtPct } from '@/lib/admin/format';
 import { CONCLUSIONS, quoteStatus, statusFromConclusion } from '@/lib/admin/status';
+import CompanyLink from './CompanyLink';
 
 export type Row = {
   id: number; sentAt: string | null; quoteNumber: string; testStandard: string | null;
@@ -61,7 +61,7 @@ export default function QuoteStatusTable({ rows: initial }: { rows: Row[] }) {
                 <td className={`${td} whitespace-nowrap`}>{r.testStandard ? <span className="tag">{r.testStandard}</span> : '—'}</td>
                 <td className={`${td} text-ink font-medium max-w-[280px]`}><span className="line-clamp-2" title={r.projectName}>{r.projectName}</span></td>
                 <td className={`${td} whitespace-nowrap`}>{r.customerCompany
-                  ? <Link href="/admin/customers" className="text-ink hover:text-brand-600 transition-colors" title="고객 관리에서 보기">{r.customerCompany}</Link>
+                  ? <CompanyLink name={r.customerCompany} className="text-ink hover:text-brand-600 transition-colors text-left" />
                   : <span className="text-ink">—</span>}</td>
                 <td className={`${td} whitespace-nowrap text-ink-body`}>{r.customerName ?? '—'}<span className="block text-[11px] text-ink-subtle tabular-nums">{r.customerPhone ?? ''}</span></td>
                 <td className={`${td} whitespace-nowrap text-ink-body`}>{r.submissionPurpose ?? '—'}</td>

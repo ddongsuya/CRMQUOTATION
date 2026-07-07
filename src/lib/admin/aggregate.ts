@@ -302,6 +302,55 @@ export async function companyNames(): Promise<string[]> {
   return cos.map((c) => c.name).filter(Boolean);
 }
 
+/** 회사(고객사)명 기준 관련 항목 집계 — 드로어·상세 페이지 공용. */
+export async function getCompanyDetail(name: string) {
+  const [company, quotes, reports, prospect] = await Promise.all([
+    prisma.company.findFirst({
+      where: { name },
+      select: {
+        industry: true, memo: true, isNewClient: true,
+        owner: { select: { name: true, center: { select: { name: true } } } },
+        contacts: { select: { name: true, position: true, email: true, phone: true } },
+      },
+    }),
+    prisma.quote.findMany({
+      where: { customerCompany: name },
+      orderBy: { sentAt: 'desc' },
+      select: { id: true, quoteNumber: true, sentAt: true, projectName: true, grandTotal: true, status: true, trackingNote: true, testStandard: true, submissionPurpose: true, discountRate: true },
+    }),
+    prisma.dailyReport.findMany({
+      where: { OR: [{ workContent: { contains: name } }, { contractPlan: { contains: name } }, { activityNote: { contains: name } }] },
+      orderBy: { date: 'desc' }, take: 30,
+      select: { id: true, date: true, workContent: true, contractPlan: true, activityNote: true },
+    }),
+    prisma.prospect.findFirst({ where: { name }, select: { id: true, pipeline: true, stage: true, indTarget: true, croOutlook: true } }),
+  ]);
+
+  let won = 0, pipeline = 0, acc = 0, rej = 0;
+  for (const q of quotes) {
+    if (q.status === WON_STATUS) { won += q.grandTotal ?? 0; acc++; }
+    else if (q.status === LOST_STATUS) rej++;
+    if (PIPELINE_STATUS.includes(q.status)) pipeline += q.grandTotal ?? 0;
+  }
+  const snip = (r: { workContent: string | null; contractPlan: string | null; activityNote: string | null }) => {
+    const text = [r.workContent, r.contractPlan, r.activityNote].filter(Boolean).join(' ');
+    const idx = text.indexOf(name);
+    if (idx < 0) return text.slice(0, 90);
+    return (idx > 30 ? '…' : '') + text.slice(Math.max(0, idx - 30), idx + 90).trim();
+  };
+  return {
+    name,
+    company: company ? {
+      industry: company.industry, memo: company.memo, isNewClient: company.isNewClient,
+      owner: company.owner?.name ?? '—', center: company.owner?.center?.name ?? '—', contacts: company.contacts,
+    } : null,
+    prospect,
+    stats: { wonAmount: won, pipelineAmount: pipeline, quoteCount: quotes.length, winRate: acc + rej > 0 ? acc / (acc + rej) : null },
+    quotes: quotes.map((q) => ({ ...q, sentAt: q.sentAt ? q.sentAt.toISOString().slice(0, 10) : null })),
+    reports: reports.map((r) => ({ id: r.id, date: r.date.toISOString().slice(0, 10), snippet: snip(r) })),
+  };
+}
+
 /** 잠재 고객 목록(영업 타겟). 전사 공유 — 스코프 무관. */
 export async function getProspects() {
   const rows = await prisma.prospect.findMany({

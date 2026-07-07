@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Icon, { type IconName } from '../Icon';
+import DrawerProvider from './DrawerProvider';
 
 export type AdminUser = { name: string; roleLabel: string; scopeLabel: string };
 
@@ -137,7 +138,7 @@ export default function AdminChrome({ children, user }: { children: React.ReactN
           </header>
 
           <main className="flex-1 overflow-auto px-4 sm:px-6 lg:px-11 pt-6 lg:pt-9 pb-16">
-            <div className="mx-auto max-w-[1180px]">{children}</div>
+            <div className="mx-auto max-w-[1180px]"><DrawerProvider>{children}</DrawerProvider></div>
           </main>
         </div>
       </div>

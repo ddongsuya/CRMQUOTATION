@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import CompanyLink from '@/components/admin/CompanyLink';
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
 import { parseScope, getDashboardData, getTargetGauge, getActivityHeatmap, listCenters } from '@/lib/admin/aggregate';
 import { fmtWon, splitWon, fmtPct, fmtInt } from '@/lib/admin/format';
@@ -183,7 +184,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
             <tbody>
               {data.topCustomers.map((c) => (
                 <tr key={c.name} className="table-row">
-                  <td className="py-2.5 text-[13px] font-medium"><Link href={`/admin/quotes?company=${encodeURIComponent(c.name)}`} className="text-ink hover:text-brand-600 transition-colors">{c.name}</Link><span className="block text-[11px] text-ink-subtle font-normal">{c.industry}</span></td>
+                  <td className="py-2.5 text-[13px] font-medium"><CompanyLink name={c.name} className="text-ink hover:text-brand-600 transition-colors text-left" /><span className="block text-[11px] text-ink-subtle font-normal">{c.industry}</span></td>
                   <td className="py-2.5 text-[13px] text-ink-body">{c.owner}<span className="block text-[11px] text-ink-subtle">{c.center}</span></td>
                   <td className="py-2.5 text-[13px] text-ink-body text-right tabular-nums">{fmtWon(c.pipeline)}</td>
                   <td className="py-2.5 text-[13px] text-ink font-semibold text-right tabular-nums">{fmtWon(c.won)}</td>

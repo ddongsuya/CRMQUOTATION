@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, Fragment } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Icon from '../Icon';
 import { fmtWon } from '@/lib/admin/format';
+import CompanyLink from './CompanyLink';
 
 export type Report = {
   id: number; date: string; owner: string;
@@ -32,7 +32,7 @@ function linkify(text: string, names: string[]): React.ReactNode {
   for (const h of hits) {
     if (h.i < cursor) continue;                       // 겹침 방지
     if (h.i > cursor) out.push(text.slice(cursor, h.i));
-    out.push(<Link key={`${h.i}-${h.name}`} href={`/admin/quotes?company=${encodeURIComponent(h.name)}`} className="text-brand-600 hover:underline font-medium">{h.name}</Link>);
+    out.push(<CompanyLink key={`${h.i}-${h.name}`} name={h.name} className="text-brand-600 hover:underline font-medium inline" />);
     cursor = h.i + h.name.length;
   }
   if (cursor < text.length) out.push(text.slice(cursor));

@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
 import { parseScope, getSchedule, listCenters } from '@/lib/admin/aggregate';
 import { fmtInt } from '@/lib/admin/format';
 import AdminHeader from '@/components/admin/AdminHeader';
+import CompanyLink from '@/components/admin/CompanyLink';
 
 export const dynamic = 'force-dynamic';
 type SP = { scope?: string; centerId?: string; userId?: string };
@@ -47,7 +47,7 @@ export default async function AdminSchedule({ searchParams }: { searchParams: SP
                   <td className="py-3">
                     <div className="text-[14px] text-ink font-semibold">{r.project}</div>
                     {r.company !== '—'
-                      ? <Link href={`/admin/quotes?company=${encodeURIComponent(r.company)}`} className="text-[12px] text-ink-subtle hover:text-brand-600 transition-colors">{r.company} →</Link>
+                      ? <CompanyLink name={r.company} className="text-[12px] text-ink-subtle hover:text-brand-600 transition-colors text-left">{r.company} →</CompanyLink>
                       : <div className="text-[12px] text-ink-subtle">{r.company}</div>}
                   </td>
                   <td className="py-3 text-[13px] text-ink-body">{r.owner}</td>
