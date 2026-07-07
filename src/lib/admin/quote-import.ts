@@ -3,6 +3,7 @@
  * 앱 업로드 API·일회성 시드 스크립트 공용. 헤더명은 시트 그대로 사용.
  */
 import type { PrismaClient } from '@prisma/client';
+import { statusFromConclusion, normalizeConclusion } from './status';
 
 export const QUOTE_SHEET_HEADERS = [
   '견적 송부 날짜', '견적서 번호', '계약번호', '시험기준', '견적명', '의뢰기관', '의뢰자',
@@ -24,15 +25,6 @@ const toDate = (v: unknown): Date | null => {
   const d = new Date(String(v));
   return isNaN(d.getTime()) ? null : d;
 };
-
-/** 결론(추적 결과) → 파이프라인 상태 매핑. 임정모 견적서 결론 어휘 기준. */
-export function statusFromConclusion(c: string): string {
-  if (!c) return 'SENT';
-  if (/계약\s*체결|수주|진행\s*확정/.test(c)) return 'ACCEPTED';
-  if (/타\s*기관|다른\s*회사|반려|드랍|drop|미진행|취소/i.test(c)) return 'REJECTED';
-  // 비교 견적·내부 검토 중·결과 대기중·과제 신청 등 = 진행 중(발송)
-  return 'SENT';
-}
 
 /** 물질종류 → modality(필수 필드) 매핑. */
 function toModality(substanceType: string): string {
@@ -108,13 +100,13 @@ export async function importQuoteRows(prisma: PrismaClient, rows: RawRow[], impo
         submissionPurpose,
         contractNo: s(r['계약번호']) || null,
         contractAmount: num(r['계약금액']),
-        trackingNote: s(r['결론']) || null,
+        trackingNote: normalizeConclusion(s(r['결론'])),
         discountRate: discount,
         totalBeforeDiscount: total,
         totalAfterDiscount: total != null ? total * (1 - discount) : null,
         grandTotal: grand,
         sentAt: sentDate,
-        status: statusFromConclusion(s(r['결론'])),
+        status: statusFromConclusion(normalizeConclusion(s(r['결론']))),
       };
       const existing = await prisma.quote.findUnique({ where: { quoteNumber }, select: { id: true } });
       if (existing) { await prisma.quote.update({ where: { id: existing.id }, data }); res.updated++; }
