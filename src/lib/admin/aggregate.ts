@@ -524,6 +524,28 @@ export async function listTargets(period: string) {
   };
 }
 
+/**
+ * 월별 견적 퍼널 (Sheet1) — 월별 견적/계약/진행중/타기관(반려) 건수 + 금액.
+ * 견적 결론(상태)에서 파생: ACCEPTED=계약, REJECTED=타기관, 그 외=진행중.
+ */
+export async function getMonthlyFunnel(scope: Scope, year: number) {
+  const uids = await scopeUserIds(scope);
+  const quotes = await prisma.quote.findMany({
+    where: { userId: { in: uids }, createdAt: { gte: new Date(year, 0, 1), lt: new Date(year + 1, 0, 1) } },
+    select: { status: true, grandTotal: true, createdAt: true },
+  });
+  const rows = Array.from({ length: 12 }, (_, m) => ({ month: m + 1, quoted: 0, won: 0, inProgress: 0, lost: 0, wonAmount: 0 }));
+  for (const q of quotes) {
+    const r = rows[q.createdAt.getMonth()];
+    r.quoted++;
+    if (q.status === WON_STATUS) { r.won++; r.wonAmount += q.grandTotal ?? 0; }
+    else if (q.status === LOST_STATUS) r.lost++;
+    else r.inProgress++;
+  }
+  // 데이터 있는 달만
+  return rows.filter((r) => r.quoted > 0);
+}
+
 /** 시험 일정(전사) — 진행 프로젝트 + 미니 간트(H1). */
 export async function getSchedule(scope: Scope) {
   const uids = await scopeUserIds(scope);

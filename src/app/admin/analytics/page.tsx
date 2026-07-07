@@ -1,5 +1,5 @@
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
-import { parseScope, getPerformance, listCenters } from '@/lib/admin/aggregate';
+import { parseScope, getPerformance, getMonthlyFunnel, listCenters } from '@/lib/admin/aggregate';
 import { fmtWon, fmtPct } from '@/lib/admin/format';
 import AdminHeader from '@/components/admin/AdminHeader';
 
@@ -11,7 +11,7 @@ export default async function AdminAnalytics({ searchParams }: { searchParams: S
   const me = await getCurrentUser();
   const scope = parseScope(searchParams, { isAdminView: view.isAdminView, selfId: me.id, selfCenterId: me.centerId });
   const centers = await listCenters();
-  const p = await getPerformance(scope);
+  const [p, funnel] = await Promise.all([getPerformance(scope), getMonthlyFunnel(scope, 2026)]);
   const scopeName = scope.kind === 'all' ? '전사' : scope.kind === 'center' ? (centers.find((c) => c.id === scope.centerId)?.name ?? '센터') : '개인';
 
   return (
@@ -58,6 +58,42 @@ export default async function AdminAnalytics({ searchParams }: { searchParams: S
             <PerfRow r={{ name: '합계', ...p.total }} tone="var(--ink)" bold />
           </tbody>
         </table>
+      </div>
+
+      {/* 월별 견적 퍼널 (Sheet1) */}
+      <div className="card card-pad mt-4">
+        <h2 className="text-[15px] font-semibold text-ink mb-4">월별 견적 현황</h2>
+        <table className="w-full">
+          <thead>
+            <tr className="table-head text-left">
+              <th className="pb-3 font-medium">월</th>
+              <th className="pb-3 font-medium text-right">견적</th>
+              <th className="pb-3 font-medium text-right">진행 중</th>
+              <th className="pb-3 font-medium text-right">계약</th>
+              <th className="pb-3 font-medium text-right">타 기관</th>
+              <th className="pb-3 font-medium text-right">수주율</th>
+              <th className="pb-3 font-medium text-right">수주 금액</th>
+            </tr>
+          </thead>
+          <tbody>
+            {funnel.map((m) => {
+              const decided = m.won + m.lost;
+              return (
+                <tr key={m.month} className="table-row">
+                  <td className="py-3 text-[13px] text-ink font-medium tabular-nums">{m.month}월</td>
+                  <td className="py-3 text-[13px] text-ink-body text-right tabular-nums">{m.quoted}</td>
+                  <td className="py-3 text-[13px] text-ink-body text-right tabular-nums">{m.inProgress}</td>
+                  <td className="py-3 text-[13px] font-semibold text-right tabular-nums" style={{ color: 'var(--success)' }}>{m.won}</td>
+                  <td className="py-3 text-[13px] text-right tabular-nums" style={{ color: m.lost ? 'var(--error)' : 'var(--muted-soft)' }}>{m.lost}</td>
+                  <td className="py-3 text-[13px] text-ink-body text-right tabular-nums">{decided ? fmtPct(m.won / decided, 0) : '—'}</td>
+                  <td className="py-3 text-[13px] text-ink font-semibold text-right tabular-nums">{fmtWon(m.wonAmount)}</td>
+                </tr>
+              );
+            })}
+            {funnel.length === 0 && <tr><td colSpan={7} className="py-8 text-center text-[13px] text-ink-subtle">데이터 없음</td></tr>}
+          </tbody>
+        </table>
+        <p className="text-[12px] text-ink-subtle mt-3">견적 결론(계약 체결·타 기관 의뢰 등)에서 파생. 보류·예산확보 등 세부 분류는 결론 어휘 확장 시 반영 가능.</p>
       </div>
     </>
   );
