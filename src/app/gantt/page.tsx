@@ -31,8 +31,12 @@ const DAY = 86400_000;
 const d = (s: string | null) => (s ? new Date(s) : null);
 const studyStart = (s: Study) => d(s.intakeCompletedAt) ?? d(s.requestSentAt) ?? d(s.createdAt)!;
 const studyEnd = (s: Study) => d(s.reportDraftIssuedAt) ?? d(s.reportDraftDueAt) ?? new Date(studyStart(s).getTime() + 84 * DAY);
-const studyPhase = (s: Study): 'done' | 'active' | 'planned' =>
-  s.reportDraftIssuedAt ? 'done' : s.intakeCompletedAt ? 'active' : 'planned';
+// 시안 간트 4단계: 예정(회색)·본시험 진행(ink)·분석·평가(오렌지)·완료(회색)
+const studyPhase = (s: Study): 'done' | 'analysis' | 'active' | 'planned' => {
+  if (s.reportDraftIssuedAt) return 'done';
+  if (!s.intakeCompletedAt) return 'planned';
+  return s.reportDraftDueAt && new Date(s.reportDraftDueAt) <= new Date() ? 'analysis' : 'active';
+};
 
 const projectDone = (p: Project) => p.stage === 'DONE' || (p.studyCount > 0 && p.studies.every(s => s.reportDraftIssuedAt));
 
@@ -74,7 +78,7 @@ export default function GanttPage() {
               {projects.find(p => p.companyId === companyId)?.companyName ?? '회사'} 필터 <span className="text-brand-500">✕</span>
             </button>
           )}
-          <div className="inline-flex rounded-lg bg-slate-100 p-0.5 text-xs">
+          <div className="inline-flex rounded-lg bg-slate-100 p-[3px] text-xs">
           {([['all', '전체'], ['active', '진행'], ['done', '완료']] as const).map(([k, l]) => (
             <button key={k} onClick={() => setSeg(k)} className={clsx('px-3 py-1.5 rounded-md font-medium transition-colors', seg === k ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink')}>{l}</button>
           ))}
@@ -146,6 +150,7 @@ function ProjectHeader({ p }: { p: Project }) {
 }
 
 const MONTH_W = 104; // px per month
+const LABEL_W = 236; // 시안: 좌 라벨열 236px
 function StudyGantt({ studies }: { studies: Study[] }) {
   const rows = studies.filter(s => s.itemName);
   if (rows.length === 0) return <div className="card p-10 text-center text-sm text-ink-subtle">등록된 시험이 없습니다. 딜 상세에서 시험을 추가하세요.</div>;
@@ -167,23 +172,25 @@ function StudyGantt({ studies }: { studies: Study[] }) {
   const showToday = now >= min && now <= max;
 
   const PHASE = {
-    done: { bar: 'bg-slate-200 border border-slate-300', text: 'text-ink-muted' },
+    planned: { bar: 'bg-slate-100 border border-slate-200', text: 'text-ink-muted' },
     active: { bar: 'bg-ink', text: 'text-white' },
-    planned: { bar: 'bg-brand-200 border border-brand-300', text: 'text-brand-800' },
+    analysis: { bar: 'bg-[var(--accent)]', text: 'text-white' },
+    done: { bar: 'bg-slate-200 border border-slate-300', text: 'text-ink-muted' },
   } as const;
 
   return (
     <div className="card p-4">
       <div className="flex flex-wrap gap-3 mb-3 text-[11px] text-ink-muted">
-        <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-ink" />진행(In-life)</span>
-        <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-brand-200 border border-brand-300" />예정</span>
+        <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-ink" />본시험 진행</span>
+        <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-[var(--accent)]" />분석·평가</span>
+        <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-slate-100 border border-slate-200" />예정</span>
         <span className="inline-flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-sm bg-slate-200 border border-slate-300" />완료</span>
       </div>
       <div className="overflow-x-auto -mx-1 px-1">
-        <div style={{ width: width + 220, minWidth: '100%' }}>
+        <div style={{ width: width + LABEL_W, minWidth: '100%' }}>
           {/* 월 헤더 */}
           <div className="flex border-b border-slate-200 pb-1 mb-1">
-            <div style={{ width: 220 }} className="shrink-0" />
+            <div style={{ width: LABEL_W }} className="shrink-0" />
             <div className="relative" style={{ width }}>
               {monthCols.map((m, i) => (
                 <div key={i} className="absolute top-0 text-[10px] text-ink-subtle border-l border-slate-100 pl-1 tabular-nums" style={{ left: i * MONTH_W, width: MONTH_W }}>
@@ -195,7 +202,7 @@ function StudyGantt({ studies }: { studies: Study[] }) {
           {/* 행 */}
           <div className="relative">
             {showToday && (
-              <div className="absolute top-0 bottom-0 w-px bg-red-400 z-10" style={{ left: 220 + xOf(now) }}>
+              <div className="absolute top-0 bottom-0 w-px bg-red-400 z-10" style={{ left: LABEL_W + xOf(now) }}>
                 <span className="absolute -top-3 -translate-x-1/2 text-[9px] text-red-500 bg-white px-0.5">오늘</span>
               </div>
             )}
@@ -204,15 +211,15 @@ function StudyGantt({ studies }: { studies: Study[] }) {
               const ph = studyPhase(s);
               const left = xOf(st), w = Math.max(xOf(en) - left, 10);
               return (
-                <div key={s.id} className="flex items-center h-[52px] border-b border-slate-50 last:border-0">
-                  <div style={{ width: 220 }} className="shrink-0 pr-3 min-w-0">
+                <div key={s.id} className="flex items-center h-[58px] border-b border-slate-50 last:border-0">
+                  <div style={{ width: LABEL_W }} className="shrink-0 pr-3 min-w-0">
                     <div className="text-xs font-medium text-ink truncate">{s.itemName}</div>
                     <div className="text-[10px] text-ink-subtle truncate">{s.studyNumber || '시험번호 미정'}{s.director ? ` · ${s.director}` : ''}</div>
                   </div>
                   <div className="relative h-full flex-1" style={{ width }}>
                     <div className={clsx('absolute top-1/2 -translate-y-1/2 h-7 rounded-md flex items-center px-2 overflow-hidden', PHASE[ph].bar)} style={{ left, width: w }}
                       title={`${s.itemName} · ${fmtDate(st.toISOString())}~${fmtDate(en.toISOString())}`}>
-                      <span className={clsx('text-[10px] font-medium truncate', PHASE[ph].text)}>{ph === 'done' ? '완료' : ph === 'active' ? '진행' : '예정'}</span>
+                      <span className={clsx('text-[10px] font-medium truncate', PHASE[ph].text)}>{ph === 'done' ? '완료' : ph === 'active' ? '본시험' : ph === 'analysis' ? '분석·평가' : '예정'}</span>
                     </div>
                   </div>
                 </div>

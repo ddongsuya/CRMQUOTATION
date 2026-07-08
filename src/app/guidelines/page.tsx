@@ -184,19 +184,31 @@ function GuidelineList({ items, q, admin }: { items: Guideline[]; q: string; adm
   );
 }
 
+// 시안: 좌측 org 배지(52px, card-cream, serif). 코드·분류에서 규제기관 도출.
+function orgOf(g: Guideline): string {
+  const s = `${g.code ?? ''} ${g.category ?? ''}`.toUpperCase();
+  if (s.includes('ICH') || /^[MSQE]\d/.test((g.code ?? '').toUpperCase())) return 'ICH';
+  if (s.includes('OECD') || /\bTG\s?\d/.test(s)) return 'OECD';
+  if (s.includes('ISO')) return 'ISO';
+  if (s.includes('FDA')) return 'FDA';
+  if (s.includes('MFDS') || s.includes('식약처') || s.includes('식품의약')) return 'MFDS';
+  return '규제';
+}
+
 function GuidelineCard({ g, admin }: { g: Guideline; admin: AdminCtx }) {
   const [open, setOpen] = useState(false);
   const checklist = Object.entries(g.checklist || {}).filter(([k]) => k !== '투여기간_주');
   return (
     <div className="card overflow-hidden">
-      <div className="w-full px-4 py-3 flex items-start justify-between gap-3 hover:bg-slate-50/40 transition-colors">
+      <div className="w-full px-4 py-3 flex items-start gap-3 hover:bg-slate-50/40 transition-colors">
+        <span className="w-[52px] h-[52px] flex-shrink-0 rounded-[10px] bg-slate-100 flex items-center justify-center text-ink-body font-serif font-semibold text-[13px] tracking-tight">{orgOf(g)}</span>
         <button onClick={() => setOpen(o => !o)} className="flex-1 min-w-0 text-left">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="pill bg-brand-100 text-brand-700 font-mono">{g.code}</span>
-            <span className="font-semibold text-ink">{g.title_ko}</span>
+            <span className="font-mono text-[15px] font-semibold text-ink">{g.code}</span>
             {g.confidence === '원문확인' && <span className="pill bg-emerald-100 text-emerald-700">원문확인</span>}
           </div>
-          <div className="text-xs text-ink-muted mt-1 line-clamp-1">{g.purpose}</div>
+          <div className="text-[15px] font-medium text-ink mt-0.5 line-clamp-1">{g.title_ko}</div>
+          <div className="text-[13px] text-ink-muted mt-0.5 line-clamp-1 leading-[1.55]">{g.purpose}</div>
         </button>
         <div className="flex items-center gap-1">
           <AdminButtons admin={admin} dataset="guidelines" rec={g as unknown as Rec} />
