@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import CompanyLink from '@/components/admin/CompanyLink';
 import { getViewMode, getCurrentUser } from '@/lib/admin/view';
-import { parseScope, getDashboardData, getTargetGauge, getActivityHeatmap, listCenters } from '@/lib/admin/aggregate';
+import { parseScope, getDashboardData, getTargetGauge, getActivityHeatmap, getFollowups, listCenters } from '@/lib/admin/aggregate';
+import FollowupCard from '@/components/admin/FollowupCard';
 import { fmtWon, splitWon, fmtPct, fmtInt } from '@/lib/admin/format';
 import AdminHeader from '@/components/admin/AdminHeader';
 import { Sparkline, BarSpark, ProgressBar, GroupedBars, DonutGauge, Donut, HBars, Funnel, Heatmap } from '@/components/admin/charts';
@@ -23,10 +24,11 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
   const scope = parseScope(searchParams, { isAdminView: view.isAdminView, selfId: me.id, selfCenterId: me.centerId });
   const centers = await listCenters();
 
-  const [data, gaugeAll, heat] = await Promise.all([
+  const [data, gaugeAll, heat, followups] = await Promise.all([
     getDashboardData(scope, YEAR),
     getTargetGauge(scope, PERIOD),
     getActivityHeatmap(scope, new Date(YEAR, 6, 6), 12),
+    getFollowups(scope, new Date(YEAR, 6, 6), 14),
   ]);
   const centerGauges = await Promise.all(centers.map((c) => getTargetGauge({ kind: 'center', centerId: c.id }, PERIOD).then((g) => ({ ...c, g }))));
 
@@ -104,6 +106,9 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
           <BarSpark values={pad6(data.monthlyActivity)} tone="accent" />
         </KpiCard>
       </div>
+
+      {/* ── 팔로업 필요 ── */}
+      <FollowupCard rows={followups} />
 
       {/* ── 센터별 월간 추이 + 목표 게이지 ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">

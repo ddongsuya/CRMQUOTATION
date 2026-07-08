@@ -351,6 +351,31 @@ export async function getCompanyDetail(name: string) {
   };
 }
 
+/**
+ * 팔로업 필요 견적 — 송부 후 minDays 경과 + 미결(결론 미정/진행중, 계약·반려 아님).
+ * 임정모 시트의 "송부 후 추적" 자동화.
+ */
+export async function getFollowups(scope: Scope, refDate: Date, minDays = 14) {
+  const uids = await scopeUserIds(scope);
+  const cutoff = new Date(refDate.getTime() - minDays * 86400000);
+  const OPEN_CONCLUSIONS = ['비교견적용', '내부 검토중', '결과 대기중', '예산확보'];
+  const quotes = await prisma.quote.findMany({
+    where: {
+      userId: { in: uids },
+      status: { in: PIPELINE_STATUS },
+      sentAt: { not: null, lte: cutoff },
+      OR: [{ trackingNote: null }, { trackingNote: { in: OPEN_CONCLUSIONS } }],
+    },
+    orderBy: { sentAt: 'asc' },
+    select: { id: true, quoteNumber: true, customerCompany: true, projectName: true, grandTotal: true, sentAt: true, trackingNote: true },
+  });
+  return quotes.map((q) => ({
+    ...q,
+    sentAt: q.sentAt ? q.sentAt.toISOString().slice(0, 10) : null,
+    days: q.sentAt ? Math.floor((refDate.getTime() - q.sentAt.getTime()) / 86400000) : 0,
+  }));
+}
+
 /** 견적 상세 — 견적 드로어(추적 타임라인 포함). */
 export async function getQuoteDetail(id: number) {
   const q = await prisma.quote.findUnique({
@@ -660,20 +685,32 @@ export async function getSchedule(scope: Scope) {
   };
   const H1start = new Date(2026, 0, 1).getTime();
   const H1span = new Date(2026, 6, 1).getTime() - H1start;
+  const frac = (ms: number, titleLen: number) => {
+    const startFrac = Math.min(Math.max((Math.max(ms, H1start) - H1start) / H1span, 0), 0.85);
+    return { startFrac, widthFrac: Math.min(0.15 + (titleLen % 3) * 0.1, 1 - startFrac) };
+  };
   const rows = deals.map((d) => {
     const s = statusOf(d.stage, d.status);
-    const startMs = Math.max(d.createdAt.getTime(), H1start);
-    const startFrac = Math.min(Math.max((startMs - H1start) / H1span, 0), 0.85);
-    const widthFrac = Math.min(0.15 + (d.title.length % 3) * 0.1, 1 - startFrac); // 명목 기간
     return {
-      project: d.title,
-      company: d.contact?.company?.name ?? '—',
-      owner: userName.get(d.ownerId) ?? '—',
-      center: userCenterName.get(d.ownerId) ?? '—',
-      status: s.label, tone: s.tone,
-      startFrac, widthFrac,
+      project: d.title, company: d.contact?.company?.name ?? '—',
+      owner: userName.get(d.ownerId) ?? '—', center: userCenterName.get(d.ownerId) ?? '—',
+      status: s.label, tone: s.tone as 'green' | 'orange' | 'gray', ...frac(d.createdAt.getTime(), d.title.length),
     };
   });
+  // 계약 체결(ACCEPTED) 견적 = 실제 진행 시험(Deal 없는 임포트 견적 포함)
+  const wonQuotes = await prisma.quote.findMany({
+    where: { userId: { in: uids }, status: WON_STATUS },
+    select: { projectName: true, customerCompany: true, userId: true, sentAt: true, createdAt: true },
+    orderBy: { sentAt: 'desc' },
+  });
+  for (const q of wonQuotes) {
+    const t = (q.sentAt ?? q.createdAt).getTime();
+    rows.push({
+      project: q.projectName, company: q.customerCompany ?? '—',
+      owner: userName.get(q.userId ?? -1) ?? '—', center: userCenterName.get(q.userId ?? -1) ?? '—',
+      status: '진행 중', tone: 'green', ...frac(t, q.projectName.length),
+    });
+  }
   const activeCount = rows.filter((r) => r.status !== '완료').length;
   return { count: activeCount, rows };
 }
