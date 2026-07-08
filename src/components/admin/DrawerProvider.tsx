@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useCallback } from 'react';
 import EntityDrawer from './EntityDrawer';
+import CommandSearch from './CommandSearch';
 
 export type Frame =
   | { type: 'company'; key: string }
@@ -31,6 +32,7 @@ export default function DrawerProvider({ children, showFullPage = true }: { chil
     <Ctx.Provider value={{ openCompany, openQuote, openReport, back, close }}>
       {children}
       <EntityDrawer stack={stack} back={back} close={close} showFullPage={showFullPage} />
+      <CommandSearch openCompany={openCompany} openQuote={openQuote} openReport={openReport} />
     </Ctx.Provider>
   );
 }

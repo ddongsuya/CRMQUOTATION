@@ -410,6 +410,29 @@ export async function getReportDetail(id: number) {
   return { ...r, date: r.date.toISOString().slice(0, 10), owner: r.owner?.name ?? '—', mentioned };
 }
 
+/** 전역 검색 — 회사·견적·기록 통합(⌘K). */
+export async function getGlobalSearch(q: string) {
+  const term = q.trim();
+  if (term.length < 1) return { companies: [], quotes: [], reports: [] };
+  const ci = { contains: term, mode: 'insensitive' as const };
+  const [companies, quotes, reports] = await Promise.all([
+    prisma.company.findMany({ where: { OR: [{ name: ci }, { aliases: ci }] }, select: { name: true, industry: true }, take: 6, orderBy: { name: 'asc' } }),
+    prisma.quote.findMany({ where: { OR: [{ quoteNumber: ci }, { customerCompany: ci }, { projectName: ci }] }, select: { id: true, quoteNumber: true, customerCompany: true, projectName: true, status: true, trackingNote: true }, take: 8, orderBy: { sentAt: 'desc' } }),
+    prisma.dailyReport.findMany({ where: { OR: [{ workContent: ci }, { activityNote: ci }, { contractPlan: ci }] }, select: { id: true, date: true, workContent: true, activityNote: true, contractPlan: true }, take: 6, orderBy: { date: 'desc' } }),
+  ]);
+  const snip = (r: { workContent: string | null; activityNote: string | null; contractPlan: string | null }) => {
+    const text = [r.workContent, r.contractPlan, r.activityNote].filter(Boolean).join(' ');
+    const idx = text.toLowerCase().indexOf(term.toLowerCase());
+    if (idx < 0) return text.slice(0, 80);
+    return (idx > 24 ? '…' : '') + text.slice(Math.max(0, idx - 24), idx + 70).trim();
+  };
+  return {
+    companies,
+    quotes,
+    reports: reports.map((r) => ({ id: r.id, date: r.date.toISOString().slice(0, 10), snippet: snip(r) })),
+  };
+}
+
 /** 잠재 고객 목록(영업 타겟). 전사 공유 — 스코프 무관. */
 export async function getProspects() {
   const rows = await prisma.prospect.findMany({

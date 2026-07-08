@@ -91,6 +91,14 @@ export default function AdminChrome({ children, user }: { children: React.ReactN
             </div>
           </Link>
 
+          <div className="px-3 mb-2">
+            <button onClick={() => window.dispatchEvent(new Event('admin:opensearch'))}
+              className="w-full flex items-center gap-2.5 h-9 px-3 rounded-lg border border-slate-200 text-ink-muted hover:bg-slate-100 transition-colors text-[13px]">
+              <Icon name="search" className="w-4 h-4" /> 검색
+              <kbd className="ml-auto text-[10px] border border-slate-200 rounded px-1.5 py-0.5">⌘K</kbd>
+            </button>
+          </div>
+
           <nav className="px-3 mt-1 space-y-3 overflow-y-auto flex-1">
             <div>
               <div className="px-3 pb-1.5 eyebrow">관리</div>
