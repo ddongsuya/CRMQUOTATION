@@ -15,13 +15,17 @@ export async function GET() {
     orderBy: { updatedAt: 'desc' },
     include: {
       _count: { select: { contacts: true } },
-      contacts: { select: { deals: { select: { status: true, quotes: { select: { grandTotal: true, status: true } } } } } },
+      contacts: { select: { deals: { select: { status: true, quotes: { select: { id: true, grandTotal: true, status: true } } } } } },
+      quotes: { select: { id: true, grandTotal: true, status: true } },   // companyId 직결(임포트 견적)
     },
   });
-  // 회사별 집계 = 소속 의뢰자들의 안건·견적 합. contacts 페이로드는 집계 후 제거.
-  const companies = rows.map(({ contacts, ...c }) => {
+  // 회사별 집계 = 딜 견적 + companyId 직결 견적(중복 id 제거). 페이로드는 집계 후 제거.
+  const companies = rows.map(({ contacts, quotes: directQuotes, ...c }) => {
     const deals = contacts.flatMap(ct => ct.deals);
-    const quotes = deals.flatMap(d => d.quotes);
+    const merged = new Map<number, { grandTotal: number | null; status: string }>();
+    for (const q of deals.flatMap(d => d.quotes)) merged.set(q.id, q);
+    for (const q of directQuotes) merged.set(q.id, q);
+    const quotes = [...merged.values()];
     const wonAmount = quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0);
     return {
       ...c,

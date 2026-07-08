@@ -47,9 +47,18 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
     ct.deals.map(d => ({ ...d, contactName: ct.name, contactId: ct.id })));
   const dealMeta = (d: DealRel) => ({ dealId: d.id, dealTitle: d.title, modality: d.modality, stage: d.stage });
 
-  const allQuotes = flatDeals.flatMap(d => d.quotes);
-  // 최근 견적 목록 (시안 고객상세 '최근 견적' 카드) — 딜/담당자 메타 포함, 최신순
-  const quotes = flatDeals.flatMap(d => d.quotes.map(q => ({ ...q, ...dealMeta(d), contactId: d.contactId })))
+  const dealQuotes = flatDeals.flatMap(d => d.quotes.map(q => ({ ...q, ...dealMeta(d), contactId: d.contactId })));
+  const dealQuoteIds = new Set(dealQuotes.map(q => q.id));
+  // 딜 없이 companyId 로만 연결된 견적(엑셀 임포트 견적) — 회사 상세에 함께 노출
+  const directRaw = await prisma.quote.findMany({
+    where: { companyId: id, id: { notIn: [...dealQuoteIds] } },
+    select: { id: true, quoteNumber: true, status: true, grandTotal: true, createdAt: true, modality: true, projectName: true },
+    orderBy: { sentAt: 'desc' },
+  });
+  const directQuotes = directRaw.map(q => ({ id: q.id, quoteNumber: q.quoteNumber, status: q.status, grandTotal: q.grandTotal, createdAt: q.createdAt, dealId: null, dealTitle: q.projectName, modality: q.modality, contactId: null as number | null }));
+  const allQuotes = [...flatDeals.flatMap(d => d.quotes), ...directRaw];
+  // 최근 견적 목록 (딜 견적 + 직결 견적 병합, 최신순)
+  const quotes = [...dealQuotes, ...directQuotes]
     .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt));
   const contracts = flatDeals.filter(d => d.contract).map(d => ({ ...d.contract!, ...dealMeta(d) }));
   const studies = flatDeals.flatMap(d => d.studies.map(s => ({ ...s, ...dealMeta(d) })));
