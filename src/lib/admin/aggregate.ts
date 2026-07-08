@@ -351,6 +351,40 @@ export async function getCompanyDetail(name: string) {
   };
 }
 
+/** 견적 상세 — 견적 드로어(추적 타임라인 포함). */
+export async function getQuoteDetail(id: number) {
+  const q = await prisma.quote.findUnique({
+    where: { id },
+    select: {
+      id: true, quoteNumber: true, sentAt: true, projectName: true, customerCompany: true, customerName: true, customerPhone: true, customerEmail: true,
+      testStandard: true, submissionPurpose: true, substanceType: true, modality: true,
+      totalBeforeDiscount: true, discountRate: true, grandTotal: true, contractNo: true, contractAmount: true,
+      status: true, trackingNote: true,
+      trackingLog: { orderBy: { createdAt: 'desc' }, select: { id: true, conclusion: true, status: true, note: true, createdAt: true, authorId: true } },
+    },
+  });
+  if (!q) return null;
+  const authors = new Map((await prisma.user.findMany({ select: { id: true, name: true } })).map((u) => [u.id, u.name ?? '—'] as const));
+  return {
+    ...q,
+    sentAt: q.sentAt ? q.sentAt.toISOString().slice(0, 10) : null,
+    trackingLog: q.trackingLog.map((t) => ({ ...t, author: t.authorId ? authors.get(t.authorId) ?? '—' : '—', createdAt: t.createdAt.toISOString().slice(0, 10) })),
+  };
+}
+
+/** 일일보고 상세 — 기록 드로어(전문 + 언급 회사명). */
+export async function getReportDetail(id: number) {
+  const r = await prisma.dailyReport.findUnique({
+    where: { id },
+    select: { id: true, date: true, workContent: true, contractPlan: true, activityNote: true, contractAmount: true, owner: { select: { name: true } } },
+  });
+  if (!r) return null;
+  const text = [r.workContent, r.contractPlan, r.activityNote].filter(Boolean).join(' ');
+  const cos = await prisma.company.findMany({ select: { name: true } });
+  const mentioned = cos.map((c) => c.name).filter((n) => n.length >= 2 && text.includes(n));
+  return { ...r, date: r.date.toISOString().slice(0, 10), owner: r.owner?.name ?? '—', mentioned };
+}
+
 /** 잠재 고객 목록(영업 타겟). 전사 공유 — 스코프 무관. */
 export async function getProspects() {
   const rows = await prisma.prospect.findMany({

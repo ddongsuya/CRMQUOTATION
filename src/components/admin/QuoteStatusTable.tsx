@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { fmtWon, fmtPct } from '@/lib/admin/format';
 import { CONCLUSIONS, quoteStatus, statusFromConclusion } from '@/lib/admin/status';
 import CompanyLink from './CompanyLink';
+import { useDrawer } from './DrawerProvider';
 
 export type Row = {
   id: number; sentAt: string | null; quoteNumber: string; testStandard: string | null;
@@ -18,6 +19,7 @@ async function patch(id: number, body: Record<string, unknown>) {
 }
 
 export default function QuoteStatusTable({ rows: initial }: { rows: Row[] }) {
+  const { openQuote } = useDrawer();
   const [rows, setRows] = useState(initial);
   const setRow = (id: number, patchObj: Partial<Row>) => setRows((rs) => rs.map((r) => (r.id === id ? { ...r, ...patchObj } : r)));
 
@@ -57,7 +59,7 @@ export default function QuoteStatusTable({ rows: initial }: { rows: Row[] }) {
             return (
               <tr key={r.id} className="border-b border-slate-100 hover:bg-slate-50 align-top">
                 <td className={`${td} whitespace-nowrap text-ink-body tabular-nums`}>{r.sentAt ?? '—'}</td>
-                <td className={`${td} whitespace-nowrap mono-no`}>{r.quoteNumber}</td>
+                <td className={`${td} whitespace-nowrap`}><button onClick={() => openQuote(r.id)} className="mono-no hover:underline" title="견적 상세">{r.quoteNumber}</button></td>
                 <td className={`${td} whitespace-nowrap`}>{r.testStandard ? <span className="tag">{r.testStandard}</span> : '—'}</td>
                 <td className={`${td} text-ink font-medium max-w-[280px]`}><span className="line-clamp-2" title={r.projectName}>{r.projectName}</span></td>
                 <td className={`${td} whitespace-nowrap`}>{r.customerCompany

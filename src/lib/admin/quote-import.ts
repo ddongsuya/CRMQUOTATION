@@ -88,6 +88,7 @@ export async function importQuoteRows(prisma: PrismaClient, rows: RawRow[], impo
       const grand = total != null ? Math.round(total * (1 - discount) * 1.1) : null;
       const data = {
         userId: ownerId,
+        companyId: companyId ?? undefined,      // FK 자동 연결
         createdAt: sentDate ?? undefined,
         customerCompany: company || null,
         customerName: contactName,

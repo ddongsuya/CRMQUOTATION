@@ -128,12 +128,14 @@ model Company {
   owner       User      @relation(fields: [ownerId], references: [id])
   ownerId     Int
   name        String
+  aliases     String?                          // 표기 변형(쉼표 구분: "㈜충청바이오텍,충청바이오") — 기록 매칭용
   bizRegNo    String?                          // 사업자등록번호
   industry    String?
   address     String?
   isNewClient Boolean   @default(true)          // 첫 거래 여부 (등록 완료 시 false)
   memo        String?
   contacts    Contact[]
+  quotes      Quote[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -270,6 +272,9 @@ model Quote {
   // CRM: 안건 연결 (Phase 1) + 견적 생애주기
   deal                Deal?      @relation(fields: [dealId], references: [id])
   dealId              Int?
+  // 고객사 FK — customerCompany(문자열)의 정본 연결. 임포트/저장 시 자동 매칭.
+  company             Company?   @relation(fields: [companyId], references: [id])
+  companyId           Int?
   sentAt              DateTime?                    // 견적 송부일
   reviewedAt          DateTime?                    // 의뢰자 검토일
   accepted            Boolean?                     // 진행 수락 여부
@@ -315,6 +320,7 @@ model Quote {
   grandTotal          Float?
 
   items               QuoteItem[]
+  trackingLog         QuoteTracking[]
 
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
@@ -322,6 +328,21 @@ model Quote {
   @@index([userId])
   @@index([status])
   @@index([dealId])
+  @@index([companyId])
+}
+
+// 견적 추적 이력 — 결론/상태 변경을 누적(임정모 시트의 '추적 관찰' 본질). 견적 드로어 타임라인.
+model QuoteTracking {
+  id        Int      @id @default(autoincrement())
+  quote     Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  quoteId   Int
+  conclusion String?                             // 그 시점 결론(통제 어휘)
+  status    String?                              // 파생 상태
+  note      String?                              // 자유 메모
+  authorId  Int?                                 // 작성자(User)
+  createdAt DateTime @default(now())
+
+  @@index([quoteId])
 }
 
 model QuoteItem {
