@@ -21,8 +21,10 @@ type Contact = { id: number; name: string; email: string | null; phone: string |
 type Company = { id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null; isNewClient: boolean; memo: string | null; contacts: Contact[] };
 
 type DealMeta = { dealId: number; dealTitle: string; modality: string | null; stage: string };
+type QuoteRow = { id: number; quoteNumber: string; status: string; grandTotal: number | null; createdAt: string; dealId: number | null; dealTitle: string; modality: string | null; contactId: number | null };
 type Agg = {
   kpi: { quoteCount: number; quoteAmount: number; wonAmount: number; dealCount: number; activeDeals: number; activeStudies: number };
+  quotes: QuoteRow[];
   deals: (DealMeta & { id: number; title: string; status: string; updatedAt: string; contactName: string; quoteCount: number; quoteAmount: number })[];
   contracts: (Contract & DealMeta)[];
   studies: (Study & DealMeta)[];
@@ -368,7 +370,17 @@ function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt;
   const [open, setOpen] = useState(false);
   const [dealId, setDealId] = useState<number | ''>('');
   const [busy, setBusy] = useState(false);
+  const [convId, setConvId] = useState<number | null>(null);
   const noContractDeals = deals.filter(d => !(agg?.contracts ?? []).some(c => c.dealId === d.id));
+  // 딜 없는 견적(임포트) → 계약 전환 대상
+  const convertible = (agg?.quotes ?? []).filter((q) => !q.dealId && q.status !== 'REJECTED');
+  const convert = async (qid: number) => {
+    setConvId(qid);
+    const res = await fetch(`/api/crm/quotes/${qid}/to-contract`, { method: 'POST' });
+    setConvId(null);
+    if (res.ok) { toast.success('계약으로 전환 — 안건·계약 생성됨. 시험·노트 탭에서 이어서 관리하세요.'); reload(); }
+    else toast.error('전환 실패');
+  };
   const start = async () => {
     if (!dealId) { toast.error('안건을 선택하세요.'); return; }
     setBusy(true);
@@ -386,6 +398,23 @@ function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt;
           <div className="flex gap-2">
             <DealSelect deals={noContractDeals} value={dealId} onChange={setDealId} />
             <button onClick={start} disabled={busy} className="btn-primary text-sm shrink-0">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 시작</button>
+          </div>
+        </div>
+      )}
+      {convertible.length > 0 && (
+        <div className="mb-4 rounded-xl border border-brand-200 bg-brand-50/40 p-3">
+          <p className="text-[12px] font-medium text-ink mb-2">견적에서 계약 전환 <span className="text-ink-subtle font-normal">· 송부한 견적을 계약으로</span></p>
+          <div className="space-y-1.5">
+            {convertible.slice(0, 8).map((q) => (
+              <div key={q.id} className="flex items-center gap-2 text-sm">
+                <span className="font-mono text-[12px] text-brand-600 w-28 flex-shrink-0 truncate">{q.quoteNumber}</span>
+                <span className="flex-1 min-w-0 text-ink-muted truncate">{q.modality ?? ''}</span>
+                <span className="text-[13px] font-semibold text-ink tabular-nums flex-shrink-0">{q.grandTotal ? fmtWon(q.grandTotal) : '—'}</span>
+                <button onClick={() => convert(q.id)} disabled={convId === q.id} className="btn-ghost text-xs shrink-0">
+                  {convId === q.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileSignature className="w-3.5 h-3.5" />} 계약 전환
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       )}
