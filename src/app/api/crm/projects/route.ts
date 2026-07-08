@@ -43,5 +43,24 @@ export async function GET(req: Request) {
       })),
     };
   });
+
+  // 계약 체결(ACCEPTED) 임포트 견적 = 진행 시험(Deal 없이 companyId 직결). 프로젝트로 합류.
+  const wonQuotes = await prisma.quote.findMany({
+    where: {
+      userId: { in: owners }, status: 'ACCEPTED', dealId: null, companyId: { not: null },
+      ...(companyId ? { companyId: Number(companyId) } : {}),
+    },
+    select: { id: true, quoteNumber: true, projectName: true, modality: true, grandTotal: true, sentAt: true, createdAt: true, company: { select: { id: true, name: true } } },
+    orderBy: { sentAt: 'desc' },
+  });
+  for (const q of wonQuotes) {
+    projects.push({
+      id: -q.id, title: q.projectName, modality: q.modality, stage: 'STUDY', status: 'WON',
+      companyId: q.company!.id, companyName: q.company!.name, contactName: '—',
+      contractStatus: 'SIGNED', contractNumber: null, signedAt: q.sentAt,
+      quoteId: q.id, quoteNumber: q.quoteNumber, amount: q.grandTotal,
+      studyCount: 0, studies: [],
+    });
+  }
   return NextResponse.json({ projects });
 }

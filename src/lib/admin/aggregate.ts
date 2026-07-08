@@ -304,17 +304,19 @@ export async function companyNames(): Promise<string[]> {
 
 /** 회사(고객사)명 기준 관련 항목 집계 — 드로어·상세 페이지 공용. */
 export async function getCompanyDetail(name: string) {
-  const [company, quotes, reports, prospect] = await Promise.all([
-    prisma.company.findFirst({
-      where: { name },
-      select: {
-        industry: true, memo: true, isNewClient: true,
-        owner: { select: { name: true, center: { select: { name: true } } } },
-        contacts: { select: { name: true, position: true, email: true, phone: true } },
-      },
-    }),
+  // 회사 먼저 조회 → 견적은 companyId(FK) OR 이름으로 매칭(표기 변형까지 견고하게)
+  const company = await prisma.company.findFirst({
+    where: { name },
+    select: {
+      id: true, industry: true, memo: true, isNewClient: true,
+      owner: { select: { name: true, center: { select: { name: true } } } },
+      contacts: { select: { name: true, position: true, email: true, phone: true } },
+    },
+  });
+  const quoteWhere = company ? { OR: [{ companyId: company.id }, { customerCompany: name }] } : { customerCompany: name };
+  const [quotes, reports, prospect] = await Promise.all([
     prisma.quote.findMany({
-      where: { customerCompany: name },
+      where: quoteWhere,
       orderBy: { sentAt: 'desc' },
       select: { id: true, quoteNumber: true, sentAt: true, projectName: true, grandTotal: true, status: true, trackingNote: true, testStandard: true, submissionPurpose: true, discountRate: true },
     }),
