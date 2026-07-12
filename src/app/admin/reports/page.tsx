@@ -2,6 +2,7 @@ import { getViewMode, getCurrentUser } from '@/lib/admin/view';
 import { parseScope, getDailyReports, companyNames, listCenters } from '@/lib/admin/aggregate';
 import AdminHeader from '@/components/admin/AdminHeader';
 import QuoteUploadButton from '@/components/admin/QuoteUploadButton';
+import AddReportButton from '@/components/admin/AddReportButton';
 import DailyReportList, { type Report } from '@/components/admin/DailyReportList';
 
 export const dynamic = 'force-dynamic';
@@ -23,7 +24,10 @@ export default async function AdminReports({ searchParams }: { searchParams: SP 
 
       <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
         <p className="text-[13px] text-ink-subtle">날짜별 업무 일지 · 본문의 <b className="text-ink-body">고객사명</b>은 해당 견적으로 연결됩니다.</p>
-        <QuoteUploadButton endpoint="/api/admin/reports/import" label="일일보고 업로드" />
+        <div className="flex items-center gap-2">
+          <QuoteUploadButton endpoint="/api/admin/reports/import" label="일일보고 업로드" />
+          <AddReportButton />
+        </div>
       </div>
 
       <DailyReportList reports={rows} companyNames={names} />

@@ -156,6 +156,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
               </div>
             </div>
             <div className="flex items-center gap-1.5 shrink-0">
+              <Link href={`/quote-v2?company=${encodeURIComponent(c.name)}`} className="btn-primary text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 이 고객으로 견적</Link>
               <Link href={`/gantt?company=${c.id}`} className="btn-outline text-xs"><GanttChartSquare className="w-3.5 h-3.5" /> 시험 일정 보기</Link>
               <Link href={`/customers/${c.id}`} className="btn-ghost text-xs">전체 관리 <ArrowRight className="w-3.5 h-3.5" /></Link>
             </div>

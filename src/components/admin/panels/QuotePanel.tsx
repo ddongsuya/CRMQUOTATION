@@ -30,6 +30,17 @@ export default function QuotePanel({ id }: { id: number }) {
     await fetch(`/api/admin/quotes/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ trackingNote: val, status: statusFromConclusion(val) }) });
     setSaving(false); load();
   };
+  const patchField = async (body: Record<string, unknown>) => {
+    await fetch(`/api/admin/quotes/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    load();
+  };
+  const convert = async () => {
+    if (!confirm('이 견적을 계약으로 전환할까요? 안건·계약이 생성됩니다.')) return;
+    setSaving(true);
+    const res = await fetch(`/api/crm/quotes/${id}/to-contract`, { method: 'POST' });
+    setSaving(false);
+    if (res.ok) { await changeConclusion('계약 체결'); }
+  };
 
   if (!d) return <div className="px-5 py-4"><Loading /></div>;
   const st = quoteStatus(d.status);
@@ -67,8 +78,12 @@ export default function QuotePanel({ id }: { id: number }) {
           {d.testStandard && <KV k="시험기준" v={d.testStandard} />}
           {d.submissionPurpose && <KV k="제출용도" v={d.submissionPurpose} />}
           {d.substanceType && <KV k="물질종류" v={d.substanceType} />}
-          {d.contractNo && <KV k="계약번호" v={d.contractNo} />}
-          {d.contractAmount != null && <KV k="계약금액" v={fmtWon(d.contractAmount)} />}
+          <div className="flex gap-2 text-[13px] items-center"><span className="w-20 text-ink-muted flex-shrink-0">계약번호</span>
+            <input defaultValue={d.contractNo ?? ''} onBlur={(e) => { if (e.target.value !== (d.contractNo ?? '')) patchField({ contractNo: e.target.value }); }}
+              placeholder="미정" className="flex-1 text-[13px] rounded-md border border-slate-200 px-2 py-1" /></div>
+          <div className="flex gap-2 text-[13px] items-center"><span className="w-20 text-ink-muted flex-shrink-0">계약금액</span>
+            <input type="number" defaultValue={d.contractAmount ?? ''} onBlur={(e) => { const n = Number(e.target.value); if (n !== (d.contractAmount ?? 0)) patchField({ contractAmount: n }); }}
+              placeholder="원" className="flex-1 text-[13px] rounded-md border border-slate-200 px-2 py-1 tabular-nums" /></div>
         </div>
       </Section>
 
@@ -87,6 +102,9 @@ export default function QuotePanel({ id }: { id: number }) {
         ) : <div className="text-[13px] text-ink-subtle">이력 없음</div>}
       </Section>
 
+      {d.status !== 'ACCEPTED' && (
+        <button onClick={convert} disabled={saving} className="btn-primary w-full"><Icon name="check" className="w-4 h-4" /> 계약으로 전환</button>
+      )}
       <div className="flex gap-2">
         {d.customerCompany && <button onClick={() => openCompany(d.customerCompany!)} className="btn-ghost flex-1 justify-center"><Icon name="users" className="w-4 h-4" /> 이 회사</button>}
         <Link href={`/quote/print?id=${d.id}`} target="_blank" className="btn-ghost flex-1 justify-center"><Icon name="arrow-right" className="w-4 h-4" /> 견적서</Link>

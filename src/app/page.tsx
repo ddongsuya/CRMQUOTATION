@@ -3,6 +3,9 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { ensureHydrated } from '@/lib/hydrate';
+import { currentUserId } from '@/lib/current-user';
+import { getFollowups } from '@/lib/admin/aggregate';
+import FollowupCard, { type Followup } from '@/components/admin/FollowupCard';
 
 // 통계·목록을 매 요청 갱신 (런타임 DB 반영). 정적 프리렌더 금지.
 export const dynamic = 'force-dynamic';
@@ -26,7 +29,9 @@ export default async function Home() {
   let dueStudies: { id: number; name: string; company: string; dueAt: string; duration: string }[] = [];
   let monthly: { label: string; amount: number }[] = [];
   let activity: { id: string; kind: string; text: string; sub: string; at: string; href: string | null }[] = [];
+  let followups: Followup[] = [];
   try {
+    followups = (await getFollowups({ kind: 'user', userId: await currentUserId() }, new Date(), 14)) as Followup[];
     // 진행 중 견적(작성·발행·발송) — 좌측 리스트
     quotes = await prisma.quote.findMany({
       where: { status: { in: ['DRAFT', 'ISSUED', 'SENT'] } },
@@ -100,6 +105,10 @@ export default async function Home() {
         <StatCard label="수주 금액" value={fmtM(kpi.wonAmt)} note={`수주율 ${kpi.wonRate}%`} invert />
         <StatCard label="진행 시험" value={`${kpi.runningStudies}`} unit="건" note="보고서안 발행 전" />
       </div>
+
+      {/* 팔로업 필요 — 송부 후 14일+ 미결 견적 (클릭 → 견적 드로어) */}
+      <FollowupCard rows={followups} />
+
 
       {/* 진행 중 견적 (459) | 마감 임박 시험 (306) */}
       <div className="grid lg:grid-cols-5 gap-4">

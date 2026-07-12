@@ -97,6 +97,12 @@ export default function QuoteV2Page() {
 
   useEffect(() => { fetch('/api/quote-v2').then(r => r.json()).then((m: Meta) => { setMeta(m); const c = new URLSearchParams(window.location.search).get('category'); if (c && m.categories?.includes(c)) setCategory(c); }); }, []);
   useEffect(() => { const d = new URLSearchParams(window.location.search).get('dealId'); if (d) setDealId(Number(d)); }, []);
+  // 고객 컨텍스트 프리필 — /customers·고객 상세에서 "이 고객으로 견적"
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    const co = sp.get('company'); const nm = sp.get('customerName');
+    if (co || nm) setCust(c => ({ ...c, company: co ?? c.company, name: nm ?? c.name }));
+  }, []);
 
   const buildPlan = () => ({
     durations: [...durations], species, addons,

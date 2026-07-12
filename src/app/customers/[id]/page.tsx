@@ -121,6 +121,7 @@ export default function CompanyDetailPage() {
           </div>
           <div className="flex items-center gap-1.5 flex-shrink-0">
             <button onClick={() => setEditCompany(true)} className="btn-outline text-xs"><Pencil className="w-3.5 h-3.5" /> 수정</button>
+            <Link href={`/quote-v2?company=${encodeURIComponent(company.name)}`} className="btn-outline text-xs"><Receipt className="w-3.5 h-3.5" /> 견적</Link>
             {firstContactId && <button onClick={() => setDealModal({ contactId: firstContactId })} className="btn-primary text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 안건</button>}
           </div>
         </div>
