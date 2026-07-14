@@ -67,9 +67,12 @@ export type PrintData = {
   terms?: string[];
   /** 표지 부제 override — 미지정 시 "시험물질 · {substanceName}" */
   subtitle?: string;
+  /** 견적 명세(p.2)와 항목 상세 사이에 끼워 넣는 페이지들 (효력: 시험 설계 — 타임라인·군구성·엔드포인트) */
+  designPages?: Array<{ title: string; content: React.ReactNode }>;
 };
 
 export default function PrintLayout({ data }: { data: PrintData }) {
+  const designPages = data.designPages ?? [];
   const symbol = data.settings.currency === 'USD' ? '$' : '₩';
   const fmt = (n: number) => `${symbol}${n.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
   const issuedStr = data.meta.issuedAt.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -274,13 +277,21 @@ export default function PrintLayout({ data }: { data: PrintData }) {
         </div>
       </section>
 
+      {/* ─────────── PAGE 3: 시험 설계 (효력 전용, 있을 때만) ─────────── */}
+      {designPages.map((d, i) => (
+        <section className="page page-break" key={`des-${i}`}>
+          <PageHeader title={d.title} quoteNo={data.meta.quoteNo} pageNum={3 + i} />
+          {d.content}
+        </section>
+      ))}
+
       {/* ─────────── PAGE 3+: 항목별 상세 ─────────── */}
       {/* 상세는 A4 페이지 단위로 분할 — 화면도 인쇄처럼 페이지별로 보이고, 카드는 페이지 경계서 안 잘림 */}
       {detailPages.map((pageItems, p) => {
         const startNo = detailPages.slice(0, p).reduce((s, pg) => s + pg.length, 0);
         return (
           <section className="page page-break" key={`det-${p}`}>
-            <PageHeader title={`시험 항목 상세 안내${detailPages.length > 1 ? ` (${p + 1}/${detailPages.length})` : ''}`} quoteNo={data.meta.quoteNo} pageNum={3 + p} />
+            <PageHeader title={`시험 항목 상세 안내${detailPages.length > 1 ? ` (${p + 1}/${detailPages.length})` : ''}`} quoteNo={data.meta.quoteNo} pageNum={3 + designPages.length + p} />
             <div className="details-list">
               {pageItems.map(({ line, detail }, j) => (
                 <DetailCard key={j} line={line} detail={detail} no={startNo + j + 1} symbol={symbol} />

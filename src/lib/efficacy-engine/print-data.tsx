@@ -5,6 +5,7 @@
 import type { PrintData } from '@/app/quote/print/_components/PrintLayout';
 import type { EffState } from '@/app/quote-efficacy/_lib/state';
 import { dosingWeeks, findModel, groupTotal, totalAnimalsOf, totalDaysOf } from '@/app/quote-efficacy/_lib/state';
+import { DesignEndpoints, DesignGroups, DesignLegend, DesignTimeline } from './DesignSection';
 import { DOSE_FREQ } from './constants';
 
 /** 견적 라인 — 위저드는 엔진 산출 CostItem, 재출력은 저장된 QuoteItem 스냅샷에서 만든다. */
@@ -111,8 +112,31 @@ export function buildEfficacyPrintData({
     usedKeys.add(key);
   });
 
+  // 시험 설계 페이지 — 명세(p.2) 뒤에 배치. 엔드포인트가 많으면 잘리지 않도록 2페이지로 분리.
+  const manyEndpoints = s.endpoints.length > 8;
+  const designPages: PrintData['designPages'] = [
+    {
+      title: manyEndpoints ? '시험 설계 (1/2) · 타임라인 · 군 구성' : '시험 설계 · 타임라인 · 군 구성 · 엔드포인트',
+      content: (
+        <>
+          <DesignTimeline s={s} />
+          <DesignLegend s={s} />
+          <DesignGroups s={s} />
+          {!manyEndpoints && <DesignEndpoints s={s} m={m} />}
+        </>
+      ),
+    },
+  ];
+  if (manyEndpoints) {
+    designPages.push({
+      title: '시험 설계 (2/2) · 엔드포인트 · 평가 스케줄',
+      content: <DesignEndpoints s={s} m={m} />,
+    });
+  }
+
   return {
     meta: { quoteNo, issuedAt, validUntilDays: 60 },
+    designPages,
     project: {
       projectName: s.client.projectName || `${modelTitle} 효력시험`,
       substanceName: s.client.substanceName,
