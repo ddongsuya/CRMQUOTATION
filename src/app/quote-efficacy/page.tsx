@@ -192,29 +192,31 @@ export default function QuoteEfficacyPage() {
 
   return (
     <div className="animate-fade-in">
-      {/* 상단 툴바 (스텝 4에서는 문서 위 액션) */}
-      <div className="flex items-center justify-end gap-2 mb-3 no-print">
-        {s.step === 3 && (
-          <button onClick={() => patch({ editorOpen: !s.editorOpen })}
-            className="inline-flex items-center gap-[7px] h-[34px] px-[13px] rounded-full text-[13px] font-semibold cursor-pointer transition-colors"
-            style={{
-              border: `1px solid ${s.editorOpen ? 'var(--accent)' : 'var(--hairline)'}`,
-              background: s.editorOpen ? 'rgba(245,129,31,.1)' : 'var(--card)',
-              color: s.editorOpen ? 'var(--accent-press)' : 'var(--muted)',
-            }}>
-            <Icon name="settings" className="w-4 h-4" /> 편집 도구
-          </button>
-        )}
-        {s.step === 4 && (
+      {/* 스테퍼 + 액션이 한 바에 묶여 화면 최상단에 고정(엑셀 틀 고정) */}
+      <Stepper
+        step={s.step} modelId={s.modelId} onGo={goStep}
+        actions={
           <>
-            <button onClick={() => goStep(3)} className="btn-ghost"><Icon name="chevron-left" className="w-4 h-4" /> 시험 설계로</button>
-            <button onClick={save} disabled={saving} className="btn-ghost">{saving ? '저장 중…' : savedId ? '재저장' : '견적 저장'}</button>
-            <button onClick={() => window.print()} className="btn-primary"><Icon name="arrow-right" className="w-4 h-4" /> PDF 저장</button>
+            {s.step === 3 && (
+              <button onClick={() => patch({ editorOpen: !s.editorOpen })}
+                className="inline-flex items-center gap-[7px] h-[34px] px-[13px] rounded-full text-[13px] font-semibold cursor-pointer transition-colors"
+                style={{
+                  border: `1px solid ${s.editorOpen ? 'var(--accent)' : 'var(--hairline)'}`,
+                  background: s.editorOpen ? 'rgba(245,129,31,.1)' : 'var(--card)',
+                  color: s.editorOpen ? 'var(--accent-press)' : 'var(--muted)',
+                }}>
+                <Icon name="settings" className="w-4 h-4" /> 편집 도구
+              </button>
+            )}
+            {s.step === 4 && (
+              <>
+                <button onClick={save} disabled={saving} className="btn-ghost">{saving ? '저장 중…' : savedId ? '재저장' : '견적 저장'}</button>
+                <button onClick={() => window.print()} className="btn-primary"><Icon name="arrow-right" className="w-4 h-4" /> PDF 저장</button>
+              </>
+            )}
           </>
-        )}
-      </div>
-
-      <Stepper step={s.step} modelId={s.modelId} onGo={goStep} />
+        }
+      />
 
       <div className="pt-6 transition-[padding] duration-200" style={dockOpen ? { paddingRight: 412 } : undefined}>
         {s.step === 1 && (
