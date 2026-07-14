@@ -8,6 +8,8 @@ import { useSearchParams } from 'next/navigation';
 import { useWizard } from '@/lib/store';
 import { toast } from '@/lib/toast';
 import PrintLayout, { type PrintData } from './_components/PrintLayout';
+import { buildEfficacyPrintData, linesFromQuoteItems } from '@/lib/efficacy-engine/print-data';
+import type { EffState } from '@/app/quote-efficacy/_lib/state';
 import './print.css';
 
 /**
@@ -28,6 +30,7 @@ function PrintPage() {
   const params = useSearchParams();
   const quoteId = params.get('id');
   const [data, setData] = useState<PrintData | null>(null);
+  const [editHref, setEditHref] = useState<string | null>(null);   // 시험 유형별 위저드로 되돌아가 수정
   // 모바일 화면 미리보기 — A4(210mm) 페이지를 화면폭에 맞춰 축소(인쇄 시엔 원본 유지)
   const innerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -55,9 +58,31 @@ function PrintPage() {
         try {
           const qRes = await fetch(`/api/quotes/${quoteId}`).then(r => r.json());
           const q = qRes.quote;
+          let plan: Record<string, unknown> = {};
+          try { plan = JSON.parse(q.planJson ?? '{}'); } catch { /* noop */ }
+
+          // 효력시험 견적: 저장된 항목을 라인으로, planJson의 설계 상태를 표지·상세로 재조립.
+          // 위저드 STEP4와 동일한 빌더를 사용해 문서가 어긋나지 않게 한다.
+          if (q.studyType === 'efficacy' || plan.engine === 'efficacy') {
+            setEditHref(`/quote-efficacy?id=${q.id}`);
+            setData(buildEfficacyPrintData({
+              state: plan as unknown as EffState,
+              lines: linesFromQuoteItems(q.items),
+              totals: {
+                totalBeforeDiscount: q.totalBeforeDiscount ?? 0,
+                discountAmount: (q.totalBeforeDiscount ?? 0) - (q.totalAfterDiscount ?? 0),
+                totalAfterDiscount: q.totalAfterDiscount ?? 0,
+                vatAmount: q.vatAmount ?? 0,
+                grandTotal: q.grandTotal ?? 0,
+              },
+              quoteNo: q.quoteNumber,
+              issuedAt: q.issuedAt ? new Date(q.issuedAt) : new Date(q.createdAt),
+            }));
+            return;
+          }
+
           // 견적 엔진 v2 견적: 저장된 항목(권위 스냅샷)을 직접 렌더 (구 엔진 재평가 불가 — 새 마스터 키)
-          let isV2 = false;
-          try { isV2 = JSON.parse(q.planJson ?? '{}').engine === 'v2'; } catch { /* noop */ }
+          const isV2 = plan.engine === 'v2';
           if (isV2) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const lines = (q.items as any[]).map((it) => ({
@@ -182,6 +207,9 @@ function PrintPage() {
       <div className="fixed top-4 right-4 z-50 no-print flex items-center gap-2">
         <Link href="/" className="btn-ghost"><Icon name="chevron-left" className="w-4 h-4" /> <span className="hidden sm:inline">대시보드</span></Link>
         <Link href="/quotes" className="btn-ghost"><Icon name="list" className="w-4 h-4" /> <span className="hidden sm:inline">견적 목록</span></Link>
+        {editHref && (
+          <Link href={editHref} className="btn-ghost"><Icon name="notebook" className="w-4 h-4" /> <span className="hidden sm:inline">수정</span></Link>
+        )}
         <button onClick={() => window.print()} className="btn-primary">
           <Printer className="w-4 h-4" /> <span className="hidden sm:inline">인쇄 / PDF 저장</span><span className="sm:hidden">인쇄</span>
         </button>

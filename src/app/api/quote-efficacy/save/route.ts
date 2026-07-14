@@ -49,7 +49,7 @@ export async function POST(req: Request) {
   }
 
   const itemRows = cost.items.map((it, i) => ({
-    testItemKey: `EFF_${it.category}_${i}`,
+    testItemKey: `EFF-${i}`,
     testNameSnapshot: it.name,
     adminRouteSnap: s.params.route,
     category: it.category,

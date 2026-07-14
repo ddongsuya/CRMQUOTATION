@@ -384,7 +384,7 @@ export async function getQuoteDetail(id: number) {
     where: { id },
     select: {
       id: true, quoteNumber: true, sentAt: true, projectName: true, customerCompany: true, customerName: true, customerPhone: true, customerEmail: true,
-      testStandard: true, submissionPurpose: true, substanceType: true, modality: true,
+      studyType: true, testStandard: true, submissionPurpose: true, substanceType: true, modality: true,
       totalBeforeDiscount: true, discountRate: true, grandTotal: true, contractNo: true, contractAmount: true,
       status: true, trackingNote: true,
       trackingLog: { orderBy: { createdAt: 'desc' }, select: { id: true, conclusion: true, status: true, note: true, createdAt: true, authorId: true } },

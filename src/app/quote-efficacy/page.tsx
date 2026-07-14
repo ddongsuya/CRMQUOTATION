@@ -42,8 +42,31 @@ export default function QuoteEfficacyPage() {
       })
       .catch(() => setCompanies([]));
 
-    // 고객 컨텍스트 프리필 — 독성 모듈과 동일 (/customers "이 고객으로 견적", 안건 연동)
     const sp = new URLSearchParams(window.location.search);
+
+    // 저장된 견적 다시 열기 — 견적 목록·견적서에서 "수정"으로 진입
+    const id = sp.get('id');
+    if (id) {
+      fetch(`/api/quotes/${id}`)
+        .then((r) => r.json())
+        .then(({ quote }) => {
+          if (!quote?.planJson) throw new Error('견적을 불러올 수 없습니다.');
+          const plan = JSON.parse(quote.planJson) as Partial<EffState> & { engine?: string };
+          if (plan.engine !== 'efficacy' || !plan.modelId) {
+            toast.error('효력시험 견적이 아닙니다. 독성 견적은 독성 모듈에서 수정하세요.');
+            return;
+          }
+          setS({ ...INITIAL, ...plan, step: 3, selIdx: 0 } as EffState);
+          setSavedId(quote.id);
+          setQuoteNo(quote.quoteNumber);
+          setIssueDate(quote.issuedAt ? new Date(quote.issuedAt) : new Date(quote.createdAt));
+          if (quote.dealId) setDealId(quote.dealId);
+        })
+        .catch(() => toast.error('견적을 불러오지 못했습니다.'));
+      return;
+    }
+
+    // 고객 컨텍스트 프리필 — 독성 모듈과 동일 (/customers "이 고객으로 견적", 안건 연동)
     const d = sp.get('dealId');
     if (d) setDealId(Number(d));
     const co = sp.get('company');
@@ -209,7 +232,7 @@ export default function QuoteEfficacyPage() {
         {s.step === 3 && <Step3Design s={s} m={m} grandTotal={q.vat} h={handlers} />}
 
         {s.step === 4 && (
-          <Step4Quote s={s} m={m} items={cost.items} q={q} quoteNo={quoteNo} issueDate={issueDate} />
+          <Step4Quote s={s} items={cost.items} q={q} quoteNo={quoteNo} issueDate={issueDate} />
         )}
 
         {/* 하단 내비 */}

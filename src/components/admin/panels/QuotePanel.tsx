@@ -11,7 +11,7 @@ import { Stat, Section, KV, Loading } from './_shared';
 type QD = {
   id: number; quoteNumber: string; sentAt: string | null; projectName: string; customerCompany: string | null;
   customerName: string | null; customerPhone: string | null; customerEmail: string | null;
-  testStandard: string | null; submissionPurpose: string | null; substanceType: string | null; modality: string;
+  studyType: string; testStandard: string | null; submissionPurpose: string | null; substanceType: string | null; modality: string;
   totalBeforeDiscount: number | null; discountRate: number; grandTotal: number | null; contractNo: string | null; contractAmount: number | null;
   status: string; trackingNote: string | null;
   trackingLog: { id: number; conclusion: string | null; status: string | null; note: string | null; createdAt: string; author: string }[];
@@ -108,6 +108,9 @@ export default function QuotePanel({ id }: { id: number }) {
       <div className="flex gap-2">
         {d.customerCompany && <button onClick={() => openCompany(d.customerCompany!)} className="btn-ghost flex-1 justify-center"><Icon name="users" className="w-4 h-4" /> 이 회사</button>}
         <Link href={`/quote/print?id=${d.id}`} target="_blank" className="btn-ghost flex-1 justify-center"><Icon name="arrow-right" className="w-4 h-4" /> 견적서</Link>
+        {d.studyType === 'efficacy' && (
+          <Link href={`/quote-efficacy?id=${d.id}`} className="btn-ghost flex-1 justify-center"><Icon name="notebook" className="w-4 h-4" /> 수정</Link>
+        )}
       </div>
     </div>
   );

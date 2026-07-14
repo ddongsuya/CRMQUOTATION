@@ -12,6 +12,7 @@ type QuoteRow = {
   quoteNumber: string;
   projectName: string;
   customerCompany: string | null;
+  studyType: string;
   modality: string;
   status: string;
   grandTotal: number | null;
@@ -72,7 +73,7 @@ export default function QuotesListPage() {
           <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">견적 목록</h1>
           <p className="text-subhead text-ink-body mt-2">발행·발송·수주 상태를 한눈에 추적하세요.</p>
         </div>
-        <Link href="/quote-v2" className="btn-primary"><Icon name="plus" className="w-4 h-4" /> 새 견적 작성</Link>
+        <Link href="/quote/start" className="btn-primary"><Icon name="plus" className="w-4 h-4" /> 새 견적 작성</Link>
       </div>
 
       {/* 통계 4카드 — 아이콘 없음, 수주 금액 블랙 반전(#000) */}
@@ -96,7 +97,7 @@ export default function QuotesListPage() {
       ) : filtered.length === 0 ? (
         <div className="card p-12 text-center">
           <div className="text-sm text-ink-muted font-medium">{quotes.length === 0 ? '저장된 견적이 없습니다.' : '조건에 맞는 견적이 없습니다.'}</div>
-          {quotes.length === 0 && <Link href="/quote-v2" className="btn-primary mt-4 inline-flex"><Icon name="plus" className="w-4 h-4" /> 첫 견적 작성하기</Link>}
+          {quotes.length === 0 && <Link href="/quote/start" className="btn-primary mt-4 inline-flex"><Icon name="plus" className="w-4 h-4" /> 첫 견적 작성하기</Link>}
         </div>
       ) : (
         <div className="card overflow-hidden">
@@ -117,7 +118,14 @@ export default function QuotesListPage() {
                     <div className="w-[132px] flex-shrink-0 text-[13px] font-medium text-brand-600 font-mono tabular-nums whitespace-nowrap">{qr.quoteNumber}</div>
                     <div className="flex-1 min-w-0 pr-3">
                       <div className="text-[16px] text-ink truncate">{qr.customerCompany || qr.projectName}</div>
-                      <div className="text-[12px] text-ink-subtle truncate">{qr.modality}</div>
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <span className="pill flex-shrink-0" style={qr.studyType === 'efficacy'
+                          ? { background: 'var(--accent-tint)', color: 'var(--accent-press)' }
+                          : { background: 'var(--card-cream)', color: 'var(--muted)' }}>
+                          {qr.studyType === 'efficacy' ? '효력' : '독성'}
+                        </span>
+                        <span className="text-[12px] text-ink-subtle truncate">{qr.modality}</span>
+                      </div>
                     </div>
                     <div className="w-[84px] flex-shrink-0 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body">
                       <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: STATUS_DOT[qr.status] ?? 'var(--muted-soft)' }} />

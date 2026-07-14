@@ -14,15 +14,21 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
 
   const q = await prisma.quote.findUnique({
     where: { id },
-    select: { id: true, dealId: true, companyId: true, customerCompany: true, customerName: true, customerEmail: true, customerPhone: true, projectName: true, modality: true, submissionPurpose: true },
+    select: {
+      id: true, dealId: true, companyId: true, customerCompany: true, customerName: true, customerEmail: true, customerPhone: true,
+      projectName: true, modality: true, submissionPurpose: true,
+      quoteNumber: true, studyType: true, planJson: true, issuedAt: true, sentAt: true, createdAt: true,
+    },
   });
   if (!q) return NextResponse.json({ error: '견적 없음' }, { status: 404 });
   if (q.dealId) {
-    // 이미 딜 연결 → 계약만 보장
+    // 이미 딜 연결 → 계약·시험만 보장(멱등)
+    const hasStudy = await prisma.study.findFirst({ where: { dealId: q.dealId }, select: { id: true } });
+    const studyId = hasStudy ? hasStudy.id : await createEfficacyStudy(q.dealId, q);
     const existing = await prisma.contract.findUnique({ where: { dealId: q.dealId }, select: { id: true } }).catch(() => null);
-    if (existing) return NextResponse.json({ ok: true, dealId: q.dealId, contractId: existing.id, already: true });
+    if (existing) return NextResponse.json({ ok: true, dealId: q.dealId, contractId: existing.id, studyId, already: true });
     const c = await prisma.contract.create({ data: { dealId: q.dealId, quoteId: q.id, status: 'DRAFT' }, select: { id: true } });
-    return NextResponse.json({ ok: true, dealId: q.dealId, contractId: c.id });
+    return NextResponse.json({ ok: true, dealId: q.dealId, contractId: c.id, studyId });
   }
 
   // 회사 확보(companyId 우선, 없으면 이름으로 조회/생성)
@@ -55,5 +61,35 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
   await prisma.quote.update({ where: { id: q.id }, data: { dealId: deal.id, status: 'ACCEPTED', trackingNote: '계약 체결' } });
   const contract = await prisma.contract.create({ data: { dealId: deal.id, quoteId: q.id, status: 'DRAFT' }, select: { id: true } });
 
-  return NextResponse.json({ ok: true, dealId: deal.id, contractId: contract.id });
+  // 효력 견적은 시험 설계(기간)를 이미 갖고 있다 → 계약 전환 시 Study를 등록해
+  // 시험 일정(간트)에 실제 기간의 막대가 바로 그려지게 한다.
+  const studyId = await createEfficacyStudy(deal.id, q);
+
+  return NextResponse.json({ ok: true, dealId: deal.id, contractId: contract.id, studyId });
+}
+
+type QuoteForStudy = {
+  studyType: string; planJson: string | null; projectName: string; quoteNumber: string;
+  issuedAt: Date | null; sentAt: Date | null; createdAt: Date;
+};
+
+/** planJson.totalWeeks 기준으로 Study 1건 생성. 효력 견적이 아니거나 기간을 모르면 건너뜀. */
+async function createEfficacyStudy(dealId: number, q: QuoteForStudy): Promise<number | null> {
+  if (q.studyType !== 'efficacy') return null;
+  let weeks = 0;
+  try { weeks = Number((JSON.parse(q.planJson ?? '{}') as { totalWeeks?: number }).totalWeeks) || 0; } catch { return null; }
+  if (weeks <= 0) return null;
+
+  const start = q.sentAt ?? q.issuedAt ?? q.createdAt;
+  const study = await prisma.study.create({
+    data: {
+      dealId,
+      itemName: q.projectName,
+      studyNumber: q.quoteNumber,
+      requestSentAt: start,
+      reportDraftDueAt: new Date(start.getTime() + weeks * 7 * 86400_000),
+    },
+    select: { id: true },
+  });
+  return study.id;
 }

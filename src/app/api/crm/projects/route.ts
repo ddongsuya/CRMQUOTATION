@@ -50,16 +50,44 @@ export async function GET(req: Request) {
       userId: { in: owners }, status: 'ACCEPTED', dealId: null, companyId: { not: null },
       ...(companyId ? { companyId: Number(companyId) } : {}),
     },
-    select: { id: true, quoteNumber: true, projectName: true, modality: true, grandTotal: true, sentAt: true, createdAt: true, company: { select: { id: true, name: true } } },
+    select: {
+      id: true, quoteNumber: true, projectName: true, modality: true, grandTotal: true,
+      sentAt: true, issuedAt: true, createdAt: true, studyType: true, planJson: true,
+      company: { select: { id: true, name: true } },
+    },
     orderBy: { sentAt: 'desc' },
   });
+  const DAY = 86400_000;
   for (const q of wonQuotes) {
+    // 효력 견적은 설계된 실제 시험기간(planJson.totalWeeks)이 있으므로 간트 막대를 그릴 수 있는
+    // 시험 행을 합성한다. 독성 견적은 아직 기간 정보가 없어 기존대로 빈 배열.
+    type StudyRow = {
+      id: number; itemName: string | null; studyNumber: string | null; director: string | null;
+      requestSentAt: Date | null; intakeCompletedAt: Date | null;
+      reportDraftDueAt: Date | null; reportDraftIssuedAt: Date | null; createdAt: Date;
+    };
+    const studies: StudyRow[] = [];
+    if (q.studyType === 'efficacy') {
+      try {
+        const plan = JSON.parse(q.planJson ?? '{}') as { totalWeeks?: number };
+        const weeks = Number(plan.totalWeeks) || 0;
+        if (weeks > 0) {
+          const start = q.sentAt ?? q.issuedAt ?? q.createdAt;
+          studies.push({
+            id: -q.id, itemName: q.projectName, studyNumber: q.quoteNumber, director: '—',
+            requestSentAt: start, intakeCompletedAt: null,
+            reportDraftDueAt: new Date(new Date(start).getTime() + weeks * 7 * DAY),
+            reportDraftIssuedAt: null, createdAt: q.createdAt,
+          });
+        }
+      } catch { /* planJson 파싱 실패 시 막대 없이 표기 */ }
+    }
     projects.push({
       id: -q.id, title: q.projectName, modality: q.modality, stage: 'STUDY', status: 'WON',
       companyId: q.company!.id, companyName: q.company!.name, contactName: '—',
       contractStatus: 'SIGNED', contractNumber: null, signedAt: q.sentAt,
       quoteId: q.id, quoteNumber: q.quoteNumber, amount: q.grandTotal,
-      studyCount: 0, studies: [],
+      studyCount: studies.length, studies,
     });
   }
   return NextResponse.json({ projects });
