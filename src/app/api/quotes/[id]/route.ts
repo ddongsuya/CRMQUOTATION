@@ -27,10 +27,9 @@ export async function POST(_req: Request, { params }: Ctx) {
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'bad id' }, { status: 400 });
   const src = await prisma.quote.findUnique({ where: { id }, include: { items: true } });
   if (!src) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  const { nextQuoteNumber } = await import('@/lib/quote-number');
-  const quoteNumber = await nextQuoteNumber();
+  const { createQuoteWithNumber } = await import('@/lib/quote-number');
   const { id: _, items, createdAt: _c, updatedAt: _u, quoteNumber: _q, issuedAt: _i, validUntil: _v, status: _s, ...rest } = src;
-  const dup = await prisma.quote.create({
+  const dup = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
     data: {
       ...rest,
       quoteNumber,
@@ -43,6 +42,6 @@ export async function POST(_req: Request, { params }: Ctx) {
       },
     },
     include: { items: true },
-  });
+  }));
   return NextResponse.json({ quote: dup });
 }

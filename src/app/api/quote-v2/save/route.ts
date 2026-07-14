@@ -4,7 +4,7 @@
  */
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { nextQuoteNumber } from '@/lib/quote-number';
+import { createQuoteWithNumber } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/quote-engine/compose';
@@ -62,7 +62,6 @@ export async function POST(req: Request) {
   }));
 
   const userId = await currentUserId();
-  const quoteNumber = await nextQuoteNumber();
 
   // 신규/기존 고객사 자동 연결 — 견적서에 고객사명이 있으면 CRM(고객관리)에 Company를 find-or-create 하고 companyId FK를 건다.
   // 정규화 매칭으로 표기 변형(㈜·공백 등)을 흡수해 중복 생성을 막는다. 의뢰자가 있으면 Contact도 함께 upsert.
@@ -85,7 +84,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const created = await prisma.quote.create({
+  const created = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
     data: {
       quoteNumber, userId, dealId: b.dealId ?? null, companyId: companyId ?? undefined,
       projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
@@ -100,6 +99,6 @@ export async function POST(req: Request) {
       items: { create: itemRows },
     },
     select: { id: true, quoteNumber: true },
-  });
+  }));
   return NextResponse.json({ quote: created });
 }

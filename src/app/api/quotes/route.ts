@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
-import { nextQuoteNumber } from '@/lib/quote-number';
+import { createQuoteWithNumber } from '@/lib/quote-number';
 import { getItemByKey } from '@/lib/data';
 import { assembleQuoteLines } from '@/engine/assemble';
 import { computeTotals } from '@/engine/pricing';
@@ -164,11 +164,10 @@ export async function POST(req: Request) {
     });
     return NextResponse.json({ quote: updated });
   } else {
-    const quoteNumber = await nextQuoteNumber();
-    const created = await prisma.quote.create({
+    const created = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
       data: { quoteNumber, userId, ...baseData, items: { create: itemRows } },
       include: { items: true },
-    });
+    }));
     return NextResponse.json({ quote: created });
   }
 }

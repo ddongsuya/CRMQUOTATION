@@ -9,7 +9,7 @@
  */
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { nextQuoteNumber } from '@/lib/quote-number';
+import { createQuoteWithNumber } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { buildCompanyIndex, matchCompanyId } from '@/lib/admin/company-match';
 import { computeCost, computeQuote, findModel, totalAnimalsOf, totalDaysOf, type EffState } from '@/app/quote-efficacy/_lib/state';
@@ -97,14 +97,13 @@ export async function POST(req: Request) {
     }
   }
 
-  const quoteNumber = await nextQuoteNumber();
-  const created = await prisma.quote.create({
+  const created = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
     data: {
       quoteNumber, ...data,
       status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000),
       items: { create: itemRows },
     },
     select: { id: true, quoteNumber: true },
-  });
+  }));
   return NextResponse.json({ quote: created });
 }
