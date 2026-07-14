@@ -63,6 +63,10 @@ h1, h2, h3, .headline { letter-spacing: var(--tracking-tight); color: var(--ink)
   }
   .card-hover { @apply transition-colors; }
   .card-hover:hover { background: var(--card-cream); border-color: var(--hairline); }
+  /* 시험 유형 선택 카드 (견적 작성 진입 시안 .card-live) */
+  .type-card { transition: border-color .15s, box-shadow .15s, transform .15s; }
+  .type-card:hover { border-color: var(--accent); box-shadow: 0 14px 40px rgba(0,0,0,.08); transform: translateY(-3px); }
+  .type-card:hover .go { background: var(--accent); color: #fff; }
   /* 인풋 — height 40px · radius 8px(--r-util) · 14px */
   .input {
     @apply w-full flex items-center;

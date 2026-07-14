@@ -289,6 +289,7 @@ model Quote {
   projectName         String                       // 견적명
   substanceName       String?
   substanceType       String?                      // 물질종류 (합성의약품·백신·화장품·미생물·의료기기 등)
+  studyType           String     @default("toxicity") // toxicity(독성) / efficacy(효력)
   modality            String
   priceStandard       String     @default("MFDS")  // MFDS / OECD
   testStandard        String?                      // 시험기준 (KGLP / nGLP)

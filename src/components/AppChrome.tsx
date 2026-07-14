@@ -38,7 +38,9 @@ const PAGE_LABEL: Record<string, string> = {
   '/quotes': '견적 목록',
   '/guidelines': '가이드라인',
   '/catalog': '항목·가격',
-  '/quote-v2': '새 견적 작성',
+  '/quote/start': '새 견적 작성',
+  '/quote-efficacy': '효력시험 견적',
+  '/quote-v2': '독성시험 견적',
   '/quote/new': '새 견적 작성 (구)',
 };
 
@@ -113,7 +115,7 @@ export default function AppChrome({ children, stats, isAdmin }: { children: Reac
           </nav>
 
           <div className="px-3 mt-4">
-            <Link href="/quote-v2" className="btn-primary w-full">
+            <Link href="/quote/start" className="btn-primary w-full">
               <Icon name="plus" className="w-4 h-4" /> 새 견적 작성
             </Link>
           </div>
