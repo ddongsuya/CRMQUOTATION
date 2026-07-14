@@ -18,7 +18,7 @@ type Body = {
   category: string; standard: 'MFDS' | 'OECD'; route: string; plan?: ComposePlan; selectedItemIds?: string[];
   customerConditions?: Record<string, boolean>; requestedAddons?: Record<string, boolean>; combinationCount?: number;
   currency?: 'KRW' | 'USD'; discountRate?: number; exchangeRate?: number;
-  projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string;
+  projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string; customerPhone?: string;
   dealId?: number | null; issueNow?: boolean;
   quantityOverrides?: Record<string, number>; removedIds?: string[];   // step4 수량·삭제 조정
 };
@@ -78,9 +78,10 @@ export async function POST(req: Request) {
     const contactName = (b.customerName ?? '').trim();
     if (contactName) {
       const email = (b.customerEmail ?? '').trim() || undefined;
+      const phone = (b.customerPhone ?? '').trim() || undefined;
       const existing = await prisma.contact.findFirst({ where: { companyId, name: contactName }, select: { id: true } });
-      if (!existing) await prisma.contact.create({ data: { companyId, name: contactName, email } });
-      else if (email) await prisma.contact.update({ where: { id: existing.id }, data: { email } });
+      if (!existing) await prisma.contact.create({ data: { companyId, name: contactName, email, phone } });
+      else if (email || phone) await prisma.contact.update({ where: { id: existing.id }, data: { email, phone } });
     }
   }
 
@@ -89,7 +90,7 @@ export async function POST(req: Request) {
       quoteNumber, userId, dealId: b.dealId ?? null, companyId: companyId ?? undefined,
       projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
       substanceName: b.substanceName ?? null,
-      customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null,
+      customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null, customerPhone: b.customerPhone ?? null,
       modality: b.category, priceStandard: std,
       planJson: JSON.stringify({ ...planForSnapshot, engine: 'v2' }),
       excipientCount: (b.plan?.excipientCount) ?? 0,

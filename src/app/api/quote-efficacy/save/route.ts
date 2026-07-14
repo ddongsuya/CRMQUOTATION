@@ -17,10 +17,10 @@ import { computeCost, computeQuote, findModel, totalAnimalsOf, totalDaysOf, type
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
-  const body = (await req.json().catch(() => null)) as { state?: EffState; quoteId?: number | null } | null;
+  const body = (await req.json().catch(() => null)) as { state?: EffState; quoteId?: number | null; dealId?: number | null } | null;
   const s = body?.state;
   if (!s?.modelId) return NextResponse.json({ error: '모델이 선택되지 않았습니다.' }, { status: 400 });
-  if (!s.client?.org?.trim()) return NextResponse.json({ error: '고객사를 입력해 주세요.' }, { status: 400 });
+  if (!s.client?.company?.trim()) return NextResponse.json({ error: '고객사를 입력해 주세요.' }, { status: 400 });
 
   const m = findModel(s.modelId);
   const cost = computeCost(s, m);
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   const userId = await currentUserId();
 
   // 고객사 자동 등록 — 표기 변형 흡수(정규화 매칭), 없으면 생성
-  const companyName = s.client.org.trim();
+  const companyName = s.client.company.trim();
   const companies = await prisma.company.findMany({ select: { id: true, name: true, aliases: true } });
   let companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
   if (companyId == null) {
@@ -65,9 +65,10 @@ export async function POST(req: Request) {
   const data = {
     userId,
     companyId,
+    dealId: body?.dealId ?? null,
     studyType: 'efficacy',
-    projectName: `${modelTitle} 효력시험`,
-    substanceName: s.client.indication || m.titleKr || null,
+    projectName: s.client.projectName?.trim() || `${modelTitle} 효력시험`,
+    substanceName: s.client.substanceName?.trim() || null,
     substanceType: m.category,
     modality: '효력시험',
     customerCompany: companyName,

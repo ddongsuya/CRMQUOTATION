@@ -24,15 +24,16 @@ import {
 export default function QuoteEfficacyPage() {
   const [s, setS] = useState<EffState>(INITIAL);
   const [companies, setCompanies] = useState<string[]>([]);
-  const [issueDate, setIssueDate] = useState('');
+  const [issueDate, setIssueDate] = useState<Date>(() => new Date());
   const [quoteNo, setQuoteNo] = useState('미발번');
   const [savedId, setSavedId] = useState<number | null>(null);
+  const [dealId, setDealId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
 
   const patch = useCallback((u: Partial<EffState>) => setS((p) => ({ ...p, ...u })), []);
 
   useEffect(() => {
-    setIssueDate(new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }));
+    setIssueDate(new Date());
     fetch('/api/crm/companies')
       .then((r) => r.json())
       .then((j) => {
@@ -40,6 +41,14 @@ export default function QuoteEfficacyPage() {
         setCompanies(list.map((c: { name: string }) => c.name).filter(Boolean));
       })
       .catch(() => setCompanies([]));
+
+    // 고객 컨텍스트 프리필 — 독성 모듈과 동일 (/customers "이 고객으로 견적", 안건 연동)
+    const sp = new URLSearchParams(window.location.search);
+    const d = sp.get('dealId');
+    if (d) setDealId(Number(d));
+    const co = sp.get('company');
+    const nm = sp.get('customerName');
+    if (co || nm) setS((p) => ({ ...p, client: { ...p.client, company: co ?? p.client.company, name: nm ?? p.client.name } }));
   }, []);
 
   const m = useMemo(() => findModel(s.modelId), [s.modelId]);
@@ -137,12 +146,12 @@ export default function QuoteEfficacyPage() {
 
   // ── 저장 ───────────────────────────────────────────────────
   const save = async () => {
-    if (!s.client.org.trim()) { toast.error('고객사를 입력해 주세요. (STEP 2)'); goStep(2); return; }
+    if (!s.client.company.trim()) { toast.error('고객사를 입력해 주세요. (STEP 2)'); goStep(2); return; }
     setSaving(true);
     try {
       const res = await fetch('/api/quote-efficacy/save', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ state: s, quoteId: savedId }),
+        body: JSON.stringify({ state: s, quoteId: savedId, dealId }),
       });
       const d = await res.json();
       if (!res.ok) throw new Error(d?.error ?? '저장 실패');
@@ -193,13 +202,14 @@ export default function QuoteEfficacyPage() {
         )}
 
         {s.step === 2 && (
-          <Step2Client client={s.client} companies={companies} onChange={(u: Partial<Client>) => setS((p) => ({ ...p, client: { ...p.client, ...u } }))} />
+          <Step2Client value={s.client} companies={companies} dealId={dealId}
+            onChange={(u: Partial<Client>) => setS((p) => ({ ...p, client: { ...p.client, ...u } }))} />
         )}
 
         {s.step === 3 && <Step3Design s={s} m={m} grandTotal={q.vat} h={handlers} />}
 
         {s.step === 4 && (
-          <Step4Quote s={s} m={m} items={cost.items} total={cost.total} q={q} quoteNo={quoteNo} issueDate={issueDate} />
+          <Step4Quote s={s} m={m} items={cost.items} q={q} quoteNo={quoteNo} issueDate={issueDate} />
         )}
 
         {/* 하단 내비 */}
@@ -212,7 +222,7 @@ export default function QuoteEfficacyPage() {
               {s.step === 3 && <>최종 견적 · <b className="text-ink">₩{fmt(q.vat)}</b></>}
             </span>
             {s.step === 2 ? (
-              <button onClick={() => goStep(3)} disabled={!s.client.org.trim()}
+              <button onClick={() => goStep(3)} disabled={!s.client.company.trim()}
                 className="btn-primary" style={{ background: 'var(--dark-surface)' }}>
                 시험 설계 <Icon name="chevron-right" className="w-4 h-4" />
               </button>

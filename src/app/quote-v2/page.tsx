@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Loader2, Receipt, Ban, PlusCircle, AlertTriangle, FileText, ChevronLeft, ChevronRight, Check, Printer } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
+import CustomerFields, { EMPTY_CUSTOMER, type CustomerInfo } from '@/components/quote/CustomerFields';
 
 const DURATIONS = [
   { key: 'SINGLE', label: '단회' }, { key: 'W4', label: '4주' }, { key: 'W13', label: '13주' },
@@ -81,7 +82,7 @@ export default function QuoteV2Page() {
   const [items, setItems] = useState<any[]>([]);
   const [picked, setPicked] = useState<Set<string>>(new Set());
   // 고객 정보 + 안건연동 + 저장
-  const [cust, setCust] = useState({ company: '', name: '', email: '', projectName: '', substanceName: '', indication: '' });
+  const [cust, setCust] = useState<CustomerInfo>(EMPTY_CUSTOMER);
   const [dealId, setDealId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [savedNo, setSavedNo] = useState<string | null>(null);
@@ -154,7 +155,7 @@ export default function QuoteV2Page() {
       const common = {
         category, standard, route, customerConditions: conds, requestedAddons: reqAddons,
         currency, discountRate, exchangeRate, quantityOverrides: qtyOverrides, removedIds,
-        projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, dealId, issueNow,
+        projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, customerPhone: cust.phone, indication: cust.indication, dealId, issueNow,
       };
       const body = isBattery
         ? { ...common, selectedItemIds: [...picked] }
@@ -217,26 +218,22 @@ export default function QuoteV2Page() {
 
           <div className="px-[22px] pb-[22px] space-y-3.5">
             {/* STEP 1 — 프로젝트 정보 (시안: 프로젝트명 → 고객사·물질명 → 적응증·제출처) */}
-            {step === 1 && <>
-              {dealId && <div className="pill tone-sent mb-1">안건 #{dealId} 연동</div>}
-              <Field label="프로젝트명 *"><input className="input" value={cust.projectName} onChange={e => setCust(c => ({ ...c, projectName: e.target.value }))} placeholder="예: CT-P17 비임상 독성 평가" /></Field>
-              <div className="grid sm:grid-cols-2 gap-2">
-                <Field label="고객사 *">
-                  <div className="flex items-center gap-2.5 h-10 px-2.5 rounded-lg border border-slate-200 bg-white focus-within:border-brand-500">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-100 text-ink-muted text-[11px] font-semibold flex-shrink-0">{(cust.company || '?').trim().charAt(0)}</span>
-                    <input className="flex-1 min-w-0 bg-transparent outline-none text-[14px] text-ink placeholder:text-slate-400" value={cust.company} onChange={e => setCust(c => ({ ...c, company: e.target.value }))} placeholder="고객사 (CRM)" list="crm-companies" />
-                  </div>
-                  <datalist id="crm-companies">{companyNames.map(n => <option key={n} value={n} />)}</datalist>
-                </Field>
-                <Field label="물질명"><input className="input" value={cust.substanceName} onChange={e => setCust(c => ({ ...c, substanceName: e.target.value }))} placeholder="예: CTP-17 (성분 미정)" /></Field>
-                <Field label="적응증"><input className="input" value={cust.indication} onChange={e => setCust(c => ({ ...c, indication: e.target.value }))} placeholder="예: 류마티스 관절염" /></Field>
-                <Field label="제출처"><select className="input" value={submissionTarget} onChange={e => setSubmissionTarget(e.target.value)}><option value="국내">한국 (MFDS)</option><option value="USFDA">미국 (USFDA)</option><option value="EMA">유럽 (EMA)</option></select></Field>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-2">
-                <Field label="담당자"><input className="input" value={cust.name} onChange={e => setCust(c => ({ ...c, name: e.target.value }))} placeholder="담당자 이름" /></Field>
-                <Field label="이메일"><input className="input" value={cust.email} onChange={e => setCust(c => ({ ...c, email: e.target.value }))} placeholder="email@company.com" /></Field>
-              </div>
-            </>}
+            {step === 1 && (
+              <CustomerFields
+                value={cust} onChange={(u) => setCust(c => ({ ...c, ...u }))}
+                companyNames={companyNames} dealId={dealId}
+                extra={
+                  <label className="block">
+                    <span className="label">제출처</span>
+                    <select className="input" value={submissionTarget} onChange={e => setSubmissionTarget(e.target.value)}>
+                      <option value="국내">한국 (MFDS)</option>
+                      <option value="USFDA">미국 (USFDA)</option>
+                      <option value="EMA">유럽 (EMA)</option>
+                    </select>
+                  </label>
+                }
+              />
+            )}
 
             {/* STEP 2 — 모달리티: 1.분류 → 2.모달리티 (2단계) */}
             {step === 2 && (() => {

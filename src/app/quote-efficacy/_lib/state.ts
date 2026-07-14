@@ -9,13 +9,15 @@ import {
 } from '@/lib/efficacy-engine/engine';
 import { STUDY_MODELS, type StudyModel } from '@/lib/efficacy-engine/models';
 import { DOSE_FREQ, PHASE, speciesWord, uid, type PhaseType } from '@/lib/efficacy-engine/constants';
+import { EMPTY_CUSTOMER, type CustomerInfo } from '@/components/quote/CustomerFields';
 
 export type Phase = { id: string; type: PhaseType; label: string; dur: number; unit: 'week' | 'day'; days: number };
 export type SubGroup = { id: string; label: string; n: number };
 export type Group = { id: string; tag: string; label: string; induct: boolean; subs: SubGroup[] };
 export type Endpoint = { id: string; name: string; times: Record<string, boolean> };
 export type Params = { vendor: string; strain: string; ageWeeks: number; route: string; freq: string; induction: string };
-export type Client = { org: string; name: string; phone: string; email: string; indication: string };
+/** 고객 정보는 독성 모듈과 공유하는 스키마를 그대로 쓴다. */
+export type Client = CustomerInfo;
 
 export type EffState = {
   step: number; browseCat: string; search: string; editorOpen: boolean;
@@ -28,7 +30,7 @@ export const INITIAL: EffState = {
   modelId: '', schedule: [], params: { vendor: '', strain: '', ageWeeks: 7, route: '경구 (PO)', freq: 'qd', induction: '' },
   groups: [], endpoints: [], selIdx: 0,
   discount: 0.25, margin: 0.1,
-  client: { org: '', name: '', phone: '', email: '', indication: '' },
+  client: EMPTY_CUSTOMER,
 };
 
 /** scheduleDurations("1-week"…) → 단계 배열. 첫=순화, 둘째(3단계 이상)=유발, 마지막=관찰, 나머지=투여. */

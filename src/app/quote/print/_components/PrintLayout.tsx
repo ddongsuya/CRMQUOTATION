@@ -61,6 +61,12 @@ export type PrintData = {
     purpose?: string | null;            // 시험 목적
     checklist?: Array<{ label: string; value: string }>;  // 시험 설계(평가항목 등)
   }>;
+  /** 표지 메타 6칸 override — 미지정 시 독성 기본(모달리티/가격기준 등) */
+  metaBlocks?: Array<{ label: string; value: string }>;
+  /** 견적 조건 override — 미지정 시 독성 기본(부형제·가격기준 등) */
+  terms?: string[];
+  /** 표지 부제 override — 미지정 시 "시험물질 · {substanceName}" */
+  subtitle?: string;
 };
 
 export default function PrintLayout({ data }: { data: PrintData }) {
@@ -132,17 +138,19 @@ export default function PrintLayout({ data }: { data: PrintData }) {
         <div className="cover-body">
           <div className="cover-eyebrow">QUOTATION · 견적서</div>
           <h1 className="cover-title">{data.project.projectName || '(프로젝트명 미입력)'}</h1>
-          {data.project.substanceName && (
-            <div className="cover-substance">시험물질 · {data.project.substanceName}</div>
+          {(data.subtitle ?? (data.project.substanceName ? `시험물질 · ${data.project.substanceName}` : '')) && (
+            <div className="cover-substance">{data.subtitle ?? `시험물질 · ${data.project.substanceName}`}</div>
           )}
 
           <div className="cover-meta-grid">
-            <MetaBlock label="고객사">{data.project.customerCompany || '—'}</MetaBlock>
-            <MetaBlock label="담당자">{[data.project.customerName, data.project.customerEmail].filter(Boolean).join(' · ') || '—'}</MetaBlock>
-            <MetaBlock label="모달리티">{data.project.modality}</MetaBlock>
-            <MetaBlock label="가격 기준">{data.settings.priceStandard}</MetaBlock>
-            <MetaBlock label="견적 발행일">{issuedStr}</MetaBlock>
-            <MetaBlock label="유효기간">{validUntilStr} 까지</MetaBlock>
+            {(data.metaBlocks ?? [
+              { label: '고객사', value: data.project.customerCompany || '—' },
+              { label: '담당자', value: [data.project.customerName, data.project.customerEmail].filter(Boolean).join(' · ') || '—' },
+              { label: '모달리티', value: data.project.modality },
+              { label: '가격 기준', value: data.settings.priceStandard },
+              { label: '견적 발행일', value: issuedStr },
+              { label: '유효기간', value: `${validUntilStr} 까지` },
+            ]).map((b) => <MetaBlock key={b.label} label={b.label}>{b.value}</MetaBlock>)}
           </div>
 
           <div className="cover-grand">
@@ -253,13 +261,15 @@ export default function PrintLayout({ data }: { data: PrintData }) {
         <div className="terms">
           <h3>견적 조건</h3>
           <ul>
-            <li>가격 기준 — {data.settings.priceStandard === 'MFDS' ? '식품의약품안전처 (MFDS) 기준' : 'OECD 가이드라인 기준'}</li>
-            <li>통화 — {data.settings.currency === 'KRW' ? '대한민국 원 (KRW)' : '미국 달러 (USD)'}</li>
-            <li>부형제 종수 — {data.settings.excipientCount}종 (함량분석 단위 산정 기준)</li>
-            <li>VAT — 위 금액에 별도 10% 부가가치세 부과</li>
-            <li>유효기간 — 발행일로부터 {data.meta.validUntilDays}일 ({validUntilStr})</li>
-            <li>지급 조건 — 시험 착수 시 50% · 종료 시 50% (별도 합의 시 조정 가능)</li>
-            <li>&quot;협의&quot; 표시 항목 — 시험 사양 확정 후 별도 산정</li>
+            {(data.terms ?? [
+              `가격 기준 — ${data.settings.priceStandard === 'MFDS' ? '식품의약품안전처 (MFDS) 기준' : 'OECD 가이드라인 기준'}`,
+              `통화 — ${data.settings.currency === 'KRW' ? '대한민국 원 (KRW)' : '미국 달러 (USD)'}`,
+              `부형제 종수 — ${data.settings.excipientCount}종 (함량분석 단위 산정 기준)`,
+              'VAT — 위 금액에 별도 10% 부가가치세 부과',
+              `유효기간 — 발행일로부터 ${data.meta.validUntilDays}일 (${validUntilStr})`,
+              '지급 조건 — 시험 착수 시 50% · 종료 시 50% (별도 합의 시 조정 가능)',
+              '"협의" 표시 항목 — 시험 사양 확정 후 별도 산정',
+            ]).map((t, i) => <li key={i}>{t}</li>)}
           </ul>
         </div>
       </section>
