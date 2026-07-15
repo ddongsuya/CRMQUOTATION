@@ -1,13 +1,25 @@
 /** 회사명 정규화·매칭 — 표기 변형(㈜·(주)·공백·영한) 흡수. FK 백필/임포트 공용. */
 
-/** 정규화 키: 법인 접두/괄호/공백/기호 제거 + 소문자. */
+/**
+ * 정규화 키: 법인 표기(㈜·주식회사·Co.,Ltd 등)·괄호·공백·기호 제거 + 소문자.
+ *
+ * ⚠️ 낱글자 '주/유/재'는 반드시 괄호로 감싸진 경우((주)·㈜)에만 제거한다.
+ * 예전 규칙은 `\(?주\)?` 로 **낱글자 주를 어디서든** 지워서
+ *   · 주성엔지니어링 → 성엔지니어링 (서로 다른 회사가 병합)
+ *   · 주식회사 대웅제약 → 식회사대웅제약 (㈜대웅제약과 매칭 실패 → 중복 생성)
+ * 처럼 조용히 데이터를 오염시켰다. 영문 접미사도 단어 경계(\b)로만 제거해
+ * Lincoln 의 'inc' 같은 부분 매칭을 막는다. (테스트: company-match.test.js)
+ */
 export function normCompany(raw: string | null | undefined): string {
   if (!raw) return '';
-  return raw
-    .replace(/\(?주\)?|㈜|주식회사|\(유\)|유한회사|\(재\)|Inc\.?|Co\.?,?\s*Ltd\.?|Corp\.?|Ltd\.?/gi, '')
-    .replace(/[\s·\-_.,()]/g, '')
-    .toLowerCase()
-    .trim();
+  let s = String(raw).toLowerCase();
+  s = s.replace(/[(（]\s*(주|유|재|사|株)\s*[)）]/g, '');   // (주) (유) (재) (사) （주）
+  s = s.replace(/㈜|㈔|株式会社/g, '');
+  s = s.replace(/주식회사|유한책임회사|유한회사|합자회사|합명회사|재단법인|사단법인|의료법인|농업회사법인/g, '');
+  s = s.replace(/\bco\.?,?\s*ltd\.?\b/g, '');            // Co., Ltd 조합
+  s = s.replace(/\b(inc|incorporated|ltd|limited|co|corp|corporation|company|llc|plc|gmbh|ag|bv|pte)\b\.?/g, '');
+  s = s.replace(/[\s·・\-_.,&()（）]/g, '');
+  return s.trim();
 }
 
 export type CompanyLite = { id: number; name: string; aliases: string | null };
