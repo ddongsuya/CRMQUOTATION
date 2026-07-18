@@ -9,13 +9,31 @@ export type ScopeOption = { key: string; label: string; scope: string; centerId?
  * 스코프는 URL searchParams(scope/centerId)로 매핑 → 서버 집계 파라미터.
  * 활성 상태는 서버(page searchParams)에서 props로 주입(useSearchParams Suspense 회피).
  */
+export type PeriodInfo = { key: string; label: string; year: number };
+
 export default function AdminHeader({
-  title, subtitle, centers, period = '2026 상반기', activeScope = 'all', activeCenterId,
-}: { title: string; subtitle: string; centers: { id: number; name: string }[]; period?: string; activeScope?: string; activeCenterId?: string }) {
+  title, subtitle, centers, period, activeScope = 'all', activeCenterId,
+}: { title: string; subtitle: string; centers: { id: number; name: string }[]; period?: PeriodInfo; activeScope?: string; activeCenterId?: string }) {
   const router = useRouter();
   const pathname = usePathname() ?? '/admin';
   const curScope = activeScope;
   const curCenter = activeCenterId ?? null;
+
+  // 스코프를 보존한 채 기간(period)만 교체
+  const goPeriod = (pkey: string) => {
+    const q = new URLSearchParams();
+    if (curScope !== 'all') q.set('scope', curScope);
+    if (curCenter != null) q.set('centerId', curCenter);
+    q.set('period', pkey);
+    router.replace(`${pathname}?${q.toString()}`, { scroll: false });
+  };
+  const periodOptions = period
+    ? [
+        { key: `${period.year}H1`, label: '상반기' },
+        { key: `${period.year}H2`, label: '하반기' },
+        { key: `${period.year}`, label: '연간' },
+      ]
+    : [];
 
   const options: ScopeOption[] = [
     { key: 'all', label: '전체', scope: 'all' },
@@ -51,10 +69,15 @@ export default function AdminHeader({
             </button>
           ))}
         </div>
-        <span className="btn-ghost pointer-events-none gap-2">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M8 2v4M16 2v4M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM3 10h18"/></svg>
-          {period}
-        </span>
+        {period ? (
+          <div className="segmented">
+            {periodOptions.map((o) => (
+              <button key={o.key} onClick={() => goPeriod(o.key)} className={period.key === o.key ? 'active' : ''}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );

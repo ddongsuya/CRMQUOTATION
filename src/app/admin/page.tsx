@@ -9,13 +9,25 @@ import { Sparkline, BarSpark, ProgressBar, GroupedBars, DonutGauge, Donut, HBars
 
 export const dynamic = 'force-dynamic';
 
-const YEAR = 2026;
-const PERIOD = '2026H1';
-const H1 = ['1월', '2월', '3월', '4월', '5월', '6월'];
+const MONTHS_KO = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 const STAGE_KO: Record<string, string> = { INQUIRY: '문의', QUOTE: '견적', INTAKE: '접수', CONTRACT: '계약', STUDY: '시험', INVOICE: '청구', DONE: '완료' };
 const ROLE_KO: Record<string, string> = { ADMIN: '본부장', CENTER_LEAD: '센터장', TEAM_LEAD: '팀장', MEMBER: '구성원', admin: '관리자' };
 
-type SP = { scope?: string; centerId?: string; userId?: string };
+type SP = { scope?: string; centerId?: string; userId?: string; period?: string };
+
+/** ?period= → 기간 창. 기본값=현재 연도의 현재 반기. 월 인덱스 startM..endM(포함). */
+function resolvePeriod(raw: string | undefined, now: Date): { key: string; label: string; year: number; startM: number; endM: number } {
+  const m = /^(\d{4})(H1|H2)?$/.exec(raw ?? '');
+  if (m) {
+    const year = Number(m[1]);
+    if (m[2] === 'H1') return { key: `${year}H1`, label: `${year} 상반기`, year, startM: 0, endM: 5 };
+    if (m[2] === 'H2') return { key: `${year}H2`, label: `${year} 하반기`, year, startM: 6, endM: 11 };
+    return { key: `${year}`, label: `${year} 연간`, year, startM: 0, endM: 11 };
+  }
+  const year = now.getFullYear();
+  const half = now.getMonth() < 6 ? 'H1' : 'H2';
+  return resolvePeriod(`${year}${half}`, now);
+}
 
 /** 관리자 대시보드(홈) — 12종 시각화. 스코프 롤업(전사/센터/개인) 집계 바인딩. */
 export default async function AdminDashboard({ searchParams }: { searchParams: SP }) {
@@ -24,13 +36,18 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
   const scope = parseScope(searchParams, { isAdminView: view.isAdminView, selfId: me.id, selfCenterId: me.centerId });
   const centers = await listCenters();
 
+  const now = new Date();
+  const period = resolvePeriod(searchParams.period, now);
+  const win = <T,>(arr: T[]): T[] => arr.slice(period.startM, period.endM + 1);   // 기간 창으로 월배열 슬라이스
+  const monLabels = MONTHS_KO.slice(period.startM, period.endM + 1);
+
   const [data, gaugeAll, heat, followups] = await Promise.all([
-    getDashboardData(scope, YEAR),
-    getTargetGauge(scope, PERIOD),
-    getActivityHeatmap(scope, new Date(YEAR, 6, 6), 12),
-    getFollowups(scope, new Date(YEAR, 6, 6), 14),
+    getDashboardData(scope, period.key),
+    getTargetGauge(scope, period.key),
+    getActivityHeatmap(scope, now, 12),
+    getFollowups(scope, now, 14),
   ]);
-  const centerGauges = await Promise.all(centers.map((c) => getTargetGauge({ kind: 'center', centerId: c.id }, PERIOD).then((g) => ({ ...c, g }))));
+  const centerGauges = await Promise.all(centers.map((c) => getTargetGauge({ kind: 'center', centerId: c.id }, period.key).then((g) => ({ ...c, g }))));
 
   const scopeName = scope.kind === 'all' ? '전사' : scope.kind === 'center' ? (centers.find((c) => c.id === scope.centerId)?.name ?? '센터') : '개인';
   const k = data.kpi;
@@ -40,13 +57,15 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
   if (searchParams.centerId) carry.set('centerId', searchParams.centerId);
   const qs = carry.toString() ? `?${carry.toString()}` : '';
 
-  // 델타(실데이터 파생) — 히어로 QoQ, 수주율 상·하반기 비교
-  const q1 = data.monthlyWon.slice(0, 3).reduce((a, b) => a + b, 0);
-  const q2 = data.monthlyWon.slice(3, 6).reduce((a, b) => a + b, 0);
+  // 델타(실데이터 파생) — 기간 창을 전·후반으로 나눠 비교(전기 대비)
+  const wonWin = win(data.monthlyWon);
+  const half = Math.floor(wonWin.length / 2) || 1;
+  const q1 = wonWin.slice(0, half).reduce((a, b) => a + b, 0);
+  const q2 = wonWin.slice(half).reduce((a, b) => a + b, 0);
   const heroDelta = q1 > 0 ? (q2 - q1) / q1 : null;
-  const wr = data.winRateSeries;
-  const early = wr.slice(0, 3).filter((v): v is number => v != null);
-  const late = wr.slice(3, 6).filter((v): v is number => v != null);
+  const wr = win(data.winRateSeries);
+  const early = wr.slice(0, half).filter((v): v is number => v != null);
+  const late = wr.slice(half).filter((v): v is number => v != null);
   const avg = (a: number[]) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
   const wrEarly = avg(early), wrLate = avg(late);
   const wrDelta = wrEarly != null && wrLate != null ? wrLate - wrEarly : null;
@@ -56,7 +75,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
 
   return (
     <>
-      <AdminHeader title={`${scopeName} 대시보드`} subtitle={`${scopeName} 기준 · 2026 상반기`} centers={centers} activeScope={searchParams.scope ?? 'all'} activeCenterId={searchParams.centerId} />
+      <AdminHeader title={`${scopeName} 대시보드`} subtitle={`${scopeName} 기준 · ${period.label}`} centers={centers} period={period} activeScope={searchParams.scope ?? 'all'} activeCenterId={searchParams.centerId} />
 
       {/* ── 히어로 (블랙 반전) ── */}
       <section className="card-dark card-pad flex flex-col sm:flex-row sm:items-center gap-6 mb-4">
@@ -70,12 +89,12 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
             <div className="mt-2 flex items-center gap-1.5 text-[13px] font-semibold" style={{ color: heroDelta >= 0 ? 'var(--success)' : 'var(--error)' }}>
               <span>{heroDelta >= 0 ? '▲' : '▼'}</span>
               <span>{Math.abs(heroDelta * 100).toFixed(1)}%</span>
-              <span className="font-normal" style={{ color: 'var(--on-dark-soft)' }}>전분기 대비</span>
+              <span className="font-normal" style={{ color: 'var(--on-dark-soft)' }}>전기 대비</span>
             </div>
           )}
         </div>
         <div className="flex-1 flex items-center justify-center min-w-[120px]">
-          <Sparkline values={data.monthlyWon.slice(0, 6)} w={180} h={64} />
+          <Sparkline values={wonWin} w={180} h={64} />
         </div>
         <div className="flex gap-7 sm:gap-9 flex-shrink-0">
           {[
@@ -94,16 +113,16 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
       {/* ── KPI 4 ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <KpiCard label="파이프라인" value={fmtWon(k.pipelineAmount)}>
-          <BarSpark values={pad6(data.monthlyPipeline)} tone="accent" />
+          <BarSpark values={win(data.monthlyPipeline)} tone="accent" />
         </KpiCard>
         <KpiCard label="진행 견적" value={`${fmtInt(k.pipelineCount)}건`}>
-          <BarSpark values={pad6(data.monthlyPipelineCount)} tone="cream" accentLast={1} />
+          <BarSpark values={win(data.monthlyPipelineCount)} tone="cream" accentLast={1} />
         </KpiCard>
         <KpiCard label="수주율" value={fmtPct(k.winRate, 0)} delta={wrDelta != null ? { up: wrDelta >= 0, text: `${Math.abs(wrDelta * 100).toFixed(1)}%` } : undefined}>
           <div className="pt-3"><ProgressBar value={k.winRate} /></div>
         </KpiCard>
         <KpiCard label="활동량" value={fmtInt(k.activityCount)}>
-          <BarSpark values={pad6(data.monthlyActivity)} tone="accent" />
+          <BarSpark values={win(data.monthlyActivity)} tone="accent" />
         </KpiCard>
       </div>
 
@@ -118,8 +137,8 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
             <Legend items={centers.map((c, i) => ({ name: c.name, color: centerColors[i % centerColors.length] }))} />
           </div>
           <GroupedBars
-            labels={H1}
-            series={centers.map((c, i) => ({ name: c.name, color: centerColors[i % centerColors.length], values: pad6(data.centerMonthly.find((r) => r.centerId === c.id)?.months ?? []) }))}
+            labels={monLabels}
+            series={centers.map((c, i) => ({ name: c.name, color: centerColors[i % centerColors.length], values: win(data.centerMonthly.find((r) => r.centerId === c.id)?.months ?? []) }))}
           />
         </div>
         <div className="card card-pad">
@@ -138,8 +157,8 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
         <div className="card card-pad">
           <h2 className="text-[15px] font-semibold text-ink mb-4">수주율 추이</h2>
-          <Sparkline values={wr.slice(0, 6).map((v) => (v ?? 0) * 100)} w={280} h={90} />
-          <div className="flex justify-between mt-2">{H1.map((m) => <span key={m} className="text-[10px] text-ink-subtle">{m}</span>)}</div>
+          <Sparkline values={wr.map((v) => (v ?? 0) * 100)} w={280} h={90} />
+          <div className="flex justify-between mt-2">{monLabels.map((m) => <span key={m} className="text-[10px] text-ink-subtle">{m}</span>)}</div>
         </div>
         <div className="card card-pad">
           <h2 className="text-[15px] font-semibold text-ink mb-4">센터 구성</h2>
@@ -222,8 +241,6 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
     </>
   );
 }
-
-function pad6(a: number[]): number[] { return Array.from({ length: 6 }, (_, i) => a[i] ?? 0); }
 
 function KpiCard({ label, value, delta, children }: { label: string; value: string; delta?: { up: boolean; text: string }; children?: React.ReactNode }) {
   return (

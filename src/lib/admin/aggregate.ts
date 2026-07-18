@@ -67,9 +67,12 @@ export type DashboardData = Awaited<ReturnType<typeof getDashboardData>>;
 
 /**
  * 대시보드(홈) 12종 시각화용 데이터 일괄 산출.
- * year 는 추이/월별 차트 기준 연도(기본: 파라미터로 주입).
+ * periodKey = '2026H1' | '2026H2' | '2026'(연간). 월별 배열은 항상 12칸(실제 월 인덱스),
+ * 견적 조회 범위만 기간에 맞춘다. 화면(page)이 기간 창으로 슬라이스해 렌더.
  */
-export async function getDashboardData(scope: Scope, year: number) {
+export async function getDashboardData(scope: Scope, periodKey: string) {
+  const range = periodRange(periodKey);
+  const year = range.gte.getFullYear();
   const uids = await scopeUserIds(scope);
   const inUids = { in: uids };
 
@@ -85,7 +88,7 @@ export async function getDashboardData(scope: Scope, year: number) {
   // 데이터: 견적·안건·고객사·활동 (스코프 담당자 한정)
   const [quotes, deals, companies, notes, events] = await Promise.all([
     prisma.quote.findMany({
-      where: { userId: inUids, createdAt: periodRange(`${year}H1`) },
+      where: { userId: inUids, createdAt: range },
       select: { userId: true, status: true, grandTotal: true, contractAmount: true, createdAt: true, customerCompany: true },
     }),
     prisma.deal.findMany({ where: { ownerId: inUids }, select: { ownerId: true, status: true, stage: true } }),
