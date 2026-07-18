@@ -131,7 +131,8 @@ export function computeCost(s: EffState, m: StudyModel): CostResult {
     species: s.params.strain, ageWeeks: Number(s.params.ageWeeks) || 7,
     animalsPerGroup: totalAnimals, groupCount: 1,
     scheduleSteps: s.schedule.map((p) => ({ duration: p.dur, durationUnit: p.unit, type: p.type })),
-    evalItems: s.endpoints.map((e) => ({ name: e.name, enabled: true })),
+    // 측정 시점 수 = 엔드포인트 매트릭스에서 켜진 칸 수(최소 1). 시점이 많을수록 비용 배수.
+    evalItems: s.endpoints.map((e) => ({ name: e.name, enabled: true, timepoints: Math.max(1, Object.values(e.times).filter(Boolean).length) })),
     reportWeeks: m.reportWeeks, inductionMethod: s.params.induction, isInVitro: m.isInVitro,
     cellLine: m.cellLine, categoryCode: m.categoryCode, positiveControl: m.positiveControl,
     animalUnitPrice: animalPrice(s.params), animalVendor: s.params.vendor,

@@ -9,7 +9,7 @@ export type AgedAnimalRow = { monthAge: number; SD: number; C57BL6N: number; ICR
 export type BestPriceRow = { strain: string; ageWeek: string; bestPrice: number; bestVendor: string };
 
 export type ScheduleStep = { duration: number; durationUnit: 'week' | 'day' | 'hour'; type: string };
-export type EvalItem = { name: string; enabled: boolean };
+export type EvalItem = { name: string; enabled: boolean; timepoints?: number };
 
 export type CostInput = {
   species: string; ageWeeks: number; animalsPerGroup: number; groupCount: number;
@@ -332,7 +332,9 @@ export function calculateCostItems(input: CostInput): CostItem[] {
   for (const ev of input.evalItems.filter(e => e.enabled)) {
     const matched = matchEvalToPrice(ev.name);
     const qty = isInVitro ? 1 : totalAnimals;
-    push({ category: matched.category, name: ev.name, unitPrice: matched.price, quantity: qty, multiplier: 1, subtotal: matched.price * qty });
+    const times = Math.max(1, ev.timepoints ?? 1);   // 측정 시점 수만큼 배수 (사용자 결정: 매트릭스 칸 수)
+    const label = times > 1 ? `${ev.name} (${times}시점)` : ev.name;
+    push({ category: matched.category, name: label, unitPrice: matched.price, quantity: qty, multiplier: times, subtotal: matched.price * qty * times });
   }
   if (!isInVitro) {
     const np = getPriceByCode('NECROPSY')?.price ?? 20000;
