@@ -84,11 +84,14 @@ function PrintPage() {
           // 견적 엔진 v2 견적: 저장된 항목(권위 스냅샷)을 직접 렌더 (구 엔진 재평가 불가 — 새 마스터 키)
           const isV2 = plan.engine === 'v2';
           if (isV2) {
+            // 금액은 DB에 원화로 저장 → USD 견적은 저장 당시 환율로 환산해 표시(원화면 rate=1로 그대로).
+            const rate = (q.currency === 'USD' && q.exchangeRate && q.exchangeRate > 0) ? q.exchangeRate : 1;
+            const cv = (n: number) => rate === 1 ? n : Math.round(n / rate);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const lines = (q.items as any[]).map((it) => ({
               kind: (it.testItemKey?.startsWith('_prep') ? 'prep_analysis' : it.testItemKey?.startsWith('_hamryang') ? 'analysis' : 'test') as 'test' | 'analysis' | 'prep_analysis',
               testName: it.testNameSnapshot, adminRoute: it.adminRouteSnap ?? null,
-              unitPrice: it.unitPrice, quantity: it.quantity, subtotal: it.subtotal, testItemKey: it.testItemKey,
+              unitPrice: cv(it.unitPrice), quantity: it.quantity, subtotal: cv(it.subtotal), testItemKey: it.testItemKey,
             }));
             // 시험 항목 상세(인쇄 부록) — 새 마스터에서 조회
             const det = await fetch('/api/quote-v2/details', {
@@ -101,7 +104,7 @@ function PrintPage() {
               project: { projectName: q.projectName, substanceName: q.substanceName ?? '', modality: q.modality, customerCompany: q.customerCompany ?? '', customerName: q.customerName ?? '', customerEmail: q.customerEmail ?? '' },
               settings: { priceStandard: q.priceStandard, currency: q.currency, discountRate: q.discountRate, excipientCount: q.excipientCount },
               lines,
-              totals: { totalBeforeDiscount: q.totalBeforeDiscount ?? 0, discountAmount: (q.totalBeforeDiscount ?? 0) - (q.totalAfterDiscount ?? 0), totalAfterDiscount: q.totalAfterDiscount ?? 0, vatAmount: q.vatAmount ?? 0, grandTotal: q.grandTotal ?? 0 },
+              totals: { totalBeforeDiscount: cv(q.totalBeforeDiscount ?? 0), discountAmount: cv((q.totalBeforeDiscount ?? 0) - (q.totalAfterDiscount ?? 0)), totalAfterDiscount: cv(q.totalAfterDiscount ?? 0), vatAmount: cv(q.vatAmount ?? 0), grandTotal: cv(q.grandTotal ?? 0) },
               warnings: [], details: det.details ?? [],
             });
             return;

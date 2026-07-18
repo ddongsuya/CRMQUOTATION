@@ -17,6 +17,7 @@ type QuoteRow = {
   status: string;
   grandTotal: number | null;
   currency: string;
+  exchangeRate: number | null;
   issuedAt: string | null;
   updatedAt: string;
   createdAt: string;
@@ -30,6 +31,17 @@ const STATUS_DOT: Record<string, string> = {
 const STATUS_LABEL: Record<string, string> = { DRAFT: '작성중', ISSUED: '발행', SENT: '발송', ACCEPTED: '수주', REJECTED: '반려' };
 const FILTERS: [string, string][] = [['ALL', '전체'], ['DRAFT', '작성중'], ['ISSUED', '발행'], ['SENT', '발송'], ['ACCEPTED', '수주'], ['REJECTED', '반려']];
 const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : (n > 0 ? `₩${n.toLocaleString()}` : '₩0');
+/**
+ * 목록 금액 표시. 금액은 DB에 원화로 저장되므로, USD 견적은 저장 당시 환율로 나눠 달러로 표시.
+ * (예전엔 원화 숫자에 $만 붙여 ~1,400배로 보였다.)
+ */
+const fmtAmount = (q: QuoteRow): string => {
+  if (q.grandTotal == null) return '—';
+  if (q.currency === 'USD' && q.exchangeRate && q.exchangeRate > 0) {
+    return `$${Math.round(q.grandTotal / q.exchangeRate).toLocaleString()}`;
+  }
+  return fmtM(q.grandTotal);
+};
 
 export default function QuotesListPage() {
   const { openCompany } = useDrawer();
@@ -132,7 +144,7 @@ export default function QuotesListPage() {
                       {STATUS_LABEL[qr.status] ?? qr.status}
                     </div>
                     <div className="w-[84px] flex-shrink-0 text-right text-[12.5px] text-ink-subtle tabular-nums">{new Date(qr.updatedAt).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })}</div>
-                    <div className="w-[120px] flex-shrink-0 text-right text-[19px] font-bold text-ink tabular-nums">{qr.grandTotal != null ? `${qr.currency === 'USD' ? '$' : ''}${qr.currency === 'USD' ? qr.grandTotal.toLocaleString() : fmtM(qr.grandTotal)}` : '—'}</div>
+                    <div className="w-[120px] flex-shrink-0 text-right text-[19px] font-bold text-ink tabular-nums">{fmtAmount(qr)}</div>
                   </Link>
                   {/* hover 액션 — 대기 상태는 시안과 동일, hover 시에만 노출 */}
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center gap-0.5 bg-slate-100 rounded-lg px-1 py-0.5">
