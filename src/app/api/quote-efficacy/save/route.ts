@@ -22,6 +22,16 @@ export async function POST(req: Request) {
   if (!s?.modelId) return NextResponse.json({ error: '모델이 선택되지 않았습니다.' }, { status: 400 });
   if (!s.client?.company?.trim()) return NextResponse.json({ error: '고객사를 입력해 주세요.' }, { status: 400 });
 
+  // 재저장 대상 검증 — 실제 효력 견적일 때만 허용(독성 견적 변조 차단). 고객사 생성 전에 먼저 거른다.
+  let target: { id: number } | null = null;
+  if (body?.quoteId) {
+    const exists = await prisma.quote.findUnique({ where: { id: body.quoteId }, select: { id: true, studyType: true } });
+    if (exists && exists.studyType !== 'efficacy') {
+      return NextResponse.json({ error: '효력시험 견적이 아니어서 덮어쓸 수 없습니다.' }, { status: 409 });
+    }
+    target = exists ? { id: exists.id } : null;
+  }
+
   const m = findModel(s.modelId);
   const cost = computeCost(s, m);
   const q = computeQuote(cost.total, s.margin, s.discount);
@@ -83,18 +93,16 @@ export async function POST(req: Request) {
     grandTotal: q.vat,
   };
 
-  // 같은 세션에서 재저장하면 기존 견적을 갱신(라인 교체), 아니면 신규 발번
-  if (body?.quoteId) {
-    const exists = await prisma.quote.findUnique({ where: { id: body.quoteId }, select: { id: true, quoteNumber: true } });
-    if (exists) {
-      await prisma.quoteItem.deleteMany({ where: { quoteId: exists.id } });
-      const updated = await prisma.quote.update({
-        where: { id: exists.id },
-        data: { ...data, items: { create: itemRows } },
-        select: { id: true, quoteNumber: true },
-      });
-      return NextResponse.json({ quote: updated });
-    }
+  // 같은 세션에서 재저장하면 기존 견적을 갱신(라인 교체), 아니면 신규 발번.
+  // (유형 검사는 위에서 이미 통과 — target 은 효력 견적이거나 존재하지 않음)
+  if (target) {
+    await prisma.quoteItem.deleteMany({ where: { quoteId: target.id } });
+    const updated = await prisma.quote.update({
+      where: { id: target.id },
+      data: { ...data, items: { create: itemRows } },
+      select: { id: true, quoteNumber: true },
+    });
+    return NextResponse.json({ quote: updated });
   }
 
   const created = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({

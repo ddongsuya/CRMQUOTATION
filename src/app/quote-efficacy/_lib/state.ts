@@ -143,10 +143,15 @@ export function computeCost(s: EffState, m: StudyModel): CostResult {
 
 export type QuoteTotals = { wp: number; disc: number; vat: number; marginAmt: number; discAmt: number; vatAmt: number };
 
-/** 원가 → 견적가(+영업이익) → 할인가 → VAT 포함. */
+/**
+ * 원가 → 견적가(+영업이익) → 할인가 → VAT 포함.
+ * margin·discount 는 [0,1] 로 가둔다(클라이언트 조작·이상값으로 음수 견적이 저장되는 것 방지).
+ */
 export function computeQuote(total: number, margin: number, discount: number): QuoteTotals {
-  const wp = Math.round(total * (1 + margin));
-  const disc = Math.round(wp * (1 - discount));
+  const m = Math.min(Math.max(margin, 0), 1);
+  const d = Math.min(Math.max(discount, 0), 1);
+  const wp = Math.round(total * (1 + m));
+  const disc = Math.round(wp * (1 - d));
   const vat = Math.round(disc * 1.1);
   return { wp, disc, vat, marginAmt: wp - total, discAmt: wp - disc, vatAmt: vat - disc };
 }
