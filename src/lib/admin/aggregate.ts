@@ -2,8 +2,8 @@
  * 관리자 대시보드 — 스코프 롤업 집계 (서버 전용).
  *
  * 집계 정의(실 스키마 기반 — 사업 정의와 다르면 조정 필요):
- *  · 수주(won)      = Quote.status='ACCEPTED', 금액=grandTotal
- *  · 파이프라인      = Quote.status ∈ {DRAFT,ISSUED,SENT,REVIEWED}, 금액=grandTotal
+ *  · 수주(won)      = Quote.status='ACCEPTED', 금액=계약금액(contractAmount) 우선, 없으면 견적금액(grandTotal)
+ *  · 파이프라인      = Quote.status ∈ {DRAFT,ISSUED,SENT,REVIEWED}, 금액=grandTotal(아직 계약 전)
  *  · 수주율(winRate)= ACCEPTED / (ACCEPTED+REJECTED), 건수 기준
  *  · 활동량          = Note + CalendarEvent 건수
  *  · 담당자→센터 롤업 = User.centerId. 견적 귀속 = Quote.userId.
@@ -21,6 +21,10 @@ export type Scope =
 const PIPELINE_STATUS = ['DRAFT', 'ISSUED', 'SENT', 'REVIEWED'];
 const WON_STATUS = 'ACCEPTED';
 const LOST_STATUS = 'REJECTED';
+
+/** 수주 금액 = 협상 후 계약금액(contractAmount) 우선, 없으면 견적금액(grandTotal). 사용자 결정: 실적=계약금액 기준. */
+const wonAmt = (q: { contractAmount?: number | null; grandTotal: number | null }): number =>
+  q.contractAmount ?? q.grandTotal ?? 0;
 
 /** 기간 키 → createdAt 범위. 2026H1=상반기, 2026=연간. */
 export function periodRange(period: string): { gte: Date; lt: Date } {
@@ -82,7 +86,7 @@ export async function getDashboardData(scope: Scope, year: number) {
   const [quotes, deals, companies, notes, events] = await Promise.all([
     prisma.quote.findMany({
       where: { userId: inUids, createdAt: periodRange(`${year}H1`) },
-      select: { userId: true, status: true, grandTotal: true, createdAt: true, customerCompany: true },
+      select: { userId: true, status: true, grandTotal: true, contractAmount: true, createdAt: true, customerCompany: true },
     }),
     prisma.deal.findMany({ where: { ownerId: inUids }, select: { ownerId: true, status: true, stage: true } }),
     prisma.company.findMany({
@@ -102,7 +106,7 @@ export async function getDashboardData(scope: Scope, year: number) {
   // ── KPI / 히어로 ──────────────────────────────
   let wonAmount = 0, wonCount = 0, pipelineAmount = 0, pipelineCount = 0, acc = 0, rej = 0;
   for (const q of quotes) {
-    if (isWon(q.status)) { wonAmount += amt(q); wonCount++; acc++; }
+    if (isWon(q.status)) { wonAmount += wonAmt(q); wonCount++; acc++; }
     else if (isPipe(q.status)) { pipelineAmount += amt(q); pipelineCount++; }
     if (q.status === LOST_STATUS) rej++;
   }
@@ -120,7 +124,7 @@ export async function getDashboardData(scope: Scope, year: number) {
   for (const q of quotes) {
     if (q.createdAt.getFullYear() !== year) continue;
     const m = q.createdAt.getMonth();
-    if (isWon(q.status)) { monthlyWon[m] += amt(q); monthlyAcc[m]++; }
+    if (isWon(q.status)) { monthlyWon[m] += wonAmt(q); monthlyAcc[m]++; }
     if (q.status === LOST_STATUS) monthlyRej[m]++;
     if (isPipe(q.status)) { monthlyPipeline[m] += amt(q); monthlyPipelineCount[m]++; }
   }
@@ -140,9 +144,9 @@ export async function getDashboardData(scope: Scope, year: number) {
   for (const q of quotes) {
     if (!isWon(q.status)) continue;
     const cid = userCenter.get(q.userId ?? -1) ?? null;
-    centerWon.set(cid, (centerWon.get(cid) ?? 0) + amt(q));
+    centerWon.set(cid, (centerWon.get(cid) ?? 0) + wonAmt(q));
     if (q.createdAt.getFullYear() === year && cid != null && centerMonthlyIdx.has(cid)) {
-      centerMonthly[centerMonthlyIdx.get(cid)!].months[q.createdAt.getMonth()] += amt(q);
+      centerMonthly[centerMonthlyIdx.get(cid)!].months[q.createdAt.getMonth()] += wonAmt(q);
     }
   }
   const centerDonut = centers.map((c) => ({ name: c.name, amount: centerWon.get(c.id) ?? 0 }));
@@ -156,7 +160,7 @@ export async function getDashboardData(scope: Scope, year: number) {
     const co = q.customerCompany ? companyById.get(q.customerCompany) : null;
     const ind = co?.industry ?? '기타';
     const cur = industryAgg.get(ind) ?? { amount: 0, count: 0 };
-    cur.amount += amt(q); cur.count++;
+    cur.amount += wonAmt(q); cur.count++;
     industryAgg.set(ind, cur);
   }
   const byIndustry = [...industryAgg.entries()].map(([industry, v]) => ({ industry, ...v })).sort((a, b) => b.amount - a.amount);
@@ -172,7 +176,7 @@ export async function getDashboardData(scope: Scope, year: number) {
   const custPipe = new Map<string, number>();
   for (const q of quotes) {
     const key = q.customerCompany ?? '—';
-    if (isWon(q.status)) custWon.set(key, (custWon.get(key) ?? 0) + amt(q));
+    if (isWon(q.status)) custWon.set(key, (custWon.get(key) ?? 0) + wonAmt(q));
     else if (isPipe(q.status)) custPipe.set(key, (custPipe.get(key) ?? 0) + amt(q));
   }
   const topCustomers = companies
@@ -272,11 +276,12 @@ export async function getActivityHeatmap(scope: Scope, refDate: Date, weeks = 12
 /** 목표 대비 달성률(게이지). scope=all→전사 목표, center→센터 목표. */
 export async function getTargetGauge(scope: Scope, period: string) {
   const uids = await scopeUserIds(scope);
-  const won = await prisma.quote.aggregate({
-    _sum: { grandTotal: true },
+  // 계약금액 우선 폴백은 단일 _sum 으로 못 하므로 행을 가져와 JS 합산.
+  const wonRows = await prisma.quote.findMany({
     where: { status: WON_STATUS, userId: { in: uids }, createdAt: periodRange(period) },
+    select: { grandTotal: true, contractAmount: true },
   });
-  const actual = won._sum.grandTotal ?? 0;
+  const actual = wonRows.reduce((s, q) => s + wonAmt(q), 0);
   const centerId = scope.kind === 'center' ? scope.centerId : null;
   const target = await prisma.target.findFirst({ where: { centerId, period } });
   const goal = target?.amount ?? null;
@@ -318,7 +323,7 @@ export async function getCompanyDetail(name: string) {
     prisma.quote.findMany({
       where: quoteWhere,
       orderBy: { sentAt: 'desc' },
-      select: { id: true, quoteNumber: true, sentAt: true, projectName: true, grandTotal: true, status: true, trackingNote: true, testStandard: true, submissionPurpose: true, discountRate: true },
+      select: { id: true, quoteNumber: true, sentAt: true, projectName: true, grandTotal: true, contractAmount: true, status: true, trackingNote: true, testStandard: true, submissionPurpose: true, discountRate: true },
     }),
     prisma.dailyReport.findMany({
       where: { OR: [{ workContent: { contains: name } }, { contractPlan: { contains: name } }, { activityNote: { contains: name } }] },
@@ -330,7 +335,7 @@ export async function getCompanyDetail(name: string) {
 
   let won = 0, pipeline = 0, acc = 0, rej = 0;
   for (const q of quotes) {
-    if (q.status === WON_STATUS) { won += q.grandTotal ?? 0; acc++; }
+    if (q.status === WON_STATUS) { won += wonAmt(q); acc++; }
     else if (q.status === LOST_STATUS) rej++;
     if (PIPELINE_STATUS.includes(q.status)) pipeline += q.grandTotal ?? 0;
   }
@@ -474,12 +479,12 @@ export async function getQuoteList(scope: Scope, period: string) {
   const { userName, userCenterName } = await centerNameMap();
   const quotes = await prisma.quote.findMany({
     where: { userId: { in: uids }, createdAt: periodRange(period) },
-    select: { quoteNumber: true, customerCompany: true, userId: true, grandTotal: true, status: true, createdAt: true },
+    select: { quoteNumber: true, customerCompany: true, userId: true, grandTotal: true, contractAmount: true, status: true, createdAt: true },
     orderBy: { createdAt: 'desc' },
   });
   let won = 0, acc = 0, rej = 0, inProgress = 0;
   for (const q of quotes) {
-    if (q.status === WON_STATUS) { won += q.grandTotal ?? 0; acc++; }
+    if (q.status === WON_STATUS) { won += wonAmt(q); acc++; }
     else if (q.status === LOST_STATUS) rej++;
     if (PIPELINE_STATUS.includes(q.status)) inProgress++;
   }
@@ -530,13 +535,13 @@ export async function getCustomerList(scope: Scope, period: string) {
   // 고객사명별 견적 집계(누적수주·진행견적)
   const quotes = await prisma.quote.findMany({
     where: { userId: { in: uids } },
-    select: { customerCompany: true, status: true, grandTotal: true },
+    select: { customerCompany: true, status: true, grandTotal: true, contractAmount: true },
   });
   const wonByCo = new Map<string, number>();
   const pipeByCo = new Map<string, number>();
   for (const q of quotes) {
     const key = q.customerCompany ?? '';
-    if (q.status === WON_STATUS) wonByCo.set(key, (wonByCo.get(key) ?? 0) + (q.grandTotal ?? 0));
+    if (q.status === WON_STATUS) wonByCo.set(key, (wonByCo.get(key) ?? 0) + wonAmt(q));
     else if (PIPELINE_STATUS.includes(q.status)) pipeByCo.set(key, (pipeByCo.get(key) ?? 0) + 1);
   }
   // 최근 활동(노트/일정) — contactId → 고객사
@@ -577,8 +582,11 @@ export async function getPerformance(scope: Scope) {
   for (const u of usersAll) if (u.centerId != null) { const a = centerUsers.get(u.centerId) ?? []; a.push(u.id); centerUsers.set(u.centerId, a); }
 
   const wonInRange = async (ids: number[], gte: Date, lt: Date) => {
-    const r = await prisma.quote.aggregate({ _sum: { grandTotal: true }, where: { status: WON_STATUS, userId: { in: ids }, createdAt: { gte, lt } } });
-    return r._sum.grandTotal ?? 0;
+    const rows = await prisma.quote.findMany({
+      where: { status: WON_STATUS, userId: { in: ids }, createdAt: { gte, lt } },
+      select: { grandTotal: true, contractAmount: true },
+    });
+    return rows.reduce((s, q) => s + wonAmt(q), 0);
   };
   const winRateInRange = async (ids: number[], gte: Date, lt: Date) => {
     const [a, r] = await Promise.all([
@@ -633,13 +641,13 @@ export async function getMemberList(scope: Scope, period: string) {
   });
   const quotes = await prisma.quote.findMany({
     where: { userId: { in: uids }, createdAt: periodRange(period) },
-    select: { userId: true, status: true, grandTotal: true },
+    select: { userId: true, status: true, grandTotal: true, contractAmount: true },
   });
   const agg = new Map<number, { won: number; acc: number; rej: number; count: number }>();
   for (const q of quotes) {
     const cur = agg.get(q.userId!) ?? { won: 0, acc: 0, rej: 0, count: 0 };
     cur.count++;
-    if (q.status === WON_STATUS) { cur.won += q.grandTotal ?? 0; cur.acc++; }
+    if (q.status === WON_STATUS) { cur.won += wonAmt(q); cur.acc++; }
     if (q.status === LOST_STATUS) cur.rej++;
     agg.set(q.userId!, cur);
   }
@@ -677,13 +685,13 @@ export async function getMonthlyFunnel(scope: Scope, year: number) {
   const uids = await scopeUserIds(scope);
   const quotes = await prisma.quote.findMany({
     where: { userId: { in: uids }, createdAt: { gte: new Date(year, 0, 1), lt: new Date(year + 1, 0, 1) } },
-    select: { status: true, grandTotal: true, createdAt: true },
+    select: { status: true, grandTotal: true, contractAmount: true, createdAt: true },
   });
   const rows = Array.from({ length: 12 }, (_, m) => ({ month: m + 1, quoted: 0, won: 0, inProgress: 0, lost: 0, wonAmount: 0 }));
   for (const q of quotes) {
     const r = rows[q.createdAt.getMonth()];
     r.quoted++;
-    if (q.status === WON_STATUS) { r.won++; r.wonAmount += q.grandTotal ?? 0; }
+    if (q.status === WON_STATUS) { r.won++; r.wonAmount += wonAmt(q); }
     else if (q.status === LOST_STATUS) r.lost++;
     else r.inProgress++;
   }
