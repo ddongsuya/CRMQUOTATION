@@ -26,6 +26,20 @@ const toDate = (v: unknown): Date | null => {
   return isNaN(d.getTime()) ? null : d;
 };
 
+/**
+ * 할인율 정규화 → 0~1 비율.
+ * 엑셀 칸이 "10%"·"10"(퍼센트 표기)든 "0.1"(비율)이든 모두 받아준다.
+ *   · 1보다 크면 퍼센트로 간주해 100으로 나눔 (10 → 0.1, 25 → 0.25)
+ *   · 최종적으로 [0, 1] 로 가둠 (엔진 pricing.js 가 이 범위를 요구)
+ * (예전엔 "10%" 가 10(=1000% 할인)으로 저장돼 총액이 음수가 됐다.)
+ */
+export function parseDiscountRate(v: unknown): number {
+  const n = num(v);
+  if (n == null) return 0;
+  const rate = n > 1 ? n / 100 : n;
+  return Math.min(Math.max(rate, 0), 1);
+}
+
 /** 물질종류 → modality(필수 필드) 매핑. */
 function toModality(substanceType: string): string {
   const t = substanceType;
@@ -62,7 +76,7 @@ export async function importQuoteRows(prisma: PrismaClient, rows: RawRow[], impo
       const substanceType = s(r['물질종류']) && s(r['물질종류']) !== '-' ? s(r['물질종류']) : null;
       const submissionPurpose = s(r['제출용도']) && s(r['제출용도']) !== '-' ? s(r['제출용도']) : null;
       const total = num(r['견적금액']);
-      const discount = num(r['할인율']) ?? 0;
+      const discount = parseDiscountRate(r['할인율']);
       const contactName = s(r['의뢰자']) || null;
       const email = s(r['의뢰자 e-mail']).replace(/^mailto:/, '') || null;
       const phone = s(r['의뢰자 연락처']) || null;
