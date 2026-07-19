@@ -97,6 +97,22 @@ export async function DELETE(_req: Request, { params }: { params: { id: string }
   const id = Number(params.id);
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   await currentUserId();
-  await prisma.company.delete({ where: { id } });
+
+  // 연결 데이터 확인 — 안건이 있으면 FK(Restrict)로 삭제 시 500, 견적은 companyId 가 조용히 null 로 풀려 고아가 된다.
+  // 사용자가 먼저 정리하도록 명확한 409 로 막는다.
+  const [dealCount, quoteCount] = await Promise.all([
+    prisma.deal.count({ where: { contact: { companyId: id } } }),
+    prisma.quote.count({ where: { companyId: id } }),
+  ]);
+  if (dealCount > 0 || quoteCount > 0) {
+    const parts = [dealCount > 0 ? `안건 ${dealCount}건` : '', quoteCount > 0 ? `견적 ${quoteCount}건` : ''].filter(Boolean).join(' · ');
+    return NextResponse.json({ error: `연결된 ${parts}이 있어 삭제할 수 없습니다. 먼저 정리해 주세요.` }, { status: 409 });
+  }
+
+  try {
+    await prisma.company.delete({ where: { id } });   // 남은 의뢰자(안건 없는)는 cascade
+  } catch {
+    return NextResponse.json({ error: '삭제에 실패했습니다. 연결된 데이터를 확인해 주세요.' }, { status: 409 });
+  }
   return NextResponse.json({ ok: true });
 }
