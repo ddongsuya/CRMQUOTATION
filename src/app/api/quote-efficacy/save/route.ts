@@ -8,11 +8,14 @@
  *  - studyType='efficacy' (핸드오프 §5), planJson에 상태 직렬화, 견적 라인은 스냅샷 저장
  */
 import { NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { createQuoteWithNumber } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { buildCompanyIndex, matchCompanyId } from '@/lib/admin/company-match';
 import { computeCost, computeQuote, findModel, totalAnimalsOf, totalDaysOf, type EffState } from '@/app/quote-efficacy/_lib/state';
+
+type Tx = Prisma.TransactionClient;
 
 export const dynamic = 'force-dynamic';
 
@@ -40,23 +43,26 @@ export async function POST(req: Request) {
   const totalAnimals = totalAnimalsOf(s.groups);
   const modelTitle = m.title.replace(/^[IVX]+-\d+\.\s*/, '');
   const userId = await currentUserId();
-
-  // 고객사 자동 등록 — 표기 변형 흡수(정규화 매칭), 없으면 생성
   const companyName = s.client.company.trim();
-  const companies = await prisma.company.findMany({ select: { id: true, name: true, aliases: true } });
-  let companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
-  if (companyId == null) {
-    const co = await prisma.company.create({ data: { name: companyName, ownerId: userId }, select: { id: true } });
-    companyId = co.id;
-  }
   const contactName = (s.client.name ?? '').trim();
-  if (contactName) {
-    const email = (s.client.email ?? '').trim() || undefined;
-    const phone = (s.client.phone ?? '').trim() || undefined;
-    const existing = await prisma.contact.findFirst({ where: { companyId, name: contactName }, select: { id: true } });
-    if (!existing) await prisma.contact.create({ data: { companyId, name: contactName, email, phone } });
-    else if (email || phone) await prisma.contact.update({ where: { id: existing.id }, data: { email, phone } });
-  }
+  const email = (s.client.email ?? '').trim() || undefined;
+  const phone = (s.client.phone ?? '').trim() || undefined;
+
+  /** 트랜잭션 안에서 고객사 find-or-create + 연락처 upsert → companyId 반환. */
+  const ensureCompany = async (tx: Tx): Promise<number> => {
+    const companies = await tx.company.findMany({ select: { id: true, name: true, aliases: true } });
+    let companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
+    if (companyId == null) {
+      const co = await tx.company.create({ data: { name: companyName, ownerId: userId }, select: { id: true } });
+      companyId = co.id;
+    }
+    if (contactName) {
+      const existing = await tx.contact.findFirst({ where: { companyId, name: contactName }, select: { id: true } });
+      if (!existing) await tx.contact.create({ data: { companyId, name: contactName, email, phone } });
+      else if (email || phone) await tx.contact.update({ where: { id: existing.id }, data: { email, phone } });
+    }
+    return companyId;
+  };
 
   const itemRows = cost.items.map((it, i) => ({
     testItemKey: `EFF-${i}`,
@@ -72,7 +78,7 @@ export async function POST(req: Request) {
     displayOrder: i,
   }));
 
-  const data = {
+  const buildData = (companyId: number) => ({
     userId,
     companyId,
     dealId: body?.dealId ?? null,
@@ -91,27 +97,34 @@ export async function POST(req: Request) {
     totalAfterDiscount: q.disc,
     vatAmount: q.vatAmt,
     grandTotal: q.vat,
-  };
+  });
 
   // 같은 세션에서 재저장하면 기존 견적을 갱신(라인 교체), 아니면 신규 발번.
   // (유형 검사는 위에서 이미 통과 — target 은 효력 견적이거나 존재하지 않음)
+  // 고객사 확보 + 라인 교체/생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백).
   if (target) {
-    await prisma.quoteItem.deleteMany({ where: { quoteId: target.id } });
-    const updated = await prisma.quote.update({
-      where: { id: target.id },
-      data: { ...data, items: { create: itemRows } },
-      select: { id: true, quoteNumber: true },
+    const updated = await prisma.$transaction(async (tx) => {
+      const companyId = await ensureCompany(tx);
+      await tx.quoteItem.deleteMany({ where: { quoteId: target.id } });
+      return tx.quote.update({
+        where: { id: target.id },
+        data: { ...buildData(companyId), items: { create: itemRows } },
+        select: { id: true, quoteNumber: true },
+      });
     });
     return NextResponse.json({ quote: updated });
   }
 
-  const created = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
-    data: {
-      quoteNumber, ...data,
-      status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000),
-      items: { create: itemRows },
-    },
-    select: { id: true, quoteNumber: true },
+  const created = await createQuoteWithNumber((quoteNumber) => prisma.$transaction(async (tx) => {
+    const companyId = await ensureCompany(tx);
+    return tx.quote.create({
+      data: {
+        quoteNumber, ...buildData(companyId),
+        status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000),
+        items: { create: itemRows },
+      },
+      select: { id: true, quoteNumber: true },
+    });
   }));
   return NextResponse.json({ quote: created });
 }

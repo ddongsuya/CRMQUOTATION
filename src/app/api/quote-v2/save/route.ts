@@ -62,43 +62,44 @@ export async function POST(req: Request) {
   }));
 
   const userId = await currentUserId();
-
-  // 신규/기존 고객사 자동 연결 — 견적서에 고객사명이 있으면 CRM(고객관리)에 Company를 find-or-create 하고 companyId FK를 건다.
-  // 정규화 매칭으로 표기 변형(㈜·공백 등)을 흡수해 중복 생성을 막는다. 의뢰자가 있으면 Contact도 함께 upsert.
-  let companyId: number | null = null;
   const companyName = (b.customerCompany ?? '').trim();
-  if (companyName) {
-    const companies = await prisma.company.findMany({ select: { id: true, name: true, aliases: true } });
-    companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
-    if (companyId == null) {
-      const co = await prisma.company.create({ data: { name: companyName, ownerId: userId }, select: { id: true } });
-      companyId = co.id;
-    }
-    const contactName = (b.customerName ?? '').trim();
-    if (contactName) {
-      const email = (b.customerEmail ?? '').trim() || undefined;
-      const phone = (b.customerPhone ?? '').trim() || undefined;
-      const existing = await prisma.contact.findFirst({ where: { companyId, name: contactName }, select: { id: true } });
-      if (!existing) await prisma.contact.create({ data: { companyId, name: contactName, email, phone } });
-      else if (email || phone) await prisma.contact.update({ where: { id: existing.id }, data: { email, phone } });
-    }
-  }
+  const contactName = (b.customerName ?? '').trim();
 
-  const created = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
-    data: {
-      quoteNumber, userId, dealId: b.dealId ?? null, companyId: companyId ?? undefined,
-      projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
-      substanceName: b.substanceName ?? null,
-      customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null, customerPhone: b.customerPhone ?? null,
-      modality: b.category, priceStandard: std,
-      planJson: JSON.stringify({ ...planForSnapshot, engine: 'v2' }),
-      excipientCount: (b.plan?.excipientCount) ?? 0,
-      currency: b.currency ?? 'KRW', exchangeRate: b.currency === 'USD' ? (b.exchangeRate ?? 1400) : null, discountRate,
-      totalBeforeDiscount: subtotal, totalAfterDiscount: afterDiscount, vatAmount: afterDiscount * 0.1, grandTotal: afterDiscount * 1.1,
-      ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
-      items: { create: itemRows },
-    },
-    select: { id: true, quoteNumber: true },
+  // 고객사 find-or-create + 연락처 upsert + 견적 생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백 → 고아 고객사 방지).
+  // 견적번호 재시도는 트랜잭션 단위 — P2002 로 tx 가 중단되면 새 번호로 트랜잭션 전체를 재실행.
+  const created = await createQuoteWithNumber((quoteNumber) => prisma.$transaction(async (tx) => {
+    let companyId: number | null = null;
+    if (companyName) {
+      const companies = await tx.company.findMany({ select: { id: true, name: true, aliases: true } });
+      companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
+      if (companyId == null) {
+        const co = await tx.company.create({ data: { name: companyName, ownerId: userId }, select: { id: true } });
+        companyId = co.id;
+      }
+      if (contactName) {
+        const email = (b.customerEmail ?? '').trim() || undefined;
+        const phone = (b.customerPhone ?? '').trim() || undefined;
+        const existing = await tx.contact.findFirst({ where: { companyId, name: contactName }, select: { id: true } });
+        if (!existing) await tx.contact.create({ data: { companyId, name: contactName, email, phone } });
+        else if (email || phone) await tx.contact.update({ where: { id: existing.id }, data: { email, phone } });
+      }
+    }
+    return tx.quote.create({
+      data: {
+        quoteNumber, userId, dealId: b.dealId ?? null, companyId: companyId ?? undefined,
+        projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
+        substanceName: b.substanceName ?? null,
+        customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null, customerPhone: b.customerPhone ?? null,
+        modality: b.category, priceStandard: std,
+        planJson: JSON.stringify({ ...planForSnapshot, engine: 'v2' }),
+        excipientCount: (b.plan?.excipientCount) ?? 0,
+        currency: b.currency ?? 'KRW', exchangeRate: b.currency === 'USD' ? (b.exchangeRate ?? 1400) : null, discountRate,
+        totalBeforeDiscount: subtotal, totalAfterDiscount: afterDiscount, vatAmount: afterDiscount * 0.1, grandTotal: afterDiscount * 1.1,
+        ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
+        items: { create: itemRows },
+      },
+      select: { id: true, quoteNumber: true },
+    });
   }));
   return NextResponse.json({ quote: created });
 }
