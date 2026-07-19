@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { useDrawer } from '@/components/admin/DrawerProvider';
+import { quoteStatus } from '@/lib/admin/status';
 
 type QuoteRow = {
   id: number;
@@ -24,11 +25,7 @@ type QuoteRow = {
   _count: { items: number };
 };
 
-// 상태점 색(components.css)
-const STATUS_DOT: Record<string, string> = {
-  DRAFT: 'var(--muted-soft)', ISSUED: 'var(--accent)', SENT: 'var(--status-sent)', ACCEPTED: 'var(--success)', REJECTED: 'var(--error)',
-};
-const STATUS_LABEL: Record<string, string> = { DRAFT: '작성중', ISSUED: '발행', SENT: '발송', ACCEPTED: '수주', REJECTED: '반려' };
+// 상태 라벨·색은 lib/admin/status.ts 단일 소스(quoteStatus) 사용 — REVIEWED 포함.
 const FILTERS: [string, string][] = [['ALL', '전체'], ['DRAFT', '작성중'], ['ISSUED', '발행'], ['SENT', '발송'], ['ACCEPTED', '수주'], ['REJECTED', '반려']];
 const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : (n > 0 ? `₩${n.toLocaleString()}` : '₩0');
 /**
@@ -140,8 +137,8 @@ export default function QuotesListPage() {
                       </div>
                     </div>
                     <div className="w-[84px] flex-shrink-0 inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body">
-                      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: STATUS_DOT[qr.status] ?? 'var(--muted-soft)' }} />
-                      {STATUS_LABEL[qr.status] ?? qr.status}
+                      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: quoteStatus(qr.status).color }} />
+                      {quoteStatus(qr.status).label}
                     </div>
                     <div className="w-[84px] flex-shrink-0 text-right text-[12.5px] text-ink-subtle tabular-nums">{new Date(qr.updatedAt).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })}</div>
                     <div className="w-[120px] flex-shrink-0 text-right text-[19px] font-bold text-ink tabular-nums">{fmtAmount(qr)}</div>

@@ -5,19 +5,13 @@ import { prisma } from '@/lib/prisma';
 import { ensureHydrated } from '@/lib/hydrate';
 import { currentUserId } from '@/lib/current-user';
 import { getFollowups } from '@/lib/admin/aggregate';
+import { quoteStatus } from '@/lib/admin/status';
 import FollowupCard, { type Followup } from '@/components/admin/FollowupCard';
 
 // 통계·목록을 매 요청 갱신 (런타임 DB 반영). 정적 프리렌더 금지.
 export const dynamic = 'force-dynamic';
 
-// 상태점 색(components.css): 작성중 muted-soft · 발행 accent · 발송 status-sent · 수주 success · 반려 error
-const STATUS: Record<string, { label: string; dot: string }> = {
-  DRAFT: { label: '작성중', dot: 'var(--muted-soft)' },
-  ISSUED: { label: '발행', dot: 'var(--accent)' },
-  SENT: { label: '발송', dot: 'var(--status-sent)' },
-  ACCEPTED: { label: '수주', dot: 'var(--success)' },
-  REJECTED: { label: '반려', dot: 'var(--error)' },
-};
+// 상태 라벨·색은 lib/admin/status.ts 단일 소스(quoteStatus) 사용 — REVIEWED 포함.
 
 export default async function Home() {
   await ensureHydrated();
@@ -81,7 +75,7 @@ export default async function Home() {
       prisma.note.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, type: true, title: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
     ]);
     activity = [
-      ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: STATUS[q.status]?.label ?? q.status, at: q.createdAt, href: `/quote/print?id=${q.id}` })),
+      ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: quoteStatus(q.status).label, at: q.createdAt, href: `/quote/print?id=${q.id}` })),
       ...rContracts.map(c => ({ id: `c${c.id}`, kind: '계약', text: c.deal?.title ?? '계약', sub: c.status, at: c.createdAt, href: c.deal ? `/deals/${c.deal.id}` : null })),
       ...rNotes.map(n => ({ id: `n${n.id}`, kind: '노트', text: n.title || n.deal?.title || '메모', sub: n.type, at: n.createdAt, href: n.deal ? `/deals/${n.deal.id}` : '/notes' })),
     ].sort((a, b) => +b.at - +a.at).slice(0, 6).map(x => ({ ...x, at: x.at.toISOString() }));
@@ -123,7 +117,7 @@ export default async function Home() {
           ) : (
             <ul>
               {quotes.map(q => {
-                const st = STATUS[q.status] ?? STATUS.DRAFT;
+                const st = quoteStatus(q.status);
                 const initial = (q.customerCompany || '?').trim().charAt(0);
                 return (
                   <li key={q.id}>
@@ -134,7 +128,7 @@ export default async function Home() {
                         <div className="text-[12px] font-mono text-ink-subtle truncate">{q.quoteNumber} · {q.modality}</div>
                       </div>
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-[11px] py-1 text-[12px] font-medium text-ink-muted flex-shrink-0">
-                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: st.dot }} />{st.label}
+                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: st.color }} />{st.label}
                       </span>
                       <span className="text-[20px] font-bold text-ink tabular-nums text-right w-[92px] flex-shrink-0">{fmtM(q.grandTotal ?? 0)}</span>
                     </Link>

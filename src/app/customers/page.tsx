@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Loader2, Building2, X, Save, Sparkles, GanttChartSquare, ArrowRight, Mail, Phone } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
+import { quoteStatus } from '@/lib/admin/status';
 
 type Company = {
   id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null;
@@ -202,12 +203,12 @@ function DetailPanel({ companyId }: { companyId: number }) {
           <Card title="최근 견적" count={scopedQuotes.length}>
             {scopedQuotes.length === 0 ? <Empty>견적 이력이 없습니다.</Empty> : <div>
               {scopedQuotes.slice(0, 5).map((qq: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                const st = QUOTE_STATUS[qq.status] ?? QUOTE_STATUS.DRAFT;
+                const st = quoteStatus(qq.status);
                 return (
                   <Link key={qq.id} href={`/quote/print?id=${qq.id}`} className="flex items-center gap-2.5 py-2.5 border-t border-[var(--hairline-soft)] first:border-t-0 -mx-1 px-1 rounded hover:bg-slate-100">
                     <span className="font-mono text-[13px] text-brand-600 w-24 flex-shrink-0 truncate">{qq.quoteNumber}</span>
                     <span className="flex-1 min-w-0 text-[13px] text-ink-muted truncate">{qq.modality || qq.dealTitle}</span>
-                    <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body flex-shrink-0"><span className="w-1.5 h-1.5 rounded-full" style={{ background: st.dot }} />{st.label}</span>
+                    <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body flex-shrink-0"><span className="w-1.5 h-1.5 rounded-full" style={{ background: st.color }} />{st.label}</span>
                     <span className="text-[15px] font-bold text-ink tabular-nums w-20 text-right flex-shrink-0">{fmtM(qq.grandTotal ?? 0)}</span>
                   </Link>
                 );
@@ -277,14 +278,7 @@ function Card({ title, count, children }: { title: string; count?: number; child
 }
 function Empty({ children }: { children: React.ReactNode }) { return <div className="py-6 text-center text-xs text-ink-subtle">{children}</div>; }
 
-// 견적 상태점 색(components.css)
-const QUOTE_STATUS: Record<string, { label: string; dot: string }> = {
-  DRAFT: { label: '작성중', dot: 'var(--muted-soft)' },
-  ISSUED: { label: '발행', dot: 'var(--accent)' },
-  SENT: { label: '발송', dot: 'var(--status-sent)' },
-  ACCEPTED: { label: '수주', dot: 'var(--success)' },
-  REJECTED: { label: '반려', dot: 'var(--error)' },
-};
+// 견적 상태 라벨·색은 lib/admin/status.ts 단일 소스(quoteStatus) 사용 — REVIEWED 포함.
 
 function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: () => void }) {
   const [f, setF] = useState({ name: '', bizRegNo: '', industry: '', address: '', memo: '', isNewClient: true });
