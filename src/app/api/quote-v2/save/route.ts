@@ -10,7 +10,7 @@ import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/quote-engine/compose';
 import { getItem } from '@/lib/quote-engine/master';
 import type { LineItem } from '@/lib/quote-engine/types';
-import { buildCompanyIndex, matchCompanyId } from '@/lib/admin/company-match';
+import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 
 export const dynamic = 'force-dynamic';
 
@@ -68,22 +68,12 @@ export async function POST(req: Request) {
   // 고객사 find-or-create + 연락처 upsert + 견적 생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백 → 고아 고객사 방지).
   // 견적번호 재시도는 트랜잭션 단위 — P2002 로 tx 가 중단되면 새 번호로 트랜잭션 전체를 재실행.
   const created = await createQuoteWithNumber((quoteNumber) => prisma.$transaction(async (tx) => {
-    let companyId: number | null = null;
-    if (companyName) {
-      const companies = await tx.company.findMany({ select: { id: true, name: true, aliases: true } });
-      companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
-      if (companyId == null) {
-        const co = await tx.company.create({ data: { name: companyName, ownerId: userId }, select: { id: true } });
-        companyId = co.id;
-      }
-      if (contactName) {
-        const email = (b.customerEmail ?? '').trim() || undefined;
-        const phone = (b.customerPhone ?? '').trim() || undefined;
-        const existing = await tx.contact.findFirst({ where: { companyId, name: contactName }, select: { id: true } });
-        if (!existing) await tx.contact.create({ data: { companyId, name: contactName, email, phone } });
-        else if (email || phone) await tx.contact.update({ where: { id: existing.id }, data: { email, phone } });
-      }
-    }
+    const companyId = companyName
+      ? await findOrCreateCompanyWithContact(tx, {
+          companyName, ownerId: userId, contactName,
+          email: (b.customerEmail ?? '').trim() || undefined, phone: (b.customerPhone ?? '').trim() || undefined,
+        })
+      : null;
     return tx.quote.create({
       data: {
         quoteNumber, userId, dealId: b.dealId ?? null, companyId: companyId ?? undefined,

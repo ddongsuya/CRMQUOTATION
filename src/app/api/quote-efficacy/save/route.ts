@@ -12,7 +12,7 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { createQuoteWithNumber } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
-import { buildCompanyIndex, matchCompanyId } from '@/lib/admin/company-match';
+import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { computeCost, computeQuote, findModel, totalAnimalsOf, totalDaysOf, type EffState } from '@/app/quote-efficacy/_lib/state';
 
 type Tx = Prisma.TransactionClient;
@@ -48,21 +48,8 @@ export async function POST(req: Request) {
   const email = (s.client.email ?? '').trim() || undefined;
   const phone = (s.client.phone ?? '').trim() || undefined;
 
-  /** 트랜잭션 안에서 고객사 find-or-create + 연락처 upsert → companyId 반환. */
-  const ensureCompany = async (tx: Tx): Promise<number> => {
-    const companies = await tx.company.findMany({ select: { id: true, name: true, aliases: true } });
-    let companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
-    if (companyId == null) {
-      const co = await tx.company.create({ data: { name: companyName, ownerId: userId }, select: { id: true } });
-      companyId = co.id;
-    }
-    if (contactName) {
-      const existing = await tx.contact.findFirst({ where: { companyId, name: contactName }, select: { id: true } });
-      if (!existing) await tx.contact.create({ data: { companyId, name: contactName, email, phone } });
-      else if (email || phone) await tx.contact.update({ where: { id: existing.id }, data: { email, phone } });
-    }
-    return companyId;
-  };
+  const ensureCompany = (tx: Tx): Promise<number> =>
+    findOrCreateCompanyWithContact(tx, { companyName, ownerId: userId, contactName, email, phone });
 
   const itemRows = cost.items.map((it, i) => ({
     testItemKey: `EFF-${i}`,

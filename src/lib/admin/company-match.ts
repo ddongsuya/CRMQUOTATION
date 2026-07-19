@@ -42,3 +42,43 @@ export function matchCompanyId(name: string | null | undefined, index: Map<strin
   const n = normCompany(name);
   return n ? index.get(n) ?? null : null;
 }
+
+/** company.findMany/create + contact.find/create/update 를 갖춘 최소 Prisma 클라이언트(트랜잭션 tx 포함). */
+type CompanyTx = {
+  company: {
+    findMany(args: { select: { id: true; name: true; aliases: true } }): Promise<CompanyLite[]>;
+    create(args: { data: { name: string; ownerId: number }; select: { id: true } }): Promise<{ id: number }>;
+  };
+  contact: {
+    findFirst(args: { where: { companyId: number; name: string }; select: { id: true } }): Promise<{ id: number } | null>;
+    create(args: { data: { companyId: number; name: string; email?: string; phone?: string } }): Promise<unknown>;
+    update(args: { where: { id: number }; data: { email?: string; phone?: string } }): Promise<unknown>;
+  };
+};
+
+/**
+ * 고객사 find-or-create(정규화 매칭) + 의뢰자 Contact upsert → companyId 반환.
+ * 두 저장 라우트(quote-v2·quote-efficacy)가 공유. 트랜잭션 tx 를 넘겨 원자성 보장.
+ */
+export async function findOrCreateCompanyWithContact(
+  tx: CompanyTx,
+  { companyName, ownerId, contactName, email, phone }: {
+    companyName: string; ownerId: number; contactName?: string; email?: string; phone?: string;
+  },
+): Promise<number> {
+  const companies = await tx.company.findMany({ select: { id: true, name: true, aliases: true } });
+  let companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
+  if (companyId == null) {
+    const co = await tx.company.create({ data: { name: companyName, ownerId }, select: { id: true } });
+    companyId = co.id;
+  }
+  const cn = (contactName ?? '').trim();
+  if (cn) {
+    const e = email?.trim() || undefined;
+    const p = phone?.trim() || undefined;
+    const existing = await tx.contact.findFirst({ where: { companyId, name: cn }, select: { id: true } });
+    if (!existing) await tx.contact.create({ data: { companyId, name: cn, email: e, phone: p } });
+    else if (e || p) await tx.contact.update({ where: { id: existing.id }, data: { email: e, phone: p } });
+  }
+  return companyId;
+}
