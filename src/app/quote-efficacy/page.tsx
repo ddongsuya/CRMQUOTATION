@@ -218,7 +218,8 @@ export default function QuoteEfficacyPage() {
         }
       />
 
-      <div className="pt-6 transition-[padding] duration-200" style={dockOpen ? { paddingRight: 412 } : undefined}>
+      {/* 편집 도구 도크는 고정 오버레이 패널(폰=전체폭+배경, 데스크톱=우측 380px 패널). */}
+      <div className="pt-6">
         {s.step === 1 && (
           <Step1Models
             browseCat={s.browseCat} search={s.search} modelId={s.modelId}

@@ -26,7 +26,10 @@ export default function EditorDock({
   const weekKeys = curEntry ? Object.keys(curEntry.priceByWeek) : [];
 
   return (
-    <aside className="fixed top-0 right-0 bottom-0 w-[380px] z-30 bg-[var(--card)] border-l border-slate-200 flex flex-col no-print">
+    <>
+      {/* 모바일: 배경 탭으로 닫기 (데스크톱은 콘텐츠를 밀어내므로 배경 없음) */}
+      <div className="fixed inset-0 z-20 bg-black/30 lg:hidden no-print" onClick={onClose} />
+    <aside className="fixed top-0 right-0 bottom-0 w-full sm:w-[400px] lg:w-[380px] z-30 bg-[var(--card)] border-l border-slate-200 flex flex-col no-print">
       <header className="flex items-start justify-between gap-2 px-5 py-4 border-b border-slate-200 flex-shrink-0">
         <div>
           <h2 className="text-[16px] font-bold text-ink m-0">편집 도구</h2>
@@ -139,6 +142,7 @@ export default function EditorDock({
         </div>
       </footer>
     </aside>
+    </>
   );
 }
 

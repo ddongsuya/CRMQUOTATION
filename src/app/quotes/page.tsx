@@ -146,8 +146,8 @@ export default function QuotesListPage() {
                     <div className="w-[84px] flex-shrink-0 text-right text-[12.5px] text-ink-subtle tabular-nums">{new Date(qr.updatedAt).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' })}</div>
                     <div className="w-[120px] flex-shrink-0 text-right text-[19px] font-bold text-ink tabular-nums">{fmtAmount(qr)}</div>
                   </Link>
-                  {/* hover 액션 — 대기 상태는 시안과 동일, hover 시에만 노출 */}
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden group-hover:flex items-center gap-0.5 bg-slate-100 rounded-lg px-1 py-0.5">
+                  {/* 액션 — 폰(hover 없음)에선 항상 노출, 데스크톱은 hover 시 (터치에서 접근 불가하던 문제 해소) */}
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 flex lg:hidden lg:group-hover:flex items-center gap-0.5 bg-slate-100 rounded-lg px-1 py-0.5">
                     {qr.customerCompany && <button onClick={() => openCompany(qr.customerCompany!)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="고객 상세"><Icon name="users" className="w-3.5 h-3.5" /></button>}
                     <Link href={`/quote/print?id=${qr.id}`} target="_blank" className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="PDF 출력"><Icon name="arrow-right" className="w-3.5 h-3.5" /></Link>
                     <button onClick={() => duplicate(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="복제"><Icon name="plus" className="w-3.5 h-3.5" /></button>
