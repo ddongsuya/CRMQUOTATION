@@ -26,12 +26,17 @@ const LOST_STATUS = 'REJECTED';
 const wonAmt = (q: { contractAmount?: number | null; grandTotal: number | null }): number =>
   q.contractAmount ?? q.grandTotal ?? 0;
 
-/** 기간 키 → createdAt 범위. 2026H1=상반기, 2026=연간. */
+/** 기간 키 → createdAt 범위. 2026H1=상반기, 2026Q1~Q4=분기, 2026=연간. */
 export function periodRange(period: string): { gte: Date; lt: Date } {
-  const m = /^(\d{4})(H1|H2)?$/.exec(period);
+  const m = /^(\d{4})(H1|H2|Q1|Q2|Q3|Q4)?$/.exec(period);
   const y = m ? Number(m[1]) : 2026;
-  if (m?.[2] === 'H1') return { gte: new Date(y, 0, 1), lt: new Date(y, 6, 1) };
-  if (m?.[2] === 'H2') return { gte: new Date(y, 6, 1), lt: new Date(y + 1, 0, 1) };
+  const seg = m?.[2];
+  if (seg === 'H1') return { gte: new Date(y, 0, 1), lt: new Date(y, 6, 1) };
+  if (seg === 'H2') return { gte: new Date(y, 6, 1), lt: new Date(y + 1, 0, 1) };
+  if (seg && seg[0] === 'Q') {
+    const q = Number(seg[1]);                       // Q1→월0, Q2→월3, Q3→월6, Q4→월9
+    return { gte: new Date(y, (q - 1) * 3, 1), lt: new Date(y, q * 3, 1) };
+  }
   return { gte: new Date(y, 0, 1), lt: new Date(y + 1, 0, 1) };
 }
 
@@ -598,32 +603,39 @@ export async function getPerformance(scope: Scope) {
     ]);
     return a + r > 0 ? a / (a + r) : 0;
   };
-  // 분기: 이번=2026 Q2, 전분기=2026 Q1, 전년동기=2025 Q2 (데모 데이터 기준)
-  const Q2_26: [Date, Date] = [new Date(2026, 3, 1), new Date(2026, 6, 1)];
-  const Q1_26: [Date, Date] = [new Date(2026, 0, 1), new Date(2026, 3, 1)];
-  const Q2_25: [Date, Date] = [new Date(2025, 3, 1), new Date(2025, 6, 1)];
-  const H1_26: [Date, Date] = [new Date(2026, 0, 1), new Date(2026, 6, 1)];
+  // 분기: 현재 날짜 기준(하드코딩 제거). 이번 분기 / 전분기 / 전년 동분기 / 현재 반기.
+  const now = new Date();
+  const y = now.getFullYear();
+  const qIdx = Math.floor(now.getMonth() / 3);                 // 0..3
+  const curQ: [Date, Date] = [new Date(y, qIdx * 3, 1), new Date(y, qIdx * 3 + 3, 1)];
+  const prvQ: [Date, Date] = qIdx === 0
+    ? [new Date(y - 1, 9, 1), new Date(y, 0, 1)]
+    : [new Date(y, (qIdx - 1) * 3, 1), new Date(y, qIdx * 3, 1)];
+  const yoyQr: [Date, Date] = [new Date(y - 1, qIdx * 3, 1), new Date(y - 1, qIdx * 3 + 3, 1)];
+  const halfIdx = now.getMonth() < 6 ? 0 : 1;
+  const halfKey = `${y}H${halfIdx + 1}`;
+  const half: [Date, Date] = [new Date(y, halfIdx * 6, 1), new Date(y, halfIdx * 6 + 6, 1)];
 
   const [thisQ, prevQ, yoyQ] = await Promise.all([
-    wonInRange(uids, ...Q2_26), wonInRange(uids, ...Q1_26), wonInRange(uids, ...Q2_25),
+    wonInRange(uids, ...curQ), wonInRange(uids, ...prvQ), wonInRange(uids, ...yoyQr),
   ]);
 
   const centerRows = await Promise.all(centers.map(async (c) => {
     const ids = centerUsers.get(c.id) ?? [];
     const [won, wr, q1, q2, target] = await Promise.all([
-      wonInRange(ids, ...H1_26),
-      winRateInRange(ids, ...H1_26),
-      wonInRange(ids, ...Q1_26),
-      wonInRange(ids, ...Q2_26),
-      prisma.target.findFirst({ where: { centerId: c.id, period: '2026H1' } }),
+      wonInRange(ids, ...half),
+      winRateInRange(ids, ...half),
+      wonInRange(ids, ...prvQ),
+      wonInRange(ids, ...curQ),
+      prisma.target.findFirst({ where: { centerId: c.id, period: halfKey } }),
     ]);
     const goal = target?.amount ?? null;
     return { name: c.name, target: goal, won, rate: goal ? won / goal : null, winRate: wr, qoq: q1 > 0 ? (q2 - q1) / q1 : null };
   }));
   const totWon = centerRows.reduce((a, r) => a + r.won, 0);
   const totTarget = centerRows.reduce((a, r) => a + (r.target ?? 0), 0);
-  const totWr = await winRateInRange(uids, ...H1_26);
-  const totQ1 = centerRows.length ? await wonInRange(uids, ...Q1_26) : 0;
+  const totWr = await winRateInRange(uids, ...half);
+  const totQ1 = centerRows.length ? await wonInRange(uids, ...prvQ) : 0;
   const total = { won: totWon, target: totTarget || null, rate: totTarget ? totWon / totTarget : null, winRate: totWr, qoq: totQ1 > 0 ? (thisQ - totQ1) / totQ1 : null };
 
   return {
@@ -733,9 +745,9 @@ export async function getSchedule(scope: Scope) {
       status: s.label, tone: s.tone as 'green' | 'orange' | 'gray', ...frac(d.createdAt.getTime(), d.title.length),
     };
   });
-  // 계약 체결(ACCEPTED) 견적 = 실제 진행 시험(Deal 없는 임포트 견적 포함)
+  // 계약 체결(ACCEPTED) 견적 중 **Deal 없는** 것만(임포트 견적). dealId 있는 건 위 deals 행에 이미 포함 → 중복 방지.
   const wonQuotes = await prisma.quote.findMany({
-    where: { userId: { in: uids }, status: WON_STATUS },
+    where: { userId: { in: uids }, status: WON_STATUS, dealId: null },
     select: { projectName: true, customerCompany: true, userId: true, sentAt: true, createdAt: true },
     orderBy: { sentAt: 'desc' },
   });

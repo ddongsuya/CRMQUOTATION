@@ -26,14 +26,23 @@ const num = (v: unknown): number | null => {
   const n = Number(t);
   return Number.isFinite(n) ? n : null;
 };
-/** 'YYYY.MM.DD' · 'YYYY-MM-DD' · Date 모두 처리. 실패 시 null. */
+/**
+ * 'YYYY.MM.DD' · 'YYYY-MM-DD' · Date 모두 처리 → **로컬 정오로 정규화**. 실패 시 null.
+ * 날짜형 셀(exceljs=UTC 자정)과 텍스트 셀이 서로 다른 시각이 되면 @@unique([ownerId,date])
+ * 중복 방지가 깨져 같은 날 보고가 2건 생긴다. 셀 형식과 무관하게 같은 캘린더 날짜는 같은 값으로.
+ */
 function parseDate(v: unknown): Date | null {
-  if (v instanceof Date) return isNaN(v.getTime()) ? null : v;
-  const raw = s(v);
-  const m = /(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})/.exec(raw);
-  if (!m) return null;
-  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), 12, 0, 0);
-  return isNaN(d.getTime()) ? null : d;
+  let y: number, mo: number, d: number;
+  if (v instanceof Date) {
+    if (isNaN(v.getTime())) return null;
+    y = v.getUTCFullYear(); mo = v.getUTCMonth(); d = v.getUTCDate();   // exceljs 날짜셀은 UTC 자정
+  } else {
+    const m = /(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})/.exec(s(v));
+    if (!m) return null;
+    y = Number(m[1]); mo = Number(m[2]) - 1; d = Number(m[3]);
+  }
+  const out = new Date(y, mo, d, 12, 0, 0);
+  return isNaN(out.getTime()) ? null : out;
 }
 
 /** exceljs 워크시트 → 일일보고 행. 날짜(A열) 있는 행만. */

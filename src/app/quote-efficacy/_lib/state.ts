@@ -99,7 +99,13 @@ export const animalEntry = (vendor: string, strain: string): AnimalPriceRow | un
 export function animalPrice(p: Params): number {
   const e = animalEntry(p.vendor, p.strain);
   if (!e) return 0;
-  return e.priceByWeek[`${p.ageWeeks}W`] || Object.values(e.priceByWeek)[0] || 0;
+  const exact = e.priceByWeek[`${p.ageWeeks}W`];
+  if (exact != null) return exact;
+  // 표에 없는 주령 → 가장 가까운 주령 단가. (예전엔 첫 항목=최연소·최저가로 폴백해 원가가 축소됐다.)
+  const weeks = Object.keys(e.priceByWeek).map((k) => parseInt(k)).filter((n) => !isNaN(n));
+  if (!weeks.length) return 0;
+  const closest = weeks.reduce((a, b) => (Math.abs(b - p.ageWeeks) < Math.abs(a - p.ageWeeks) ? b : a));
+  return e.priceByWeek[`${closest}W`] ?? 0;
 }
 
 export const groupTotal = (g: Group): number => g.subs.reduce((a, x) => a + (Number(x.n) || 0), 0);
