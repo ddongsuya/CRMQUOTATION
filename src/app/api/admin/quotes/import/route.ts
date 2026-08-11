@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 import ExcelJS from 'exceljs';
-import { prisma } from '@/lib/prisma';
 import { getViewMode } from '@/lib/admin/view';
 import { currentUserId } from '@/lib/current-user';
 import { importQuoteRows, rowsFromWorksheet } from '@/lib/admin/quote-import';
+import { MAX_UPLOAD_BYTES, isDryRun, runImport } from '@/lib/admin/import-run';
 
 export const runtime = 'nodejs';
 
-/** 견적 현황 엑셀 업로드 — 관리자 뷰 전용. multipart: file. '견적서' 시트 파싱→Quote upsert. */
+/**
+ * 견적 현황 엑셀 업로드 — 관리자 뷰 전용. multipart: file. '견적서' 시트 파싱→Quote upsert.
+ * ?dryRun=1 이면 쓰지 않고 신규/갱신/건너뜀/오류 건수만 계산해 반환(미리보기).
+ */
 export async function POST(req: Request) {
   const view = await getViewMode();
   if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
@@ -15,6 +18,9 @@ export async function POST(req: Request) {
   const form = await req.formData().catch(() => null);
   const file = form?.get('file');
   if (!(file instanceof File)) return NextResponse.json({ error: '파일 없음' }, { status: 400 });
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return NextResponse.json({ error: `파일이 너무 큽니다(최대 ${MAX_UPLOAD_BYTES / 1024 / 1024}MB).` }, { status: 400 });
+  }
 
   const buf = Buffer.from(await file.arrayBuffer());
   const wb = new ExcelJS.Workbook();
@@ -25,6 +31,7 @@ export async function POST(req: Request) {
 
   const rows = rowsFromWorksheet(ws);
   const importerId = await currentUserId();
-  const result = await importQuoteRows(prisma, rows, importerId);
-  return NextResponse.json({ ok: true, ...result, parsed: rows.length });
+  const dryRun = isDryRun(req);
+  const result = await runImport(importQuoteRows, rows, importerId, dryRun);
+  return NextResponse.json({ ok: true, dryRun, ...result, parsed: rows.length });
 }
