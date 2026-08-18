@@ -20,7 +20,7 @@
     "backfill:all": "npm run backfill:prices && npm run backfill:detail && npm run backfill:study-weeks",
     "data:build": "npm run extract && npm run presets && npm run backfill:all",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push",
     "db:seed": "prisma db seed"
   },
   "prisma": {

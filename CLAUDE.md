@@ -6,6 +6,7 @@
 
 ## 절대 규칙
 
+- **`prisma migrate dev` 를 실행하지 않는다.** 이 DB는 Prisma Migrate 관리 밖(`_prisma_migrations` 테이블 없음)이라 드리프트로 판정되어 **운영 Neon DB 리셋**을 제안한다. 스키마 반영은 `npx prisma db push`. `--accept-data-loss` / `--force-reset` 플래그는 절대 금지.
 - **OECD 가격이 비어 있을 때 MFDS 가격으로 자동 폴백하지 않는다.** `missing_info`를 발생시켜 사용자에게 되묻는다. (`docs/quote-engine-binding.md` §5)
 - **정형화 불가 데이터를 추측으로 채우지 않는다.** `studyWeeks = null`(비정형 141건)은 UI에서 사용자가 직접 입력한다. (`docs/REGRESSION.md` F-1)
 - **회귀 스냅샷을 습관적으로 갱신하지 않는다.** `npm run test:snapshots:update`는 가격·룰을 *의도적으로* 바꿨을 때만. 갱신 후 반드시 `git diff src/lib/__tests__/__snapshots__/` 확인.
@@ -25,7 +26,7 @@ npm run test:rules           # rules_catalog.yaml 구조 검사
 npm run test:snapshots:update  # 스냅샷 갱신 — 위 '절대 규칙' 참조
 npm run data:build           # extract → presets → backfill(prices/detail/study-weeks)
 npm run prisma:generate      # = prisma generate (postinstall 에도 걸려 있음)
-npm run prisma:migrate       # prisma migrate dev
+npm run prisma:push          # prisma db push — 스키마 반영. migrate dev 금지(절대 규칙 참조)
 npm run db:seed              # ts-node prisma/seed.ts
 ```
 
@@ -107,7 +108,7 @@ docs/               설계·룰·회귀 문서
 ## 저장소에서 확인된 불일치 — 손대기 전에 확인 필요
 
 1. **DB 프로바이더 불일치**: `prisma/schema.prisma`는 `provider = "postgresql"`인데 `.env.example`은 `DATABASE_URL="file:./dev.db"`(SQLite). 그대로 복사하면 Prisma가 실패한다.
-2. **migrations 폴더 없음**: `prisma/migrations/`가 저장소에 없다. 실제 스키마 반영 방식(`migrate dev` vs `db push`)은 문서화되어 있지 않다.
+2. **스키마 반영 방식 = `prisma db push`** (2026-08-18 확정). `npx prisma migrate status` → "not managed by Prisma Migrate", `_prisma_migrations` 테이블 없음, `prisma/migrations/` 폴더 없음. 단 `migrate diff` 결과 **드리프트 0** — DB와 `schema.prisma`는 정확히 일치한다. Prisma Migrate 도입은 개발용 DB 분리가 선행되어야 하므로 보류 중이다.
 3. **README.md가 낡음**: "다음 단계: pnpm init → Next.js 스캐폴딩"이라고 적혀 있으나 앱은 이미 구현되어 있다. 구조 파악은 README가 아니라 `docs/` 와 실제 코드를 볼 것.
 4. **eslint 설정 파일 부재**: `npm run lint`(next lint)의 실제 동작 규칙이 저장소에 정의돼 있지 않다.
 5. **`docs/REGRESSION.md`의 룰 커버리지 표가 낡음**: `implemented 2 / not_implemented 23`으로 적혀 있으나 실제 COVERAGE 맵은 `6 / 19`다. 커버리지는 문서가 아니라 `rule-coverage.test.js`를 기준으로 판단할 것.

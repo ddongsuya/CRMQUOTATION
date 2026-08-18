@@ -27,7 +27,7 @@ data/test_mappings.json     972 rows
 ## 다음 단계
 
 1. `pnpm init` → Next.js 14.2 + Express 스캐폴딩
-2. PostgreSQL 연결 → `npx prisma migrate dev` → `npx prisma db seed`
+2. PostgreSQL 연결 → `npx prisma db push` → `npx prisma db seed`
 3. 14개 모달리티 × 2~3 프리셋 초안 작성 → 팀 검토
 4. 견적 계산 엔진 (pure fn + fast-check 테스트)
 5. 5-step Wizard UI
