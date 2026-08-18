@@ -107,7 +107,7 @@ docs/               설계·룰·회귀 문서
 
 ## 저장소에서 확인된 불일치 — 손대기 전에 확인 필요
 
-1. **DB 프로바이더 불일치**: `prisma/schema.prisma`는 `provider = "postgresql"`인데 `.env.example`은 `DATABASE_URL="file:./dev.db"`(SQLite). 그대로 복사하면 Prisma가 실패한다.
+1. ~~**DB 프로바이더 불일치**~~ — **2026-08-18 해결.** `.env.example`이 SQLite(`file:./dev.db`)로 되어 있어 그대로 복사하면 Prisma가 실패했다. PostgreSQL(Neon) 형식으로 교체했다(커밋 b2a079b). 실제 개발·운영 DB는 Neon PostgreSQL이다.
 2. **스키마 반영 방식 = `prisma db push`** (2026-08-18 확정). `npx prisma migrate status` → "not managed by Prisma Migrate", `_prisma_migrations` 테이블 없음, `prisma/migrations/` 폴더 없음. 단 `migrate diff` 결과 **드리프트 0** — DB와 `schema.prisma`는 정확히 일치한다. Prisma Migrate 도입은 개발용 DB 분리가 선행되어야 하므로 보류 중이다.
 3. **README.md가 낡음**: "다음 단계: pnpm init → Next.js 스캐폴딩"이라고 적혀 있으나 앱은 이미 구현되어 있다. 구조 파악은 README가 아니라 `docs/` 와 실제 코드를 볼 것.
 4. **eslint 설정 파일 부재**: `npm run lint`(next lint)의 실제 동작 규칙이 저장소에 정의돼 있지 않다.
