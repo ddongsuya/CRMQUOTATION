@@ -10,7 +10,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   const body = await req.json().catch(() => null);
   if (!body) return NextResponse.json({ error: '본문 오류' }, { status: 400 });
 
-  const prev = await prisma.quote.findUnique({ where: { id }, select: { trackingNote: true, status: true } });
+  const prev = await prisma.quote.findUnique({ where: { id }, select: { trackingNote: true, status: true, sentAt: true } });
   if (!prev) return NextResponse.json({ error: '견적 없음' }, { status: 404 });
 
   const data: Record<string, unknown> = {};
@@ -18,6 +18,13 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ('status' in body && ['DRAFT', 'ISSUED', 'SENT', 'REVIEWED', 'ACCEPTED', 'REJECTED'].includes(body.status)) data.status = body.status;
   if ('contractNo' in body) data.contractNo = body.contractNo === '' ? null : String(body.contractNo);
   if ('contractAmount' in body) { const n = Number(body.contractAmount); data.contractAmount = Number.isFinite(n) && n > 0 ? n : null; }
+  // 발송일 — 명시 지정(소급 입력) 또는 SENT 전환 시 자동 기록. 팔로업 알림의 기준일.
+  if ('sentAt' in body) {
+    const d = body.sentAt ? new Date(body.sentAt) : null;
+    data.sentAt = d && !isNaN(d.getTime()) ? d : null;
+  } else if (data.status === 'SENT' && !prev.sentAt) {
+    data.sentAt = new Date();
+  }
   if (Object.keys(data).length === 0 && !body.note) return NextResponse.json({ error: '변경 없음' }, { status: 400 });
 
   if (Object.keys(data).length) await prisma.quote.update({ where: { id }, data });

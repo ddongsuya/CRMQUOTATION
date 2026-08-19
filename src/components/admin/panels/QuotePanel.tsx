@@ -75,6 +75,14 @@ export default function QuotePanel({ id }: { id: number }) {
         <div className="space-y-1">
           {d.customerCompany && <div className="flex gap-2 text-[13px]"><span className="w-20 text-ink-muted flex-shrink-0">의뢰기관</span><button onClick={() => openCompany(d.customerCompany!)} className="text-brand-600 hover:underline flex-1 text-left">{d.customerCompany}</button></div>}
           {d.customerName && <KV k="의뢰자" v={`${d.customerName}${d.customerPhone ? ` · ${d.customerPhone}` : ''}`} />}
+          <div className="flex gap-2 text-[13px] items-center">
+            <span className="w-20 text-ink-muted flex-shrink-0">발송일</span>
+            {d.sentAt
+              ? <span className="text-ink-body tabular-nums">{d.sentAt}</span>
+              : d.status !== 'ACCEPTED' && d.status !== 'REJECTED'
+                ? <button onClick={() => patchField({ status: 'SENT' })} className="btn-ghost h-7 text-[11.5px] px-2">발송 처리</button>
+                : <span className="text-ink-subtle">—</span>}
+          </div>
           {d.testStandard && <KV k="시험기준" v={d.testStandard} />}
           {d.submissionPurpose && <KV k="제출용도" v={d.submissionPurpose} />}
           {d.substanceType && <KV k="물질종류" v={d.substanceType} />}
