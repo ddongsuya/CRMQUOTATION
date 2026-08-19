@@ -7,6 +7,7 @@ import { currentUserId } from '@/lib/current-user';
 import { getFollowups } from '@/lib/admin/aggregate';
 import { quoteStatus } from '@/lib/admin/status';
 import FollowupCard, { type Followup } from '@/components/admin/FollowupCard';
+import DashboardAlarms from '@/components/DashboardAlarms';
 
 // 통계·목록을 매 요청 갱신 (런타임 DB 반영). 정적 프리렌더 금지.
 export const dynamic = 'force-dynamic';
@@ -101,7 +102,10 @@ export default async function Home() {
       </div>
 
       {/* 팔로업 필요 — 송부 후 14일+ 미결 견적 (클릭 → 견적 드로어) */}
-      <FollowupCard rows={followups} />
+      <div className="grid lg:grid-cols-2 gap-4 mb-4 items-start">
+        <FollowupCard rows={followups} />
+        <DashboardAlarms />
+      </div>
 
 
       {/* 진행 중 견적 (459) | 마감 임박 시험 (306) */}
