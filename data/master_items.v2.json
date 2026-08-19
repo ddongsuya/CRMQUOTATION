@@ -4,7 +4,9 @@
   "count": 446,
   "built": "2026-06-29",
   "note": "통합 시험항목 마스터 v1(복원본) + 가격 보강(의약품 OECD=613, 복합제 개별/동시=2023, 환경=2025원본). 단일진실원천 후보. 앱 미연결(엔진 재구축 전). | SEND/CTD/번역 80항목을 세포치료제→SEND·CTD·번역 카테고리로 재분류(2026-06-29). | 백신 군구성 12·건기식 하위유형 21 백필(2026-06-30, test_items 2025).",
-  "priceModel": "경로그룹(경구피하근육=경구·피하·근육 / 정맥경피=정맥·경피·복강) × 제출처(MFDS/OECD). 정맥경피 비어있으면 단일가→경구피하근육 적용(어떤 경로든)."
+  "priceModel": "경로그룹(경구피하근육=경구·피하·근육 / 정맥경피=정맥·경피·복강) × 제출처(MFDS/OECD). 정맥경피 비어있으면 단일가→경구피하근육 적용(어떤 경로든).",
+  "patched_at": "2026-08-19T02:06:36",
+  "patch_note": "2026년 원본 견적서 전수검증 기반 의약품 슬라이스 교정 (10셀) + 설치류 26주 OECD 군구성 행분리 (med-106/107) / 2차: 건기식 회복 교정, 프로바이오 조제물 메모, pk-279 교정"
  },
  "items": [
   {
@@ -431,11 +433,11 @@
    "prices": {
     "경구피하근육": {
      "MFDS": 52000000,
-     "OECD": null
+     "OECD": 52000000
     },
     "정맥경피": {
      "MFDS": 57000000,
-     "OECD": null
+     "OECD": 57000000
     }
    },
    "hamryangApply": "O",
@@ -465,11 +467,11 @@
    "prices": {
     "경구피하근육": {
      "MFDS": 35000000,
-     "OECD": null
+     "OECD": 35000000
     },
     "정맥경피": {
      "MFDS": 39000000,
-     "OECD": null
+     "OECD": 39000000
     }
    },
    "hamryangApply": "O",
@@ -737,11 +739,11 @@
    "prices": {
     "경구피하근육": {
      "MFDS": 20000000,
-     "OECD": 22000000
+     "OECD": 20000000
     },
     "정맥경피": {
      "MFDS": 20000000,
-     "OECD": 22000000
+     "OECD": 20000000
     }
    },
    "hamryangApply": "O",
@@ -805,11 +807,11 @@
    "prices": {
     "경구피하근육": {
      "MFDS": 20000000,
-     "OECD": 20000000
+     "OECD": null
     },
     "정맥경피": {
      "MFDS": 20000000,
-     "OECD": 20000000
+     "OECD": null
     }
    },
    "hamryangApply": "O",
@@ -1077,11 +1079,11 @@
    "prices": {
     "경구피하근육": {
      "MFDS": 75000000,
-     "OECD": 20000000
+     "OECD": 75000000
     },
     "정맥경피": {
      "MFDS": 75000000,
-     "OECD": 20000000
+     "OECD": 75000000
     }
    },
    "hamryangApply": "O",
@@ -3045,14 +3047,82 @@
    "analysisMethod": null,
    "tkPoints": null,
    "tkMode": null,
-   "groupComposition": null,
+   "groupComposition": "암수 각각 10마리/군",
    "prices": {
     "경구피하근육": {
      "MFDS": 162000000,
-     "OECD": 294000000
+     "OECD": null
     },
     "정맥경피": {
      "MFDS": 214000000,
+     "OECD": null
+    }
+   },
+   "hamryangApply": "O",
+   "hamryangCount": "6회",
+   "guidelineCode": "ICH M3(R2), ICH S4",
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "2026",
+   "reviewStatus": null,
+   "memo": "[2026-08-19] OECD 군구성 옵션은 med-106(15마리)/med-107(20마리)에서 선택. 원본 견적서 대조 교정.",
+   "srcRow": 91
+  },
+  {
+   "id": "med-106",
+   "category": "의약품",
+   "testClass": "반복투여독성",
+   "testName": "설치류 26주 반복투여 독성(OECD 15마리)",
+   "species": "설치류",
+   "dosingPeriod": "26주",
+   "studyWeeks": 26,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "암수 각각 15마리/군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": null,
+     "OECD": 228000000
+    },
+    "정맥경피": {
+     "MFDS": null,
+     "OECD": 313000000
+    }
+   },
+   "hamryangApply": "O",
+   "hamryangCount": "6회",
+   "guidelineCode": "ICH M3(R2), ICH S4",
+   "detail": null,
+   "guidelineSummary": null,
+   "notice": null,
+   "dataSource": "2026",
+   "reviewStatus": null,
+   "memo": "[2026-08-19 신설] 원본 경구피하근육(OECD)/정맥경피(OECD) 시트 행72 (228M/313M). MFDS 기준은 med-91(10마리) 사용.",
+   "srcRow": 91
+  },
+  {
+   "id": "med-107",
+   "category": "의약품",
+   "testClass": "반복투여독성",
+   "testName": "설치류 26주 반복투여 독성(OECD 20마리)",
+   "species": "설치류",
+   "dosingPeriod": "26주",
+   "studyWeeks": 26,
+   "componentCount": null,
+   "analysisMethod": null,
+   "tkPoints": null,
+   "tkMode": null,
+   "groupComposition": "암수 각각 20마리/군",
+   "prices": {
+    "경구피하근육": {
+     "MFDS": null,
+     "OECD": 294000000
+    },
+    "정맥경피": {
+     "MFDS": null,
      "OECD": 397000000
     }
    },
@@ -3064,7 +3134,7 @@
    "notice": null,
    "dataSource": "2026",
    "reviewStatus": null,
-   "memo": null,
+   "memo": "[2026-08-19 신설] 원본 경구피하근육(OECD)/정맥경피(OECD) 시트 행74 (294M/397M). MFDS 기준은 med-91(10마리) 사용.",
    "srcRow": 91
   },
   {
@@ -8998,7 +9068,7 @@
    "groupComposition": null,
    "prices": {
     "경구피하근육": {
-     "MFDS": 52700000,
+     "MFDS": 54600000,
      "OECD": null
     },
     "정맥경피": {
@@ -14624,8 +14694,8 @@
    "groupComposition": null,
    "prices": {
     "경구피하근육": {
-     "MFDS": 5600000,
-     "OECD": 5600000
+     "MFDS": 26000000,
+     "OECD": 26000000
     },
     "정맥경피": {
      "MFDS": null,
@@ -14640,7 +14710,7 @@
    "notice": null,
    "dataSource": "백필(test_items 2025)",
    "reviewStatus": null,
-   "memo": "하위유형 개별인정형",
+   "memo": "[2026-08-19 2차] 원본에는 '* 설치류 반복 투여 회복시험 진행여부' 확인 문구만 존재 — 선택 시에만 추가하는 옵션 항목(option_prompt 연동). 가격은 프로바이오틱스/한시적식품 회복시험 기준.",
    "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#개별인정형#6__경구",
    "subtype": "개별인정형"
   },
@@ -14780,7 +14850,7 @@
    "notice": null,
    "dataSource": "백필(test_items 2025)",
    "reviewStatus": null,
-   "memo": "하위유형 프로바이오틱스",
+   "memo": "[2026-08-19 2차] 원본 프로바이오틱스 시트의 조제물분석 가격은 빈칸. 26M은 타 서브타입 참고치이며 RULE-PREP-R8로 견적 시 재계산 대상.",
    "srcRow": "건기식_항목_마스터_통합_추가정규화_v2.xlsx#프로바이오틱스#2__",
    "subtype": "프로바이오틱스"
   },
