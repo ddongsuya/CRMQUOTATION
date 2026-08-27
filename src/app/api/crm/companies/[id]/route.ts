@@ -25,6 +25,9 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
       contacts: {
         orderBy: { createdAt: 'asc' },
         include: {
+          // 안건 없이 의뢰자에게 직접 기록된 노트·일정 (안건 소속은 deals 경유로 수집 — 중복 방지)
+          notes: { where: { dealId: null }, orderBy: { occurredAt: 'desc' } },
+          events: { where: { dealId: null }, orderBy: { startAt: 'asc' } },
           deals: {
             orderBy: { updatedAt: 'desc' },
             include: {
@@ -69,10 +72,17 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
     .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt));
   const contracts = flatDeals.filter(d => d.contract).map(d => ({ ...d.contract!, ...dealMeta(d) }));
   const studies = flatDeals.flatMap(d => d.studies.map(s => ({ ...s, ...dealMeta(d) })));
-  const notes = flatDeals.flatMap(d => d.notes.map(n => ({ ...n, ...dealMeta(d), contactName: d.contactName, contactId: d.contactId })))
-    .sort((a, b) => +new Date(b.occurredAt) - +new Date(a.occurredAt));
-  const events = flatDeals.flatMap(d => d.events.map(e => ({ ...e, ...dealMeta(d), contactId: d.contactId })))
-    .sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
+  // 노트·일정 = 안건 소속 + 의뢰자 직속(안건 없음) 병합
+  const contactNotes = company.contacts.flatMap(ct => ct.notes.map(n => ({ ...n, dealId: null, dealTitle: null, modality: null, stage: null, contactName: ct.name, contactId: ct.id })));
+  const contactEvents = company.contacts.flatMap(ct => ct.events.map(e => ({ ...e, dealId: null, dealTitle: null, modality: null, stage: null, contactName: ct.name, contactId: ct.id })));
+  const notes = [
+    ...flatDeals.flatMap(d => d.notes.map(n => ({ ...n, ...dealMeta(d), contactName: d.contactName, contactId: d.contactId }))),
+    ...contactNotes,
+  ].sort((a, b) => +new Date(b.occurredAt) - +new Date(a.occurredAt));
+  const events = [
+    ...flatDeals.flatMap(d => d.events.map(e => ({ ...e, ...dealMeta(d), contactName: d.contactName, contactId: d.contactId }))),
+    ...contactEvents,
+  ].sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
 
   const kpi = {
     quoteCount: allQuotes.length,
