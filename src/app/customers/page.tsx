@@ -124,10 +124,11 @@ function DetailPanel({ companyId }: { companyId: number }) {
   const scopedEvents = scoped(agg?.events ?? []);
   const dealIds = new Set(scopedDeals.map((d: any) => d.id));
   const scopedStudies = (agg?.studies ?? []).filter((s: any) => dealIds.has(s.dealId));
+  // 담당자 스코프 KPI — 딜 소속 견적뿐 아니라 담당자에게 직접 연결된 견적(Quote.contactId)도 집계 (회사 전체 kpi 와 같은 기준)
   const kpi = scope === 'all' ? (agg?.kpi ?? { wonAmount: 0, quoteAmount: 0, quoteCount: 0, dealCount: 0, activeDeals: 0, activeStudies: 0 }) : {
-    wonAmount: scopedDeals.reduce((s: number, d: any) => s + (d.wonAmount ?? 0), 0),
-    quoteAmount: scopedDeals.reduce((s: number, d: any) => s + (d.quoteAmount ?? 0), 0),
-    quoteCount: scopedDeals.reduce((s: number, d: any) => s + (d.quoteCount ?? 0), 0),
+    wonAmount: scopedQuotes.filter((q: any) => q.status === 'ACCEPTED').reduce((s: number, q: any) => s + (q.grandTotal ?? 0), 0),
+    quoteAmount: scopedQuotes.reduce((s: number, q: any) => s + (q.grandTotal ?? 0), 0),
+    quoteCount: scopedQuotes.length,
     dealCount: scopedDeals.length,
     activeDeals: scopedDeals.filter((d: any) => d.status === 'ACTIVE').length,
     activeStudies: scopedStudies.filter((s: any) => !s.reportDraftIssuedAt).length,
@@ -222,7 +223,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
                 {(scopedNotes.slice(0, 5)).map((n: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
                   <li key={n.id} className="relative pl-4 border-l-2 border-slate-200">
                     <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-brand-500" />
-                    <div className="text-[11px] text-ink-subtle">{new Date(n.occurredAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })} · {n.dealTitle}</div>
+                    <div className="text-[11px] text-ink-subtle">{new Date(n.occurredAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}{(n.dealTitle || n.contactName) ? ` · ${n.dealTitle ?? n.contactName}` : ''}</div>
                     {n.title && <div className="text-sm font-medium text-ink">{n.title}</div>}
                     <div className="text-sm text-ink-muted line-clamp-2">{n.body}</div>
                   </li>
@@ -250,7 +251,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
             <div className="text-[13px] text-white/60 mb-1.5 flex items-center gap-1.5"><Icon name="calendar" className="w-3.5 h-3.5" /> 다음 팔로업</div>
             {nextEvent ? <>
               <div className="text-[15px] font-semibold">{nextEvent.title}</div>
-              <div className="text-[12px] text-white/60 mt-1">{new Date(nextEvent.startAt).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })} · {nextEvent.dealTitle}</div>
+              <div className="text-[12px] text-white/60 mt-1">{new Date(nextEvent.startAt).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}{(nextEvent.dealTitle || nextEvent.contactName) ? ` · ${nextEvent.dealTitle ?? nextEvent.contactName}` : ''}</div>
             </> : <div className="text-sm text-white/50">예정된 팔로업이 없습니다.</div>}
           </div>
         </div>
