@@ -98,12 +98,13 @@ export default function DealDetailPage() {
 }
 
 function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
+  const today = () => new Date().toISOString().slice(0, 10);
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState({ type: 'MEETING', body: '' });
+  const [f, setF] = useState({ type: 'MEETING', body: '', occurredAt: today() });
   const add = async () => {
     if (!f.body.trim()) { toast.error('내용을 입력하세요.'); return; }
-    const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...f, dealId: deal.id, contactId: deal.contact.id }) });
-    if (res.ok) { setF({ type: 'MEETING', body: '' }); setOpen(false); reload(); } else toast.error('실패');
+    const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...f, occurredAt: f.occurredAt || undefined, dealId: deal.id, contactId: deal.contact.id }) });
+    if (res.ok) { setF({ type: 'MEETING', body: '', occurredAt: today() }); setOpen(false); reload(); } else toast.error('실패');
   };
   const del = async (id: number) => { const res = await fetch(`/api/crm/notes/${id}`, { method: 'DELETE' }); if (res.ok) reload(); };
   const TLABEL: Record<string, string> = { MEETING: '미팅', CALL: '통화', MEMO: '메모' };
@@ -112,7 +113,10 @@ function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
       action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 기록 추가</button>}>
       {open && (
         <div className="space-y-2 mb-3">
-          <div className="flex gap-1.5">{['MEETING', 'CALL', 'MEMO'].map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{TLABEL[t]}</button>)}</div>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {['MEETING', 'CALL', 'MEMO'].map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{TLABEL[t]}</button>)}
+            <input type="date" className="input text-sm ml-auto w-auto" title="대화·미팅 날짜" value={f.occurredAt} onChange={e => setF(p => ({ ...p, occurredAt: e.target.value }))} />
+          </div>
           <textarea className="input w-full min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="미팅·상담 내용…" autoFocus />
           <div className="flex justify-end"><button onClick={add} className="btn-primary text-sm">저장</button></div>
         </div>

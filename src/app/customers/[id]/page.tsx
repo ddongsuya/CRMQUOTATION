@@ -551,16 +551,17 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
 
 // ─── 노트 ───
 function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void }) {
+  const today = () => new Date().toISOString().slice(0, 10);
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState<{ target: string; type: string; title: string; body: string }>({ target: '', type: 'MEMO', title: '', body: '' });
+  const [f, setF] = useState<{ target: string; type: string; title: string; body: string; occurredAt: string }>({ target: '', type: 'MEMO', title: '', body: '', occurredAt: today() });
   const [busy, setBusy] = useState(false);
   const add = async () => {
     const tgt = parseTarget(f.target);
     if ((!tgt.dealId && !tgt.contactId) || !f.body.trim()) { toast.error('대상·내용을 입력하세요.'); return; }
     setBusy(true);
-    const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...tgt, type: f.type, title: f.title || null, body: f.body }) });
+    const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...tgt, type: f.type, title: f.title || null, body: f.body, occurredAt: f.occurredAt || undefined }) });
     setBusy(false);
-    if (res.ok) { toast.success('기록 추가됨'); setF({ target: '', type: 'MEMO', title: '', body: '' }); setOpen(false); reload(); } else toast.error('저장 실패');
+    if (res.ok) { toast.success('기록 추가됨'); setF({ target: '', type: 'MEMO', title: '', body: '', occurredAt: today() }); setOpen(false); reload(); } else toast.error('저장 실패');
   };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
@@ -572,7 +573,16 @@ function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: De
             <TargetSelect deals={deals} contacts={contacts} value={f.target} onChange={v => setF(s => ({ ...s, target: v }))} />
             <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{Object.entries(NOTE_T).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select>
           </div>
-          <input className="input text-sm w-full" placeholder="제목(선택)" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
+          <div className="grid grid-cols-2 gap-2">
+            <label className="block">
+              <span className="text-[11px] text-ink-subtle">대화·미팅 날짜</span>
+              <input type="date" className="input text-sm w-full" value={f.occurredAt} onChange={e => setF(s => ({ ...s, occurredAt: e.target.value }))} />
+            </label>
+            <label className="block">
+              <span className="text-[11px] text-ink-subtle">제목(선택)</span>
+              <input className="input text-sm w-full" placeholder="제목(선택)" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
+            </label>
+          </div>
           <textarea className="input text-sm w-full min-h-[64px]" placeholder="내용" value={f.body} onChange={e => setF(s => ({ ...s, body: e.target.value }))} />
           <div className="flex justify-end"><button onClick={add} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 저장</button></div>
         </div>
