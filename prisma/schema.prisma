@@ -154,6 +154,7 @@ model Contact {
   deals     Deal[]
   notes     Note[]
   events    CalendarEvent[]
+  quotes    Quote[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -275,6 +276,9 @@ model Quote {
   // 고객사 FK — customerCompany(문자열)의 정본 연결. 임포트/저장 시 자동 매칭.
   company             Company?   @relation(fields: [companyId], references: [id])
   companyId           Int?
+  // 담당자(의뢰자) — 견적 작성 시 입력한 담당자와 CRM Contact 연결 (고객 상세에서 담당자 기반 집계)
+  contact             Contact?   @relation(fields: [contactId], references: [id])
+  contactId           Int?
   sentAt              DateTime?                    // 견적 송부일
   reviewedAt          DateTime?                    // 의뢰자 검토일
   accepted            Boolean?                     // 진행 수락 여부
@@ -330,6 +334,7 @@ model Quote {
   @@index([status])
   @@index([dealId])
   @@index([companyId])
+  @@index([contactId])
 }
 
 // 견적 추적 이력 — 결론/상태 변경을 누적(임정모 시트의 '추적 관찰' 본질). 견적 드로어 타임라인.

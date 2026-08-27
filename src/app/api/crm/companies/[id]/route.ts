@@ -52,10 +52,17 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   // 딜 없이 companyId 로만 연결된 견적(엑셀 임포트 견적) — 회사 상세에 함께 노출
   const directRaw = await prisma.quote.findMany({
     where: { companyId: id, id: { notIn: [...dealQuoteIds] } },
-    select: { id: true, quoteNumber: true, status: true, grandTotal: true, createdAt: true, modality: true, projectName: true },
+    select: { id: true, quoteNumber: true, status: true, grandTotal: true, createdAt: true, modality: true, projectName: true, contactId: true, customerName: true },
     orderBy: { sentAt: 'desc' },
   });
-  const directQuotes = directRaw.map(q => ({ id: q.id, quoteNumber: q.quoteNumber, status: q.status, grandTotal: q.grandTotal, createdAt: q.createdAt, dealId: null, dealTitle: q.projectName, modality: q.modality, contactId: null as number | null }));
+  // 담당자(의뢰자) 연결 — contactId FK 우선, 없으면(구 데이터) 이름 매칭 폴백
+  const contactByName = new Map(company.contacts.map(c => [c.name.trim(), c.id] as const));
+  const directQuotes = directRaw.map(q => ({
+    id: q.id, quoteNumber: q.quoteNumber, status: q.status, grandTotal: q.grandTotal, createdAt: q.createdAt,
+    dealId: null, dealTitle: q.projectName, modality: q.modality,
+    contactId: q.contactId ?? (q.customerName ? contactByName.get(q.customerName.trim()) ?? null : null),
+    contactName: q.customerName ?? null,
+  }));
   const allQuotes = [...flatDeals.flatMap(d => d.quotes), ...directRaw];
   // 최근 견적 목록 (딜 견적 + 직결 견적 병합, 최신순)
   const quotes = [...dealQuotes, ...directQuotes]

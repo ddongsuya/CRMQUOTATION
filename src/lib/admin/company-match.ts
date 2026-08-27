@@ -57,15 +57,16 @@ type CompanyTx = {
 };
 
 /**
- * 고객사 find-or-create(정규화 매칭) + 의뢰자 Contact upsert → companyId 반환.
+ * 고객사 find-or-create(정규화 매칭) + 의뢰자 Contact upsert → { companyId, contactId } 반환.
  * 두 저장 라우트(quote-v2·quote-efficacy)가 공유. 트랜잭션 tx 를 넘겨 원자성 보장.
+ * contactId 는 견적의 담당자 연결(Quote.contactId)에 사용 — 고객 상세에서 담당자 기반 집계 근거.
  */
 export async function findOrCreateCompanyWithContact(
   tx: CompanyTx,
   { companyName, ownerId, contactName, email, phone }: {
     companyName: string; ownerId: number; contactName?: string; email?: string; phone?: string;
   },
-): Promise<number> {
+): Promise<{ companyId: number; contactId: number | null }> {
   const companies = await tx.company.findMany({ select: { id: true, name: true, aliases: true } });
   let companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
   if (companyId == null) {
@@ -73,12 +74,18 @@ export async function findOrCreateCompanyWithContact(
     companyId = co.id;
   }
   const cn = (contactName ?? '').trim();
+  let contactId: number | null = null;
   if (cn) {
     const e = email?.trim() || undefined;
     const p = phone?.trim() || undefined;
     const existing = await tx.contact.findFirst({ where: { companyId, name: cn }, select: { id: true } });
-    if (!existing) await tx.contact.create({ data: { companyId, name: cn, email: e, phone: p } });
-    else if (e || p) await tx.contact.update({ where: { id: existing.id }, data: { email: e, phone: p } });
+    if (!existing) {
+      const created = await tx.contact.create({ data: { companyId, name: cn, email: e, phone: p } });
+      contactId = (created as { id: number }).id;
+    } else {
+      if (e || p) await tx.contact.update({ where: { id: existing.id }, data: { email: e, phone: p } });
+      contactId = existing.id;
+    }
   }
-  return companyId;
+  return { companyId, contactId };
 }

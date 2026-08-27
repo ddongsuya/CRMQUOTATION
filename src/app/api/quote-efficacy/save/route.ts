@@ -48,7 +48,7 @@ export async function POST(req: Request) {
   const email = (s.client.email ?? '').trim() || undefined;
   const phone = (s.client.phone ?? '').trim() || undefined;
 
-  const ensureCompany = (tx: Tx): Promise<number> =>
+  const ensureCompany = (tx: Tx) =>
     findOrCreateCompanyWithContact(tx, { companyName, ownerId: userId, contactName, email, phone });
 
   const itemRows = cost.items.map((it, i) => ({
@@ -65,9 +65,10 @@ export async function POST(req: Request) {
     displayOrder: i,
   }));
 
-  const buildData = (companyId: number) => ({
+  const buildData = (linked: { companyId: number; contactId: number | null }) => ({
     userId,
-    companyId,
+    companyId: linked.companyId,
+    contactId: linked.contactId ?? undefined,
     dealId: body?.dealId ?? null,
     studyType: 'efficacy',
     projectName: s.client.projectName?.trim() || `${modelTitle} 효력시험`,
@@ -91,11 +92,11 @@ export async function POST(req: Request) {
   // 고객사 확보 + 라인 교체/생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백).
   if (target) {
     const updated = await prisma.$transaction(async (tx) => {
-      const companyId = await ensureCompany(tx);
+      const linked = await ensureCompany(tx);
       await tx.quoteItem.deleteMany({ where: { quoteId: target.id } });
       return tx.quote.update({
         where: { id: target.id },
-        data: { ...buildData(companyId), items: { create: itemRows } },
+        data: { ...buildData(linked), items: { create: itemRows } },
         select: { id: true, quoteNumber: true },
       });
     });
@@ -103,10 +104,10 @@ export async function POST(req: Request) {
   }
 
   const created = await createQuoteWithNumber((quoteNumber) => prisma.$transaction(async (tx) => {
-    const companyId = await ensureCompany(tx);
+    const linked = await ensureCompany(tx);
     return tx.quote.create({
       data: {
-        quoteNumber, ...buildData(companyId),
+        quoteNumber, ...buildData(linked),
         status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000),
         items: { create: itemRows },
       },

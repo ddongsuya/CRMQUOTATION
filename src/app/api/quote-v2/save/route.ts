@@ -78,7 +78,7 @@ export async function POST(req: Request) {
   // 고객사 find-or-create + 연락처 upsert + 견적 생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백 → 고아 고객사 방지).
   // 견적번호 재시도는 트랜잭션 단위 — P2002 로 tx 가 중단되면 새 번호로 트랜잭션 전체를 재실행.
   const created = await createQuoteWithNumber((quoteNumber) => prisma.$transaction(async (tx) => {
-    const companyId = companyName
+    const linked = companyName
       ? await findOrCreateCompanyWithContact(tx, {
           companyName, ownerId: userId, contactName,
           email: (b.customerEmail ?? '').trim() || undefined, phone: (b.customerPhone ?? '').trim() || undefined,
@@ -86,7 +86,7 @@ export async function POST(req: Request) {
       : null;
     return tx.quote.create({
       data: {
-        quoteNumber, userId, dealId: b.dealId ?? null, companyId: companyId ?? undefined,
+        quoteNumber, userId, dealId: b.dealId ?? null, companyId: linked?.companyId ?? undefined, contactId: linked?.contactId ?? undefined,
         projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
         substanceName: b.substanceName ?? null,
         customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null, customerPhone: b.customerPhone ?? null,

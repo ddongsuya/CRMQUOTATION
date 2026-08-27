@@ -21,7 +21,7 @@ type Contact = { id: number; name: string; email: string | null; phone: string |
 type Company = { id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null; isNewClient: boolean; memo: string | null; contacts: Contact[] };
 
 type DealMeta = { dealId: number; dealTitle: string; modality: string | null; stage: string };
-type QuoteRow = { id: number; quoteNumber: string; status: string; grandTotal: number | null; createdAt: string; dealId: number | null; dealTitle: string; modality: string | null; contactId: number | null };
+type QuoteRow = { id: number; quoteNumber: string; status: string; grandTotal: number | null; createdAt: string; dealId: number | null; dealTitle: string; modality: string | null; contactId: number | null; contactName?: string | null };
 type Agg = {
   kpi: { quoteCount: number; quoteAmount: number; wonAmount: number; dealCount: number; activeDeals: number; activeStudies: number };
   quotes: QuoteRow[];
@@ -154,7 +154,7 @@ export default function CompanyDetailPage() {
       {tab === '개요' && <OverviewTab agg={agg} company={company} />}
       {tab === '딜' && <DealsTab agg={agg} />}
       {tab === '연락처' && (
-        <ContactsTab company={company} onAdd={() => setContactModal({ contact: null })} onEdit={c => setContactModal({ contact: c })} onDel={delContact} onAddDeal={cid => setDealModal({ contactId: cid })} />
+        <ContactsTab company={company} quotes={agg?.quotes ?? []} onAdd={() => setContactModal({ contact: null })} onEdit={c => setContactModal({ contact: c })} onDel={delContact} onAddDeal={cid => setDealModal({ contactId: cid })} />
       )}
       {tab === '계약' && <ContractsTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
       {tab === '시험' && <StudiesTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
@@ -260,15 +260,19 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
       <SectionCard title="담당자" count={company.contacts.length}>
         {company.contacts.length === 0 ? <Empty>등록된 의뢰자가 없습니다.</Empty> : (
           <ul className="space-y-2.5">
-            {company.contacts.map(c => (
+            {company.contacts.map(c => {
+              const cq = agg.quotes.filter(q => q.contactId === c.id);
+              return (
               <li key={c.id} className="flex items-center gap-2.5">
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-brand-50 text-brand-600 font-bold text-xs flex-shrink-0">{c.name.charAt(0)}</span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm text-ink truncate">{c.name}{c.position && <span className="text-ink-subtle text-xs ml-1.5">{c.position}</span>}</span>
                   <span className="block text-[11px] text-ink-subtle truncate">{[c.email, c.phone].filter(Boolean).join(' · ') || '연락처 없음'}</span>
                 </span>
+                {cq.length > 0 && <span className="pill bg-brand-100 text-brand-700 flex-shrink-0">견적 {cq.length}건</span>}
               </li>
-            ))}
+              );
+            })}
           </ul>
         )}
       </SectionCard>
@@ -320,8 +324,8 @@ function DealsTab({ agg }: { agg: Agg | null }) {
 }
 
 // ─── 연락처 ───
-function ContactsTab({ company, onAdd, onEdit, onDel, onAddDeal }: {
-  company: Company; onAdd: () => void; onEdit: (c: Contact) => void; onDel: (id: number) => void; onAddDeal: (id: number) => void;
+function ContactsTab({ company, quotes, onAdd, onEdit, onDel, onAddDeal }: {
+  company: Company; quotes: QuoteRow[]; onAdd: () => void; onEdit: (c: Contact) => void; onDel: (id: number) => void; onAddDeal: (id: number) => void;
 }) {
   return (
     <div className="space-y-3">
@@ -331,11 +335,18 @@ function ContactsTab({ company, onAdd, onEdit, onDel, onAddDeal }: {
       </div>
       {company.contacts.length === 0 ? (
         <div className="card p-8 text-center text-sm text-ink-subtle">등록된 의뢰자가 없습니다.</div>
-      ) : company.contacts.map(ct => (
+      ) : company.contacts.map(ct => {
+        // 담당자 기반 집계 — 이 의뢰자 명의로 저장된 견적(Quote.contactId)
+        const ctQuotes = quotes.filter(q => q.contactId === ct.id);
+        const ctQuoteSum = ctQuotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0);
+        return (
         <div key={ct.id} className="card p-[22px] min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <div className="font-semibold text-ink flex items-center gap-2 flex-wrap">{ct.name}{ct.position && <span className="text-xs font-normal text-ink-subtle">{ct.position}</span>}</div>
+              <div className="font-semibold text-ink flex items-center gap-2 flex-wrap">
+                {ct.name}{ct.position && <span className="text-xs font-normal text-ink-subtle">{ct.position}</span>}
+                {ctQuotes.length > 0 && <span className="pill bg-brand-100 text-brand-700">견적 {ctQuotes.length}건 · {fmtWonM(ctQuoteSum)}</span>}
+              </div>
               <div className="text-xs text-ink-muted mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5">
                 {ct.email && <span className="inline-flex items-center gap-1 min-w-0"><Icon name="mail" className="w-3 h-3 flex-shrink-0" /><span className="truncate">{ct.email}</span></span>}
                 {ct.phone && <span className="inline-flex items-center gap-1"><Icon name="phone" className="w-3 h-3" />{ct.phone}</span>}
@@ -358,10 +369,19 @@ function ContactsTab({ company, onAdd, onEdit, onDel, onAddDeal }: {
                 </Link>
               );
             })}
+            {ctQuotes.map(q => (
+              <Link key={`q-${q.id}`} href={`/quote/print?id=${q.id}`} className="flex items-center gap-2 py-1.5 px-2 -mx-1 rounded-lg hover:bg-slate-50/70">
+                <Receipt className="w-3.5 h-3.5 text-ink-subtle flex-shrink-0" />
+                <span className="font-mono text-[12px] text-brand-600 flex-shrink-0">{q.quoteNumber}</span>
+                <span className="flex-1 min-w-0 text-xs text-ink-subtle truncate">{q.modality ?? ''}</span>
+                <span className="text-sm font-semibold text-ink tabular-nums flex-shrink-0">{q.grandTotal ? fmtWon(q.grandTotal) : '—'}</span>
+              </Link>
+            ))}
             <button onClick={() => onAddDeal(ct.id)} className="inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 py-1"><Icon name="plus" className="w-3.5 h-3.5" /> 안건 추가</button>
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -409,7 +429,7 @@ function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt;
             {convertible.slice(0, 8).map((q) => (
               <div key={q.id} className="flex items-center gap-2 text-sm">
                 <span className="font-mono text-[12px] text-brand-600 w-28 flex-shrink-0 truncate">{q.quoteNumber}</span>
-                <span className="flex-1 min-w-0 text-ink-muted truncate">{q.modality ?? ''}</span>
+                <span className="flex-1 min-w-0 text-ink-muted truncate">{q.contactName ? `${q.contactName} · ` : ''}{q.modality ?? ''}</span>
                 <span className="text-[13px] font-semibold text-ink tabular-nums flex-shrink-0">{q.grandTotal ? fmtWon(q.grandTotal) : '—'}</span>
                 <button onClick={() => convert(q.id)} disabled={convId === q.id} className="btn-ghost text-xs shrink-0">
                   {convId === q.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileSignature className="w-3.5 h-3.5" />} 계약 전환
