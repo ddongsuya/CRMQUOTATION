@@ -25,6 +25,9 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ('startAt' in b) data.startAt = new Date(String(b.startAt));
   if ('endAt' in b) data.endAt = b.endAt ? new Date(String(b.endAt)) : null;
   if ('done' in b) data.done = !!b.done;
+  for (const k of ['location', 'attendeesClient', 'attendeesInternal', 'requests'] as const) {
+    if (k in b) data[k] = String(b[k] ?? '').trim() || null;
+  }
   const event = await prisma.calendarEvent.update({ where: { id }, data });
   return NextResponse.json({ event });
 }

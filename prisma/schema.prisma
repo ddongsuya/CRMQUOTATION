@@ -433,6 +433,11 @@ model CalendarEvent {
   allDay    Boolean   @default(true)
   done      Boolean   @default(false)
   source    String    @default("MANUAL")          // MANUAL·AUTO
+  // 미팅 상세 (일정 탭 기록용)
+  location          String?                       // 장소
+  attendeesClient   String?                       // 참여자 — 고객사 측
+  attendeesInternal String?                       // 참여자 — 우리 회사 측
+  requests          String?                       // 요청사항
   createdAt DateTime  @default(now())
 
   @@index([ownerId])

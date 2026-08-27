@@ -26,7 +26,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const ownerId = await currentUserId();
-  const b = await req.json().catch(() => null) as { title?: string; type?: string; startAt?: string; endAt?: string; allDay?: boolean; dealId?: number; contactId?: number } | null;
+  const b = await req.json().catch(() => null) as { title?: string; type?: string; startAt?: string; endAt?: string; allDay?: boolean; dealId?: number; contactId?: number; location?: string; attendeesClient?: string; attendeesInternal?: string; requests?: string } | null;
   const title = String(b?.title ?? '').trim();
   if (!title || !b?.startAt) return NextResponse.json({ error: '제목·날짜가 필요합니다.' }, { status: 400 });
   const type = ['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].includes(String(b?.type)) ? String(b!.type) : 'MEETING';
@@ -38,6 +38,11 @@ export async function POST(req: Request) {
       allDay: b?.allDay ?? true,
       dealId: b?.dealId ? Number(b.dealId) : null,
       contactId: b?.contactId ? Number(b.contactId) : null,
+      // 미팅 상세 — 장소·참여자(고객사/자사)·요청사항
+      location: b?.location?.trim() || null,
+      attendeesClient: b?.attendeesClient?.trim() || null,
+      attendeesInternal: b?.attendeesInternal?.trim() || null,
+      requests: b?.requests?.trim() || null,
     },
   });
   return NextResponse.json({ event });

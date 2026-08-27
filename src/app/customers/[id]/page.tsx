@@ -12,7 +12,7 @@ type Quote = { id: number; quoteNumber: string; status: string; grandTotal: numb
 type Contract = { id: number; status: string; contractNumber: string | null; signedAt: string | null; draftSentAt: string | null } & Record<string, unknown>;
 type Study = { id: number; studyNumber: string | null; director: string | null; itemName: string | null; reportDraftDueAt: string | null; reportDraftIssuedAt: string | null } & Record<string, unknown>;
 type Note = { id: number; type: string; title: string | null; body: string; occurredAt: string };
-type EventT = { id: number; title: string; type: string; startAt: string; done: boolean };
+type EventT = { id: number; title: string; type: string; startAt: string; done: boolean; location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null };
 type Deal = {
   id: number; title: string; modality: string | null; stage: string; status: string; updatedAt: string;
   quotes: Quote[]; contract: Contract | null; studies: Study[]; notes: Note[]; events: EventT[];
@@ -612,17 +612,24 @@ function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: De
 }
 
 // ─── 일정 ───
+const EMPTY_EVENT_FORM = { target: '', title: '', startAt: '', type: 'MEETING', location: '', attendeesClient: '', attendeesInternal: '', requests: '' };
 function ScheduleTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void }) {
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState<{ target: string; title: string; startAt: string; type: string }>({ target: '', title: '', startAt: '', type: 'MEETING' });
+  const [f, setF] = useState<typeof EMPTY_EVENT_FORM>(EMPTY_EVENT_FORM);
   const [busy, setBusy] = useState(false);
   const add = async () => {
     const tgt = parseTarget(f.target);
     if ((!tgt.dealId && !tgt.contactId) || !f.title.trim() || !f.startAt) { toast.error('대상·제목·날짜를 입력하세요.'); return; }
     setBusy(true);
-    const res = await fetch('/api/crm/events', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...tgt, title: f.title, startAt: new Date(f.startAt).toISOString(), type: f.type, allDay: true }) });
+    const res = await fetch('/api/crm/events', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        ...tgt, title: f.title, startAt: new Date(f.startAt).toISOString(), type: f.type, allDay: true,
+        location: f.location, attendeesClient: f.attendeesClient, attendeesInternal: f.attendeesInternal, requests: f.requests,
+      }),
+    });
     setBusy(false);
-    if (res.ok) { toast.success('일정 추가됨'); setF({ target: '', title: '', startAt: '', type: 'MEETING' }); setOpen(false); reload(); } else toast.error('저장 실패');
+    if (res.ok) { toast.success('일정 추가됨'); setF(EMPTY_EVENT_FORM); setOpen(false); reload(); } else toast.error('저장 실패');
   };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   const sorted = [...agg.events].sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
@@ -636,7 +643,30 @@ function ScheduleTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals:
             <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].map(k => <option key={k} value={k}>{k === 'MEETING' ? '미팅' : k === 'DEADLINE' ? '마감' : k === 'MILESTONE' ? '마일스톤' : '리마인더'}</option>)}</select>
           </div>
           <input className="input text-sm w-full" placeholder="일정 제목" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
-          <input type="date" className="input text-sm w-full" value={f.startAt} onChange={e => setF(s => ({ ...s, startAt: e.target.value }))} />
+          <div className="grid grid-cols-2 gap-2">
+            <label className="block">
+              <span className="text-[11px] text-ink-subtle">날짜</span>
+              <input type="date" className="input text-sm w-full" value={f.startAt} onChange={e => setF(s => ({ ...s, startAt: e.target.value }))} />
+            </label>
+            <label className="block">
+              <span className="text-[11px] text-ink-subtle">장소</span>
+              <input className="input text-sm w-full" placeholder="예: 켐온 본사 회의실 / 화상" value={f.location} onChange={e => setF(s => ({ ...s, location: e.target.value }))} />
+            </label>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <label className="block">
+              <span className="text-[11px] text-ink-subtle">참여자 — 고객사</span>
+              <input className="input text-sm w-full" placeholder="예: 김혜정 팀장, 이OO 연구원" value={f.attendeesClient} onChange={e => setF(s => ({ ...s, attendeesClient: e.target.value }))} />
+            </label>
+            <label className="block">
+              <span className="text-[11px] text-ink-subtle">참여자 — 우리 회사</span>
+              <input className="input text-sm w-full" placeholder="예: 임재민, 박OO 책임" value={f.attendeesInternal} onChange={e => setF(s => ({ ...s, attendeesInternal: e.target.value }))} />
+            </label>
+          </div>
+          <label className="block">
+            <span className="text-[11px] text-ink-subtle">요청사항</span>
+            <textarea className="input text-sm w-full min-h-[56px]" placeholder="미팅에서 나온 요청·준비사항" value={f.requests} onChange={e => setF(s => ({ ...s, requests: e.target.value }))} />
+          </label>
           <div className="flex justify-end"><button onClick={add} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 저장</button></div>
         </div>
       )}
@@ -649,7 +679,13 @@ function ScheduleTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals:
                 <span className={clsx('w-2 h-2 rounded-full flex-shrink-0', EVENT_T[e.type] ?? 'bg-slate-300')} />
                 <span className="flex-1 min-w-0">
                   <span className={clsx('block text-sm text-ink truncate', e.done && 'line-through')}>{e.title}</span>
-                  <span className="block text-[11px] text-ink-subtle">{fmtDate(e.startAt)}{(e.dealTitle || e.contactName) ? ` · ${e.dealTitle ?? e.contactName}` : ''}</span>
+                  <span className="block text-[11px] text-ink-subtle">{fmtDate(e.startAt)}{(e.dealTitle || e.contactName) ? ` · ${e.dealTitle ?? e.contactName}` : ''}{e.location ? ` · ${e.location}` : ''}</span>
+                  {(e.attendeesClient || e.attendeesInternal) && (
+                    <span className="block text-[11px] text-ink-subtle truncate">
+                      {[e.attendeesClient && `고객사: ${e.attendeesClient}`, e.attendeesInternal && `자사: ${e.attendeesInternal}`].filter(Boolean).join(' · ')}
+                    </span>
+                  )}
+                  {e.requests && <span className="block text-[11px] text-ink-muted whitespace-pre-wrap mt-0.5">요청사항: {e.requests}</span>}
                 </span>
                 {e.done ? <span className="pill bg-slate-200 text-ink-subtle flex-shrink-0">완료</span> : dd && <span className={clsx('pill flex-shrink-0', dd.cls)}>{dd.label}</span>}
               </li>
