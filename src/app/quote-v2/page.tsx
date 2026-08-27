@@ -576,7 +576,7 @@ export default function QuoteV2Page() {
               </Field>
               <Field label={`할인율 — ${(discountRate * 100).toFixed(0)}%`}>
                 <input type="range" min={0} max={0.5} step={0.01} value={discountRate} onChange={e => setDiscountRate(Number(e.target.value))} className="w-full accent-brand-600" />
-                <div className="flex justify-between text-[11px] text-ink-subtle mt-1"><span>0%</span><span>15%</span><span>30%</span></div>
+                <div className="flex justify-between text-[11px] text-ink-subtle mt-1"><span>0%</span><span>25%</span><span>50%</span></div>
               </Field>
               {savedNo && <div className="text-[13px] text-emerald-600 font-medium">임시 저장됨 · {savedNo}</div>}
             </>}
