@@ -12,6 +12,14 @@ import { getItem } from '@/lib/quote-engine/master';
 
 type Tx = Prisma.TransactionClient;
 
+// 기본 지급조건 — 선금 50%(계약 체결 시) + 잔금 50%(최종보고서안 발행 + 30일). "계약 시작" 경로와 동일 규칙.
+const DEFAULT_TERMS = {
+  create: [
+    { seq: 1, kind: 'ADVANCE', ratio: 0.5, condition: '계약 체결 시' },
+    { seq: 2, kind: 'BALANCE', ratio: 0.5, condition: '최종보고서(안) 발행 + 30일' },
+  ],
+};
+
 export async function POST(_req: Request, { params }: { params: { id: string } }) {
   const ownerId = await currentUserId();
   const id = Number(params.id);
@@ -33,9 +41,17 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
     const out = await prisma.$transaction(async (tx) => {
       const hasStudy = await tx.study.findFirst({ where: { dealId }, select: { id: true } });
       const studyId = hasStudy ? hasStudy.id : await createStudiesFromQuote(tx, dealId, q);
+      // 견적·안건 상태도 계약 체결로 동기화 (신규 전환 경로와 동일한 의미론 — 수주 KPI 근거)
+      await tx.quote.update({ where: { id: q.id }, data: { status: 'ACCEPTED', trackingNote: '계약 체결' } });
+      const deal = await tx.deal.findUnique({ where: { id: dealId }, select: { stage: true } });
+      if (deal && ['INQUIRY', 'QUOTE', 'INTAKE'].includes(deal.stage)) {
+        await tx.deal.update({ where: { id: dealId }, data: { stage: 'CONTRACT', status: 'WON' } });
+      } else {
+        await tx.deal.update({ where: { id: dealId }, data: { status: 'WON' } });
+      }
       const existing = await tx.contract.findUnique({ where: { dealId }, select: { id: true } });
       if (existing) return { dealId, contractId: existing.id, studyId, already: true };
-      const c = await tx.contract.create({ data: { dealId, quoteId: q.id, status: 'DRAFT' }, select: { id: true } });
+      const c = await tx.contract.create({ data: { dealId, quoteId: q.id, status: 'DRAFT', paymentTerms: DEFAULT_TERMS }, select: { id: true } });
       return { dealId, contractId: c.id, studyId, already: false };
     });
     return NextResponse.json({ ok: true, ...out });
@@ -69,7 +85,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
       select: { id: true },
     });
     await tx.quote.update({ where: { id: q.id }, data: { dealId: deal.id, status: 'ACCEPTED', trackingNote: '계약 체결' } });
-    const contract = await tx.contract.create({ data: { dealId: deal.id, quoteId: q.id, status: 'DRAFT' }, select: { id: true } });
+    const contract = await tx.contract.create({ data: { dealId: deal.id, quoteId: q.id, status: 'DRAFT', paymentTerms: DEFAULT_TERMS }, select: { id: true } });
     const studyId = await createStudiesFromQuote(tx, deal.id, q);
     return { dealId: deal.id, contractId: contract.id, studyId };
   });

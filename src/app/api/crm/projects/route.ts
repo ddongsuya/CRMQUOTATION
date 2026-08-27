@@ -20,7 +20,7 @@ export async function GET(req: Request) {
     include: {
       contact: { select: { name: true, company: { select: { id: true, name: true } } } },
       contract: { select: { status: true, signedAt: true, contractNumber: true } },
-      quotes: { select: { id: true, quoteNumber: true, grandTotal: true, status: true, createdAt: true }, orderBy: { createdAt: 'desc' } },
+      quotes: { select: { id: true, quoteNumber: true, grandTotal: true, totalAfterDiscount: true, status: true, createdAt: true }, orderBy: { createdAt: 'desc' } },
       studies: { orderBy: { createdAt: 'asc' } },
     },
   });
@@ -33,7 +33,9 @@ export async function GET(req: Request) {
       id: d.id, title: d.title, modality: d.modality, stage: d.stage, status: d.status,
       companyId: d.contact.company.id, companyName: d.contact.company.name, contactName: d.contact.name,
       contractStatus: d.contract?.status ?? null, contractNumber: d.contract?.contractNumber ?? null, signedAt: d.contract?.signedAt ?? null,
-      quoteId: top?.id ?? null, quoteNumber: top?.quoteNumber ?? null, amount: top?.grandTotal ?? null,
+      // 금액은 공급가(VAT 별도) 기준 — 구 데이터는 총액/1.1 역산
+      quoteId: top?.id ?? null, quoteNumber: top?.quoteNumber ?? null,
+      amount: top ? (top.totalAfterDiscount ?? (top.grandTotal ? Math.round(top.grandTotal / 1.1) : null)) : null,
       studyCount: d.studies.length,
       studies: d.studies.map(s => ({
         id: s.id, itemName: s.itemName, studyNumber: s.studyNumber, director: s.director,
@@ -52,7 +54,7 @@ export async function GET(req: Request) {
     },
     select: {
       id: true, quoteNumber: true, projectName: true, modality: true, grandTotal: true,
-      sentAt: true, issuedAt: true, createdAt: true, studyType: true, planJson: true,
+      totalAfterDiscount: true, sentAt: true, issuedAt: true, createdAt: true, studyType: true, planJson: true,
       company: { select: { id: true, name: true } },
     },
     orderBy: { sentAt: 'desc' },
@@ -86,7 +88,7 @@ export async function GET(req: Request) {
       id: -q.id, title: q.projectName, modality: q.modality, stage: 'STUDY', status: 'WON',
       companyId: q.company!.id, companyName: q.company!.name, contactName: '—',
       contractStatus: 'SIGNED', contractNumber: null, signedAt: q.sentAt,
-      quoteId: q.id, quoteNumber: q.quoteNumber, amount: q.grandTotal,
+      quoteId: q.id, quoteNumber: q.quoteNumber, amount: q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : null),
       studyCount: studies.length, studies,
     });
   }

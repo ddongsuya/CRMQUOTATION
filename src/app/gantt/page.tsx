@@ -124,7 +124,11 @@ export default function GanttPage() {
 }
 
 function ProjectHeader({ p }: { p: Project }) {
-  const period = p.signedAt ? `${fmtDate(p.signedAt)} ~` : '기간 미정';
+  // 기간 = 시험 일정의 최소 시작~최대 종료 (없으면 계약 체결일, 그것도 없으면 미정)
+  const withDates = p.studies.filter(s => s.itemName);
+  const period = withDates.length > 0
+    ? `${fmtDate(new Date(Math.min(...withDates.map(s => +studyStart(s)))).toISOString())} ~ ${fmtDate(new Date(Math.max(...withDates.map(s => +studyEnd(s)))).toISOString())}`
+    : p.signedAt ? `${fmtDate(p.signedAt)} ~` : '기간 미정';
   return (
     <div className="card p-5">
       <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -141,7 +145,7 @@ function ProjectHeader({ p }: { p: Project }) {
           </div>
         </div>
         <div className="text-right shrink-0">
-          <div className="text-2xl font-bold text-ink tabular-nums tracking-tight">{won(p.amount)}</div>
+          <div className="text-2xl font-bold text-ink tabular-nums tracking-tight">{won(p.amount)} <span className="text-[10px] font-normal text-ink-subtle align-middle">VAT 별도</span></div>
           {p.quoteNumber && <Link href={`/quote/print?id=${p.quoteId}`} className="text-[11px] font-mono text-brand-600 hover:underline inline-flex items-center gap-0.5">{p.quoteNumber} <FileText className="w-3 h-3" /></Link>}
         </div>
       </div>

@@ -23,7 +23,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
     where: { id },
     include: {
       contact: { include: { company: true } },
-      quotes: { orderBy: { createdAt: 'desc' }, select: { id: true, quoteNumber: true, grandTotal: true, currency: true, status: true, sentAt: true, accepted: true, createdAt: true } },
+      quotes: { orderBy: { createdAt: 'desc' }, select: { id: true, quoteNumber: true, grandTotal: true, totalAfterDiscount: true, currency: true, status: true, sentAt: true, accepted: true, createdAt: true } },
       contract: { include: { paymentTerms: { orderBy: { seq: 'asc' } } } },
       studies: { orderBy: { createdAt: 'asc' } },
       changeQuotes: { orderBy: { createdAt: 'desc' } },
@@ -47,6 +47,14 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ('status' in body) data.status = String(body.status);
   if (data.title === undefined && 'title' in body) return NextResponse.json({ error: '안건명은 비울 수 없습니다.' }, { status: 400 });
   const deal = await prisma.deal.update({ where: { id }, data });
+  // 수주 처리 시 대표 견적(미거절 중 최대 금액)을 ACCEPTED 로 동기화 — 고객 KPI 누적 수주의 근거.
+  if (data.status === 'WON') {
+    const quotes = await prisma.quote.findMany({ where: { dealId: id }, select: { id: true, status: true, grandTotal: true } });
+    if (quotes.length && !quotes.some(q => q.status === 'ACCEPTED')) {
+      const top = quotes.filter(q => q.status !== 'REJECTED').sort((a, b) => (b.grandTotal ?? 0) - (a.grandTotal ?? 0))[0];
+      if (top) await prisma.quote.update({ where: { id: top.id }, data: { status: 'ACCEPTED', trackingNote: '수주 처리' } });
+    }
+  }
   return NextResponse.json({ deal });
 }
 
