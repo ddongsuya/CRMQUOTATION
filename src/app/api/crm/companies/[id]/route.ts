@@ -31,7 +31,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
           deals: {
             orderBy: { updatedAt: 'desc' },
             include: {
-              quotes: { select: { id: true, quoteNumber: true, status: true, grandTotal: true, createdAt: true } },
+              quotes: { select: { id: true, quoteNumber: true, status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true } },
               contract: true,
               studies: { orderBy: { createdAt: 'asc' } },
               notes: { orderBy: { occurredAt: 'desc' } },
@@ -44,24 +44,28 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   });
   if (!company) return NextResponse.json({ error: 'not found' }, { status: 404 });
 
+  // CRM 화면 금액은 공급가(VAT 별도) 기준 — 구 데이터에 totalAfterDiscount 가 없으면 총액/1.1 로 역산
+  const supply = (q: { totalAfterDiscount: number | null; grandTotal: number | null }) =>
+    q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0);
+
   // 회사 단위 집계 — 모든 의뢰자의 모든 안건을 가로질러 평탄화 (각 탭의 데이터원)
   type DealRel = (typeof company.contacts)[number]['deals'][number];
   const flatDeals = company.contacts.flatMap(ct =>
     ct.deals.map(d => ({ ...d, contactName: ct.name, contactId: ct.id })));
   const dealMeta = (d: DealRel) => ({ dealId: d.id, dealTitle: d.title, modality: d.modality, stage: d.stage });
 
-  const dealQuotes = flatDeals.flatMap(d => d.quotes.map(q => ({ ...q, ...dealMeta(d), contactId: d.contactId })));
+  const dealQuotes = flatDeals.flatMap(d => d.quotes.map(q => ({ ...q, supplyTotal: supply(q), ...dealMeta(d), contactId: d.contactId })));
   const dealQuoteIds = new Set(dealQuotes.map(q => q.id));
   // 딜 없이 companyId 로만 연결된 견적(엑셀 임포트 견적) — 회사 상세에 함께 노출
   const directRaw = await prisma.quote.findMany({
     where: { companyId: id, id: { notIn: [...dealQuoteIds] } },
-    select: { id: true, quoteNumber: true, status: true, grandTotal: true, createdAt: true, modality: true, projectName: true, contactId: true, customerName: true },
+    select: { id: true, quoteNumber: true, status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true, modality: true, projectName: true, contactId: true, customerName: true },
     orderBy: { sentAt: 'desc' },
   });
   // 담당자(의뢰자) 연결 — contactId FK 우선, 없으면(구 데이터) 이름 매칭 폴백
   const contactByName = new Map(company.contacts.map(c => [c.name.trim(), c.id] as const));
   const directQuotes = directRaw.map(q => ({
-    id: q.id, quoteNumber: q.quoteNumber, status: q.status, grandTotal: q.grandTotal, createdAt: q.createdAt,
+    id: q.id, quoteNumber: q.quoteNumber, status: q.status, grandTotal: q.grandTotal, supplyTotal: supply(q), createdAt: q.createdAt,
     dealId: null, dealTitle: q.projectName, modality: q.modality,
     contactId: q.contactId ?? (q.customerName ? contactByName.get(q.customerName.trim()) ?? null : null),
     contactName: q.customerName ?? null,
@@ -86,14 +90,14 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
 
   const kpi = {
     quoteCount: allQuotes.length,
-    quoteAmount: allQuotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0),
-    wonAmount: allQuotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0),
+    quoteAmount: allQuotes.reduce((s, q) => s + supply(q), 0),
+    wonAmount: allQuotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + supply(q), 0),
     dealCount: flatDeals.length,
     activeDeals: flatDeals.filter(d => d.status === 'ACTIVE').length,
     activeStudies: studies.filter(s => !s.reportDraftIssuedAt).length,
   };
 
-  return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, contactId: d.contactId, quoteCount: d.quotes.length, quoteAmount: d.quotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0), wonAmount: d.quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0) })), quotes, contracts, studies, notes, events, kpi } });
+  return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, contactId: d.contactId, quoteCount: d.quotes.length, quoteAmount: d.quotes.reduce((s, q) => s + supply(q), 0), wonAmount: d.quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + supply(q), 0) })), quotes, contracts, studies, notes, events, kpi } });
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {

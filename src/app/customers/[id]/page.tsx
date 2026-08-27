@@ -21,7 +21,7 @@ type Contact = { id: number; name: string; email: string | null; phone: string |
 type Company = { id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null; isNewClient: boolean; memo: string | null; contacts: Contact[] };
 
 type DealMeta = { dealId: number; dealTitle: string; modality: string | null; stage: string };
-type QuoteRow = { id: number; quoteNumber: string; status: string; grandTotal: number | null; createdAt: string; dealId: number | null; dealTitle: string; modality: string | null; contactId: number | null; contactName?: string | null };
+type QuoteRow = { id: number; quoteNumber: string; status: string; grandTotal: number | null; supplyTotal: number; createdAt: string; dealId: number | null; dealTitle: string; modality: string | null; contactId: number | null; contactName?: string | null };
 type Agg = {
   kpi: { quoteCount: number; quoteAmount: number; wonAmount: number; dealCount: number; activeDeals: number; activeStudies: number };
   quotes: QuoteRow[];
@@ -128,8 +128,8 @@ export default function CompanyDetailPage() {
 
         {agg && (
           <div className="grid grid-cols-3 gap-3 mt-4">
-            <KpiCell icon={<Receipt className="w-3.5 h-3.5" />} label="누적 견적" value={fmtWonM(agg.kpi.quoteAmount)} sub={`${agg.kpi.quoteCount}건`} />
-            <KpiCell icon={<FileSignature className="w-3.5 h-3.5" />} label="수주" value={fmtWonM(agg.kpi.wonAmount)} sub={`진행 딜 ${agg.kpi.activeDeals}`} />
+            <KpiCell icon={<Receipt className="w-3.5 h-3.5" />} label="누적 견적" value={fmtWonM(agg.kpi.quoteAmount)} sub={`${agg.kpi.quoteCount}건 · VAT 별도`} />
+            <KpiCell icon={<FileSignature className="w-3.5 h-3.5" />} label="수주" value={fmtWonM(agg.kpi.wonAmount)} sub={`진행 딜 ${agg.kpi.activeDeals} · VAT 별도`} />
             <KpiCell icon={<FlaskConical className="w-3.5 h-3.5" />} label="진행 시험" value={`${agg.kpi.activeStudies}건`} sub={`전체 ${agg.kpi.dealCount} 안건`} />
           </div>
         )}
@@ -365,16 +365,16 @@ function ContactsTab({ company, quotes, onAdd, onEdit, onDel, onAddDeal }: {
       {company.contacts.length === 0 ? (
         <div className="card p-8 text-center text-sm text-ink-subtle">등록된 의뢰자가 없습니다.</div>
       ) : company.contacts.map(ct => {
-        // 담당자 기반 집계 — 이 의뢰자 명의로 저장된 견적(Quote.contactId)
+        // 담당자 기반 집계 — 이 의뢰자 명의로 저장된 견적(Quote.contactId). 금액은 공급가(VAT 별도)
         const ctQuotes = quotes.filter(q => q.contactId === ct.id);
-        const ctQuoteSum = ctQuotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0);
+        const ctQuoteSum = ctQuotes.reduce((s, q) => s + (q.supplyTotal ?? 0), 0);
         return (
         <div key={ct.id} className="card p-[22px] min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="font-semibold text-ink flex items-center gap-2 flex-wrap">
                 {ct.name}{ct.position && <span className="text-xs font-normal text-ink-subtle">{ct.position}</span>}
-                {ctQuotes.length > 0 && <span className="pill bg-brand-100 text-brand-700">견적 {ctQuotes.length}건 · {fmtWonM(ctQuoteSum)}</span>}
+                {ctQuotes.length > 0 && <span className="pill bg-brand-100 text-brand-700">견적 {ctQuotes.length}건 · {fmtWonM(ctQuoteSum)} <span className="font-normal opacity-70">VAT 별도</span></span>}
               </div>
               <div className="text-xs text-ink-muted mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5">
                 {ct.email && <span className="inline-flex items-center gap-1 min-w-0"><Icon name="mail" className="w-3 h-3 flex-shrink-0" /><span className="truncate">{ct.email}</span></span>}
@@ -403,7 +403,8 @@ function ContactsTab({ company, quotes, onAdd, onEdit, onDel, onAddDeal }: {
                 <Receipt className="w-3.5 h-3.5 text-ink-subtle flex-shrink-0" />
                 <span className="font-mono text-[12px] text-brand-600 flex-shrink-0">{q.quoteNumber}</span>
                 <span className="flex-1 min-w-0 text-xs text-ink-subtle truncate">{q.modality ?? ''}</span>
-                <span className="text-sm font-semibold text-ink tabular-nums flex-shrink-0">{q.grandTotal ? fmtWon(q.grandTotal) : '—'}</span>
+                <span className="text-sm font-semibold text-ink tabular-nums flex-shrink-0">{q.supplyTotal ? fmtWon(q.supplyTotal) : '—'}</span>
+                <span className="text-[10px] text-ink-subtle flex-shrink-0">VAT 별도</span>
               </Link>
             ))}
             <button onClick={() => onAddDeal(ct.id)} className="inline-flex items-center gap-1 text-xs text-brand-600 hover:text-brand-700 py-1"><Icon name="plus" className="w-3.5 h-3.5" /> 안건 추가</button>
@@ -459,7 +460,8 @@ function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt;
               <div key={q.id} className="flex items-center gap-2 text-sm">
                 <span className="font-mono text-[12px] text-brand-600 w-28 flex-shrink-0 truncate">{q.quoteNumber}</span>
                 <span className="flex-1 min-w-0 text-ink-muted truncate">{q.contactName ? `${q.contactName} · ` : ''}{q.modality ?? ''}</span>
-                <span className="text-[13px] font-semibold text-ink tabular-nums flex-shrink-0">{q.grandTotal ? fmtWon(q.grandTotal) : '—'}</span>
+                <span className="text-[13px] font-semibold text-ink tabular-nums flex-shrink-0">{q.supplyTotal ? fmtWon(q.supplyTotal) : '—'}</span>
+                <span className="text-[10px] text-ink-subtle flex-shrink-0">VAT 별도</span>
                 <button onClick={() => convert(q.id)} disabled={convId === q.id} className="btn-ghost text-xs shrink-0">
                   {convId === q.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileSignature className="w-3.5 h-3.5" />} 계약 전환
                 </button>

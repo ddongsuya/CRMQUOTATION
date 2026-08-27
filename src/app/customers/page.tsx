@@ -126,8 +126,8 @@ function DetailPanel({ companyId }: { companyId: number }) {
   const scopedStudies = (agg?.studies ?? []).filter((s: any) => dealIds.has(s.dealId));
   // 담당자 스코프 KPI — 딜 소속 견적뿐 아니라 담당자에게 직접 연결된 견적(Quote.contactId)도 집계 (회사 전체 kpi 와 같은 기준)
   const kpi = scope === 'all' ? (agg?.kpi ?? { wonAmount: 0, quoteAmount: 0, quoteCount: 0, dealCount: 0, activeDeals: 0, activeStudies: 0 }) : {
-    wonAmount: scopedQuotes.filter((q: any) => q.status === 'ACCEPTED').reduce((s: number, q: any) => s + (q.grandTotal ?? 0), 0),
-    quoteAmount: scopedQuotes.reduce((s: number, q: any) => s + (q.grandTotal ?? 0), 0),
+    wonAmount: scopedQuotes.filter((q: any) => q.status === 'ACCEPTED').reduce((s: number, q: any) => s + (q.supplyTotal ?? 0), 0),
+    quoteAmount: scopedQuotes.reduce((s: number, q: any) => s + (q.supplyTotal ?? 0), 0),
     quoteCount: scopedQuotes.length,
     dealCount: scopedDeals.length,
     activeDeals: scopedDeals.filter((d: any) => d.status === 'ACTIVE').length,
@@ -189,11 +189,11 @@ function DetailPanel({ companyId }: { companyId: number }) {
       {/* KPI — 누적수주 블랙 반전(#000) · 진행딜 · 견적 · 수주율 (시안 순서) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="rounded-[12px] bg-ink px-[22px] py-5 text-white">
-          <div className="text-[13px] font-medium text-white/85">누적 수주</div>
+          <div className="text-[13px] font-medium text-white/85">누적 수주 <span className="text-white/50 font-normal">· VAT 별도</span></div>
           <div className="text-stat tabular-nums mt-2.5">{fmtM(kpi.wonAmount)}</div>
         </div>
         <Kpi label="진행 딜" value={`${kpi.activeDeals}`} unit="건" sub={`전체 ${kpi.dealCount}`} />
-        <Kpi label="견적" value={`${kpi.quoteCount}`} unit="건" sub={fmtM(kpi.quoteAmount)} />
+        <Kpi label="견적" value={`${kpi.quoteCount}`} unit="건" sub={`${fmtM(kpi.quoteAmount)} · VAT 별도`} />
         <Kpi label="수주율" value={`${wonRate}%`} sub={`진행 시험 ${kpi.activeStudies ?? 0}`} />
       </div>
 
@@ -201,7 +201,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
       <div className="grid xl:grid-cols-[1fr_300px] gap-4">
         <div className="space-y-4 min-w-0">
           {/* 최근 견적 */}
-          <Card title="최근 견적" count={scopedQuotes.length}>
+          <Card title="최근 견적 · VAT 별도" count={scopedQuotes.length}>
             {scopedQuotes.length === 0 ? <Empty>견적 이력이 없습니다.</Empty> : <div>
               {scopedQuotes.slice(0, 5).map((qq: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                 const st = quoteStatus(qq.status);
@@ -210,7 +210,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
                     <span className="font-mono text-[13px] text-brand-600 w-24 flex-shrink-0 truncate">{qq.quoteNumber}</span>
                     <span className="flex-1 min-w-0 text-[13px] text-ink-muted truncate">{qq.modality || qq.dealTitle}</span>
                     <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body flex-shrink-0"><span className="w-1.5 h-1.5 rounded-full" style={{ background: st.color }} />{st.label}</span>
-                    <span className="text-[15px] font-bold text-ink tabular-nums w-20 text-right flex-shrink-0">{fmtM(qq.grandTotal ?? 0)}</span>
+                    <span className="text-[15px] font-bold text-ink tabular-nums w-20 text-right flex-shrink-0">{fmtM(qq.supplyTotal ?? 0)}</span>
                   </Link>
                 );
               })}

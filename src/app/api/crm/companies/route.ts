@@ -15,24 +15,27 @@ export async function GET() {
     orderBy: { updatedAt: 'desc' },
     include: {
       _count: { select: { contacts: true } },
-      contacts: { select: { deals: { select: { status: true, quotes: { select: { id: true, grandTotal: true, status: true } } } } } },
-      quotes: { select: { id: true, grandTotal: true, status: true } },   // companyId 직결(임포트 견적)
+      contacts: { select: { deals: { select: { status: true, quotes: { select: { id: true, grandTotal: true, totalAfterDiscount: true, status: true } } } } } },
+      quotes: { select: { id: true, grandTotal: true, totalAfterDiscount: true, status: true } },   // companyId 직결(임포트 견적)
     },
   });
   // 회사별 집계 = 딜 견적 + companyId 직결 견적(중복 id 제거). 페이로드는 집계 후 제거.
   const companies = rows.map(({ contacts, quotes: directQuotes, ...c }) => {
     const deals = contacts.flatMap(ct => ct.deals);
-    const merged = new Map<number, { grandTotal: number | null; status: string }>();
+    const merged = new Map<number, { grandTotal: number | null; totalAfterDiscount: number | null; status: string }>();
     for (const q of deals.flatMap(d => d.quotes)) merged.set(q.id, q);
     for (const q of directQuotes) merged.set(q.id, q);
     const quotes = [...merged.values()];
-    const wonAmount = quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + (q.grandTotal ?? 0), 0);
+    // 금액은 공급가(VAT 별도) 기준 — 구 데이터는 총액/1.1 역산
+    const supply = (q: { totalAfterDiscount: number | null; grandTotal: number | null }) =>
+      q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0);
+    const wonAmount = quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + supply(q), 0);
     return {
       ...c,
       dealCount: deals.length,
       activeDeals: deals.filter(d => d.status === 'ACTIVE').length,
       quoteCount: quotes.length,
-      quoteAmount: quotes.reduce((s, q) => s + (q.grandTotal ?? 0), 0),
+      quoteAmount: quotes.reduce((s, q) => s + supply(q), 0),
       wonAmount,
       vip: wonAmount >= 50_000_000,   // 파생: 누적수주 5천만↑
     };
