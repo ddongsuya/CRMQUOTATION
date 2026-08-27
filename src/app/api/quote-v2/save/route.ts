@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   });
 
   const subtotal = quote.totals.subtotalKrw;
-  const discountRate = Math.min(Math.max(b.discountRate ?? 0, 0), 0.9);
+  const discountRate = Math.min(Math.max(b.discountRate ?? 0, 0), 0.5);   // 할인 상한 50% (사용자 정책)
   const afterDiscount = subtotal * (1 - discountRate);
   const itemRows = quote.lineItems.map((li, i) => ({
     testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route as string | null, category: b.category,

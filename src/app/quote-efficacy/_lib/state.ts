@@ -156,7 +156,7 @@ export type QuoteTotals = { wp: number; disc: number; vat: number; marginAmt: nu
  */
 export function computeQuote(total: number, margin: number, discount: number): QuoteTotals {
   const m = Math.min(Math.max(margin, 0), 1);
-  const d = Math.min(Math.max(discount, 0), 1);
+  const d = Math.min(Math.max(discount, 0), 0.5);   // 할인 상한 50% (사용자 정책)
   const wp = Math.round(total * (1 + m));
   const disc = Math.round(wp * (1 - d));
   const vat = Math.round(disc * 1.1);

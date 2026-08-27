@@ -124,7 +124,7 @@ export default function EditorDock({
                 <span className="text-ink-muted">할인율</span>
                 <span className="font-semibold text-ink tabular-nums">{(s.discount * 100).toFixed(0)}%</span>
               </div>
-              <input type="range" min={0} max={0.4} step={0.05} value={s.discount}
+              <input type="range" min={0} max={0.5} step={0.05} value={s.discount}
                 onChange={(e) => onDiscount(Number(e.target.value))} className="w-full accent-[var(--accent)]" />
             </div>
           </div>
