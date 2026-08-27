@@ -230,9 +230,11 @@ model Study {
   deal                Deal      @relation(fields: [dealId], references: [id], onDelete: Cascade)
   dealId              Int
   studyNumber         String?                             // 시험번호
+  department          String?                             // 담당부서
   director            String?                             // 시험책임자
   itemName            String?                             // 시험 항목명
-  requestSentAt       DateTime?                           // 시험관리팀 접수요청
+  requestSentAt       DateTime?                           // 시험 시작 예정(전환 시 자동 배치)
+  studyEndAt          DateTime?                           // 시험 종료 예정(동물시험 끝)
   intakeCompletedAt   DateTime?                           // 접수완료 안내
   reportDraftDueAt    DateTime?                           // 최종보고서(안) 발행 예정 ★
   reportDraftIssuedAt DateTime?                           // 실제 발행

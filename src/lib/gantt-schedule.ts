@@ -3,16 +3,18 @@
  *
  * 동물실험기간 = quoteWeeks − 순화(1주) − 보고서(반복·회복 8주 / 그 외 4주).
  *   · 조제물분석: 예비1 + 본시험3 = 4주(고정) + 보고서 4주.
- *   · TK: quoteWeeks 안에 TK validation(생체시료분석) 4주가 포함 → 동물 = qw−1−4−4.
- * 배치(critical path):
- *   조제물 본시험 끝(=4주) ┬ 단회 → DRF → TK Validation(4주) → 반복(회복)+TK 동시
- *                          └ 유전독성 · 안전성약리 (조제물 끝 시점 시작)
+ *   · TK: quoteWeeks 안에 생체시료분석 Validation 4주가 포함되어 있으나, Validation 은
+ *     별도 시험(VALIDATION 역할)으로 분리 → 본시험 동물 = qw−1−4(보고서)−4(validation).
+ * 배치(critical path — 실무 확정 규칙):
+ *   0주:  조제물분석(4주) ∥ TK 생체시료분석 Validation(4주)   ← 이 둘이 끝나야 동물 입고 가능
+ *   gate(둘 중 늦은 끝) → 단회 → DRF(용량결정) → 반복투여(회복 포함) ∥ TK 본시험 (병렬)
+ *   유전독성·안전성약리는 조제물 끝 시점부터 병렬.
  *   같은 역할의 설치류·비설치류는 같은 시점에 시작(병렬), 각자 길이만큼.
  *
  * 모든 길이는 기본값일 뿐, 사용자가 직접 편집할 수 있다(커스텀 간트 도구).
  */
 
-export type GanttRole = 'PREP' | 'SINGLE' | 'DRF' | 'REPEAT' | 'TK' | 'GENOTOX' | 'SAFETY' | 'OTHER';
+export type GanttRole = 'PREP' | 'VALIDATION' | 'SINGLE' | 'DRF' | 'REPEAT' | 'TK' | 'GENOTOX' | 'SAFETY' | 'OTHER';
 
 export type GanttTask = {
   id: string;
@@ -29,7 +31,7 @@ export type ScheduledBar = GanttTask & {
 };
 
 export const ROLE_LABEL: Record<GanttRole, string> = {
-  PREP: '조제물분석', SINGLE: '단회', DRF: 'DRF', REPEAT: '반복·회복', TK: 'TK', GENOTOX: '유전독성', SAFETY: '안전성약리', OTHER: '기타',
+  PREP: '조제물분석', VALIDATION: '생체시료분석 Val.', SINGLE: '단회', DRF: 'DRF', REPEAT: '반복·회복', TK: 'TK 본시험', GENOTOX: '유전독성', SAFETY: '안전성약리', OTHER: '기타',
 };
 
 const TK_VALIDATION_WEEKS = 4;
@@ -52,14 +54,15 @@ export function classifyRole(name: string): GanttRole {
 /** quoteWeeks(견적기간) → 기본 동물기간·보고서기간. quoteWeeks 없으면 역할별 fallback. */
 export function defaultDurations(role: GanttRole, quoteWeeks: number | null | undefined): { animalWeeks: number; reportWeeks: number } {
   if (role === 'PREP') return { animalWeeks: PREP_ANIMAL_WEEKS, reportWeeks: PREP_REPORT_WEEKS };
+  if (role === 'VALIDATION') return { animalWeeks: TK_VALIDATION_WEEKS, reportWeeks: 0 };   // 보고서는 TK 본시험에 포함
   const report = role === 'REPEAT' ? 8 : 4;
   const qw = (quoteWeeks != null && quoteWeeks > 0) ? quoteWeeks : null;
   if (qw == null) {
     // 견적기간 없는 시험 fallback(편집 가능): 단회 2 / 유전·약리 4 / 기타 4
-    const fb: Record<GanttRole, number> = { PREP: 4, SINGLE: 2, DRF: 4, REPEAT: 13, TK: 13, GENOTOX: 4, SAFETY: 7, OTHER: 4 };
+    const fb: Record<GanttRole, number> = { PREP: 4, VALIDATION: 4, SINGLE: 2, DRF: 4, REPEAT: 13, TK: 13, GENOTOX: 4, SAFETY: 7, OTHER: 4 };
     return { animalWeeks: fb[role], reportWeeks: report };
   }
-  const subtract = 1 + report + (role === 'TK' ? TK_VALIDATION_WEEKS : 0); // 순화1 + 보고서 (+ TK validation4)
+  const subtract = 1 + report + (role === 'TK' ? TK_VALIDATION_WEEKS : 0); // 순화1 + 보고서 (+ TK 는 별도 분리된 validation4 차감)
   return { animalWeeks: Math.max(1, qw - subtract), reportWeeks: report };
 }
 
@@ -71,24 +74,25 @@ export function schedule(tasks: GanttTask[]): ScheduledBar[] {
   const by = (r: GanttRole) => tasks.filter(t => t.role === r);
   const groupEnd = (start: number, list: GanttTask[]) => list.length ? Math.max(...list.map(t => start + t.animalWeeks)) : start;
 
-  // 조제물분석: 0주 시작, 본시험 끝 = animalWeeks(기본 4)
+  // 0주 병렬 선행: 조제물분석(본시험 끝=기본 4주) ∥ TK 생체시료분석 Validation.
+  // 이 둘이 모두 끝나야(gate) DRF·반복의 동물 입고가 가능하다 (실무 확정 규칙).
   const prep = by('PREP');
   const prepEnd = prep.length ? Math.max(...prep.map(t => t.animalWeeks)) : PREP_ANIMAL_WEEKS;
   const anchor = prep.length ? prepEnd : 0;   // 조제물 없으면 0주부터
 
+  const val = by('VALIDATION');
+  const valEnd = val.length ? Math.max(...val.map(t => t.animalWeeks)) : 0;
+  const gate = Math.max(anchor, valEnd);
+
   const single = by('SINGLE');
-  const singleEnd = groupEnd(anchor, single);
+  const singleEnd = groupEnd(gate, single);
 
   const drf = by('DRF');
-  const drfStart = single.length ? singleEnd : anchor;
+  const drfStart = single.length ? singleEnd : gate;
   const drfEnd = groupEnd(drfStart, drf);
 
-  const tk = by('TK');
-  const tkValStart = drf.length ? drfEnd : drfStart;            // DRF 끝 → TK validation
-  const tkValEnd = tk.length ? tkValStart + TK_VALIDATION_WEEKS : tkValStart;
-
-  const repeat = by('REPEAT');
-  const repeatStart = tk.length ? tkValEnd : (drf.length ? drfEnd : anchor);
+  // 반복투여(회복 포함) ∥ TK 본시험 — DRF(용량결정) 이후 병렬 진행
+  const repeatStart = drf.length ? drfEnd : gate;
 
   const place = (t: GanttTask, start: number, extra?: Partial<ScheduledBar>): ScheduledBar =>
     ({ ...t, startWeek: start, endWeek: start + t.animalWeeks, ...extra });
@@ -97,11 +101,12 @@ export function schedule(tasks: GanttTask[]): ScheduledBar[] {
   for (const t of tasks) {
     switch (t.role) {
       case 'PREP': out.push(place(t, 0)); break;
+      case 'VALIDATION': out.push(place(t, 0)); break;
       case 'GENOTOX':
       case 'SAFETY': out.push(place(t, anchor)); break;
-      case 'SINGLE': out.push(place(t, anchor)); break;
+      case 'SINGLE': out.push(place(t, gate)); break;
       case 'DRF': out.push(place(t, drfStart)); break;
-      case 'TK': out.push(place(t, repeatStart, { validationStart: tkValStart })); break;
+      case 'TK': out.push(place(t, repeatStart)); break;
       case 'REPEAT': out.push(place(t, repeatStart)); break;
       default: out.push(place(t, anchor)); break;
     }

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { GanttChartSquare, Loader2, FlaskConical, Building2, User, FileText, ChevronRight } from 'lucide-react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Study = { id: number; itemName: string | null; studyNumber: string | null; director: string | null; requestSentAt: string | null; intakeCompletedAt: string | null; reportDraftDueAt: string | null; reportDraftIssuedAt: string | null; createdAt: string };
+type Study = { id: number; itemName: string | null; studyNumber: string | null; director: string | null; department?: string | null; requestSentAt: string | null; studyEndAt?: string | null; intakeCompletedAt: string | null; reportDraftDueAt: string | null; reportDraftIssuedAt: string | null; createdAt: string };
 type Project = {
   id: number; title: string; modality: string | null; stage: string; status: string;
   companyId: number; companyName: string; contactName: string;
@@ -29,13 +29,16 @@ const fmtDate = (s: string | null) => (s ? new Date(s).toLocaleDateString('ko-KR
 
 const DAY = 86400_000;
 const d = (s: string | null) => (s ? new Date(s) : null);
-const studyStart = (s: Study) => d(s.intakeCompletedAt) ?? d(s.requestSentAt) ?? d(s.createdAt)!;
-const studyEnd = (s: Study) => d(s.reportDraftIssuedAt) ?? d(s.reportDraftDueAt) ?? new Date(studyStart(s).getTime() + 84 * DAY);
+const studyStart = (s: Study) => d(s.requestSentAt) ?? d(s.intakeCompletedAt) ?? d(s.createdAt)!;
+const studyEnd = (s: Study) => d(s.reportDraftIssuedAt) ?? d(s.reportDraftDueAt) ?? d(s.studyEndAt ?? null) ?? new Date(studyStart(s).getTime() + 84 * DAY);
 // 시안 간트 4단계: 예정(회색)·본시험 진행(ink)·분석·평가(오렌지)·완료(회색)
+// 날짜 기반 판정 — 시작 전 예정, 시험기간(시작~studyEndAt) 본시험, 이후 보고서 예정일까지 분석·평가, 예정일 경과/발행 시 완료
 const studyPhase = (s: Study): 'done' | 'analysis' | 'active' | 'planned' => {
-  if (s.reportDraftIssuedAt) return 'done';
-  if (!s.intakeCompletedAt) return 'planned';
-  return s.reportDraftDueAt && new Date(s.reportDraftDueAt) <= new Date() ? 'analysis' : 'active';
+  const now = new Date();
+  if (s.reportDraftIssuedAt || (s.reportDraftDueAt && new Date(s.reportDraftDueAt) <= now)) return 'done';
+  if (studyStart(s) > now) return 'planned';
+  if (s.studyEndAt && new Date(s.studyEndAt) <= now) return 'analysis';
+  return 'active';
 };
 
 const projectDone = (p: Project) => p.stage === 'DONE' || (p.studyCount > 0 && p.studies.every(s => s.reportDraftIssuedAt));

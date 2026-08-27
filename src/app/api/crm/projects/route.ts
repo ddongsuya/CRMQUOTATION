@@ -38,8 +38,8 @@ export async function GET(req: Request) {
       amount: top ? (top.totalAfterDiscount ?? (top.grandTotal ? Math.round(top.grandTotal / 1.1) : null)) : null,
       studyCount: d.studies.length,
       studies: d.studies.map(s => ({
-        id: s.id, itemName: s.itemName, studyNumber: s.studyNumber, director: s.director,
-        requestSentAt: s.requestSentAt, intakeCompletedAt: s.intakeCompletedAt,
+        id: s.id, itemName: s.itemName, studyNumber: s.studyNumber, director: s.director, department: s.department,
+        requestSentAt: s.requestSentAt, studyEndAt: s.studyEndAt, intakeCompletedAt: s.intakeCompletedAt,
         reportDraftDueAt: s.reportDraftDueAt, reportDraftIssuedAt: s.reportDraftIssuedAt,
         createdAt: s.createdAt,
       })),
@@ -64,8 +64,8 @@ export async function GET(req: Request) {
     // 효력 견적은 설계된 실제 시험기간(planJson.totalWeeks)이 있으므로 간트 막대를 그릴 수 있는
     // 시험 행을 합성한다. 독성 견적은 아직 기간 정보가 없어 기존대로 빈 배열.
     type StudyRow = {
-      id: number; itemName: string | null; studyNumber: string | null; director: string | null;
-      requestSentAt: Date | null; intakeCompletedAt: Date | null;
+      id: number; itemName: string | null; studyNumber: string | null; director: string | null; department: string | null;
+      requestSentAt: Date | null; studyEndAt: Date | null; intakeCompletedAt: Date | null;
       reportDraftDueAt: Date | null; reportDraftIssuedAt: Date | null; createdAt: Date;
     };
     const studies: StudyRow[] = [];
@@ -76,8 +76,8 @@ export async function GET(req: Request) {
         if (weeks > 0) {
           const start = q.sentAt ?? q.issuedAt ?? q.createdAt;
           studies.push({
-            id: -q.id, itemName: q.projectName, studyNumber: q.quoteNumber, director: '—',
-            requestSentAt: start, intakeCompletedAt: null,
+            id: -q.id, itemName: q.projectName, studyNumber: q.quoteNumber, director: '—', department: null,
+            requestSentAt: start, studyEndAt: null, intakeCompletedAt: null,
             reportDraftDueAt: new Date(new Date(start).getTime() + weeks * 7 * DAY),
             reportDraftIssuedAt: null, createdAt: q.createdAt,
           });

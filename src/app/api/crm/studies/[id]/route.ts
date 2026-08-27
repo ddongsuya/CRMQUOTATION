@@ -22,10 +22,10 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const body = await req.json().catch(() => ({})) as Record<string, unknown>;
   const data: Record<string, unknown> = {};
-  for (const k of ['itemName', 'studyNumber', 'director'] as const) {
+  for (const k of ['itemName', 'studyNumber', 'director', 'department'] as const) {
     if (k in body) data[k] = String(body[k] ?? '').trim() || null;
   }
-  for (const k of ['requestSentAt', 'intakeCompletedAt', 'reportDraftDueAt', 'reportDraftIssuedAt', 'invoiceRequestedAt', 'invoiceIssuedAt'] as const) {
+  for (const k of ['requestSentAt', 'studyEndAt', 'intakeCompletedAt', 'reportDraftDueAt', 'reportDraftIssuedAt', 'invoiceRequestedAt', 'invoiceIssuedAt'] as const) {
     if (k in body) data[k] = date(body[k]);
   }
   const study = await prisma.study.update({ where: { id }, data });

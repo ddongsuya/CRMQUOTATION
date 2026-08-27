@@ -53,7 +53,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
       if (existing) return { dealId, contractId: existing.id, studyId, already: true };
       const c = await tx.contract.create({ data: { dealId, quoteId: q.id, status: 'DRAFT', paymentTerms: DEFAULT_TERMS }, select: { id: true } });
       return { dealId, contractId: c.id, studyId, already: false };
-    });
+    }, { timeout: 30_000 });   // 시험 다건 생성 + Neon 지연 대비 (기본 5초로는 P2028)
     return NextResponse.json({ ok: true, ...out });
   }
 
@@ -88,7 +88,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
     const contract = await tx.contract.create({ data: { dealId: deal.id, quoteId: q.id, status: 'DRAFT', paymentTerms: DEFAULT_TERMS }, select: { id: true } });
     const studyId = await createStudiesFromQuote(tx, deal.id, q);
     return { dealId: deal.id, contractId: contract.id, studyId };
-  });
+  }, { timeout: 30_000 });   // 시험 다건 생성 + Neon 지연 대비
 
   return NextResponse.json({ ok: true, ...out });
 }
@@ -120,7 +120,7 @@ async function createStudiesFromQuote(tx: Tx, dealId: number, q: QuoteForStudy):
     const study = await tx.study.create({
       data: {
         dealId, itemName: q.projectName, studyNumber: q.quoteNumber,
-        requestSentAt: base, reportDraftDueAt: new Date(base.getTime() + weeks * WEEK_MS),
+        requestSentAt: base, studyEndAt: new Date(base.getTime() + weeks * WEEK_MS), reportDraftDueAt: new Date(base.getTime() + weeks * WEEK_MS),
       },
       select: { id: true },
     });
@@ -129,6 +129,10 @@ async function createStudiesFromQuote(tx: Tx, dealId: number, q: QuoteForStudy):
 
   // ── 독성: 라인 → GanttTask. '_'로 시작하는 키는 분석 라인(함량·조제물) — 실험 시험이 아니므로
   //    개별 Study 대신 하나의 조제물분석(PREP, 임계경로 anchor)으로 합친다.
+  //    실무 시험 구성 규칙:
+  //     · 반복투여 + 회복 = 하나의 시험 (회복 주수만큼 동물기간 연장)
+  //     · TK(독성동태) = 생체시료분석 Validation 시험 + 본시험 두 건으로 분리
+  //       (Validation 이 끝나야 DRF·반복의 동물 입고 가능 — 스케줄러 gate)
   const testLines = q.items.filter((it) => !it.testItemKey.startsWith('_'));
   const hasAnalysis = q.items.length > testLines.length;
   if (!testLines.length && !hasAnalysis) return null;
@@ -137,6 +141,11 @@ async function createStudiesFromQuote(tx: Tx, dealId: number, q: QuoteForStudy):
   if (hasAnalysis) {
     tasks.push({ id: '_prep', name: '조제물·함량분석', role: 'PREP', ...defaultDurations('PREP', null) });
   }
+  const speciesOf = (name: string) => /비설치류|개\b|비글|원숭이|영장류/.test(name) ? '비설치류' : '설치류';
+  const recoveryLines: { name: string; weeks: number; species: string }[] = [];
+  const repeatTasks: (GanttTask & { species: string })[] = [];
+  let tkSeen = false;
+
   for (const it of testLines) {
     const role = classifyRole(it.testNameSnapshot);
     // 마스터 studyWeeks = 투여 주차 → 견적기간으로 역산(투여 + 순화1 + 보고서4/8 + TK검증4).
@@ -146,25 +155,48 @@ async function createStudiesFromQuote(tx: Tx, dealId: number, q: QuoteForStudy):
     const quoteWeeks = dosing != null && dosing > 0
       ? dosing + 1 + report + (role === 'TK' ? 4 : 0)
       : null;
-    tasks.push({ id: it.testItemKey, name: it.testNameSnapshot, role, ...defaultDurations(role, quoteWeeks) });
+
+    // 회복 라인은 별도 시험이 아님 — 같은 종의 반복투여 시험에 병합
+    if (role === 'REPEAT' && /회복/.test(it.testNameSnapshot)) {
+      const m = /(\d+)\s*주\s*회복/.exec(it.testNameSnapshot);
+      recoveryLines.push({ name: it.testNameSnapshot, weeks: m ? Number(m[1]) : 4, species: speciesOf(it.testNameSnapshot) });
+      continue;
+    }
+    // TK: Validation(1건만) + 본시험으로 분리
+    if (role === 'TK') {
+      if (!tkSeen) {
+        tkSeen = true;
+        tasks.push({ id: `${it.testItemKey}__val`, name: '독성동태 생체시료분석 Validation', role: 'VALIDATION', ...defaultDurations('VALIDATION', null) });
+      }
+      tasks.push({ id: it.testItemKey, name: `${it.testNameSnapshot} — 본시험`, role: 'TK', ...defaultDurations('TK', quoteWeeks) });
+      continue;
+    }
+    const task = { id: it.testItemKey, name: it.testNameSnapshot, role, ...defaultDurations(role, quoteWeeks) };
+    tasks.push(task);
+    if (role === 'REPEAT') repeatTasks.push({ ...task, species: speciesOf(it.testNameSnapshot) });
+  }
+
+  // 회복 병합 — 같은 종의 반복투여 task 를 찾아 이름·기간 확장 (없으면 첫 반복 task)
+  for (const rec of recoveryLines) {
+    const target = repeatTasks.find(r => r.species === rec.species) ?? repeatTasks[0];
+    if (!target) { tasks.push({ id: `_rec-${rec.name}`, name: rec.name, role: 'REPEAT', animalWeeks: rec.weeks, reportWeeks: 8 }); continue; }
+    const t = tasks.find(x => x.id === target.id)!;
+    t.animalWeeks += rec.weeks;
+    t.name = `${t.name} (+${rec.weeks}주 회복)`;
   }
 
   const bars = schedule(tasks);
-  let firstId: number | null = null;
-  let seq = 0;
-  for (const bar of bars) {
-    seq += 1;
-    const study = await tx.study.create({
-      data: {
-        dealId,
-        itemName: bar.name,
-        studyNumber: `${q.quoteNumber}-${String(seq).padStart(2, '0')}`,
-        requestSentAt: new Date(base.getTime() + bar.startWeek * WEEK_MS),
-        reportDraftDueAt: new Date(base.getTime() + (bar.endWeek + bar.reportWeeks) * WEEK_MS),
-      },
-      select: { id: true },
-    });
-    if (firstId == null) firstId = study.id;
-  }
-  return firstId;
+  if (!bars.length) return null;
+  await tx.study.createMany({
+    data: bars.map((bar, i) => ({
+      dealId,
+      itemName: bar.name,
+      studyNumber: `${q.quoteNumber}-${String(i + 1).padStart(2, '0')}`,
+      requestSentAt: new Date(base.getTime() + bar.startWeek * WEEK_MS),
+      studyEndAt: new Date(base.getTime() + bar.endWeek * WEEK_MS),
+      reportDraftDueAt: new Date(base.getTime() + (bar.endWeek + bar.reportWeeks) * WEEK_MS),
+    })),
+  });
+  const first = await tx.study.findFirst({ where: { dealId }, orderBy: { id: 'asc' }, select: { id: true } });
+  return first?.id ?? null;
 }

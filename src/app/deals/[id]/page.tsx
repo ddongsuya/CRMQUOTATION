@@ -12,7 +12,7 @@ import { quoteStatus } from '@/lib/admin/status';
 type Quote = { id: number; quoteNumber: string; grandTotal: number | null; totalAfterDiscount: number | null; currency: string; status: string; sentAt: string | null; accepted: boolean | null; createdAt: string };
 type PaymentTerm = { id: number; seq: number; kind: string; ratio: number | null; amount: number | null; condition: string | null; dueAt: string | null; paidAt: string | null };
 type Contract = { id: number; status: string; contractNumber: string | null; costEstimateSentAt: string | null; draftSentAt: string | null; approvedAt: string | null; signedAt: string | null; paymentTerms: PaymentTerm[] };
-type Study = { id: number; itemName: string | null; studyNumber: string | null; director: string | null; requestSentAt: string | null; intakeCompletedAt: string | null; reportDraftDueAt: string | null; reportDraftIssuedAt: string | null; invoiceRequestedAt: string | null; invoiceIssuedAt: string | null };
+type Study = { id: number; itemName: string | null; studyNumber: string | null; department: string | null; director: string | null; requestSentAt: string | null; studyEndAt: string | null; intakeCompletedAt: string | null; reportDraftDueAt: string | null; reportDraftIssuedAt: string | null; invoiceRequestedAt: string | null; invoiceIssuedAt: string | null };
 type ChangeQuote = { id: number; kind: string; amount: number; reason: string; createdAt: string };
 type Note = { id: number; type: string; title: string | null; body: string; occurredAt: string };
 type Deal = {
@@ -326,14 +326,15 @@ function SectionStudies({ deal, reload }: { deal: Deal; reload: () => void }) {
                 <input className="input flex-1 text-sm font-medium" defaultValue={s.itemName ?? ''} onBlur={e => e.target.value !== (s.itemName ?? '') && patch(s.id, { itemName: e.target.value })} placeholder="시험 항목명" />
                 <button onClick={() => del(s.id)} className="p-1.5 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50"><Trash2 className="w-3.5 h-3.5" /></button>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+              <div className="grid sm:grid-cols-3 gap-2.5 mb-2">
                 <Labeled label="시험번호"><input className="input w-full text-sm" defaultValue={s.studyNumber ?? ''} onBlur={e => e.target.value !== (s.studyNumber ?? '') && patch(s.id, { studyNumber: e.target.value })} /></Labeled>
+                <Labeled label="담당부서"><input className="input w-full text-sm" defaultValue={s.department ?? ''} onBlur={e => e.target.value !== (s.department ?? '') && patch(s.id, { department: e.target.value })} placeholder="예: 독성시험부" /></Labeled>
                 <Labeled label="시험책임자"><input className="input w-full text-sm" defaultValue={s.director ?? ''} onBlur={e => e.target.value !== (s.director ?? '') && patch(s.id, { director: e.target.value })} /></Labeled>
-                <DateField label="시험 접수 예정" value={s.requestSentAt} onChange={v => patch(s.id, { requestSentAt: v })} hint="전환 시 자동 배치" />
-                <DateField label="시험 접수완료" value={s.intakeCompletedAt} onChange={v => patch(s.id, { intakeCompletedAt: v })} />
-                <DateField label="보고서(안) 예정" value={s.reportDraftDueAt} onChange={v => patch(s.id, { reportDraftDueAt: v })} hint="간트 막대 기준" />
-                <DateField label="최종보고서(안) 발행" value={s.reportDraftIssuedAt} onChange={v => patch(s.id, { reportDraftIssuedAt: v })} hint="발행+30일=잔금 기한" />
-                <DateField label="계산서 발행요청" value={s.invoiceRequestedAt} onChange={v => patch(s.id, { invoiceRequestedAt: v })} />
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+                <DateField label="시험 시작 예정" value={s.requestSentAt} onChange={v => patch(s.id, { requestSentAt: v })} hint="전환 시 자동 배치" />
+                <DateField label="시험 종료 예정" value={s.studyEndAt} onChange={v => patch(s.id, { studyEndAt: v })} />
+                <DateField label="보고서(안) 발행 예정" value={s.reportDraftDueAt} onChange={v => patch(s.id, { reportDraftDueAt: v })} hint="+30일=잔금 기한" />
                 <DateField label="세금계산서 발행" value={s.invoiceIssuedAt} onChange={v => patch(s.id, { invoiceIssuedAt: v })} />
               </div>
             </div>
