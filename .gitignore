@@ -35,3 +35,4 @@ yarn-error.log*
 ~$*.xlsx
 design/
 public/_design/
+backups/
