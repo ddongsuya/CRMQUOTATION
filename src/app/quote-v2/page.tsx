@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Loader2, Receipt, Ban, PlusCircle, AlertTriangle, FileText, ChevronLeft, ChevronRight, Check, Printer } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
@@ -93,6 +93,8 @@ export default function QuoteV2Page() {
   // 추가 옵션 — 적용 대상 라인 선택(key→라인 id[]) / 협의 단가(key→1건당 원). 미선택 시 견적 전체 1회.
   const [addonTargets, setAddonTargets] = useState<Record<string, string[]>>({});
   const [addonPrices, setAddonPrices] = useState<Record<string, number>>({});
+  const [restorePending, setRestorePending] = useState(false);       // ?id= 복원 후 자동 재생성 대기
+  const pendingPicked = useRef<Set<string> | null>(null);            // 배터리형 복원 — 항목 목록 로드 후 적용
   const [companyNames, setCompanyNames] = useState<string[]>([]);  // 고객사 자동완성(CRM)
   useEffect(() => { fetch('/api/crm/companies').then(r => r.json()).then(d => setCompanyNames((d.companies ?? []).map((c: { name: string }) => c.name))).catch(() => {}); }, []);
 
@@ -121,14 +123,81 @@ export default function QuoteV2Page() {
   const togglePick = (id: string) => setPicked(p => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n; });
   const selectPriced = () => setPicked(new Set(items.filter(priceOf).map(it => it.id)));
 
-  // 배터리형 모달리티 선택 시 제안 시험항목 로드
+  // 배터리형 모달리티 선택 시 제안 시험항목 로드 (복원 중이면 저장된 선택을 적용)
   useEffect(() => {
     if (!isBattery) { setItems([]); setPicked(new Set()); return; }
-    fetch('/api/quote-v2?category=' + encodeURIComponent(category)).then(r => r.json()).then(d => { setItems(d.items ?? []); setPicked(new Set()); });
+    fetch('/api/quote-v2?category=' + encodeURIComponent(category)).then(r => r.json()).then(d => {
+      setItems(d.items ?? []);
+      setPicked(pendingPicked.current ?? new Set());
+      pendingPicked.current = null;
+    });
   }, [category, isBattery]);
 
+  // ── 견적 수정(?id=) — 저장된 v2 견적을 위저드 상태로 복원 ──
+  useEffect(() => {
+    const qid = new URLSearchParams(window.location.search).get('id');
+    if (!qid) return;
+    (async () => {
+      const d = await fetch(`/api/quotes/${qid}`).then(r => r.json()).catch(() => null);
+      const q = d?.quote;
+      if (!q) { toast.error('견적을 불러오지 못했습니다.'); return; }
+      let pj: any = {};
+      try { pj = JSON.parse(q.planJson ?? '{}'); } catch { /* noop */ }
+      if (q.studyType === 'efficacy' || pj.engine !== 'v2') { toast.error('이 견적은 독성 위저드에서 수정할 수 없습니다.'); return; }
+
+      if (pj.modality) setCategory(pj.modality);
+      if (pj.standard === 'MFDS' || pj.standard === 'OECD') setStandard(pj.standard);
+      else if (q.priceStandard === 'MFDS' || q.priceStandard === 'OECD') setStandard(q.priceStandard);
+      if (pj.route) setRoute(pj.route);
+      // 파라메트릭 플랜
+      if (Array.isArray(pj.durations)) setDurations(new Set(pj.durations));
+      if (pj.species) setSpecies(pj.species);
+      if (pj.addons) setAddons(pj.addons);
+      if (pj.tk) setTk({ points: pj.tk.points ?? 8, sessions: pj.tk.sessions ?? 2, sampleOnly: !!pj.tk.sampleOnly });
+      if (pj.componentCount) setComboCount(pj.componentCount);
+      if (pj.comboAnalysis) setComboAnal(pj.comboAnalysis);
+      if (pj.excipientCount != null) setExcipient(pj.excipientCount);
+      if (pj.submissionTarget) setSubmissionTarget(pj.submissionTarget);
+      if (pj.vaccineGroups) setVaccineGroups(pj.vaccineGroups);
+      if (pj.subtype) setHealthSubtype(pj.subtype);
+      // 배터리형 선택 항목 — 항목 목록 로드 효과가 초기화하므로 ref 로 넘긴다
+      if (Array.isArray(pj.selectedItemIds) && pj.selectedItemIds.length) pendingPicked.current = new Set(pj.selectedItemIds);
+      // step4 편집 상태
+      const e = pj.edit ?? {};
+      setConds(e.customerConditions ?? {});
+      setReqAddons(e.requestedAddons ?? {});
+      setAddonTargets(e.addonTargets ?? {});
+      setAddonPrices(e.addonPriceOverrides ?? {});
+      setQtyOverrides(e.quantityOverrides ?? {});
+      setRemovedIds(e.removedIds ?? []);
+      // 고객·금액 조건
+      setCust(c => ({
+        ...c,
+        projectName: q.projectName ?? c.projectName, substanceName: q.substanceName ?? c.substanceName,
+        company: q.customerCompany ?? c.company, name: q.customerName ?? c.name,
+        email: q.customerEmail ?? c.email, phone: q.customerPhone ?? c.phone,
+      }));
+      if (q.currency === 'USD') { setCurrency('USD'); if (q.exchangeRate) setExchangeRate(q.exchangeRate); }
+      setDiscountRate(Math.min(q.discountRate ?? 0, 0.5));
+      if (q.dealId) setDealId(q.dealId);
+      setSavedId(q.id); setSavedNo(q.quoteNumber);
+      setStep(4);
+      setRestorePending(true);
+    })();
+  }, []);
+
+  // 복원 직후 자동 재생성 — 배터리형은 선택 항목이 적용될 때까지 대기
+  useEffect(() => {
+    if (!restorePending) return;
+    if (isBattery && picked.size === 0) return;
+    setRestorePending(false);
+    generate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restorePending, picked, isBattery]);
+
   const generate = async () => {
-    setLoading(true); setSavedNo(null); setSavedId(null);
+    // savedId 는 유지 — 한 번 저장한 견적은 이후 저장 시 같은 견적을 갱신(수정 흐름). savedNo 만 지워 "미저장 변경" 표시.
+    setLoading(true); setSavedNo(null);
     try {
       const edits = { quantityOverrides: qtyOverrides, removedIds, addonTargets, addonPriceOverrides: addonPrices };
       const body = isBattery
@@ -160,6 +229,7 @@ export default function QuoteV2Page() {
         currency, discountRate, exchangeRate, quantityOverrides: qtyOverrides, removedIds,
         addonTargets, addonPriceOverrides: addonPrices,
         projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, customerPhone: cust.phone, indication: cust.indication, dealId, issueNow,
+        quoteId: savedId,   // 있으면 기존 견적 갱신(수정 흐름)
       };
       const body = isBattery
         ? { ...common, selectedItemIds: [...picked] }

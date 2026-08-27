@@ -84,6 +84,7 @@ function PrintPage() {
           // 견적 엔진 v2 견적: 저장된 항목(권위 스냅샷)을 직접 렌더 (구 엔진 재평가 불가 — 새 마스터 키)
           const isV2 = plan.engine === 'v2';
           if (isV2) {
+            setEditHref(`/quote-v2?id=${q.id}`);
             // 금액은 DB에 원화로 저장 → USD 견적은 저장 당시 환율로 환산해 표시(원화면 rate=1로 그대로).
             const rate = (q.currency === 'USD' && q.exchangeRate && q.exchangeRate > 0) ? q.exchangeRate : 1;
             const cv = (n: number) => rate === 1 ? n : Math.round(n / rate);

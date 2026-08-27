@@ -22,6 +22,7 @@ type Body = {
   projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string; customerPhone?: string;
   dealId?: number | null; issueNow?: boolean;
   quantityOverrides?: Record<string, number>; removedIds?: string[];   // step4 수량·삭제 조정
+  quoteId?: number | null;   // 있으면 기존 견적 갱신(라인 교체) — 견적 수정 흐름
 };
 
 export async function POST(req: Request) {
@@ -75,6 +76,56 @@ export async function POST(req: Request) {
   const companyName = (b.customerCompany ?? '').trim();
   const contactName = (b.customerName ?? '').trim();
 
+  // 수정 흐름을 위해 위저드 편집 상태 전체를 planJson 에 함께 영속 — /quote-v2?id= 재개 시 그대로 복원.
+  const planJson = JSON.stringify({
+    ...planForSnapshot, engine: 'v2',
+    edit: {
+      customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {},
+      combinationCount: b.combinationCount ?? null,
+      addonTargets: b.addonTargets ?? {}, addonPriceOverrides: b.addonPriceOverrides ?? {},
+      quantityOverrides: b.quantityOverrides ?? {}, removedIds: b.removedIds ?? [],
+    },
+  });
+
+  const quoteData = (linked: { companyId: number; contactId: number | null } | null) => ({
+    userId, dealId: b.dealId ?? null, companyId: linked?.companyId ?? undefined, contactId: linked?.contactId ?? undefined,
+    projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
+    substanceName: b.substanceName ?? null,
+    customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null, customerPhone: b.customerPhone ?? null,
+    modality: b.category, priceStandard: std,
+    planJson,
+    excipientCount: (b.plan?.excipientCount) ?? 0,
+    currency: b.currency ?? 'KRW', exchangeRate: b.currency === 'USD' ? (b.exchangeRate ?? 1400) : null, discountRate,
+    totalBeforeDiscount: subtotal, totalAfterDiscount: afterDiscount, vatAmount: afterDiscount * 0.1, grandTotal: afterDiscount * 1.1,
+    ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
+  });
+
+  // ── 기존 견적 갱신(수정 흐름) — v2 견적만 허용(효력·구엔진 견적 변조 차단), 라인 전체 교체 ──
+  if (b.quoteId) {
+    const prev = await prisma.quote.findUnique({ where: { id: b.quoteId }, select: { id: true, studyType: true, planJson: true } });
+    if (!prev) return NextResponse.json({ error: '수정할 견적을 찾을 수 없습니다.' }, { status: 404 });
+    let prevEngine = '';
+    try { prevEngine = (JSON.parse(prev.planJson ?? '{}') as { engine?: string }).engine ?? ''; } catch { /* noop */ }
+    if (prev.studyType === 'efficacy' || prevEngine !== 'v2') {
+      return NextResponse.json({ error: '이 견적은 독성 위저드에서 수정할 수 없습니다.' }, { status: 409 });
+    }
+    const updated = await prisma.$transaction(async (tx) => {
+      const linked = companyName
+        ? await findOrCreateCompanyWithContact(tx, {
+            companyName, ownerId: userId, contactName,
+            email: (b.customerEmail ?? '').trim() || undefined, phone: (b.customerPhone ?? '').trim() || undefined,
+          })
+        : null;
+      await tx.quoteItem.deleteMany({ where: { quoteId: prev.id } });
+      return tx.quote.update({
+        where: { id: prev.id },
+        data: { ...quoteData(linked), items: { create: itemRows } },
+        select: { id: true, quoteNumber: true },
+      });
+    });
+    return NextResponse.json({ quote: updated });
+  }
+
   // 고객사 find-or-create + 연락처 upsert + 견적 생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백 → 고아 고객사 방지).
   // 견적번호 재시도는 트랜잭션 단위 — P2002 로 tx 가 중단되면 새 번호로 트랜잭션 전체를 재실행.
   const created = await createQuoteWithNumber((quoteNumber) => prisma.$transaction(async (tx) => {
@@ -85,19 +136,7 @@ export async function POST(req: Request) {
         })
       : null;
     return tx.quote.create({
-      data: {
-        quoteNumber, userId, dealId: b.dealId ?? null, companyId: linked?.companyId ?? undefined, contactId: linked?.contactId ?? undefined,
-        projectName: b.projectName || `${b.customerCompany ?? ''} ${b.category}`.trim() || b.category,
-        substanceName: b.substanceName ?? null,
-        customerName: b.customerName ?? null, customerCompany: b.customerCompany ?? null, customerEmail: b.customerEmail ?? null, customerPhone: b.customerPhone ?? null,
-        modality: b.category, priceStandard: std,
-        planJson: JSON.stringify({ ...planForSnapshot, engine: 'v2' }),
-        excipientCount: (b.plan?.excipientCount) ?? 0,
-        currency: b.currency ?? 'KRW', exchangeRate: b.currency === 'USD' ? (b.exchangeRate ?? 1400) : null, discountRate,
-        totalBeforeDiscount: subtotal, totalAfterDiscount: afterDiscount, vatAmount: afterDiscount * 0.1, grandTotal: afterDiscount * 1.1,
-        ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
-        items: { create: itemRows },
-      },
+      data: { quoteNumber, ...quoteData(linked), items: { create: itemRows } },
       select: { id: true, quoteNumber: true },
     });
   }));
