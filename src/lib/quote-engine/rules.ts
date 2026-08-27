@@ -3,7 +3,7 @@
  *  WV(면제) → SB(대체) → CG(조건부군) → PR(선행·문서) → AD(추가옵션) → PF(가격공식·외삽)
  * 매칭: docs/quote-engine-binding.md §1~4. 규칙 구조에 없는 필드는 관대하게 통과.
  */
-import type { MasterItem, QuoteInput, LineItem, MissingInfo, WaivedItem, Addon, DocRequirement } from './types';
+import type { MasterItem, QuoteInput, LineItem, MissingInfo, WaivedItem, Addon, AddonOffer, DocRequirement } from './types';
 import { loadRules, loadMaster } from './master';
 import { resolvePrice } from './pricing';
 
@@ -64,6 +64,7 @@ export type RuleState = {
   lineItems: LineItem[];
   waivedItems: WaivedItem[];
   addons: Addon[];
+  addonOffers: AddonOffer[];
   prerequisitesAdded: LineItem[];
   documentRequirements: DocRequirement[];
   missingInfo: MissingInfo[];
@@ -166,20 +167,52 @@ export function applyPrerequisites(s: RuleState) {
 }
 
 // ── AD: 추가 옵션 (optional은 requestedAddons에서 채택 시만) ──
+// 채택 시 addonTargets[key]로 적용 대상 라인을 고르면 라인별 1건씩 계상, 미지정이면 견적 전체 1회.
+// 룰 가격(price_krw) null이면 addonPriceOverrides[key](협의 단가)를 쓰고, 그것도 없으면 0원 + missing_info 경고.
 export function applyAddons(s: RuleState) {
   for (const r of rulesOf('addons')) {
     const ap = (r.applies_to ?? {}) as Crit;
     if (!matchFileType(ap.file_type, s.input.category)) continue;
-    const matched = s.lineItems.some(li => { const it = item(li.id); return it && itemMatches(it, ap, s.input); });
-    if (!matched) continue;
+    const key = r.addon_name as string;
+    const nameKo = r.addon_name_ko as string;
+    const basePrice = r.price_krw == null ? null : Number(r.price_krw);
     const optional = !!r.optional;
-    const requested = !!s.input.requestedAddons?.[r.addon_name as string];
+
+    // 적용 가능 라인 — 룰 표기(v1 시험명)가 v2 마스터명과 안 맞으면 비게 됨 → UI가 전체 라인 선택으로 폴백
+    const eligible = s.lineItems
+      .filter(li => { const it = item(li.id); return it && itemMatches(it, ap, s.input); })
+      .map(li => li.id);
+    const autoMatched = eligible.length > 0;
+
+    if (optional) {
+      s.addonOffers.push({ key, ruleId: r.id as string, name: nameKo, price: basePrice, eligibleLineIds: eligible, autoMatched });
+    } else if (!autoMatched) {
+      continue;   // 강제(비선택) 애드온은 기존대로 라인 매칭이 있어야 발동
+    }
+
+    const requested = !!s.input.requestedAddons?.[key];
     if (optional && !requested) {
-      s.ruleLog.push({ step: 'AD', msg: `${r.id}: 추가옵션 가능(미채택) — ${r.addon_name_ko}` });
+      s.ruleLog.push({ step: 'AD', msg: `${r.id}: 추가옵션 가능(미채택) — ${nameKo}` });
       continue;
     }
-    s.addons.push({ ruleId: r.id as string, name: r.addon_name_ko as string, price: Number(r.price_krw ?? 0), optional, note: r.trigger_ko as string });
-    s.ruleLog.push({ step: 'AD', msg: `${r.id}: 추가 — ${r.addon_name_ko} (${Number(r.price_krw ?? 0).toLocaleString()})` });
+
+    const override = s.input.addonPriceOverrides?.[key];
+    const unit = override != null && override > 0 ? override : basePrice;
+    const priceMissing = unit == null;
+    const lineName = (id: string) => s.lineItems.find(l => l.id === id)?.testName ?? id;
+    const targets = (s.input.addonTargets?.[key] ?? []).filter(id => s.lineItems.some(l => l.id === id));
+
+    if (targets.length) {
+      for (const t of targets) {
+        s.addons.push({ ruleId: r.id as string, key, name: `${nameKo} — ${lineName(t)}`, price: unit ?? 0, optional, targetId: t, priceMissing, note: r.trigger_ko as string });
+      }
+    } else {
+      s.addons.push({ ruleId: r.id as string, key, name: nameKo, price: unit ?? 0, optional, priceMissing, note: r.trigger_ko as string });
+    }
+    if (priceMissing) {
+      s.missingInfo.push({ level: 'warning', message: `${nameKo}: 협의 단가 미입력 — 금액에 반영되지 않았습니다` });
+    }
+    s.ruleLog.push({ step: 'AD', msg: `${r.id}: 추가 — ${nameKo} ×${targets.length || 1} (단가 ${unit != null ? unit.toLocaleString() : '협의'})` });
   }
 }
 

@@ -47,6 +47,8 @@ export type QuoteInput = {
   extraLines?: LineItem[];          // 계산 산출 라인(함량분석·조제물분석 R2/R8) — 마스터 항목 아님
   quantityOverrides?: Record<string, number>;   // step4 수량 조정 (라인 id → 수량)
   removedIds?: string[];            // step4 삭제한 라인 id
+  addonTargets?: Record<string, string[]>;        // 애드온 key → 적용 대상 라인 id 목록 (미지정 시 견적 전체 1회)
+  addonPriceOverrides?: Record<string, number>;   // 애드온 key → 협의 단가(1건당) — 룰 가격 null 시 사용자 입력
 };
 
 export type LineItem = {
@@ -64,7 +66,13 @@ export type LineItem = {
 
 export type MissingInfo = { id?: string; level: 'blocker' | 'warning'; message: string };
 export type WaivedItem = { id: string; testName: string; ruleId: string; reason: string };
-export type Addon = { ruleId: string; name: string; price: number; optional: boolean; note?: string };
+export type Addon = { ruleId: string; name: string; price: number; optional: boolean; note?: string; key?: string; targetId?: string; priceMissing?: boolean };
+/** 채택 가능(optional) 애드온 제안 — UI가 대상 선택·협의 단가 입력을 그리는 근거. */
+export type AddonOffer = {
+  key: string; ruleId: string; name: string; price: number | null;
+  eligibleLineIds: string[];   // applies_to 매칭 라인 (비면 룰 표기-마스터명 불일치 → UI는 전체 라인 선택 허용)
+  autoMatched: boolean;
+};
 export type DocRequirement = { ruleId: string; document: string; mandatory: boolean };
 
 export type Quote = {
@@ -72,6 +80,7 @@ export type Quote = {
   lineItems: LineItem[];
   waivedItems: WaivedItem[];
   addons: Addon[];
+  addonOffers: AddonOffer[];
   prerequisitesAdded: LineItem[];
   documentRequirements: DocRequirement[];
   totals: { lineItemsKrw: number; addonsKrw: number; subtotalKrw: number };

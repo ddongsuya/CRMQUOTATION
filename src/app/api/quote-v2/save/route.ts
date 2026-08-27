@@ -17,6 +17,7 @@ export const dynamic = 'force-dynamic';
 type Body = {
   category: string; standard: 'MFDS' | 'OECD'; route: string; plan?: ComposePlan; selectedItemIds?: string[];
   customerConditions?: Record<string, boolean>; requestedAddons?: Record<string, boolean>; combinationCount?: number;
+  addonTargets?: Record<string, string[]>; addonPriceOverrides?: Record<string, number>;
   currency?: 'KRW' | 'USD'; discountRate?: number; exchangeRate?: number;
   projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string; customerPhone?: string;
   dealId?: number | null; issueNow?: boolean;
@@ -49,17 +50,26 @@ export async function POST(req: Request) {
     selectedItems, extraLines,
     customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {}, combinationCount: b.combinationCount,
     quantityOverrides: b.quantityOverrides, removedIds: b.removedIds,
+    addonTargets: b.addonTargets, addonPriceOverrides: b.addonPriceOverrides,
   });
 
   const subtotal = quote.totals.subtotalKrw;
   const discountRate = Math.min(Math.max(b.discountRate ?? 0, 0), 0.9);
   const afterDiscount = subtotal * (1 - discountRate);
   const itemRows = quote.lineItems.map((li, i) => ({
-    testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route, category: b.category,
+    testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route as string | null, category: b.category,
     tag: [...li.appliedRules, ...(li.isPrereq ? ['선행'] : [])].join(',') || null,
     unitPrice: li.unitPrice ?? 0, quantity: li.quantity, subtotal: li.amount ?? 0,
     source: li.isPrereq ? 'auto' : 'engine', priority: null, displayOrder: i,
   }));
+  // 채택된 추가 옵션도 견적 항목으로 영속 — 견적서(인쇄)와 합계가 어긋나지 않게 한다.
+  const addonRows = quote.addons.map((a, i) => ({
+    testItemKey: `_addon-${a.ruleId}-${i}`, testNameSnapshot: a.name, adminRouteSnap: null, category: b.category,
+    tag: a.priceMissing ? '옵션·협의' : '옵션',
+    unitPrice: a.price, quantity: 1, subtotal: a.price,
+    source: 'addon', priority: null, displayOrder: quote.lineItems.length + i,
+  }));
+  itemRows.push(...addonRows);
 
   const userId = await currentUserId();
   const companyName = (b.customerCompany ?? '').trim();

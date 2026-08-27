@@ -90,6 +90,9 @@ export default function QuoteV2Page() {
   // step4 수량·삭제 조정 (라인 id 기준)
   const [qtyOverrides, setQtyOverrides] = useState<Record<string, number>>({});
   const [removedIds, setRemovedIds] = useState<string[]>([]);
+  // 추가 옵션 — 적용 대상 라인 선택(key→라인 id[]) / 협의 단가(key→1건당 원). 미선택 시 견적 전체 1회.
+  const [addonTargets, setAddonTargets] = useState<Record<string, string[]>>({});
+  const [addonPrices, setAddonPrices] = useState<Record<string, number>>({});
   const [companyNames, setCompanyNames] = useState<string[]>([]);  // 고객사 자동완성(CRM)
   useEffect(() => { fetch('/api/crm/companies').then(r => r.json()).then(d => setCompanyNames((d.companies ?? []).map((c: { name: string }) => c.name))).catch(() => {}); }, []);
 
@@ -127,7 +130,7 @@ export default function QuoteV2Page() {
   const generate = async () => {
     setLoading(true); setSavedNo(null); setSavedId(null);
     try {
-      const edits = { quantityOverrides: qtyOverrides, removedIds };
+      const edits = { quantityOverrides: qtyOverrides, removedIds, addonTargets, addonPriceOverrides: addonPrices };
       const body = isBattery
         ? { category, standard, route, selectedItems: [...picked].map(id => ({ id })), customerConditions: conds, requestedAddons: reqAddons, ...edits }
         : { category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined, ...edits };
@@ -147,7 +150,7 @@ export default function QuoteV2Page() {
     const t = setTimeout(() => { generate(); }, 350);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [excipient, JSON.stringify(reqAddons), JSON.stringify(conds), JSON.stringify(qtyOverrides), JSON.stringify(removedIds)]);
+  }, [excipient, JSON.stringify(reqAddons), JSON.stringify(conds), JSON.stringify(qtyOverrides), JSON.stringify(removedIds), JSON.stringify(addonTargets), JSON.stringify(addonPrices)]);
 
   const saveQuote = async (issueNow: boolean) => {
     setSaving(true); setSavedNo(null);
@@ -155,6 +158,7 @@ export default function QuoteV2Page() {
       const common = {
         category, standard, route, customerConditions: conds, requestedAddons: reqAddons,
         currency, discountRate, exchangeRate, quantityOverrides: qtyOverrides, removedIds,
+        addonTargets, addonPriceOverrides: addonPrices,
         projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, customerPhone: cust.phone, indication: cust.indication, dealId, issueNow,
       };
       const body = isBattery
@@ -423,16 +427,61 @@ export default function QuoteV2Page() {
               {!isBattery && (
                 <Field label="부형제(비히클) 종수 — 함량·조제물분석 곱"><div className="flex gap-1.5">{[1, 2, 3].map(n => <Chip key={n} on={excipient === n} onClick={() => setExcipient(n)}>{n}종</Chip>)}</div></Field>
               )}
-              {meta && meta.addonOptions.length > 0 && (
-                <Field label="추가 옵션 채택"><div className="grid grid-cols-1 gap-1">
-                  {meta.addonOptions.map(a => (
-                    <label key={a.key} className="flex items-center gap-2 text-xs text-ink-muted cursor-pointer">
-                      <input type="checkbox" checked={!!reqAddons[a.key]} onChange={e => setReqAddons(p => ({ ...p, [a.key]: e.target.checked }))} className="rounded border-slate-300 text-brand-600" />
-                      {a.label} <span className="text-ink-subtle">(+{won(a.price)})</span>
-                    </label>
-                  ))}
-                </div></Field>
-              )}
+              {(() => {
+                // 엔진이 계산한 채택 가능 옵션(적용 가능 라인 포함). 견적 산출 전엔 meta 목록으로 폴백.
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const offers: any[] = quote?.addonOffers?.length
+                  ? quote.addonOffers
+                  : (meta?.addonOptions ?? []).map(a => ({ key: a.key, name: a.label, price: a.price ?? null, eligibleLineIds: [], autoMatched: false }));
+                if (!offers.length) return null;
+                return (
+                  <Field label="추가 옵션 채택"><div className="grid grid-cols-1 gap-1">
+                    {offers.map(a => {
+                      const on = !!reqAddons[a.key];
+                      const unit = a.price ?? addonPrices[a.key] ?? null;
+                      const priceLabel = a.price != null ? `+${won(a.price)}/건` : (addonPrices[a.key] ? `협의 ${won(addonPrices[a.key])}/건` : '협의');
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      const pickable: any[] = quote ? (a.autoMatched ? quote.lineItems.filter((li: any) => a.eligibleLineIds.includes(li.id)) : quote.lineItems) : [];
+                      const targets = addonTargets[a.key] ?? [];
+                      return (
+                        <div key={a.key}>
+                          <label className="flex items-center gap-2 text-xs text-ink-muted cursor-pointer">
+                            <input type="checkbox" checked={on} onChange={e => setReqAddons(p => ({ ...p, [a.key]: e.target.checked }))} className="rounded border-slate-300 text-brand-600" />
+                            {a.name} <span className="text-ink-subtle">({priceLabel})</span>
+                          </label>
+                          {on && (
+                            <div className="ml-6 mt-1.5 mb-2 space-y-2">
+                              {pickable.length > 0 && (
+                                <div>
+                                  <div className="text-[11px] text-ink-subtle mb-1">
+                                    적용 대상 {targets.length ? `${targets.length}건 선택${unit != null ? ` — 소계 ${won(unit * targets.length)}` : ''}` : '미선택 (견적 전체 1회 적용)'}
+                                    {!a.autoMatched && quote ? ' · 전체 항목에서 선택' : ''}
+                                  </div>
+                                  <div className="flex flex-wrap gap-1">
+                                    {pickable.map(li => (
+                                      <Chip key={li.id} on={targets.includes(li.id)} onClick={() => setAddonTargets(p => {
+                                        const cur = p[a.key] ?? [];
+                                        return { ...p, [a.key]: cur.includes(li.id) ? cur.filter(x => x !== li.id) : [...cur, li.id] };
+                                      })}>{li.testName}</Chip>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              {a.price == null && (
+                                <label className="flex items-center gap-2 text-[11px] text-ink-muted">협의 단가(1건당)
+                                  <input type="number" min={0} value={addonPrices[a.key] ?? ''} placeholder="원"
+                                    onChange={e => { const n = Number(e.target.value); setAddonPrices(p => { const q = { ...p }; if (n > 0) q[a.key] = n; else delete q[a.key]; return q; }); }}
+                                    className="input h-8 w-40 text-[12px]" />
+                                </label>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div></Field>
+                );
+              })()}
               <p className="text-xs text-ink-subtle">부형제·옵션을 변경하면 우측 견적이 자동 갱신됩니다.</p>
             </>}
 
@@ -572,9 +621,26 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
         </div>
       )}
 
+      {/* 채택된 추가 옵션 — 라인 아래 별도 표기 */}
+      {quote && quote.addons?.length > 0 && (
+        <div className="border-t border-[var(--hairline-soft)]">
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {quote.addons.map((a: any, i: number) => (
+            <div key={i} className="flex items-start gap-3 py-2 border-b border-[var(--hairline-soft)]">
+              <div className="flex-1 min-w-0">
+                <div className="text-[13px] text-ink">{a.name}<span className="tag ml-1.5">옵션</span></div>
+              </div>
+              <div className="text-[13px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">
+                {a.priceMissing ? <span className="text-[11px] font-semibold" style={{ color: 'var(--error)' }}>협의 필요</span> : f(a.price)}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* 합계 — 소계/할인/VAT/합계 (시안) */}
       <div className="border-t border-[var(--hairline-soft)] pt-3 space-y-1.5">
-        <div className="flex justify-between text-[13px] text-ink-muted"><span>소계 <span className="text-ink-subtle">({lineCount}건)</span></span><span className="tabular-nums">{quote ? f(subtotal) : dash}</span></div>
+        <div className="flex justify-between text-[13px] text-ink-muted"><span>소계 <span className="text-ink-subtle">({lineCount}건{quote?.addons?.length ? ` + 옵션 ${quote.addons.length}` : ''})</span></span><span className="tabular-nums">{quote ? f(subtotal) : dash}</span></div>
         <div className="flex justify-between text-[13px] text-ink-muted"><span>할인 {(discountRate * 100).toFixed(0)}%</span><span className="tabular-nums">{quote && discountAmt > 0 ? `- ${f(discountAmt)}` : dash}</span></div>
         <div className="flex justify-between text-[13px] text-ink-muted"><span>VAT 10%</span><span className="tabular-nums">{quote ? f(vat) : dash}</span></div>
         <div className="flex justify-between items-baseline pt-2 mt-1 border-t border-[var(--hairline-soft)]">
@@ -590,7 +656,7 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
       </div>
       {/* 푸터 */}
       <div className="flex items-center gap-1.5 text-[11px] text-ink-subtle border-t border-[var(--hairline-soft)] pt-3">
-        <Receipt className="w-3.5 h-3.5" /> 선택 {selectedCount}건 + 자동 {autoCount}건 · 엔진 산출
+        <Receipt className="w-3.5 h-3.5" /> 선택 {selectedCount}건 + 자동 {autoCount}건{quote?.addons?.length ? ` + 옵션 ${quote.addons.length}건` : ''} · 엔진 산출
       </div>
     </section>
   );

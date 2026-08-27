@@ -12,7 +12,7 @@ import { sortLines } from './ordering';
 
 export function evaluateQuote(input: QuoteInput): Quote {
   const s: RuleState = {
-    input, lineItems: [], waivedItems: [], addons: [], prerequisitesAdded: [],
+    input, lineItems: [], waivedItems: [], addons: [], addonOffers: [], prerequisitesAdded: [],
     documentRequirements: [], missingInfo: [], ruleLog: [],
   };
 
@@ -71,7 +71,7 @@ export function evaluateQuote(input: QuoteInput): Quote {
   const addonsKrw = s.addons.reduce((sum, a) => sum + a.price, 0);
 
   return {
-    input, lineItems, waivedItems: s.waivedItems, addons: s.addons,
+    input, lineItems, waivedItems: s.waivedItems, addons: s.addons, addonOffers: s.addonOffers,
     prerequisitesAdded: s.prerequisitesAdded, documentRequirements: s.documentRequirements,
     totals: { lineItemsKrw, addonsKrw, subtotalKrw: lineItemsKrw + addonsKrw },
     missingInfo: s.missingInfo, metaNotes, ruleLog: s.ruleLog,
