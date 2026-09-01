@@ -5,7 +5,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { Bell, AlertTriangle, CalendarClock, Loader2 } from 'lucide-react';
 
-type Item = { date: string; kind: string; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; contact?: string; eventId?: number; done?: boolean };
+type Item = { date: string; kind: string; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; quoteId?: number; contact?: string; eventId?: number; done?: boolean };
 
 const TYPE_DOT: Record<string, string> = { MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]' };
 const dayDiff = (d: string, now: Date) => Math.round((new Date(d.slice(0, 10)).getTime() - new Date(now.toISOString().slice(0, 10)).getTime()) / 86400_000);
@@ -68,5 +68,7 @@ function Row({ it, dd }: { it: Item; dd: number }) {
       </div>
     </div>
   );
-  return it.dealId ? <Link href={`/deals/${it.dealId}`} className="block -mx-1 px-1 rounded hover:bg-slate-50/70">{inner}</Link> : <div className="-mx-1 px-1">{inner}</div>;
+  // 클릭 → 해당 내용 확인: 딜 상세 > 견적서 > 고객 상세 순으로 연결
+  const href = it.dealId ? `/deals/${it.dealId}` : it.quoteId ? `/quote/print?id=${it.quoteId}` : it.companyId ? `/customers/${it.companyId}` : null;
+  return href ? <Link href={href} className="block -mx-1 px-1 rounded hover:bg-slate-50/70">{inner}</Link> : <div className="-mx-1 px-1">{inner}</div>;
 }

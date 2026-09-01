@@ -12,8 +12,8 @@ export const dynamic = 'force-dynamic';
 
 type Item = {
   date: string; kind: 'event' | 'milestone'; type: string; title: string;
-  dealId?: number; dealTitle?: string; company?: string; contact?: string;
-  eventId?: number; done?: boolean;
+  dealId?: number; dealTitle?: string; company?: string; companyId?: number; contact?: string;
+  quoteId?: number; eventId?: number; done?: boolean;
 };
 
 const addDays = (d: Date, n: number) => new Date(d.getTime() + n * 86400_000);
@@ -33,12 +33,13 @@ export async function GET(req: Request) {
   // 1) 수동 일정
   const events = await prisma.calendarEvent.findMany({
     where: { ownerId: { in: owners }, startAt: { gte: from, lte: to } },
-    include: { deal: { select: { id: true, title: true } }, contact: { select: { name: true, company: { select: { name: true } } } } },
+    include: { deal: { select: { id: true, title: true } }, contact: { select: { name: true, company: { select: { id: true, name: true } } } } },
   });
   for (const e of events) {
     items.push({
       date: e.startAt.toISOString(), kind: 'event', type: e.type, title: e.title,
       dealId: e.deal?.id, dealTitle: e.deal?.title, contact: e.contact?.name, company: e.contact?.company?.name,
+      companyId: e.contact?.company?.id,
       eventId: e.id, done: e.done,
     });
   }
@@ -46,10 +47,10 @@ export async function GET(req: Request) {
   // 2) 파생 마일스톤 — 시험 보고서안/잔금
   const studies = await prisma.study.findMany({
     where: { deal: { ownerId: { in: owners } } },
-    include: { deal: { select: { id: true, title: true, contact: { select: { name: true, company: { select: { name: true } } } } } } },
+    include: { deal: { select: { id: true, title: true, contact: { select: { name: true, company: { select: { id: true, name: true } } } } } } },
   });
   for (const s of studies) {
-    const ctx = { dealId: s.deal.id, dealTitle: s.deal.title, contact: s.deal.contact.name, company: s.deal.contact.company.name };
+    const ctx = { dealId: s.deal.id, dealTitle: s.deal.title, contact: s.deal.contact.name, company: s.deal.contact.company.name, companyId: s.deal.contact.company.id };
     // 보고서안 발행 예정 (미발행)
     if (!s.reportDraftIssuedAt && inRange(s.reportDraftDueAt)) {
       items.push({ date: s.reportDraftDueAt!.toISOString(), kind: 'milestone', type: 'MILESTONE', title: `최종보고서(안) 발행 예정${s.studyNumber ? ` · ${s.studyNumber}` : ''}`, ...ctx });
@@ -69,14 +70,14 @@ export async function GET(req: Request) {
       supersededAt: null,                                // 변경견적으로 대체된 버전 제외
     },
     select: {
-      quoteNumber: true, sentAt: true, validUntil: true, customerCompany: true,
-      deal: { select: { id: true, title: true, contact: { select: { name: true, company: { select: { name: true } } } } } },
+      id: true, quoteNumber: true, sentAt: true, validUntil: true, customerCompany: true, companyId: true,
+      deal: { select: { id: true, title: true, contact: { select: { name: true, company: { select: { id: true, name: true } } } } } },
     },
   });
   for (const q of quotes) {
     const ctx = q.deal
-      ? { dealId: q.deal.id, dealTitle: q.deal.title, contact: q.deal.contact.name, company: q.deal.contact.company.name }
-      : { company: q.customerCompany ?? undefined };
+      ? { dealId: q.deal.id, dealTitle: q.deal.title, contact: q.deal.contact.name, company: q.deal.contact.company.name, companyId: q.deal.contact.company.id, quoteId: q.id }
+      : { company: q.customerCompany ?? undefined, companyId: q.companyId ?? undefined, quoteId: q.id };
     // 송부 +7일 검토 팔로업
     if (q.sentAt) {
       const due = addDays(q.sentAt, 7);

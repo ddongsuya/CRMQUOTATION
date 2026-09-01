@@ -21,7 +21,7 @@ export default async function Home() {
 
   let quotes: Array<{ id: number; quoteNumber: string; customerCompany: string | null; modality: string; status: string; grandTotal: number | null }> = [];
   let kpi = { thisMonth: 0, inProgress: 0, wonAmt: 0, wonRate: 0, runningStudies: 0, quoteDelta: 0, wonDelta: 0 };
-  let dueStudies: { id: number; name: string; company: string; dueAt: string; duration: string }[] = [];
+  let dueStudies: { id: number; name: string; company: string; dueAt: string; duration: string; dealId: number }[] = [];
   let monthly: { label: string; amount: number }[] = [];
   let activity: { id: string; kind: string; text: string; sub: string; at: string; href: string | null }[] = [];
   let followups: Followup[] = [];
@@ -54,13 +54,14 @@ export default async function Home() {
     const studies = await prisma.study.findMany({
       where: { reportDraftIssuedAt: null, reportDraftDueAt: { not: null } },
       orderBy: { reportDraftDueAt: 'asc' }, take: 5,
-      select: { id: true, itemName: true, studyNumber: true, reportDraftDueAt: true, deal: { select: { title: true, contact: { select: { company: { select: { name: true } } } } } } },
+      select: { id: true, itemName: true, studyNumber: true, reportDraftDueAt: true, deal: { select: { id: true, title: true, contact: { select: { company: { select: { name: true } } } } } } },
     });
     dueStudies = studies.map(s => ({
       id: s.id, name: s.itemName || s.deal.title,
       company: s.deal.contact?.company?.name ?? '',
       dueAt: s.reportDraftDueAt!.toISOString(),
       duration: s.studyNumber ?? '',
+      dealId: s.deal.id,
     }));
 
     // 월별 수주 추이 (최근 6개월 ACCEPTED 합)
@@ -153,12 +154,14 @@ export default async function Home() {
               {dueStudies.map(s => {
                 const dd = ddayLabel(s.dueAt);
                 return (
-                  <li key={s.id} className="flex items-center gap-3.5 py-[11px] border-t border-[var(--hairline-soft)] first:border-t-0">
-                    <span className={`inline-flex items-center justify-center w-12 h-12 rounded-[10px] text-[14px] font-semibold flex-shrink-0 ${dd.urgent ? 'bg-brand-100 text-brand-700' : 'bg-slate-100 text-ink-muted'}`}>{dd.label}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[15px] text-ink truncate">{s.name}</div>
-                      <div className="text-[12px] text-ink-subtle truncate">{[s.company || '고객사 미지정', s.duration].filter(Boolean).join(' · ')}</div>
-                    </div>
+                  <li key={s.id} className="border-t border-[var(--hairline-soft)] first:border-t-0">
+                    <Link href={`/deals/${s.dealId}`} className="flex items-center gap-3.5 py-[11px] -mx-2 px-2 rounded-lg hover:bg-slate-50/70 transition-colors">
+                      <span className={`inline-flex items-center justify-center w-12 h-12 rounded-[10px] text-[14px] font-semibold flex-shrink-0 ${dd.urgent ? 'bg-brand-100 text-brand-700' : 'bg-slate-100 text-ink-muted'}`}>{dd.label}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[15px] text-ink truncate">{s.name}</div>
+                        <div className="text-[12px] text-ink-subtle truncate">{[s.company || '고객사 미지정', s.duration].filter(Boolean).join(' · ')}</div>
+                      </div>
+                    </Link>
                   </li>
                 );
               })}
