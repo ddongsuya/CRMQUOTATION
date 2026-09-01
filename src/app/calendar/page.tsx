@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { CalendarDays, ChevronLeft, ChevronRight, Plus, Loader2, X, Save, ArrowRight, GanttChartSquare } from 'lucide-react';
+import { CalendarDays, ChevronLeft, ChevronRight, Plus, Loader2, X, Save, ArrowRight, GanttChartSquare, Pencil, Trash2, Check } from 'lucide-react';
 import { toast } from '@/lib/toast';
 
-type Item = { date: string; kind: 'event' | 'milestone'; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; eventId?: number; done?: boolean };
+type Item = { date: string; kind: 'event' | 'milestone'; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; contactId?: number; quoteId?: number; eventId?: number; done?: boolean; location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null };
 
 const ymd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const TYPE_CLS: Record<string, string> = {
@@ -24,6 +24,7 @@ export default function CalendarPage() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState<string | null>(null);
+  const [editing, setEditing] = useState<Item | null>(null);   // 수동 일정 수정
   const [selected, setSelected] = useState<string>(() => ymd(new Date()));
 
   // 뷰별 셀(날짜) 계산
@@ -130,23 +131,36 @@ export default function CalendarPage() {
         </div>
 
         {/* 아젠다 패널 */}
-        <AgendaPanel date={selected} items={byDay[selected] ?? []} onAdd={() => setAdding(selected)} />
+        <AgendaPanel date={selected} items={byDay[selected] ?? []} onAdd={() => setAdding(selected)}
+          onEdit={it => setEditing(it)} onReload={load} />
       </div>
 
       {adding && <EventModal date={adding} onClose={() => setAdding(null)} onSaved={() => { setAdding(null); load(); }} />}
+      {editing && <EventModal date={editing.date.slice(0, 10)} event={editing} onClose={() => setEditing(null)} onSaved={() => { setEditing(null); load(); }} />}
     </div>
   );
 }
 
 const TYPE_LABEL: Record<string, string> = { MEETING: '미팅', DEADLINE: '마감', MILESTONE: '보고서안', REMINDER: '팔로업' };
-function AgendaPanel({ date, items, onAdd }: { date: string; items: Item[]; onAdd: () => void }) {
+function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; items: Item[]; onAdd: () => void; onEdit: (it: Item) => void; onReload: () => void }) {
   const d = new Date(date + 'T00:00:00');
   const label = d.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
-  // 이벤트 → 연동 화면
+  // 이벤트 → 연동 화면 (파생 알림은 딜/견적/고객으로)
   const linkOf = (it: Item): string | null => {
     if (it.kind === 'milestone' && it.dealId) return `/gantt?deal=${it.dealId}`;
     if (it.dealId) return `/deals/${it.dealId}`;
+    if (it.kind === 'milestone' && it.quoteId) return `/quote/print?id=${it.quoteId}`;
+    if (it.companyId) return `/customers/${it.companyId}`;
     return null;
+  };
+  const toggleDone = async (it: Item) => {
+    const res = await fetch(`/api/crm/events/${it.eventId}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !it.done }) });
+    if (res.ok) onReload(); else toast.error('변경 실패');
+  };
+  const del = async (it: Item) => {
+    if (!confirm('이 일정을 삭제할까요?')) return;
+    const res = await fetch(`/api/crm/events/${it.eventId}`, { method: 'DELETE' });
+    if (res.ok) { toast.success('삭제됨'); onReload(); } else toast.error('삭제 실패');
   };
   return (
     <div className="card p-4 self-start lg:sticky lg:top-4">
@@ -158,20 +172,33 @@ function AgendaPanel({ date, items, onAdd }: { date: string; items: Item[]; onAd
         <ul className="space-y-1.5">
           {items.map((it, i) => {
             const href = linkOf(it);
-            const inner = (
-              <div className={clsx('flex items-start gap-2.5 p-2.5 rounded-lg transition-colors', href ? 'hover:bg-slate-50 cursor-pointer' : '', it.done && 'opacity-50')}>
+            const editable = it.kind === 'event' && it.eventId != null;
+            const body = (
+              <div className="flex items-start gap-2.5 min-w-0 flex-1">
                 <span className={clsx('w-2.5 h-2.5 rounded-full mt-1 shrink-0', TYPE_CLS[it.type] ?? 'bg-slate-400')} />
                 <div className="min-w-0 flex-1">
                   <div className={clsx('text-sm text-ink', it.done && 'line-through')}>{it.title}</div>
                   <div className="text-[11px] text-ink-subtle flex items-center gap-1.5 mt-0.5">
                     <span>{TYPE_LABEL[it.type] ?? it.type}</span>
                     {it.company && <><span className="text-ink-subtle/40">·</span><span className="truncate">{it.company}</span></>}
+                    {it.location && <><span className="text-ink-subtle/40">·</span><span className="truncate">{it.location}</span></>}
                   </div>
                 </div>
-                {href && (it.kind === 'milestone' ? <GanttChartSquare className="w-3.5 h-3.5 text-ink-subtle shrink-0 mt-0.5" /> : <ArrowRight className="w-3.5 h-3.5 text-ink-subtle shrink-0 mt-0.5" />)}
               </div>
             );
-            return href ? <li key={i}><Link href={href}>{inner}</Link></li> : <li key={i}>{inner}</li>;
+            return (
+              <li key={i} className={clsx('group flex items-start gap-1 p-2.5 rounded-lg transition-colors hover:bg-slate-50', it.done && 'opacity-50')}>
+                {href ? <Link href={href} className="flex min-w-0 flex-1">{body}</Link> : body}
+                <span className="flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {editable && <>
+                    <button onClick={() => toggleDone(it)} className="p-1 rounded text-ink-subtle hover:text-emerald-600 hover:bg-emerald-50" title={it.done ? '완료 해제' : '완료 처리'}><Check className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => onEdit(it)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => del(it)} className="p-1 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+                  </>}
+                  {href && !editable && (it.kind === 'milestone' ? <GanttChartSquare className="w-3.5 h-3.5 text-ink-subtle mt-0.5" /> : <ArrowRight className="w-3.5 h-3.5 text-ink-subtle mt-0.5" />)}
+                </span>
+              </li>
+            );
           })}
         </ul>
       )}
@@ -179,29 +206,41 @@ function AgendaPanel({ date, items, onAdd }: { date: string; items: Item[]; onAd
   );
 }
 
-function EventModal({ date, onClose, onSaved }: { date: string; onClose: () => void; onSaved: () => void }) {
-  const [f, setF] = useState({ title: '', type: 'MEETING', startAt: date });
+function EventModal({ date, event, onClose, onSaved }: { date: string; event?: Item; onClose: () => void; onSaved: () => void }) {
+  const [f, setF] = useState({
+    title: event?.title ?? '', type: event?.type ?? 'MEETING', startAt: date,
+    location: event?.location ?? '', attendeesClient: event?.attendeesClient ?? '', attendeesInternal: event?.attendeesInternal ?? '', requests: event?.requests ?? '',
+  });
   const [saving, setSaving] = useState(false);
   const save = async () => {
     if (!f.title.trim()) { toast.error('제목을 입력하세요.'); return; }
     setSaving(true);
     try {
-      const res = await fetch('/api/crm/events', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...f, allDay: true }) });
-      if (!res.ok) throw new Error((await res.json()).error ?? 'fail'); toast.success('일정이 추가되었습니다.'); onSaved();
+      const res = event?.eventId
+        ? await fetch(`/api/crm/events/${event.eventId}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...f, allDay: true }) })
+        : await fetch('/api/crm/events', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...f, allDay: true }) });
+      if (!res.ok) throw new Error((await res.json()).error ?? 'fail');
+      toast.success(event ? '일정이 수정되었습니다.' : '일정이 추가되었습니다.'); onSaved();
     } catch (e) { toast.error(`실패: ${e instanceof Error ? e.message : '오류'}`); } finally { setSaving(false); }
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm" onClick={e => e.stopPropagation()}>
-        <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between"><div className="font-semibold text-ink">새 일정</div><button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button></header>
-        <div className="px-5 py-4 space-y-3">
+        <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between"><div className="font-semibold text-ink">{event ? '일정 수정' : '새 일정'}</div><button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button></header>
+        <div className="px-5 py-4 space-y-3 max-h-[70vh] overflow-auto">
           <input className="input w-full" value={f.title} onChange={e => setF(p => ({ ...p, title: e.target.value }))} placeholder="일정 제목" autoFocus />
           <div className="grid grid-cols-2 gap-3">
             <div><div className="label mb-1">날짜</div><input type="date" className="input w-full" value={f.startAt} onChange={e => setF(p => ({ ...p, startAt: e.target.value }))} /></div>
-            <div><div className="label mb-1">유형</div><select className="input w-full" value={f.type} onChange={e => setF(p => ({ ...p, type: e.target.value }))}><option value="MEETING">미팅</option><option value="DEADLINE">마감</option><option value="REMINDER">리마인더</option></select></div>
+            <div><div className="label mb-1">유형</div><select className="input w-full" value={f.type} onChange={e => setF(p => ({ ...p, type: e.target.value }))}><option value="MEETING">미팅</option><option value="DEADLINE">마감</option><option value="MILESTONE">마일스톤</option><option value="REMINDER">리마인더</option></select></div>
           </div>
+          <div><div className="label mb-1">장소</div><input className="input w-full" placeholder="예: 켐온 본사 회의실 / 화상" value={f.location} onChange={e => setF(p => ({ ...p, location: e.target.value }))} /></div>
+          <div className="grid grid-cols-2 gap-3">
+            <div><div className="label mb-1">참여자 — 고객사</div><input className="input w-full" value={f.attendeesClient} onChange={e => setF(p => ({ ...p, attendeesClient: e.target.value }))} /></div>
+            <div><div className="label mb-1">참여자 — 우리 회사</div><input className="input w-full" value={f.attendeesInternal} onChange={e => setF(p => ({ ...p, attendeesInternal: e.target.value }))} /></div>
+          </div>
+          <div><div className="label mb-1">요청사항</div><textarea className="input w-full min-h-[56px]" value={f.requests} onChange={e => setF(p => ({ ...p, requests: e.target.value }))} /></div>
         </div>
-        <footer className="px-5 py-3 border-t border-slate-100 flex justify-end gap-2"><button onClick={onClose} className="btn-ghost text-sm">취소</button><button onClick={save} disabled={saving} className="btn-primary text-sm">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 추가</button></footer>
+        <footer className="px-5 py-3 border-t border-slate-100 flex justify-end gap-2"><button onClick={onClose} className="btn-ghost text-sm">취소</button><button onClick={save} disabled={saving} className="btn-primary text-sm">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {event ? '수정 저장' : '추가'}</button></footer>
       </div>
     </div>
   );

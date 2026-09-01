@@ -12,8 +12,10 @@ export const dynamic = 'force-dynamic';
 
 type Item = {
   date: string; kind: 'event' | 'milestone'; type: string; title: string;
-  dealId?: number; dealTitle?: string; company?: string; companyId?: number; contact?: string;
+  dealId?: number; dealTitle?: string; company?: string; companyId?: number; contact?: string; contactId?: number;
   quoteId?: number; eventId?: number; done?: boolean;
+  // 수동 일정 편집 프리필용 (캘린더·고객상세 공용)
+  location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null;
 };
 
 const addDays = (d: Date, n: number) => new Date(d.getTime() + n * 86400_000);
@@ -39,8 +41,9 @@ export async function GET(req: Request) {
     items.push({
       date: e.startAt.toISOString(), kind: 'event', type: e.type, title: e.title,
       dealId: e.deal?.id, dealTitle: e.deal?.title, contact: e.contact?.name, company: e.contact?.company?.name,
-      companyId: e.contact?.company?.id,
+      companyId: e.contact?.company?.id, contactId: e.contactId ?? undefined,
       eventId: e.id, done: e.done,
+      location: e.location, attendeesClient: e.attendeesClient, attendeesInternal: e.attendeesInternal, requests: e.requests,
     });
   }
 
