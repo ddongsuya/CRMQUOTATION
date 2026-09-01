@@ -15,8 +15,10 @@ const TYPE: Record<string, { label: string; cls: string; dot: string }> = {
   CALL: { label: '통화', cls: 'tone-sent', dot: 'bg-[var(--status-sent)]' },
   MEMO: { label: '메모', cls: 'bg-slate-100 text-ink-muted', dot: 'bg-slate-400' },
 };
-const today = () => new Date().toISOString().slice(0, 10);
-const dayKey = (d: Date) => d.toISOString().slice(0, 10);
+// 로컬(KST) 기준 날짜 키 — toISOString(UTC)을 쓰면 오전 9시 전까지 "오늘"이 어제로 판정되는 버그가 있었음
+const localYmd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const today = () => localYmd(new Date());
+const dayKey = (d: Date) => localYmd(d);
 
 // 긴급도: 지연/오늘/내일/이번주
 function urgency(startAt: string): { key: string; label: string; cls: string; order: number } {

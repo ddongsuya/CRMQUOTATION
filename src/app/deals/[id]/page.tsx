@@ -99,7 +99,7 @@ export default function DealDetailPage() {
 }
 
 function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
-  const today = () => new Date().toISOString().slice(0, 10);
+  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };   // 로컬 기준 (UTC면 오전 9시 전 어제로 나옴)
   const [open, setOpen] = useState(false);
   const [f, setF] = useState({ type: 'MEETING', body: '', occurredAt: today() });
   const add = async () => {

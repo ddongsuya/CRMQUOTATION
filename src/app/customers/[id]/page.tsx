@@ -555,7 +555,7 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
 
 // ─── 노트 ───
 function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void }) {
-  const today = () => new Date().toISOString().slice(0, 10);
+  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };   // 로컬 기준 (UTC면 오전 9시 전 어제로 나옴)
   const [open, setOpen] = useState(false);
   const [f, setF] = useState<{ target: string; type: string; title: string; body: string; occurredAt: string }>({ target: '', type: 'MEMO', title: '', body: '', occurredAt: today() });
   const [busy, setBusy] = useState(false);
