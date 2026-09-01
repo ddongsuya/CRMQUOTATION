@@ -15,8 +15,19 @@ export const dynamic = 'force-dynamic';
 export function GET(req: Request) {
   const url = new URL(req.url);
   const category = url.searchParams.get('category');
+  const q = (url.searchParams.get('q') ?? '').trim().toLowerCase();
   const master = loadMaster();
   const categories = [...new Set(master.map(i => i.category))];
+
+  // 항목 검색 — 마스터 전체(448)에서 이름·id·분류로 검색 (step4 수동 추가용)
+  if (q) {
+    const results = master
+      .filter(i => (i.testName ?? '').toLowerCase().includes(q) || i.id.toLowerCase().includes(q) || (i.testClass ?? '').toLowerCase().includes(q))
+      .slice(0, 30)
+      .map(i => ({ id: i.id, testName: i.testName, testClass: i.testClass, category: i.category,
+        priceA: i.prices['경구피하근육'], priceB: i.prices['정맥경피'] }));
+    return NextResponse.json({ results });
+  }
 
   const items = (category ? master.filter(i => i.category === category) : []).map(i => ({
     id: i.id, testName: i.testName, testClass: i.testClass, species: i.species,
@@ -68,6 +79,7 @@ export async function POST(req: Request) {
     combinationCount: body.combinationCount,
     quantityOverrides: body.quantityOverrides, removedIds: body.removedIds,
     addonTargets: body.addonTargets, addonPriceOverrides: body.addonPriceOverrides,
+    extraItemIds: body.extraItemIds, unitPriceOverrides: body.unitPriceOverrides,
   });
   return NextResponse.json({ quote, composed });
 }

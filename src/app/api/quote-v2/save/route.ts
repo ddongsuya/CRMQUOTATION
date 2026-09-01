@@ -22,6 +22,7 @@ type Body = {
   projectName?: string; substanceName?: string; customerName?: string; customerCompany?: string; customerEmail?: string; customerPhone?: string;
   dealId?: number | null; issueNow?: boolean;
   quantityOverrides?: Record<string, number>; removedIds?: string[];   // step4 수량·삭제 조정
+  extraItemIds?: string[]; unitPriceOverrides?: Record<string, number>;   // step4 수동 추가·단가 조정
   quoteId?: number | null;   // 있으면 기존 견적 갱신(라인 교체) — 견적 수정 흐름
 };
 
@@ -52,6 +53,7 @@ export async function POST(req: Request) {
     customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {}, combinationCount: b.combinationCount,
     quantityOverrides: b.quantityOverrides, removedIds: b.removedIds,
     addonTargets: b.addonTargets, addonPriceOverrides: b.addonPriceOverrides,
+    extraItemIds: b.extraItemIds, unitPriceOverrides: b.unitPriceOverrides,
   });
 
   const subtotal = quote.totals.subtotalKrw;
@@ -84,6 +86,7 @@ export async function POST(req: Request) {
       combinationCount: b.combinationCount ?? null,
       addonTargets: b.addonTargets ?? {}, addonPriceOverrides: b.addonPriceOverrides ?? {},
       quantityOverrides: b.quantityOverrides ?? {}, removedIds: b.removedIds ?? [],
+      extraItemIds: b.extraItemIds ?? [], unitPriceOverrides: b.unitPriceOverrides ?? {},
     },
   });
 

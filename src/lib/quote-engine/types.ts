@@ -47,6 +47,8 @@ export type QuoteInput = {
   extraLines?: LineItem[];          // 계산 산출 라인(함량분석·조제물분석 R2/R8) — 마스터 항목 아님
   quantityOverrides?: Record<string, number>;   // step4 수량 조정 (라인 id → 수량)
   removedIds?: string[];            // step4 삭제한 라인 id
+  extraItemIds?: string[];          // step4 수동 추가 항목 (자동 구성 외 마스터 항목)
+  unitPriceOverrides?: Record<string, number>;  // step4 단가 조정 (프리셋 이탈: 군구성·동물수·투여횟수 변경 등)
   addonTargets?: Record<string, string[]>;        // 애드온 key → 적용 대상 라인 id 목록 (미지정 시 견적 전체 1회)
   addonPriceOverrides?: Record<string, number>;   // 애드온 key → 협의 단가(1건당) — 룰 가격 null 시 사용자 입력
 };

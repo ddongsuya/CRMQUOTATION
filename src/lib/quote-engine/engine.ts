@@ -17,7 +17,11 @@ export function evaluateQuote(input: QuoteInput): Quote {
   };
 
   // ── select: 선택 항목 확정 + 가격 ──
-  for (const sel of input.selectedItems) {
+  // 수동 추가 항목(extraItemIds)을 선택 목록에 합류 — 자동 구성 외 항목도 자유롭게 추가 가능
+  const extraSet = new Set(input.extraItemIds ?? []);
+  const selection = [...input.selectedItems];
+  for (const id of extraSet) if (!selection.some(x => x.id === id)) selection.push({ id });
+  for (const sel of selection) {
     const it = getItem(sel.id);
     if (!it) {
       s.missingInfo.push({ id: sel.id, level: 'blocker', message: `항목 없음: ${sel.id}` });
@@ -30,7 +34,7 @@ export function evaluateQuote(input: QuoteInput): Quote {
       id: it.id, testName: it.testName ?? '(이름 없음)', route: input.route,
       testClass: it.testClass ?? null,
       unitPrice: pr.ok ? pr.price : null, quantity: qty, amount: pr.ok ? pr.price * qty : null,
-      appliedRules: [], notes: [],
+      appliedRules: extraSet.has(it.id) ? ['수동 추가'] : [], notes: [],
     };
     if (pr.ok) {
       if (pr.fallbackGroup) li.notes.push('단일가(경로 무관) 적용');
@@ -61,12 +65,21 @@ export function evaluateQuote(input: QuoteInput): Quote {
 
   // ── 선행추가 라인 병합(플래그) + 정립 순서 정렬 + 합계 ──
   let lineItems = sortLines([...s.lineItems, ...s.prerequisitesAdded.map(li => ({ ...li, isPrereq: true }))]);
-  // step4 수량·삭제 오버라이드 적용 (미리보기·저장 공통)
+  // step4 수량·삭제·단가 오버라이드 적용 (미리보기·저장 공통)
   const removed = new Set(input.removedIds ?? []);
   const qov = input.quantityOverrides ?? {};
+  const pov = input.unitPriceOverrides ?? {};
   lineItems = lineItems
     .filter(li => !removed.has(li.id))
+    .map(li => {
+      const p = pov[li.id];
+      return (p != null && p >= 0)
+        ? { ...li, unitPrice: p, amount: p * li.quantity, appliedRules: [...li.appliedRules, '단가 조정'] }
+        : li;
+    })
     .map(li => { const q = qov[li.id]; return (q != null && q >= 1) ? { ...li, quantity: q, amount: li.unitPrice != null ? li.unitPrice * q : null } : li; });
+  // 단가를 직접 지정한 라인의 가격 미정 경고는 해소된 것으로 처리 (OECD null 등)
+  s.missingInfo = s.missingInfo.filter(m => m.id == null || pov[m.id] == null);
   const lineItemsKrw = lineItems.reduce((sum, li) => sum + (li.amount ?? 0), 0);
   const addonsKrw = s.addons.reduce((sum, a) => sum + a.price, 0);
 

@@ -93,6 +93,13 @@ export default function QuoteV2Page() {
   // 추가 옵션 — 적용 대상 라인 선택(key→라인 id[]) / 협의 단가(key→1건당 원). 미선택 시 견적 전체 1회.
   const [addonTargets, setAddonTargets] = useState<Record<string, string[]>>({});
   const [addonPrices, setAddonPrices] = useState<Record<string, number>>({});
+  // step4 자유 편집 — 자동 구성 외 항목 추가 + 프리셋 이탈(군구성·동물수 등) 단가 조정
+  const [extraIds, setExtraIds] = useState<string[]>([]);
+  const [priceOv, setPriceOv] = useState<Record<string, number>>({});
+  const [editingPriceId, setEditingPriceId] = useState<string | null>(null);
+  const [itemSearch, setItemSearch] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [restorePending, setRestorePending] = useState(false);       // ?id= 복원 후 자동 재생성 대기
   const pendingPicked = useRef<Set<string> | null>(null);            // 배터리형 복원 — 항목 목록 로드 후 적용
   const [companyNames, setCompanyNames] = useState<string[]>([]);  // 고객사 자동완성(CRM)
@@ -170,6 +177,8 @@ export default function QuoteV2Page() {
       setAddonPrices(e.addonPriceOverrides ?? {});
       setQtyOverrides(e.quantityOverrides ?? {});
       setRemovedIds(e.removedIds ?? []);
+      setExtraIds(e.extraItemIds ?? []);
+      setPriceOv(e.unitPriceOverrides ?? {});
       // 고객·금액 조건
       setCust(c => ({
         ...c,
@@ -186,6 +195,16 @@ export default function QuoteV2Page() {
     })();
   }, []);
 
+  // step4 항목 검색 (수동 추가) — 마스터 전체에서 이름·분류 검색
+  useEffect(() => {
+    if (!itemSearch.trim()) { setSearchResults([]); return; }
+    const t = setTimeout(() => {
+      fetch('/api/quote-v2?q=' + encodeURIComponent(itemSearch.trim()))
+        .then(r => r.json()).then(d => setSearchResults(d.results ?? [])).catch(() => setSearchResults([]));
+    }, 300);
+    return () => clearTimeout(t);
+  }, [itemSearch]);
+
   // 복원 직후 자동 재생성 — 배터리형은 선택 항목이 적용될 때까지 대기
   useEffect(() => {
     if (!restorePending) return;
@@ -199,7 +218,7 @@ export default function QuoteV2Page() {
     // savedId 는 유지 — 한 번 저장한 견적은 이후 저장 시 같은 견적을 갱신(수정 흐름). savedNo 만 지워 "미저장 변경" 표시.
     setLoading(true); setSavedNo(null);
     try {
-      const edits = { quantityOverrides: qtyOverrides, removedIds, addonTargets, addonPriceOverrides: addonPrices };
+      const edits = { quantityOverrides: qtyOverrides, removedIds, addonTargets, addonPriceOverrides: addonPrices, extraItemIds: extraIds, unitPriceOverrides: priceOv };
       const body = isBattery
         ? { category, standard, route, selectedItems: [...picked].map(id => ({ id })), customerConditions: conds, requestedAddons: reqAddons, ...edits }
         : { category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined, ...edits };
@@ -219,7 +238,7 @@ export default function QuoteV2Page() {
     const t = setTimeout(() => { generate(); }, 350);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [excipient, JSON.stringify(reqAddons), JSON.stringify(conds), JSON.stringify(qtyOverrides), JSON.stringify(removedIds), JSON.stringify(addonTargets), JSON.stringify(addonPrices)]);
+  }, [excipient, JSON.stringify(reqAddons), JSON.stringify(conds), JSON.stringify(qtyOverrides), JSON.stringify(removedIds), JSON.stringify(addonTargets), JSON.stringify(addonPrices), JSON.stringify(extraIds), JSON.stringify(priceOv)]);
 
   const saveQuote = async (issueNow: boolean) => {
     setSaving(true); setSavedNo(null);
@@ -227,7 +246,7 @@ export default function QuoteV2Page() {
       const common = {
         category, standard, route, customerConditions: conds, requestedAddons: reqAddons,
         currency, discountRate, exchangeRate, quantityOverrides: qtyOverrides, removedIds,
-        addonTargets, addonPriceOverrides: addonPrices,
+        addonTargets, addonPriceOverrides: addonPrices, extraItemIds: extraIds, unitPriceOverrides: priceOv,
         projectName: cust.projectName, substanceName: cust.substanceName, customerName: cust.name, customerCompany: cust.company, customerEmail: cust.email, customerPhone: cust.phone, indication: cust.indication, dealId, issueNow,
         quoteId: savedId,   // 있으면 기존 견적 갱신(수정 흐름)
       };
@@ -467,13 +486,17 @@ export default function QuoteV2Page() {
                         <div className="rounded-[12px] border border-slate-200 overflow-hidden">
                           {lines.map((li: any) => {
                             const q = qtyOverrides[li.id] ?? li.quantity;
+                            const isExtra = extraIds.includes(li.id);
+                            const isPriceOv = priceOv[li.id] != null;
                             return (
                               <div key={li.id} className="flex items-center gap-2.5 px-3.5 py-2.5 border-t border-[var(--hairline-soft)] first:border-t-0">
-                                {!li.isPrereq
-                                  ? <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-600 text-white text-[10px] font-bold flex-shrink-0">필수</span>
-                                  : <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-100 text-ink-muted text-[10px] font-medium flex-shrink-0">선행</span>}
+                                {isExtra
+                                  ? <span className="inline-flex items-center px-2 py-0.5 rounded-full tone-blue text-[10px] font-bold flex-shrink-0">추가</span>
+                                  : !li.isPrereq
+                                    ? <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-brand-600 text-white text-[10px] font-bold flex-shrink-0">필수</span>
+                                    : <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-100 text-ink-muted text-[10px] font-medium flex-shrink-0">선행</span>}
                                 <div className="flex-1 min-w-0">
-                                  <div className="text-[14px] text-ink truncate">{li.testName}</div>
+                                  <div className="text-[14px] text-ink truncate">{li.testName}{isPriceOv && <span className="ml-1.5 inline-flex items-center px-1.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-medium align-middle">단가 조정</span>}</div>
                                   <div className="text-[11px] text-ink-subtle truncate">{[li.route, ...li.notes].filter(Boolean).join(' · ')}</div>
                                 </div>
                                 <div className="inline-flex items-center rounded-lg border border-slate-200 overflow-hidden flex-shrink-0">
@@ -481,15 +504,65 @@ export default function QuoteV2Page() {
                                   <span className="w-7 text-center text-[13px] tabular-nums">{q}</span>
                                   <button type="button" onClick={() => setQtyOverrides(o => ({ ...o, [li.id]: q + 1 }))} className="w-7 h-7 flex items-center justify-center text-ink-muted hover:bg-slate-100">+</button>
                                 </div>
-                                <div className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0 w-24 text-right">{won(li.amount)}</div>
-                                <button type="button" onClick={() => setRemovedIds(r => [...r, li.id])} className="w-6 h-6 flex items-center justify-center rounded text-ink-subtle hover:text-red-600 hover:bg-red-50 flex-shrink-0" title="삭제"><Icon name="x" className="w-3.5 h-3.5" /></button>
+                                {editingPriceId === li.id ? (
+                                  <input
+                                    type="number" autoFocus min={0} step={100000}
+                                    defaultValue={priceOv[li.id] ?? li.unitPrice ?? 0}
+                                    className="input text-sm w-28 text-right flex-shrink-0"
+                                    onBlur={e => { const v = Number(e.target.value); if (Number.isFinite(v) && v >= 0) setPriceOv(o => ({ ...o, [li.id]: v })); setEditingPriceId(null); }}
+                                    onKeyDown={e => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); if (e.key === 'Escape') setEditingPriceId(null); }}
+                                  />
+                                ) : (
+                                  <button type="button" onClick={() => setEditingPriceId(li.id)}
+                                    className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0 w-24 text-right hover:text-brand-600 hover:underline decoration-dotted underline-offset-2"
+                                    title="클릭해서 단가 수정 (군구성·동물수·투여횟수 변경 등 프리셋 이탈 시)">
+                                    {won(li.amount)}
+                                  </button>
+                                )}
+                                <button type="button"
+                                  onClick={() => {
+                                    if (isExtra) { setExtraIds(x => x.filter(id => id !== li.id)); setPriceOv(o => { const n = { ...o }; delete n[li.id]; return n; }); }
+                                    else setRemovedIds(r => [...r, li.id]);
+                                  }}
+                                  className="w-6 h-6 flex items-center justify-center rounded text-ink-subtle hover:text-red-600 hover:bg-red-50 flex-shrink-0" title="삭제"><Icon name="x" className="w-3.5 h-3.5" /></button>
                               </div>
                             );
                           })}
                         </div>
                       </div>
                     ))}
-                    {removedIds.length > 0 && <button type="button" onClick={() => setRemovedIds([])} className="text-[12px] text-brand-600 hover:underline">삭제한 {removedIds.length}건 복원</button>}
+                    <div className="flex items-center gap-3">
+                      {removedIds.length > 0 && <button type="button" onClick={() => setRemovedIds([])} className="text-[12px] text-brand-600 hover:underline">삭제한 {removedIds.length}건 복원</button>}
+                      {Object.keys(priceOv).length > 0 && <button type="button" onClick={() => setPriceOv({})} className="text-[12px] text-brand-600 hover:underline">조정 단가 {Object.keys(priceOv).length}건 초기화</button>}
+                    </div>
+
+                    {/* 자유 항목 추가 — 마스터 전체(모든 모달리티)에서 검색해 추가 */}
+                    <div className="rounded-[12px] border border-dashed border-slate-300 p-3">
+                      <div className="text-[12px] font-semibold text-ink-subtle mb-1.5">항목 추가 <span className="font-normal">— 자동 구성 외 시험을 마스터에서 검색해 추가</span></div>
+                      <input className="input text-sm w-full" placeholder="시험명·분류 검색 (예: 국소독성, hERG, 광독성…)"
+                        value={itemSearch} onChange={e => setItemSearch(e.target.value)} />
+                      {searchResults.length > 0 && (
+                        <div className="mt-2 max-h-56 overflow-auto rounded-lg border border-slate-200 divide-y divide-slate-100">
+                          {searchResults.map((r: any) => {
+                            const inQuote = extraIds.includes(r.id) || quote.lineItems.some((li: any) => li.id === r.id);
+                            const price = r.priceA?.[standard] ?? r.priceB?.[standard];
+                            return (
+                              <button key={r.id} type="button" disabled={inQuote}
+                                onClick={() => { setExtraIds(x => [...x, r.id]); setRemovedIds(rm => rm.filter(id => id !== r.id)); setItemSearch(''); }}
+                                className="w-full flex items-center gap-2 px-2.5 py-2 text-left hover:bg-slate-50 disabled:opacity-40">
+                                <span className="flex-1 min-w-0">
+                                  <span className="block text-[13px] text-ink truncate">{r.testName}</span>
+                                  <span className="block text-[11px] text-ink-subtle truncate">{r.category} · {r.testClass ?? ''}</span>
+                                </span>
+                                <span className="text-[12px] tabular-nums text-ink-muted flex-shrink-0">{price != null ? won(price) : '가격 미정'}</span>
+                                <span className="text-[11px] text-brand-600 flex-shrink-0">{inQuote ? '포함됨' : '+ 추가'}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                      {itemSearch.trim() && searchResults.length === 0 && <div className="mt-2 text-[11px] text-ink-subtle">검색 결과가 없습니다.</div>}
+                    </div>
                   </div>
                 );
               })()}
