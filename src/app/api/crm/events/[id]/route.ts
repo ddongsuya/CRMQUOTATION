@@ -25,6 +25,9 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ('startAt' in b) data.startAt = new Date(String(b.startAt));
   if ('endAt' in b) data.endAt = b.endAt ? new Date(String(b.endAt)) : null;
   if ('done' in b) data.done = !!b.done;
+  // 연결 대상 변경 — 폼에서 안건/의뢰자를 바꿔 저장하는 경우
+  if ('dealId' in b) data.dealId = b.dealId ? Number(b.dealId) : null;
+  if ('contactId' in b) data.contactId = b.contactId ? Number(b.contactId) : null;
   for (const k of ['location', 'attendeesClient', 'attendeesInternal', 'requests'] as const) {
     if (k in b) data[k] = String(b[k] ?? '').trim() || null;
   }
