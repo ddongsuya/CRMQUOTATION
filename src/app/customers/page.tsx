@@ -50,7 +50,10 @@ export default function CustomersPage() {
           <h1 className="text-[34px] font-bold text-ink tracking-[-0.022em] leading-[1.1]">고객 관리</h1>
           <p className="text-subhead text-ink-body mt-2">거래 고객사·담당자·견적 이력을 한 화면에서 관리하세요.</p>
         </div>
-        <Link href="/quote-v2" className="btn-primary"><Icon name="plus" className="w-4 h-4" /> 견적 작성</Link>
+        <div className="flex items-center gap-2">
+          <button onClick={() => setCreating(true)} className="btn-outline"><Building2 className="w-4 h-4" /> 새 고객사</button>
+          <Link href="/quote-v2" className="btn-primary"><Icon name="plus" className="w-4 h-4" /> 견적 작성</Link>
+        </div>
       </div>
 
       {companies === null ? (
@@ -101,7 +104,7 @@ export default function CustomersPage() {
         </div>
       )}
 
-      {creating && <CompanyModal onClose={() => setCreating(false)} onSaved={() => { setCreating(false); load(); }} />}
+      {creating && <CompanyModal onClose={() => setCreating(false)} onSaved={(id) => { setCreating(false); if (id) setSel(id); load(); }} />}
     </div>
   );
 }
@@ -281,7 +284,7 @@ function Empty({ children }: { children: React.ReactNode }) { return <div classN
 
 // 견적 상태 라벨·색은 lib/admin/status.ts 단일 소스(quoteStatus) 사용 — REVIEWED 포함.
 
-function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: () => void }) {
+function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: (id?: number) => void }) {
   const [f, setF] = useState({ name: '', bizRegNo: '', industry: '', address: '', memo: '', isNewClient: true });
   const [saving, setSaving] = useState(false);
   const set = (k: keyof typeof f, v: string | boolean) => setF(p => ({ ...p, [k]: v }));
@@ -292,7 +295,7 @@ function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: () =
     try {
       const res = await fetch('/api/crm/companies', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(f) });
       const d = await res.json(); if (!res.ok) throw new Error(d.error ?? `HTTP ${res.status}`);
-      toast.success('고객사가 등록되었습니다.'); onSaved();
+      toast.success('고객사가 등록되었습니다. 이제 견적 작성이나 의뢰자 추가를 이어서 하세요.'); onSaved(d.company?.id);
     } catch (e) { toast.error(`등록 실패: ${e instanceof Error ? e.message : '알 수 없음'}`); }
     finally { setSaving(false); }
   };

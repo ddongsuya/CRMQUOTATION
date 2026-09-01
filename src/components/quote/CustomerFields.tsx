@@ -42,10 +42,18 @@ export default function CustomerFields({
               {(value.company || '?').trim().charAt(0)}
             </span>
             <input className="flex-1 min-w-0 bg-transparent outline-none text-[14px] text-ink placeholder:text-slate-400"
-              value={value.company} placeholder="고객사 (CRM)" list="crm-companies"
+              value={value.company} placeholder="고객사명 입력 또는 선택" list="crm-companies"
               onChange={(e) => onChange({ company: e.target.value })} />
           </div>
           <datalist id="crm-companies">{companyNames.map((n) => <option key={n} value={n} />)}</datalist>
+          {/* 신규/기존 여부 안내 — 새 고객사도 그대로 입력하면 저장 시 자동 등록됨을 명시 */}
+          {value.company.trim() ? (
+            companyNames.includes(value.company.trim())
+              ? <span className="block text-[11px] text-ink-subtle mt-1">기존 고객사 — 저장 시 이 고객사에 연결됩니다.</span>
+              : <span className="block text-[11px] mt-1" style={{ color: 'var(--accent-press, #c2410c)' }}>신규 고객사 — 저장하면 고객 관리에 자동 등록됩니다.</span>
+          ) : (
+            <span className="block text-[11px] text-ink-subtle mt-1">새 고객사는 이름을 그대로 입력하면 저장 시 자동 등록됩니다.</span>
+          )}
         </Field>
 
         <Field label="물질명">
