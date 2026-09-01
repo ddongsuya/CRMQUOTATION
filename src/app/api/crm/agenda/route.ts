@@ -11,7 +11,8 @@ import { visibleOwnerIds } from '@/lib/current-user';
 export const dynamic = 'force-dynamic';
 
 type Item = {
-  date: string; kind: 'event' | 'milestone'; type: string; title: string;
+  date: string; kind: 'event' | 'milestone' | 'task'; type: string; title: string;
+  taskId?: number;
   dealId?: number; dealTitle?: string; company?: string; companyId?: number; contact?: string; contactId?: number;
   quoteId?: number; eventId?: number; done?: boolean;
   // 수동 일정 편집 프리필용 (캘린더·고객상세 공용)
@@ -44,6 +45,19 @@ export async function GET(req: Request) {
       companyId: e.contact?.company?.id, contactId: e.contactId ?? undefined,
       eventId: e.id, done: e.done,
       location: e.location, attendeesClient: e.attendeesClient, attendeesInternal: e.attendeesInternal, requests: e.requests,
+    });
+  }
+
+  // 1.5) 기한 있는 할 일 — 캘린더·알람에 옅게 표시 (완료 여부 포함)
+  const tasks = await prisma.task.findMany({
+    where: { ownerId: { in: owners }, dueAt: { not: null, gte: from, lte: to } },
+    include: { company: { select: { id: true, name: true } }, deal: { select: { id: true, title: true } } },
+  });
+  for (const t of tasks) {
+    items.push({
+      date: t.dueAt!.toISOString(), kind: 'task', type: 'TASK', title: t.title,
+      dealId: t.deal?.id, dealTitle: t.deal?.title, company: t.company?.name, companyId: t.company?.id,
+      taskId: t.id, done: t.done,
     });
   }
 

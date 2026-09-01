@@ -6,11 +6,11 @@ import clsx from 'clsx';
 import { CalendarDays, ChevronLeft, ChevronRight, Plus, Loader2, X, Save, ArrowRight, GanttChartSquare, Pencil, Trash2, Check } from 'lucide-react';
 import { toast } from '@/lib/toast';
 
-type Item = { date: string; kind: 'event' | 'milestone'; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; contactId?: number; quoteId?: number; eventId?: number; done?: boolean; location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null };
+type Item = { date: string; kind: 'event' | 'milestone' | 'task'; type: string; title: string; taskId?: number; dealId?: number; dealTitle?: string; company?: string; companyId?: number; contactId?: number; quoteId?: number; eventId?: number; done?: boolean; location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null };
 
 const ymd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const TYPE_CLS: Record<string, string> = {
-  MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]',
+  MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]', TASK: 'bg-teal-500',
 };
 
 type View = 'week' | 'biweek' | 'month';
@@ -124,7 +124,7 @@ export default function CalendarPage() {
             </div>
           )}
           <div className="flex flex-wrap gap-3 mt-3 px-1 text-[11px] text-ink-muted">
-            {Object.entries({ MEETING: '미팅/일정', DEADLINE: '마감(잔금 등)', MILESTONE: '보고서안 예정', REMINDER: '견적 팔로업' }).map(([k, l]) => (
+            {Object.entries({ MEETING: '미팅/일정', TASK: '할 일(기한)', DEADLINE: '마감(잔금 등)', MILESTONE: '보고서안 예정', REMINDER: '견적 팔로업' }).map(([k, l]) => (
               <span key={k} className="inline-flex items-center gap-1"><span className={clsx('w-2.5 h-2.5 rounded-sm', TYPE_CLS[k])} />{l}</span>
             ))}
           </div>
@@ -141,7 +141,7 @@ export default function CalendarPage() {
   );
 }
 
-const TYPE_LABEL: Record<string, string> = { MEETING: '미팅', DEADLINE: '마감', MILESTONE: '보고서안', REMINDER: '팔로업' };
+const TYPE_LABEL: Record<string, string> = { MEETING: '미팅', DEADLINE: '마감', MILESTONE: '보고서안', REMINDER: '팔로업', TASK: '할 일' };
 function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; items: Item[]; onAdd: () => void; onEdit: (it: Item) => void; onReload: () => void }) {
   const d = new Date(date + 'T00:00:00');
   const label = d.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
@@ -154,12 +154,14 @@ function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; i
     return null;
   };
   const toggleDone = async (it: Item) => {
-    const res = await fetch(`/api/crm/events/${it.eventId}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !it.done }) });
+    const url = it.kind === 'task' ? `/api/crm/tasks/${it.taskId}` : `/api/crm/events/${it.eventId}`;
+    const res = await fetch(url, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !it.done }) });
     if (res.ok) onReload(); else toast.error('변경 실패');
   };
   const del = async (it: Item) => {
-    if (!confirm('이 일정을 삭제할까요?')) return;
-    const res = await fetch(`/api/crm/events/${it.eventId}`, { method: 'DELETE' });
+    if (!confirm(it.kind === 'task' ? '이 할 일을 삭제할까요?' : '이 일정을 삭제할까요?')) return;
+    const url = it.kind === 'task' ? `/api/crm/tasks/${it.taskId}` : `/api/crm/events/${it.eventId}`;
+    const res = await fetch(url, { method: 'DELETE' });
     if (res.ok) { toast.success('삭제됨'); onReload(); } else toast.error('삭제 실패');
   };
   return (
@@ -172,7 +174,7 @@ function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; i
         <ul className="space-y-1.5">
           {items.map((it, i) => {
             const href = linkOf(it);
-            const editable = it.kind === 'event' && it.eventId != null;
+            const editable = (it.kind === 'event' && it.eventId != null) || (it.kind === 'task' && it.taskId != null);
             const body = (
               <div className="flex items-start gap-2.5 min-w-0 flex-1">
                 <span className={clsx('w-2.5 h-2.5 rounded-full mt-1 shrink-0', TYPE_CLS[it.type] ?? 'bg-slate-400')} />
@@ -192,7 +194,7 @@ function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; i
                 <span className="flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                   {editable && <>
                     <button onClick={() => toggleDone(it)} className="p-1 rounded text-ink-subtle hover:text-emerald-600 hover:bg-emerald-50" title={it.done ? '완료 해제' : '완료 처리'}><Check className="w-3.5 h-3.5" /></button>
-                    <button onClick={() => onEdit(it)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                    {it.kind === 'event' && <button onClick={() => onEdit(it)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>}
                     <button onClick={() => del(it)} className="p-1 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
                   </>}
                   {href && !editable && (it.kind === 'milestone' ? <GanttChartSquare className="w-3.5 h-3.5 text-ink-subtle mt-0.5" /> : <ArrowRight className="w-3.5 h-3.5 text-ink-subtle mt-0.5" />)}

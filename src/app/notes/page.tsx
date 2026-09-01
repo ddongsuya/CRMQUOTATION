@@ -8,7 +8,8 @@ import Icon, { type IconName } from '@/components/Icon';
 import { toast } from '@/lib/toast';
 
 type Note = { id: number; type: string; title: string | null; body: string; occurredAt: string; contact: { company: { id: number; name: string }; name: string } | null; deal: { id: number; title: string } | null };
-type Ev = { id: number; title: string; type: string; startAt: string; done: boolean; dealId: number | null; dealTitle: string | null };
+type Task = { id: number; title: string; memo: string | null; dueAt: string | null; done: boolean; companyId: number | null; companyName: string | null; dealId: number | null; dealTitle: string | null };
+type TodayEv = { id: number; title: string; type: string; location: string | null; dealId: number | null; dealTitle: string | null; companyId: number | null; companyName: string | null };
 
 const TYPE: Record<string, { label: string; cls: string; dot: string }> = {
   MEETING: { label: '미팅', cls: 'bg-brand-100 text-brand-700', dot: 'bg-brand-500' },
@@ -34,24 +35,41 @@ function urgency(startAt: string): { key: string; label: string; cls: string; or
 
 export default function NotebookPage() {
   const [notes, setNotes] = useState<Note[] | null>(null);
-  const [events, setEvents] = useState<Ev[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [todayEvents, setTodayEvents] = useState<TodayEv[]>([]);
   const [weekDone, setWeekDone] = useState(0);
   const [f, setF] = useState({ type: 'MEMO', title: '', body: '', occurredAt: today() });
   const [adding, setAdding] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [quickTask, setQuickTask] = useState('');
+  const [quickDue, setQuickDue] = useState(today());
 
   const loadNotes = () => fetch('/api/crm/notes').then(r => r.json()).then(d => setNotes(d.notes ?? [])).catch(() => setNotes([]));
-  const loadEvents = () => fetch('/api/crm/notebook').then(r => r.json()).then(d => { setEvents(d.events ?? []); setWeekDone(d.weekDone ?? 0); }).catch(() => {});
-  useEffect(() => { loadNotes(); loadEvents(); }, []);
+  const loadTasks = () => fetch('/api/crm/notebook').then(r => r.json()).then(d => { setTasks(d.tasks ?? []); setTodayEvents(d.todayEvents ?? []); setWeekDone(d.weekDone ?? 0); }).catch(() => {});
+  useEffect(() => { loadNotes(); loadTasks(); }, []);
 
-  const todayFocus = useMemo(() => events.filter(e => dayKey(new Date(e.startAt)) === today()), [events]);
-  const focusDone = todayFocus.filter(e => e.done).length;
-  const followups = useMemo(() => events.filter(e => !e.done && dayKey(new Date(e.startAt)) !== today()).sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt)).slice(0, 8), [events]);
+  // 오늘의 포커스 = 기한이 오늘인 할 일 (완료 포함 — 진행률 표시)
+  const todayFocus = useMemo(() => tasks.filter(t => t.dueAt && dayKey(new Date(t.dueAt)) === today()), [tasks]);
+  const focusDone = todayFocus.filter(t => t.done).length;
+  // 팔로업 큐 = 오늘이 아닌 미완료 할 일 (지연 포함, 기한 없는 것은 뒤에)
+  const followups = useMemo(() => tasks
+    .filter(t => !t.done && !(t.dueAt && dayKey(new Date(t.dueAt)) === today()))
+    .sort((a, b) => (a.dueAt ? +new Date(a.dueAt) : Infinity) - (b.dueAt ? +new Date(b.dueAt) : Infinity))
+    .slice(0, 10), [tasks]);
 
-  const toggle = async (e: Ev) => {
-    setEvents(evs => evs.map(x => x.id === e.id ? { ...x, done: !x.done } : x));
-    await fetch(`/api/crm/events/${e.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !e.done }) }).catch(() => {});
-    loadEvents();
+  const toggle = async (t: Task) => {
+    setTasks(ts => ts.map(x => x.id === t.id ? { ...x, done: !x.done } : x));
+    await fetch(`/api/crm/tasks/${t.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !t.done }) }).catch(() => {});
+    loadTasks();
+  };
+  const delTask = async (id: number) => {
+    const res = await fetch(`/api/crm/tasks/${id}`, { method: 'DELETE' });
+    if (res.ok) loadTasks(); else toast.error('삭제 실패');
+  };
+  const addTask = async () => {
+    if (!quickTask.trim()) return;
+    const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ title: quickTask, dueAt: quickDue || null }) });
+    if (res.ok) { setQuickTask(''); loadTasks(); } else toast.error('추가 실패');
   };
   const add = async () => {
     if (!f.body.trim()) { toast.error('내용을 입력하세요.'); return; }
@@ -77,38 +95,67 @@ export default function NotebookPage() {
       <div className="grid lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] gap-4">
         {/* 좌 */}
         <div className="space-y-4 min-w-0">
-          {/* 오늘의 포커스 */}
+          {/* 오늘의 포커스 — 기한이 오늘인 할 일 */}
           <section className="card pt-5 px-[22px] pb-5">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[22px] font-bold text-ink tracking-tight">오늘의 포커스</h2>
+              <h2 className="text-[22px] font-bold text-ink tracking-tight">오늘의 포커스 <span className="text-[13px] font-normal text-ink-subtle">할 일</span></h2>
               <span className="text-[13px] text-ink-subtle tabular-nums">{focusDone}/{todayFocus.length} 완료</span>
             </div>
             <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden mb-3">
               <div className="h-full bg-brand-500 rounded-full transition-all" style={{ width: `${todayFocus.length ? (focusDone / todayFocus.length) * 100 : 0}%` }} />
             </div>
-            {todayFocus.length === 0 ? <div className="py-4 text-center text-xs text-ink-subtle">오늘 예정된 일정이 없습니다.</div> : (
+            {/* 빠른 할 일 추가 */}
+            <div className="flex gap-1.5 mb-3">
+              <input className="input text-sm flex-1" placeholder="할 일 추가 (예: 아이큐어 번역의뢰서 영문본 재요청)" value={quickTask}
+                onChange={e => setQuickTask(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addTask(); }} />
+              <input type="date" className="input text-sm w-auto" title="기한" value={quickDue} onChange={e => setQuickDue(e.target.value)} />
+              <button onClick={addTask} className="btn-primary text-sm shrink-0"><Plus className="w-4 h-4" /></button>
+            </div>
+            {todayFocus.length === 0 ? <div className="py-3 text-center text-xs text-ink-subtle">오늘 기한인 할 일이 없습니다.</div> : (
               <ul className="space-y-1.5">
-                {todayFocus.map(e => (
-                  <li key={e.id} className="flex items-center gap-2.5">
-                    <button onClick={() => toggle(e)} className={clsx('w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', e.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{e.done && <Check className="w-3 h-3" />}</button>
-                    <span className={clsx('flex-1 text-sm min-w-0 truncate', e.done ? 'line-through text-ink-subtle' : 'text-ink')}>{e.title}</span>
-                    {e.dealId && <Link href={`/deals/${e.dealId}`} className="text-[11px] text-ink-subtle hover:text-brand-600 truncate max-w-[120px]">{e.dealTitle}</Link>}
+                {todayFocus.map(t => (
+                  <li key={t.id} className="flex items-center gap-2.5 group">
+                    <button onClick={() => toggle(t)} className={clsx('w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Check className="w-3 h-3" />}</button>
+                    <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
+                    {(t.dealId || t.companyId) && (
+                      <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-[11px] text-ink-subtle hover:text-brand-600 truncate max-w-[130px]">{t.dealTitle ?? t.companyName}</Link>
+                    )}
+                    <button onClick={() => delTask(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
                   </li>
                 ))}
               </ul>
             )}
+            {/* 오늘 일정(약속) — 참고 표시 */}
+            {todayEvents.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-slate-100">
+                <div className="text-[11px] font-semibold text-ink-subtle mb-1.5">오늘 일정 (약속)</div>
+                <ul className="space-y-1">
+                  {todayEvents.map(e => (
+                    <li key={e.id}>
+                      <Link href={e.dealId ? `/deals/${e.dealId}` : e.companyId ? `/customers/${e.companyId}` : '/calendar'} className="flex items-center gap-2 text-[13px] text-ink-muted hover:text-brand-600">
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-500 shrink-0" />
+                        <span className="truncate">{e.title}</span>
+                        {(e.companyName || e.location) && <span className="text-[11px] text-ink-subtle truncate">{[e.companyName, e.location].filter(Boolean).join(' · ')}</span>}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </section>
 
-          {/* 팔로업 큐 */}
+          {/* 팔로업 큐 — 오늘이 아닌 미완료 할 일 (지연 포함) */}
           <section className="card pt-5 px-[22px] pb-5">
-            <h2 className="text-[22px] font-bold text-ink tracking-tight mb-3">팔로업 큐</h2>
-            {followups.length === 0 ? <div className="py-4 text-center text-xs text-ink-subtle">예정된 팔로업이 없습니다.</div> : (
+            <h2 className="text-[22px] font-bold text-ink tracking-tight mb-3">팔로업 큐 <span className="text-[13px] font-normal text-ink-subtle">할 일</span></h2>
+            {followups.length === 0 ? <div className="py-4 text-center text-xs text-ink-subtle">예정된 팔로업이 없습니다. 위 입력창에서 할 일을 추가해 보세요.</div> : (
               <ul className="divide-y divide-slate-100">
-                {followups.map(e => { const u = urgency(e.startAt); return (
-                  <li key={e.id} className="flex items-center gap-2.5 py-2.5">
+                {followups.map(t => { const u = t.dueAt ? urgency(t.dueAt) : { label: '기한 없음', cls: 'bg-slate-100 text-ink-subtle' }; return (
+                  <li key={t.id} className="flex items-center gap-2.5 py-2.5 group">
+                    <button onClick={() => toggle(t)} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
                     <span className={clsx('pill shrink-0', u.cls)}>{u.label}</span>
-                    <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{e.title}</span><span className="block text-[11px] text-ink-subtle">{new Date(e.startAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}{e.dealTitle ? ` · ${e.dealTitle}` : ''}</span></span>
-                    {e.dealId && <Link href={`/deals/${e.dealId}`} className="text-ink-subtle hover:text-brand-600"><Icon name="arrow-right" className="w-4 h-4" /></Link>}
+                    <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{t.title}</span><span className="block text-[11px] text-ink-subtle">{t.dueAt ? new Date(t.dueAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' }) : ''}{(t.dealTitle || t.companyName) ? `${t.dueAt ? ' · ' : ''}${t.dealTitle ?? t.companyName}` : ''}</span></span>
+                    <button onClick={() => delTask(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+                    {(t.dealId || t.companyId) && <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-ink-subtle hover:text-brand-600"><Icon name="arrow-right" className="w-4 h-4" /></Link>}
                   </li>
                 ); })}
               </ul>
@@ -156,7 +203,7 @@ export default function NotebookPage() {
             <div className="text-[13px] text-white/60 mb-2">이번 주 처리</div>
             <div className="text-[34px] font-bold tabular-nums tracking-tight leading-none">{weekDone}<span className="text-base font-normal text-white/60 ml-1.5">건 완료</span></div>
             <div className="mt-3 flex gap-4 text-[12px] text-white/60">
-              <span>팔로업 {events.filter(e => !e.done).length}</span>
+              <span>미완료 할 일 {tasks.filter(t => !t.done).length}</span>
               <span>메모 {notes?.length ?? 0}</span>
             </div>
           </div>

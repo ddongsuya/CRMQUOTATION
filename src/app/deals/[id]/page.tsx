@@ -89,12 +89,52 @@ export default function DealDetailPage() {
         </div>
       </div>
 
+      <SectionTasks dealId={deal.id} />
       <SectionQuotes deal={deal} />
       <SectionContract deal={deal} reload={load} />
       <SectionStudies deal={deal} reload={load} />
       <SectionChangeQuotes deal={deal} reload={load} />
       <SectionNotes deal={deal} reload={load} />
     </div>
+  );
+}
+
+// ─── 할 일 — 이 안건의 액션 아이템 (일정과 구분) ───
+function SectionTasks({ dealId }: { dealId: number }) {
+  type T = { id: number; title: string; dueAt: string | null; done: boolean };
+  const [tasks, setTasks] = useState<T[]>([]);
+  const [title, setTitle] = useState('');
+  const [dueAt, setDueAt] = useState('');
+  const load = useCallback(() => { fetch(`/api/crm/tasks?dealId=${dealId}`).then(r => r.json()).then(d => setTasks(d.tasks ?? [])).catch(() => {}); }, [dealId]);
+  useEffect(() => { load(); }, [load]);
+  const add = async () => {
+    if (!title.trim()) return;
+    const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ title, dueAt: dueAt || null, dealId }) });
+    if (res.ok) { setTitle(''); load(); } else toast.error('추가 실패');
+  };
+  const toggle = async (t: T) => { await fetch(`/api/crm/tasks/${t.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !t.done }) }); load(); };
+  const del = async (id: number) => { await fetch(`/api/crm/tasks/${id}`, { method: 'DELETE' }); load(); };
+  const open = tasks.filter(t => !t.done);
+  return (
+    <Card title={`할 일 ${open.length}건`}>
+      <div className="flex gap-1.5 mb-2">
+        <input className="input text-sm flex-1" placeholder="할 일 추가…" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
+        <input type="date" className="input text-sm w-auto" title="기한(선택)" value={dueAt} onChange={e => setDueAt(e.target.value)} />
+        <button onClick={add} className="btn-primary text-sm shrink-0"><Icon name="plus" className="w-4 h-4" /></button>
+      </div>
+      {tasks.length === 0 ? <div className="text-xs text-ink-subtle py-1">할 일 없음.</div> : (
+        <ul className="space-y-1">
+          {tasks.map(t => (
+            <li key={t.id} className={clsx('flex items-center gap-2 group', t.done && 'opacity-50')}>
+              <button onClick={() => toggle(t)} className={clsx('w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Icon name="check" className="w-2.5 h-2.5" />}</button>
+              <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
+              {t.dueAt && <span className="text-[11px] text-ink-subtle tabular-nums shrink-0">{t.dueAt.slice(5, 10).replace('-', '/')}</span>}
+              <button onClick={() => del(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Card>
   );
 }
 

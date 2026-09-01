@@ -36,6 +36,7 @@ model User {
   deals         Deal[]
   notes         Note[]
   events        CalendarEvent[]
+  tasks         Task[]
   dailyReports  DailyReport[]
   prospects     Prospect[]
 
@@ -137,6 +138,7 @@ model Company {
   memo        String?
   contacts    Contact[]
   quotes      Quote[]
+  tasks       Task[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -156,6 +158,7 @@ model Contact {
   notes     Note[]
   events    CalendarEvent[]
   quotes    Quote[]
+  tasks     Task[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -184,6 +187,7 @@ model Deal {
   changeQuotes         ChangeQuote[]
   notes                Note[]
   events               CalendarEvent[]
+  tasks                Task[]
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
@@ -426,6 +430,31 @@ model Note {
   @@index([ownerId])
   @@index([contactId])
   @@index([dealId])
+}
+
+// 할 일(To-do) — 일정(약속)과 구분되는 액션 아이템. 완료 체크가 본질, 기한은 선택.
+// 고객사/의뢰자/안건에 연결해 "기업별 to-do"로 쓰고, 개인 기록의 포커스·팔로업 큐의 데이터원.
+model Task {
+  id        Int       @id @default(autoincrement())
+  owner     User      @relation(fields: [ownerId], references: [id])
+  ownerId   Int
+  company   Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  companyId Int?
+  contact   Contact?  @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  contactId Int?
+  deal      Deal?     @relation(fields: [dealId], references: [id], onDelete: SetNull)
+  dealId    Int?
+  title     String
+  memo      String?
+  dueAt     DateTime?                          // 기한 (선택 — 없으면 기한 없는 할 일)
+  done      Boolean   @default(false)
+  doneAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([ownerId])
+  @@index([companyId])
+  @@index([dueAt])
 }
 
 model CalendarEvent {

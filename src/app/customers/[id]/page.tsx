@@ -19,6 +19,7 @@ type Deal = {
   quotes: Quote[]; contract: Contract | null; studies: Study[]; notes: Note[]; events: EventT[];
 };
 type Contact = { id: number; name: string; email: string | null; phone: string | null; position: string | null; memo: string | null; deals: Deal[] };
+type TaskT = { id: number; title: string; memo: string | null; dueAt: string | null; done: boolean; contact: { id: number; name: string } | null; deal: { id: number; title: string } | null };
 type Company = { id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null; isNewClient: boolean; memo: string | null; contacts: Contact[] };
 
 type DealMeta = { dealId: number; dealTitle: string; modality: string | null; stage: string };
@@ -67,7 +68,7 @@ function dday(s: string | null | undefined): { label: string; cls: string } | nu
   return { label: `D-${days}`, cls: days <= 7 ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-ink-muted' };
 }
 
-const TABS = ['개요', '딜', '연락처', '계약', '시험', '노트', '일정'] as const;
+const TABS = ['개요', '할 일', '딜', '연락처', '계약', '시험', '노트', '일정'] as const;
 type Tab = (typeof TABS)[number];
 
 export default function CompanyDetailPage() {
@@ -78,9 +79,11 @@ export default function CompanyDetailPage() {
   const [editCompany, setEditCompany] = useState(false);
   const [contactModal, setContactModal] = useState<{ contact: Contact | null } | null>(null);
   const [dealModal, setDealModal] = useState<{ contactId: number } | null>(null);
+  const [tasks, setTasks] = useState<TaskT[]>([]);
 
   const load = useCallback(() => {
     fetch(`/api/crm/companies/${id}`).then(r => r.json()).then(d => { setCompany(d.company ?? null); setAgg(d.agg ?? null); }).catch(() => {});
+    fetch(`/api/crm/tasks?companyId=${id}`).then(r => r.json()).then(d => setTasks(d.tasks ?? [])).catch(() => {});
   }, [id]);
   useEffect(() => { load(); }, [load]);
 
@@ -92,9 +95,9 @@ export default function CompanyDetailPage() {
 
   const firstContactId = company?.contacts[0]?.id;
   const tabCount: Record<Tab, number | null> = useMemo(() => ({
-    개요: null, 딜: agg?.deals.length ?? 0, 연락처: company?.contacts.length ?? 0,
+    개요: null, '할 일': tasks.filter(t => !t.done).length, 딜: agg?.deals.length ?? 0, 연락처: company?.contacts.length ?? 0,
     계약: agg?.contracts.length ?? 0, 시험: agg?.studies.length ?? 0, 노트: agg?.notes.length ?? 0, 일정: agg?.events.filter(e => !e.done).length ?? 0,
-  }), [agg, company]);
+  }), [agg, company, tasks]);
 
   if (!company) return <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
 
@@ -153,6 +156,7 @@ export default function CompanyDetailPage() {
 
       {/* 탭 내용 */}
       {tab === '개요' && <OverviewTab agg={agg} company={company} />}
+      {tab === '할 일' && <TasksTab companyId={company.id} tasks={tasks} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} />}
       {tab === '딜' && <DealsTab agg={agg} contacts={company.contacts} onAddDeal={cid => setDealModal({ contactId: cid })} />}
       {tab === '연락처' && (
         <ContactsTab company={company} quotes={agg?.quotes ?? []} onAdd={() => setContactModal({ contact: null })} onEdit={c => setContactModal({ contact: c })} onDel={delContact} onAddDeal={cid => setDealModal({ contactId: cid })} />
@@ -614,6 +618,71 @@ function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: De
 }
 
 // ─── 일정 ───
+// ─── 할 일 (기업별 to-do — 일정(약속)과 구분되는 액션 아이템) ───
+function TasksTab({ companyId, tasks, deals, contacts, reload }: { companyId: number; tasks: TaskT[]; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void }) {
+  const [f, setF] = useState({ title: '', dueAt: '', target: '' });
+  const [busy, setBusy] = useState(false);
+  const add = async () => {
+    if (!f.title.trim()) { toast.error('할 일 내용을 입력하세요.'); return; }
+    setBusy(true);
+    const tgt = parseTarget(f.target);
+    const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ title: f.title, dueAt: f.dueAt || null, companyId, ...tgt }) });
+    setBusy(false);
+    if (res.ok) { toast.success('할 일 추가됨'); setF({ title: '', dueAt: '', target: '' }); reload(); } else toast.error('추가 실패');
+  };
+  const patch = async (id: number, data: Record<string, unknown>) => {
+    const res = await fetch(`/api/crm/tasks/${id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) });
+    if (res.ok) reload(); else toast.error('수정 실패');
+  };
+  const del = async (id: number) => { const res = await fetch(`/api/crm/tasks/${id}`, { method: 'DELETE' }); if (res.ok) reload(); else toast.error('삭제 실패'); };
+  const open = tasks.filter(t => !t.done);
+  const doneList = tasks.filter(t => t.done);
+  const row = (t: TaskT) => {
+    const dd = t.dueAt ? dday(t.dueAt) : null;
+    return (
+      <li key={t.id} className={clsx('flex items-center gap-2.5 py-2 group', t.done && 'opacity-50')}>
+        <button onClick={() => patch(t.id, { done: !t.done })}
+          className={clsx('w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>
+          {t.done && <Icon name="check" className="w-3 h-3" />}
+        </button>
+        <input className={clsx('flex-1 min-w-0 bg-transparent outline-none text-sm text-ink rounded px-1 -mx-1 focus:bg-slate-50', t.done && 'line-through text-ink-subtle')}
+          defaultValue={t.title} onBlur={e => e.target.value.trim() && e.target.value !== t.title && patch(t.id, { title: e.target.value })} />
+        {(t.deal || t.contact) && <span className="text-[11px] text-ink-subtle truncate max-w-[140px] shrink-0">{t.deal?.title ?? t.contact?.name}</span>}
+        <input type="date" className="input text-xs w-auto shrink-0 py-1" title="기한" defaultValue={t.dueAt ? t.dueAt.slice(0, 10) : ''}
+          onBlur={e => e.target.value !== (t.dueAt ? t.dueAt.slice(0, 10) : '') && patch(t.id, { dueAt: e.target.value || null })} />
+        {!t.done && dd && <span className={clsx('pill shrink-0', dd.cls)}>{dd.label}</span>}
+        <button onClick={() => del(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 shrink-0"><Trash2 className="w-3.5 h-3.5" /></button>
+      </li>
+    );
+  };
+  return (
+    <SectionCard title="할 일" count={open.length}>
+      <div className="flex flex-wrap gap-1.5 mb-3">
+        <input className="input text-sm flex-1 min-w-[180px]" placeholder="할 일 추가 (예: 번역의뢰서 영문본 재요청)" value={f.title}
+          onChange={e => setF(s => ({ ...s, title: e.target.value }))} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
+        <input type="date" className="input text-sm w-auto" title="기한(선택)" value={f.dueAt} onChange={e => setF(s => ({ ...s, dueAt: e.target.value }))} />
+        <select className="input text-sm w-auto max-w-[160px]" value={f.target} onChange={e => setF(s => ({ ...s, target: e.target.value }))}>
+          <option value="">대상(선택)…</option>
+          {deals.length > 0 && <optgroup label="안건">{deals.map(d => <option key={`d${d.id}`} value={`d:${d.id}`}>{d.title}</option>)}</optgroup>}
+          {contacts.length > 0 && <optgroup label="의뢰자">{contacts.map(c => <option key={`c${c.id}`} value={`c:${c.id}`}>{c.name}</option>)}</optgroup>}
+        </select>
+        <button onClick={add} disabled={busy} className="btn-primary text-sm shrink-0">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Icon name="plus" className="w-4 h-4" />} 추가</button>
+      </div>
+      {open.length === 0 && doneList.length === 0 ? <Empty>등록된 할 일이 없습니다. 위 입력창에서 바로 추가하세요.</Empty> : (
+        <>
+          <ul className="divide-y divide-slate-100">{open.map(row)}</ul>
+          {doneList.length > 0 && (
+            <details className="mt-3">
+              <summary className="text-[12px] text-ink-subtle cursor-pointer select-none">완료 {doneList.length}건 보기</summary>
+              <ul className="divide-y divide-slate-100 mt-1">{doneList.map(row)}</ul>
+            </details>
+          )}
+        </>
+      )}
+    </SectionCard>
+  );
+}
+
 const EMPTY_EVENT_FORM = { target: '', title: '', startAt: '', type: 'MEETING', location: '', attendeesClient: '', attendeesInternal: '', requests: '' };
 function ScheduleTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void }) {
   const [open, setOpen] = useState(false);

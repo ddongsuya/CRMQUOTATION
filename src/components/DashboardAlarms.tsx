@@ -7,7 +7,7 @@ import { Bell, AlertTriangle, CalendarClock, Loader2 } from 'lucide-react';
 
 type Item = { date: string; kind: string; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; quoteId?: number; contact?: string; eventId?: number; done?: boolean };
 
-const TYPE_DOT: Record<string, string> = { MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]' };
+const TYPE_DOT: Record<string, string> = { MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]', TASK: 'bg-teal-500' };
 // D-day 계산 — '오늘'은 로컬 날짜 기준 (UTC 기준이면 오전 9시 전까지 하루 밀림)
 const localYmd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const dayDiff = (d: string, now: Date) => Math.round((new Date(d.slice(0, 10)).getTime() - new Date(localYmd(now)).getTime()) / 86400_000);
