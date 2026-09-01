@@ -58,7 +58,7 @@ export async function GET() {
     orderBy: { updatedAt: 'desc' },
     select: {
       id: true, quoteNumber: true, projectName: true, customerCompany: true,
-      studyType: true, modality: true, status: true, grandTotal: true, currency: true, exchangeRate: true,
+      studyType: true, modality: true, status: true, grandTotal: true, totalAfterDiscount: true, currency: true, exchangeRate: true,
       issuedAt: true, updatedAt: true, createdAt: true, supersededAt: true, revisedFromId: true,
       _count: { select: { items: true } },
     },

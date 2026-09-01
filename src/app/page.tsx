@@ -19,7 +19,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   const name = session?.user?.name ?? '데모 사용자';  // DEMO(임시): 로그인 OFF
 
-  let quotes: Array<{ id: number; quoteNumber: string; customerCompany: string | null; modality: string; status: string; grandTotal: number | null }> = [];
+  let quotes: Array<{ id: number; quoteNumber: string; customerCompany: string | null; modality: string; status: string; grandTotal: number | null; totalAfterDiscount: number | null }> = [];
   let kpi = { thisMonth: 0, inProgress: 0, wonAmt: 0, wonRate: 0, runningStudies: 0, quoteDelta: 0, wonDelta: 0 };
   let dueStudies: { id: number; name: string; company: string; dueAt: string; duration: string; dealId: number }[] = [];
   let monthly: { label: string; amount: number }[] = [];
@@ -29,11 +29,14 @@ export default async function Home() {
     followups = (await getFollowups({ kind: 'user', userId: await currentUserId() }, new Date(), 14)) as Followup[];
     // 진행 중 견적(작성·발행·발송) — 좌측 리스트
     quotes = await prisma.quote.findMany({
-      where: { status: { in: ['DRAFT', 'ISSUED', 'SENT'] } },
+      where: { status: { in: ['DRAFT', 'ISSUED', 'SENT'] }, supersededAt: null },
       orderBy: { createdAt: 'desc' }, take: 5,
-      select: { id: true, quoteNumber: true, customerCompany: true, modality: true, status: true, grandTotal: true },
+      select: { id: true, quoteNumber: true, customerCompany: true, modality: true, status: true, grandTotal: true, totalAfterDiscount: true },
     });
-    const all = await prisma.quote.findMany({ select: { status: true, grandTotal: true, createdAt: true } });
+    // 집계는 현재 진행 중(최신) 견적만 — 변경견적 대체본 제외. 금액은 공급가(VAT 별도) 기준.
+    const all = await prisma.quote.findMany({ where: { supersededAt: null }, select: { status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true } });
+    const supply = (q: { totalAfterDiscount: number | null; grandTotal: number | null }) =>
+      q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0);
     const now = new Date();
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
     const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
@@ -43,7 +46,7 @@ export default async function Home() {
     kpi = {
       thisMonth: thisMonthN,
       inProgress: all.filter(q => ['DRAFT', 'ISSUED', 'SENT'].includes(q.status)).length,
-      wonAmt: won.reduce((s, q) => s + (q.grandTotal ?? 0), 0),
+      wonAmt: won.reduce((s, q) => s + supply(q), 0),
       wonRate: all.length ? Math.round(won.length / all.length * 100) : 0,
       runningStudies: await prisma.study.count({ where: { reportDraftIssuedAt: null } }),
       quoteDelta: thisMonthN - lastMonthN,
@@ -67,7 +70,7 @@ export default async function Home() {
     // 월별 수주 추이 (최근 6개월 ACCEPTED 합)
     const buckets: { y: number; m: number; amount: number }[] = [];
     for (let i = 5; i >= 0; i--) { const d = new Date(now.getFullYear(), now.getMonth() - i, 1); buckets.push({ y: d.getFullYear(), m: d.getMonth(), amount: 0 }); }
-    for (const q of won) { const b = buckets.find(x => x.y === q.createdAt.getFullYear() && x.m === q.createdAt.getMonth()); if (b) b.amount += q.grandTotal ?? 0; }
+    for (const q of won) { const b = buckets.find(x => x.y === q.createdAt.getFullYear() && x.m === q.createdAt.getMonth()); if (b) b.amount += supply(q); }
     monthly = buckets.map(b => ({ label: `${b.m + 1}월`, amount: b.amount }));
 
     // 최근 활동 (견적·계약·노트 통합 타임라인)
@@ -98,7 +101,7 @@ export default async function Home() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <StatCard label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" delta={kpi.quoteDelta} note="지난달 대비" />
         <StatCard label="진행 중" value={`${kpi.inProgress}`} unit="건" note="작성·발행·발송" />
-        <StatCard label="수주 금액" value={fmtM(kpi.wonAmt)} note={`수주율 ${kpi.wonRate}%`} invert />
+        <StatCard label="수주 금액" value={fmtM(kpi.wonAmt)} note={`수주율 ${kpi.wonRate}% · VAT 별도`} invert />
         <StatCard label="진행 시험" value={`${kpi.runningStudies}`} unit="건" note="보고서안 발행 전" />
       </div>
 
@@ -135,7 +138,7 @@ export default async function Home() {
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-[11px] py-1 text-[12px] font-medium text-ink-muted flex-shrink-0">
                         <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: st.color }} />{st.label}
                       </span>
-                      <span className="text-[20px] font-bold text-ink tabular-nums text-right w-[92px] flex-shrink-0">{fmtM(q.grandTotal ?? 0)}</span>
+                      <span className="text-right w-[92px] flex-shrink-0"><span className="text-[20px] font-bold text-ink tabular-nums">{fmtM(q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0))}</span><span className="block text-[9px] text-ink-subtle leading-none">VAT 별도</span></span>
                     </Link>
                   </li>
                 );
@@ -176,7 +179,7 @@ export default async function Home() {
         <section className="rounded-[12px] bg-slate-900 pt-[22px] px-6 pb-5 text-white lg:col-span-3">
           <div className="flex items-baseline gap-2 mb-5">
             <h2 className="text-[22px] font-bold tracking-tight">월별 수주 추이</h2>
-            <span className="text-[13px] font-normal text-white/50">최근 6개월 · 단위 ₩M</span>
+            <span className="text-[13px] font-normal text-white/50">최근 6개월 · 단위 ₩M · VAT 별도</span>
           </div>
           <MonthlyChart data={monthly} />
         </section>

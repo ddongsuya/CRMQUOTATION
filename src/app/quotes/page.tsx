@@ -25,6 +25,7 @@ type QuoteRow = {
   modality: string;
   status: string;
   grandTotal: number | null;
+  totalAfterDiscount: number | null;
   currency: string;
   exchangeRate: number | null;
   issuedAt: string | null;
@@ -37,15 +38,18 @@ type QuoteRow = {
 const FILTERS: [string, string][] = [['ALL', '전체'], ['DRAFT', '작성중'], ['ISSUED', '발행'], ['SENT', '발송'], ['ACCEPTED', '수주'], ['REJECTED', '반려']];
 const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : (n > 0 ? `₩${n.toLocaleString()}` : '₩0');
 /**
- * 목록 금액 표시. 금액은 DB에 원화로 저장되므로, USD 견적은 저장 당시 환율로 나눠 달러로 표시.
- * (예전엔 원화 숫자에 $만 붙여 ~1,400배로 보였다.)
+ * 목록 금액 표시 — 공급가(VAT 별도) 기준. 금액은 DB에 원화로 저장되므로,
+ * USD 견적은 저장 당시 환율로 나눠 달러로 표시. 구 데이터는 총액/1.1 역산.
  */
+const supplyOf = (q: QuoteRow): number | null =>
+  q.totalAfterDiscount ?? (q.grandTotal != null ? Math.round(q.grandTotal / 1.1) : null);
 const fmtAmount = (q: QuoteRow): string => {
-  if (q.grandTotal == null) return '—';
+  const n = supplyOf(q);
+  if (n == null) return '—';
   if (q.currency === 'USD' && q.exchangeRate && q.exchangeRate > 0) {
-    return `$${Math.round(q.grandTotal / q.exchangeRate).toLocaleString()}`;
+    return `$${Math.round(n / q.exchangeRate).toLocaleString()}`;
   }
-  return fmtM(q.grandTotal);
+  return fmtM(n);
 };
 
 export default function QuotesListPage() {
@@ -74,14 +78,14 @@ export default function QuotesListPage() {
   };
 
   const stats = useMemo(() => {
-    const list = quotes ?? [];
+    const list = (quotes ?? []).filter(x => !x.supersededAt);   // 통계는 현재 진행 중(최신) 견적만
     const won = list.filter(x => x.status === 'ACCEPTED');
     return {
       total: list.length,
       inProgress: list.filter(x => ['DRAFT', 'ISSUED', 'SENT'].includes(x.status)).length,
       won: won.length,
       wonRate: list.length ? Math.round(won.length / list.length * 100) : 0,
-      wonAmt: won.reduce((s, x) => s + (x.grandTotal ?? 0), 0),
+      wonAmt: won.reduce((s, x) => s + (supplyOf(x) ?? 0), 0),
     };
   }, [quotes]);
 
@@ -103,7 +107,7 @@ export default function QuotesListPage() {
         <StatCard label="전체 견적" value={`${stats.total}`} unit="건" note="누적" />
         <StatCard label="진행 중" value={`${stats.inProgress}`} unit="건" note="작성·발행·발송" />
         <StatCard label="수주" value={`${stats.won}`} unit="건" note={`수주율 ${stats.wonRate}%`} />
-        <StatCard label="수주 금액" value={fmtM(stats.wonAmt)} note="누적 수주" invert />
+        <StatCard label="수주 금액" value={fmtM(stats.wonAmt)} note="누적 수주 · VAT 별도" invert />
       </div>
 
       {/* 상태 필터칩 */}
@@ -131,7 +135,7 @@ export default function QuotesListPage() {
                 <div className="flex-1 min-w-0">고객사 · 모달리티</div>
                 <div className="w-[84px] flex-shrink-0">상태</div>
                 <div className="w-[84px] flex-shrink-0 text-right">작성일</div>
-                <div className="w-[120px] flex-shrink-0 text-right">금액</div>
+                <div className="w-[120px] flex-shrink-0 text-right">금액 (VAT 별도)</div>
               </div>
               {/* 행 */}
               {filtered.map(qr => (
