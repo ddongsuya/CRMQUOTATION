@@ -22,7 +22,7 @@ type Contact = { id: number; name: string; email: string | null; phone: string |
 type Company = { id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null; isNewClient: boolean; memo: string | null; contacts: Contact[] };
 
 type DealMeta = { dealId: number; dealTitle: string; modality: string | null; stage: string };
-type QuoteRow = { id: number; quoteNumber: string; status: string; grandTotal: number | null; supplyTotal: number; createdAt: string; dealId: number | null; dealTitle: string; modality: string | null; contactId: number | null; contactName?: string | null };
+type QuoteRow = { id: number; quoteNumber: string; status: string; grandTotal: number | null; supplyTotal: number; createdAt: string; dealId: number | null; dealTitle: string; modality: string | null; contactId: number | null; contactName?: string | null; supersededAt?: string | null };
 type Agg = {
   kpi: { quoteCount: number; quoteAmount: number; wonAmount: number; dealCount: number; activeDeals: number; activeStudies: number };
   quotes: QuoteRow[];
@@ -403,6 +403,7 @@ function ContactsTab({ company, quotes, onAdd, onEdit, onDel, onAddDeal }: {
               <Link key={`q-${q.id}`} href={`/quote/print?id=${q.id}`} className="flex items-center gap-2 py-1.5 px-2 -mx-1 rounded-lg hover:bg-slate-50/70">
                 <Receipt className="w-3.5 h-3.5 text-ink-subtle flex-shrink-0" />
                 <span className="font-mono text-[12px] text-brand-600 flex-shrink-0">{q.quoteNumber}</span>
+                {q.supersededAt && <span className="pill bg-slate-200 text-ink-subtle flex-shrink-0">변경 전</span>}
                 <span className="flex-1 min-w-0 text-xs text-ink-subtle truncate">{q.modality ?? ''}</span>
                 <span className="text-sm font-semibold text-ink tabular-nums flex-shrink-0">{q.supplyTotal ? fmtWon(q.supplyTotal) : '—'}</span>
                 <span className="text-[10px] text-ink-subtle flex-shrink-0">VAT 별도</span>
@@ -425,7 +426,7 @@ function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt;
   const [convId, setConvId] = useState<number | null>(null);
   const noContractDeals = deals.filter(d => !(agg?.contracts ?? []).some(c => c.dealId === d.id));
   // 딜 없는 견적(임포트) → 계약 전환 대상
-  const convertible = (agg?.quotes ?? []).filter((q) => !q.dealId && q.status !== 'REJECTED');
+  const convertible = (agg?.quotes ?? []).filter((q) => !q.dealId && q.status !== 'REJECTED' && !q.supersededAt);   // 최신본만 전환 대상
   const convert = async (qid: number) => {
     setConvId(qid);
     const res = await fetch(`/api/crm/quotes/${qid}/to-contract`, { method: 'POST' });

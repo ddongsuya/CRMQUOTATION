@@ -32,6 +32,7 @@ export async function POST(_req: Request, { params }: Ctx) {
   const {
     id: _, items, createdAt: _c, updatedAt: _u, quoteNumber: _q, issuedAt: _i, validUntil: _v, status: _s,
     dealId: _d, sentAt: _sa, reviewedAt: _r, accepted: _a, contractNo: _cn, contractAmount: _ca, trackingNote: _tn,
+    revisedFromId: _rf, supersededAt: _sp,   // 변경견적 체인은 복제본에 승계하지 않는다
     ...rest
   } = src;
   const dup = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
@@ -47,6 +48,6 @@ export async function POST(_req: Request, { params }: Ctx) {
       },
     },
     include: { items: true },
-  }));
+  }), src.userId);
   return NextResponse.json({ quote: dup });
 }

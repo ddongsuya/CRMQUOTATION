@@ -66,6 +66,7 @@ export async function GET(req: Request) {
     where: {
       userId: { in: owners },
       status: { in: ['ISSUED', 'SENT', 'REVIEWED'] },   // 진행 중(수주·반려 전)만
+      supersededAt: null,                                // 변경견적으로 대체된 버전 제외
     },
     select: {
       quoteNumber: true, sentAt: true, validUntil: true, customerCompany: true,

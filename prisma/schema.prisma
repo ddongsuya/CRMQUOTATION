@@ -22,6 +22,7 @@ model User {
   email         String    @unique
   name          String
   role          String    @default("user")   // user / admin / (CRM: MEMBER·TEAM_LEAD·CENTER_LEAD·ADMIN)
+  quoteInitials String?                        // 견적번호 사용자 코드 (예: DL) — YY-MM-{코드}-{발행번호}
   passwordHash  String
   createdAt     DateTime  @default(now())
   quotes        Quote[]
@@ -266,7 +267,14 @@ model ChangeQuote {
 
 model Quote {
   id                  Int        @id @default(autoincrement())
-  quoteNumber         String     @unique           // CK-YYYYMMDD-NNN
+  quoteNumber         String     @unique           // YY-MM-{사용자코드}-{발행번호}(-{변경차수}) · 구형 CK-YYYYMMDD-NNN 병존
+
+  // 변경견적서 체인 — 발행된 견적을 수정하면 원본을 보존하고 -1, -2… 변경본을 새로 만든다.
+  // supersededAt == null 인 것이 현재 진행 중 견적. revisedFrom = 직전 버전.
+  revisedFrom         Quote?     @relation("QuoteRevision", fields: [revisedFromId], references: [id])
+  revisedFromId       Int?
+  revisions           Quote[]    @relation("QuoteRevision")
+  supersededAt        DateTime?
 
   // ownership
   user                User?      @relation(fields: [userId], references: [id])

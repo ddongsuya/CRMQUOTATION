@@ -31,7 +31,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
           deals: {
             orderBy: { updatedAt: 'desc' },
             include: {
-              quotes: { select: { id: true, quoteNumber: true, status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true } },
+              quotes: { select: { id: true, quoteNumber: true, status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true, supersededAt: true } },
               contract: true,
               studies: { orderBy: { createdAt: 'asc' } },
               notes: { orderBy: { occurredAt: 'desc' } },
@@ -59,13 +59,13 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   // 딜 없이 companyId 로만 연결된 견적(엑셀 임포트 견적) — 회사 상세에 함께 노출
   const directRaw = await prisma.quote.findMany({
     where: { companyId: id, id: { notIn: [...dealQuoteIds] } },
-    select: { id: true, quoteNumber: true, status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true, modality: true, projectName: true, contactId: true, customerName: true },
+    select: { id: true, quoteNumber: true, status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true, modality: true, projectName: true, contactId: true, customerName: true, supersededAt: true },
     orderBy: { sentAt: 'desc' },
   });
   // 담당자(의뢰자) 연결 — contactId FK 우선, 없으면(구 데이터) 이름 매칭 폴백
   const contactByName = new Map(company.contacts.map(c => [c.name.trim(), c.id] as const));
   const directQuotes = directRaw.map(q => ({
-    id: q.id, quoteNumber: q.quoteNumber, status: q.status, grandTotal: q.grandTotal, supplyTotal: supply(q), createdAt: q.createdAt,
+    id: q.id, quoteNumber: q.quoteNumber, status: q.status, grandTotal: q.grandTotal, supplyTotal: supply(q), createdAt: q.createdAt, supersededAt: q.supersededAt,
     dealId: null, dealTitle: q.projectName, modality: q.modality,
     contactId: q.contactId ?? (q.customerName ? contactByName.get(q.customerName.trim()) ?? null : null),
     contactName: q.customerName ?? null,
@@ -88,16 +88,18 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
     ...contactEvents,
   ].sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
 
+  // KPI 는 현재 진행 중(최신) 견적만 — 변경견적으로 대체된 버전은 제외 (이중 집계 방지)
+  const activeQuotes = allQuotes.filter(q => !q.supersededAt);
   const kpi = {
-    quoteCount: allQuotes.length,
-    quoteAmount: allQuotes.reduce((s, q) => s + supply(q), 0),
-    wonAmount: allQuotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + supply(q), 0),
+    quoteCount: activeQuotes.length,
+    quoteAmount: activeQuotes.reduce((s, q) => s + supply(q), 0),
+    wonAmount: activeQuotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + supply(q), 0),
     dealCount: flatDeals.length,
     activeDeals: flatDeals.filter(d => d.status === 'ACTIVE').length,
     activeStudies: studies.filter(s => !s.reportDraftIssuedAt).length,
   };
 
-  return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, contactId: d.contactId, quoteCount: d.quotes.length, quoteAmount: d.quotes.reduce((s, q) => s + supply(q), 0), wonAmount: d.quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + supply(q), 0) })), quotes, contracts, studies, notes, events, kpi } });
+  return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, contactId: d.contactId, quoteCount: d.quotes.filter(q => !q.supersededAt).length, quoteAmount: d.quotes.filter(q => !q.supersededAt).reduce((s, q) => s + supply(q), 0), wonAmount: d.quotes.filter(q => q.status === 'ACCEPTED' && !q.supersededAt).reduce((s, q) => s + supply(q), 0) })), quotes, contracts, studies, notes, events, kpi } });
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {

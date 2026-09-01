@@ -20,15 +20,16 @@ export async function GET(req: Request) {
     include: {
       contact: { select: { name: true, company: { select: { id: true, name: true } } } },
       contract: { select: { status: true, signedAt: true, contractNumber: true } },
-      quotes: { select: { id: true, quoteNumber: true, grandTotal: true, totalAfterDiscount: true, status: true, createdAt: true }, orderBy: { createdAt: 'desc' } },
+      quotes: { select: { id: true, quoteNumber: true, grandTotal: true, totalAfterDiscount: true, status: true, createdAt: true, supersededAt: true }, orderBy: { createdAt: 'desc' } },
       studies: { orderBy: { createdAt: 'asc' } },
     },
   });
 
   const projects = rows.map(d => {
-    // 대표 견적 = 수주(ACCEPTED) 우선, 없으면 금액 최대
-    const won = d.quotes.find(q => q.status === 'ACCEPTED');
-    const top = won ?? [...d.quotes].sort((a, b) => (b.grandTotal ?? 0) - (a.grandTotal ?? 0))[0];
+    // 대표 견적 = 현재 진행 중(최신) 중에서 수주(ACCEPTED) 우선, 없으면 금액 최대
+    const activeQs = d.quotes.filter(q => !q.supersededAt);
+    const won = activeQs.find(q => q.status === 'ACCEPTED');
+    const top = won ?? [...activeQs].sort((a, b) => (b.grandTotal ?? 0) - (a.grandTotal ?? 0))[0];
     return {
       id: d.id, title: d.title, modality: d.modality, stage: d.stage, status: d.status,
       companyId: d.contact.company.id, companyName: d.contact.company.name, contactName: d.contact.name,
@@ -49,7 +50,7 @@ export async function GET(req: Request) {
   // 계약 체결(ACCEPTED) 임포트 견적 = 진행 시험(Deal 없이 companyId 직결). 프로젝트로 합류.
   const wonQuotes = await prisma.quote.findMany({
     where: {
-      userId: { in: owners }, status: 'ACCEPTED', dealId: null, companyId: { not: null },
+      userId: { in: owners }, status: 'ACCEPTED', dealId: null, companyId: { not: null }, supersededAt: null,
       ...(companyId ? { companyId: Number(companyId) } : {}),
     },
     select: {

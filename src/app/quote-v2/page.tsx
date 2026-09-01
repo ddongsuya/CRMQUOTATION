@@ -151,6 +151,7 @@ export default function QuoteV2Page() {
       let pj: any = {};
       try { pj = JSON.parse(q.planJson ?? '{}'); } catch { /* noop */ }
       if (q.studyType === 'efficacy' || pj.engine !== 'v2') { toast.error('이 견적은 독성 위저드에서 수정할 수 없습니다.'); return; }
+      if (q.supersededAt) toast.error('이 견적은 변경견적서로 대체된 이전 버전입니다 — 저장하면 이 버전 기준의 새 변경본이 생성됩니다.');
 
       if (pj.modality) setCategory(pj.modality);
       if (pj.standard === 'MFDS' || pj.standard === 'OECD') setStandard(pj.standard);

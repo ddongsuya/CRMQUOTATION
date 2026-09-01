@@ -129,9 +129,9 @@ function DetailPanel({ companyId }: { companyId: number }) {
   const scopedStudies = (agg?.studies ?? []).filter((s: any) => dealIds.has(s.dealId));
   // 담당자 스코프 KPI — 딜 소속 견적뿐 아니라 담당자에게 직접 연결된 견적(Quote.contactId)도 집계 (회사 전체 kpi 와 같은 기준)
   const kpi = scope === 'all' ? (agg?.kpi ?? { wonAmount: 0, quoteAmount: 0, quoteCount: 0, dealCount: 0, activeDeals: 0, activeStudies: 0 }) : {
-    wonAmount: scopedQuotes.filter((q: any) => q.status === 'ACCEPTED').reduce((s: number, q: any) => s + (q.supplyTotal ?? 0), 0),
-    quoteAmount: scopedQuotes.reduce((s: number, q: any) => s + (q.supplyTotal ?? 0), 0),
-    quoteCount: scopedQuotes.length,
+    wonAmount: scopedQuotes.filter((q: any) => q.status === 'ACCEPTED' && !q.supersededAt).reduce((s: number, q: any) => s + (q.supplyTotal ?? 0), 0),
+    quoteAmount: scopedQuotes.filter((q: any) => !q.supersededAt).reduce((s: number, q: any) => s + (q.supplyTotal ?? 0), 0),
+    quoteCount: scopedQuotes.filter((q: any) => !q.supersededAt).length,
     dealCount: scopedDeals.length,
     activeDeals: scopedDeals.filter((d: any) => d.status === 'ACTIVE').length,
     activeStudies: scopedStudies.filter((s: any) => !s.reportDraftIssuedAt).length,
@@ -211,6 +211,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
                 return (
                   <Link key={qq.id} href={`/quote/print?id=${qq.id}`} className="flex items-center gap-2.5 py-2.5 border-t border-[var(--hairline-soft)] first:border-t-0 -mx-1 px-1 rounded hover:bg-slate-100">
                     <span className="font-mono text-[13px] text-brand-600 w-24 flex-shrink-0 truncate">{qq.quoteNumber}</span>
+                    {qq.supersededAt && <span className="pill bg-slate-200 text-ink-subtle flex-shrink-0">변경 전</span>}
                     <span className="flex-1 min-w-0 text-[13px] text-ink-muted truncate">{qq.modality || qq.dealTitle}</span>
                     <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body flex-shrink-0"><span className="w-1.5 h-1.5 rounded-full" style={{ background: st.color }} />{st.label}</span>
                     <span className="text-[15px] font-bold text-ink tabular-nums w-20 text-right flex-shrink-0">{fmtM(qq.supplyTotal ?? 0)}</span>

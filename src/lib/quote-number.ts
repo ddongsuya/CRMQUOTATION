@@ -1,31 +1,63 @@
 import { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
 
-/** 오늘 날짜 접두사 CK-YYYYMMDD- */
-function todayPrefix(now: Date): string {
-  const yyyy = now.getFullYear();
-  const mm = String(now.getMonth() + 1).padStart(2, '0');
-  const dd = String(now.getDate()).padStart(2, '0');
-  return `CK-${yyyy}${mm}${dd}-`;
+/**
+ * 견적번호 체계 (회사 실무 규칙):
+ *   YY-MM-{사용자코드}-{발행번호4자리}         예) 26-07-DL-0122
+ *   변경견적서: 원본 번호 뒤에 -{차수}          예) 26-07-DL-0122-1, -2 …
+ *
+ * · 발행번호는 사용자코드별 통산 일련번호 (월 리셋 없음 — 0122 다음은 0123).
+ * · 발행된(DRAFT 아닌) 견적을 수정하면 덮어쓰지 않고 변경견적서를 새로 만들고
+ *   원본에 supersededAt 을 찍는다. supersededAt == null 이 "현재 진행 중" 견적.
+ * · 구형 번호(CK-YYYYMMDD-NNN)는 그대로 병존 — 변경 시 구형 번호를 base 로 -1 부여.
+ */
+
+const NUM_RE = /^(\d{2})-(\d{2})-([A-Za-z0-9]+)-(\d{4})(?:-(\d+))?$/;
+
+/** 사용자 견적 코드 — User.quoteInitials, 없으면 'CK'. */
+export async function userInitials(userId: number | null | undefined): Promise<string> {
+  if (!userId) return 'CK';
+  const u = await prisma.user.findUnique({ where: { id: userId }, select: { quoteInitials: true } });
+  return (u?.quoteInitials ?? '').trim() || 'CK';
 }
 
-/**
- * 오늘의 다음 견적번호: CK-YYYYMMDD-NNN (NNN = 일련번호, 매일 리셋).
- *
- * 오늘 접두사를 가진 견적 중 **가장 큰 순번 + 1**로 계산한다.
- * (예전엔 개수 count+1 이라, 중간 견적을 삭제하면 이미 쓴 번호를 재발급해 unique 충돌이 났다.)
- * 순번은 3자리 zero-pad 이므로 사전식 내림차순 = 숫자 내림차순.
- */
-export async function nextQuoteNumber(now = new Date()): Promise<string> {
-  const prefix = todayPrefix(now);
-  const last = await prisma.quote.findFirst({
-    where: { quoteNumber: { startsWith: prefix } },
-    orderBy: { quoteNumber: 'desc' },
+/** 번호에서 변경차수 접미사를 뗀 base. 신형 패턴이 아니면 번호 전체가 base (구형 CK-…). */
+export function revisionBase(quoteNumber: string): string {
+  const m = NUM_RE.exec(quoteNumber);
+  return m ? `${m[1]}-${m[2]}-${m[3]}-${m[4]}` : quoteNumber;
+}
+
+/** 다음 신규 견적번호 — 해당 사용자코드의 최대 발행번호 + 1. */
+export async function nextQuoteNumber(userId: number | null | undefined, now = new Date()): Promise<string> {
+  const initials = await userInitials(userId);
+  const yy = String(now.getFullYear() % 100).padStart(2, '0');
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const rows = await prisma.quote.findMany({
+    where: { quoteNumber: { contains: `-${initials}-` } },
     select: { quoteNumber: true },
   });
-  const lastSeq = last ? parseInt(last.quoteNumber.slice(prefix.length), 10) : 0;
-  const next = (Number.isFinite(lastSeq) ? lastSeq : 0) + 1;
-  return prefix + String(next).padStart(3, '0');
+  let maxSeq = 0;
+  for (const r of rows) {
+    const m = NUM_RE.exec(r.quoteNumber);
+    if (m && m[3] === initials) maxSeq = Math.max(maxSeq, parseInt(m[4], 10));
+  }
+  return `${yy}-${mm}-${initials}-${String(maxSeq + 1).padStart(4, '0')}`;
+}
+
+/** 변경견적서 번호 — base 의 기존 최대 차수 + 1 (26-07-DL-0122 → 26-07-DL-0122-1). */
+export async function nextRevisionNumber(baseNumber: string): Promise<string> {
+  const base = revisionBase(baseNumber);
+  const rows = await prisma.quote.findMany({
+    where: { quoteNumber: { startsWith: `${base}-` } },
+    select: { quoteNumber: true },
+  });
+  let maxRev = 0;
+  const revRe = new RegExp(`^${base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}-(\\d+)$`);
+  for (const r of rows) {
+    const m = revRe.exec(r.quoteNumber);
+    if (m) maxRev = Math.max(maxRev, parseInt(m[1], 10));
+  }
+  return `${base}-${maxRev + 1}`;
 }
 
 function isUniqueViolation(e: unknown): boolean {
@@ -34,17 +66,17 @@ function isUniqueViolation(e: unknown): boolean {
 
 /**
  * 견적 생성 시 번호를 발급하고, 동시 저장으로 번호가 겹치면(P2002) 다음 번호로 재시도한다.
- * 두 사용자가 같은 초에 저장해도 한 명이 500으로 실패하지 않게 한다.
- *
  * @param create quoteNumber를 받아 prisma.quote.create(...) 를 수행하는 함수
+ * @param userId 발행자 — 사용자코드(YY-MM-{코드}-NNNN) 결정
  */
 export async function createQuoteWithNumber<T>(
   create: (quoteNumber: string) => Promise<T>,
+  userId?: number | null,
   now = new Date(),
 ): Promise<T> {
   const MAX_ATTEMPTS = 5;
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-    const quoteNumber = await nextQuoteNumber(now);
+    const quoteNumber = await nextQuoteNumber(userId, now);
     try {
       return await create(quoteNumber);
     } catch (e) {

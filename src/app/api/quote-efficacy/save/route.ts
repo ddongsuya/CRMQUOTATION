@@ -10,7 +10,7 @@
 import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
-import { createQuoteWithNumber } from '@/lib/quote-number';
+import { createQuoteWithNumber, nextRevisionNumber } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { computeCost, computeQuote, findModel, totalAnimalsOf, totalDaysOf, type EffState } from '@/app/quote-efficacy/_lib/state';
@@ -26,13 +26,13 @@ export async function POST(req: Request) {
   if (!s.client?.company?.trim()) return NextResponse.json({ error: '고객사를 입력해 주세요.' }, { status: 400 });
 
   // 재저장 대상 검증 — 실제 효력 견적일 때만 허용(독성 견적 변조 차단). 고객사 생성 전에 먼저 거른다.
-  let target: { id: number } | null = null;
+  let target: { id: number; status: string; quoteNumber: string; dealId: number | null } | null = null;
   if (body?.quoteId) {
-    const exists = await prisma.quote.findUnique({ where: { id: body.quoteId }, select: { id: true, studyType: true } });
+    const exists = await prisma.quote.findUnique({ where: { id: body.quoteId }, select: { id: true, studyType: true, status: true, quoteNumber: true, dealId: true } });
     if (exists && exists.studyType !== 'efficacy') {
       return NextResponse.json({ error: '효력시험 견적이 아니어서 덮어쓸 수 없습니다.' }, { status: 409 });
     }
-    target = exists ? { id: exists.id } : null;
+    target = exists ? { id: exists.id, status: exists.status, quoteNumber: exists.quoteNumber, dealId: exists.dealId } : null;
   }
 
   const m = findModel(s.modelId);
@@ -87,20 +87,36 @@ export async function POST(req: Request) {
     grandTotal: q.vat,
   });
 
-  // 같은 세션에서 재저장하면 기존 견적을 갱신(라인 교체), 아니면 신규 발번.
-  // (유형 검사는 위에서 이미 통과 — target 은 효력 견적이거나 존재하지 않음)
-  // 고객사 확보 + 라인 교체/생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백).
+  // 재저장: DRAFT 는 제자리 갱신, 발행된 견적은 변경견적서 생성(원본 보존 + -1, -2 … + supersededAt).
   if (target) {
-    const updated = await prisma.$transaction(async (tx) => {
+    if (target.status === 'DRAFT') {
+      const updated = await prisma.$transaction(async (tx) => {
+        const linked = await ensureCompany(tx);
+        await tx.quoteItem.deleteMany({ where: { quoteId: target.id } });
+        return tx.quote.update({
+          where: { id: target.id },
+          data: { ...buildData(linked), items: { create: itemRows } },
+          select: { id: true, quoteNumber: true },
+        });
+      });
+      return NextResponse.json({ quote: updated });
+    }
+    const revNumber = await nextRevisionNumber(target.quoteNumber);
+    const created = await prisma.$transaction(async (tx) => {
       const linked = await ensureCompany(tx);
-      await tx.quoteItem.deleteMany({ where: { quoteId: target.id } });
-      return tx.quote.update({
-        where: { id: target.id },
-        data: { ...buildData(linked), items: { create: itemRows } },
+      const rev = await tx.quote.create({
+        data: {
+          quoteNumber: revNumber, ...buildData(linked), dealId: body?.dealId ?? target.dealId,
+          revisedFromId: target.id,
+          status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000),
+          items: { create: itemRows },
+        },
         select: { id: true, quoteNumber: true },
       });
+      await tx.quote.update({ where: { id: target.id }, data: { supersededAt: new Date() } });
+      return rev;
     });
-    return NextResponse.json({ quote: updated });
+    return NextResponse.json({ quote: created, revised: true });
   }
 
   const created = await createQuoteWithNumber((quoteNumber) => prisma.$transaction(async (tx) => {
@@ -113,6 +129,6 @@ export async function POST(req: Request) {
       },
       select: { id: true, quoteNumber: true },
     });
-  }));
+  }), userId);
   return NextResponse.json({ quote: created });
 }

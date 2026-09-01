@@ -59,7 +59,7 @@ export async function GET() {
     select: {
       id: true, quoteNumber: true, projectName: true, customerCompany: true,
       studyType: true, modality: true, status: true, grandTotal: true, currency: true, exchangeRate: true,
-      issuedAt: true, updatedAt: true, createdAt: true,
+      issuedAt: true, updatedAt: true, createdAt: true, supersededAt: true, revisedFromId: true,
       _count: { select: { items: true } },
     },
     take: 200,
@@ -167,7 +167,7 @@ export async function POST(req: Request) {
     const created = await createQuoteWithNumber((quoteNumber) => prisma.quote.create({
       data: { quoteNumber, userId, ...baseData, items: { create: itemRows } },
       include: { items: true },
-    }));
+    }), userId);
     return NextResponse.json({ quote: created });
   }
 }

@@ -4,7 +4,7 @@
  */
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { createQuoteWithNumber } from '@/lib/quote-number';
+import { createQuoteWithNumber, nextRevisionNumber } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/quote-engine/compose';
@@ -103,30 +103,58 @@ export async function POST(req: Request) {
     ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
   });
 
-  // ── 기존 견적 갱신(수정 흐름) — v2 견적만 허용(효력·구엔진 견적 변조 차단), 라인 전체 교체 ──
+  // ── 기존 견적 수정 흐름 — v2 견적만 허용(효력·구엔진 견적 변조 차단) ──
+  //   · DRAFT(발행 전): 제자리 갱신 (라인 전체 교체)
+  //   · 발행 후: 변경견적서 생성 — 원본 보존 + 번호 -1, -2 … + 원본 supersededAt (최신본만 진행 중)
   if (b.quoteId) {
-    const prev = await prisma.quote.findUnique({ where: { id: b.quoteId }, select: { id: true, studyType: true, planJson: true } });
+    const prev = await prisma.quote.findUnique({ where: { id: b.quoteId }, select: { id: true, studyType: true, planJson: true, status: true, quoteNumber: true, dealId: true } });
     if (!prev) return NextResponse.json({ error: '수정할 견적을 찾을 수 없습니다.' }, { status: 404 });
     let prevEngine = '';
     try { prevEngine = (JSON.parse(prev.planJson ?? '{}') as { engine?: string }).engine ?? ''; } catch { /* noop */ }
     if (prev.studyType === 'efficacy' || prevEngine !== 'v2') {
       return NextResponse.json({ error: '이 견적은 독성 위저드에서 수정할 수 없습니다.' }, { status: 409 });
     }
-    const updated = await prisma.$transaction(async (tx) => {
+
+    if (prev.status === 'DRAFT') {
+      const updated = await prisma.$transaction(async (tx) => {
+        const linked = companyName
+          ? await findOrCreateCompanyWithContact(tx, {
+              companyName, ownerId: userId, contactName,
+              email: (b.customerEmail ?? '').trim() || undefined, phone: (b.customerPhone ?? '').trim() || undefined,
+            })
+          : null;
+        await tx.quoteItem.deleteMany({ where: { quoteId: prev.id } });
+        return tx.quote.update({
+          where: { id: prev.id },
+          data: { ...quoteData(linked), items: { create: itemRows } },
+          select: { id: true, quoteNumber: true },
+        });
+      });
+      return NextResponse.json({ quote: updated });
+    }
+
+    // 발행된 견적 → 변경견적서
+    const revNumber = await nextRevisionNumber(prev.quoteNumber);
+    const created = await prisma.$transaction(async (tx) => {
       const linked = companyName
         ? await findOrCreateCompanyWithContact(tx, {
             companyName, ownerId: userId, contactName,
             email: (b.customerEmail ?? '').trim() || undefined, phone: (b.customerPhone ?? '').trim() || undefined,
           })
         : null;
-      await tx.quoteItem.deleteMany({ where: { quoteId: prev.id } });
-      return tx.quote.update({
-        where: { id: prev.id },
-        data: { ...quoteData(linked), items: { create: itemRows } },
+      const rev = await tx.quote.create({
+        data: {
+          quoteNumber: revNumber, ...quoteData(linked),
+          dealId: b.dealId ?? prev.dealId,           // 딜 연결 승계
+          revisedFromId: prev.id,
+          items: { create: itemRows },
+        },
         select: { id: true, quoteNumber: true },
       });
+      await tx.quote.update({ where: { id: prev.id }, data: { supersededAt: new Date() } });
+      return rev;
     });
-    return NextResponse.json({ quote: updated });
+    return NextResponse.json({ quote: created, revised: true });
   }
 
   // 고객사 find-or-create + 연락처 upsert + 견적 생성을 하나의 트랜잭션으로 (중간 실패 시 전부 롤백 → 고아 고객사 방지).
@@ -142,6 +170,6 @@ export async function POST(req: Request) {
       data: { quoteNumber, ...quoteData(linked), items: { create: itemRows } },
       select: { id: true, quoteNumber: true },
     });
-  }));
+  }), userId);
   return NextResponse.json({ quote: created });
 }

@@ -8,9 +8,17 @@ import { toast } from '@/lib/toast';
 import { useDrawer } from '@/components/admin/DrawerProvider';
 import { quoteStatus } from '@/lib/admin/status';
 
+// 변경견적 차수 — 번호가 YY-MM-XX-NNNN-<n> 이면 n
+const revOf = (num: string): number | null => {
+  const m = /^\d{2}-\d{2}-[A-Za-z0-9]+-\d{4}-(\d+)$/.exec(num);
+  return m ? Number(m[1]) : null;
+};
+
 type QuoteRow = {
   id: number;
   quoteNumber: string;
+  supersededAt?: string | null;
+  revisedFromId?: number | null;
   projectName: string;
   customerCompany: string | null;
   studyType: string;
@@ -127,9 +135,14 @@ export default function QuotesListPage() {
               </div>
               {/* 행 */}
               {filtered.map(qr => (
-                <div key={qr.id} className="group relative flex items-center px-6 py-[15px] border-t border-[var(--hairline-soft)] hover:bg-slate-100 transition-colors">
+                <div key={qr.id} className={"group relative flex items-center px-6 py-[15px] border-t border-[var(--hairline-soft)] hover:bg-slate-100 transition-colors" + (qr.supersededAt ? ' opacity-55' : '')}>
                   <Link href={`/quote/print?id=${qr.id}`} className="flex items-center flex-1 min-w-0">
-                    <div className="w-[132px] flex-shrink-0 text-[13px] font-medium text-brand-600 font-mono tabular-nums whitespace-nowrap">{qr.quoteNumber}</div>
+                    <div className="w-[150px] flex-shrink-0 whitespace-nowrap">
+                      <span className="text-[13px] font-medium text-brand-600 font-mono tabular-nums">{qr.quoteNumber}</span>
+                      {qr.supersededAt
+                        ? <span className="block w-fit mt-0.5 pill bg-slate-200 text-ink-subtle">변경 전</span>
+                        : revOf(qr.quoteNumber) != null && <span className="block w-fit mt-0.5 pill bg-brand-100 text-brand-700">변경 {revOf(qr.quoteNumber)}차 · 진행</span>}
+                    </div>
                     <div className="flex-1 min-w-0 pr-3">
                       <div className="text-[16px] text-ink truncate">{qr.customerCompany || qr.projectName}</div>
                       <div className="flex items-center gap-1.5 min-w-0">
