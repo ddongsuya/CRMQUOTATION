@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Users, X, Plus } from 'lucide-react';
 import { useWizard } from '@/lib/store';
+import { formatPhone } from '@/lib/format-phone';
 
 type CrmCompany = { id: number; name: string; industry: string | null; isNewClient?: boolean; _count: { contacts: number } };
 type CrmContact = { id: number; name: string; email: string | null; phone: string | null; position: string | null };
@@ -113,7 +114,7 @@ export default function SectionProject() {
       </Field>
 
       <Field label="담당자 연락처">
-        <input className="input" value={s.customerPhone} onChange={(e) => s.patch({ customerPhone: e.target.value })} placeholder="010-0000-0000" inputMode="tel" />
+        <input className="input" value={s.customerPhone} onChange={(e) => s.patch({ customerPhone: formatPhone(e.target.value) })} placeholder="010-0000-0000" inputMode="tel" />
       </Field>
 
       <Field label="적응증">

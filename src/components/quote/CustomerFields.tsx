@@ -1,5 +1,7 @@
 'use client';
 
+import { formatPhone } from '@/lib/format-phone';
+
 /**
  * 견적 고객 정보 — 독성(quote-v2) · 효력(quote-efficacy) 공용 블록.
  * 두 모듈이 동일한 필드·동일한 CRM 자동완성·동일한 안건 연동을 쓴다.
@@ -74,7 +76,7 @@ export default function CustomerFields({
           <input className="input" value={value.name} placeholder="담당자 이름" onChange={(e) => onChange({ name: e.target.value })} />
         </Field>
         <Field label="연락처">
-          <input className="input" value={value.phone} placeholder="010-0000-0000" onChange={(e) => onChange({ phone: e.target.value })} />
+          <input className="input" inputMode="tel" value={value.phone} placeholder="010-0000-0000" onChange={(e) => onChange({ phone: formatPhone(e.target.value) })} />
         </Field>
         <Field label="이메일">
           <input className="input" value={value.email} placeholder="email@company.com" onChange={(e) => onChange({ email: e.target.value })} />

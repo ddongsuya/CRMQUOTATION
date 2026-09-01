@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { Loader2, Pencil, Trash2, Save, Briefcase, Sparkles, FileSignature, FlaskConical, NotebookPen, Receipt } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
+import { formatPhone } from '@/lib/format-phone';
 
 type Quote = { id: number; quoteNumber: string; status: string; grandTotal: number | null; createdAt: string };
 type Contract = { id: number; status: string; contractNumber: string | null; signedAt: string | null; draftSentAt: string | null } & Record<string, unknown>;
@@ -763,7 +764,7 @@ function ContactModal({ companyId, contact, onClose, onSaved }: { companyId: num
         <Field label="직책"><input className="input w-full" value={f.position} onChange={e => set('position', e.target.value)} /></Field>
       </div>
       <Field label="이메일"><input className="input w-full" value={f.email} onChange={e => set('email', e.target.value)} /></Field>
-      <Field label="연락처"><input className="input w-full" value={f.phone} onChange={e => set('phone', e.target.value)} /></Field>
+      <Field label="연락처"><input className="input w-full" inputMode="tel" placeholder="010-0000-0000" value={f.phone} onChange={e => set('phone', formatPhone(e.target.value))} /></Field>
       <Field label="메모"><textarea className="input w-full min-h-[60px]" value={f.memo} onChange={e => set('memo', e.target.value)} /></Field>
     </Modal>
   );
