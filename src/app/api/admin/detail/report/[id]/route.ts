@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { currentUserId } from '@/lib/current-user';
 import { getReportDetail } from '@/lib/admin/aggregate';
 
+export const dynamic = 'force-dynamic';
+
 /** 일일보고 상세(전문) — 드로어용. */
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
   await currentUserId();

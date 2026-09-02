@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { ensureHydrated } from '@/lib/hydrate';
-import { currentUserId } from '@/lib/current-user';
+import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { getFollowups } from '@/lib/admin/aggregate';
 import { quoteStatus } from '@/lib/admin/status';
 import FollowupCard, { type Followup } from '@/components/admin/FollowupCard';
@@ -27,14 +27,15 @@ export default async function Home() {
   let followups: Followup[] = [];
   try {
     followups = (await getFollowups({ kind: 'user', userId: await currentUserId() }, new Date(), 14)) as Followup[];
+    const owners = await visibleOwnerIds();   // 홈은 내 데이터만 — 다중 사용자 시 타인 견적이 KPI 에 섞이지 않게
     // 진행 중 견적(작성·발행·발송) — 좌측 리스트
     quotes = await prisma.quote.findMany({
-      where: { status: { in: ['DRAFT', 'ISSUED', 'SENT'] }, supersededAt: null },
+      where: { status: { in: ['DRAFT', 'ISSUED', 'SENT'] }, supersededAt: null, userId: { in: owners } },
       orderBy: { createdAt: 'desc' }, take: 5,
       select: { id: true, quoteNumber: true, customerCompany: true, modality: true, status: true, grandTotal: true, totalAfterDiscount: true },
     });
     // 집계는 현재 진행 중(최신) 견적만 — 변경견적 대체본 제외. 금액은 공급가(VAT 별도) 기준.
-    const all = await prisma.quote.findMany({ where: { supersededAt: null }, select: { status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true } });
+    const all = await prisma.quote.findMany({ where: { supersededAt: null, userId: { in: owners } }, select: { status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true } });
     const supply = (q: { totalAfterDiscount: number | null; grandTotal: number | null }) =>
       q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0);
     const now = new Date();
@@ -48,14 +49,14 @@ export default async function Home() {
       inProgress: all.filter(q => ['DRAFT', 'ISSUED', 'SENT'].includes(q.status)).length,
       wonAmt: won.reduce((s, q) => s + supply(q), 0),
       wonRate: all.length ? Math.round(won.length / all.length * 100) : 0,
-      runningStudies: await prisma.study.count({ where: { reportDraftIssuedAt: null } }),
+      runningStudies: await prisma.study.count({ where: { reportDraftIssuedAt: null, deal: { ownerId: { in: owners } } } }),
       quoteDelta: thisMonthN - lastMonthN,
       wonDelta: 0,
     };
 
     // 마감 임박 시험 (보고서안 미발행, 가까운 순)
     const studies = await prisma.study.findMany({
-      where: { reportDraftIssuedAt: null, reportDraftDueAt: { not: null } },
+      where: { reportDraftIssuedAt: null, reportDraftDueAt: { not: null }, deal: { ownerId: { in: owners } } },
       orderBy: { reportDraftDueAt: 'asc' }, take: 5,
       select: { id: true, itemName: true, studyNumber: true, reportDraftDueAt: true, deal: { select: { id: true, title: true, contact: { select: { company: { select: { name: true } } } } } } },
     });
@@ -75,9 +76,9 @@ export default async function Home() {
 
     // 최근 활동 (견적·계약·노트 통합 타임라인)
     const [rQuotes, rContracts, rNotes] = await Promise.all([
-      prisma.quote.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, quoteNumber: true, customerCompany: true, status: true, createdAt: true } }),
-      prisma.contract.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, status: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
-      prisma.note.findMany({ orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, type: true, title: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
+      prisma.quote.findMany({ where: { userId: { in: owners } }, orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, quoteNumber: true, customerCompany: true, status: true, createdAt: true } }),
+      prisma.contract.findMany({ where: { deal: { ownerId: { in: owners } } }, orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, status: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
+      prisma.note.findMany({ where: { ownerId: { in: owners } }, orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, type: true, title: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
     ]);
     activity = [
       ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: quoteStatus(q.status).label, at: q.createdAt, href: `/quote/print?id=${q.id}` })),

@@ -5,6 +5,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
+import { checkLinkOwnership } from '@/lib/crm-guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +18,7 @@ async function owned(id: number) {
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
+  if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const b = await req.json().catch(() => ({})) as Record<string, unknown>;
   const data: Record<string, unknown> = {};
@@ -25,7 +27,9 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   if ('startAt' in b) data.startAt = new Date(String(b.startAt));
   if ('endAt' in b) data.endAt = b.endAt ? new Date(String(b.endAt)) : null;
   if ('done' in b) data.done = !!b.done;
-  // 연결 대상 변경 — 폼에서 안건/의뢰자를 바꿔 저장하는 경우
+  // 연결 대상 변경 — 폼에서 안건/의뢰자를 바꿔 저장하는 경우 (새 대상도 내 소유여야 함)
+  const linkErr = await checkLinkOwnership(b);
+  if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
   if ('dealId' in b) data.dealId = b.dealId ? Number(b.dealId) : null;
   if ('contactId' in b) data.contactId = b.contactId ? Number(b.contactId) : null;
   for (const k of ['location', 'attendeesClient', 'attendeesInternal', 'requests'] as const) {
@@ -37,6 +41,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
 export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
+  if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   await prisma.calendarEvent.delete({ where: { id } });
   return NextResponse.json({ ok: true });

@@ -46,7 +46,7 @@ export function matchCompanyId(name: string | null | undefined, index: Map<strin
 /** company.findMany/create + contact.find/create/update 를 갖춘 최소 Prisma 클라이언트(트랜잭션 tx 포함). */
 type CompanyTx = {
   company: {
-    findMany(args: { select: { id: true; name: true; aliases: true } }): Promise<CompanyLite[]>;
+    findMany(args: { where?: { ownerId: number }; select: { id: true; name: true; aliases: true } }): Promise<CompanyLite[]>;
     create(args: { data: { name: string; ownerId: number }; select: { id: true } }): Promise<{ id: number }>;
   };
   contact: {
@@ -67,7 +67,8 @@ export async function findOrCreateCompanyWithContact(
     companyName: string; ownerId: number; contactName?: string; email?: string; phone?: string;
   },
 ): Promise<{ companyId: number; contactId: number | null }> {
-  const companies = await tx.company.findMany({ select: { id: true, name: true, aliases: true } });
+  // 내 고객사만 매칭 — 다중 사용자 시 타인 고객사에 견적이 붙는 것을 막고, 매 저장마다 전체 테이블을 읽지 않게
+  const companies = await tx.company.findMany({ where: { ownerId }, select: { id: true, name: true, aliases: true } });
   let companyId = matchCompanyId(companyName, buildCompanyIndex(companies));
   if (companyId == null) {
     const co = await tx.company.create({ data: { name: companyName, ownerId }, select: { id: true } });

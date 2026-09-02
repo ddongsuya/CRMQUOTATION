@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
     extraLines = composeAnalysisLines(plan, masterItems);
   }
-  if (selectedItems.length === 0) return NextResponse.json({ error: '구성된 시험이 없습니다 (조건을 확인하세요)', composed }, { status: 200 });
+  if (selectedItems.length === 0) return NextResponse.json({ error: '구성된 시험이 없습니다 (조건을 확인하세요)', composed }, { status: 422 });
 
   const quote = evaluateQuote({
     category: body.category, standard: body.standard ?? 'MFDS', route: body.route ?? '경구',

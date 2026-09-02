@@ -10,9 +10,10 @@
 import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
-import { createQuoteWithNumber, nextRevisionNumber } from '@/lib/quote-number';
+import { createQuoteWithNumber, createRevisionWithNumber, QUOTE_TX_OPTS } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
+import { ownsQuote } from '@/lib/crm-guards';
 import { computeCost, computeQuote, findModel, totalAnimalsOf, totalDaysOf, type EffState } from '@/app/quote-efficacy/_lib/state';
 
 type Tx = Prisma.TransactionClient;
@@ -29,6 +30,7 @@ export async function POST(req: Request) {
   let target: { id: number; status: string; quoteNumber: string; dealId: number | null } | null = null;
   if (body?.quoteId) {
     const exists = await prisma.quote.findUnique({ where: { id: body.quoteId }, select: { id: true, studyType: true, status: true, quoteNumber: true, dealId: true } });
+    if (exists && !(await ownsQuote(exists.id))) return NextResponse.json({ error: '수정할 견적을 찾을 수 없습니다.' }, { status: 404 });
     if (exists && exists.studyType !== 'efficacy') {
       return NextResponse.json({ error: '효력시험 견적이 아니어서 덮어쓸 수 없습니다.' }, { status: 409 });
     }
@@ -98,11 +100,10 @@ export async function POST(req: Request) {
           data: { ...buildData(linked), items: { create: itemRows } },
           select: { id: true, quoteNumber: true },
         });
-      });
+      }, QUOTE_TX_OPTS);
       return NextResponse.json({ quote: updated });
     }
-    const revNumber = await nextRevisionNumber(target.quoteNumber);
-    const created = await prisma.$transaction(async (tx) => {
+    const created = await createRevisionWithNumber(target.quoteNumber, (revNumber) => prisma.$transaction(async (tx) => {
       const linked = await ensureCompany(tx);
       const rev = await tx.quote.create({
         data: {
@@ -115,7 +116,7 @@ export async function POST(req: Request) {
       });
       await tx.quote.update({ where: { id: target.id }, data: { supersededAt: new Date() } });
       return rev;
-    });
+    }, QUOTE_TX_OPTS));
     return NextResponse.json({ quote: created, revised: true });
   }
 
@@ -129,6 +130,6 @@ export async function POST(req: Request) {
       },
       select: { id: true, quoteNumber: true },
     });
-  }), userId);
+  }, QUOTE_TX_OPTS), userId);
   return NextResponse.json({ quote: created });
 }

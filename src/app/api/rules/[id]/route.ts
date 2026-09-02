@@ -4,6 +4,8 @@
 import { NextResponse } from 'next/server';
 import { findRuleById } from '@/lib/rules-catalog';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   _req: Request,
   { params }: { params: { id: string } },

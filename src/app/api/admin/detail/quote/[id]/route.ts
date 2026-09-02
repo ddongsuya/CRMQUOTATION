@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { currentUserId } from '@/lib/current-user';
 import { getQuoteDetail } from '@/lib/admin/aggregate';
 
+export const dynamic = 'force-dynamic';
+
 /** 견적 상세(추적 타임라인) — 드로어용. */
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
   await currentUserId();

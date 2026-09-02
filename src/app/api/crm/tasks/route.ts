@@ -7,6 +7,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
+import { checkLinkOwnership } from '@/lib/crm-guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,6 +40,8 @@ export async function POST(req: Request) {
   const b = await req.json().catch(() => null) as { title?: string; memo?: string; dueAt?: string | null; companyId?: number; contactId?: number; dealId?: number } | null;
   const title = String(b?.title ?? '').trim();
   if (!title) return NextResponse.json({ error: '할 일 내용을 입력하세요.' }, { status: 400 });
+  const linkErr = await checkLinkOwnership(b ?? {});
+  if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
 
   // 의뢰자/안건이 오면 회사도 자동 연결 (기업별 to-do 집계 근거)
   let companyId = b?.companyId ? Number(b.companyId) : null;

@@ -4,13 +4,14 @@
  */
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { createQuoteWithNumber, nextRevisionNumber } from '@/lib/quote-number';
+import { createQuoteWithNumber, createRevisionWithNumber, QUOTE_TX_OPTS } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/quote-engine/compose';
 import { getItem } from '@/lib/quote-engine/master';
 import type { LineItem } from '@/lib/quote-engine/types';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
+import { ownsQuote } from '@/lib/crm-guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -108,7 +109,7 @@ export async function POST(req: Request) {
   //   · 발행 후: 변경견적서 생성 — 원본 보존 + 번호 -1, -2 … + 원본 supersededAt (최신본만 진행 중)
   if (b.quoteId) {
     const prev = await prisma.quote.findUnique({ where: { id: b.quoteId }, select: { id: true, studyType: true, planJson: true, status: true, quoteNumber: true, dealId: true } });
-    if (!prev) return NextResponse.json({ error: '수정할 견적을 찾을 수 없습니다.' }, { status: 404 });
+    if (!prev || !(await ownsQuote(prev.id))) return NextResponse.json({ error: '수정할 견적을 찾을 수 없습니다.' }, { status: 404 });
     let prevEngine = '';
     try { prevEngine = (JSON.parse(prev.planJson ?? '{}') as { engine?: string }).engine ?? ''; } catch { /* noop */ }
     if (prev.studyType === 'efficacy' || prevEngine !== 'v2') {
@@ -129,13 +130,12 @@ export async function POST(req: Request) {
           data: { ...quoteData(linked), items: { create: itemRows } },
           select: { id: true, quoteNumber: true },
         });
-      });
+      }, QUOTE_TX_OPTS);
       return NextResponse.json({ quote: updated });
     }
 
-    // 발행된 견적 → 변경견적서
-    const revNumber = await nextRevisionNumber(prev.quoteNumber);
-    const created = await prisma.$transaction(async (tx) => {
+    // 발행된 견적 → 변경견적서 (차수 충돌 시 재시도)
+    const created = await createRevisionWithNumber(prev.quoteNumber, (revNumber) => prisma.$transaction(async (tx) => {
       const linked = companyName
         ? await findOrCreateCompanyWithContact(tx, {
             companyName, ownerId: userId, contactName,
@@ -153,7 +153,7 @@ export async function POST(req: Request) {
       });
       await tx.quote.update({ where: { id: prev.id }, data: { supersededAt: new Date() } });
       return rev;
-    });
+    }, QUOTE_TX_OPTS));
     return NextResponse.json({ quote: created, revised: true });
   }
 
@@ -170,6 +170,6 @@ export async function POST(req: Request) {
       data: { quoteNumber, ...quoteData(linked), items: { create: itemRows } },
       select: { id: true, quoteNumber: true },
     });
-  }), userId);
+  }, QUOTE_TX_OPTS), userId);
   return NextResponse.json({ quote: created });
 }

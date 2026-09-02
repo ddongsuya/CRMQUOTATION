@@ -5,6 +5,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
+import { checkLinkOwnership } from '@/lib/crm-guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,6 +31,8 @@ export async function POST(req: Request) {
   const title = String(b?.title ?? '').trim();
   if (!title || !b?.startAt) return NextResponse.json({ error: '제목·날짜가 필요합니다.' }, { status: 400 });
   const type = ['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].includes(String(b?.type)) ? String(b!.type) : 'MEETING';
+  const linkErr = await checkLinkOwnership(b ?? {});
+  if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
   const event = await prisma.calendarEvent.create({
     data: {
       ownerId, title, type,

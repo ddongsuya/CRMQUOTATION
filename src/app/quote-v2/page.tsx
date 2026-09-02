@@ -227,19 +227,27 @@ export default function QuoteV2Page() {
         method: 'POST', headers: { 'content-type': 'application/json' },
         body: JSON.stringify(body),
       });
-      const d = await res.json();
+      const d = await res.json().catch(() => ({}));
+      if (!res.ok || d.error) { toast.error(d.error ?? '견적 구성에 실패했습니다.'); setQuote(null); setComposed([]); return; }
       setQuote(d.quote ?? null);
       setComposed(d.composed?.length ? d.composed : (isBattery ? [...picked].map(id => ({ id, testName: null })) : []));
     } finally { setLoading(false); }
   };
 
-  // 4단계 이후 조건·부형제·옵션 변경 시 자동 재구성 (이미 견적이 있을 때만)
+  // 4단계 이후 계획·조건·부형제·옵션 등 견적에 영향을 주는 상태가 바뀌면 자동 재구성 (이미 견적이 있을 때만).
+  // 계획(카테고리·기준·경로·기간·종·TK·배터리 선택)까지 키에 포함 — 예전엔 빠져 있어 MFDS↔OECD 전환 시 실시간 견적이 갱신되지 않았다.
+  const regenKey = JSON.stringify({
+    category, standard, route, plan: isBattery ? null : buildPlan(), picked: isBattery ? [...picked].sort() : null,
+    conds, reqAddons, qtyOverrides, removedIds, addonTargets, addonPrices, extraIds, priceOv,
+  });
   useEffect(() => {
     if (!quote) return;
+    if (isBattery && picked.size === 0) return;   // 배터리형은 선택이 비면 재구성 불가
     const t = setTimeout(() => { generate(); }, 350);
     return () => clearTimeout(t);
+    // generate 는 렌더마다 새로 만들어지는 클로저라 regenKey 로 대체 (키에 견적 입력 전부 포함)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [excipient, JSON.stringify(reqAddons), JSON.stringify(conds), JSON.stringify(qtyOverrides), JSON.stringify(removedIds), JSON.stringify(addonTargets), JSON.stringify(addonPrices), JSON.stringify(extraIds), JSON.stringify(priceOv)]);
+  }, [regenKey]);
 
   const saveQuote = async (issueNow: boolean) => {
     setSaving(true); setSavedNo(null);
@@ -258,9 +266,14 @@ export default function QuoteV2Page() {
         method: 'POST', headers: { 'content-type': 'application/json' },
         body: JSON.stringify(body),
       });
-      const d = await res.json();
-      if (d.quote?.quoteNumber) { setSavedNo(d.quote.quoteNumber); setSavedId(d.quote.id ?? null); }
+      const d = await res.json().catch(() => ({}));
+      if (!res.ok || !d.quote?.quoteNumber) { toast.error(d.error ?? '견적 저장에 실패했습니다. 다시 시도해 주세요.'); return null; }
+      setSavedNo(d.quote.quoteNumber); setSavedId(d.quote.id ?? null);
+      if (!issueNow) toast.success(d.revised ? `변경견적서 ${d.quote.quoteNumber} 로 임시 저장됨` : `임시 저장됨 · ${d.quote.quoteNumber}`);
       return d.quote?.id ?? null;
+    } catch (e) {
+      toast.error(`저장 실패: ${e instanceof Error ? e.message : '네트워크 오류'}`);
+      return null;
     } finally { setSaving(false); }
   };
 

@@ -17,6 +17,7 @@ async function owned(id: number) {
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
+  if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const b = await req.json().catch(() => ({})) as Record<string, unknown>;
   const data: Record<string, unknown> = {};
@@ -30,6 +31,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
 export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
+  if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   await prisma.note.delete({ where: { id } });
   return NextResponse.json({ ok: true });

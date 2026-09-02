@@ -1,11 +1,15 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { ownsQuote } from '@/lib/crm-guards';
+
+export const dynamic = 'force-dynamic';
 
 interface Ctx { params: { id: string } }
 
 export async function GET(_req: Request, { params }: Ctx) {
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'bad id' }, { status: 400 });
+  if (!(await ownsQuote(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const quote = await prisma.quote.findUnique({
     where: { id },
     include: { items: { orderBy: { displayOrder: 'asc' } } },
@@ -17,6 +21,7 @@ export async function GET(_req: Request, { params }: Ctx) {
 export async function DELETE(_req: Request, { params }: Ctx) {
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'bad id' }, { status: 400 });
+  if (!(await ownsQuote(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   await prisma.quote.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }
@@ -25,6 +30,7 @@ export async function DELETE(_req: Request, { params }: Ctx) {
 export async function POST(_req: Request, { params }: Ctx) {
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'bad id' }, { status: 400 });
+  if (!(await ownsQuote(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const src = await prisma.quote.findUnique({ where: { id }, include: { items: true } });
   if (!src) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const { createQuoteWithNumber } = await import('@/lib/quote-number');

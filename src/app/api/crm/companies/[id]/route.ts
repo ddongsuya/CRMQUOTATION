@@ -5,7 +5,7 @@
  */
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
+import { visibleOwnerIds } from '@/lib/current-user';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,6 +18,7 @@ async function ownedCompany(id: number) {
 
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
+  if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const company = await prisma.company.findUnique({
     where: { id },
@@ -26,16 +27,16 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
         orderBy: { createdAt: 'asc' },
         include: {
           // 안건 없이 의뢰자에게 직접 기록된 노트·일정 (안건 소속은 deals 경유로 수집 — 중복 방지)
-          notes: { where: { dealId: null }, orderBy: { occurredAt: 'desc' } },
-          events: { where: { dealId: null }, orderBy: { startAt: 'asc' } },
+          notes: { where: { dealId: null }, orderBy: { occurredAt: 'desc' }, take: 50 },
+          events: { where: { dealId: null }, orderBy: { startAt: 'asc' }, take: 50 },
           deals: {
             orderBy: { updatedAt: 'desc' },
             include: {
               quotes: { select: { id: true, quoteNumber: true, status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true, supersededAt: true } },
               contract: true,
               studies: { orderBy: { createdAt: 'asc' } },
-              notes: { orderBy: { occurredAt: 'desc' } },
-              events: { orderBy: { startAt: 'asc' } },
+              notes: { orderBy: { occurredAt: 'desc' }, take: 50 },
+              events: { orderBy: { startAt: 'asc' }, take: 50 },
             },
           },
         },
@@ -104,6 +105,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
+  if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const body = await req.json().catch(() => ({})) as Record<string, unknown>;
   const data: Record<string, unknown> = {};
@@ -118,8 +120,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
 export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
+  if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  await currentUserId();
 
   // 연결 데이터 확인 — 안건이 있으면 FK(Restrict)로 삭제 시 500, 견적은 companyId 가 조용히 null 로 풀려 고아가 된다.
   // 사용자가 먼저 정리하도록 명확한 409 로 막는다.

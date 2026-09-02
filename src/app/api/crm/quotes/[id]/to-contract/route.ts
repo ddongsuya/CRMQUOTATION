@@ -7,6 +7,7 @@ import { NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { currentUserId } from '@/lib/current-user';
+import { ownsQuote } from '@/lib/crm-guards';
 import { classifyRole, defaultDurations, schedule, type GanttTask } from '@/lib/gantt-schedule';
 import { getItem } from '@/lib/quote-engine/master';
 
@@ -35,6 +36,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
     },
   });
   if (!q) return NextResponse.json({ error: '견적 없음' }, { status: 404 });
+  if (!(await ownsQuote(id))) return NextResponse.json({ error: '견적 없음' }, { status: 404 });   // 타인 견적 전환 차단
   if (q.dealId) {
     // 이미 딜 연결 → 계약·시험만 보장(멱등). 원자적으로.
     const dealId = q.dealId;
@@ -65,7 +67,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
   const out = await prisma.$transaction(async (tx) => {
     let companyId = q.companyId;
     if (!companyId && q.customerCompany) {
-      const co = (await tx.company.findFirst({ where: { name: q.customerCompany }, select: { id: true } }))
+      const co = (await tx.company.findFirst({ where: { name: q.customerCompany, ownerId }, select: { id: true } }))
         ?? (await tx.company.create({ data: { name: q.customerCompany, ownerId }, select: { id: true } }));
       companyId = co.id;
     }
@@ -115,7 +117,8 @@ async function createStudiesFromQuote(tx: Tx, dealId: number, q: QuoteForStudy):
 
   if (q.studyType === 'efficacy') {
     let weeks = 0;
-    try { weeks = Number((JSON.parse(q.planJson ?? '{}') as { totalWeeks?: number }).totalWeeks) || 0; } catch { return null; }
+    try { weeks = Number((JSON.parse(q.planJson ?? '{}') as { totalWeeks?: number }).totalWeeks) || 0; }
+    catch (e) { console.error('[to-contract] efficacy planJson 파싱 실패 — Study 미생성', { quote: q.quoteNumber, e }); return null; }
     if (weeks <= 0) return null;
     const study = await tx.study.create({
       data: {
@@ -176,10 +179,14 @@ async function createStudiesFromQuote(tx: Tx, dealId: number, q: QuoteForStudy):
     if (role === 'REPEAT') repeatTasks.push({ ...task, species: speciesOf(it.testNameSnapshot) });
   }
 
-  // 회복 병합 — 같은 종의 반복투여 task 를 찾아 이름·기간 확장 (없으면 첫 반복 task)
+  // 회복 병합 — 같은 종의 반복투여 task 를 찾아 이름·기간 확장. 한 번 짝지은 task 는 제외해
+  //   같은 종 반복시험이 2건(4주+13주 등)일 때 회복이 첫 번째에만 몰리지 않게 한다.
+  const used = new Set<string>();
   for (const rec of recoveryLines) {
-    const target = repeatTasks.find(r => r.species === rec.species) ?? repeatTasks[0];
+    const target = repeatTasks.find(r => r.species === rec.species && !used.has(r.id))
+      ?? repeatTasks.find(r => !used.has(r.id)) ?? repeatTasks[0];
     if (!target) { tasks.push({ id: `_rec-${rec.name}`, name: rec.name, role: 'REPEAT', animalWeeks: rec.weeks, reportWeeks: 8 }); continue; }
+    used.add(target.id);
     const t = tasks.find(x => x.id === target.id)!;
     t.animalWeeks += rec.weeks;
     t.name = `${t.name} (+${rec.weeks}주 회복)`;

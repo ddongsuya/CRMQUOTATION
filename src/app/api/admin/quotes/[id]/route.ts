@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { currentUserId } from '@/lib/current-user';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { ownsQuote } from '@/lib/crm-guards';
+
+export const dynamic = 'force-dynamic';
 
 /** 견적 추적 편집 — { trackingNote?, status?, contractNo?, contractAmount?, note? }. 결론/상태 변경 시 이력 적재. */
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
@@ -12,6 +17,10 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
   const prev = await prisma.quote.findUnique({ where: { id }, select: { trackingNote: true, status: true, sentAt: true } });
   if (!prev) return NextResponse.json({ error: '견적 없음' }, { status: 404 });
+  // 라우트 자체에서 권한 검사 — 미들웨어(현재 비활성)에 기대지 않는다: 관리자이거나 견적 소유자여야 함
+  const session = await getServerSession(authOptions);
+  const isAdmin = (session?.user as { role?: string } | undefined)?.role === 'admin';
+  if (!isAdmin && !(await ownsQuote(id))) return NextResponse.json({ error: '권한이 없습니다.' }, { status: 403 });
 
   const data: Record<string, unknown> = {};
   if ('trackingNote' in body) data.trackingNote = body.trackingNote === '' ? null : String(body.trackingNote);

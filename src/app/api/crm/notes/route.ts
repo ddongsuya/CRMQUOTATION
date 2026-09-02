@@ -5,6 +5,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
+import { checkLinkOwnership } from '@/lib/crm-guards';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,6 +36,8 @@ export async function POST(req: Request) {
   const body = String(b?.body ?? '').trim();
   if (!body) return NextResponse.json({ error: '내용을 입력하세요.' }, { status: 400 });
   const type = ['MEETING', 'CALL', 'MEMO'].includes(String(b?.type)) ? String(b!.type) : 'MEMO';
+  const linkErr = await checkLinkOwnership(b ?? {});
+  if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
   const note = await prisma.note.create({
     data: {
       ownerId, type, body,

@@ -27,11 +27,19 @@ export function revisionBase(quoteNumber: string): string {
   return m ? `${m[1]}-${m[2]}-${m[3]}-${m[4]}` : quoteNumber;
 }
 
+/** 견적 저장류 인터랙티브 트랜잭션 옵션 — Neon 콜드스타트 지연 + 다건 쓰기로 기본 5초(P2028)를 넘길 수 있어 30초. */
+export const QUOTE_TX_OPTS = { timeout: 30_000, maxWait: 10_000 } as const;
+
+/** 번호 접두사는 한국시간(KST) 기준 — 서버가 UTC(Vercel)여도 0~9시 저장분이 전달 번호로 찍히지 않게. */
+function kstYearMonth(now: Date): { yy: string; mm: string } {
+  const kst = new Date(now.getTime() + 9 * 3600_000);
+  return { yy: String(kst.getUTCFullYear() % 100).padStart(2, '0'), mm: String(kst.getUTCMonth() + 1).padStart(2, '0') };
+}
+
 /** 다음 신규 견적번호 — 해당 사용자코드의 최대 발행번호 + 1. */
 export async function nextQuoteNumber(userId: number | null | undefined, now = new Date()): Promise<string> {
   const initials = await userInitials(userId);
-  const yy = String(now.getFullYear() % 100).padStart(2, '0');
-  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const { yy, mm } = kstYearMonth(now);
   const rows = await prisma.quote.findMany({
     where: { quoteNumber: { contains: `-${initials}-` } },
     select: { quoteNumber: true },
@@ -62,6 +70,27 @@ export async function nextRevisionNumber(baseNumber: string): Promise<string> {
 
 function isUniqueViolation(e: unknown): boolean {
   return e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002';
+}
+
+/**
+ * 변경견적서 생성 — 차수 번호를 발급하고, 동시 저장으로 같은 -N 이 겹치면(P2002) 다음 차수로 재시도한다.
+ * (신규 발번의 createQuoteWithNumber 와 같은 의미론 — 두 탭에서 동시에 수정 저장해도 한쪽이 500 으로 죽지 않게.)
+ */
+export async function createRevisionWithNumber<T>(
+  baseNumber: string,
+  create: (revisionNumber: string) => Promise<T>,
+): Promise<T> {
+  const MAX_ATTEMPTS = 5;
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    const revNumber = await nextRevisionNumber(baseNumber);
+    try {
+      return await create(revNumber);
+    } catch (e) {
+      if (isUniqueViolation(e) && attempt < MAX_ATTEMPTS - 1) continue;
+      throw e;
+    }
+  }
+  throw new Error('변경견적 번호 생성 재시도 초과');
 }
 
 /**

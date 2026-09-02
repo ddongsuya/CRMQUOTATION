@@ -62,8 +62,15 @@ export async function GET(req: Request) {
   }
 
   // 2) 파생 마일스톤 — 시험 보고서안/잔금
+  // 보고서안 예정일이 범위 안이거나, 발행됐지만 계산서 미발행(잔금 기한 산출 대상)인 것만
   const studies = await prisma.study.findMany({
-    where: { deal: { ownerId: { in: owners } } },
+    where: {
+      deal: { ownerId: { in: owners } },
+      OR: [
+        { reportDraftIssuedAt: null, reportDraftDueAt: { gte: from, lte: to } },
+        { reportDraftIssuedAt: { not: null, gte: addDays(from, -30), lte: to }, invoiceIssuedAt: null },
+      ],
+    },
     include: { deal: { select: { id: true, title: true, contact: { select: { name: true, company: { select: { id: true, name: true } } } } } } },
   });
   for (const s of studies) {
@@ -85,6 +92,7 @@ export async function GET(req: Request) {
       userId: { in: owners },
       status: { in: ['ISSUED', 'SENT', 'REVIEWED'] },   // 진행 중(수주·반려 전)만
       supersededAt: null,                                // 변경견적으로 대체된 버전 제외
+      OR: [{ sentAt: { gte: addDays(from, -7), lte: to } }, { validUntil: { gte: from, lte: to } }],
     },
     select: {
       id: true, quoteNumber: true, sentAt: true, validUntil: true, customerCompany: true, companyId: true,
