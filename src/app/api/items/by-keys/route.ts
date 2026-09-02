@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { loadData } from '@/lib/data';
 import { ensureHydrated } from '@/lib/hydrate';
 
-export async function POST(req: Request) {
+import { withErrorHandling } from '@/lib/api-handler';
+async function _POST(req: Request) {
   await ensureHydrated();
   const body = await req.json() as { keys: string[] };
   const { testItems } = loadData();
@@ -27,3 +28,5 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ items });
 }
+
+export const POST = withErrorHandling(_POST);

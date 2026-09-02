@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { loadData } from '@/lib/data';
 import { ensureHydrated } from '@/lib/hydrate';
 
+import { withErrorHandling } from '@/lib/api-handler';
 /** Modality-specific masters that don't tag themselves in modalityPool. */
 const MODALITY_SOURCE_PREFIX: Record<string, string> = {
   '화장품': '화장품_',
@@ -14,7 +15,7 @@ const MODALITY_SOURCE_PREFIX: Record<string, string> = {
   '건강기능식품': '건기식_',
 };
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const body = (await req.json()) as {
     modality?: string;
     query?: string;
@@ -71,3 +72,5 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ hits, total: filtered.length });
 }
+
+export const POST = withErrorHandling(_POST);

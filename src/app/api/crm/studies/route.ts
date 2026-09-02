@@ -6,9 +6,10 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const owners = await visibleOwnerIds();
   const body = await req.json().catch(() => null) as { dealId?: number; itemName?: string; studyNumber?: string; director?: string } | null;
   const dealId = Number(body?.dealId);
@@ -29,3 +30,5 @@ export async function POST(req: Request) {
   }
   return NextResponse.json({ study });
 }
+
+export const POST = withErrorHandling(_POST);

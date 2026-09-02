@@ -7,6 +7,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 async function ownedDeal(id: number) {
@@ -16,7 +17,7 @@ async function ownedDeal(id: number) {
   return d;
 }
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+async function _GET(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedDeal(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -34,7 +35,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   return NextResponse.json({ deal });
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedDeal(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -60,10 +61,14 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   return NextResponse.json({ deal });
 }
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+async function _DELETE(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedDeal(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   await prisma.deal.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }
+
+export const GET = withErrorHandling(_GET);
+export const PATCH = withErrorHandling(_PATCH);
+export const DELETE = withErrorHandling(_DELETE);

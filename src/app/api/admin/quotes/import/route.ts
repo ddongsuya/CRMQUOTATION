@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server';
 import ExcelJS from 'exceljs';
-import { getViewMode } from '@/lib/admin/view';
+import { requireAdmin } from '@/lib/admin/guard';
 import { currentUserId } from '@/lib/current-user';
 import { importQuoteRows, rowsFromWorksheet } from '@/lib/admin/quote-import';
 import { MAX_UPLOAD_BYTES, isDryRun, runImport } from '@/lib/admin/import-run';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const runtime = 'nodejs';
 
 /**
  * 견적 현황 엑셀 업로드 — 관리자 뷰 전용. multipart: file. '견적서' 시트 파싱→Quote upsert.
  * ?dryRun=1 이면 쓰지 않고 신규/갱신/건너뜀/오류 건수만 계산해 반환(미리보기).
  */
-export async function POST(req: Request) {
-  const view = await getViewMode();
-  if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
+async function _POST(req: Request) {
+  const denied = await requireAdmin(); if (denied) return denied;
 
   const form = await req.formData().catch(() => null);
   const file = form?.get('file');
@@ -35,3 +35,5 @@ export async function POST(req: Request) {
   const result = await runImport(importQuoteRows, rows, importerId, dryRun);
   return NextResponse.json({ ok: true, dryRun, ...result, parsed: rows.length });
 }
+
+export const POST = withErrorHandling(_POST);

@@ -12,6 +12,7 @@ import { validateTestItems, type TestItemRecord } from '@/lib/test-items-schema'
 import { parseTestItemsWorkbook } from '@/lib/test-items-xlsx';
 import { ensureHydrated } from '@/lib/hydrate';
 
+import { withErrorHandling } from '@/lib/api-handler';
 const nfc = (s: unknown) => String(s ?? '').trim().normalize('NFC');
 
 /** 빈값(null/''/[]/{}) 제거 + 키 정렬(중첩 포함) → 순서·부재·빈값에 둔감한 비교 문자열.
@@ -58,7 +59,7 @@ function mergePreserving(current: TestItemRecord[], next: TestItemRecord[]): Tes
   });
 }
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 가져올 수 있습니다.' }, { status: 403 });
@@ -95,3 +96,5 @@ export async function POST(req: Request) {
   await writeTestItems(merged as unknown as TestItem[]);
   return NextResponse.json({ ok: true, mode: 'apply', summary });
 }
+
+export const POST = withErrorHandling(_POST);

@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getViewMode } from '@/lib/admin/view';
+import { requireAdmin } from '@/lib/admin/guard';
 
+import { withErrorHandling } from '@/lib/api-handler';
 const FIELDS = ['name', 'pipeline', 'platform', 'stage', 'indTarget', 'croOutlook', 'founded', 'location', 'ceo', 'companyType', 'note'] as const;
 
 /** 잠재 고객 편집. { <field>: value } — 빈 문자열=null. */
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
-  const view = await getViewMode();
-  if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
+async function _PATCH(req: Request, { params }: { params: { id: string } }) {
+  const denied = await requireAdmin(); if (denied) return denied;
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   const body = await req.json().catch(() => null);
@@ -21,11 +21,13 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   return NextResponse.json({ ok: true });
 }
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
-  const view = await getViewMode();
-  if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
+async function _DELETE(_req: Request, { params }: { params: { id: string } }) {
+  const denied = await requireAdmin(); if (denied) return denied;
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   await prisma.prospect.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }
+
+export const PATCH = withErrorHandling(_PATCH);
+export const DELETE = withErrorHandling(_DELETE);

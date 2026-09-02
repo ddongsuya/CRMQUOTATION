@@ -6,10 +6,11 @@ import { assembleQuoteLines } from '@/engine/assemble';
 import { computeTotals } from '@/engine/pricing';
 import { ensureHydrated } from '@/lib/hydrate';
 
+import { withErrorHandling } from '@/lib/api-handler';
 // price for the synthetic 함량분석 aggregate line — policy value, tweak here
 const PRICE_ANALYSIS_UNIT = 1_000_000;
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   await ensureHydrated();
   const body = await req.json() as {
     selections: Array<{
@@ -64,3 +65,5 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ lines, warnings, totals });
 }
+
+export const POST = withErrorHandling(_POST);

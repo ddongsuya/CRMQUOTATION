@@ -316,17 +316,19 @@ export async function companyNames(): Promise<string[]> {
 }
 
 /** 회사(고객사)명 기준 관련 항목 집계 — 드로어·상세 페이지 공용. */
-export async function getCompanyDetail(name: string) {
+export async function getCompanyDetail(name: string, uids?: number[]) {
   // 회사 먼저 조회 → 견적은 companyId(FK) OR 이름으로 매칭(표기 변형까지 견고하게)
+  // uids: 일반 사용자 뷰에서는 본인 소유 범위로 제한(undefined = 전사).
   const company = await prisma.company.findFirst({
-    where: { name },
+    where: { name, ...(uids ? { ownerId: { in: uids } } : {}) },
     select: {
       id: true, industry: true, memo: true, isNewClient: true,
       owner: { select: { name: true, center: { select: { name: true } } } },
       contacts: { select: { name: true, position: true, email: true, phone: true } },
     },
   });
-  const quoteWhere = company ? { OR: [{ companyId: company.id }, { customerCompany: name }] } : { customerCompany: name };
+  const nameWhere = company ? { OR: [{ companyId: company.id }, { customerCompany: name }] } : { customerCompany: name };
+  const quoteWhere = uids ? { AND: [nameWhere, { OR: [{ userId: { in: uids } }, { userId: null }] }] } : nameWhere;
   const [quotes, reports, prospect] = await Promise.all([
     prisma.quote.findMany({
       where: quoteWhere,
@@ -334,7 +336,7 @@ export async function getCompanyDetail(name: string) {
       select: { id: true, quoteNumber: true, sentAt: true, projectName: true, grandTotal: true, contractAmount: true, status: true, trackingNote: true, testStandard: true, submissionPurpose: true, discountRate: true },
     }),
     prisma.dailyReport.findMany({
-      where: { OR: [{ workContent: { contains: name } }, { contractPlan: { contains: name } }, { activityNote: { contains: name } }] },
+      where: { ...(uids ? { ownerId: { in: uids } } : {}), OR: [{ workContent: { contains: name } }, { contractPlan: { contains: name } }, { activityNote: { contains: name } }] },
       orderBy: { date: 'desc' }, take: 30,
       select: { id: true, date: true, workContent: true, contractPlan: true, activityNote: true },
     }),
@@ -392,11 +394,11 @@ export async function getFollowups(scope: Scope, refDate: Date, minDays = 14) {
 }
 
 /** 견적 상세 — 견적 드로어(추적 타임라인 포함). */
-export async function getQuoteDetail(id: number) {
+export async function getQuoteDetail(id: number, uids?: number[]) {
   const q = await prisma.quote.findUnique({
     where: { id },
     select: {
-      id: true, quoteNumber: true, sentAt: true, projectName: true, customerCompany: true, customerName: true, customerPhone: true, customerEmail: true,
+      id: true, userId: true, quoteNumber: true, sentAt: true, projectName: true, customerCompany: true, customerName: true, customerPhone: true, customerEmail: true,
       studyType: true, testStandard: true, submissionPurpose: true, substanceType: true, modality: true,
       totalBeforeDiscount: true, discountRate: true, grandTotal: true, contractNo: true, contractAmount: true,
       status: true, trackingNote: true,
@@ -404,6 +406,7 @@ export async function getQuoteDetail(id: number) {
     },
   });
   if (!q) return null;
+  if (uids && q.userId != null && !uids.includes(q.userId)) return null;
   const authors = new Map((await prisma.user.findMany({ select: { id: true, name: true } })).map((u) => [u.id, u.name ?? '—'] as const));
   return {
     ...q,
@@ -413,12 +416,13 @@ export async function getQuoteDetail(id: number) {
 }
 
 /** 일일보고 상세 — 기록 드로어(전문 + 언급 회사명). */
-export async function getReportDetail(id: number) {
+export async function getReportDetail(id: number, uids?: number[]) {
   const r = await prisma.dailyReport.findUnique({
     where: { id },
-    select: { id: true, date: true, workContent: true, contractPlan: true, activityNote: true, contractAmount: true, owner: { select: { name: true } } },
+    select: { id: true, ownerId: true, date: true, workContent: true, contractPlan: true, activityNote: true, contractAmount: true, owner: { select: { name: true } } },
   });
   if (!r) return null;
+  if (uids && !uids.includes(r.ownerId)) return null;
   const text = [r.workContent, r.contractPlan, r.activityNote].filter(Boolean).join(' ');
   const cos = await prisma.company.findMany({ select: { name: true } });
   const mentioned = cos.map((c) => c.name).filter((n) => n.length >= 2 && text.includes(n));
@@ -426,14 +430,16 @@ export async function getReportDetail(id: number) {
 }
 
 /** 전역 검색 — 회사·견적·기록 통합(⌘K). */
-export async function getGlobalSearch(q: string) {
+export async function getGlobalSearch(q: string, uids?: number[]) {
   const term = q.trim();
   if (term.length < 1) return { companies: [], quotes: [], reports: [] };
   const ci = { contains: term, mode: 'insensitive' as const };
+  const ownerScope = uids ? { ownerId: { in: uids } } : {};
+  const quoteScope = uids ? { AND: [{ OR: [{ userId: { in: uids } }, { userId: null }] }] } : {};
   const [companies, quotes, reports] = await Promise.all([
-    prisma.company.findMany({ where: { OR: [{ name: ci }, { aliases: ci }] }, select: { name: true, industry: true }, take: 6, orderBy: { name: 'asc' } }),
-    prisma.quote.findMany({ where: { OR: [{ quoteNumber: ci }, { customerCompany: ci }, { projectName: ci }] }, select: { id: true, quoteNumber: true, customerCompany: true, projectName: true, status: true, trackingNote: true }, take: 8, orderBy: { sentAt: 'desc' } }),
-    prisma.dailyReport.findMany({ where: { OR: [{ workContent: ci }, { activityNote: ci }, { contractPlan: ci }] }, select: { id: true, date: true, workContent: true, activityNote: true, contractPlan: true }, take: 6, orderBy: { date: 'desc' } }),
+    prisma.company.findMany({ where: { ...ownerScope, OR: [{ name: ci }, { aliases: ci }] }, select: { name: true, industry: true }, take: 6, orderBy: { name: 'asc' } }),
+    prisma.quote.findMany({ where: { ...quoteScope, OR: [{ quoteNumber: ci }, { customerCompany: ci }, { projectName: ci }] }, select: { id: true, quoteNumber: true, customerCompany: true, projectName: true, status: true, trackingNote: true }, take: 8, orderBy: { sentAt: 'desc' } }),
+    prisma.dailyReport.findMany({ where: { ...ownerScope, OR: [{ workContent: ci }, { activityNote: ci }, { contractPlan: ci }] }, select: { id: true, date: true, workContent: true, activityNote: true, contractPlan: true }, take: 6, orderBy: { date: 'desc' } }),
   ]);
   const snip = (r: { workContent: string | null; activityNote: string | null; contractPlan: string | null }) => {
     const text = [r.workContent, r.contractPlan, r.activityNote].filter(Boolean).join(' ');

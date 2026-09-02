@@ -4,7 +4,7 @@
  *         → GR(메타) → 합계 + missing_info
  * 설계: docs/quote-engine-binding.md
  */
-import type { QuoteInput, Quote, LineItem, MissingInfo } from './types';
+import type { QuoteInput, Quote, LineItem } from './types';
 import { getItem } from './master';
 import { resolvePrice } from './pricing';
 import { runRuleStages, type RuleState } from './rules';

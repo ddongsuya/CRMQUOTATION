@@ -8,7 +8,8 @@ import { loadModalityTemplates, writeModalityTemplates, type TemplateCategory } 
 import { allModalityKeys } from '@/lib/modality-config';
 import { ensureHydrated } from '@/lib/hydrate';
 
-export async function GET() {
+import { withErrorHandling } from '@/lib/api-handler';
+async function _GET() {
   await ensureHydrated();
   const admin = await getAdmin();
   return NextResponse.json({
@@ -18,7 +19,7 @@ export async function GET() {
   });
 }
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 편집할 수 있습니다.' }, { status: 403 });
@@ -56,3 +57,6 @@ export async function POST(req: Request) {
   await writeModalityTemplates(clean);
   return NextResponse.json({ ok: true, categories: clean });
 }
+
+export const GET = withErrorHandling(_GET);
+export const POST = withErrorHandling(_POST);

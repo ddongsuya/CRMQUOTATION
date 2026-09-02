@@ -9,7 +9,8 @@ import { loadQuoteTemplates, templatesForModality, writeQuoteTemplates, type Quo
 import { getItemByKey } from '@/lib/data';
 import { ensureHydrated } from '@/lib/hydrate';
 
-export async function GET(req: Request) {
+import { withErrorHandling } from '@/lib/api-handler';
+async function _GET(req: Request) {
   await ensureHydrated();
   const { searchParams } = new URL(req.url);
   const modality = searchParams.get('modality');
@@ -18,7 +19,7 @@ export async function GET(req: Request) {
   return NextResponse.json({ templates: loadQuoteTemplates(), isAdmin: !!admin });
 }
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 편집할 수 있습니다.' }, { status: 403 });
@@ -49,3 +50,6 @@ export async function POST(req: Request) {
   await writeQuoteTemplates(clean);
   return NextResponse.json({ ok: true, templates: clean });
 }
+
+export const GET = withErrorHandling(_GET);
+export const POST = withErrorHandling(_POST);

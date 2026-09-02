@@ -7,6 +7,7 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 import { checkLinkOwnership } from '@/lib/crm-guards';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 async function owned(id: number) {
@@ -16,7 +17,7 @@ async function owned(id: number) {
   return t;
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -35,10 +36,13 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   return NextResponse.json({ task });
 }
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+async function _DELETE(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   await prisma.task.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }
+
+export const PATCH = withErrorHandling(_PATCH);
+export const DELETE = withErrorHandling(_DELETE);

@@ -7,9 +7,10 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 import { supplyTotal } from '@/lib/money';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request) {
+async function _GET(req: Request) {
   const owners = await visibleOwnerIds();
   const companyId = new URL(req.url).searchParams.get('companyId');
   const rows = await prisma.deal.findMany({
@@ -95,3 +96,5 @@ export async function GET(req: Request) {
   }
   return NextResponse.json({ projects });
 }
+
+export const GET = withErrorHandling(_GET);

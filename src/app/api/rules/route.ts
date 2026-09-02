@@ -5,6 +5,7 @@
  * GET /api/rules?confidence=low
  */
 import { NextResponse } from 'next/server';
+import { withErrorHandling } from '@/lib/api-handler';
 import {
   loadRulesCatalog,
   flattenAllRules,
@@ -23,7 +24,7 @@ const TYPE_PREFIX_MAP: Record<string, string> = {
   GR: 'Generic',
 };
 
-export async function GET(req: Request) {
+async function _GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const type = searchParams.get('type');         // PF/PR/CG/AD/WV/SB/GR or full type name
   const status = searchParams.get('status') as RuleStatus | null;
@@ -52,3 +53,5 @@ export async function GET(req: Request) {
     rules,
   });
 }
+
+export const GET = withErrorHandling(_GET);

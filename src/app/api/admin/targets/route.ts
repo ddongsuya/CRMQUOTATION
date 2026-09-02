@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getViewMode } from '@/lib/admin/view';
+import { requireAdmin } from '@/lib/admin/guard';
 
+import { withErrorHandling } from '@/lib/api-handler';
 /** 목표(Target) 저장 — 관리자 뷰 전용. { period, rows: [{ centerId|null, amount|null }] }. amount null → 삭제. */
-export async function POST(req: Request) {
-  const view = await getViewMode();
-  if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
+async function _POST(req: Request) {
+  const denied = await requireAdmin(); if (denied) return denied;
 
   const body = await req.json().catch(() => null);
   const period = (body?.period ?? '').toString();
@@ -25,3 +25,5 @@ export async function POST(req: Request) {
   }
   return NextResponse.json({ ok: true });
 }
+
+export const POST = withErrorHandling(_POST);

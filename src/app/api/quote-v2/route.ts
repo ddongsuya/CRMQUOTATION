@@ -10,9 +10,10 @@ import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/q
 import { getItem } from '@/lib/quote-engine/master';
 import type { QuoteInput, LineItem } from '@/lib/quote-engine/types';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export function GET(req: Request) {
+function _GET(req: Request) {
   const url = new URL(req.url);
   const category = url.searchParams.get('category');
   const q = (url.searchParams.get('q') ?? '').trim().toLowerCase();
@@ -54,7 +55,7 @@ export function GET(req: Request) {
 
 type Body = Partial<QuoteInput> & { plan?: ComposePlan };
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const body = (await req.json().catch(() => null)) as Body | null;
   if (!body || !body.category) return NextResponse.json({ error: 'category 필요' }, { status: 400 });
 
@@ -83,3 +84,6 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ quote, composed });
 }
+
+export const GET = withErrorHandling(_GET);
+export const POST = withErrorHandling(_POST);

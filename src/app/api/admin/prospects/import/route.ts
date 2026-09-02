@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server';
 import ExcelJS from 'exceljs';
-import { getViewMode } from '@/lib/admin/view';
+import { requireAdmin } from '@/lib/admin/guard';
 import { currentUserId } from '@/lib/current-user';
 import { prospectRowsFromWorksheet, importProspects } from '@/lib/admin/prospect-import';
 import { MAX_UPLOAD_BYTES, isDryRun, runImport } from '@/lib/admin/import-run';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const runtime = 'nodejs';
 
 /**
  * 잠재 고객 엑셀 업로드 — '기업명' 헤더가 있는 시트 자동 탐지 → Prospect upsert.
  * ?dryRun=1 이면 쓰지 않고 건수만 계산(미리보기).
  */
-export async function POST(req: Request) {
-  const view = await getViewMode();
-  if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
+async function _POST(req: Request) {
+  const denied = await requireAdmin(); if (denied) return denied;
 
   const form = await req.formData().catch(() => null);
   const file = form?.get('file');
@@ -39,3 +39,5 @@ export async function POST(req: Request) {
   const result = await runImport(importProspects, best, importerId, dryRun);
   return NextResponse.json({ ok: true, dryRun, ...result, parsed: best.length });
 }
+
+export const POST = withErrorHandling(_POST);

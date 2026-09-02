@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server';
 import ExcelJS from 'exceljs';
-import { getViewMode } from '@/lib/admin/view';
+import { requireAdmin } from '@/lib/admin/guard';
 import { currentUserId } from '@/lib/current-user';
 import { dailyRowsFromWorksheet, importDailyReports } from '@/lib/admin/daily-import';
 import { MAX_UPLOAD_BYTES, isDryRun, runImport } from '@/lib/admin/import-run';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const runtime = 'nodejs';
 
 /**
  * 일일업무보고 엑셀 업로드 — 관리자 뷰 전용. '일일업무보고' 시트 파싱→DailyReport upsert.
  * ?dryRun=1 이면 쓰지 않고 건수만 계산(미리보기).
  */
-export async function POST(req: Request) {
-  const view = await getViewMode();
-  if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
+async function _POST(req: Request) {
+  const denied = await requireAdmin(); if (denied) return denied;
 
   const form = await req.formData().catch(() => null);
   const file = form?.get('file');
@@ -34,3 +34,5 @@ export async function POST(req: Request) {
   const result = await runImport(importDailyReports, rows, importerId, dryRun);
   return NextResponse.json({ ok: true, dryRun, ...result, parsed: rows.length });
 }
+
+export const POST = withErrorHandling(_POST);

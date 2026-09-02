@@ -8,6 +8,7 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 import { supplyOrZero } from '@/lib/money';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 async function ownedCompany(id: number) {
@@ -17,7 +18,7 @@ async function ownedCompany(id: number) {
   return c;
 }
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+async function _GET(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -102,7 +103,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   return NextResponse.json({ company, agg: { deals: flatDeals.map(d => ({ ...dealMeta(d), id: d.id, title: d.title, status: d.status, updatedAt: d.updatedAt, contactName: d.contactName, contactId: d.contactId, quoteCount: d.quotes.filter(q => !q.supersededAt).length, quoteAmount: d.quotes.filter(q => !q.supersededAt).reduce((s, q) => s + supply(q), 0), wonAmount: d.quotes.filter(q => q.status === 'ACCEPTED' && !q.supersededAt).reduce((s, q) => s + supply(q), 0) })), quotes, contracts, studies, notes, events, kpi } });
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -117,7 +118,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   return NextResponse.json({ company });
 }
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+async function _DELETE(_req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -140,3 +141,7 @@ export async function DELETE(_req: Request, { params }: { params: { id: string }
   }
   return NextResponse.json({ ok: true });
 }
+
+export const GET = withErrorHandling(_GET);
+export const PATCH = withErrorHandling(_PATCH);
+export const DELETE = withErrorHandling(_DELETE);

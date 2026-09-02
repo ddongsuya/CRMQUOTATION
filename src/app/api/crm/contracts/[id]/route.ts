@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 type PT = { seq?: number; kind?: string; ratio?: number | null; amount?: number | null; condition?: string; studyId?: number | null; dueAt?: string | null; paidAt?: string | null };
@@ -18,7 +19,7 @@ async function owned(id: number) {
 
 const date = (v: unknown) => (v ? new Date(String(v)) : null);
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -53,3 +54,5 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   });
   return NextResponse.json({ contract });
 }
+
+export const PATCH = withErrorHandling(_PATCH);

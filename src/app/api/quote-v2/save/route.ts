@@ -13,6 +13,7 @@ import type { LineItem } from '@/lib/quote-engine/types';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { ownsQuote } from '@/lib/crm-guards';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 type Body = {
@@ -27,7 +28,7 @@ type Body = {
   quoteId?: number | null;   // 있으면 기존 견적 갱신(라인 교체) — 견적 수정 흐름
 };
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const b = (await req.json().catch(() => null)) as Body | null;
   if (!b?.category || (!b.plan && !b.selectedItemIds?.length)) return NextResponse.json({ error: 'category + (plan 또는 selectedItemIds) 필요' }, { status: 400 });
 
@@ -173,3 +174,5 @@ export async function POST(req: Request) {
   }, QUOTE_TX_OPTS), userId);
   return NextResponse.json({ quote: created });
 }
+
+export const POST = withErrorHandling(_POST);

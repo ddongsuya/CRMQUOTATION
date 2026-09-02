@@ -2,11 +2,12 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { ownsQuote } from '@/lib/crm-guards';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 interface Ctx { params: { id: string } }
 
-export async function GET(_req: Request, { params }: Ctx) {
+async function _GET(_req: Request, { params }: Ctx) {
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'bad id' }, { status: 400 });
   if (!(await ownsQuote(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -18,7 +19,7 @@ export async function GET(_req: Request, { params }: Ctx) {
   return NextResponse.json({ quote });
 }
 
-export async function DELETE(_req: Request, { params }: Ctx) {
+async function _DELETE(_req: Request, { params }: Ctx) {
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'bad id' }, { status: 400 });
   if (!(await ownsQuote(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -27,7 +28,7 @@ export async function DELETE(_req: Request, { params }: Ctx) {
 }
 
 /** Duplicate — create a fresh DRAFT copy with new quote number. */
-export async function POST(_req: Request, { params }: Ctx) {
+async function _POST(_req: Request, { params }: Ctx) {
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'bad id' }, { status: 400 });
   if (!(await ownsQuote(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -57,3 +58,7 @@ export async function POST(_req: Request, { params }: Ctx) {
   }), src.userId);
   return NextResponse.json({ quote: dup });
 }
+
+export const GET = withErrorHandling(_GET);
+export const DELETE = withErrorHandling(_DELETE);
+export const POST = withErrorHandling(_POST);

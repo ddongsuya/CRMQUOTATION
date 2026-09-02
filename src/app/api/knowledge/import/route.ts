@@ -12,6 +12,7 @@ import { validateDataset, ID_FIELD, type KnowledgeRecord } from '@/lib/knowledge
 import { parseKnowledgeWorkbook } from '@/lib/knowledge-xlsx';
 import { ensureHydrated } from '@/lib/hydrate';
 
+import { withErrorHandling } from '@/lib/api-handler';
 const DATASETS: KnowledgeDataset[] = ['guidelines', 'modalities', 'designRules'];
 
 function currentBundle() {
@@ -37,7 +38,7 @@ function diff(dataset: KnowledgeDataset, current: KnowledgeRecord[], next: Knowl
   return { added, changed, removed, total: next.length };
 }
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 가져올 수 있습니다.' }, { status: 403 });
@@ -87,3 +88,5 @@ export async function POST(req: Request) {
   for (const ds of DATASETS) await writeKnowledgeDataset(ds, validated[ds]);
   return NextResponse.json({ ok: true, mode: 'apply', summary });
 }
+
+export const POST = withErrorHandling(_POST);

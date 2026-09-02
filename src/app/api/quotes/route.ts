@@ -8,6 +8,7 @@ import { assembleQuoteLines } from '@/engine/assemble';
 import { computeTotals } from '@/engine/pricing';
 import { ensureHydrated } from '@/lib/hydrate';
 
+import { withErrorHandling } from '@/lib/api-handler';
 async function currentUserId(): Promise<number | null> {
   const session = await getServerSession(authOptions);
   const id = (session?.user as { id?: string } | undefined)?.id;
@@ -47,7 +48,7 @@ type SaveBody = {
 };
 
 /** GET /api/quotes — list quotes owned by the current user (admins see all). */
-export async function GET() {
+async function _GET() {
   const userId = await currentUserId();
   const session = await getServerSession(authOptions);
   const role = (session?.user as { role?: string } | undefined)?.role;
@@ -68,7 +69,7 @@ export async function GET() {
 }
 
 /** POST /api/quotes — create or update. */
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   await ensureHydrated();
   const body = await req.json() as SaveBody;
 
@@ -171,3 +172,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ quote: created });
   }
 }
+
+export const GET = withErrorHandling(_GET);
+export const POST = withErrorHandling(_POST);

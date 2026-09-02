@@ -16,11 +16,12 @@ import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { ownsQuote } from '@/lib/crm-guards';
 import { computeCost, computeQuote, findModel, totalAnimalsOf, totalDaysOf, type EffState } from '@/app/quote-efficacy/_lib/state';
 
+import { withErrorHandling } from '@/lib/api-handler';
 type Tx = Prisma.TransactionClient;
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const body = (await req.json().catch(() => null)) as { state?: EffState; quoteId?: number | null; dealId?: number | null } | null;
   const s = body?.state;
   if (!s?.modelId) return NextResponse.json({ error: '모델이 선택되지 않았습니다.' }, { status: 400 });
@@ -133,3 +134,5 @@ export async function POST(req: Request) {
   }, QUOTE_TX_OPTS), userId);
   return NextResponse.json({ quote: created });
 }
+
+export const POST = withErrorHandling(_POST);

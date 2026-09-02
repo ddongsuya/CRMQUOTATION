@@ -10,15 +10,14 @@
 npm install                  # postinstall 로 prisma generate 가 자동 실행됨
 cp .env.example .env         # 값을 실제 Neon 접속 정보로 채운다
 npx prisma generate          # 위 postinstall 이 돌았다면 생략 가능
-npx prisma db push           # 스키마를 DB 에 반영
+npm run db:deploy            # 마이그레이션 적용 (prisma migrate deploy)
 npx prisma db seed           # 초기 데이터 시드
 npm run dev                  # http://localhost:3000
 ```
 
-> ⚠️ **`prisma migrate dev` 를 실행하지 말 것.**
-> 이 프로젝트의 DB 는 Prisma Migrate 관리 밖에 있다(`_prisma_migrations` 테이블 없음, `prisma/migrations/` 폴더 없음).
-> `migrate dev` 를 실행하면 드리프트로 판정되어 **DB 리셋을 제안**한다. `.env` 가 운영 Neon 을 가리키는 상태라면 데이터가 소실될 수 있다.
-> 스키마 반영은 항상 `npx prisma db push` 를 쓴다.
+> ⚠️ **스키마 변경은 마이그레이션으로만.** `prisma db push` · `prisma migrate dev` 는 쓰지 않는다.
+> `npm run db:migrate:new -- <이름>` 으로 `prisma/migrations/` 에 SQL 을 생성하고 검토한 뒤 `npm run db:deploy`.
+> 로컬 `.env` 는 Neon **dev 브랜치**를 가리켜야 한다. 자세한 절차는 `docs/OPERATIONS.md`.
 
 `.env` 에 필요한 값은 `.env.example` 에 주석과 함께 정리돼 있다 (`DATABASE_URL` · `NEXTAUTH_SECRET` · `NEXTAUTH_URL`).
 `DATABASE_URL` 은 `prisma/schema.prisma` 의 `provider = "postgresql"` 때문에 반드시 `postgresql://` 스킴이어야 한다.
@@ -31,13 +30,15 @@ npm run dev                  # http://localhost:3000
 | --- | --- |
 | `npm run dev` | 개발 서버 (:3000) |
 | `npm run build` / `npm start` | 프로덕션 빌드 / 실행 |
-| `npm run lint` | `next lint` (※ eslint 설정 파일은 저장소에 없음) |
+| `npm run lint` | `next lint` (`.eslintrc.json`) |
 | `npm test` | 견적 엔진 + lib 전체 테스트 |
 | `npm run test:regression` | 회귀 4종 (catalog-integrity · assemble · suggest-api · rule-coverage) |
 | `npm run test:rules` | `rules_catalog.yaml` 구조 검사 |
 | `npm run test:snapshots:update` | 회귀 스냅샷 갱신 — 가격·룰을 **의도적으로** 바꿨을 때만 |
 | `npm run prisma:generate` | `prisma generate` |
-| `npm run prisma:push` | `prisma db push` — 스키마 반영 |
+| `npm run db:migrate:new -- <이름>` | 현재 DB↔schema 차이를 `prisma/migrations/` SQL 로 생성 |
+| `npm run db:deploy` / `db:status` | `prisma migrate deploy` / `migrate status` |
+| `npm run typecheck` | `tsc --noEmit` |
 | `npm run db:seed` | `prisma db seed` (`ts-node prisma/seed.ts`) |
 | `npm run data:build` | `extract` → `presets` → `backfill:all` 일괄 실행 |
 | `npm run extract` | `마스터_가이드라인_매핑.xlsx` → `data/*.json` 추출 |

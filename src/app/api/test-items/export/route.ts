@@ -8,9 +8,10 @@ import { loadData } from '@/lib/data';
 import { buildTestItemsWorkbook } from '@/lib/test-items-xlsx';
 import { ensureHydrated } from '@/lib/hydrate';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+async function _GET() {
   await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 내보낼 수 있습니다.' }, { status: 403 });
@@ -26,3 +27,5 @@ export async function GET() {
     },
   });
 }
+
+export const GET = withErrorHandling(_GET);

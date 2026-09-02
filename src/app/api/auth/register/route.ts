@@ -2,12 +2,13 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
 
+import { withErrorHandling } from '@/lib/api-handler';
 /**
  * Minimal self-registration. In production this should be admin-gated or
  * tied to a corporate email allow-list — for now it's open so the team can
  * seed their own accounts.
  */
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const { email, name, password } = await req.json() as { email?: string; name?: string; password?: string };
   if (!email || !name || !password || password.length < 6) {
     return NextResponse.json({ error: '이메일·이름·비밀번호(6자 이상) 필수' }, { status: 400 });
@@ -21,3 +22,5 @@ export async function POST(req: Request) {
   await prisma.user.create({ data: { email, name, passwordHash, role } });
   return NextResponse.json({ ok: true, role });
 }
+
+export const POST = withErrorHandling(_POST);

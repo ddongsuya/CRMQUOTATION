@@ -9,9 +9,10 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+async function _GET() {
   const owners = await visibleOwnerIds();
   const now = new Date();
   const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -52,3 +53,5 @@ export async function GET() {
     weekDone,
   });
 }
+
+export const GET = withErrorHandling(_GET);

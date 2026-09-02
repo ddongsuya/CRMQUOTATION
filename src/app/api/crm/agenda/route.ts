@@ -8,6 +8,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 type Item = {
@@ -21,7 +22,7 @@ type Item = {
 
 const addDays = (d: Date, n: number) => new Date(d.getTime() + n * 86400_000);
 
-export async function GET(req: Request) {
+async function _GET(req: Request) {
   const owners = await visibleOwnerIds();
   const { searchParams } = new URL(req.url);
   const fromP = searchParams.get('from');
@@ -117,3 +118,5 @@ export async function GET(req: Request) {
   items.sort((a, b) => a.date.localeCompare(b.date));
   return NextResponse.json({ items, now: now.toISOString() });
 }
+
+export const GET = withErrorHandling(_GET);

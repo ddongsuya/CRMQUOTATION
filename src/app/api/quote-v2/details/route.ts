@@ -7,6 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { getItem } from '@/lib/quote-engine/master';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +27,7 @@ function guidelineMap(): Record<string, any> {
   return GL_CACHE;
 }
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const body = (await req.json().catch(() => null)) as { ids?: string[] } | null;
   const ids = body?.ids ?? [];
   const GL = guidelineMap();
@@ -51,3 +52,5 @@ export async function POST(req: Request) {
   }).filter(Boolean);
   return NextResponse.json({ details });
 }
+
+export const POST = withErrorHandling(_POST);

@@ -14,7 +14,8 @@ import { loadData, writeTestItems, type TestItem } from '@/lib/data';
 import { validateTestItems, type TestItemRecord } from '@/lib/test-items-schema';
 import { ensureHydrated } from '@/lib/hydrate';
 
-export async function POST(req: Request) {
+import { withErrorHandling } from '@/lib/api-handler';
+async function _POST(req: Request) {
   await ensureHydrated();
   const admin = await getAdmin();
   if (!admin) return NextResponse.json({ error: '관리자만 편집할 수 있습니다.' }, { status: 403 });
@@ -54,3 +55,5 @@ export async function POST(req: Request) {
   await writeTestItems(valid.data as unknown as TestItem[]);
   return NextResponse.json({ ok: true, count: valid.data.length });
 }
+
+export const POST = withErrorHandling(_POST);

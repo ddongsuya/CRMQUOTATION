@@ -11,6 +11,7 @@ import { ownsQuote } from '@/lib/crm-guards';
 import { classifyRole, defaultDurations, schedule, type GanttTask } from '@/lib/gantt-schedule';
 import { getItem } from '@/lib/quote-engine/master';
 
+import { withErrorHandling } from '@/lib/api-handler';
 type Tx = Prisma.TransactionClient;
 
 // 기본 지급조건 — 선금 50%(계약 체결 시) + 잔금 50%(최종보고서안 발행 + 30일). "계약 시작" 경로와 동일 규칙.
@@ -21,7 +22,7 @@ const DEFAULT_TERMS = {
   ],
 };
 
-export async function POST(_req: Request, { params }: { params: { id: string } }) {
+async function _POST(_req: Request, { params }: { params: { id: string } }) {
   const ownerId = await currentUserId();
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
@@ -207,3 +208,5 @@ async function createStudiesFromQuote(tx: Tx, dealId: number, q: QuoteForStudy):
   const first = await tx.study.findFirst({ where: { dealId }, orderBy: { id: 'asc' }, select: { id: true } });
   return first?.id ?? null;
 }
+
+export const POST = withErrorHandling(_POST);

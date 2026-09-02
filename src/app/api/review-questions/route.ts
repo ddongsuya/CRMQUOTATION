@@ -4,6 +4,7 @@
  * GET /api/review-questions?unanswered=1        — 미답변 질문만
  */
 import { NextResponse } from 'next/server';
+import { withErrorHandling } from '@/lib/api-handler';
 import {
   loadReviewQuestions,
   getReviewQuestionsByPriority,
@@ -17,7 +18,7 @@ const PRIORITY_MAP: Record<string, QuestionPriority> = {
   P2: '보통 (P2)',
 };
 
-export async function GET(req: Request) {
+async function _GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const priority = searchParams.get('priority');
   const unanswered = searchParams.get('unanswered') === '1';
@@ -42,3 +43,5 @@ export async function GET(req: Request) {
     questions,
   });
 }
+
+export const GET = withErrorHandling(_GET);

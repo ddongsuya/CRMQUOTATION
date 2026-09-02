@@ -7,9 +7,10 @@ import { prisma } from '@/lib/prisma';
 import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { supplyOrZero } from '@/lib/money';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+async function _GET() {
   const owners = await visibleOwnerIds();
   const rows = await prisma.company.findMany({
     where: { ownerId: { in: owners } },
@@ -42,7 +43,7 @@ export async function GET() {
   return NextResponse.json({ companies });
 }
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const ownerId = await currentUserId();
   const body = await req.json().catch(() => null) as {
     name?: string; bizRegNo?: string; industry?: string; address?: string; isNewClient?: boolean; memo?: string;
@@ -63,3 +64,6 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ company });
 }
+
+export const GET = withErrorHandling(_GET);
+export const POST = withErrorHandling(_POST);

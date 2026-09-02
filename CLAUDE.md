@@ -6,7 +6,7 @@
 
 ## 절대 규칙
 
-- **`prisma migrate dev` 를 실행하지 않는다.** 이 DB는 Prisma Migrate 관리 밖(`_prisma_migrations` 테이블 없음)이라 드리프트로 판정되어 **운영 Neon DB 리셋**을 제안한다. 스키마 반영은 `npx prisma db push`. `--accept-data-loss` / `--force-reset` 플래그는 절대 금지.
+- **스키마 변경은 Prisma Migrate 로만 한다 (2026-09-02 baseline 도입).** `prisma db push` 금지. 절차: `npm run db:migrate:new -- <이름>`(현재 DB↔schema 차이를 `prisma/migrations/<ts>_<이름>/migration.sql` 로 생성) → 내용 검토 → `npm run db:deploy`. Vercel 은 `vercel-build` 가 `migrate deploy` 를 먼저 실행한다. `prisma migrate dev` 는 Neon 에 shadow DB 가 없어 실패하므로 쓰지 않는다. `--accept-data-loss` / `--force-reset` 플래그는 절대 금지. 로컬 `.env` 는 Neon dev 브랜치를 가리켜야 한다(`docs/OPERATIONS.md` §3).
 - **OECD 가격이 비어 있을 때 MFDS 가격으로 자동 폴백하지 않는다.** `missing_info`를 발생시켜 사용자에게 되묻는다. (`docs/quote-engine-binding.md` §5)
 - **정형화 불가 데이터를 추측으로 채우지 않는다.** `studyWeeks = null`(비정형 141건)은 UI에서 사용자가 직접 입력한다. (`docs/REGRESSION.md` F-1)
 - **회귀 스냅샷을 습관적으로 갱신하지 않는다.** `npm run test:snapshots:update`는 가격·룰을 *의도적으로* 바꿨을 때만. 갱신 후 반드시 `git diff src/lib/__tests__/__snapshots__/` 확인.
@@ -26,7 +26,9 @@ npm run test:rules           # rules_catalog.yaml 구조 검사
 npm run test:snapshots:update  # 스냅샷 갱신 — 위 '절대 규칙' 참조
 npm run data:build           # extract → presets → backfill(prices/detail/study-weeks)
 npm run prisma:generate      # = prisma generate (postinstall 에도 걸려 있음)
-npm run prisma:push          # prisma db push — 스키마 반영. migrate dev 금지(절대 규칙 참조)
+npm run db:migrate:new -- <이름>   # 스키마 변경 → migration.sql 생성 (docs/OPERATIONS.md §3)
+npm run db:deploy            # prisma migrate deploy — 로컬(dev 브랜치)·Vercel(vercel-build) 공통
+npm run typecheck            # tsc --noEmit (CI 와 동일)
 npm run db:seed              # ts-node prisma/seed.ts
 ```
 
@@ -108,9 +110,9 @@ docs/               설계·룰·회귀 문서
 ## 저장소에서 확인된 불일치 — 손대기 전에 확인 필요
 
 1. ~~**DB 프로바이더 불일치**~~ — **2026-08-18 해결.** `.env.example`이 SQLite(`file:./dev.db`)로 되어 있어 그대로 복사하면 Prisma가 실패했다. PostgreSQL(Neon) 형식으로 교체했다(커밋 b2a079b). 실제 개발·운영 DB는 Neon PostgreSQL이다.
-2. **스키마 반영 방식 = `prisma db push`** (2026-08-18 확정). `npx prisma migrate status` → "not managed by Prisma Migrate", `_prisma_migrations` 테이블 없음, `prisma/migrations/` 폴더 없음. 단 `migrate diff` 결과 **드리프트 0** — DB와 `schema.prisma`는 정확히 일치한다. Prisma Migrate 도입은 개발용 DB 분리가 선행되어야 하므로 보류 중이다.
+2. ~~**스키마 반영 방식 = `prisma db push`**~~ — **2026-09-02 해결.** `prisma/migrations/0_init` baseline 을 만들고 prod 에 `migrate resolve --applied` 로 표시했다. 이후는 `db:migrate:new` → `db:deploy`. CI 가 Postgres 컨테이너에서 `migrate deploy` 후 드리프트 0 을 검사한다.
 3. ~~**README.md가 낡음**~~ — **2026-08-18 해결.** "다음 단계: pnpm init → Next.js 스캐폴딩"이라는 미착수 로드맵이 남아 있어 프로젝트 상태를 오해하게 했다. 현행 구현 기준으로 전면 재작성했다(커밋 ee297fd). 데이터 건수도 실측값으로 교정(test_items 429 → 449).
-4. **eslint 설정 파일 부재**: `npm run lint`(next lint)의 실제 동작 규칙이 저장소에 정의돼 있지 않다.
+4. ~~**eslint 설정 파일 부재**~~ — **2026-09-02 해결.** `.eslintrc.json`(next/core-web-vitals + next/typescript). CI(`.github/workflows/ci.yml`)가 lint·test·typecheck·build 를 실행한다.
 5. **`docs/REGRESSION.md`의 룰 커버리지 표가 낡음**: `implemented 2 / not_implemented 23`으로 적혀 있으나 실제 COVERAGE 맵은 `6 / 19`다. 커버리지는 문서가 아니라 `rule-coverage.test.js`를 기준으로 판단할 것.
 
 ## 참고 문서

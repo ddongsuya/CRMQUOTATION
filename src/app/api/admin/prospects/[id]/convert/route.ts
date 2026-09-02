@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getViewMode } from '@/lib/admin/view';
+import { requireAdmin } from '@/lib/admin/guard';
 import { currentUserId } from '@/lib/current-user';
 
+import { withErrorHandling } from '@/lib/api-handler';
 /** 잠재 고객 → 고객사(Company) 전환. 기존 동일명 고객사 있으면 연결만. */
-export async function POST(_req: Request, { params }: { params: { id: string } }) {
-  const view = await getViewMode();
-  if (!view.isAdminView) return NextResponse.json({ error: '권한 없음' }, { status: 403 });
+async function _POST(_req: Request, { params }: { params: { id: string } }) {
+  const denied = await requireAdmin(); if (denied) return denied;
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
 
@@ -28,3 +28,5 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
   await prisma.prospect.update({ where: { id }, data: { companyId: company.id } });
   return NextResponse.json({ ok: true, companyId: company.id });
 }
+
+export const POST = withErrorHandling(_POST);

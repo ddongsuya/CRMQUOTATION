@@ -4,9 +4,10 @@
 import { NextResponse } from 'next/server';
 import { findRuleById } from '@/lib/rules-catalog';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function GET(
+async function _GET(
   _req: Request,
   { params }: { params: { id: string } },
 ) {
@@ -16,3 +17,5 @@ export async function GET(
   }
   return NextResponse.json(rule);
 }
+
+export const GET = withErrorHandling(_GET);

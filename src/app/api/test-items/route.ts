@@ -3,7 +3,8 @@ import { loadData, getItemByKey, itemsForModality, listModalities } from '@/lib/
 import { getAdmin } from '@/lib/admin';
 import { ensureHydrated } from '@/lib/hydrate';
 
-export async function GET(req: Request) {
+import { withErrorHandling } from '@/lib/api-handler';
+async function _GET(req: Request) {
   await ensureHydrated();
   const { searchParams } = new URL(req.url);
   const keys = searchParams.get('keys');
@@ -24,3 +25,5 @@ export async function GET(req: Request) {
     isAdmin: !!admin,
   });
 }
+
+export const GET = withErrorHandling(_GET);

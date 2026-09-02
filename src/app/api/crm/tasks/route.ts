@@ -9,9 +9,10 @@ import { prisma } from '@/lib/prisma';
 import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { checkLinkOwnership } from '@/lib/crm-guards';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request) {
+async function _GET(req: Request) {
   const owners = await visibleOwnerIds();
   const { searchParams } = new URL(req.url);
   const companyId = searchParams.get('companyId');
@@ -35,7 +36,7 @@ export async function GET(req: Request) {
   return NextResponse.json({ tasks });
 }
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const ownerId = await currentUserId();
   const b = await req.json().catch(() => null) as { title?: string; memo?: string; dueAt?: string | null; companyId?: number; contactId?: number; dealId?: number } | null;
   const title = String(b?.title ?? '').trim();
@@ -64,3 +65,6 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ task });
 }
+
+export const GET = withErrorHandling(_GET);
+export const POST = withErrorHandling(_POST);

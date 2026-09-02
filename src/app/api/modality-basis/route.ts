@@ -7,11 +7,14 @@ import { NextResponse } from 'next/server';
 import { getModalityBasis } from '@/lib/advisories';
 import { ensureHydrated } from '@/lib/hydrate';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request) {
+async function _GET(req: Request) {
   await ensureHydrated();
   const { searchParams } = new URL(req.url);
   const modality = searchParams.get('modality') ?? '';
   return NextResponse.json({ basis: getModalityBasis(modality) });
 }
+
+export const GET = withErrorHandling(_GET);

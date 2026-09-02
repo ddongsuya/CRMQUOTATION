@@ -6,9 +6,10 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
+import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: Request) {
+async function _POST(req: Request) {
   const owners = await visibleOwnerIds();
   const body = await req.json().catch(() => null) as {
     companyId?: number; name?: string; email?: string; phone?: string; position?: string; memo?: string;
@@ -32,3 +33,5 @@ export async function POST(req: Request) {
   });
   return NextResponse.json({ contact });
 }
+
+export const POST = withErrorHandling(_POST);
