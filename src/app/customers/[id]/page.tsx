@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import clsx from 'clsx';
@@ -80,6 +80,9 @@ export default function CompanyDetailPage() {
   const [contactModal, setContactModal] = useState<{ contact: Contact | null } | null>(null);
   const [dealModal, setDealModal] = useState<{ contactId: number } | null>(null);
   const [tasks, setTasks] = useState<TaskT[]>([]);
+  // 개요 카드에서 "특정 항목 수정/추가 폼 열기"로 탭을 넘길 때 전달하는 1회성 지시
+  const [jump, setJump] = useState<{ editId?: number; open?: boolean } | null>(null);
+  const goTo = (t: Tab, opts?: { editId?: number; open?: boolean }) => { setJump(opts ?? null); setTab(t); };
 
   const load = useCallback(() => {
     fetch(`/api/crm/companies/${id}`).then(r => r.json()).then(d => { setCompany(d.company ?? null); setAgg(d.agg ?? null); }).catch(() => {});
@@ -144,7 +147,7 @@ export default function CompanyDetailPage() {
         {TABS.map(t => (
           <button
             key={t}
-            onClick={() => setTab(t)}
+            onClick={() => { setJump(null); setTab(t); }}
             className={clsx('px-3.5 py-2 text-sm font-semibold whitespace-nowrap shrink-0 border-b-2 -mb-px transition-colors inline-flex items-center gap-1.5',
               tab === t ? 'border-brand-500 text-brand-700' : 'border-transparent text-ink-muted hover:text-ink')}
           >
@@ -155,7 +158,10 @@ export default function CompanyDetailPage() {
       </div>
 
       {/* 탭 내용 */}
-      {tab === '개요' && <OverviewTab agg={agg} company={company} />}
+      {tab === '개요' && (
+        <OverviewTab agg={agg} company={company} tasks={tasks} reload={load} onGo={goTo}
+          onAddContact={() => setContactModal({ contact: null })} onEditContact={c => setContactModal({ contact: c })} />
+      )}
       {tab === '할 일' && <TasksTab companyId={company.id} tasks={tasks} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} />}
       {tab === '딜' && <DealsTab agg={agg} contacts={company.contacts} onAddDeal={cid => setDealModal({ contactId: cid })} />}
       {tab === '연락처' && (
@@ -163,8 +169,8 @@ export default function CompanyDetailPage() {
       )}
       {tab === '계약' && <ContractsTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
       {tab === '시험' && <StudiesTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
-      {tab === '노트' && <NotesTab agg={agg} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} />}
-      {tab === '일정' && <ScheduleTab agg={agg} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} />}
+      {tab === '노트' && <NotesTab agg={agg} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} initial={jump ?? undefined} />}
+      {tab === '일정' && <ScheduleTab agg={agg} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} initial={jump ?? undefined} />}
 
       {editCompany && <CompanyEditModal company={company} onClose={() => setEditCompany(false)} onSaved={() => { setEditCompany(false); load(); }} />}
       {contactModal && <ContactModal companyId={company.id} contact={contactModal.contact} onClose={() => setContactModal(null)} onSaved={() => { setContactModal(null); load(); }} />}
@@ -244,29 +250,66 @@ function DealLine({ d }: { d: Agg['deals'][number] }) {
 }
 
 // ─── 개요 ───
-function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
+function OverviewTab({ agg, company, tasks, reload, onGo, onAddContact, onEditContact }: {
+  agg: Agg | null; company: Company; tasks: TaskT[]; reload: () => void;
+  onGo: (t: Tab, opts?: { editId?: number; open?: boolean }) => void;
+  onAddContact: () => void; onEditContact: (c: Contact) => void;
+}) {
   if (!agg) return <Empty>불러오는 중…</Empty>;
   const activeDeals = agg.deals.filter(d => d.status === 'ACTIVE').slice(0, 5);
   const runningStudies = agg.studies.filter(s => !s.reportDraftIssuedAt).slice(0, 5);
   const recentNotes = agg.notes.slice(0, 4);
   const upcoming = agg.events.filter(e => !e.done && new Date(e.startAt) >= new Date(new Date().setHours(0, 0, 0, 0))).slice(0, 5);
+  const openTasks = tasks.filter(t => !t.done).slice(0, 5);
+  // 개요에서도 전용 탭과 같은 조작 — 완료 토글은 바로 반영, 수정은 해당 탭의 편집 폼으로
+  const toggleEvent = async (e: Agg['events'][number]) => {
+    const res = await fetch(`/api/crm/events/${e.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !e.done }) });
+    if (res.ok) reload(); else toast.error('변경 실패');
+  };
+  const toggleTask = async (t: TaskT) => {
+    const res = await fetch(`/api/crm/tasks/${t.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !t.done }) });
+    if (res.ok) reload(); else toast.error('변경 실패');
+  };
+  const More = ({ t }: { t: Tab }) => <button onClick={() => onGo(t)} className="text-[12px] text-brand-600 hover:underline">전체 보기</button>;
   return (
     <div className="grid lg:grid-cols-2 gap-4">
-      <SectionCard title="진행 중 딜" count={activeDeals.length}>
+      <SectionCard title="진행 중 딜" count={activeDeals.length} action={<More t="딜" />}>
         {activeDeals.length === 0 ? <Empty>진행 중인 딜이 없습니다.</Empty> : <div className="divide-y divide-slate-100">{activeDeals.map(d => <DealLine key={d.id} d={d} />)}</div>}
       </SectionCard>
 
-      <SectionCard title="시험 진행" count={runningStudies.length}>
+      <SectionCard title="시험 진행" count={runningStudies.length} action={<More t="시험" />}>
         {runningStudies.length === 0 ? <Empty>진행 중인 시험이 없습니다.</Empty> : (
           <ul className="divide-y divide-slate-100">
             {runningStudies.map(s => {
               const dd = dday(s.reportDraftDueAt);
               return (
-                <li key={s.id} className="flex items-center gap-2 py-2.5">
-                  <span className="flex-1 min-w-0">
-                    <span className="block text-sm text-ink truncate">{s.itemName || s.dealTitle}</span>
-                    <span className="block text-[11px] text-ink-subtle truncate">{s.studyNumber ? `${s.studyNumber} · ` : ''}{s.director || '책임자 미정'}</span>
-                  </span>
+                <li key={s.id}>
+                  <Link href={`/deals/${s.dealId}`} className="flex items-center gap-2 py-2.5 -mx-2 px-2 rounded-lg hover:bg-slate-50/70" title="딜 상세에서 시험 정보 수정">
+                    <span className="flex-1 min-w-0">
+                      <span className="block text-sm text-ink truncate">{s.itemName || s.dealTitle}</span>
+                      <span className="block text-[11px] text-ink-subtle truncate">{s.studyNumber ? `${s.studyNumber} · ` : ''}{s.director || '책임자 미정'}</span>
+                    </span>
+                    {dd && <span className={clsx('pill flex-shrink-0', dd.cls)}>{dd.label}</span>}
+                    <Pencil className="w-3.5 h-3.5 text-ink-subtle flex-shrink-0" />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </SectionCard>
+
+      <SectionCard title="할 일" count={openTasks.length}
+        action={<div className="flex items-center gap-2"><button onClick={() => onGo('할 일')} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 할 일 추가</button><More t="할 일" /></div>}>
+        {openTasks.length === 0 ? <Empty>미완료 할 일이 없습니다.</Empty> : (
+          <ul className="divide-y divide-slate-100">
+            {openTasks.map(t => {
+              const dd = t.dueAt ? dday(t.dueAt) : null;
+              return (
+                <li key={t.id} className="flex items-center gap-2.5 py-2">
+                  <button onClick={() => toggleTask(t)} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
+                  <button onClick={() => onGo('할 일')} className="flex-1 min-w-0 text-left text-sm text-ink truncate hover:text-brand-600">{t.title}</button>
+                  {(t.deal || t.contact) && <span className="text-[11px] text-ink-subtle truncate max-w-[120px]">{t.deal?.title ?? t.contact?.name}</span>}
                   {dd && <span className={clsx('pill flex-shrink-0', dd.cls)}>{dd.label}</span>}
                 </li>
               );
@@ -275,19 +318,23 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
         )}
       </SectionCard>
 
-      <SectionCard title="담당자" count={company.contacts.length}>
+      <SectionCard title="담당자" count={company.contacts.length}
+        action={<div className="flex items-center gap-2"><button onClick={onAddContact} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 의뢰자 추가</button><More t="연락처" /></div>}>
         {company.contacts.length === 0 ? <Empty>등록된 의뢰자가 없습니다.</Empty> : (
-          <ul className="space-y-2.5">
+          <ul className="space-y-1">
             {company.contacts.map(c => {
               const cq = agg.quotes.filter(q => q.contactId === c.id);
               return (
-              <li key={c.id} className="flex items-center gap-2.5">
-                <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-brand-50 text-brand-600 font-bold text-xs flex-shrink-0">{c.name.charAt(0)}</span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm text-ink truncate">{c.name}{c.position && <span className="text-ink-subtle text-xs ml-1.5">{c.position}</span>}</span>
-                  <span className="block text-[11px] text-ink-subtle truncate">{[c.email, c.phone].filter(Boolean).join(' · ') || '연락처 없음'}</span>
-                </span>
-                {cq.length > 0 && <span className="pill bg-brand-100 text-brand-700 flex-shrink-0">견적 {cq.length}건</span>}
+              <li key={c.id} className="flex items-center gap-2.5 py-1.5 -mx-2 px-2 rounded-lg hover:bg-slate-50/70 group">
+                <button onClick={() => onEditContact(c)} className="flex items-center gap-2.5 min-w-0 flex-1 text-left" title="의뢰자 정보 수정">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-brand-50 text-brand-600 font-bold text-xs flex-shrink-0">{c.name.charAt(0)}</span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm text-ink truncate">{c.name}{c.position && <span className="text-ink-subtle text-xs ml-1.5">{c.position}</span>}</span>
+                    <span className="block text-[11px] text-ink-subtle truncate">{[c.email, c.phone].filter(Boolean).join(' · ') || '연락처 없음'}</span>
+                  </span>
+                </button>
+                {cq.length > 0 && <button onClick={() => onGo('연락처')} className="pill bg-brand-100 text-brand-700 flex-shrink-0 hover:bg-brand-200" title="담당자별 견적 보기">견적 {cq.length}건</button>}
+                <Pencil className="w-3.5 h-3.5 text-ink-subtle flex-shrink-0 opacity-0 group-hover:opacity-100" />
               </li>
               );
             })}
@@ -295,16 +342,22 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
         )}
       </SectionCard>
 
-      <SectionCard title="예정 일정" count={upcoming.length}>
+      <SectionCard title="예정 일정" count={upcoming.length}
+        action={<div className="flex items-center gap-2"><button onClick={() => onGo('일정', { open: true })} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 일정 추가</button><More t="일정" /></div>}>
         {upcoming.length === 0 ? <Empty>예정된 일정이 없습니다.</Empty> : (
           <ul className="divide-y divide-slate-100">
             {upcoming.map(e => {
               const dd = dday(e.startAt);
               return (
-                <li key={e.id} className="flex items-center gap-2 py-2.5">
+                <li key={e.id} className="flex items-center gap-2 py-2 group">
+                  <button onClick={() => toggleEvent(e)} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-emerald-500 flex items-center justify-center shrink-0" title="완료 처리" />
                   <span className={clsx('w-2 h-2 rounded-full flex-shrink-0', EVENT_T[e.type] ?? 'bg-slate-300')} />
-                  <span className="flex-1 min-w-0 text-sm text-ink truncate">{e.title}</span>
+                  <button onClick={() => onGo('일정', { editId: e.id })} className="flex-1 min-w-0 text-left hover:text-brand-600" title="일정 수정">
+                    <span className="block text-sm text-ink truncate">{e.title}</span>
+                    <span className="block text-[11px] text-ink-subtle truncate">{fmtDate(e.startAt)}{e.location ? ` · ${e.location}` : ''}</span>
+                  </button>
                   {dd && <span className={clsx('pill flex-shrink-0', dd.cls)}>{dd.label}</span>}
+                  <Pencil className="w-3.5 h-3.5 text-ink-subtle flex-shrink-0 opacity-0 group-hover:opacity-100" />
                 </li>
               );
             })}
@@ -312,16 +365,20 @@ function OverviewTab({ agg, company }: { agg: Agg | null; company: Company }) {
         )}
       </SectionCard>
 
-      <SectionCard title="최근 노트" count={recentNotes.length}>
+      <SectionCard title="최근 노트" count={recentNotes.length}
+        action={<div className="flex items-center gap-2"><button onClick={() => onGo('노트', { open: true })} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 기록 추가</button><More t="노트" /></div>}>
         {recentNotes.length === 0 ? <Empty>기록된 노트가 없습니다.</Empty> : (
-          <ul className="space-y-3">
+          <ul className="space-y-1">
             {recentNotes.map(n => (
-              <li key={n.id} className="text-sm">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className={clsx('pill', (NOTE_T[n.type] ?? NOTE_T.MEMO).cls)}>{(NOTE_T[n.type] ?? NOTE_T.MEMO).label}</span>
-                  <span className="text-[11px] text-ink-subtle">{fmtDate(n.occurredAt)}{(n.dealTitle || n.contactName) ? ` · ${n.dealTitle ?? n.contactName}` : ''}</span>
-                </div>
-                <p className="text-ink-muted line-clamp-2">{n.title ? <span className="font-medium text-ink">{n.title} — </span> : null}{n.body}</p>
+              <li key={n.id}>
+                <button onClick={() => onGo('노트', { editId: n.id })} className="w-full text-left text-sm py-2 -mx-2 px-2 rounded-lg hover:bg-slate-50/70 group" title="노트 수정">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className={clsx('pill', (NOTE_T[n.type] ?? NOTE_T.MEMO).cls)}>{(NOTE_T[n.type] ?? NOTE_T.MEMO).label}</span>
+                    <span className="text-[11px] text-ink-subtle">{fmtDate(n.occurredAt)}{(n.dealTitle || n.contactName) ? ` · ${n.dealTitle ?? n.contactName}` : ''}</span>
+                    <Pencil className="w-3 h-3 text-ink-subtle ml-auto opacity-0 group-hover:opacity-100" />
+                  </div>
+                  <p className="text-ink-muted line-clamp-2">{n.title ? <span className="font-medium text-ink">{n.title} — </span> : null}{n.body}</p>
+                </button>
               </li>
             ))}
           </ul>
@@ -558,25 +615,51 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
 }
 
 // ─── 노트 ───
-function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void }) {
+function NotesTab({ agg, deals, contacts, reload, initial }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void; initial?: { editId?: number; open?: boolean } }) {
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };   // 로컬 기준 (UTC면 오전 9시 전 어제로 나옴)
+  const EMPTY = { target: '', type: 'MEMO', title: '', body: '', occurredAt: today() };
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState<{ target: string; type: string; title: string; body: string; occurredAt: string }>({ target: '', type: 'MEMO', title: '', body: '', occurredAt: today() });
+  const [editId, setEditId] = useState<number | null>(null);
+  const [f, setF] = useState<{ target: string; type: string; title: string; body: string; occurredAt: string }>(EMPTY);
   const [busy, setBusy] = useState(false);
-  const add = async () => {
+  const startEdit = (n: Agg['notes'][number]) => {
+    setEditId(n.id);
+    setF({ target: n.dealId ? `d:${n.dealId}` : n.contactId ? `c:${n.contactId}` : '', type: n.type, title: n.title ?? '', body: n.body, occurredAt: n.occurredAt.slice(0, 10) });
+    setOpen(true);
+  };
+  const closeForm = () => { setOpen(false); setEditId(null); setF(EMPTY); };
+  // 개요 카드에서 넘어온 지시(특정 노트 수정 / 추가 폼) — 1회 적용
+  const applied = useRef(false);
+  useEffect(() => {
+    if (applied.current || !initial || !agg) return;
+    applied.current = true;
+    if (initial.editId) { const n = agg.notes.find(x => x.id === initial.editId); if (n) startEdit(n); }
+    else if (initial.open) setOpen(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial, agg]);
+  const save = async () => {
     const tgt = parseTarget(f.target);
-    if ((!tgt.dealId && !tgt.contactId) || !f.body.trim()) { toast.error('대상·내용을 입력하세요.'); return; }
+    if ((!editId && !tgt.dealId && !tgt.contactId) || !f.body.trim()) { toast.error('대상·내용을 입력하세요.'); return; }
     setBusy(true);
-    const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...tgt, type: f.type, title: f.title || null, body: f.body, occurredAt: f.occurredAt || undefined }) });
+    const payload = { ...tgt, type: f.type, title: f.title || null, body: f.body, occurredAt: f.occurredAt || undefined };
+    const res = editId
+      ? await fetch(`/api/crm/notes/${editId}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) })
+      : await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
     setBusy(false);
-    if (res.ok) { toast.success('기록 추가됨'); setF({ target: '', type: 'MEMO', title: '', body: '', occurredAt: today() }); setOpen(false); reload(); } else toast.error('저장 실패');
+    if (res.ok) { toast.success(editId ? '기록 수정됨' : '기록 추가됨'); closeForm(); reload(); } else toast.error('저장 실패');
+  };
+  const del = async (id: number) => {
+    if (!confirm('이 기록을 삭제할까요?')) return;
+    const res = await fetch(`/api/crm/notes/${id}`, { method: 'DELETE' });
+    if (res.ok) { toast.success('삭제됨'); if (editId === id) closeForm(); reload(); } else toast.error('삭제 실패');
   };
   if (!agg) return <Empty>불러오는 중…</Empty>;
   return (
     <SectionCard title="노트" count={agg.notes.length}
-      action={(deals.length > 0 || contacts.length > 0) && <AddToggle open={open} onToggle={() => setOpen(v => !v)} label="기록 추가" />}>
+      action={(deals.length > 0 || contacts.length > 0) && <AddToggle open={open} onToggle={() => open ? closeForm() : setOpen(true)} label="기록 추가" />}>
       {open && (
         <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
+          {editId && <div className="pill bg-brand-100 text-brand-700 w-fit">기록 수정 중</div>}
           <div className="grid grid-cols-2 gap-2">
             <TargetSelect deals={deals} contacts={contacts} value={f.target} onChange={v => setF(s => ({ ...s, target: v }))} />
             <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{Object.entries(NOTE_T).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select>
@@ -592,13 +675,16 @@ function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: De
             </label>
           </div>
           <textarea className="input text-sm w-full min-h-[64px]" placeholder="내용" value={f.body} onChange={e => setF(s => ({ ...s, body: e.target.value }))} />
-          <div className="flex justify-end"><button onClick={add} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 저장</button></div>
+          <div className="flex justify-end gap-2">
+            {editId && <button onClick={closeForm} className="btn-ghost text-sm">취소</button>}
+            <button onClick={save} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {editId ? '수정 저장' : '저장'}</button>
+          </div>
         </div>
       )}
       {agg.notes.length === 0 ? <Empty>기록된 노트가 없습니다.</Empty> : (
         <ul className="space-y-4">
           {agg.notes.map(n => (
-            <li key={n.id} className="relative pl-4 border-l-2 border-slate-100">
+            <li key={n.id} className="relative pl-4 border-l-2 border-slate-100 group">
               <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-brand-300" />
               <div className="flex items-center gap-2 flex-wrap mb-0.5">
                 <span className={clsx('pill', (NOTE_T[n.type] ?? NOTE_T.MEMO).cls)}>{(NOTE_T[n.type] ?? NOTE_T.MEMO).label}</span>
@@ -606,6 +692,10 @@ function NotesTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: De
                 {n.dealId
                   ? <Link href={`/deals/${n.dealId}`} className="text-[11px] text-brand-600 hover:underline truncate">{n.dealTitle}</Link>
                   : n.contactName && <span className="text-[11px] text-ink-subtle truncate">{n.contactName}</span>}
+                <span className="ml-auto flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button onClick={() => startEdit(n)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => del(n.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+                </span>
               </div>
               {n.title && <div className="text-sm font-semibold text-ink">{n.title}</div>}
               <p className="text-sm text-ink-muted whitespace-pre-wrap">{n.body}</p>
@@ -684,7 +774,7 @@ function TasksTab({ companyId, tasks, deals, contacts, reload }: { companyId: nu
 }
 
 const EMPTY_EVENT_FORM = { target: '', title: '', startAt: '', type: 'MEETING', location: '', attendeesClient: '', attendeesInternal: '', requests: '' };
-function ScheduleTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void }) {
+function ScheduleTab({ agg, deals, contacts, reload, initial }: { agg: Agg | null; deals: DealOpt; contacts: { id: number; name: string }[]; reload: () => void; initial?: { editId?: number; open?: boolean } }) {
   const [open, setOpen] = useState(false);
   const [editId, setEditId] = useState<number | null>(null);   // 수정 중인 일정 id (null = 신규)
   const [f, setF] = useState<typeof EMPTY_EVENT_FORM>(EMPTY_EVENT_FORM);
@@ -699,6 +789,15 @@ function ScheduleTab({ agg, deals, contacts, reload }: { agg: Agg | null; deals:
     setOpen(true);
   };
   const closeForm = () => { setOpen(false); setEditId(null); setF(EMPTY_EVENT_FORM); };
+  // 개요 카드에서 넘어온 지시(특정 일정 수정 / 추가 폼) — 1회 적용
+  const applied = useRef(false);
+  useEffect(() => {
+    if (applied.current || !initial || !agg) return;
+    applied.current = true;
+    if (initial.editId) { const e = agg.events.find(x => x.id === initial.editId); if (e) startEdit(e); }
+    else if (initial.open) setOpen(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial, agg]);
   const save = async () => {
     const tgt = parseTarget(f.target);
     if ((!editId && !tgt.dealId && !tgt.contactId) || !f.title.trim() || !f.startAt) { toast.error('대상·제목·날짜를 입력하세요.'); return; }
