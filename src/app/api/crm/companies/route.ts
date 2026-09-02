@@ -5,6 +5,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
+import { supplyOrZero } from '@/lib/money';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,9 +27,7 @@ export async function GET() {
     for (const q of deals.flatMap(d => d.quotes)) merged.set(q.id, q);
     for (const q of directQuotes) merged.set(q.id, q);
     const quotes = [...merged.values()].filter(q => !q.supersededAt);   // 변경견적으로 대체된 버전은 집계 제외 (최신본만)
-    // 금액은 공급가(VAT 별도) 기준 — 구 데이터는 총액/1.1 역산
-    const supply = (q: { totalAfterDiscount: number | null; grandTotal: number | null }) =>
-      q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0);
+    const supply = supplyOrZero;   // 공급가(VAT 별도) — lib/money 단일 소스
     const wonAmount = quotes.filter(q => q.status === 'ACCEPTED').reduce((s, q) => s + supply(q), 0);
     return {
       ...c,

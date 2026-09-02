@@ -227,6 +227,7 @@ model PaymentTerm {
   dueAt       DateTime?
   paidAt      DateTime?
 
+  @@unique([contractId, seq])   // 회차 번호 중복 방지 (선금/잔금 순서 모호성 차단)
   @@index([contractId])
 }
 
@@ -249,6 +250,7 @@ model Study {
   updatedAt           DateTime  @updatedAt
 
   @@index([dealId])
+  @@index([reportDraftDueAt])   // 마감 임박 시험·아젠다
 }
 
 model ChangeQuote {
@@ -349,6 +351,8 @@ model Quote {
   @@index([dealId])
   @@index([companyId])
   @@index([contactId])
+  @@index([userId, status, supersededAt])   // 대시보드·아젠다·목록: "내 진행 중(최신) 견적"
+  @@index([revisedFromId])
 }
 
 // 견적 추적 이력 — 결론/상태 변경을 누적(임정모 시트의 '추적 관찰' 본질). 견적 드로어 타임라인.
@@ -454,7 +458,9 @@ model Task {
 
   @@index([ownerId])
   @@index([companyId])
-  @@index([dueAt])
+  @@index([contactId])
+  @@index([dealId])
+  @@index([ownerId, done, dueAt])   // 개인 기록·아젠다: 미완료 우선 + 기한 정렬
 }
 
 model CalendarEvent {
@@ -481,4 +487,6 @@ model CalendarEvent {
 
   @@index([ownerId])
   @@index([startAt])
+  @@index([contactId])
+  @@index([dealId])
 }

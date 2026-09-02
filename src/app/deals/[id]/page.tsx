@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import clsx from 'clsx';
@@ -8,6 +8,7 @@ import { GanttChartSquare, Loader2, Trash2, TrendingDown, TrendingUp } from 'luc
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { quoteStatus } from '@/lib/admin/status';
+import { supplyTotal } from '@/lib/money';
 
 type Quote = { id: number; quoteNumber: string; grandTotal: number | null; totalAfterDiscount: number | null; currency: string; status: string; sentAt: string | null; accepted: boolean | null; createdAt: string };
 type PaymentTerm = { id: number; seq: number; kind: string; ratio: number | null; amount: number | null; condition: string | null; dueAt: string | null; paidAt: string | null };
@@ -33,7 +34,15 @@ const fmtDate = (d: string | null) => d ? new Date(d).toISOString().slice(0, 10)
 export default function DealDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [deal, setDeal] = useState<Deal | null>(null);
-  const load = useCallback(() => fetch(`/api/crm/deals/${id}`).then(r => r.json()).then(d => setDeal(d.deal ?? null)).catch(() => {}), [id]);
+  const [loadError, setLoadError] = useState(false);
+  const reqSeq = useRef(0);   // 빠른 화면 전환 시 늦게 도착한 이전 응답이 현재 딜을 덮어쓰지 않게
+  const load = useCallback(() => {
+    const my = ++reqSeq.current;
+    setLoadError(false);
+    return fetch(`/api/crm/deals/${id}`).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then(d => { if (my === reqSeq.current) setDeal(d.deal ?? null); })
+      .catch(e => { if (my === reqSeq.current) { setLoadError(true); console.error('[deal] load failed', e); } });
+  }, [id]);
   useEffect(() => { load(); }, [load]);
 
   const patchDeal = async (data: Record<string, unknown>) => {
@@ -41,7 +50,9 @@ export default function DealDetailPage() {
     if (res.ok) load(); else toast.error('수정 실패');
   };
 
-  if (!deal) return <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
+  if (!deal) return loadError
+    ? <div role="alert" className="card p-12 text-center text-sm text-red-700">안건을 불러오지 못했습니다. <button onClick={load} className="btn-ghost text-sm ml-2">다시 시도</button></div>
+    : <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
   const curIdx = won(deal.stage);
 
   return (
@@ -118,7 +129,7 @@ function SectionTasks({ dealId }: { dealId: number }) {
   return (
     <Card title={`할 일 ${open.length}건`}>
       <div className="flex gap-1.5 mb-2">
-        <input className="input text-sm flex-1" placeholder="할 일 추가…" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
+        <input className="input text-sm flex-1" placeholder="할 일 추가…" aria-label="할 일 추가" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
         <input type="date" className="input text-sm w-auto" title="기한(선택)" value={dueAt} onChange={e => setDueAt(e.target.value)} />
         <button onClick={add} className="btn-primary text-sm shrink-0"><Icon name="plus" className="w-4 h-4" /></button>
       </div>
@@ -126,7 +137,7 @@ function SectionTasks({ dealId }: { dealId: number }) {
         <ul className="space-y-1">
           {tasks.map(t => (
             <li key={t.id} className={clsx('flex items-center gap-2 group', t.done && 'opacity-50')}>
-              <button onClick={() => toggle(t)} className={clsx('w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Icon name="check" className="w-2.5 h-2.5" />}</button>
+              <button onClick={() => toggle(t)} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Icon name="check" className="w-2.5 h-2.5" />}</button>
               <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
               {t.dueAt && <span className="text-[11px] text-ink-subtle tabular-nums shrink-0">{t.dueAt.slice(5, 10).replace('-', '/')}</span>}
               <button onClick={() => del(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
@@ -200,7 +211,7 @@ function SectionQuotes({ deal }: { deal: Deal }) {
         <ul className="divide-y divide-slate-300">
           {deal.quotes.map(q => {
             const st = quoteStatus(q.status);
-            const supply = q.totalAfterDiscount ?? (q.grandTotal != null ? Math.round(q.grandTotal / 1.1) : null);
+            const supply = supplyTotal(q);
             return (
             <li key={q.id}>
               <Link href={`/quote/print?id=${q.id}`} className="flex items-center gap-3 py-2 hover:bg-slate-50 -mx-1 px-1 rounded-lg">
@@ -363,13 +374,13 @@ function SectionStudies({ deal, reload }: { deal: Deal; reload: () => void }) {
           {deal.studies.map(s => (
             <div key={s.id} className="rounded-[12px] border border-slate-200 p-3">
               <div className="flex items-center gap-2 mb-2">
-                <input className="input flex-1 text-sm font-medium" defaultValue={s.itemName ?? ''} onBlur={e => e.target.value !== (s.itemName ?? '') && patch(s.id, { itemName: e.target.value })} placeholder="시험 항목명" />
+                <input key={`n-${s.id}-${s.itemName ?? ''}`} className="input flex-1 text-sm font-medium" defaultValue={s.itemName ?? ''} onBlur={e => e.target.value !== (s.itemName ?? '') && patch(s.id, { itemName: e.target.value })} placeholder="시험 항목명" />
                 <button onClick={() => del(s.id)} className="p-1.5 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50"><Trash2 className="w-3.5 h-3.5" /></button>
               </div>
               <div className="grid sm:grid-cols-3 gap-2.5 mb-2">
-                <Labeled label="시험번호"><input className="input w-full text-sm" defaultValue={s.studyNumber ?? ''} onBlur={e => e.target.value !== (s.studyNumber ?? '') && patch(s.id, { studyNumber: e.target.value })} /></Labeled>
-                <Labeled label="담당부서"><input className="input w-full text-sm" defaultValue={s.department ?? ''} onBlur={e => e.target.value !== (s.department ?? '') && patch(s.id, { department: e.target.value })} placeholder="예: 독성시험부" /></Labeled>
-                <Labeled label="시험책임자"><input className="input w-full text-sm" defaultValue={s.director ?? ''} onBlur={e => e.target.value !== (s.director ?? '') && patch(s.id, { director: e.target.value })} /></Labeled>
+                <Labeled label="시험번호"><input key={`sn-${s.id}-${s.studyNumber ?? ''}`} className="input w-full text-sm" defaultValue={s.studyNumber ?? ''} onBlur={e => e.target.value !== (s.studyNumber ?? '') && patch(s.id, { studyNumber: e.target.value })} /></Labeled>
+                <Labeled label="담당부서"><input key={`dp-${s.id}-${s.department ?? ''}`} className="input w-full text-sm" defaultValue={s.department ?? ''} onBlur={e => e.target.value !== (s.department ?? '') && patch(s.id, { department: e.target.value })} placeholder="예: 독성시험부" /></Labeled>
+                <Labeled label="시험책임자"><input key={`dr-${s.id}-${s.director ?? ''}`} className="input w-full text-sm" defaultValue={s.director ?? ''} onBlur={e => e.target.value !== (s.director ?? '') && patch(s.id, { director: e.target.value })} /></Labeled>
               </div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
                 <DateField label="시험 시작 예정" value={s.requestSentAt} onChange={v => patch(s.id, { requestSentAt: v })} hint="전환 시 자동 배치" />

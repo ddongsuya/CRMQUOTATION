@@ -21,8 +21,11 @@ export default function CatalogPage() {
   const [submit, setSubmit] = useState<'MFDS' | 'OECD'>('MFDS');   // 제출처(단가 기준)
   const [editing, setEditing] = useState<{ record: Rec | null } | null>(null);
 
+  const [loadError, setLoadError] = useState(false);
   const load = useCallback(() => {
-    fetch('/api/test-items').then(r => r.json()).then(setData).catch(() => {});
+    setLoadError(false);
+    fetch('/api/test-items').then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }).then(setData)
+      .catch(e => { setLoadError(true); console.error('[catalog] load failed', e); });
   }, []);
   useEffect(() => { load(); }, [load]);
   // 가이드라인 등에서 ?q= 로 진입 시 초기 검색어
@@ -70,7 +73,9 @@ export default function CatalogPage() {
   }, [data, q, cat, submit]);
 
   if (!data) {
-    return (
+    return loadError ? (
+      <div role="alert" className="card p-12 text-center text-sm text-red-700">시험항목을 불러오지 못했습니다. <button onClick={load} className="btn-ghost text-sm ml-2">다시 시도</button></div>
+    ) : (
       <div className="card p-12 text-center text-ink-subtle text-sm">
         <Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 시험항목 불러오는 중…
       </div>

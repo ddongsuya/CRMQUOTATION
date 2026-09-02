@@ -5,6 +5,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { CalendarDays, ChevronLeft, ChevronRight, Plus, Loader2, X, Save, ArrowRight, GanttChartSquare, Pencil, Trash2, Check } from 'lucide-react';
 import { toast } from '@/lib/toast';
+import EventDetailFields from '@/components/crm/EventDetailFields';
 
 type Item = { date: string; kind: 'event' | 'milestone' | 'task'; type: string; title: string; taskId?: number; dealId?: number; dealTitle?: string; company?: string; companyId?: number; contactId?: number; quoteId?: number; eventId?: number; done?: boolean; location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null };
 
@@ -189,7 +190,7 @@ function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; i
               </div>
             );
             return (
-              <li key={i} className={clsx('group flex items-start gap-1 p-2.5 rounded-lg transition-colors hover:bg-slate-50', it.done && 'opacity-50')}>
+              <li key={`${it.kind}-${it.eventId ?? it.taskId ?? it.quoteId ?? i}-${it.date}`} className={clsx('group flex items-start gap-1 p-2.5 rounded-lg transition-colors hover:bg-slate-50', it.done && 'opacity-50')}>
                 {href ? <Link href={href} className="flex min-w-0 flex-1">{body}</Link> : body}
                 <span className="flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                   {editable && <>
@@ -230,17 +231,12 @@ function EventModal({ date, event, onClose, onSaved }: { date: string; event?: I
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm" onClick={e => e.stopPropagation()}>
         <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between"><div className="font-semibold text-ink">{event ? '일정 수정' : '새 일정'}</div><button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button></header>
         <div className="px-5 py-4 space-y-3 max-h-[70vh] overflow-auto">
-          <input className="input w-full" value={f.title} onChange={e => setF(p => ({ ...p, title: e.target.value }))} placeholder="일정 제목" autoFocus />
+          <input className="input w-full" value={f.title} onChange={e => setF(p => ({ ...p, title: e.target.value }))} placeholder="일정 제목" aria-label="일정 제목" autoFocus />
           <div className="grid grid-cols-2 gap-3">
             <div><div className="label mb-1">날짜</div><input type="date" className="input w-full" value={f.startAt} onChange={e => setF(p => ({ ...p, startAt: e.target.value }))} /></div>
             <div><div className="label mb-1">유형</div><select className="input w-full" value={f.type} onChange={e => setF(p => ({ ...p, type: e.target.value }))}><option value="MEETING">미팅</option><option value="DEADLINE">마감</option><option value="MILESTONE">마일스톤</option><option value="REMINDER">리마인더</option></select></div>
           </div>
-          <div><div className="label mb-1">장소</div><input className="input w-full" placeholder="예: 켐온 본사 회의실 / 화상" value={f.location} onChange={e => setF(p => ({ ...p, location: e.target.value }))} /></div>
-          <div className="grid grid-cols-2 gap-3">
-            <div><div className="label mb-1">참여자 — 고객사</div><input className="input w-full" value={f.attendeesClient} onChange={e => setF(p => ({ ...p, attendeesClient: e.target.value }))} /></div>
-            <div><div className="label mb-1">참여자 — 우리 회사</div><input className="input w-full" value={f.attendeesInternal} onChange={e => setF(p => ({ ...p, attendeesInternal: e.target.value }))} /></div>
-          </div>
-          <div><div className="label mb-1">요청사항</div><textarea className="input w-full min-h-[56px]" value={f.requests} onChange={e => setF(p => ({ ...p, requests: e.target.value }))} /></div>
+          <EventDetailFields f={f} set={(k, v) => setF(p => ({ ...p, [k]: v }))} />
         </div>
         <footer className="px-5 py-3 border-t border-slate-100 flex justify-end gap-2"><button onClick={onClose} className="btn-ghost text-sm">취소</button><button onClick={save} disabled={saving} className="btn-primary text-sm">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {event ? '수정 저장' : '추가'}</button></footer>
       </div>

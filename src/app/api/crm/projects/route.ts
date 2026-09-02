@@ -5,6 +5,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
+import { supplyTotal } from '@/lib/money';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,9 +35,8 @@ export async function GET(req: Request) {
       id: d.id, title: d.title, modality: d.modality, stage: d.stage, status: d.status,
       companyId: d.contact.company.id, companyName: d.contact.company.name, contactName: d.contact.name,
       contractStatus: d.contract?.status ?? null, contractNumber: d.contract?.contractNumber ?? null, signedAt: d.contract?.signedAt ?? null,
-      // 금액은 공급가(VAT 별도) 기준 — 구 데이터는 총액/1.1 역산
       quoteId: top?.id ?? null, quoteNumber: top?.quoteNumber ?? null,
-      amount: top ? (top.totalAfterDiscount ?? (top.grandTotal ? Math.round(top.grandTotal / 1.1) : null)) : null,
+      amount: top ? supplyTotal(top) : null,   // 공급가(VAT 별도) — lib/money
       studyCount: d.studies.length,
       studies: d.studies.map(s => ({
         id: s.id, itemName: s.itemName, studyNumber: s.studyNumber, director: s.director, department: s.department,
@@ -89,7 +89,7 @@ export async function GET(req: Request) {
       id: -q.id, title: q.projectName, modality: q.modality, stage: 'STUDY', status: 'WON',
       companyId: q.company!.id, companyName: q.company!.name, contactName: '—',
       contractStatus: 'SIGNED', contractNumber: null, signedAt: q.sentAt,
-      quoteId: q.id, quoteNumber: q.quoteNumber, amount: q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : null),
+      quoteId: q.id, quoteNumber: q.quoteNumber, amount: supplyTotal(q),
       studyCount: studies.length, studies,
     });
   }

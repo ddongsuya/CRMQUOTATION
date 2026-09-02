@@ -7,6 +7,7 @@ import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { useDrawer } from '@/components/admin/DrawerProvider';
 import { quoteStatus } from '@/lib/admin/status';
+import { supplyTotal } from '@/lib/money';
 
 // 변경견적 차수 — 번호가 YY-MM-XX-NNNN-<n> 이면 n
 const revOf = (num: string): number | null => {
@@ -41,8 +42,7 @@ const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M`
  * 목록 금액 표시 — 공급가(VAT 별도) 기준. 금액은 DB에 원화로 저장되므로,
  * USD 견적은 저장 당시 환율로 나눠 달러로 표시. 구 데이터는 총액/1.1 역산.
  */
-const supplyOf = (q: QuoteRow): number | null =>
-  q.totalAfterDiscount ?? (q.grandTotal != null ? Math.round(q.grandTotal / 1.1) : null);
+const supplyOf = (q: QuoteRow): number | null => supplyTotal(q);   // lib/money 단일 소스
 const fmtAmount = (q: QuoteRow): string => {
   const n = supplyOf(q);
   if (n == null) return '—';
@@ -167,12 +167,12 @@ export default function QuotesListPage() {
                   </Link>
                   {/* 액션 — 폰(hover 없음)에선 항상 노출, 데스크톱은 hover 시 (터치에서 접근 불가하던 문제 해소) */}
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 flex lg:hidden lg:group-hover:flex items-center gap-0.5 bg-slate-100 rounded-lg px-1 py-0.5">
-                    {(qr.status === 'DRAFT' || qr.status === 'ISSUED') && <button onClick={() => markSent(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="발송 처리"><Icon name="mail" className="w-3.5 h-3.5" /></button>}
+                    {(qr.status === 'DRAFT' || qr.status === 'ISSUED') && <button onClick={() => markSent(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="발송 처리" aria-label="발송 처리"><Icon name="mail" className="w-3.5 h-3.5" /></button>}
                     {qr.customerCompany && <button onClick={() => openCompany(qr.customerCompany!)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="고객 상세"><Icon name="users" className="w-3.5 h-3.5" /></button>}
                     <Link href={qr.studyType === 'efficacy' ? `/quote-efficacy?id=${qr.id}` : `/quote-v2?id=${qr.id}`} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="내용 수정"><Icon name="notebook" className="w-3.5 h-3.5" /></Link>
                     <Link href={`/quote/print?id=${qr.id}`} target="_blank" className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="PDF 출력"><Icon name="arrow-right" className="w-3.5 h-3.5" /></Link>
-                    <button onClick={() => duplicate(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="복제"><Icon name="plus" className="w-3.5 h-3.5" /></button>
-                    <button onClick={() => remove(qr.id, qr.projectName)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-red-600" title="삭제"><Icon name="x" className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => duplicate(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="복제" aria-label="복제"><Icon name="plus" className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => remove(qr.id, qr.projectName)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-red-600" title="삭제" aria-label="삭제"><Icon name="x" className="w-3.5 h-3.5" /></button>
                   </div>
                 </div>
               ))}

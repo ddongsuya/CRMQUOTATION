@@ -5,7 +5,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { Bell, AlertTriangle, CalendarClock, Loader2 } from 'lucide-react';
 
-type Item = { date: string; kind: string; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; quoteId?: number; contact?: string; eventId?: number; done?: boolean };
+type Item = { date: string; kind: string; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; quoteId?: number; taskId?: number; contact?: string; eventId?: number; done?: boolean };
 
 const TYPE_DOT: Record<string, string> = { MEETING: 'bg-brand-500', DEADLINE: 'bg-red-500', MILESTONE: 'bg-emerald-500', REMINDER: 'bg-[var(--status-sent)]', TASK: 'bg-teal-500' };
 // D-day 계산 — '오늘'은 로컬 날짜 기준 (UTC 기준이면 오전 9시 전까지 하루 밀림)
@@ -15,12 +15,17 @@ const dayDiff = (d: string, now: Date) => Math.round((new Date(d.slice(0, 10)).g
 export default function DashboardAlarms() {
   const [items, setItems] = useState<Item[] | null>(null);
   const [now, setNow] = useState<Date>(new Date());
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch('/api/crm/agenda').then(r => r.json()).then(d => { setItems((d.items ?? []).filter((x: Item) => !x.done)); if (d.now) setNow(new Date(d.now)); }).catch(() => setItems([]));
+    fetch('/api/crm/agenda').then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then(d => { setItems((d.items ?? []).filter((x: Item) => !x.done)); if (d.now) setNow(new Date(d.now)); })
+      .catch(e => { console.error('[alarms] load failed', e); setError(true); setItems([]); });
   }, []);
 
   if (items === null) return <section className="card p-5"><div className="text-ink-subtle text-sm flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> 알람 불러오는 중…</div></section>;
+  // 실패를 "예정 없음"으로 위장하지 않는다 — 마감을 놓치게 만드는 가장 위험한 침묵
+  if (error) return <section className="card p-5" role="alert"><h2 className="text-sm font-bold text-ink flex items-center gap-1.5 mb-2"><Bell className="w-4 h-4 text-brand-500" /> 알람 · 예정 일정</h2><div className="text-sm text-red-700">알람을 불러오지 못했습니다. 새로고침해 주세요.</div></section>;
 
   const upcoming = items.filter(x => dayDiff(x.date, now) <= 14);
   const overdue = upcoming.filter(x => dayDiff(x.date, now) < 0);
@@ -42,7 +47,7 @@ export default function DashboardAlarms() {
           {[...overdue, ...soon].slice(0, 8).map((it, i) => {
             const dd = dayDiff(it.date, now);
             return (
-              <li key={i}>
+              <li key={`${it.kind}-${it.eventId ?? it.taskId ?? it.quoteId ?? i}-${it.date}`}>
                 <Row it={it} dd={dd} />
               </li>
             );

@@ -115,8 +115,18 @@ function DetailPanel({ companyId }: { companyId: number }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<{ company: any; agg: Agg } | null>(null);
   const [scope, setScope] = useState<number | 'all'>('all'); // 'all'=회사 전체, number=담당자 스코프
-  useEffect(() => { setData(null); setScope('all'); fetch(`/api/crm/companies/${companyId}`).then(r => r.json()).then(setData).catch(() => {}); }, [companyId]);
-  if (!data) return <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
+  const [loadError, setLoadError] = useState(false);
+  useEffect(() => {
+    let cancelled = false;   // 빠르게 다른 고객사를 클릭하면 이전 요청 응답은 버린다
+    setData(null); setScope('all'); setLoadError(false);
+    fetch(`/api/crm/companies/${companyId}`).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then(d => { if (!cancelled) setData(d); })
+      .catch(e => { if (!cancelled) { setLoadError(true); console.error('[customers] detail load failed', e); } });
+    return () => { cancelled = true; };
+  }, [companyId]);
+  if (!data) return loadError
+    ? <div role="alert" className="card p-12 text-center text-sm text-red-700">고객사 정보를 불러오지 못했습니다. 다시 선택하거나 새로고침해 주세요.</div>
+    : <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
   const { company: c, agg } = data;
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const contacts: any[] = c.contacts ?? [];

@@ -29,7 +29,8 @@ export default function ModalityTemplatesAdmin() {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [builder, setBuilder] = useState<{ mod: Mod; tpl: Tpl | null } | null>(null);
 
-  const loadCfg = () => fetch('/api/modality-templates').then(r => r.json()).then(d => { setCats(d.categories); setAvailable(d.availableKeys ?? []); setIsAdmin(!!d.isAdmin); }).catch(() => {});
+  const [loadError, setLoadError] = useState(false);
+  const loadCfg = () => { setLoadError(false); return fetch('/api/modality-templates').then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); }).then(d => { setCats(d.categories); setAvailable(d.availableKeys ?? []); setIsAdmin(!!d.isAdmin); }).catch(e => { setLoadError(true); console.error('[modalities] load failed', e); }); };
   const loadItems = () => fetch('/api/test-items').then(r => r.json()).then(d => setItems(d.items ?? [])).catch(() => {});
   const loadTpls = () => fetch('/api/quote-templates').then(r => r.json()).then(d => setTemplates(d.templates ?? [])).catch(() => {});
   useEffect(() => { loadCfg(); loadItems(); loadTpls(); }, []);
@@ -37,7 +38,9 @@ export default function ModalityTemplatesAdmin() {
   const usedKeys = useMemo(() => new Set((cats ?? []).flatMap(c => c.modalities.map(m => m.key))), [cats]);
   const unused = available.filter(k => !usedKeys.has(k));
 
-  if (!cats) return <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
+  if (!cats) return loadError
+    ? <div role="alert" className="card p-12 text-center text-sm text-red-700">모달리티 설정을 불러오지 못했습니다. <button onClick={loadCfg} className="btn-ghost text-sm ml-2">다시 시도</button></div>
+    : <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
 
   const update = (fn: (d: Cat[]) => Cat[]) => setCats(prev => fn(structuredClone(prev ?? [])));
 

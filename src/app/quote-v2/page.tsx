@@ -101,7 +101,7 @@ export default function QuoteV2Page() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [restorePending, setRestorePending] = useState(false);       // ?id= 복원 후 자동 재생성 대기
-  const pendingPicked = useRef<Set<string> | null>(null);            // 배터리형 복원 — 항목 목록 로드 후 적용
+  const pendingPicked = useRef<{ set: Set<string>; category: string } | null>(null);   // 배터리형 복원 — 해당 카테고리 항목 로드 후 적용
   const [companyNames, setCompanyNames] = useState<string[]>([]);  // 고객사 자동완성(CRM)
   useEffect(() => { fetch('/api/crm/companies').then(r => r.json()).then(d => setCompanyNames((d.companies ?? []).map((c: { name: string }) => c.name))).catch(() => {}); }, []);
 
@@ -135,8 +135,9 @@ export default function QuoteV2Page() {
     if (!isBattery) { setItems([]); setPicked(new Set()); return; }
     fetch('/api/quote-v2?category=' + encodeURIComponent(category)).then(r => r.json()).then(d => {
       setItems(d.items ?? []);
-      setPicked(pendingPicked.current ?? new Set());
-      pendingPicked.current = null;
+      const pend = pendingPicked.current;
+      if (pend && pend.category === category) { setPicked(pend.set); pendingPicked.current = null; }
+      else setPicked(new Set());
     });
   }, [category, isBattery]);
 
@@ -168,8 +169,17 @@ export default function QuoteV2Page() {
       if (pj.submissionTarget) setSubmissionTarget(pj.submissionTarget);
       if (pj.vaccineGroups) setVaccineGroups(pj.vaccineGroups);
       if (pj.subtype) setHealthSubtype(pj.subtype);
-      // 배터리형 선택 항목 — 항목 목록 로드 효과가 초기화하므로 ref 로 넘긴다
-      if (Array.isArray(pj.selectedItemIds) && pj.selectedItemIds.length) pendingPicked.current = new Set(pj.selectedItemIds);
+      // 배터리형 선택 항목 — 항목 목록 로드 효과가 초기화하므로 ref 로 넘긴다.
+      // 카테고리가 이미 같으면(setCategory 가 no-op) 그 효과가 다시 돌지 않으므로 여기서 직접 로드해 적용한다.
+      if (Array.isArray(pj.selectedItemIds) && pj.selectedItemIds.length) {
+        const set = new Set<string>(pj.selectedItemIds);
+        pendingPicked.current = { set, category: pj.modality };
+        if (pj.modality === category) {
+          fetch('/api/quote-v2?category=' + encodeURIComponent(pj.modality)).then(r => r.json()).then(d => {
+            setItems(d.items ?? []); setPicked(set); pendingPicked.current = null;
+          }).catch(() => toast.error('시험 항목 목록을 불러오지 못했습니다.'));
+        }
+      }
       // step4 편집 상태
       const e = pj.edit ?? {};
       setConds(e.customerConditions ?? {});
@@ -194,6 +204,8 @@ export default function QuoteV2Page() {
       setStep(4);
       setRestorePending(true);
     })();
+    // ?id= 복원은 마운트 시 1회만 — category 는 초기값과의 비교용이라 의존성에서 의도적으로 제외
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // step4 항목 검색 (수동 추가) — 마스터 전체에서 이름·분류 검색
@@ -553,7 +565,7 @@ export default function QuoteV2Page() {
                     {/* 자유 항목 추가 — 마스터 전체(모든 모달리티)에서 검색해 추가 */}
                     <div className="rounded-[12px] border border-dashed border-slate-300 p-3">
                       <div className="text-[12px] font-semibold text-ink-subtle mb-1.5">항목 추가 <span className="font-normal">— 자동 구성 외 시험을 마스터에서 검색해 추가</span></div>
-                      <input className="input text-sm w-full" placeholder="시험명·분류 검색 (예: 국소독성, hERG, 광독성…)"
+                      <input className="input text-sm w-full" placeholder="시험명·분류 검색 (예: 국소독성, hERG, 광독성…)" aria-label="시험 항목 검색"
                         value={itemSearch} onChange={e => setItemSearch(e.target.value)} />
                       {searchResults.length > 0 && (
                         <div className="mt-2 max-h-56 overflow-auto rounded-lg border border-slate-200 divide-y divide-slate-100">
@@ -766,7 +778,7 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
           {quote.lineItems.map((li: any, i: number) => {
             const meta = [li.route, ...li.appliedRules, ...li.notes].filter(Boolean).join(' · ');
             return (
-              <div key={i} className="flex items-start gap-3 py-2 border-b border-[var(--hairline-soft)]">
+              <div key={`${li.id}-${i}`} className="flex items-start gap-3 py-2 border-b border-[var(--hairline-soft)]">
                 <div className="flex-1 min-w-0">
                   <div className="text-[13px] text-ink">{li.testName}{li.isPrereq && <span className="tag ml-1.5">선행</span>}</div>
                   {meta && <div className="text-[11px] text-ink-subtle mt-0.5 break-keep">{meta}</div>}
@@ -783,7 +795,7 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
         <div className="border-t border-[var(--hairline-soft)]">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {quote.addons.map((a: any, i: number) => (
-            <div key={i} className="flex items-start gap-3 py-2 border-b border-[var(--hairline-soft)]">
+            <div key={`${a.key ?? a.ruleId}-${a.targetId ?? ''}-${i}`} className="flex items-start gap-3 py-2 border-b border-[var(--hairline-soft)]">
               <div className="flex-1 min-w-0">
                 <div className="text-[13px] text-ink">{a.name}<span className="tag ml-1.5">옵션</span></div>
               </div>

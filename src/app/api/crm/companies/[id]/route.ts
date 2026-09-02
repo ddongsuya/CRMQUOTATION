@@ -6,6 +6,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
+import { supplyOrZero } from '@/lib/money';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,9 +46,7 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   });
   if (!company) return NextResponse.json({ error: 'not found' }, { status: 404 });
 
-  // CRM 화면 금액은 공급가(VAT 별도) 기준 — 구 데이터에 totalAfterDiscount 가 없으면 총액/1.1 로 역산
-  const supply = (q: { totalAfterDiscount: number | null; grandTotal: number | null }) =>
-    q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0);
+  const supply = supplyOrZero;   // 공급가(VAT 별도) — lib/money 단일 소스
 
   // 회사 단위 집계 — 모든 의뢰자의 모든 안건을 가로질러 평탄화 (각 탭의 데이터원)
   type DealRel = (typeof company.contacts)[number]['deals'][number];

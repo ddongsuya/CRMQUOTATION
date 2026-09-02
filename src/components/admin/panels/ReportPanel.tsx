@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, Fragment, useCallback } from 'react';
 import { fmtWon } from '@/lib/admin/format';
 import Icon from '../../Icon';
 import { useDrawer } from '../DrawerProvider';
@@ -14,8 +14,8 @@ export default function ReportPanel({ id }: { id: number }) {
   const [edit, setEdit] = useState(false);
   const [f, setF] = useState({ workContent: '', contractPlan: '', activityNote: '' });
   const [busy, setBusy] = useState(false);
-  const load = () => fetch(`/api/admin/detail/report/${id}`).then((r) => r.json()).then(setD).catch(() => setD(null));
-  useEffect(() => { setD(null); setEdit(false); load(); }, [id]);
+  const load = useCallback(() => fetch(`/api/admin/detail/report/${id}`).then((r) => r.json()).then(setD).catch(() => setD(null)), [id]);
+  useEffect(() => { setD(null); setEdit(false); load(); }, [load]);
 
   const startEdit = () => { if (d) { setF({ workContent: d.workContent ?? '', contractPlan: d.contractPlan ?? '', activityNote: d.activityNote ?? '' }); setEdit(true); } };
   const save = async () => {

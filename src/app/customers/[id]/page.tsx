@@ -8,6 +8,7 @@ import { Loader2, Pencil, Trash2, Save, Briefcase, Sparkles, FileSignature, Flas
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { formatPhone } from '@/lib/format-phone';
+import EventDetailFields from '@/components/crm/EventDetailFields';
 
 type Quote = { id: number; quoteNumber: string; status: string; grandTotal: number | null; createdAt: string };
 type Contract = { id: number; status: string; contractNumber: string | null; signedAt: string | null; draftSentAt: string | null } & Record<string, unknown>;
@@ -84,9 +85,15 @@ export default function CompanyDetailPage() {
   const [jump, setJump] = useState<{ editId?: number; open?: boolean } | null>(null);
   const goTo = (t: Tab, opts?: { editId?: number; open?: boolean }) => { setJump(opts ?? null); setTab(t); };
 
+  const [loadError, setLoadError] = useState(false);
+  const reqSeq = useRef(0);   // 빠른 화면 전환 시 이전 응답이 현재 고객사를 덮어쓰지 않게
   const load = useCallback(() => {
-    fetch(`/api/crm/companies/${id}`).then(r => r.json()).then(d => { setCompany(d.company ?? null); setAgg(d.agg ?? null); }).catch(() => {});
-    fetch(`/api/crm/tasks?companyId=${id}`).then(r => r.json()).then(d => setTasks(d.tasks ?? [])).catch(() => {});
+    const my = ++reqSeq.current;
+    setLoadError(false);
+    fetch(`/api/crm/companies/${id}`).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then(d => { if (my === reqSeq.current) { setCompany(d.company ?? null); setAgg(d.agg ?? null); } })
+      .catch(e => { if (my === reqSeq.current) { setLoadError(true); console.error('[company] load failed', e); } });
+    fetch(`/api/crm/tasks?companyId=${id}`).then(r => r.json()).then(d => { if (my === reqSeq.current) setTasks(d.tasks ?? []); }).catch(e => console.error('[company] tasks load failed', e));
   }, [id]);
   useEffect(() => { load(); }, [load]);
 
@@ -102,7 +109,9 @@ export default function CompanyDetailPage() {
     계약: agg?.contracts.length ?? 0, 시험: agg?.studies.length ?? 0, 노트: agg?.notes.length ?? 0, 일정: agg?.events.filter(e => !e.done).length ?? 0,
   }), [agg, company, tasks]);
 
-  if (!company) return <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
+  if (!company) return loadError
+    ? <div role="alert" className="card p-12 text-center text-sm text-red-700">고객사 정보를 불러오지 못했습니다. <button onClick={load} className="btn-ghost text-sm ml-2">다시 시도</button></div>
+    : <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -307,7 +316,7 @@ function OverviewTab({ agg, company, tasks, reload, onGo, onAddContact, onEditCo
               const dd = t.dueAt ? dday(t.dueAt) : null;
               return (
                 <li key={t.id} className="flex items-center gap-2.5 py-2">
-                  <button onClick={() => toggleTask(t)} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
+                  <button onClick={() => toggleTask(t)} role="checkbox" aria-checked={false} aria-label={`${t.title} 완료 처리`} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
                   <button onClick={() => onGo('할 일')} className="flex-1 min-w-0 text-left text-sm text-ink truncate hover:text-brand-600">{t.title}</button>
                   {(t.deal || t.contact) && <span className="text-[11px] text-ink-subtle truncate max-w-[120px]">{t.deal?.title ?? t.contact?.name}</span>}
                   {dd && <span className={clsx('pill flex-shrink-0', dd.cls)}>{dd.label}</span>}
@@ -350,7 +359,7 @@ function OverviewTab({ agg, company, tasks, reload, onGo, onAddContact, onEditCo
               const dd = dday(e.startAt);
               return (
                 <li key={e.id} className="flex items-center gap-2 py-2 group">
-                  <button onClick={() => toggleEvent(e)} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-emerald-500 flex items-center justify-center shrink-0" title="완료 처리" />
+                  <button onClick={() => toggleEvent(e)} role="checkbox" aria-checked={false} aria-label={`${e.title} 완료 처리`} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-emerald-500 flex items-center justify-center shrink-0" title="완료 처리" />
                   <span className={clsx('w-2 h-2 rounded-full flex-shrink-0', EVENT_T[e.type] ?? 'bg-slate-300')} />
                   <button onClick={() => onGo('일정', { editId: e.id })} className="flex-1 min-w-0 text-left hover:text-brand-600" title="일정 수정">
                     <span className="block text-sm text-ink truncate">{e.title}</span>
@@ -731,14 +740,14 @@ function TasksTab({ companyId, tasks, deals, contacts, reload }: { companyId: nu
     const dd = t.dueAt ? dday(t.dueAt) : null;
     return (
       <li key={t.id} className={clsx('flex items-center gap-2.5 py-2 group', t.done && 'opacity-50')}>
-        <button onClick={() => patch(t.id, { done: !t.done })}
+        <button onClick={() => patch(t.id, { done: !t.done })} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`}
           className={clsx('w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>
           {t.done && <Icon name="check" className="w-3 h-3" />}
         </button>
-        <input className={clsx('flex-1 min-w-0 bg-transparent outline-none text-sm text-ink rounded px-1 -mx-1 focus:bg-slate-50', t.done && 'line-through text-ink-subtle')}
+        <input key={`tt-${t.id}-${t.title}`} aria-label="할 일 제목" className={clsx('flex-1 min-w-0 bg-transparent outline-none text-sm text-ink rounded px-1 -mx-1 focus:bg-slate-50', t.done && 'line-through text-ink-subtle')}
           defaultValue={t.title} onBlur={e => e.target.value.trim() && e.target.value !== t.title && patch(t.id, { title: e.target.value })} />
         {(t.deal || t.contact) && <span className="text-[11px] text-ink-subtle truncate max-w-[140px] shrink-0">{t.deal?.title ?? t.contact?.name}</span>}
-        <input type="date" className="input text-xs w-auto shrink-0 py-1" title="기한" defaultValue={t.dueAt ? t.dueAt.slice(0, 10) : ''}
+        <input key={`td-${t.id}-${t.dueAt ?? ''}`} type="date" className="input text-xs w-auto shrink-0 py-1" title="기한" aria-label="기한" defaultValue={t.dueAt ? t.dueAt.slice(0, 10) : ''}
           onBlur={e => e.target.value !== (t.dueAt ? t.dueAt.slice(0, 10) : '') && patch(t.id, { dueAt: e.target.value || null })} />
         {!t.done && dd && <span className={clsx('pill shrink-0', dd.cls)}>{dd.label}</span>}
         <button onClick={() => del(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 shrink-0"><Trash2 className="w-3.5 h-3.5" /></button>
@@ -748,7 +757,7 @@ function TasksTab({ companyId, tasks, deals, contacts, reload }: { companyId: nu
   return (
     <SectionCard title="할 일" count={open.length}>
       <div className="flex flex-wrap gap-1.5 mb-3">
-        <input className="input text-sm flex-1 min-w-[180px]" placeholder="할 일 추가 (예: 번역의뢰서 영문본 재요청)" value={f.title}
+        <input className="input text-sm flex-1 min-w-[180px]" placeholder="할 일 추가 (예: 번역의뢰서 영문본 재요청)" aria-label="할 일 추가" value={f.title}
           onChange={e => setF(s => ({ ...s, title: e.target.value }))} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
         <input type="date" className="input text-sm w-auto" title="기한(선택)" value={f.dueAt} onChange={e => setF(s => ({ ...s, dueAt: e.target.value }))} />
         <select className="input text-sm w-auto max-w-[160px]" value={f.target} onChange={e => setF(s => ({ ...s, target: e.target.value }))}>
@@ -836,30 +845,11 @@ function ScheduleTab({ agg, deals, contacts, reload, initial }: { agg: Agg | nul
             <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].map(k => <option key={k} value={k}>{k === 'MEETING' ? '미팅' : k === 'DEADLINE' ? '마감' : k === 'MILESTONE' ? '마일스톤' : '리마인더'}</option>)}</select>
           </div>
           <input className="input text-sm w-full" placeholder="일정 제목" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
-          <div className="grid grid-cols-2 gap-2">
-            <label className="block">
-              <span className="text-[11px] text-ink-subtle">날짜</span>
-              <input type="date" className="input text-sm w-full" value={f.startAt} onChange={e => setF(s => ({ ...s, startAt: e.target.value }))} />
-            </label>
-            <label className="block">
-              <span className="text-[11px] text-ink-subtle">장소</span>
-              <input className="input text-sm w-full" placeholder="예: 켐온 본사 회의실 / 화상" value={f.location} onChange={e => setF(s => ({ ...s, location: e.target.value }))} />
-            </label>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <label className="block">
-              <span className="text-[11px] text-ink-subtle">참여자 — 고객사</span>
-              <input className="input text-sm w-full" placeholder="예: 김혜정 팀장, 이OO 연구원" value={f.attendeesClient} onChange={e => setF(s => ({ ...s, attendeesClient: e.target.value }))} />
-            </label>
-            <label className="block">
-              <span className="text-[11px] text-ink-subtle">참여자 — 우리 회사</span>
-              <input className="input text-sm w-full" placeholder="예: 임재민, 박OO 책임" value={f.attendeesInternal} onChange={e => setF(s => ({ ...s, attendeesInternal: e.target.value }))} />
-            </label>
-          </div>
           <label className="block">
-            <span className="text-[11px] text-ink-subtle">요청사항</span>
-            <textarea className="input text-sm w-full min-h-[56px]" placeholder="미팅에서 나온 요청·준비사항" value={f.requests} onChange={e => setF(s => ({ ...s, requests: e.target.value }))} />
+            <span className="text-[11px] text-ink-subtle">날짜</span>
+            <input type="date" className="input text-sm w-full" value={f.startAt} onChange={e => setF(s => ({ ...s, startAt: e.target.value }))} />
           </label>
+          <EventDetailFields dense f={f} set={(k, v) => setF(s => ({ ...s, [k]: v }))} />
           <div className="flex justify-end gap-2">
             {editId && <button onClick={closeForm} className="btn-ghost text-sm">취소</button>}
             <button onClick={save} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {editId ? '수정 저장' : '저장'}</button>

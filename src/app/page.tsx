@@ -6,6 +6,7 @@ import { ensureHydrated } from '@/lib/hydrate';
 import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { getFollowups } from '@/lib/admin/aggregate';
 import { quoteStatus } from '@/lib/admin/status';
+import { supplyOrZero } from '@/lib/money';
 import FollowupCard, { type Followup } from '@/components/admin/FollowupCard';
 import DashboardAlarms from '@/components/DashboardAlarms';
 
@@ -25,6 +26,7 @@ export default async function Home() {
   let monthly: { label: string; amount: number }[] = [];
   let activity: { id: string; kind: string; text: string; sub: string; at: string; href: string | null }[] = [];
   let followups: Followup[] = [];
+  let loadError = false;   // DB 조회 실패 — 0 건/₩0 으로 위장하지 않고 배너로 알린다
   try {
     followups = (await getFollowups({ kind: 'user', userId: await currentUserId() }, new Date(), 14)) as Followup[];
     const owners = await visibleOwnerIds();   // 홈은 내 데이터만 — 다중 사용자 시 타인 견적이 KPI 에 섞이지 않게
@@ -36,8 +38,7 @@ export default async function Home() {
     });
     // 집계는 현재 진행 중(최신) 견적만 — 변경견적 대체본 제외. 금액은 공급가(VAT 별도) 기준.
     const all = await prisma.quote.findMany({ where: { supersededAt: null, userId: { in: owners } }, select: { status: true, grandTotal: true, totalAfterDiscount: true, createdAt: true } });
-    const supply = (q: { totalAfterDiscount: number | null; grandTotal: number | null }) =>
-      q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0);
+    const supply = supplyOrZero;   // 공급가(VAT 별도) — lib/money 단일 소스
     const now = new Date();
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
     const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
@@ -85,7 +86,7 @@ export default async function Home() {
       ...rContracts.map(c => ({ id: `c${c.id}`, kind: '계약', text: c.deal?.title ?? '계약', sub: c.status, at: c.createdAt, href: c.deal ? `/deals/${c.deal.id}` : null })),
       ...rNotes.map(n => ({ id: `n${n.id}`, kind: '노트', text: n.title || n.deal?.title || '메모', sub: n.type, at: n.createdAt, href: n.deal ? `/deals/${n.deal.id}` : '/notes' })),
     ].sort((a, b) => +b.at - +a.at).slice(0, 6).map(x => ({ ...x, at: x.at.toISOString() }));
-  } catch { /* DB 미연결 시 0 */ }
+  } catch (e) { loadError = true; console.error('[dashboard] 데이터 조회 실패', e); }
 
   const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : (n > 0 ? `₩${n.toLocaleString()}` : '₩0');
   const todayStr = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
@@ -98,6 +99,11 @@ export default async function Home() {
         <p className="text-[14px] sm:text-subhead text-ink-body mt-2 sm:mt-3">{todayStr} · 진행 중인 견적 {kpi.inProgress}건과 마감이 임박한 시험 {dueStudies.length}건이 있습니다.</p>
       </div>
 
+      {loadError && (
+        <div role="alert" className="mb-4 rounded-[12px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          대시보드 데이터를 불러오지 못했습니다. 아래 수치는 실제 값이 아닐 수 있습니다 — 새로고침해 주세요.
+        </div>
+      )}
       {/* KPI 4카드 — 아이콘 없음, 수주 금액은 블랙 반전(#000) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <StatCard label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" delta={kpi.quoteDelta} note="지난달 대비" />
@@ -139,7 +145,7 @@ export default async function Home() {
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-[11px] py-1 text-[12px] font-medium text-ink-muted flex-shrink-0">
                         <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: st.color }} />{st.label}
                       </span>
-                      <span className="text-right w-[92px] flex-shrink-0"><span className="text-[20px] font-bold text-ink tabular-nums">{fmtM(q.totalAfterDiscount ?? (q.grandTotal ? Math.round(q.grandTotal / 1.1) : 0))}</span><span className="block text-[9px] text-ink-subtle leading-none">VAT 별도</span></span>
+                      <span className="text-right w-[92px] flex-shrink-0"><span className="text-[20px] font-bold text-ink tabular-nums">{fmtM(supplyOrZero(q))}</span><span className="block text-[9px] text-ink-subtle leading-none">VAT 별도</span></span>
                     </Link>
                   </li>
                 );

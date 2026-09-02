@@ -58,8 +58,14 @@ export default function NotebookPage() {
     .slice(0, 10), [tasks]);
 
   const toggle = async (t: Task) => {
-    setTasks(ts => ts.map(x => x.id === t.id ? { ...x, done: !x.done } : x));
-    await fetch(`/api/crm/tasks/${t.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !t.done }) }).catch(() => {});
+    setTasks(ts => ts.map(x => x.id === t.id ? { ...x, done: !x.done } : x));   // 낙관적 반영
+    try {
+      const res = await fetch(`/api/crm/tasks/${t.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !t.done }) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    } catch (e) {
+      setTasks(ts => ts.map(x => x.id === t.id ? { ...x, done: t.done } : x));   // 실패 시 되돌리고 알림
+      toast.error('완료 상태 변경에 실패했습니다.'); console.error('[notes] toggle failed', e);
+    }
     loadTasks();
   };
   const delTask = async (id: number) => {
@@ -106,7 +112,7 @@ export default function NotebookPage() {
             </div>
             {/* 빠른 할 일 추가 */}
             <div className="flex gap-1.5 mb-3">
-              <input className="input text-sm flex-1" placeholder="할 일 추가 (예: 아이큐어 번역의뢰서 영문본 재요청)" value={quickTask}
+              <input className="input text-sm flex-1" placeholder="할 일 추가 (예: 아이큐어 번역의뢰서 영문본 재요청)" aria-label="할 일 추가" value={quickTask}
                 onChange={e => setQuickTask(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addTask(); }} />
               <input type="date" className="input text-sm w-auto" title="기한" value={quickDue} onChange={e => setQuickDue(e.target.value)} />
               <button onClick={addTask} className="btn-primary text-sm shrink-0"><Plus className="w-4 h-4" /></button>
@@ -115,7 +121,7 @@ export default function NotebookPage() {
               <ul className="space-y-1.5">
                 {todayFocus.map(t => (
                   <li key={t.id} className="flex items-center gap-2.5 group">
-                    <button onClick={() => toggle(t)} className={clsx('w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Check className="w-3 h-3" />}</button>
+                    <button onClick={() => toggle(t)} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Check className="w-3 h-3" />}</button>
                     <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
                     {(t.dealId || t.companyId) && (
                       <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-[11px] text-ink-subtle hover:text-brand-600 truncate max-w-[130px]">{t.dealTitle ?? t.companyName}</Link>
@@ -151,7 +157,7 @@ export default function NotebookPage() {
               <ul className="divide-y divide-slate-100">
                 {followups.map(t => { const u = t.dueAt ? urgency(t.dueAt) : { label: '기한 없음', cls: 'bg-slate-100 text-ink-subtle' }; return (
                   <li key={t.id} className="flex items-center gap-2.5 py-2.5 group">
-                    <button onClick={() => toggle(t)} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
+                    <button onClick={() => toggle(t)} role="checkbox" aria-checked={false} aria-label={`${t.title} 완료 처리`} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
                     <span className={clsx('pill shrink-0', u.cls)}>{u.label}</span>
                     <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{t.title}</span><span className="block text-[11px] text-ink-subtle">{t.dueAt ? new Date(t.dueAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' }) : ''}{(t.dealTitle || t.companyName) ? `${t.dueAt ? ' · ' : ''}${t.dealTitle ?? t.companyName}` : ''}</span></span>
                     <button onClick={() => delTask(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
