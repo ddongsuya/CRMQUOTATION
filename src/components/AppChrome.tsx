@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import Icon, { type IconName } from './Icon';
 import DrawerProvider from './admin/DrawerProvider';
+import SaveStatus from './SaveStatus';
+import GlobalSearch, { OPEN_SEARCH_EVENT } from './GlobalSearch';
+import { saveStatus } from '@/lib/save-status';
 
 export type ChromeStats = { items: number; presets: number; blocks: number; modalities: number };
 
@@ -51,7 +54,7 @@ const PAGE_LABEL: Record<string, string> = {
 export default function AppChrome({ children, stats, isAdmin }: { children: React.ReactNode; stats?: ChromeStats; isAdmin?: boolean }) {
   const pathname = usePathname() ?? '';
   const [drawer, setDrawer] = useState(false);
-  useEffect(() => { setDrawer(false); }, [pathname]);
+  useEffect(() => { setDrawer(false); saveStatus.reset(); }, [pathname]);   // 화면 이동 시 이전 화면의 저장 상태 제거
 
   // 라이트/다크 테마 — data-theme 스왑 + localStorage 영속 (tokens.css가 색 자동 스왑)
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -157,7 +160,15 @@ export default function AppChrome({ children, stats, isAdmin }: { children: Reac
               <span className="font-semibold text-ink truncate">{label}</span>
             </div>
             <div className="flex items-center gap-3 text-xs text-ink-subtle flex-shrink-0">
-              <span className="inline-flex items-center gap-2"><Icon name="check" className="w-4 h-4 text-emerald-500" /><span className="hidden sm:inline">자동 저장됨</span></span>
+              <SaveStatus />
+              <button type="button" onClick={() => window.dispatchEvent(new Event(OPEN_SEARCH_EVENT))}
+                className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-slate-200 text-ink-muted hover:bg-slate-100 transition-colors"
+                aria-label="전역 검색 열기 (Ctrl+K)" title="검색 (Ctrl+K)">
+                <Icon name="search" className="w-[15px] h-[15px]" />
+                <span className="hidden md:inline">검색</span>
+                <kbd className="hidden md:inline text-[10px] text-ink-subtle border border-slate-200 rounded px-1">Ctrl K</kbd>
+              </button>
+              <GlobalSearch />
               <button onClick={toggleTheme} className="inline-flex items-center justify-center w-8 h-8 rounded-full text-ink-muted hover:bg-slate-100 transition-colors" title={theme === 'dark' ? '라이트 모드' : '다크 모드'} aria-label="테마 전환">
                 <Icon name={theme === 'dark' ? 'sun' : 'moon'} className="w-[18px] h-[18px]" />
               </button>

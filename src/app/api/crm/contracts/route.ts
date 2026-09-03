@@ -7,13 +7,15 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { contractCreateSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function _POST(req: Request) {
   const owners = await visibleOwnerIds();
-  const body = await req.json().catch(() => null) as { dealId?: number } | null;
-  const dealId = Number(body?.dealId);
-  if (!dealId) return NextResponse.json({ error: 'dealId 가 필요합니다.' }, { status: 400 });
+  const parsed = await parseBody(req, contractCreateSchema);
+  if (!parsed.ok) return parsed.res;
+  const { dealId } = parsed.data;
 
   const deal = await prisma.deal.findUnique({ where: { id: dealId } });
   if (!deal || !owners.includes(deal.ownerId)) return NextResponse.json({ error: '안건을 찾을 수 없습니다.' }, { status: 404 });

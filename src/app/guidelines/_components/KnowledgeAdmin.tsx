@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Download, Upload, X, Loader2, Save, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import type { KnowledgeDataset } from '@/lib/knowledge';
@@ -25,6 +25,12 @@ export function EditorModal({
   const [saving, setSaving] = useState(false);
 
   const set = (field: string, v: string) => setForm(f => ({ ...f, [field]: v }));
+  const ids = useId();
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   const save = async () => {
     setSaving(true);
@@ -51,26 +57,27 @@ export function EditorModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
+      <div role="dialog" aria-modal="true" aria-labelledby={`${ids}-title`} className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-          <div className="font-semibold text-ink">
+          <div id={`${ids}-title`} className="font-semibold text-ink">
             {DATASET_LABEL[dataset]} {isCreate ? '새 항목' : '수정'}
             {!isCreate && <span className="text-ink-subtle font-mono text-xs ml-2">{originalId}</span>}
           </div>
-          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} aria-label="닫기" className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
         </header>
 
         <div className="px-5 py-4 overflow-auto space-y-3">
           {FIELDS[dataset].map(f => (
             <div key={f.field}>
-              <label className="label flex items-center gap-1.5">
+              <label htmlFor={`${ids}-${f.field}`} className="label flex items-center gap-1.5">
                 {f.label}
                 {f.required && <span className="text-red-500">*</span>}
               </label>
               {f.type === 'text' ? (
-                <input className="input w-full" value={form[f.field] ?? ''} onChange={e => set(f.field, e.target.value)} />
+                <input id={`${ids}-${f.field}`} className="input w-full" value={form[f.field] ?? ''} onChange={e => set(f.field, e.target.value)} />
               ) : (
                 <textarea
+                  id={`${ids}-${f.field}`}
                   className="input w-full font-mono text-xs leading-relaxed"
                   rows={f.type === 'json' ? 6 : f.type === 'array' ? 3 : 2}
                   value={form[f.field] ?? ''}

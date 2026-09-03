@@ -41,7 +41,7 @@ export default async function CustomerDetail({ params }: { params: { name: strin
             </div>
             {d.quotes.length ? (
               <table className="w-full">
-                <thead><tr className="table-head text-left"><th className="pb-2 font-medium">견적번호</th><th className="pb-2 font-medium">견적명</th><th className="pb-2 font-medium text-right">금액</th><th className="pb-2 font-medium text-right">결론</th></tr></thead>
+                <thead><tr className="table-head text-left"><th scope="col" className="pb-2 font-medium">견적번호</th><th scope="col" className="pb-2 font-medium">견적명</th><th scope="col" className="pb-2 font-medium text-right">금액</th><th scope="col" className="pb-2 font-medium text-right">결론</th></tr></thead>
                 <tbody>
                   {d.quotes.map((q) => { const st = quoteStatus(q.status); return (
                     <tr key={q.id} className="table-row">

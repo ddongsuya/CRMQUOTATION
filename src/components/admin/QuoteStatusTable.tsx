@@ -38,19 +38,19 @@ export default function QuoteStatusTable({ rows: initial }: { rows: Row[] }) {
       <table className="min-w-[1440px] w-full text-[13px]">
         <thead>
           <tr className="table-head border-b border-slate-200">
-            <th className={th}>송부일</th>
-            <th className={th}>견적번호</th>
-            <th className={th}>시험기준</th>
-            <th className={th}>견적명</th>
-            <th className={th}>의뢰기관</th>
-            <th className={th}>의뢰자</th>
-            <th className={th}>제출용도</th>
-            <th className={th}>물질종류</th>
-            <th className={th}>담당자</th>
-            <th className={`${th} text-right`}>견적금액</th>
-            <th className={`${th} text-right`}>할인</th>
-            <th className={th} style={{ minWidth: 170 }}>결론</th>
-            <th className={th}>상태</th>
+            <th scope="col" className={th}>송부일</th>
+            <th scope="col" className={th}>견적번호</th>
+            <th scope="col" className={th}>시험기준</th>
+            <th scope="col" className={th}>견적명</th>
+            <th scope="col" className={th}>의뢰기관</th>
+            <th scope="col" className={th}>의뢰자</th>
+            <th scope="col" className={th}>제출용도</th>
+            <th scope="col" className={th}>물질종류</th>
+            <th scope="col" className={th}>담당자</th>
+            <th scope="col" className={`${th} text-right`}>견적금액</th>
+            <th scope="col" className={`${th} text-right`}>할인</th>
+            <th scope="col" className={th} style={{ minWidth: 170 }}>결론</th>
+            <th scope="col" className={th}>상태</th>
           </tr>
         </thead>
         <tbody>
@@ -73,6 +73,7 @@ export default function QuoteStatusTable({ rows: initial }: { rows: Row[] }) {
                 <td className={`${td} whitespace-nowrap text-right text-ink-body tabular-nums`}>{r.discountRate ? fmtPct(r.discountRate, 0) : '—'}</td>
                 <td className={td} style={{ minWidth: 170 }}>
                   <select value={CONCLUSIONS.includes(r.trackingNote as never) ? (r.trackingNote as string) : ''}
+                    aria-label={`${r.quoteNumber} 결론`}
                     onChange={(e) => changeConclusion(r, e.target.value)}
                     className="text-[12px] rounded-md border border-slate-200 bg-[var(--card)] px-2 py-1 cursor-pointer w-full">
                     <option value="">— 미정 —</option>

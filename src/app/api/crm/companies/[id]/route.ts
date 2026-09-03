@@ -9,6 +9,8 @@ import { visibleOwnerIds } from '@/lib/current-user';
 import { supplyOrZero } from '@/lib/money';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { companyPatchSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function ownedCompany(id: number) {
@@ -107,14 +109,10 @@ async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedCompany(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  const body = await req.json().catch(() => ({})) as Record<string, unknown>;
-  const data: Record<string, unknown> = {};
-  for (const k of ['name', 'bizRegNo', 'industry', 'address', 'memo'] as const) {
-    if (k in body) data[k] = String(body[k] ?? '').trim() || (k === 'name' ? undefined : null);
-  }
-  if ('isNewClient' in body) data.isNewClient = !!body.isNewClient;
-  if (data.name === undefined && 'name' in body) return NextResponse.json({ error: '고객사명은 비울 수 없습니다.' }, { status: 400 });
-  const company = await prisma.company.update({ where: { id }, data });
+  const parsed = await parseBody(req, companyPatchSchema);
+  if (!parsed.ok) return parsed.res;
+  // 스키마 출력: 키 없음 → undefined(Prisma 가 무시), 있으면 trim·''→null 정규화 완료 (name 은 비울 수 없음)
+  const company = await prisma.company.update({ where: { id }, data: parsed.data });
   return NextResponse.json({ company });
 }
 

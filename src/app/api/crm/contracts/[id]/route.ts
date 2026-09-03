@@ -6,9 +6,9 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { contractPatchSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
-
-type PT = { seq?: number; kind?: string; ratio?: number | null; amount?: number | null; condition?: string; studyId?: number | null; dueAt?: string | null; paidAt?: string | null };
 
 async function owned(id: number) {
   const owners = await visibleOwnerIds();
@@ -17,39 +17,21 @@ async function owned(id: number) {
   return c;
 }
 
-const date = (v: unknown) => (v ? new Date(String(v)) : null);
-
 async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  const body = await req.json().catch(() => ({})) as Record<string, unknown>;
-
-  const data: Record<string, unknown> = {};
-  if ('status' in body) data.status = String(body.status);
-  if ('contractNumber' in body) data.contractNumber = String(body.contractNumber ?? '').trim() || null;
-  for (const k of ['costEstimateSentAt', 'draftSentAt', 'approvedAt', 'signedAt'] as const) {
-    if (k in body) data[k] = date(body[k]);
-  }
-
-  // 지급회차 교체 (전체 replace)
-  if (Array.isArray(body.paymentTerms)) {
-    const terms = (body.paymentTerms as PT[]).map((t, i) => ({
-      seq: Number(t.seq ?? i + 1),
-      kind: ['ADVANCE', 'INTERIM', 'BALANCE'].includes(String(t.kind)) ? String(t.kind) : 'INTERIM',
-      ratio: t.ratio == null ? null : Number(t.ratio),
-      amount: t.amount == null ? null : Number(t.amount),
-      condition: t.condition ? String(t.condition).trim() : null,
-      studyId: t.studyId == null ? null : Number(t.studyId),
-      dueAt: date(t.dueAt),
-      paidAt: date(t.paidAt),
-    }));
-    data.paymentTerms = { deleteMany: {}, create: terms };
-  }
+  const parsed = await parseBody(req, contractPatchSchema);
+  if (!parsed.ok) return parsed.res;
+  const { paymentTerms, ...scalars } = parsed.data;   // 키 없음 → undefined(Prisma 가 무시)
 
   const contract = await prisma.contract.update({
     where: { id },
-    data,
+    data: {
+      ...scalars,
+      // 지급회차 교체 (전체 replace) — 스키마가 seq 미지정 시 index+1, kind 기본 INTERIM 을 채운다
+      ...(paymentTerms ? { paymentTerms: { deleteMany: {}, create: paymentTerms } } : {}),
+    },
     include: { paymentTerms: { orderBy: { seq: 'asc' } } },
   });
   return NextResponse.json({ contract });

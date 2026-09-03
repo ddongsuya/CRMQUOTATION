@@ -136,6 +136,7 @@ export default function SectionSelections() {
             <input
               type="text"
               placeholder={`"${s.modality || '전체'}" 모달리티 내 검색…`}
+              aria-label="시험 항목 검색"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="input pl-9 pr-20"
@@ -168,6 +169,7 @@ export default function SectionSelections() {
                       <button
                         onClick={() => addManual(h)}
                         disabled={already}
+                        aria-label={already ? '추가됨' : '항목 추가'}
                         className={clsx(
                           'inline-flex items-center justify-center w-7 h-7 rounded-lg transition-all',
                           already
@@ -202,12 +204,12 @@ export default function SectionSelections() {
             <table className="w-full min-w-[440px] text-xs">
               <thead className="sticky top-0 bg-slate-50/95 backdrop-blur border-b border-slate-200 z-10">
                 <tr className="whitespace-nowrap">
-                  <th className="px-3 py-2 text-left font-semibold text-ink-muted w-24">분류</th>
-                  <th className="px-3 py-2 text-left font-semibold text-ink-muted">시험명</th>
-                  <th className="px-3 py-2 text-left font-semibold text-ink-muted w-16">경로</th>
-                  <th className="px-3 py-2 text-center font-semibold text-ink-muted w-16">수량</th>
-                  <th className="w-8" />
-                  <th className="w-8" />
+                  <th scope="col" className="px-3 py-2 text-left font-semibold text-ink-muted w-24">분류</th>
+                  <th scope="col" className="px-3 py-2 text-left font-semibold text-ink-muted">시험명</th>
+                  <th scope="col" className="px-3 py-2 text-left font-semibold text-ink-muted w-16">경로</th>
+                  <th scope="col" className="px-3 py-2 text-center font-semibold text-ink-muted w-16">수량</th>
+                  <th scope="col" className="w-8" />
+                  <th scope="col" className="w-8" />
                 </tr>
               </thead>
               <tbody>
@@ -263,6 +265,8 @@ export default function SectionSelections() {
                                                        : 'text-ink-subtle hover:text-brand-600 hover:bg-brand-50',
                               )}
                               title={isEditing ? '편집 닫기' : '값 직접 입력 (가격·시험주차·함량회수·메모)'}
+                              aria-label={isEditing ? '편집 닫기' : '값 직접 입력'}
+                              aria-expanded={isEditing}
                             >
                               <Pencil className="w-3.5 h-3.5" />
                             </button>
@@ -272,6 +276,7 @@ export default function SectionSelections() {
                               onClick={() => s.removeSelection(it.key)}
                               className="text-ink-subtle hover:text-red-500 hover:bg-red-50 rounded p-1 transition-colors"
                               title="이 항목 제거"
+                              aria-label="이 항목 제거"
                             >
                               <X className="w-3.5 h-3.5" />
                             </button>

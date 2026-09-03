@@ -38,7 +38,7 @@ export default function TargetForm({ period, rows }: { period: string; rows: Row
                 type="number" inputMode="decimal" min={0} step={0.1}
                 className="input flex-1 tabular-nums" value={vals[i]}
                 onChange={(e) => setVals((v) => v.map((x, j) => (j === i ? e.target.value : x)))}
-                placeholder="0"
+                placeholder="0" aria-label={`${r.name} 수주 목표(억원)`}
               />
               <span className="text-[14px] text-ink-muted">억원</span>
             </div>

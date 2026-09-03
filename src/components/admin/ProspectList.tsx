@@ -77,8 +77,8 @@ export default function ProspectList({ prospects: initial }: { prospects: Prospe
                 ) : (
                   <>
                     {!r.companyId && <button onClick={() => convert(r)} className="btn-ghost h-8 text-[12px]" title="고객사로 전환"><Icon name="arrow-right" className="w-3.5 h-3.5" /> 고객 전환</button>}
-                    <button onClick={() => startEdit(r)} className="icon-btn" title="편집"><Icon name="notebook" className="w-4 h-4" /></button>
-                    <button onClick={() => remove(r)} className="icon-btn" title="삭제"><Icon name="x" className="w-4 h-4" /></button>
+                    <button onClick={() => startEdit(r)} className="icon-btn" title="편집" aria-label="편집"><Icon name="notebook" className="w-4 h-4" /></button>
+                    <button onClick={() => remove(r)} className="icon-btn" title="삭제" aria-label="삭제"><Icon name="x" className="w-4 h-4" /></button>
                   </>
                 )}
               </div>
@@ -89,7 +89,7 @@ export default function ProspectList({ prospects: initial }: { prospects: Prospe
                 {[...FIELD_DEFS, ...PROFILE_DEFS].map((f) => (
                   <div key={f.key} className="flex items-center gap-2">
                     <span className="w-32 text-[12px] text-ink-muted flex-shrink-0">{f.label}</span>
-                    <input className="input h-9 text-[13px] flex-1" value={(form[f.key] as string) ?? ''} onChange={(e) => setForm((s) => ({ ...s, [f.key]: e.target.value }))} />
+                    <input className="input h-9 text-[13px] flex-1" aria-label={f.label} value={(form[f.key] as string) ?? ''} onChange={(e) => setForm((s) => ({ ...s, [f.key]: e.target.value }))} />
                   </div>
                 ))}
               </div>

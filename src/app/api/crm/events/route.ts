@@ -8,6 +8,8 @@ import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { checkLinkOwnership } from '@/lib/crm-guards';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { eventCreateSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function _GET(req: Request) {
@@ -28,25 +30,24 @@ async function _GET(req: Request) {
 
 async function _POST(req: Request) {
   const ownerId = await currentUserId();
-  const b = await req.json().catch(() => null) as { title?: string; type?: string; startAt?: string; endAt?: string; allDay?: boolean; dealId?: number; contactId?: number; location?: string; attendeesClient?: string; attendeesInternal?: string; requests?: string } | null;
-  const title = String(b?.title ?? '').trim();
-  if (!title || !b?.startAt) return NextResponse.json({ error: '제목·날짜가 필요합니다.' }, { status: 400 });
-  const type = ['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].includes(String(b?.type)) ? String(b!.type) : 'MEETING';
-  const linkErr = await checkLinkOwnership(b ?? {});
+  const parsed = await parseBody(req, eventCreateSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;
+  const linkErr = await checkLinkOwnership(b);
   if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
   const event = await prisma.calendarEvent.create({
     data: {
-      ownerId, title, type,
-      startAt: new Date(b.startAt),
-      endAt: b?.endAt ? new Date(b.endAt) : null,
-      allDay: b?.allDay ?? true,
-      dealId: b?.dealId ? Number(b.dealId) : null,
-      contactId: b?.contactId ? Number(b.contactId) : null,
+      ownerId, title: b.title, type: b.type,
+      startAt: b.startAt,
+      endAt: b.endAt,
+      allDay: b.allDay,
+      dealId: b.dealId,
+      contactId: b.contactId,
       // 미팅 상세 — 장소·참여자(고객사/자사)·요청사항
-      location: b?.location?.trim() || null,
-      attendeesClient: b?.attendeesClient?.trim() || null,
-      attendeesInternal: b?.attendeesInternal?.trim() || null,
-      requests: b?.requests?.trim() || null,
+      location: b.location,
+      attendeesClient: b.attendeesClient,
+      attendeesInternal: b.attendeesInternal,
+      requests: b.requests,
     },
   });
   return NextResponse.json({ event });

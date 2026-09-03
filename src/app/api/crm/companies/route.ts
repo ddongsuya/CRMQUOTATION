@@ -8,6 +8,8 @@ import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { supplyOrZero } from '@/lib/money';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { companyCreateSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function _GET() {
@@ -45,21 +47,19 @@ async function _GET() {
 
 async function _POST(req: Request) {
   const ownerId = await currentUserId();
-  const body = await req.json().catch(() => null) as {
-    name?: string; bizRegNo?: string; industry?: string; address?: string; isNewClient?: boolean; memo?: string;
-  } | null;
-  const name = String(body?.name ?? '').trim();
-  if (!name) return NextResponse.json({ error: '고객사명을 입력하세요.' }, { status: 400 });
+  const parsed = await parseBody(req, companyCreateSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;
 
   const company = await prisma.company.create({
     data: {
       ownerId,
-      name,
-      bizRegNo: body?.bizRegNo?.trim() || null,
-      industry: body?.industry?.trim() || null,
-      address: body?.address?.trim() || null,
-      isNewClient: body?.isNewClient ?? true,
-      memo: body?.memo?.trim() || null,
+      name: b.name,
+      bizRegNo: b.bizRegNo,
+      industry: b.industry,
+      address: b.address,
+      isNewClient: b.isNewClient,
+      memo: b.memo,
     },
   });
   return NextResponse.json({ company });

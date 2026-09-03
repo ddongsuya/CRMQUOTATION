@@ -66,7 +66,7 @@ export default function QuoteUploadButton({ endpoint = '/api/admin/quotes/import
               <h3 className="text-[14px] font-bold text-ink m-0">업로드 미리보기</h3>
               <p className="text-[11.5px] text-ink-subtle mt-0.5 mb-0 truncate max-w-[220px]">{file?.name}</p>
             </div>
-            <button onClick={cancel} className="icon-btn w-7 h-7"><Icon name="x" className="w-3.5 h-3.5" /></button>
+            <button onClick={cancel} aria-label="미리보기 닫기" className="icon-btn w-7 h-7"><Icon name="x" className="w-3.5 h-3.5" /></button>
           </div>
 
           <div className="grid grid-cols-3 gap-2 mb-3">

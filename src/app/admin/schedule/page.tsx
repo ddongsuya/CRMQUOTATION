@@ -32,11 +32,11 @@ export default async function AdminSchedule({ searchParams }: { searchParams: SP
         <table className="w-full min-w-[720px]">
           <thead>
             <tr className="table-head text-left">
-              <th className="pb-3 font-medium">프로젝트 / 고객사</th>
-              <th className="pb-3 font-medium">담당자</th>
-              <th className="pb-3 font-medium">센터</th>
-              <th className="pb-3 font-medium">상태</th>
-              <th className="pb-3 font-medium w-[38%]">일정 (2026 상반기)</th>
+              <th scope="col" className="pb-3 font-medium">프로젝트 / 고객사</th>
+              <th scope="col" className="pb-3 font-medium">담당자</th>
+              <th scope="col" className="pb-3 font-medium">센터</th>
+              <th scope="col" className="pb-3 font-medium">상태</th>
+              <th scope="col" className="pb-3 font-medium w-[38%]">일정 (2026 상반기)</th>
             </tr>
           </thead>
           <tbody>

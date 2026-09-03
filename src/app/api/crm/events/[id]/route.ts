@@ -8,6 +8,8 @@ import { visibleOwnerIds } from '@/lib/current-user';
 import { checkLinkOwnership } from '@/lib/crm-guards';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { eventPatchSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function owned(id: number) {
@@ -21,22 +23,13 @@ async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  const b = await req.json().catch(() => ({})) as Record<string, unknown>;
-  const data: Record<string, unknown> = {};
-  if ('title' in b) { const v = String(b.title ?? '').trim(); if (!v) return NextResponse.json({ error: '제목은 비울 수 없습니다.' }, { status: 400 }); data.title = v; }
-  if ('type' in b) data.type = String(b.type);
-  if ('startAt' in b) data.startAt = new Date(String(b.startAt));
-  if ('endAt' in b) data.endAt = b.endAt ? new Date(String(b.endAt)) : null;
-  if ('done' in b) data.done = !!b.done;
+  const parsed = await parseBody(req, eventPatchSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;   // 키 없음 → undefined(Prisma 가 무시), 연결 id 는 falsy → null(해제)
   // 연결 대상 변경 — 폼에서 안건/의뢰자를 바꿔 저장하는 경우 (새 대상도 내 소유여야 함)
   const linkErr = await checkLinkOwnership(b);
   if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
-  if ('dealId' in b) data.dealId = b.dealId ? Number(b.dealId) : null;
-  if ('contactId' in b) data.contactId = b.contactId ? Number(b.contactId) : null;
-  for (const k of ['location', 'attendeesClient', 'attendeesInternal', 'requests'] as const) {
-    if (k in b) data[k] = String(b[k] ?? '').trim() || null;
-  }
-  const event = await prisma.calendarEvent.update({ where: { id }, data });
+  const event = await prisma.calendarEvent.update({ where: { id }, data: b });
   return NextResponse.json({ event });
 }
 

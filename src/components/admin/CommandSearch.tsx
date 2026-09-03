@@ -90,11 +90,11 @@ export default function CommandSearch({ openCompany, openQuote, openReport }: {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center pt-[12vh] px-4 bg-black/40" onClick={() => setOpen(false)}>
-      <div className="w-full max-w-[560px] card overflow-hidden" onClick={(e) => e.stopPropagation()}>
+      <div role="dialog" aria-modal="true" aria-label="통합 검색" className="w-full max-w-[560px] card overflow-hidden" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-2.5 px-4 border-b border-slate-200">
           <Icon name="search" className="w-4 h-4 text-ink-subtle flex-shrink-0" />
           <input ref={inputRef} value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={onInputKey}
-            placeholder="회사·견적번호·업무 기록 검색…"
+            placeholder="회사·견적번호·업무 기록 검색…" aria-label="검색어"
             className="flex-1 h-12 bg-transparent text-[14px] outline-none placeholder:text-ink-subtle" />
           {loading && <span className="text-[11px] text-ink-subtle">검색 중…</span>}
           <kbd className="text-[11px] text-ink-subtle border border-slate-200 rounded px-1.5 py-0.5">ESC</kbd>

@@ -25,6 +25,7 @@ export default function EntityDrawer({ stack, back, close, showFullPage }: { sta
       <div onClick={close}
         className={`fixed inset-0 z-50 bg-black/40 transition-opacity duration-200 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} />
       <aside
+        role="dialog" aria-modal="true" aria-label="상세 정보"
         className={`fixed inset-y-0 right-0 z-50 w-full max-w-[460px] bg-[var(--card)] border-l border-slate-200 flex flex-col transition-transform duration-200 ${open ? 'translate-x-0' : 'translate-x-full'}`}
         aria-hidden={!open}>
         <div className="flex items-center justify-between gap-2 px-4 py-3 border-b border-slate-200 flex-shrink-0">

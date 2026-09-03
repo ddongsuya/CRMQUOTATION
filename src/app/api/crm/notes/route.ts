@@ -8,6 +8,8 @@ import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { checkLinkOwnership } from '@/lib/crm-guards';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { noteCreateSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function _GET(req: Request) {
@@ -33,19 +35,18 @@ async function _GET(req: Request) {
 
 async function _POST(req: Request) {
   const ownerId = await currentUserId();
-  const b = await req.json().catch(() => null) as { type?: string; title?: string; body?: string; occurredAt?: string; contactId?: number; dealId?: number } | null;
-  const body = String(b?.body ?? '').trim();
-  if (!body) return NextResponse.json({ error: '내용을 입력하세요.' }, { status: 400 });
-  const type = ['MEETING', 'CALL', 'MEMO'].includes(String(b?.type)) ? String(b!.type) : 'MEMO';
-  const linkErr = await checkLinkOwnership(b ?? {});
+  const parsed = await parseBody(req, noteCreateSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;
+  const linkErr = await checkLinkOwnership(b);
   if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
   const note = await prisma.note.create({
     data: {
-      ownerId, type, body,
-      title: b?.title?.trim() || null,
-      occurredAt: b?.occurredAt ? new Date(b.occurredAt) : new Date(),
-      contactId: b?.contactId ? Number(b.contactId) : null,
-      dealId: b?.dealId ? Number(b.dealId) : null,
+      ownerId, type: b.type, body: b.body,
+      title: b.title,
+      occurredAt: b.occurredAt,   // 없으면 스키마가 지금 시각으로 채움
+      contactId: b.contactId,
+      dealId: b.dealId,
     },
   });
   return NextResponse.json({ note });

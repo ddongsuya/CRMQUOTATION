@@ -7,26 +7,28 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { studyCreateSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function _POST(req: Request) {
   const owners = await visibleOwnerIds();
-  const body = await req.json().catch(() => null) as { dealId?: number; itemName?: string; studyNumber?: string; director?: string } | null;
-  const dealId = Number(body?.dealId);
-  if (!dealId) return NextResponse.json({ error: 'dealId 가 필요합니다.' }, { status: 400 });
-  const deal = await prisma.deal.findUnique({ where: { id: dealId } });
+  const parsed = await parseBody(req, studyCreateSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;
+  const deal = await prisma.deal.findUnique({ where: { id: b.dealId } });
   if (!deal || !owners.includes(deal.ownerId)) return NextResponse.json({ error: '안건을 찾을 수 없습니다.' }, { status: 404 });
 
   const study = await prisma.study.create({
     data: {
-      dealId,
-      itemName: body?.itemName?.trim() || null,
-      studyNumber: body?.studyNumber?.trim() || null,
-      director: body?.director?.trim() || null,
+      dealId: b.dealId,
+      itemName: b.itemName,
+      studyNumber: b.studyNumber,
+      director: b.director,
     },
   });
   if (['INQUIRY', 'QUOTE'].includes(deal.stage)) {
-    await prisma.deal.update({ where: { id: dealId }, data: { stage: 'STUDY' } });
+    await prisma.deal.update({ where: { id: b.dealId }, data: { stage: 'STUDY' } });
   }
   return NextResponse.json({ study });
 }

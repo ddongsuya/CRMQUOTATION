@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Loader2, Receipt, Ban, PlusCircle, AlertTriangle, FileText, ChevronLeft, ChevronRight, Check, Printer } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
+import { saveStatus } from '@/lib/save-status';
 import CustomerFields, { EMPTY_CUSTOMER, type CustomerInfo } from '@/components/quote/CustomerFields';
 
 const DURATIONS = [
@@ -47,6 +48,18 @@ const STEPS = [
   { n: 4, label: '항목·부형제', title: '시험 항목 · 부형제', sub: '엔진이 자동 구성한 항목입니다. 조건·부형제를 조정하세요.' },
   { n: 5, label: '통화·할인', title: '가격 기준 · 통화 · 할인', sub: '최종 조건을 설정하면 우측 견적이 즉시 갱신됩니다.' },
 ];
+// 작성 중 상태를 브라우저에 자동 보관(새로고침·탭 닫힘·연결 끊김 대비). 서버 저장이 아니다.
+const DRAFT_KEY = 'quote-v2:draft';
+const DRAFT_VERSION = 1;
+const draftKeyFor = (editId: string | null) => (editId ? `${DRAFT_KEY}:${editId}` : DRAFT_KEY);
+type DraftEnvelope = { v: number; at: number; state: Record<string, unknown> };
+const readDraft = (key: string): DraftEnvelope | null => {
+  try { const raw = localStorage.getItem(key); if (!raw) return null; const d = JSON.parse(raw); return d?.v === DRAFT_VERSION && d.state ? d : null; } catch { return null; }
+};
+const writeDraft = (key: string, state: Record<string, unknown>) => { try { localStorage.setItem(key, JSON.stringify({ v: DRAFT_VERSION, at: Date.now(), state })); } catch { /* 저장소 꽉 참·차단 — 무시 */ } };
+const clearDraft = (key: string) => { try { localStorage.removeItem(key); } catch { /* noop */ } };
+const hhmm = (t: number) => new Date(t).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+
 const won = (n: number | null | undefined) => (n == null ? '—' : `₩${n.toLocaleString()}`);
 type Meta = { categories: string[]; conditionKeys: string[]; addonOptions: { key: string; label: string; price: number }[] };
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,11 +118,25 @@ export default function QuoteV2Page() {
   const [companyNames, setCompanyNames] = useState<string[]>([]);  // 고객사 자동완성(CRM)
   useEffect(() => { fetch('/api/crm/companies').then(r => r.json()).then(d => setCompanyNames((d.companies ?? []).map((c: { name: string }) => c.name))).catch(() => {}); }, []);
 
+  // 자동 보관 — 복구 제안 · 편집 대상 id · 기준 스냅샷(사용자가 실제로 바꾼 것만 보관) · 복원 중 플래그
+  const [draftOffer, setDraftOffer] = useState<{ at: number; step: number; state: Record<string, unknown> } | null>(null);
+  const editIdRef = useRef<string | null>(null);
+  const baselineRef = useRef<string | null>(null);
+  const touchedRef = useRef(false);
+  const restoringRef = useRef(false);
+
   const isCombo = category === '복합제';
   const isBattery = !['의약품', '복합제', '백신', '건강기능식품'].includes(category);
 
   useEffect(() => { fetch('/api/quote-v2').then(r => r.json()).then((m: Meta) => { setMeta(m); const c = new URLSearchParams(window.location.search).get('category'); if (c && m.categories?.includes(c)) setCategory(c); }); }, []);
   useEffect(() => { const d = new URLSearchParams(window.location.search).get('dealId'); if (d) setDealId(Number(d)); }, []);
+  // 마운트 1회: 편집 대상 id 기록 → 해당 키의 브라우저 보관본이 있으면 "이어서 작성" 제안(자동 적용은 하지 않는다)
+  useEffect(() => {
+    const qid = new URLSearchParams(window.location.search).get('id');
+    editIdRef.current = qid;
+    const d = readDraft(draftKeyFor(qid));
+    if (d) setDraftOffer({ at: d.at, step: Number(d.state.step ?? 1), state: d.state });
+  }, []);
   // 고객 컨텍스트 프리필 — /customers·고객 상세에서 "이 고객으로 견적"
   useEffect(() => {
     const sp = new URLSearchParams(window.location.search);
@@ -125,6 +152,28 @@ export default function QuoteV2Page() {
     vaccineGroups: category === '백신' ? vaccineGroups : undefined,
     subtype: category === '건강기능식품' ? healthSubtype : undefined,
   });
+  // 위저드 상태 스냅샷 ↔ 복원 (브라우저 보관용). 서버 견적(planJson)과는 별개의 임시 저장.
+  const snapshot = (): Record<string, unknown> => ({
+    step, category, catGroup, standard, route, durations: [...durations], species, addons, tk, comboCount, comboAnal, excipient,
+    submissionTarget, vaccineGroups, healthSubtype, conds, reqAddons, currency, discountRate, exchangeRate, picked: [...picked],
+    cust, dealId, savedId, savedNo, qtyOverrides, removedIds, addonTargets, addonPrices, extraIds, priceOv,
+  });
+  const applySnapshot = (st: Record<string, unknown>) => {
+    const g = <T,>(k: string, d: T): T => (st[k] === undefined || st[k] === null ? d : (st[k] as T));
+    setCategory(g('category', category)); setCatGroup(g('catGroup', null as string | null)); setStandard(g('standard', standard)); setRoute(g('route', route));
+    setDurations(new Set(g<string[]>('durations', [...durations]))); setSpecies(g('species', species)); setAddons(g('addons', addons)); setTk(g('tk', tk));
+    setComboCount(g('comboCount', comboCount)); setComboAnal(g('comboAnal', comboAnal)); setExcipient(g('excipient', excipient));
+    setSubmissionTarget(g('submissionTarget', submissionTarget)); setVaccineGroups(g('vaccineGroups', vaccineGroups)); setHealthSubtype(g('healthSubtype', healthSubtype));
+    setConds(g('conds', {})); setReqAddons(g('reqAddons', {})); setCurrency(g('currency', 'KRW')); setDiscountRate(Math.min(g('discountRate', 0), 0.5)); setExchangeRate(g('exchangeRate', 1400));
+    const pk = new Set<string>(g<string[]>('picked', []));
+    const cat = g('category', category);
+    if (pk.size) pendingPicked.current = { set: pk, category: cat };
+    setCust(g('cust', EMPTY_CUSTOMER)); setDealId(g('dealId', null as number | null)); setSavedId(g('savedId', null as number | null)); setSavedNo(g('savedNo', null as string | null));
+    setQtyOverrides(g('qtyOverrides', {})); setRemovedIds(g('removedIds', [])); setAddonTargets(g('addonTargets', {})); setAddonPrices(g('addonPrices', {}));
+    setExtraIds(g('extraIds', [])); setPriceOv(g('priceOv', {}));
+    setStep(g('step', 1));
+  };
+
   const toggleSet = (s: Set<string>, k: string) => { const n = new Set(s); n.has(k) ? n.delete(k) : n.add(k); return n; };
   const priceOf = (it: { priceA?: { MFDS: number | null; OECD: number | null }; priceB?: { MFDS: number | null; OECD: number | null } }) => it.priceA?.[standard] ?? it.priceB?.[standard] ?? null;
   const togglePick = (id: string) => setPicked(p => { const n = new Set(p); n.has(id) ? n.delete(id) : n.add(id); return n; });
@@ -145,6 +194,7 @@ export default function QuoteV2Page() {
   useEffect(() => {
     const qid = new URLSearchParams(window.location.search).get('id');
     if (!qid) return;
+    restoringRef.current = true;
     (async () => {
       const d = await fetch(`/api/quotes/${qid}`).then(r => r.json()).catch(() => null);
       const q = d?.quote;
@@ -224,6 +274,8 @@ export default function QuoteV2Page() {
     if (isBattery && picked.size === 0) return;
     setRestorePending(false);
     generate();
+    // 복원으로 바뀐 상태는 사용자 변경이 아니다 — 기준 스냅샷을 다시 잡는다
+    restoringRef.current = false; baselineRef.current = null; touchedRef.current = false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restorePending, picked, isBattery]);
 
@@ -261,8 +313,39 @@ export default function QuoteV2Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [regenKey]);
 
+  // ── 브라우저 자동 보관: 기준 스냅샷과 달라진 뒤부터 0.5초 디바운스로 보관. 복원 중·제안 표시 중엔 보관하지 않는다.
+  const draftJson = JSON.stringify(snapshot());
+  useEffect(() => {
+    if (draftOffer || restoringRef.current) return;
+    if (baselineRef.current == null) { baselineRef.current = draftJson; return; }
+    if (draftJson === baselineRef.current) return;
+    touchedRef.current = true;
+    const t = setTimeout(() => {
+      writeDraft(draftKeyFor(editIdRef.current), JSON.parse(draftJson));
+      if (!savedNo) saveStatus.dirty('브라우저에 임시 보관 · 서버 미저장');
+    }, 500);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draftJson, draftOffer]);
+  // 서버에 저장되지 않은 변경이 있으면 탭 닫기·새로고침 전에 확인
+  useEffect(() => {
+    const h = (e: BeforeUnloadEvent) => { if (touchedRef.current && !savedNo) { e.preventDefault(); e.returnValue = ''; } };
+    window.addEventListener('beforeunload', h);
+    return () => window.removeEventListener('beforeunload', h);
+  }, [savedNo]);
+  const resumeDraft = () => {
+    if (!draftOffer) return;
+    restoringRef.current = true;
+    applySnapshot(draftOffer.state);
+    setDraftOffer(null);
+    if (draftOffer.step >= 3) setRestorePending(true);
+    else { restoringRef.current = false; baselineRef.current = null; }
+    toast.info(`${hhmm(draftOffer.at)} 에 보관된 작성 내용을 불러왔습니다.`);
+  };
+  const discardDraft = () => { clearDraft(draftKeyFor(editIdRef.current)); setDraftOffer(null); };
+
   const saveQuote = async (issueNow: boolean) => {
-    setSaving(true); setSavedNo(null);
+    setSaving(true); setSavedNo(null); saveStatus.saving();
     try {
       const common = {
         category, standard, route, customerConditions: conds, requestedAddons: reqAddons,
@@ -279,12 +362,13 @@ export default function QuoteV2Page() {
         body: JSON.stringify(body),
       });
       const d = await res.json().catch(() => ({}));
-      if (!res.ok || !d.quote?.quoteNumber) { toast.error(d.error ?? '견적 저장에 실패했습니다. 다시 시도해 주세요.'); return null; }
-      setSavedNo(d.quote.quoteNumber); setSavedId(d.quote.id ?? null);
+      if (!res.ok || !d.quote?.quoteNumber) { const msg = d.error ?? '견적 저장에 실패했습니다. 입력 내용은 그대로 남아 있으니 다시 시도해 주세요.'; toast.error(msg); saveStatus.error(d.retryable ? '잠시 후 다시 시도' : undefined); return null; }
+      setSavedNo(d.quote.quoteNumber); setSavedId(d.quote.id ?? null); saveStatus.saved(d.quote.quoteNumber);
       if (!issueNow) toast.success(d.revised ? `변경견적서 ${d.quote.quoteNumber} 로 임시 저장됨` : `임시 저장됨 · ${d.quote.quoteNumber}`);
       return d.quote?.id ?? null;
     } catch (e) {
-      toast.error(`저장 실패: ${e instanceof Error ? e.message : '네트워크 오류'}`);
+      toast.error(`저장 실패: ${e instanceof Error ? e.message : '네트워크 오류'} — 입력 내용은 그대로 남아 있습니다.`);
+      saveStatus.error('네트워크 오류');
       return null;
     } finally { setSaving(false); }
   };
@@ -292,7 +376,7 @@ export default function QuoteV2Page() {
   // 견적 완성 — 발행 저장 후 견적서(표지·견적명세·항목별 상세)로 이동
   const completeQuote = async () => {
     const id = await saveQuote(true);
-    if (id) window.location.href = `/quote/print?id=${id}`;
+    if (id) { clearDraft(draftKeyFor(editIdRef.current)); touchedRef.current = false; window.location.href = `/quote/print?id=${id}`; }
     else toast.error('견적 저장에 실패했습니다. 다시 시도해 주세요.');
   };
 
@@ -307,6 +391,19 @@ export default function QuoteV2Page() {
 
   return (
     <div className="space-y-5 animate-fade-in">
+      {draftOffer && (
+        <div role="region" aria-label="작성 중이던 견적 복구" className="card px-5 py-3.5 flex flex-wrap items-center gap-3" style={{ borderColor: 'var(--accent)', background: 'var(--accent-tint)' }}>
+          <FileText className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--accent-press)' }} aria-hidden="true" />
+          <div className="flex-1 min-w-[200px] text-[13px]">
+            <span className="font-semibold text-ink">작성 중이던 견적이 브라우저에 남아 있습니다.</span>
+            <span className="text-ink-muted"> {hhmm(draftOffer.at)} · {STEPS[Math.min(Math.max(draftOffer.step, 1), STEPS.length) - 1].label} 단계{typeof draftOffer.state.cust === 'object' && draftOffer.state.cust && (draftOffer.state.cust as { company?: string }).company ? ` · ${(draftOffer.state.cust as { company?: string }).company}` : ''}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button type="button" onClick={discardDraft} className="btn-ghost h-8 text-[12px]">새로 시작</button>
+            <button type="button" onClick={resumeDraft} className="btn-primary h-8 px-3.5 text-[12px]">이어서 작성</button>
+          </div>
+        </div>
+      )}
       {/* Stepper — 원형(활성/완료 오렌지, ✓) + 라벨 아래 + 연결선 */}
       <div className="card px-4 sm:px-6 py-5">
         <div className="flex items-start">

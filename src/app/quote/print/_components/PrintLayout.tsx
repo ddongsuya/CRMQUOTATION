@@ -196,12 +196,12 @@ export default function PrintLayout({ data }: { data: PrintData }) {
         <table className="quote-table">
           <thead>
             <tr>
-              <th style={{ width: '6%' }}>No.</th>
-              <th>시험 항목</th>
-              <th style={{ width: '8%' }}>경로</th>
-              <th style={{ width: '14%' }} className="num">단가</th>
-              <th style={{ width: '6%' }} className="num">수량</th>
-              <th style={{ width: '16%' }} className="num">소계</th>
+              <th scope="col" style={{ width: '6%' }}>No.</th>
+              <th scope="col">시험 항목</th>
+              <th scope="col" style={{ width: '8%' }}>경로</th>
+              <th scope="col" style={{ width: '14%' }} className="num">단가</th>
+              <th scope="col" style={{ width: '6%' }} className="num">수량</th>
+              <th scope="col" style={{ width: '16%' }} className="num">소계</th>
             </tr>
           </thead>
           <tbody>

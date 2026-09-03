@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Download, Upload, X, Loader2, Save, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { FIELDS, GROUPS, formToPartial, recordToForm } from '@/lib/test-items-fields';
@@ -16,6 +16,12 @@ export function ItemEditorModal({
   const [form, setForm] = useState<Record<string, string>>(() => recordToForm(record ?? createDefaults ?? null));
   const [saving, setSaving] = useState(false);
   const set = (field: string, v: string) => setForm(f => ({ ...f, [field]: v }));
+  const ids = useId();
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   const save = async () => {
     setSaving(true);
@@ -42,13 +48,13 @@ export function ItemEditorModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
+      <div role="dialog" aria-modal="true" aria-labelledby={`${ids}-title`} className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-          <div className="font-semibold text-ink">
+          <div id={`${ids}-title`} className="font-semibold text-ink">
             시험항목 {isCreate ? '새 항목' : '수정'}
             {!isCreate && <span className="text-ink-subtle text-xs ml-2">{String(record?.testName ?? '')}</span>}
           </div>
-          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} aria-label="닫기" className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
         </header>
 
         <div className="px-5 py-4 overflow-auto space-y-4">
@@ -60,21 +66,22 @@ export function ItemEditorModal({
                   const full = f.type === 'textarea' || f.type === 'json' || f.type === 'array';
                   return (
                     <div key={f.field} className={clsx(full && 'sm:col-span-2')}>
-                      <label className="label flex items-center gap-1.5">
+                      <label htmlFor={`${ids}-${f.field}`} className="label flex items-center gap-1.5">
                         {f.label}{f.required && <span className="text-red-500">*</span>}
                       </label>
                       {f.type === 'select' ? (
-                        <select className="input w-full" value={form[f.field] ?? ''} onChange={e => set(f.field, e.target.value)}>
+                        <select id={`${ids}-${f.field}`} className="input w-full" value={form[f.field] ?? ''} onChange={e => set(f.field, e.target.value)}>
                           <option value="">—</option>
                           {f.options?.map(o => <option key={o} value={o}>{o}</option>)}
                         </select>
                       ) : f.type === 'bool' ? (
-                        <select className="input w-full" value={/^(y|true|1)$/i.test(form[f.field] ?? '') ? 'Y' : 'N'} onChange={e => set(f.field, e.target.value)}>
+                        <select id={`${ids}-${f.field}`} className="input w-full" value={/^(y|true|1)$/i.test(form[f.field] ?? '') ? 'Y' : 'N'} onChange={e => set(f.field, e.target.value)}>
                           <option value="N">아니오</option>
                           <option value="Y">예</option>
                         </select>
                       ) : f.type === 'text' || f.type === 'number' ? (
                         <input
+                          id={`${ids}-${f.field}`}
                           className="input w-full"
                           inputMode={f.type === 'number' ? 'numeric' : undefined}
                           disabled={!isCreate && f.readonlyOnEdit}
@@ -83,6 +90,7 @@ export function ItemEditorModal({
                         />
                       ) : (
                         <textarea
+                          id={`${ids}-${f.field}`}
                           className="input w-full font-mono text-xs leading-relaxed"
                           rows={f.type === 'json' ? 4 : f.type === 'array' ? 3 : 2}
                           value={form[f.field] ?? ''}

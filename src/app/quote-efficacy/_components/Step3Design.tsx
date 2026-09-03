@@ -210,7 +210,7 @@ export default function Step3Design({ s, m, grandTotal, h }: {
                 </button>
                 <span className="text-[12px] text-ink-muted tabular-nums whitespace-nowrap">총 {groupTotal(g)}마리</span>
                 <button onClick={() => h.addSub(g.id)} className="btn-ghost h-7 text-[11px] px-2">+ 마리수 분할</button>
-                <button onClick={() => h.delGroup(g.id)} className="icon-btn w-7 h-7"><Icon name="x" className="w-3.5 h-3.5" /></button>
+                <button onClick={() => h.delGroup(g.id)} aria-label="군 삭제" className="icon-btn w-7 h-7"><Icon name="x" className="w-3.5 h-3.5" /></button>
               </div>
 
               <div className="flex flex-wrap gap-1.5 mt-2 pl-1">
@@ -221,7 +221,7 @@ export default function Step3Design({ s, m, grandTotal, h }: {
                     <input type="number" min={1} value={x.n} onChange={(e) => h.updSub(g.id, x.id, { n: Number(e.target.value) || 1 })}
                       className="w-11 text-[12px] font-semibold text-ink bg-transparent outline-none tabular-nums text-right" />
                     {g.subs.length > 1 && (
-                      <button onClick={() => h.delSub(g.id, x.id)} className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-3 h-3" /></button>
+                      <button onClick={() => h.delSub(g.id, x.id)} aria-label="분할 삭제" className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-3 h-3" /></button>
                     )}
                   </span>
                 ))}
@@ -249,18 +249,18 @@ export default function Step3Design({ s, m, grandTotal, h }: {
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="text-left text-[11px] font-semibold text-ink-subtle uppercase tracking-wider pb-2 pr-3 min-w-[180px]">평가항목</th>
+                <th scope="col" className="text-left text-[11px] font-semibold text-ink-subtle uppercase tracking-wider pb-2 pr-3 min-w-[180px]">평가항목</th>
                 {cols.map((c) => (
-                  <th key={c} className="text-[11px] font-semibold text-ink-subtle pb-2 px-1 w-[42px] whitespace-nowrap">{c}</th>
+                  <th scope="col" key={c} className="text-[11px] font-semibold text-ink-subtle pb-2 px-1 w-[42px] whitespace-nowrap">{c}</th>
                 ))}
-                <th className="w-8" />
+                <th scope="col" className="w-8" />
               </tr>
             </thead>
             <tbody>
               {s.endpoints.map((e) => (
                 <tr key={e.id} className="border-t border-slate-200">
                   <td className="py-1.5 pr-3">
-                    <input value={e.name} onChange={(ev) => h.updEnd(e.id, { name: ev.target.value })}
+                    <input value={e.name} onChange={(ev) => h.updEnd(e.id, { name: ev.target.value })} aria-label="평가항목"
                       className="w-full h-8 px-2.5 text-[13px] rounded-md border border-slate-200 bg-[var(--card)] outline-none focus:border-[var(--accent)]" />
                   </td>
                   {cols.map((c) => {
@@ -268,6 +268,7 @@ export default function Step3Design({ s, m, grandTotal, h }: {
                     return (
                       <td key={c} className="text-center px-1">
                         <button onClick={() => h.toggleCell(e.id, c)}
+                          aria-pressed={on} aria-label={`${e.name || '평가항목'} ${c}`}
                           className="w-[26px] h-[26px] rounded-[7px] cursor-pointer text-[9px] leading-none"
                           style={{ border: `1px solid ${on ? 'var(--accent)' : 'var(--hairline)'}`, background: on ? 'var(--accent)' : 'var(--card)', color: '#fff' }}>
                           {on ? '●' : ''}
@@ -276,7 +277,7 @@ export default function Step3Design({ s, m, grandTotal, h }: {
                     );
                   })}
                   <td className="text-center">
-                    <button onClick={() => h.delEnd(e.id)} className="icon-btn w-7 h-7"><Icon name="x" className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => h.delEnd(e.id)} aria-label="항목 삭제" className="icon-btn w-7 h-7"><Icon name="x" className="w-3.5 h-3.5" /></button>
                   </td>
                 </tr>
               ))}

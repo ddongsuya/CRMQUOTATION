@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '../Icon';
 
@@ -18,6 +18,13 @@ export default function AddMemberButton({ centers }: { centers: { id: number; na
   const [role, setRole] = useState('MEMBER');
   const [centerId, setCenterId] = useState<string>(centers[0]?.id ? String(centers[0].id) : '');
   const [busy, setBusy] = useState(false);
+  const ids = useId();
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
   const [err, setErr] = useState('');
 
   const submit = async () => {
@@ -41,25 +48,25 @@ export default function AddMemberButton({ centers }: { centers: { id: number; na
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" onClick={() => setOpen(false)}>
-          <div className="card card-pad w-full max-w-sm bg-[var(--card)]" onClick={(e) => e.stopPropagation()}>
+          <div role="dialog" aria-modal="true" aria-labelledby={`${ids}-title`} className="card card-pad w-full max-w-sm bg-[var(--card)]" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-[16px] font-bold text-ink">구성원 추가</h3>
-              <button onClick={() => setOpen(false)} className="icon-btn"><Icon name="x" className="w-4 h-4" /></button>
+              <h3 id={`${ids}-title`} className="text-[16px] font-bold text-ink">구성원 추가</h3>
+              <button onClick={() => setOpen(false)} aria-label="닫기" className="icon-btn"><Icon name="x" className="w-4 h-4" /></button>
             </div>
             <div className="space-y-3">
               <div>
-                <label className="label">이름</label>
-                <input className="input" value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김코아" autoFocus />
+                <label className="label" htmlFor={`${ids}-name`}>이름</label>
+                <input id={`${ids}-name`} className="input" value={name} onChange={(e) => setName(e.target.value)} placeholder="예: 김코아" autoFocus />
               </div>
               <div>
-                <label className="label">직책 · 권한</label>
-                <select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
+                <label className="label" htmlFor={`${ids}-role`}>직책 · 권한</label>
+                <select id={`${ids}-role`} className="input" value={role} onChange={(e) => setRole(e.target.value)}>
                   {ROLES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
                 </select>
               </div>
               <div>
-                <label className="label">센터</label>
-                <select className="input" value={centerId} onChange={(e) => setCenterId(e.target.value)}>
+                <label className="label" htmlFor={`${ids}-center`}>센터</label>
+                <select id={`${ids}-center`} className="input" value={centerId} onChange={(e) => setCenterId(e.target.value)}>
                   <option value="">미배정</option>
                   {centers.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>

@@ -97,7 +97,7 @@ export default function CatalogPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <div className="segmented inline-flex gap-[3px] p-[3px] rounded-lg bg-slate-100">
             {(['MFDS', 'OECD'] as const).map(s => (
-              <button key={s} onClick={() => setSubmit(s)} className={clsx('px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-colors', submit === s ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink')}>{s}</button>
+              <button key={s} onClick={() => setSubmit(s)} aria-pressed={submit === s} className={clsx('px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-colors', submit === s ? 'bg-[var(--card)] text-ink' : 'text-ink-muted hover:text-ink')}>{s}</button>
             ))}
           </div>
           <Link href="/catalog/modalities" className="btn-ghost"><Layers className="w-4 h-4" /> 모달리티 구성 편집</Link>
@@ -109,15 +109,15 @@ export default function CatalogPage() {
       {/* 분류 필터칩 + 검색 */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex flex-wrap gap-2">
-          <button onClick={() => setCat('')} className={clsx('chip', cat === '' ? 'chip-active' : 'chip-inactive')}>전체 <span className="tabular-nums opacity-70">{data.items.length}</span></button>
+          <button onClick={() => setCat('')} aria-pressed={cat === ''} className={clsx('chip', cat === '' ? 'chip-active' : 'chip-inactive')}>전체 <span className="tabular-nums opacity-70">{data.items.length}</span></button>
           {catCounts.map(([c, n]) => (
-            <button key={c} onClick={() => setCat(c)} className={clsx('chip', cat === c ? 'chip-active' : 'chip-inactive')}>{c} <span className="tabular-nums opacity-70">{n}</span></button>
+            <button key={c} onClick={() => setCat(c)} aria-pressed={cat === c} className={clsx('chip', cat === c ? 'chip-active' : 'chip-inactive')}>{c} <span className="tabular-nums opacity-70">{n}</span></button>
           ))}
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2.5 h-[38px] px-[13px] rounded-lg bg-slate-50 border border-slate-200 w-56">
             <Icon name="search" className="w-[15px] h-[15px] text-ink-subtle flex-shrink-0" />
-            <input value={q} onChange={e => setQ(e.target.value)} placeholder="시험명·분류 검색" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder="시험명·분류 검색" aria-label="시험명·분류 검색" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
           </div>
           {isAdmin && <button onClick={() => setEditing({ record: null })} className="btn-ghost"><Plus className="w-4 h-4" /> 새 항목</button>}
         </div>
@@ -133,12 +133,12 @@ export default function CatalogPage() {
           <table className="w-full min-w-[760px]">
             <thead>
               <tr className="whitespace-nowrap text-[12px] font-medium text-ink-subtle">
-                <th className="px-6 py-[14px] text-left font-medium">시험 항목</th>
-                <th className="px-3 py-[14px] text-left font-medium w-36">분류</th>
-                <th className="px-3 py-[14px] text-center font-medium w-20">투여경로</th>
-                <th className="px-3 py-[14px] text-center font-medium w-14">기간</th>
-                <th className="px-3 py-[14px] text-right font-medium w-32">단가 ({submit})</th>
-                {isAdmin && <th className="px-3 py-[14px] text-center font-medium w-16">관리</th>}
+                <th scope="col" className="px-6 py-[14px] text-left font-medium">시험 항목</th>
+                <th scope="col" className="px-3 py-[14px] text-left font-medium w-36">분류</th>
+                <th scope="col" className="px-3 py-[14px] text-center font-medium w-20">투여경로</th>
+                <th scope="col" className="px-3 py-[14px] text-center font-medium w-14">기간</th>
+                <th scope="col" className="px-3 py-[14px] text-right font-medium w-32">단가 ({submit})</th>
+                {isAdmin && <th scope="col" className="px-3 py-[14px] text-center font-medium w-16">관리</th>}
               </tr>
             </thead>
             <tbody>
@@ -158,8 +158,8 @@ export default function CatalogPage() {
                     {isAdmin && (
                       <td className="px-3 py-[13px]">
                         <div className="flex items-center justify-center gap-1 opacity-0 group-hover/row:opacity-100 transition-opacity">
-                          <button onClick={() => setEditing({ record: it })} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-slate-100" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
-                          <button onClick={() => onDelete(it)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+                          <button onClick={() => setEditing({ record: it })} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-slate-100" title="수정" aria-label="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                          <button onClick={() => onDelete(it)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제" aria-label="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
                         </div>
                       </td>
                     )}

@@ -7,28 +7,27 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { contactCreateSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function _POST(req: Request) {
   const owners = await visibleOwnerIds();
-  const body = await req.json().catch(() => null) as {
-    companyId?: number; name?: string; email?: string; phone?: string; position?: string; memo?: string;
-  } | null;
-  const companyId = Number(body?.companyId);
-  const name = String(body?.name ?? '').trim();
-  if (!companyId || !name) return NextResponse.json({ error: 'companyId·name 이 필요합니다.' }, { status: 400 });
+  const parsed = await parseBody(req, contactCreateSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;
 
-  const company = await prisma.company.findUnique({ where: { id: companyId } });
+  const company = await prisma.company.findUnique({ where: { id: b.companyId } });
   if (!company || !owners.includes(company.ownerId)) return NextResponse.json({ error: '고객사를 찾을 수 없습니다.' }, { status: 404 });
 
   const contact = await prisma.contact.create({
     data: {
-      companyId,
-      name,
-      email: body?.email?.trim() || null,
-      phone: body?.phone?.trim() || null,
-      position: body?.position?.trim() || null,
-      memo: body?.memo?.trim() || null,
+      companyId: b.companyId,
+      name: b.name,
+      email: b.email,
+      phone: b.phone,
+      position: b.position,
+      memo: b.memo,
     },
   });
   return NextResponse.json({ contact });

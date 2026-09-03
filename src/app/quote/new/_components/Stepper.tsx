@@ -42,6 +42,8 @@ export default function Stepper() {
               <button
                 onClick={() => reachable && s.setStep(st.n)}
                 disabled={!reachable}
+                aria-label={`${st.n}단계 ${st.label}`}
+                aria-current={active ? 'step' : undefined}
                 className={clsx(
                   'inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold border-2 transition-all',
                   active && 'bg-brand-600 text-white border-brand-600 shadow-glow scale-110',

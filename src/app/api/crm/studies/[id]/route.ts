@@ -7,6 +7,8 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { studyPatchSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function owned(id: number) {
@@ -16,21 +18,14 @@ async function owned(id: number) {
   return s;
 }
 
-const date = (v: unknown) => (v ? new Date(String(v)) : null);
-
 async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  const body = await req.json().catch(() => ({})) as Record<string, unknown>;
-  const data: Record<string, unknown> = {};
-  for (const k of ['itemName', 'studyNumber', 'director', 'department'] as const) {
-    if (k in body) data[k] = String(body[k] ?? '').trim() || null;
-  }
-  for (const k of ['requestSentAt', 'studyEndAt', 'intakeCompletedAt', 'reportDraftDueAt', 'reportDraftIssuedAt', 'invoiceRequestedAt', 'invoiceIssuedAt'] as const) {
-    if (k in body) data[k] = date(body[k]);
-  }
-  const study = await prisma.study.update({ where: { id }, data });
+  const parsed = await parseBody(req, studyPatchSchema);
+  if (!parsed.ok) return parsed.res;
+  // 텍스트: trim·''→null, 날짜: ''·null→null(해제), 키 없음 → undefined(Prisma 가 무시)
+  const study = await prisma.study.update({ where: { id }, data: parsed.data });
   return NextResponse.json({ study });
 }
 

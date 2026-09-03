@@ -56,12 +56,12 @@ export default async function AdminCustomers({ searchParams }: { searchParams: S
         <table className="w-full">
           <thead>
             <tr className="table-head text-left">
-              <th className="pb-3 font-medium">고객사</th>
-              <th className="pb-3 font-medium">담당자</th>
-              <th className="pb-3 font-medium">센터</th>
-              <th className="pb-3 font-medium text-right">진행견적</th>
-              <th className="pb-3 font-medium text-right">누적수주</th>
-              <th className="pb-3 font-medium text-right">최근 활동</th>
+              <th scope="col" className="pb-3 font-medium">고객사</th>
+              <th scope="col" className="pb-3 font-medium">담당자</th>
+              <th scope="col" className="pb-3 font-medium">센터</th>
+              <th scope="col" className="pb-3 font-medium text-right">진행견적</th>
+              <th scope="col" className="pb-3 font-medium text-right">누적수주</th>
+              <th scope="col" className="pb-3 font-medium text-right">최근 활동</th>
             </tr>
           </thead>
           <tbody>

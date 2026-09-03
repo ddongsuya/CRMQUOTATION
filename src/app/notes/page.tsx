@@ -114,8 +114,8 @@ export default function NotebookPage() {
             <div className="flex gap-1.5 mb-3">
               <input className="input text-sm flex-1" placeholder="할 일 추가 (예: 아이큐어 번역의뢰서 영문본 재요청)" aria-label="할 일 추가" value={quickTask}
                 onChange={e => setQuickTask(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addTask(); }} />
-              <input type="date" className="input text-sm w-auto" title="기한" value={quickDue} onChange={e => setQuickDue(e.target.value)} />
-              <button onClick={addTask} className="btn-primary text-sm shrink-0"><Plus className="w-4 h-4" /></button>
+              <input type="date" className="input text-sm w-auto" title="기한" aria-label="기한" value={quickDue} onChange={e => setQuickDue(e.target.value)} />
+              <button onClick={addTask} aria-label="할 일 추가" className="btn-primary text-sm shrink-0"><Plus className="w-4 h-4" /></button>
             </div>
             {todayFocus.length === 0 ? <div className="py-3 text-center text-xs text-ink-subtle">오늘 기한인 할 일이 없습니다.</div> : (
               <ul className="space-y-1.5">
@@ -126,7 +126,7 @@ export default function NotebookPage() {
                     {(t.dealId || t.companyId) && (
                       <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-[11px] text-ink-subtle hover:text-brand-600 truncate max-w-[130px]">{t.dealTitle ?? t.companyName}</Link>
                     )}
-                    <button onClick={() => delTask(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+                    <button onClick={() => delTask(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
                   </li>
                 ))}
               </ul>
@@ -160,7 +160,7 @@ export default function NotebookPage() {
                     <button onClick={() => toggle(t)} role="checkbox" aria-checked={false} aria-label={`${t.title} 완료 처리`} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
                     <span className={clsx('pill shrink-0', u.cls)}>{u.label}</span>
                     <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{t.title}</span><span className="block text-[11px] text-ink-subtle">{t.dueAt ? new Date(t.dueAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' }) : ''}{(t.dealTitle || t.companyName) ? `${t.dueAt ? ' · ' : ''}${t.dealTitle ?? t.companyName}` : ''}</span></span>
-                    <button onClick={() => delTask(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+                    <button onClick={() => delTask(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
                     {(t.dealId || t.companyId) && <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-ink-subtle hover:text-brand-600"><Icon name="arrow-right" className="w-4 h-4" /></Link>}
                   </li>
                 ); })}
@@ -174,11 +174,11 @@ export default function NotebookPage() {
             {adding && (
               <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2 mb-3">
                 <div className="flex gap-2 flex-wrap items-center">
-                  {Object.entries(TYPE).map(([k, v]) => <button key={k} onClick={() => setF(p => ({ ...p, type: k }))} className={clsx('chip', f.type === k ? 'chip-active' : 'chip-inactive')}>{v.label}</button>)}
-                  <input type="date" className="input text-sm ml-auto w-auto" value={f.occurredAt} onChange={e => setF(p => ({ ...p, occurredAt: e.target.value }))} />
+                  {Object.entries(TYPE).map(([k, v]) => <button key={k} onClick={() => setF(p => ({ ...p, type: k }))} aria-pressed={f.type === k} className={clsx('chip', f.type === k ? 'chip-active' : 'chip-inactive')}>{v.label}</button>)}
+                  <input type="date" className="input text-sm ml-auto w-auto" aria-label="날짜" value={f.occurredAt} onChange={e => setF(p => ({ ...p, occurredAt: e.target.value }))} />
                 </div>
-                <input className="input w-full text-sm" value={f.title} onChange={e => setF(p => ({ ...p, title: e.target.value }))} placeholder="제목(선택)" />
-                <textarea className="input w-full text-sm min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="내용…" autoFocus />
+                <input className="input w-full text-sm" value={f.title} onChange={e => setF(p => ({ ...p, title: e.target.value }))} placeholder="제목(선택)" aria-label="제목(선택)" />
+                <textarea className="input w-full text-sm min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="내용…" aria-label="내용" autoFocus />
                 <div className="flex justify-end gap-2"><button onClick={() => setAdding(false)} className="btn-ghost text-sm">취소</button><button onClick={add} disabled={saving} className="btn-primary text-sm">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />} 저장</button></div>
               </div>
             )}
@@ -191,7 +191,7 @@ export default function NotebookPage() {
                       <span className={clsx('w-1.5 h-3.5 rounded-sm shrink-0', t.dot)} />
                       {n.title ? <span className="text-sm font-semibold text-ink truncate flex-1">{n.title}</span> : <span className={clsx('pill', t.cls)}>{t.label}</span>}
                       <span className="text-[10px] font-mono text-ink-subtle shrink-0">{n.occurredAt.slice(5, 10).replace('-', '.')}</span>
-                      <button onClick={() => del(n.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+                      <button onClick={() => del(n.id)} aria-label="메모 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
                     </div>
                     <div className="text-[13px] text-ink-muted mt-1.5 whitespace-pre-wrap line-clamp-4">{n.body}</div>
                     {n.deal && <Link href={`/deals/${n.deal.id}`} className="inline-flex items-center gap-1 mt-2 text-[10px] text-ink-subtle hover:text-brand-600"><Briefcase className="w-2.5 h-2.5" />{n.deal.title}</Link>}

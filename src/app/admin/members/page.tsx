@@ -31,13 +31,13 @@ export default async function AdminMembers({ searchParams }: { searchParams: SP 
         <table className="w-full">
           <thead>
             <tr className="table-head text-left">
-              <th className="pb-3 font-medium">이름</th>
-              <th className="pb-3 font-medium">직책</th>
-              <th className="pb-3 font-medium">센터</th>
-              <th className="pb-3 font-medium">권한</th>
-              <th className="pb-3 font-medium text-right">건수</th>
-              <th className="pb-3 font-medium text-right">수주금액</th>
-              <th className="pb-3 font-medium text-right">수주율</th>
+              <th scope="col" className="pb-3 font-medium">이름</th>
+              <th scope="col" className="pb-3 font-medium">직책</th>
+              <th scope="col" className="pb-3 font-medium">센터</th>
+              <th scope="col" className="pb-3 font-medium">권한</th>
+              <th scope="col" className="pb-3 font-medium text-right">건수</th>
+              <th scope="col" className="pb-3 font-medium text-right">수주금액</th>
+              <th scope="col" className="pb-3 font-medium text-right">수주율</th>
             </tr>
           </thead>
           <tbody>

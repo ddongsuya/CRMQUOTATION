@@ -29,6 +29,7 @@ export default function Stepper({ step, modelId, onGo, actions }: {
               <button
                 onClick={() => reachable && onGo(n)}
                 disabled={!reachable}
+                aria-current={active ? 'step' : undefined}
                 className="flex items-center gap-[9px] bg-transparent border-none p-0"
                 style={{ cursor: reachable ? 'pointer' : 'not-allowed', opacity: reachable ? 1 : 0.4 }}
               >

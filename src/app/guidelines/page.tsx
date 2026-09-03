@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { ExternalLink, ChevronDown, Loader2, Pencil, Trash2, Plus } from 'lucide-react';
 import Icon from '@/components/Icon';
@@ -34,6 +34,7 @@ export default function GuidelinesPage() {
   const [tab, setTab] = useState<Tab>('guidelines');
   const [q, setQ] = useState('');
   const [editing, setEditing] = useState<{ dataset: KnowledgeDataset; record: Rec | null } | null>(null);
+  const tabsId = useId();
 
   const load = useCallback(() => {
     fetch('/api/knowledge').then(r => r.json()).then(setData).catch(() => {});
@@ -76,6 +77,16 @@ export default function GuidelinesPage() {
     { id: 'design', label: '시험설계 규칙', count: data.counts.designRules },
     { id: 'modality', label: '모달리티별 가이드라인', count: data.counts.modalities },
   ];
+  const tabIdx = tabs.findIndex(t => t.id === tab);
+  // 세로 탭리스트 — 상하(좌우) 방향키로 이동 (WAI-ARIA tabs 패턴)
+  const onTabKey = (e: React.KeyboardEvent<HTMLElement>) => {
+    const dir = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+    if (!dir) return;
+    e.preventDefault();
+    const next = (tabIdx + dir + tabs.length) % tabs.length;
+    setTab(tabs[next].id);
+    e.currentTarget.querySelectorAll<HTMLElement>('[role="tab"]')[next]?.focus();
+  };
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -93,12 +104,17 @@ export default function GuidelinesPage() {
         <div className="self-start space-y-3">
           <div className="flex items-center gap-2.5 h-[38px] px-[13px] rounded-lg bg-slate-50 border border-slate-200">
             <Icon name="search" className="w-[15px] h-[15px] text-ink-subtle flex-shrink-0" />
-            <input value={q} onChange={e => setQ(e.target.value)} placeholder="검색 (시험명·코드)" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
+            <input value={q} onChange={e => setQ(e.target.value)} placeholder="검색 (시험명·코드)" aria-label="검색 (시험명·코드)" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
           </div>
-          <nav className="space-y-0.5">
-            {tabs.map(t => (
+          <nav role="tablist" aria-label="가이드라인 분류" aria-orientation="vertical" onKeyDown={onTabKey} className="space-y-0.5">
+            {tabs.map((t, i) => (
               <button
                 key={t.id}
+                role="tab"
+                id={`${tabsId}-tab-${i}`}
+                aria-selected={tab === t.id}
+                aria-controls={`${tabsId}-panel`}
+                tabIndex={tab === t.id ? 0 : -1}
                 onClick={() => setTab(t.id)}
                 className={clsx(
                   'relative w-full flex items-center gap-2.5 h-[38px] px-3 rounded-lg text-[15px] transition-colors',
@@ -118,7 +134,7 @@ export default function GuidelinesPage() {
           )}
         </div>
 
-        <div className="min-w-0">
+        <div role="tabpanel" id={`${tabsId}-panel`} aria-labelledby={`${tabsId}-tab-${tabIdx}`} className="min-w-0">
           {tab === 'guidelines' && <GuidelineList items={data.guidelines} q={q} admin={admin} />}
           {tab === 'design' && <DesignRuleList items={data.designRules} q={q} admin={admin} />}
           {tab === 'modality' && <ModalityList items={data.modalities} q={q} admin={admin} />}
@@ -150,10 +166,10 @@ function AdminButtons({ admin, dataset, rec }: { admin: AdminCtx; dataset: Knowl
   if (!admin) return null;
   return (
     <div className="flex items-center gap-1 flex-shrink-0" onClick={e => e.stopPropagation()}>
-      <button onClick={() => admin.onEdit(dataset, rec)} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정">
+      <button onClick={() => admin.onEdit(dataset, rec)} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정" aria-label="수정">
         <Pencil className="w-3.5 h-3.5" />
       </button>
-      <button onClick={() => admin.onDelete(dataset, rec)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제">
+      <button onClick={() => admin.onDelete(dataset, rec)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제" aria-label="삭제">
         <Trash2 className="w-3.5 h-3.5" />
       </button>
     </div>
@@ -212,7 +228,7 @@ function GuidelineCard({ g, admin }: { g: Guideline; admin: AdminCtx }) {
         </button>
         <div className="flex items-center gap-1">
           <AdminButtons admin={admin} dataset="guidelines" rec={g as unknown as Rec} />
-          <button onClick={() => setOpen(o => !o)}>
+          <button onClick={() => setOpen(o => !o)} aria-expanded={open} aria-label={open ? '접기' : '펼치기'}>
             <ChevronDown className={clsx('w-4 h-4 text-ink-subtle flex-shrink-0 mt-1 transition-transform', open && 'rotate-180')} />
           </button>
         </div>

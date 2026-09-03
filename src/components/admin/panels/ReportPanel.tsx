@@ -56,7 +56,7 @@ export default function ReportPanel({ id }: { id: number }) {
             <button onClick={save} disabled={busy} className="btn-primary h-8 text-[12px] px-3">{busy ? '…' : '저장'}</button>
           </div>
         ) : (
-          <button onClick={startEdit} className="icon-btn flex-shrink-0" title="편집"><Icon name="notebook" className="w-4 h-4" /></button>
+          <button onClick={startEdit} className="icon-btn flex-shrink-0" title="편집" aria-label="편집"><Icon name="notebook" className="w-4 h-4" /></button>
         )}
       </div>
 
@@ -80,10 +80,10 @@ export default function ReportPanel({ id }: { id: number }) {
 
 function Fld({ label, value, onChange, rows }: { label: string; value: string; onChange: (v: string) => void; rows: number }) {
   return (
-    <div>
-      <label className="eyebrow block mb-1">{label}</label>
+    <label className="block">
+      <span className="eyebrow block mb-1">{label}</span>
       <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={rows}
         className="w-full text-[13px] rounded-md border border-slate-200 px-3 py-2 resize-y focus:border-[var(--accent)]" />
-    </div>
+    </label>
   );
 }

@@ -135,11 +135,11 @@ export default function LivePreview() {
             <table className="w-full min-w-[420px] text-xs">
               <thead className="sticky top-0 bg-white/95 backdrop-blur border-b border-slate-100">
                 <tr className="whitespace-nowrap">
-                  <th className="px-4 py-2.5 text-left font-semibold text-ink-muted">항목</th>
-                  <th className="px-2 py-2.5 text-left font-semibold text-ink-muted w-14">경로</th>
-                  <th className="px-2 py-2.5 text-right font-semibold text-ink-muted w-24">단가</th>
-                  <th className="px-2 py-2.5 text-center font-semibold text-ink-muted w-10">수량</th>
-                  <th className="px-4 py-2.5 text-right font-semibold text-ink-muted w-28">소계</th>
+                  <th scope="col" className="px-4 py-2.5 text-left font-semibold text-ink-muted">항목</th>
+                  <th scope="col" className="px-2 py-2.5 text-left font-semibold text-ink-muted w-14">경로</th>
+                  <th scope="col" className="px-2 py-2.5 text-right font-semibold text-ink-muted w-24">단가</th>
+                  <th scope="col" className="px-2 py-2.5 text-center font-semibold text-ink-muted w-10">수량</th>
+                  <th scope="col" className="px-4 py-2.5 text-right font-semibold text-ink-muted w-28">소계</th>
                 </tr>
               </thead>
               <tbody>

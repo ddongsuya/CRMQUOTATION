@@ -7,6 +7,8 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { notePatchSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function owned(id: number) {
@@ -20,13 +22,9 @@ async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await owned(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  const b = await req.json().catch(() => ({})) as Record<string, unknown>;
-  const data: Record<string, unknown> = {};
-  if ('title' in b) data.title = String(b.title ?? '').trim() || null;
-  if ('body' in b) { const v = String(b.body ?? '').trim(); if (!v) return NextResponse.json({ error: '내용은 비울 수 없습니다.' }, { status: 400 }); data.body = v; }
-  if ('type' in b && ['MEETING', 'CALL', 'MEMO'].includes(String(b.type))) data.type = String(b.type);
-  if ('occurredAt' in b) data.occurredAt = b.occurredAt ? new Date(String(b.occurredAt)) : new Date();
-  const note = await prisma.note.update({ where: { id }, data });
+  const parsed = await parseBody(req, notePatchSchema);
+  if (!parsed.ok) return parsed.res;
+  const note = await prisma.note.update({ where: { id }, data: parsed.data });
   return NextResponse.json({ note });
 }
 

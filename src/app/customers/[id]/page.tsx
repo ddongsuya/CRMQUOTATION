@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import clsx from 'clsx';
@@ -84,6 +84,16 @@ export default function CompanyDetailPage() {
   // 개요 카드에서 "특정 항목 수정/추가 폼 열기"로 탭을 넘길 때 전달하는 1회성 지시
   const [jump, setJump] = useState<{ editId?: number; open?: boolean } | null>(null);
   const goTo = (t: Tab, opts?: { editId?: number; open?: boolean }) => { setJump(opts ?? null); setTab(t); };
+  const tabsId = useId();
+  // 탭리스트 좌우 방향키 이동 (WAI-ARIA tabs 패턴)
+  const onTabKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    const i = TABS.indexOf(tab);
+    const next = TABS[(i + (e.key === 'ArrowRight' ? 1 : -1) + TABS.length) % TABS.length];
+    setJump(null); setTab(next);
+    e.currentTarget.querySelectorAll<HTMLElement>('[role="tab"]')[TABS.indexOf(next)]?.focus();
+  };
 
   const [loadError, setLoadError] = useState(false);
   const reqSeq = useRef(0);   // 빠른 화면 전환 시 이전 응답이 현재 고객사를 덮어쓰지 않게
@@ -152,10 +162,15 @@ export default function CompanyDetailPage() {
       </div>
 
       {/* 탭 바 */}
-      <div className="flex gap-1 border-b border-slate-200 overflow-x-auto -mx-1 px-1">
-        {TABS.map(t => (
+      <div role="tablist" aria-label="고객사 상세 탭" onKeyDown={onTabKey} className="flex gap-1 border-b border-slate-200 overflow-x-auto -mx-1 px-1">
+        {TABS.map((t, i) => (
           <button
             key={t}
+            role="tab"
+            id={`${tabsId}-tab-${i}`}
+            aria-selected={tab === t}
+            aria-controls={`${tabsId}-panel`}
+            tabIndex={tab === t ? 0 : -1}
             onClick={() => { setJump(null); setTab(t); }}
             className={clsx('px-3.5 py-2 text-sm font-semibold whitespace-nowrap shrink-0 border-b-2 -mb-px transition-colors inline-flex items-center gap-1.5',
               tab === t ? 'border-brand-500 text-brand-700' : 'border-transparent text-ink-muted hover:text-ink')}
@@ -167,6 +182,7 @@ export default function CompanyDetailPage() {
       </div>
 
       {/* 탭 내용 */}
+      <div role="tabpanel" id={`${tabsId}-panel`} aria-labelledby={`${tabsId}-tab-${TABS.indexOf(tab)}`}>
       {tab === '개요' && (
         <OverviewTab agg={agg} company={company} tasks={tasks} reload={load} onGo={goTo}
           onAddContact={() => setContactModal({ contact: null })} onEditContact={c => setContactModal({ contact: c })} />
@@ -180,6 +196,7 @@ export default function CompanyDetailPage() {
       {tab === '시험' && <StudiesTab agg={agg} deals={agg?.deals ?? []} reload={load} />}
       {tab === '노트' && <NotesTab agg={agg} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} initial={jump ?? undefined} />}
       {tab === '일정' && <ScheduleTab agg={agg} deals={agg?.deals ?? []} contacts={company.contacts} reload={load} initial={jump ?? undefined} />}
+      </div>
 
       {editCompany && <CompanyEditModal company={company} onClose={() => setEditCompany(false)} onSaved={() => { setEditCompany(false); load(); }} />}
       {contactModal && <ContactModal companyId={company.id} contact={contactModal.contact} onClose={() => setContactModal(null)} onSaved={() => { setContactModal(null); load(); }} />}
@@ -213,7 +230,7 @@ function SectionCard({ title, count, children, action }: { title: string; count?
 type DealOpt = Agg['deals'];
 function DealSelect({ deals, value, onChange }: { deals: DealOpt; value: number | ''; onChange: (v: number) => void }) {
   return (
-    <select className="input text-sm" value={value} onChange={e => onChange(Number(e.target.value))}>
+    <select className="input text-sm" aria-label="안건" value={value} onChange={e => onChange(Number(e.target.value))}>
       <option value="">안건 선택…</option>
       {deals.map(d => <option key={d.id} value={d.id}>{d.title}{d.contactName ? ` · ${d.contactName}` : ''}</option>)}
     </select>
@@ -226,7 +243,7 @@ function AddToggle({ open, onToggle, label }: { open: boolean; onToggle: () => v
 // 노트·일정의 연결 대상 — 안건 또는 의뢰자(안건이 없어도 기록 가능). 값: "d:<id>" | "c:<id>"
 function TargetSelect({ deals, contacts, value, onChange }: { deals: DealOpt; contacts: { id: number; name: string }[]; value: string; onChange: (v: string) => void }) {
   return (
-    <select className="input text-sm" value={value} onChange={e => onChange(e.target.value)}>
+    <select className="input text-sm" aria-label="대상 (안건·의뢰자)" value={value} onChange={e => onChange(e.target.value)}>
       <option value="">대상 선택 (안건·의뢰자)…</option>
       {deals.length > 0 && <optgroup label="안건">{deals.map(d => <option key={`d${d.id}`} value={`d:${d.id}`}>{d.title}{d.contactName ? ` · ${d.contactName}` : ''}</option>)}</optgroup>}
       {contacts.length > 0 && <optgroup label="의뢰자">{contacts.map(c => <option key={`c${c.id}`} value={`c:${c.id}`}>{c.name}</option>)}</optgroup>}
@@ -411,7 +428,7 @@ function DealsTab({ agg, contacts, onAddDeal }: { agg: Agg | null; contacts: { i
       action={contacts.length > 0 && <AddToggle open={open} onToggle={start} label="안건 추가" />}>
       {open && contacts.length > 1 && (
         <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 flex gap-2">
-          <select className="input text-sm" value={cid} onChange={e => setCid(Number(e.target.value))}>
+          <select className="input text-sm" aria-label="의뢰자" value={cid} onChange={e => setCid(Number(e.target.value))}>
             <option value="">의뢰자 선택…</option>
             {contacts.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
@@ -453,8 +470,8 @@ function ContactsTab({ company, quotes, onAdd, onEdit, onDel, onAddDeal }: {
               </div>
             </div>
             <div className="flex items-center gap-1 flex-shrink-0">
-              <button onClick={() => onEdit(ct)} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
-              <button onClick={() => onDel(ct.id)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+              <button onClick={() => onEdit(ct)} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정" aria-label="수정"><Pencil className="w-3.5 h-3.5" /></button>
+              <button onClick={() => onDel(ct.id)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제" aria-label="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
             </div>
           </div>
           <div className="mt-3 pl-1 space-y-1.5">
@@ -546,8 +563,8 @@ function ContractsTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt;
         <div className="overflow-x-auto -mx-1 px-1">
           <table className="w-full min-w-[480px] text-sm">
             <thead><tr className="text-[11px] text-ink-subtle text-left border-b border-slate-100 whitespace-nowrap">
-              <th className="py-2 pr-2 font-medium">안건</th><th className="py-2 px-2 font-medium w-32">계약번호</th>
-              <th className="py-2 px-2 font-medium w-20">상태</th><th className="py-2 pl-2 font-medium w-24 text-right">체결일</th>
+              <th scope="col" className="py-2 pr-2 font-medium">안건</th><th scope="col" className="py-2 px-2 font-medium w-32">계약번호</th>
+              <th scope="col" className="py-2 px-2 font-medium w-20">상태</th><th scope="col" className="py-2 pl-2 font-medium w-24 text-right">체결일</th>
             </tr></thead>
             <tbody>
               {agg.contracts.map(c => {
@@ -588,7 +605,7 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
       {open && (
         <div className="mb-4 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2">
           <DealSelect deals={deals} value={f.dealId} onChange={v => setF(s => ({ ...s, dealId: v }))} />
-          <input className="input text-sm w-full" placeholder="시험 항목명 (예: 설치류 13주 반복투여 독성)" value={f.itemName} onChange={e => setF(s => ({ ...s, itemName: e.target.value }))} />
+          <input className="input text-sm w-full" placeholder="시험 항목명 (예: 설치류 13주 반복투여 독성)" aria-label="시험 항목명" value={f.itemName} onChange={e => setF(s => ({ ...s, itemName: e.target.value }))} />
           <div className="flex justify-end"><button onClick={add} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} 추가</button></div>
         </div>
       )}
@@ -596,9 +613,9 @@ function StudiesTab({ agg, deals, reload }: { agg: Agg | null; deals: DealOpt; r
         <div className="overflow-x-auto -mx-1 px-1">
           <table className="w-full min-w-[560px] text-sm">
             <thead><tr className="text-[11px] text-ink-subtle text-left border-b border-slate-100 whitespace-nowrap">
-              <th className="py-2 pr-2 font-medium">시험 / 안건</th><th className="py-2 px-2 font-medium w-24">시험번호</th>
-              <th className="py-2 px-2 font-medium w-20">책임자</th><th className="py-2 px-2 font-medium w-24">보고서안 예정</th>
-              <th className="py-2 pl-2 font-medium w-16 text-right">상태</th>
+              <th scope="col" className="py-2 pr-2 font-medium">시험 / 안건</th><th scope="col" className="py-2 px-2 font-medium w-24">시험번호</th>
+              <th scope="col" className="py-2 px-2 font-medium w-20">책임자</th><th scope="col" className="py-2 px-2 font-medium w-24">보고서안 예정</th>
+              <th scope="col" className="py-2 pl-2 font-medium w-16 text-right">상태</th>
             </tr></thead>
             <tbody>
               {agg.studies.map(s => {
@@ -671,7 +688,7 @@ function NotesTab({ agg, deals, contacts, reload, initial }: { agg: Agg | null; 
           {editId && <div className="pill bg-brand-100 text-brand-700 w-fit">기록 수정 중</div>}
           <div className="grid grid-cols-2 gap-2">
             <TargetSelect deals={deals} contacts={contacts} value={f.target} onChange={v => setF(s => ({ ...s, target: v }))} />
-            <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{Object.entries(NOTE_T).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select>
+            <select className="input text-sm" aria-label="기록 유형" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{Object.entries(NOTE_T).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <label className="block">
@@ -683,7 +700,7 @@ function NotesTab({ agg, deals, contacts, reload, initial }: { agg: Agg | null; 
               <input className="input text-sm w-full" placeholder="제목(선택)" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
             </label>
           </div>
-          <textarea className="input text-sm w-full min-h-[64px]" placeholder="내용" value={f.body} onChange={e => setF(s => ({ ...s, body: e.target.value }))} />
+          <textarea className="input text-sm w-full min-h-[64px]" placeholder="내용" aria-label="내용" value={f.body} onChange={e => setF(s => ({ ...s, body: e.target.value }))} />
           <div className="flex justify-end gap-2">
             {editId && <button onClick={closeForm} className="btn-ghost text-sm">취소</button>}
             <button onClick={save} disabled={busy} className="btn-primary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} {editId ? '수정 저장' : '저장'}</button>
@@ -702,8 +719,8 @@ function NotesTab({ agg, deals, contacts, reload, initial }: { agg: Agg | null; 
                   ? <Link href={`/deals/${n.dealId}`} className="text-[11px] text-brand-600 hover:underline truncate">{n.dealTitle}</Link>
                   : n.contactName && <span className="text-[11px] text-ink-subtle truncate">{n.contactName}</span>}
                 <span className="ml-auto flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={() => startEdit(n)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
-                  <button onClick={() => del(n.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => startEdit(n)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정" aria-label="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => del(n.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제" aria-label="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
                 </span>
               </div>
               {n.title && <div className="text-sm font-semibold text-ink">{n.title}</div>}
@@ -750,7 +767,7 @@ function TasksTab({ companyId, tasks, deals, contacts, reload }: { companyId: nu
         <input key={`td-${t.id}-${t.dueAt ?? ''}`} type="date" className="input text-xs w-auto shrink-0 py-1" title="기한" aria-label="기한" defaultValue={t.dueAt ? t.dueAt.slice(0, 10) : ''}
           onBlur={e => e.target.value !== (t.dueAt ? t.dueAt.slice(0, 10) : '') && patch(t.id, { dueAt: e.target.value || null })} />
         {!t.done && dd && <span className={clsx('pill shrink-0', dd.cls)}>{dd.label}</span>}
-        <button onClick={() => del(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 shrink-0"><Trash2 className="w-3.5 h-3.5" /></button>
+        <button onClick={() => del(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 shrink-0"><Trash2 className="w-3.5 h-3.5" /></button>
       </li>
     );
   };
@@ -759,8 +776,8 @@ function TasksTab({ companyId, tasks, deals, contacts, reload }: { companyId: nu
       <div className="flex flex-wrap gap-1.5 mb-3">
         <input className="input text-sm flex-1 min-w-[180px]" placeholder="할 일 추가 (예: 번역의뢰서 영문본 재요청)" aria-label="할 일 추가" value={f.title}
           onChange={e => setF(s => ({ ...s, title: e.target.value }))} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
-        <input type="date" className="input text-sm w-auto" title="기한(선택)" value={f.dueAt} onChange={e => setF(s => ({ ...s, dueAt: e.target.value }))} />
-        <select className="input text-sm w-auto max-w-[160px]" value={f.target} onChange={e => setF(s => ({ ...s, target: e.target.value }))}>
+        <input type="date" className="input text-sm w-auto" title="기한(선택)" aria-label="기한(선택)" value={f.dueAt} onChange={e => setF(s => ({ ...s, dueAt: e.target.value }))} />
+        <select className="input text-sm w-auto max-w-[160px]" aria-label="대상(선택)" value={f.target} onChange={e => setF(s => ({ ...s, target: e.target.value }))}>
           <option value="">대상(선택)…</option>
           {deals.length > 0 && <optgroup label="안건">{deals.map(d => <option key={`d${d.id}`} value={`d:${d.id}`}>{d.title}</option>)}</optgroup>}
           {contacts.length > 0 && <optgroup label="의뢰자">{contacts.map(c => <option key={`c${c.id}`} value={`c:${c.id}`}>{c.name}</option>)}</optgroup>}
@@ -842,9 +859,9 @@ function ScheduleTab({ agg, deals, contacts, reload, initial }: { agg: Agg | nul
           {editId && <div className="pill bg-brand-100 text-brand-700 w-fit">일정 수정 중</div>}
           <div className="grid grid-cols-2 gap-2">
             <TargetSelect deals={deals} contacts={contacts} value={f.target} onChange={v => setF(s => ({ ...s, target: v }))} />
-            <select className="input text-sm" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].map(k => <option key={k} value={k}>{k === 'MEETING' ? '미팅' : k === 'DEADLINE' ? '마감' : k === 'MILESTONE' ? '마일스톤' : '리마인더'}</option>)}</select>
+            <select className="input text-sm" aria-label="일정 유형" value={f.type} onChange={e => setF(s => ({ ...s, type: e.target.value }))}>{['MEETING', 'DEADLINE', 'MILESTONE', 'REMINDER'].map(k => <option key={k} value={k}>{k === 'MEETING' ? '미팅' : k === 'DEADLINE' ? '마감' : k === 'MILESTONE' ? '마일스톤' : '리마인더'}</option>)}</select>
           </div>
-          <input className="input text-sm w-full" placeholder="일정 제목" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
+          <input className="input text-sm w-full" placeholder="일정 제목" aria-label="일정 제목" value={f.title} onChange={e => setF(s => ({ ...s, title: e.target.value }))} />
           <label className="block">
             <span className="text-[11px] text-ink-subtle">날짜</span>
             <input type="date" className="input text-sm w-full" value={f.startAt} onChange={e => setF(s => ({ ...s, startAt: e.target.value }))} />
@@ -874,9 +891,9 @@ function ScheduleTab({ agg, deals, contacts, reload, initial }: { agg: Agg | nul
                   {e.requests && <span className="block text-[11px] text-ink-muted whitespace-pre-wrap mt-0.5">요청사항: {e.requests}</span>}
                 </span>
                 <span className="flex items-center gap-0.5 flex-shrink-0 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
-                  <button onClick={() => toggleDone(e)} className="p-1.5 rounded-lg text-ink-subtle hover:text-emerald-600 hover:bg-emerald-50" title={e.done ? '완료 해제' : '완료 처리'}><Icon name="check" className="w-3.5 h-3.5" /></button>
-                  <button onClick={() => startEdit(e)} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
-                  <button onClick={() => del(e.id)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => toggleDone(e)} className="p-1.5 rounded-lg text-ink-subtle hover:text-emerald-600 hover:bg-emerald-50" title={e.done ? '완료 해제' : '완료 처리'} aria-label={e.done ? '완료 해제' : '완료 처리'}><Icon name="check" className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => startEdit(e)} className="p-1.5 rounded-lg text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정" aria-label="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => del(e.id)} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제" aria-label="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
                 </span>
                 {e.done ? <span className="pill bg-slate-200 text-ink-subtle flex-shrink-0">완료</span> : dd && <span className={clsx('pill flex-shrink-0', dd.cls)}>{dd.label}</span>}
               </li>
@@ -890,12 +907,18 @@ function ScheduleTab({ agg, deals, contacts, reload, initial }: { agg: Agg | nul
 
 // ════════════════ 모달 ════════════════
 function Modal({ title, onClose, children, footer }: { title: string; onClose: () => void; children: React.ReactNode; footer: React.ReactNode }) {
+  const titleId = useId();
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-[12px] border border-slate-200 w-full max-w-md max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
+      <div role="dialog" aria-modal="true" aria-labelledby={titleId} className="bg-white rounded-[12px] border border-slate-200 w-full max-w-md max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-          <div className="font-semibold text-ink">{title}</div>
-          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-5 h-5" /></button>
+          <div id={titleId} className="font-semibold text-ink">{title}</div>
+          <button onClick={onClose} aria-label="닫기" className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-5 h-5" /></button>
         </header>
         <div className="px-5 py-4 space-y-3 overflow-auto">{children}</div>
         <footer className="px-5 py-3 border-t border-slate-100 flex justify-end gap-2">{footer}</footer>
@@ -905,7 +928,7 @@ function Modal({ title, onClose, children, footer }: { title: string; onClose: (
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <div><div className="label mb-1">{label}</div>{children}</div>;
+  return <label className="block"><span className="label mb-1">{label}</span>{children}</label>;
 }
 
 function CompanyEditModal({ company, onClose, onSaved }: { company: Company; onClose: () => void; onSaved: () => void }) {
@@ -965,6 +988,7 @@ function DealModal({ contactId, onClose, onSaved }: { contactId: number; onClose
   const [saving, setSaving] = useState(false);
   const set = (k: keyof typeof f, v: string) => setF(p => ({ ...p, [k]: v }));
   const onTarget = (v: string) => setF(p => ({ ...p, submissionTarget: v, reportLanguage: /FDA|EMA|해외|영문/i.test(v) ? 'EN' : 'KO' }));
+  const langId = useId();
   const save = async () => {
     if (!f.title.trim()) { toast.error('안건명을 입력하세요.'); return; }
     setSaving(true);
@@ -985,12 +1009,13 @@ function DealModal({ contactId, onClose, onSaved }: { contactId: number; onClose
           <option>한국 (MFDS)</option><option>미국 (US FDA)</option><option>유럽 (EMA)</option>
         </select>
       </Field>
-      <Field label="보고서 언어">
+      <div role="group" aria-labelledby={langId}>
+        <div id={langId} className="label mb-1">보고서 언어</div>
         <div className="flex gap-1.5">
-          {(['KO', 'EN'] as const).map(l => <button key={l} onClick={() => set('reportLanguage', l)} className={clsx('chip', f.reportLanguage === l ? 'chip-active' : 'chip-inactive')}>{l === 'KO' ? '국문' : '영문'}</button>)}
+          {(['KO', 'EN'] as const).map(l => <button key={l} onClick={() => set('reportLanguage', l)} aria-pressed={f.reportLanguage === l} className={clsx('chip', f.reportLanguage === l ? 'chip-active' : 'chip-inactive')}>{l === 'KO' ? '국문' : '영문'}</button>)}
           <span className="text-[11px] text-ink-subtle self-center ml-1">{f.reportLanguage === 'EN' ? '해외 제출 — 영문보고서(추가금 없음)' : ''}</span>
         </div>
-      </Field>
+      </div>
       <Field label="임상 예정 디자인"><textarea className="input w-full min-h-[60px]" value={f.clinicalDesign} onChange={e => set('clinicalDesign', e.target.value)} placeholder="투여경로·기간 등 임상 설계 메모" /></Field>
     </Modal>
   );

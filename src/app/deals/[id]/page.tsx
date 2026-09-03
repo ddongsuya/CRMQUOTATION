@@ -91,7 +91,7 @@ export default function DealDetailPage() {
         {/* 단계 스테퍼 (클릭 시 단계 설정) */}
         <div className="mt-4 flex items-center gap-1 overflow-x-auto pb-1">
           {STAGES.map((s, i) => (
-            <button key={s.k} onClick={() => patchDeal({ stage: s.k })}
+            <button key={s.k} onClick={() => patchDeal({ stage: s.k })} aria-pressed={i === curIdx}
               className={clsx('flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors',
                 i < curIdx ? 'bg-brand-50 text-brand-600' : i === curIdx ? 'bg-brand-600 text-white' : 'text-ink-subtle hover:bg-slate-100')}>
               {i < curIdx ? <Icon name="check" className="w-3 h-3" /> : <span className="w-4 text-center">{i + 1}</span>}{s.label}
@@ -130,8 +130,8 @@ function SectionTasks({ dealId }: { dealId: number }) {
     <Card title={`할 일 ${open.length}건`}>
       <div className="flex gap-1.5 mb-2">
         <input className="input text-sm flex-1" placeholder="할 일 추가…" aria-label="할 일 추가" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
-        <input type="date" className="input text-sm w-auto" title="기한(선택)" value={dueAt} onChange={e => setDueAt(e.target.value)} />
-        <button onClick={add} className="btn-primary text-sm shrink-0"><Icon name="plus" className="w-4 h-4" /></button>
+        <input type="date" className="input text-sm w-auto" title="기한(선택)" aria-label="기한(선택)" value={dueAt} onChange={e => setDueAt(e.target.value)} />
+        <button onClick={add} aria-label="할 일 추가" className="btn-primary text-sm shrink-0"><Icon name="plus" className="w-4 h-4" /></button>
       </div>
       {tasks.length === 0 ? <div className="text-xs text-ink-subtle py-1">할 일 없음.</div> : (
         <ul className="space-y-1">
@@ -140,7 +140,7 @@ function SectionTasks({ dealId }: { dealId: number }) {
               <button onClick={() => toggle(t)} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Icon name="check" className="w-2.5 h-2.5" />}</button>
               <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
               {t.dueAt && <span className="text-[11px] text-ink-subtle tabular-nums shrink-0">{t.dueAt.slice(5, 10).replace('-', '/')}</span>}
-              <button onClick={() => del(t.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+              <button onClick={() => del(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
             </li>
           ))}
         </ul>
@@ -166,10 +166,10 @@ function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
       {open && (
         <div className="space-y-2 mb-3">
           <div className="flex items-center gap-1.5 flex-wrap">
-            {['MEETING', 'CALL', 'MEMO'].map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{TLABEL[t]}</button>)}
-            <input type="date" className="input text-sm ml-auto w-auto" title="대화·미팅 날짜" value={f.occurredAt} onChange={e => setF(p => ({ ...p, occurredAt: e.target.value }))} />
+            {['MEETING', 'CALL', 'MEMO'].map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} aria-pressed={f.type === t} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{TLABEL[t]}</button>)}
+            <input type="date" className="input text-sm ml-auto w-auto" title="대화·미팅 날짜" aria-label="대화·미팅 날짜" value={f.occurredAt} onChange={e => setF(p => ({ ...p, occurredAt: e.target.value }))} />
           </div>
-          <textarea className="input w-full min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="미팅·상담 내용…" autoFocus />
+          <textarea className="input w-full min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="미팅·상담 내용…" aria-label="기록 내용" autoFocus />
           <div className="flex justify-end"><button onClick={add} className="btn-primary text-sm">저장</button></div>
         </div>
       )}
@@ -182,7 +182,7 @@ function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
                 <div className="text-sm text-ink-muted whitespace-pre-wrap">{n.body}</div>
                 <div className="text-[11px] text-ink-subtle mt-0.5">{n.occurredAt.slice(0, 10)}</div>
               </div>
-              <button onClick={() => del(n.id)} className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3.5 h-3.5" /></button>
+              <button onClick={() => del(n.id)} aria-label="기록 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3.5 h-3.5" /></button>
             </li>
           ))}
         </ul>
@@ -324,17 +324,17 @@ function PaymentTermsEditor({ contractId, terms, reload }: { contractId: number;
           </div>
           {rows.map((r, i) => (
             <div key={i} className="grid grid-cols-2 sm:grid-cols-[90px_70px_1fr_130px_130px_28px] gap-1.5 items-center rounded-lg border border-slate-100 sm:border-0 p-2 sm:p-0">
-              <select className="input text-sm" value={r.kind} onChange={e => set(i, 'kind', e.target.value)}>
+              <select className="input text-sm" aria-label="회차 구분" value={r.kind} onChange={e => set(i, 'kind', e.target.value)}>
                 {Object.entries(KIND_LABEL).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
               </select>
-              <input type="number" min={0} max={100} className="input text-sm" placeholder="%" value={r.ratio} onChange={e => set(i, 'ratio', e.target.value)} />
-              <input className="input text-sm col-span-2 sm:col-span-1" placeholder="조건 (예: 계약 체결 시)" value={r.condition} onChange={e => set(i, 'condition', e.target.value)} />
-              <input type="date" className="input text-sm" title="지급 기한" value={r.dueAt} onChange={e => set(i, 'dueAt', e.target.value)} />
+              <input type="number" min={0} max={100} className="input text-sm" placeholder="%" aria-label="비율 %" value={r.ratio} onChange={e => set(i, 'ratio', e.target.value)} />
+              <input className="input text-sm col-span-2 sm:col-span-1" placeholder="조건 (예: 계약 체결 시)" aria-label="조건" value={r.condition} onChange={e => set(i, 'condition', e.target.value)} />
+              <input type="date" className="input text-sm" title="지급 기한" aria-label="지급 기한" value={r.dueAt} onChange={e => set(i, 'dueAt', e.target.value)} />
               <div className="flex items-center gap-1">
-                <input type="date" className="input text-sm flex-1" title="입금일" value={r.paidAt} onChange={e => set(i, 'paidAt', e.target.value)} />
+                <input type="date" className="input text-sm flex-1" title="입금일" aria-label="입금일" value={r.paidAt} onChange={e => set(i, 'paidAt', e.target.value)} />
                 {r.paidAt && <span className="pill bg-emerald-100 text-emerald-700 shrink-0">입금</span>}
               </div>
-              <button onClick={() => removeRow(i)} className="p-1 rounded text-ink-subtle hover:text-red-600 justify-self-end sm:justify-self-auto"><Trash2 className="w-3.5 h-3.5" /></button>
+              <button onClick={() => removeRow(i)} aria-label="회차 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 justify-self-end sm:justify-self-auto"><Trash2 className="w-3.5 h-3.5" /></button>
             </div>
           ))}
           {dirty && <p className="text-[10px] text-ink-subtle">변경 사항이 있습니다 — 저장을 눌러 반영하세요.</p>}
@@ -365,7 +365,7 @@ function SectionStudies({ deal, reload }: { deal: Deal; reload: () => void }) {
       </div>}>
       {adding && (
         <div className="flex gap-2 mb-3">
-          <input className="input flex-1 text-sm" value={itemName} onChange={e => setItemName(e.target.value)} placeholder="시험 항목명 (예: 설치류 13주 반복투여 독성)" autoFocus />
+          <input className="input flex-1 text-sm" value={itemName} onChange={e => setItemName(e.target.value)} placeholder="시험 항목명 (예: 설치류 13주 반복투여 독성)" aria-label="시험 항목명" autoFocus />
           <button onClick={add} className="btn-primary text-sm">추가</button>
         </div>
       )}
@@ -374,8 +374,8 @@ function SectionStudies({ deal, reload }: { deal: Deal; reload: () => void }) {
           {deal.studies.map(s => (
             <div key={s.id} className="rounded-[12px] border border-slate-200 p-3">
               <div className="flex items-center gap-2 mb-2">
-                <input key={`n-${s.id}-${s.itemName ?? ''}`} className="input flex-1 text-sm font-medium" defaultValue={s.itemName ?? ''} onBlur={e => e.target.value !== (s.itemName ?? '') && patch(s.id, { itemName: e.target.value })} placeholder="시험 항목명" />
-                <button onClick={() => del(s.id)} className="p-1.5 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50"><Trash2 className="w-3.5 h-3.5" /></button>
+                <input key={`n-${s.id}-${s.itemName ?? ''}`} className="input flex-1 text-sm font-medium" defaultValue={s.itemName ?? ''} onBlur={e => e.target.value !== (s.itemName ?? '') && patch(s.id, { itemName: e.target.value })} placeholder="시험 항목명" aria-label="시험 항목명" />
+                <button onClick={() => del(s.id)} aria-label="시험 삭제" className="p-1.5 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50"><Trash2 className="w-3.5 h-3.5" /></button>
               </div>
               <div className="grid sm:grid-cols-3 gap-2.5 mb-2">
                 <Labeled label="시험번호"><input key={`sn-${s.id}-${s.studyNumber ?? ''}`} className="input w-full text-sm" defaultValue={s.studyNumber ?? ''} onBlur={e => e.target.value !== (s.studyNumber ?? '') && patch(s.id, { studyNumber: e.target.value })} /></Labeled>
@@ -411,9 +411,9 @@ function SectionChangeQuotes({ deal, reload }: { deal: Deal; reload: () => void 
       action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 감가/추가금</button>}>
       {open && (
         <div className="flex flex-wrap gap-2 mb-3 items-center">
-          <select className="input text-sm w-24" value={f.kind} onChange={e => setF(p => ({ ...p, kind: e.target.value }))}><option value="ADD">추가금</option><option value="DEDUCT">감가</option></select>
-          <input className="input text-sm w-32" type="number" value={f.amount} onChange={e => setF(p => ({ ...p, amount: e.target.value }))} placeholder="금액" />
-          <input className="input text-sm flex-1 min-w-[140px]" value={f.reason} onChange={e => setF(p => ({ ...p, reason: e.target.value }))} placeholder="사유" />
+          <select className="input text-sm w-24" aria-label="구분" value={f.kind} onChange={e => setF(p => ({ ...p, kind: e.target.value }))}><option value="ADD">추가금</option><option value="DEDUCT">감가</option></select>
+          <input className="input text-sm w-32" type="number" value={f.amount} onChange={e => setF(p => ({ ...p, amount: e.target.value }))} placeholder="금액" aria-label="금액" />
+          <input className="input text-sm flex-1 min-w-[140px]" value={f.reason} onChange={e => setF(p => ({ ...p, reason: e.target.value }))} placeholder="사유" aria-label="사유" />
           <button onClick={add} className="btn-primary text-sm">추가</button>
         </div>
       )}
@@ -424,7 +424,7 @@ function SectionChangeQuotes({ deal, reload }: { deal: Deal; reload: () => void 
               {c.kind === 'DEDUCT' ? <TrendingDown className="w-4 h-4" style={{ color: 'var(--error)' }} /> : <TrendingUp className="w-4 h-4" style={{ color: 'var(--success)' }} />}
               <span className="font-semibold tabular-nums" style={{ color: c.kind === 'DEDUCT' ? 'var(--error)' : 'var(--success)' }}>{c.kind === 'DEDUCT' ? '-' : '+'}₩{c.amount.toLocaleString()}</span>
               <span className="flex-1 text-ink-muted truncate">{c.reason}</span>
-              <button onClick={() => del(c.id)} className="p-1 rounded text-ink-subtle hover:text-red-600"><Trash2 className="w-3.5 h-3.5" /></button>
+              <button onClick={() => del(c.id)} aria-label="변경 내역 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600"><Trash2 className="w-3.5 h-3.5" /></button>
             </li>
           ))}
         </ul>
@@ -434,15 +434,15 @@ function SectionChangeQuotes({ deal, reload }: { deal: Deal; reload: () => void 
 }
 
 function Labeled({ label, children }: { label: string; children: React.ReactNode }) {
-  return <div><div className="label mb-0.5">{label}</div>{children}</div>;
+  return <label className="block"><span className="label mb-0.5">{label}</span>{children}</label>;
 }
 function DateField({ label, value, onChange, hint }: { label: string; value: string | null; onChange: (v: string) => void; hint?: string }) {
   // blur 시점에만 저장 — 타이핑 중간값(빈 문자열)이 날짜를 지워버리는 것을 방지. key 로 reload 후 표시 동기화.
   return (
-    <div>
-      <div className="label mb-0.5">{label}{hint && <span className="text-[10px] font-normal text-ink-subtle ml-1">— {hint}</span>}</div>
+    <label className="block">
+      <span className="label mb-0.5">{label}{hint && <span className="text-[10px] font-normal text-ink-subtle ml-1">— {hint}</span>}</span>
       <input key={value ?? ''} type="date" className="input w-full text-sm" defaultValue={fmtDate(value)}
         onBlur={e => e.target.value !== fmtDate(value) && onChange(e.target.value)} />
-    </div>
+    </label>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { CalendarDays, ChevronLeft, ChevronRight, Plus, Loader2, X, Save, ArrowRight, GanttChartSquare, Pencil, Trash2, Check } from 'lucide-react';
@@ -75,13 +75,13 @@ export default function CalendarPage() {
           {/* 뷰 전환 세그먼트 */}
           <div className="segmented inline-flex gap-[3px] p-[3px] rounded-lg bg-slate-100">
             {VIEWS.map(([v, l]) => (
-              <button key={v} onClick={() => setView(v)} className={clsx('px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors', view === v ? 'bg-[var(--card)] text-brand-600 shadow-[var(--shadow-float)]' : 'text-ink-muted hover:text-ink')}>{l}</button>
+              <button key={v} onClick={() => setView(v)} aria-pressed={view === v} className={clsx('px-3 py-1.5 rounded-md text-[13px] font-medium transition-colors', view === v ? 'bg-[var(--card)] text-brand-600 shadow-[var(--shadow-float)]' : 'text-ink-muted hover:text-ink')}>{l}</button>
             ))}
           </div>
           <div className="flex items-center gap-1">
-            <button onClick={() => shift(-1)} className="icon-btn"><ChevronLeft className="w-4 h-4" /></button>
+            <button onClick={() => shift(-1)} aria-label="이전 기간" className="icon-btn"><ChevronLeft className="w-4 h-4" /></button>
             <button onClick={() => setAnchor(new Date())} className="btn-ghost text-[13px] whitespace-nowrap">오늘</button>
-            <button onClick={() => shift(1)} className="icon-btn"><ChevronRight className="w-4 h-4" /></button>
+            <button onClick={() => shift(1)} aria-label="다음 기간" className="icon-btn"><ChevronRight className="w-4 h-4" /></button>
           </div>
           <button onClick={() => setAdding(selected)} className="btn-primary text-sm shrink-0 whitespace-nowrap"><Plus className="w-4 h-4" /> 일정</button>
         </div>
@@ -106,7 +106,7 @@ export default function CalendarPage() {
                 const isSel = key === selected;
                 const isToday = key === todayKey;
                 return (
-                  <button key={i} onClick={() => setSelected(key)} className={clsx(cellH, 'rounded-lg border p-1.5 text-left align-top transition-colors flex flex-col',
+                  <button key={i} onClick={() => setSelected(key)} aria-pressed={isSel} className={clsx(cellH, 'rounded-lg border p-1.5 text-left align-top transition-colors flex flex-col',
                     isSel ? 'border-brand-500 ring-1 ring-brand-500 bg-brand-50' : isToday ? 'border-brand-300 bg-brand-50/50' : inMonth ? 'border-slate-200 hover:bg-slate-100' : 'border-transparent bg-slate-50/50')}>
                     <div className={clsx('text-[12px] font-semibold mb-1.5 tabular-nums flex items-center justify-between', isToday ? 'text-brand-600' : !inMonth ? 'text-ink-subtle/40' : d.getDay() === 0 ? 'text-red-500' : d.getDay() === 6 ? 'text-[var(--sat)]' : 'text-ink-muted')}>
                       <span className={clsx(isToday && 'inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-600 text-white')}>{d.getDate()}</span>
@@ -194,9 +194,9 @@ function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; i
                 {href ? <Link href={href} className="flex min-w-0 flex-1">{body}</Link> : body}
                 <span className="flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                   {editable && <>
-                    <button onClick={() => toggleDone(it)} className="p-1 rounded text-ink-subtle hover:text-emerald-600 hover:bg-emerald-50" title={it.done ? '완료 해제' : '완료 처리'}><Check className="w-3.5 h-3.5" /></button>
-                    {it.kind === 'event' && <button onClick={() => onEdit(it)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>}
-                    <button onClick={() => del(it)} className="p-1 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => toggleDone(it)} className="p-1 rounded text-ink-subtle hover:text-emerald-600 hover:bg-emerald-50" title={it.done ? '완료 해제' : '완료 처리'} aria-label={it.done ? '완료 해제' : '완료 처리'}><Check className="w-3.5 h-3.5" /></button>
+                    {it.kind === 'event' && <button onClick={() => onEdit(it)} className="p-1 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정" aria-label="수정"><Pencil className="w-3.5 h-3.5" /></button>}
+                    <button onClick={() => del(it)} className="p-1 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제" aria-label="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
                   </>}
                   {href && !editable && (it.kind === 'milestone' ? <GanttChartSquare className="w-3.5 h-3.5 text-ink-subtle mt-0.5" /> : <ArrowRight className="w-3.5 h-3.5 text-ink-subtle mt-0.5" />)}
                 </span>
@@ -215,6 +215,12 @@ function EventModal({ date, event, onClose, onSaved }: { date: string; event?: I
     location: event?.location ?? '', attendeesClient: event?.attendeesClient ?? '', attendeesInternal: event?.attendeesInternal ?? '', requests: event?.requests ?? '',
   });
   const [saving, setSaving] = useState(false);
+  const titleId = useId();
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
   const save = async () => {
     if (!f.title.trim()) { toast.error('제목을 입력하세요.'); return; }
     setSaving(true);
@@ -228,13 +234,13 @@ function EventModal({ date, event, onClose, onSaved }: { date: string; event?: I
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm" onClick={e => e.stopPropagation()}>
-        <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between"><div className="font-semibold text-ink">{event ? '일정 수정' : '새 일정'}</div><button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button></header>
+      <div role="dialog" aria-modal="true" aria-labelledby={titleId} className="bg-white rounded-2xl shadow-2xl w-full max-w-sm" onClick={e => e.stopPropagation()}>
+        <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between"><div id={titleId} className="font-semibold text-ink">{event ? '일정 수정' : '새 일정'}</div><button onClick={onClose} aria-label="닫기" className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button></header>
         <div className="px-5 py-4 space-y-3 max-h-[70vh] overflow-auto">
           <input className="input w-full" value={f.title} onChange={e => setF(p => ({ ...p, title: e.target.value }))} placeholder="일정 제목" aria-label="일정 제목" autoFocus />
           <div className="grid grid-cols-2 gap-3">
-            <div><div className="label mb-1">날짜</div><input type="date" className="input w-full" value={f.startAt} onChange={e => setF(p => ({ ...p, startAt: e.target.value }))} /></div>
-            <div><div className="label mb-1">유형</div><select className="input w-full" value={f.type} onChange={e => setF(p => ({ ...p, type: e.target.value }))}><option value="MEETING">미팅</option><option value="DEADLINE">마감</option><option value="MILESTONE">마일스톤</option><option value="REMINDER">리마인더</option></select></div>
+            <label className="block"><span className="label mb-1">날짜</span><input type="date" className="input w-full" value={f.startAt} onChange={e => setF(p => ({ ...p, startAt: e.target.value }))} /></label>
+            <label className="block"><span className="label mb-1">유형</span><select className="input w-full" value={f.type} onChange={e => setF(p => ({ ...p, type: e.target.value }))}><option value="MEETING">미팅</option><option value="DEADLINE">마감</option><option value="MILESTONE">마일스톤</option><option value="REMINDER">리마인더</option></select></label>
           </div>
           <EventDetailFields f={f} set={(k, v) => setF(p => ({ ...p, [k]: v }))} />
         </div>

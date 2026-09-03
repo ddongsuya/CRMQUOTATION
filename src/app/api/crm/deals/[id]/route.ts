@@ -8,6 +8,8 @@ import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { dealPatchSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function ownedDeal(id: number) {
@@ -39,19 +41,12 @@ async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id 오류' }, { status: 400 });
   if (!(await ownedDeal(id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
-  const body = await req.json().catch(() => ({})) as Record<string, unknown>;
-  const data: Record<string, unknown> = {};
-  for (const k of ['title', 'modality', 'indication', 'clinicalDesign', 'submissionTarget', 'lostReason'] as const) {
-    if (k in body) data[k] = String(body[k] ?? '').trim() || (k === 'title' ? undefined : null);
-  }
-  if ('reportLanguage' in body) data.reportLanguage = body.reportLanguage === 'EN' ? 'EN' : 'KO';
-  if ('translationRequested' in body) data.translationRequested = !!body.translationRequested;
-  if ('stage' in body) data.stage = String(body.stage);
-  if ('status' in body) data.status = String(body.status);
-  if (data.title === undefined && 'title' in body) return NextResponse.json({ error: '안건명은 비울 수 없습니다.' }, { status: 400 });
-  const deal = await prisma.deal.update({ where: { id }, data });
+  const parsed = await parseBody(req, dealPatchSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;   // 키 없음 → undefined(Prisma 가 무시)
+  const deal = await prisma.deal.update({ where: { id }, data: b });
   // 수주 처리 시 대표 견적(미거절 중 최대 금액)을 ACCEPTED 로 동기화 — 고객 KPI 누적 수주의 근거.
-  if (data.status === 'WON') {
+  if (b.status === 'WON') {
     const quotes = await prisma.quote.findMany({ where: { dealId: id }, select: { id: true, status: true, grandTotal: true } });
     if (quotes.length && !quotes.some(q => q.status === 'ACCEPTED')) {
       const top = quotes.filter(q => q.status !== 'REJECTED').sort((a, b) => (b.grandTotal ?? 0) - (a.grandTotal ?? 0))[0];

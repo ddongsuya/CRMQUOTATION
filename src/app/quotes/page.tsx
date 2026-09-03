@@ -113,7 +113,7 @@ export default function QuotesListPage() {
       {/* 상태 필터칩 */}
       <div className="flex flex-wrap gap-2 mb-4">
         {FILTERS.map(([k, l]) => (
-          <button key={k} onClick={() => setFilter(k)} className={clsx('chip', filter === k ? 'chip-active' : 'chip-inactive')}>{l}</button>
+          <button key={k} onClick={() => setFilter(k)} aria-pressed={filter === k} className={clsx('chip', filter === k ? 'chip-active' : 'chip-inactive')}>{l}</button>
         ))}
       </div>
 
@@ -168,7 +168,7 @@ export default function QuotesListPage() {
                   {/* 액션 — 폰(hover 없음)에선 항상 노출, 데스크톱은 hover 시 (터치에서 접근 불가하던 문제 해소) */}
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 flex lg:hidden lg:group-hover:flex items-center gap-0.5 bg-slate-100 rounded-lg px-1 py-0.5">
                     {(qr.status === 'DRAFT' || qr.status === 'ISSUED') && <button onClick={() => markSent(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="발송 처리" aria-label="발송 처리"><Icon name="mail" className="w-3.5 h-3.5" /></button>}
-                    {qr.customerCompany && <button onClick={() => openCompany(qr.customerCompany!)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="고객 상세"><Icon name="users" className="w-3.5 h-3.5" /></button>}
+                    {qr.customerCompany && <button onClick={() => openCompany(qr.customerCompany!)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="고객 상세" aria-label="고객 상세"><Icon name="users" className="w-3.5 h-3.5" /></button>}
                     <Link href={qr.studyType === 'efficacy' ? `/quote-efficacy?id=${qr.id}` : `/quote-v2?id=${qr.id}`} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="내용 수정"><Icon name="notebook" className="w-3.5 h-3.5" /></Link>
                     <Link href={`/quote/print?id=${qr.id}`} target="_blank" className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="PDF 출력"><Icon name="arrow-right" className="w-3.5 h-3.5" /></Link>
                     <button onClick={() => duplicate(qr.id)} className="p-1.5 rounded hover:bg-white text-ink-muted hover:text-brand-600" title="복제" aria-label="복제"><Icon name="plus" className="w-3.5 h-3.5" /></button>

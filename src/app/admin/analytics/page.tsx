@@ -45,12 +45,12 @@ export default async function AdminAnalytics({ searchParams }: { searchParams: S
         <table className="w-full">
           <thead>
             <tr className="table-head text-left">
-              <th className="pb-3 font-medium">센터</th>
-              <th className="pb-3 font-medium text-right">목표</th>
-              <th className="pb-3 font-medium text-right">수주</th>
-              <th className="pb-3 font-medium">달성률</th>
-              <th className="pb-3 font-medium text-right">수주율</th>
-              <th className="pb-3 font-medium text-right">전분기 대비</th>
+              <th scope="col" className="pb-3 font-medium">센터</th>
+              <th scope="col" className="pb-3 font-medium text-right">목표</th>
+              <th scope="col" className="pb-3 font-medium text-right">수주</th>
+              <th scope="col" className="pb-3 font-medium">달성률</th>
+              <th scope="col" className="pb-3 font-medium text-right">수주율</th>
+              <th scope="col" className="pb-3 font-medium text-right">전분기 대비</th>
             </tr>
           </thead>
           <tbody>
@@ -66,13 +66,13 @@ export default async function AdminAnalytics({ searchParams }: { searchParams: S
         <table className="w-full">
           <thead>
             <tr className="table-head text-left">
-              <th className="pb-3 font-medium">월</th>
-              <th className="pb-3 font-medium text-right">견적</th>
-              <th className="pb-3 font-medium text-right">진행 중</th>
-              <th className="pb-3 font-medium text-right">계약</th>
-              <th className="pb-3 font-medium text-right">타 기관</th>
-              <th className="pb-3 font-medium text-right">수주율</th>
-              <th className="pb-3 font-medium text-right">수주 금액</th>
+              <th scope="col" className="pb-3 font-medium">월</th>
+              <th scope="col" className="pb-3 font-medium text-right">견적</th>
+              <th scope="col" className="pb-3 font-medium text-right">진행 중</th>
+              <th scope="col" className="pb-3 font-medium text-right">계약</th>
+              <th scope="col" className="pb-3 font-medium text-right">타 기관</th>
+              <th scope="col" className="pb-3 font-medium text-right">수주율</th>
+              <th scope="col" className="pb-3 font-medium text-right">수주 금액</th>
             </tr>
           </thead>
           <tbody>

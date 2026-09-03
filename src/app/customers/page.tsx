@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Loader2, Building2, X, Save, Sparkles, GanttChartSquare, ArrowRight, Mail, Phone } from 'lucide-react';
@@ -70,11 +70,11 @@ export default function CustomersPage() {
             <div className="px-4 pt-[14px] pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2.5 h-[38px] px-[13px] rounded-lg bg-slate-50 border border-slate-200 mb-2.5">
                 <Icon name="search" className="w-[15px] h-[15px] text-ink-subtle flex-shrink-0" />
-                <input value={q} onChange={e => setQ(e.target.value)} placeholder="회사명·담당자 검색" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
+                <input value={q} onChange={e => setQ(e.target.value)} placeholder="회사명·담당자 검색" aria-label="회사명·담당자 검색" className="flex-1 bg-transparent text-[13.5px] text-ink placeholder:text-ink-subtle outline-none" />
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {SEGS.map(([k, l]) => (
-                  <button key={k} onClick={() => setSeg(k)} className={clsx('inline-flex items-center gap-1 rounded-full px-3 py-[5px] text-[12px] font-medium border transition-colors', seg === k ? 'bg-ink text-slate-50 border-ink' : 'text-ink-muted border-slate-200 hover:bg-slate-100')}>
+                  <button key={k} onClick={() => setSeg(k)} aria-pressed={seg === k} className={clsx('inline-flex items-center gap-1 rounded-full px-3 py-[5px] text-[12px] font-medium border transition-colors', seg === k ? 'bg-ink text-slate-50 border-ink' : 'text-ink-muted border-slate-200 hover:bg-slate-100')}>
                     {l} <span className={clsx('tabular-nums', seg === k ? 'text-slate-50/70' : 'text-ink-subtle')}>{segCount[k]}</span>
                   </button>
                 ))}
@@ -82,7 +82,7 @@ export default function CustomersPage() {
             </div>
             <div className="max-h-[calc(100vh-240px)] overflow-auto">
               {filtered.map(c => (
-                <button key={c.id} onClick={() => setSel(c.id)} className={clsx('relative w-full text-left px-4 py-[13px] transition-colors flex items-center gap-3 border-b border-[var(--hairline-soft)]', sel === c.id ? 'bg-slate-100' : 'hover:bg-slate-100')}>
+                <button key={c.id} onClick={() => setSel(c.id)} aria-pressed={sel === c.id} className={clsx('relative w-full text-left px-4 py-[13px] transition-colors flex items-center gap-3 border-b border-[var(--hairline-soft)]', sel === c.id ? 'bg-slate-100' : 'hover:bg-slate-100')}>
                   {sel === c.id && <span className="absolute left-0 top-[12px] bottom-[12px] w-0.5 rounded-full bg-brand-600" />}
                   <span className="inline-flex items-center justify-center w-10 h-10 rounded-[10px] bg-slate-100 text-ink-muted font-semibold text-[15px] shrink-0">{c.name.charAt(0)}</span>
                   <div className="flex-1 min-w-0">
@@ -252,7 +252,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
           <Card title="담당자" count={contacts.length}>
             {contacts.length === 0 ? <Empty>등록된 담당자가 없습니다.</Empty> : <div className="space-y-1">
               {contacts.map((ct: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
-                <button key={ct.id} onClick={() => setScope(scope === ct.id ? 'all' : ct.id)} className={clsx('w-full flex items-center gap-2 text-left rounded-lg px-2 py-1.5 transition-colors', scope === ct.id ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50')}>
+                <button key={ct.id} onClick={() => setScope(scope === ct.id ? 'all' : ct.id)} aria-pressed={scope === ct.id} className={clsx('w-full flex items-center gap-2 text-left rounded-lg px-2 py-1.5 transition-colors', scope === ct.id ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50')}>
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 text-ink text-xs font-semibold shrink-0">{ct.name.charAt(0)}</span>
                   <span className="min-w-0 flex-1"><span className="block text-sm text-ink truncate">{ct.name}{ct.position ? ` · ${ct.position}` : ''}</span><span className="block text-[11px] text-ink-subtle truncate">{[ct.email, ct.phone].filter(Boolean).join(' · ') || '연락처 없음'}</span></span>
                   {scope === ct.id && <span className="pill bg-brand-600 text-white shrink-0">보는 중</span>}
@@ -276,7 +276,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
 
 function TabBtn({ active, onClick, children, icon, sub }: { active: boolean; onClick: () => void; children: React.ReactNode; icon?: React.ReactNode; sub?: string | null }) {
   return (
-    <button onClick={onClick} className={clsx('inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border',
+    <button onClick={onClick} aria-pressed={active} className={clsx('inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border',
       active ? 'bg-[var(--card)] text-ink border-brand-300 ring-1 ring-brand-200' : 'bg-transparent text-ink-muted border-transparent hover:bg-white/70 hover:text-ink')}>
       {active && <span className="w-1.5 h-1.5 rounded-full bg-brand-500 shrink-0" />}
       {icon}
@@ -299,6 +299,12 @@ function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: (id?
   const [f, setF] = useState({ name: '', bizRegNo: '', industry: '', address: '', memo: '', isNewClient: true });
   const [saving, setSaving] = useState(false);
   const set = (k: keyof typeof f, v: string | boolean) => setF(p => ({ ...p, [k]: v }));
+  const titleId = useId();
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   const save = async () => {
     if (!f.name.trim()) { toast.error('고객사명을 입력하세요.'); return; }
@@ -313,10 +319,10 @@ function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: (id?
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md" onClick={e => e.stopPropagation()}>
+      <div role="dialog" aria-modal="true" aria-labelledby={titleId} className="bg-white rounded-2xl shadow-2xl w-full max-w-md" onClick={e => e.stopPropagation()}>
         <header className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-          <div className="font-semibold text-ink">새 고객사</div>
-          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
+          <div id={titleId} className="font-semibold text-ink">새 고객사</div>
+          <button onClick={onClose} aria-label="닫기" className="text-ink-subtle hover:text-ink"><X className="w-5 h-5" /></button>
         </header>
         <div className="px-5 py-4 space-y-3">
           <Field label="고객사명 *"><input className="input w-full" value={f.name} onChange={e => set('name', e.target.value)} placeholder="예: OOO제약" autoFocus /></Field>
@@ -341,5 +347,5 @@ function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: (id?
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <div><div className="label mb-1">{label}</div>{children}</div>;
+  return <label className="block"><span className="label mb-1">{label}</span>{children}</label>;
 }

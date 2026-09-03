@@ -10,6 +10,8 @@ import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { checkLinkOwnership } from '@/lib/crm-guards';
 
 import { withErrorHandling } from '@/lib/api-handler';
+import { parseBody } from '@/lib/parse-body';
+import { taskCreateSchema } from '@/lib/schemas/crm';
 export const dynamic = 'force-dynamic';
 
 async function _GET(req: Request) {
@@ -38,29 +40,29 @@ async function _GET(req: Request) {
 
 async function _POST(req: Request) {
   const ownerId = await currentUserId();
-  const b = await req.json().catch(() => null) as { title?: string; memo?: string; dueAt?: string | null; companyId?: number; contactId?: number; dealId?: number } | null;
-  const title = String(b?.title ?? '').trim();
-  if (!title) return NextResponse.json({ error: '할 일 내용을 입력하세요.' }, { status: 400 });
-  const linkErr = await checkLinkOwnership(b ?? {});
+  const parsed = await parseBody(req, taskCreateSchema);
+  if (!parsed.ok) return parsed.res;
+  const b = parsed.data;
+  const linkErr = await checkLinkOwnership(b);
   if (linkErr) return NextResponse.json({ error: linkErr }, { status: 404 });
 
   // 의뢰자/안건이 오면 회사도 자동 연결 (기업별 to-do 집계 근거)
-  let companyId = b?.companyId ? Number(b.companyId) : null;
-  if (!companyId && b?.contactId) {
-    const c = await prisma.contact.findUnique({ where: { id: Number(b.contactId) }, select: { companyId: true } });
+  let companyId = b.companyId;
+  if (!companyId && b.contactId) {
+    const c = await prisma.contact.findUnique({ where: { id: b.contactId }, select: { companyId: true } });
     companyId = c?.companyId ?? null;
   }
-  if (!companyId && b?.dealId) {
-    const d = await prisma.deal.findUnique({ where: { id: Number(b.dealId) }, select: { contact: { select: { companyId: true } } } });
+  if (!companyId && b.dealId) {
+    const d = await prisma.deal.findUnique({ where: { id: b.dealId }, select: { contact: { select: { companyId: true } } } });
     companyId = d?.contact.companyId ?? null;
   }
 
   const task = await prisma.task.create({
     data: {
-      ownerId, title,
-      memo: b?.memo?.trim() || null,
-      dueAt: b?.dueAt ? new Date(b.dueAt) : null,
-      companyId, contactId: b?.contactId ? Number(b.contactId) : null, dealId: b?.dealId ? Number(b.dealId) : null,
+      ownerId, title: b.title,
+      memo: b.memo,
+      dueAt: b.dueAt,
+      companyId, contactId: b.contactId, dealId: b.dealId,
     },
   });
   return NextResponse.json({ task });

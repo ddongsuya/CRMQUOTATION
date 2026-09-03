@@ -47,7 +47,7 @@ export default function Step1Models({
         </div>
         <div className="relative w-[280px]">
           <Icon name="search" className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-ink-subtle" />
-          <input value={search} onChange={(e) => onSearch(e.target.value)} placeholder="모델·동물종·유발법 검색"
+          <input value={search} onChange={(e) => onSearch(e.target.value)} placeholder="모델·동물종·유발법 검색" aria-label="모델·동물종·유발법 검색"
             className="input pl-9" />
         </div>
       </div>

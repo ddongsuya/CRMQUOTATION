@@ -64,7 +64,7 @@ export default function QuotePanel({ id }: { id: number }) {
       {/* 결론 편집 */}
       <div>
         <label className="eyebrow block mb-1.5">결론 · 추적</label>
-        <select value={curConc} onChange={(e) => changeConclusion(e.target.value)} disabled={saving}
+        <select value={curConc} onChange={(e) => changeConclusion(e.target.value)} disabled={saving} aria-label="결론 · 추적"
           className="w-full text-[13px] rounded-md border border-slate-200 bg-[var(--card)] px-3 py-2 cursor-pointer">
           <option value="">— 미정 —</option>
           {CONCLUSIONS.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -88,10 +88,10 @@ export default function QuotePanel({ id }: { id: number }) {
           {d.substanceType && <KV k="물질종류" v={d.substanceType} />}
           <div className="flex gap-2 text-[13px] items-center"><span className="w-20 text-ink-muted flex-shrink-0">계약번호</span>
             <input defaultValue={d.contractNo ?? ''} onBlur={(e) => { if (e.target.value !== (d.contractNo ?? '')) patchField({ contractNo: e.target.value }); }}
-              placeholder="미정" className="flex-1 text-[13px] rounded-md border border-slate-200 px-2 py-1" /></div>
+              placeholder="미정" aria-label="계약번호" className="flex-1 text-[13px] rounded-md border border-slate-200 px-2 py-1" /></div>
           <div className="flex gap-2 text-[13px] items-center"><span className="w-20 text-ink-muted flex-shrink-0">계약금액</span>
             <input type="number" defaultValue={d.contractAmount ?? ''} onBlur={(e) => { const n = Number(e.target.value); if (n !== (d.contractAmount ?? 0)) patchField({ contractAmount: n }); }}
-              placeholder="원" className="flex-1 text-[13px] rounded-md border border-slate-200 px-2 py-1 tabular-nums" /></div>
+              placeholder="원" aria-label="계약금액" className="flex-1 text-[13px] rounded-md border border-slate-200 px-2 py-1 tabular-nums" /></div>
         </div>
       </Section>
 

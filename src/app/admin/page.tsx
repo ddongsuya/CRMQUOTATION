@@ -204,7 +204,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
             <Link href={`/admin/customers${qs}`} className="link text-[13px]">전체 보기 →</Link>
           </div>
           <table className="w-full">
-            <thead><tr className="table-head text-left"><th className="pb-2 font-medium">고객사</th><th className="pb-2 font-medium">담당</th><th className="pb-2 font-medium text-right">파이프라인</th><th className="pb-2 font-medium text-right">누적 수주</th></tr></thead>
+            <thead><tr className="table-head text-left"><th scope="col" className="pb-2 font-medium">고객사</th><th scope="col" className="pb-2 font-medium">담당</th><th scope="col" className="pb-2 font-medium text-right">파이프라인</th><th scope="col" className="pb-2 font-medium text-right">누적 수주</th></tr></thead>
             <tbody>
               {data.topCustomers.map((c) => (
                 <tr key={c.name} className="table-row">
@@ -223,7 +223,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
             <Link href={`/admin/members${qs}`} className="link text-[13px]">전체 보기 →</Link>
           </div>
           <table className="w-full">
-            <thead><tr className="table-head text-left"><th className="pb-2 font-medium">담당자</th><th className="pb-2 font-medium">직책</th><th className="pb-2 font-medium text-right">건수</th><th className="pb-2 font-medium text-right">수주</th><th className="pb-2 font-medium text-right">수주율</th></tr></thead>
+            <thead><tr className="table-head text-left"><th scope="col" className="pb-2 font-medium">담당자</th><th scope="col" className="pb-2 font-medium">직책</th><th scope="col" className="pb-2 font-medium text-right">건수</th><th scope="col" className="pb-2 font-medium text-right">수주</th><th scope="col" className="pb-2 font-medium text-right">수주율</th></tr></thead>
             <tbody>
               {data.memberSummary.map((m) => (
                 <tr key={m.userId} className="table-row">

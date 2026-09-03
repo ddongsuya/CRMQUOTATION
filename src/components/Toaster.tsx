@@ -34,6 +34,7 @@ export default function Toaster() {
           <span className="flex-1 leading-snug">{t.message}</span>
           <button
             onClick={() => dismiss(t.id)}
+            aria-label="닫기"
             className="flex-shrink-0 opacity-60 hover:opacity-100"
           >
             <X className="w-3.5 h-3.5" />

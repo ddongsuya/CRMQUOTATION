@@ -29,13 +29,13 @@ export default function EditorDock({
     <>
       {/* 모바일: 배경 탭으로 닫기 (데스크톱은 콘텐츠를 밀어내므로 배경 없음) */}
       <div className="fixed inset-0 z-20 bg-black/30 lg:hidden no-print" onClick={onClose} />
-    <aside className="fixed top-0 right-0 bottom-0 w-full sm:w-[400px] lg:w-[380px] z-30 bg-[var(--card)] border-l border-slate-200 flex flex-col no-print">
+    <aside aria-label="편집 도구" className="fixed top-0 right-0 bottom-0 w-full sm:w-[400px] lg:w-[380px] z-30 bg-[var(--card)] border-l border-slate-200 flex flex-col no-print">
       <header className="flex items-start justify-between gap-2 px-5 py-4 border-b border-slate-200 flex-shrink-0">
         <div>
           <h2 className="text-[16px] font-bold text-ink m-0">편집 도구</h2>
           <p className="text-[12px] text-ink-subtle mt-0.5 mb-0">의뢰자 시험 디자인에 맞게 수정</p>
         </div>
-        <button onClick={onClose} className="icon-btn"><Icon name="x" className="w-4 h-4" /></button>
+        <button onClick={onClose} aria-label="편집 도구 닫기" className="icon-btn"><Icon name="x" className="w-4 h-4" /></button>
       </header>
 
       <div className="flex-1 overflow-y-auto px-5 py-4 space-y-5">
@@ -99,7 +99,7 @@ export default function EditorDock({
                   <option value="week">주</option>
                   <option value="day">일</option>
                 </select>
-                <button onClick={() => { h.selectPhase(i); h.delPhase(); }} className="text-ink-subtle hover:text-[var(--error)] flex-shrink-0">
+                <button onClick={() => { h.selectPhase(i); h.delPhase(); }} aria-label="단계 삭제" className="text-ink-subtle hover:text-[var(--error)] flex-shrink-0">
                   <Icon name="x" className="w-3.5 h-3.5" />
                 </button>
               </div>

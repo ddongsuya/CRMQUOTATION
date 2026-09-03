@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Loader2, Trash2, Save, GripVertical, ChevronDown, Pencil, FileStack } from 'lucide-react';
@@ -84,8 +84,8 @@ export default function ModalityTemplatesAdmin() {
           <div key={ci} className="card p-4 space-y-3">
             <div className="flex items-center gap-2">
               <GripVertical className="w-4 h-4 text-ink-subtle/50" />
-              <input className="input font-semibold flex-1" value={cat.label} disabled={!isAdmin} onChange={e => update(d => { d[ci].label = e.target.value; return d; })} placeholder="분류 이름" />
-              {isAdmin && <button onClick={() => { if (cat.modalities.length && !confirm('이 분류의 모달리티 구성도 삭제됩니다(항목·템플릿은 유지). 계속할까요?')) return; update(d => d.filter((_, i) => i !== ci)); }} className="p-2 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="분류 삭제"><Trash2 className="w-4 h-4" /></button>}
+              <input className="input font-semibold flex-1" aria-label="분류 이름" value={cat.label} disabled={!isAdmin} onChange={e => update(d => { d[ci].label = e.target.value; return d; })} placeholder="분류 이름" />
+              {isAdmin && <button onClick={() => { if (cat.modalities.length && !confirm('이 분류의 모달리티 구성도 삭제됩니다(항목·템플릿은 유지). 계속할까요?')) return; update(d => d.filter((_, i) => i !== ci)); }} className="p-2 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="분류 삭제" aria-label="분류 삭제"><Trash2 className="w-4 h-4" /></button>}
             </div>
 
             <div className="space-y-2 pl-6">
@@ -96,16 +96,16 @@ export default function ModalityTemplatesAdmin() {
                   <div key={m.key} className="rounded-[12px] border border-slate-200 overflow-hidden">
                     <div className="flex items-center gap-2 flex-wrap p-2.5 bg-slate-50">
                       <span className="pill bg-slate-100 text-ink-subtle font-mono">{m.key}</span>
-                      <input className="input flex-1 min-w-[120px]" value={m.label} disabled={!isAdmin} onChange={e => update(d => { d[ci].modalities[mi].label = e.target.value; return d; })} placeholder="표시명" />
+                      <input className="input flex-1 min-w-[120px]" aria-label="표시명" value={m.label} disabled={!isAdmin} onChange={e => update(d => { d[ci].modalities[mi].label = e.target.value; return d; })} placeholder="표시명" />
                       {isAdmin && (
-                        <select className="input w-28" value={ci} onChange={e => { const to = Number(e.target.value); if (to === ci) return; update(d => { const [mv] = d[ci].modalities.splice(mi, 1); d[to].modalities.push(mv); return d; }); }} title="분류 이동">
+                        <select className="input w-28" value={ci} onChange={e => { const to = Number(e.target.value); if (to === ci) return; update(d => { const [mv] = d[ci].modalities.splice(mi, 1); d[to].modalities.push(mv); return d; }); }} title="분류 이동" aria-label="분류 이동">
                           {cats.map((c2, i2) => <option key={i2} value={i2}>{c2.label || `분류 ${i2 + 1}`}</option>)}
                         </select>
                       )}
-                      <button onClick={() => toggle(m.key)} className="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium text-brand-700 bg-brand-50 hover:bg-brand-100">
+                      <button onClick={() => toggle(m.key)} aria-expanded={open} className="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium text-brand-700 bg-brand-50 hover:bg-brand-100">
                         <FileStack className="w-3.5 h-3.5" /> 템플릿 {tpls.length}개 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
                       </button>
-                      {isAdmin && <button onClick={() => update(d => { d[ci].modalities.splice(mi, 1); return d; })} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="모달리티 제거"><Trash2 className="w-3.5 h-3.5" /></button>}
+                      {isAdmin && <button onClick={() => update(d => { d[ci].modalities.splice(mi, 1); return d; })} className="p-1.5 rounded-lg text-ink-subtle hover:text-red-600 hover:bg-red-50" title="모달리티 제거" aria-label="모달리티 제거"><Trash2 className="w-3.5 h-3.5" /></button>}
                     </div>
 
                     {open && (
@@ -120,8 +120,8 @@ export default function ModalityTemplatesAdmin() {
                             </div>
                             {isAdmin && (
                               <>
-                                <button onClick={() => setBuilder({ mod: m, tpl: t })} className="p-1.5 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정"><Pencil className="w-3.5 h-3.5" /></button>
-                                <button onClick={() => deleteTemplate(t.id)} className="p-1.5 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
+                                <button onClick={() => setBuilder({ mod: m, tpl: t })} className="p-1.5 rounded text-ink-subtle hover:text-brand-600 hover:bg-brand-50" title="수정" aria-label="수정"><Pencil className="w-3.5 h-3.5" /></button>
+                                <button onClick={() => deleteTemplate(t.id)} className="p-1.5 rounded text-ink-subtle hover:text-red-600 hover:bg-red-50" title="삭제" aria-label="삭제"><Trash2 className="w-3.5 h-3.5" /></button>
                               </>
                             )}
                           </div>
@@ -173,6 +173,12 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
   const [picked, setPicked] = useState<Set<string>>(() => new Set((tpl?.tests ?? []).map(t => t.key)));
   const [q, setQ] = useState('');
   const [hideNoPrice, setHideNoPrice] = useState(false);
+  const titleId = useId();
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   const hasPrice = (c: Rec) => c.priceMfds != null || c.priceOecd != null;
   const noPriceCount = candidates.filter(c => !hasPrice(c)).length;
@@ -201,22 +207,22 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" onClick={onClose}>
-      <div className="bg-white rounded-[12px] border border-slate-200 w-full max-w-2xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
+      <div role="dialog" aria-modal="true" aria-labelledby={titleId} className="bg-white rounded-[12px] border border-slate-200 w-full max-w-2xl max-h-[88vh] flex flex-col" onClick={e => e.stopPropagation()}>
         <header className="px-5 py-4 border-b border-slate-200 flex items-center justify-between">
-          <div className="font-semibold text-ink">{tpl ? '템플릿 수정' : '새 템플릿'} <span className="text-ink-subtle text-xs ml-1">· {mod.label}</span></div>
-          <button onClick={onClose} className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-5 h-5" /></button>
+          <div id={titleId} className="font-semibold text-ink">{tpl ? '템플릿 수정' : '새 템플릿'} <span className="text-ink-subtle text-xs ml-1">· {mod.label}</span></div>
+          <button onClick={onClose} aria-label="닫기" className="text-ink-subtle hover:text-ink"><Icon name="x" className="w-5 h-5" /></button>
         </header>
 
         <div className="px-5 py-4 space-y-3 border-b border-slate-200">
-          <input className="input w-full" value={name} onChange={e => setName(e.target.value)} placeholder="템플릿 이름 (예: IND 1상 최소 패키지)" />
-          <input className="input w-full" value={scenario} onChange={e => setScenario(e.target.value)} placeholder="한 줄 설명 (선택, 예: 1상 임상 개시용 최소 구성)" />
+          <input className="input w-full" value={name} onChange={e => setName(e.target.value)} placeholder="템플릿 이름 (예: IND 1상 최소 패키지)" aria-label="템플릿 이름" />
+          <input className="input w-full" value={scenario} onChange={e => setScenario(e.target.value)} placeholder="한 줄 설명 (선택, 예: 1상 임상 개시용 최소 구성)" aria-label="한 줄 설명" />
         </div>
 
         <div className="px-5 py-3 space-y-2">
           <div className="flex items-center justify-between gap-2">
             <div className="relative flex-1">
               <Icon name="search" className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-subtle" />
-              <input className="input pl-8 text-sm" value={q} onChange={e => setQ(e.target.value)} placeholder="시험 검색" />
+              <input className="input pl-8 text-sm" value={q} onChange={e => setQ(e.target.value)} placeholder="시험 검색" aria-label="시험 검색" />
             </div>
             <span className="text-xs text-brand-700 font-semibold whitespace-nowrap">{picked.size}개 선택</span>
           </div>
@@ -238,7 +244,7 @@ function TemplateBuilder({ mod, tpl, candidates, onClose, onSave }: { mod: Mod; 
               const period = fmtWeeks(c.studyWeeks);
               const route = c.adminRoute ? String(c.adminRoute) : '';
               return (
-                <button key={key || i} onClick={() => togglePick(key)} className="w-full flex items-center gap-2.5 py-2 text-left hover:bg-slate-50/50 px-1 rounded">
+                <button key={key || i} onClick={() => togglePick(key)} aria-pressed={on} className="w-full flex items-center gap-2.5 py-2 text-left hover:bg-slate-50/50 px-1 rounded">
                   <span className={clsx('inline-flex items-center justify-center w-5 h-5 rounded border-2 flex-shrink-0', on ? 'bg-brand-600 border-brand-600 text-white' : 'border-slate-300')}>{on && <Icon name="check" className="w-3 h-3" />}</span>
                   <span className="flex-1 min-w-0">
                     <span className="block truncate text-sm text-ink">{String(c.testName ?? '(이름없음)')}</span>
