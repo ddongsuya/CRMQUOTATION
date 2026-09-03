@@ -3,7 +3,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { GanttChartSquare, Loader2, FlaskConical, Building2, User, FileText, ChevronRight } from 'lucide-react';
+import { FlaskConical, Building2, User, FileText } from 'lucide-react';
+import { DEAL_STAGE, label, VAT_EXCL } from '@/lib/labels';
+import { fmtDate } from '@/lib/dates';
+import { EmptyState, LoadingState } from '@/components/ui/State';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Study = { id: number; itemName: string | null; studyNumber: string | null; director: string | null; department?: string | null; requestSentAt: string | null; studyEndAt?: string | null; intakeCompletedAt: string | null; reportDraftDueAt: string | null; reportDraftIssuedAt: string | null; createdAt: string };
@@ -15,17 +18,17 @@ type Project = {
   studyCount: number; studies: Study[];
 };
 
-const STAGE: Record<string, { label: string; cls: string }> = {
-  INQUIRY: { label: '문의', cls: 'bg-slate-200 text-ink-muted' },
-  QUOTE: { label: '견적', cls: 'bg-brand-100 text-brand-700' },
-  INTAKE: { label: '접수', cls: 'tone-sent' },
-  CONTRACT: { label: '계약', cls: 'tone-blue' },
-  STUDY: { label: '시험진행', cls: 'bg-ink text-white' },
-  INVOICE: { label: '정산', cls: 'bg-emerald-100 text-emerald-700' },
-  DONE: { label: '완료', cls: 'bg-emerald-100 text-emerald-700' },
+// 단계 칩 색 — 이 화면 고유 톤(시험진행=ink 반전). 라벨은 lib/labels(DEAL_STAGE) 단일 소스.
+const STAGE_CLS: Record<string, string> = {
+  INQUIRY: 'bg-slate-200 text-ink-muted',
+  QUOTE: 'bg-brand-100 text-brand-700',
+  INTAKE: 'tone-sent',
+  CONTRACT: 'tone-blue',
+  STUDY: 'bg-ink text-white',
+  INVOICE: 'bg-emerald-100 text-emerald-700',
+  DONE: 'bg-emerald-100 text-emerald-700',
 };
 const won = (n: number | null) => (n == null ? '—' : n >= 1e8 ? `₩${Math.round(n / 1e6).toLocaleString()}M` : `₩${(n / 1e6).toFixed(1)}M`);
-const fmtDate = (s: string | null) => (s ? new Date(s).toLocaleDateString('ko-KR', { year: '2-digit', month: '2-digit', day: '2-digit' }) : '—');
 
 const DAY = 86400_000;
 const d = (s: string | null) => (s ? new Date(s) : null);
@@ -90,9 +93,12 @@ export default function GanttPage() {
       </div>
 
       {loading ? (
-        <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>
+        <div className="card"><LoadingState label="시험 일정 불러오는 중" /></div>
       ) : projects.length === 0 ? (
-        <div className="card p-12 text-center text-sm text-ink-subtle">진행 중인 프로젝트(안건)가 없습니다. 고객 관리에서 안건을 추가하세요.</div>
+        <div className="card">
+          <EmptyState title="진행 중인 프로젝트(안건)가 없습니다" description="견적을 수주·계약 전환하면 시험 일정이 이곳에 자동으로 배치됩니다."
+            action={{ label: '견적 목록에서 전환', href: '/quotes' }} secondary={{ label: '고객 관리', href: '/customers' }} />
+        </div>
       ) : (
         <div className="grid lg:grid-cols-[300px_minmax(0,1fr)] gap-4">
           {/* 좌: 프로젝트 리스트 */}
@@ -101,7 +107,7 @@ export default function GanttPage() {
               <button key={p.id} onClick={() => setSel(p.id)} aria-pressed={sel === p.id} className={clsx('w-full text-left rounded-lg px-3 py-2.5 transition-colors', sel === p.id ? 'bg-slate-100' : 'hover:bg-slate-50')}>
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-[11px] text-ink-subtle inline-flex items-center gap-1 min-w-0"><Building2 className="w-3 h-3 shrink-0" /><span className="truncate">{p.companyName}</span></span>
-                  <span className={clsx('pill shrink-0', STAGE[p.stage]?.cls ?? 'bg-slate-100')}>{STAGE[p.stage]?.label ?? p.stage}</span>
+                  <span className={clsx('pill shrink-0', STAGE_CLS[p.stage] ?? 'bg-slate-100')}>{label(DEAL_STAGE, p.stage)}</span>
                 </div>
                 <div className="text-sm font-semibold text-ink mt-0.5 truncate">{p.title}</div>
                 <div className="text-[11px] text-ink-subtle mt-0.5 flex items-center gap-2">
@@ -110,16 +116,18 @@ export default function GanttPage() {
                 </div>
               </button>
             ))}
-            {filtered.length === 0 && <div className="p-6 text-center text-xs text-ink-subtle">해당 상태의 프로젝트가 없습니다.</div>}
+            {filtered.length === 0 && (
+              <EmptyState compact title="해당 상태의 프로젝트가 없습니다" action={{ label: '전체 보기', onClick: () => { setSeg('all'); setCompanyId(null); } }} />
+            )}
           </div>
 
           {/* 우: 프로젝트 헤더 + 간트 */}
           {current ? (
             <div className="space-y-4 min-w-0">
               <ProjectHeader p={current} />
-              <StudyGantt studies={current.studies} />
+              <StudyGantt studies={current.studies} dealId={current.id} />
             </div>
-          ) : <div className="card p-12 text-center text-sm text-ink-subtle">프로젝트를 선택하세요.</div>}
+          ) : <div className="card"><EmptyState compact title="프로젝트를 선택하세요" description="왼쪽 목록에서 프로젝트를 고르면 시험 타임라인이 열립니다." /></div>}
         </div>
       )}
     </div>
@@ -130,7 +138,7 @@ function ProjectHeader({ p }: { p: Project }) {
   // 기간 = 시험 일정의 최소 시작~최대 종료 (없으면 계약 체결일, 그것도 없으면 미정)
   const withDates = p.studies.filter(s => s.itemName);
   const period = withDates.length > 0
-    ? `${fmtDate(new Date(Math.min(...withDates.map(s => +studyStart(s)))).toISOString())} ~ ${fmtDate(new Date(Math.max(...withDates.map(s => +studyEnd(s)))).toISOString())}`
+    ? `${fmtDate(new Date(Math.min(...withDates.map(s => +studyStart(s)))))} ~ ${fmtDate(new Date(Math.max(...withDates.map(s => +studyEnd(s)))))}`
     : p.signedAt ? `${fmtDate(p.signedAt)} ~` : '기간 미정';
   return (
     <div className="card p-5">
@@ -138,7 +146,7 @@ function ProjectHeader({ p }: { p: Project }) {
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="text-lg font-bold text-ink tracking-tight">{p.title}</h2>
-            <span className={clsx('pill', STAGE[p.stage]?.cls ?? 'bg-slate-100')}>{STAGE[p.stage]?.label ?? p.stage}</span>
+            <span className={clsx('pill', STAGE_CLS[p.stage] ?? 'bg-slate-100')}>{label(DEAL_STAGE, p.stage)}</span>
           </div>
           <div className="text-xs text-ink-muted mt-1 flex flex-wrap gap-x-4 gap-y-0.5">
             <Link href={`/customers/${p.companyId}`} className="inline-flex items-center gap-1 hover:text-brand-600"><Building2 className="w-3 h-3" />{p.companyName}</Link>
@@ -148,7 +156,7 @@ function ProjectHeader({ p }: { p: Project }) {
           </div>
         </div>
         <div className="text-right shrink-0">
-          <div className="text-2xl font-bold text-ink tabular-nums tracking-tight">{won(p.amount)} <span className="text-[10px] font-normal text-ink-subtle align-middle">VAT 별도</span></div>
+          <div className="text-2xl font-bold text-ink tabular-nums tracking-tight">{won(p.amount)} <span className="text-[10px] font-normal text-ink-subtle align-middle">{VAT_EXCL}</span></div>
           {p.quoteNumber && <Link href={`/quote/print?id=${p.quoteId}`} className="text-[11px] font-mono text-brand-600 hover:underline inline-flex items-center gap-0.5">{p.quoteNumber} <FileText className="w-3 h-3" /></Link>}
         </div>
       </div>
@@ -158,9 +166,15 @@ function ProjectHeader({ p }: { p: Project }) {
 
 const MONTH_W = 104; // px per month
 const LABEL_W = 236; // 시안: 좌 라벨열 236px
-function StudyGantt({ studies }: { studies: Study[] }) {
+function StudyGantt({ studies, dealId }: { studies: Study[]; dealId: number }) {
   const rows = studies.filter(s => s.itemName);
-  if (rows.length === 0) return <div className="card p-10 text-center text-sm text-ink-subtle">등록된 시험이 없습니다. 딜 상세에서 시험을 추가하세요.</div>;
+  if (rows.length === 0) {
+    return (
+      <div className="card">
+        <EmptyState compact title="등록된 시험이 없습니다" description="안건 상세에서 시험을 추가하면 타임라인에 막대가 그려집니다." action={{ label: '시험 추가', href: `/deals/${dealId}` }} />
+      </div>
+    );
+  }
 
   // 타임라인 범위 = 월 단위 (최소 4개월)
   const starts = rows.map(studyStart);
@@ -225,7 +239,7 @@ function StudyGantt({ studies }: { studies: Study[] }) {
                   </div>
                   <div className="relative h-full flex-1" style={{ width }}>
                     <div className={clsx('absolute top-1/2 -translate-y-1/2 h-7 rounded-md flex items-center px-2 overflow-hidden', PHASE[ph].bar)} style={{ left, width: w }}
-                      title={`${s.itemName} · ${fmtDate(st.toISOString())}~${fmtDate(en.toISOString())}`}>
+                      title={`${s.itemName} · ${fmtDate(st)}~${fmtDate(en)}`}>
                       <span className={clsx('text-[10px] font-medium truncate', PHASE[ph].text)}>{ph === 'done' ? '완료' : ph === 'active' ? '본시험' : ph === 'analysis' ? '분석·평가' : '예정'}</span>
                     </div>
                   </div>

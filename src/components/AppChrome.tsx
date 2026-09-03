@@ -16,6 +16,7 @@ export type ChromeStats = { items: number; presets: number; blocks: number; moda
 const NAV: { href: string; label: string; icon: IconName; exact?: boolean }[] = [
   { href: '/', label: '홈', icon: 'home', exact: true },
   { href: '/customers', label: '고객 관리', icon: 'users' },
+  { href: '/deals', label: '안건 파이프라인', icon: 'gantt' },
   { href: '/notes', label: '개인 기록', icon: 'notebook' },
   { href: '/calendar', label: '캘린더', icon: 'calendar' },
   { href: '/gantt', label: '시험 일정', icon: 'gantt' },
@@ -35,6 +36,7 @@ const BOTTOM_NAV: { href: string; label: string; icon: IconName; exact?: boolean
 const PAGE_LABEL: Record<string, string> = {
   '/': '홈',
   '/customers': '고객 관리',
+  '/deals': '안건 파이프라인',
   '/notes': '개인 기록',
   '/calendar': '캘린더',
   '/gantt': '시험 일정',

@@ -7,13 +7,16 @@ import { currentUserId, visibleOwnerIds } from '@/lib/current-user';
 import { getFollowups } from '@/lib/admin/aggregate';
 import { quoteStatus } from '@/lib/admin/status';
 import { supplyOrZero } from '@/lib/money';
+import { QUOTE_STATUS, CONTRACT_STATUS, NOTE_TYPE, label, VAT_EXCL } from '@/lib/labels';
+import { fmtDateLong, fmtRelative, dDay, diffDays } from '@/lib/dates';
+import { EmptyState, ErrorState } from '@/components/ui/State';
 import FollowupCard, { type Followup } from '@/components/admin/FollowupCard';
 import DashboardAlarms from '@/components/DashboardAlarms';
 
 // 통계·목록을 매 요청 갱신 (런타임 DB 반영). 정적 프리렌더 금지.
 export const dynamic = 'force-dynamic';
 
-// 상태 라벨·색은 lib/admin/status.ts 단일 소스(quoteStatus) 사용 — REVIEWED 포함.
+// 상태 라벨은 lib/labels(QUOTE_STATUS) 단일 소스, 상태점 색은 lib/admin/status(quoteStatus).
 
 export default async function Home() {
   await ensureHydrated();
@@ -82,14 +85,14 @@ export default async function Home() {
       prisma.note.findMany({ where: { ownerId: { in: owners } }, orderBy: { createdAt: 'desc' }, take: 5, select: { id: true, type: true, title: true, createdAt: true, deal: { select: { id: true, title: true } } } }),
     ]);
     activity = [
-      ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: quoteStatus(q.status).label, at: q.createdAt, href: `/quote/print?id=${q.id}` })),
-      ...rContracts.map(c => ({ id: `c${c.id}`, kind: '계약', text: c.deal?.title ?? '계약', sub: c.status, at: c.createdAt, href: c.deal ? `/deals/${c.deal.id}` : null })),
-      ...rNotes.map(n => ({ id: `n${n.id}`, kind: '노트', text: n.title || n.deal?.title || '메모', sub: n.type, at: n.createdAt, href: n.deal ? `/deals/${n.deal.id}` : '/notes' })),
+      ...rQuotes.map(q => ({ id: `q${q.id}`, kind: '견적', text: `${q.customerCompany ?? '견적'} · ${q.quoteNumber}`, sub: label(QUOTE_STATUS, q.status), at: q.createdAt, href: `/quote/print?id=${q.id}` })),
+      ...rContracts.map(c => ({ id: `c${c.id}`, kind: '계약', text: c.deal?.title ?? '계약', sub: label(CONTRACT_STATUS, c.status), at: c.createdAt, href: c.deal ? `/deals/${c.deal.id}` : null })),
+      ...rNotes.map(n => ({ id: `n${n.id}`, kind: '노트', text: n.title || n.deal?.title || '메모', sub: label(NOTE_TYPE, n.type), at: n.createdAt, href: n.deal ? `/deals/${n.deal.id}` : '/notes' })),
     ].sort((a, b) => +b.at - +a.at).slice(0, 6).map(x => ({ ...x, at: x.at.toISOString() }));
   } catch (e) { loadError = true; console.error('[dashboard] 데이터 조회 실패', e); }
 
   const fmtM = (n: number) => n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : (n > 0 ? `₩${n.toLocaleString()}` : '₩0');
-  const todayStr = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+  const todayStr = fmtDateLong(new Date());
 
   return (
     <div className="animate-fade-in">
@@ -100,15 +103,15 @@ export default async function Home() {
       </div>
 
       {loadError && (
-        <div role="alert" className="mb-4 rounded-[12px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          대시보드 데이터를 불러오지 못했습니다. 아래 수치는 실제 값이 아닐 수 있습니다 — 새로고침해 주세요.
+        <div className="mb-4 card border-red-200">
+          <ErrorState compact message="대시보드 데이터를 불러오지 못했습니다. 아래 수치는 실제 값이 아닐 수 있습니다 — 새로고침해 주세요." />
         </div>
       )}
       {/* KPI 4카드 — 아이콘 없음, 수주 금액은 블랙 반전(#000) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <StatCard label="이번 달 견적" value={`${kpi.thisMonth}`} unit="건" delta={kpi.quoteDelta} note="지난달 대비" />
         <StatCard label="진행 중" value={`${kpi.inProgress}`} unit="건" note="작성·발행·발송" />
-        <StatCard label="수주 금액" value={fmtM(kpi.wonAmt)} note={`수주율 ${kpi.wonRate}% · VAT 별도`} invert />
+        <StatCard label="수주 금액" value={fmtM(kpi.wonAmt)} note={`수주율 ${kpi.wonRate}% · ${VAT_EXCL}`} invert />
         <StatCard label="진행 시험" value={`${kpi.runningStudies}`} unit="건" note="보고서안 발행 전" />
       </div>
 
@@ -128,11 +131,12 @@ export default async function Home() {
             <Link href="/quotes" className="link">전체 보기 →</Link>
           </div>
           {quotes.length === 0 ? (
-            <div className="px-6 py-10 text-center text-sm text-ink-subtle border-t border-[var(--hairline-soft)]">진행 중인 견적이 없습니다.</div>
+            <div className="border-t border-[var(--hairline-soft)]">
+              <EmptyState compact title="진행 중인 견적이 없습니다" description="새 견적을 작성하면 작성·발행·발송 단계가 여기에 모입니다." action={{ label: '새 견적 작성', href: '/quote/start' }} />
+            </div>
           ) : (
             <ul>
               {quotes.map(q => {
-                const st = quoteStatus(q.status);
                 const initial = (q.customerCompany || '?').trim().charAt(0);
                 return (
                   <li key={q.id}>
@@ -143,9 +147,9 @@ export default async function Home() {
                         <div className="text-[12px] font-mono text-ink-subtle truncate">{q.quoteNumber} · {q.modality}</div>
                       </div>
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-[11px] py-1 text-[12px] font-medium text-ink-muted flex-shrink-0">
-                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: st.color }} />{st.label}
+                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: quoteStatus(q.status).color }} />{label(QUOTE_STATUS, q.status)}
                       </span>
-                      <span className="text-right w-[92px] flex-shrink-0"><span className="text-[20px] font-bold text-ink tabular-nums">{fmtM(supplyOrZero(q))}</span><span className="block text-[9px] text-ink-subtle leading-none">VAT 별도</span></span>
+                      <span className="text-right w-[92px] flex-shrink-0"><span className="text-[20px] font-bold text-ink tabular-nums">{fmtM(supplyOrZero(q))}</span><span className="block text-[9px] text-ink-subtle leading-none">{VAT_EXCL}</span></span>
                     </Link>
                   </li>
                 );
@@ -158,15 +162,16 @@ export default async function Home() {
         <section className="card pt-5 px-[22px] pb-2 lg:col-span-2">
           <h2 className="text-[22px] font-bold text-ink tracking-tight mb-1">마감 임박 시험</h2>
           {dueStudies.length === 0 ? (
-            <div className="py-10 text-center text-sm text-ink-subtle">예정된 보고서안 발행이 없습니다.</div>
+            <EmptyState compact title="예정된 보고서안 발행이 없습니다" action={{ label: '시험 일정 보기', href: '/gantt' }} />
           ) : (
             <ul>
               {dueStudies.map(s => {
-                const dd = ddayLabel(s.dueAt);
+                const days = diffDays(s.dueAt) ?? 0;
+                const urgent = days >= 0 && days <= 7;
                 return (
                   <li key={s.id} className="border-t border-[var(--hairline-soft)] first:border-t-0">
                     <Link href={`/deals/${s.dealId}`} className="flex items-center gap-3.5 py-[11px] -mx-2 px-2 rounded-lg hover:bg-slate-50/70 transition-colors">
-                      <span className={`inline-flex items-center justify-center w-12 h-12 rounded-[10px] text-[14px] font-semibold flex-shrink-0 ${dd.urgent ? 'bg-brand-100 text-brand-700' : 'bg-slate-100 text-ink-muted'}`}>{dd.label}</span>
+                      <span className={`inline-flex items-center justify-center w-12 h-12 rounded-[10px] text-[14px] font-semibold flex-shrink-0 ${urgent ? 'bg-brand-100 text-brand-700' : 'bg-slate-100 text-ink-muted'}`}>{dDay(s.dueAt)}</span>
                       <div className="flex-1 min-w-0">
                         <div className="text-[15px] text-ink truncate">{s.name}</div>
                         <div className="text-[12px] text-ink-subtle truncate">{[s.company || '고객사 미지정', s.duration].filter(Boolean).join(' · ')}</div>
@@ -186,7 +191,7 @@ export default async function Home() {
         <section className="rounded-[12px] bg-slate-900 pt-[22px] px-6 pb-5 text-white lg:col-span-3">
           <div className="flex items-baseline gap-2 mb-5">
             <h2 className="text-[22px] font-bold tracking-tight">월별 수주 추이</h2>
-            <span className="text-[13px] font-normal text-white/50">최근 6개월 · 단위 ₩M · VAT 별도</span>
+            <span className="text-[13px] font-normal text-white/50">최근 6개월 · 단위 ₩M · {VAT_EXCL}</span>
           </div>
           <MonthlyChart data={monthly} />
         </section>
@@ -195,7 +200,7 @@ export default async function Home() {
         <section className="card pt-[22px] px-[22px] pb-2 lg:col-span-2">
           <h2 className="text-[22px] font-bold text-ink tracking-tight mb-2">최근 활동</h2>
           {activity.length === 0 ? (
-            <div className="py-8 text-center text-sm text-ink-subtle">최근 활동이 없습니다.</div>
+            <EmptyState compact title="최근 활동이 없습니다" description="견적·계약·기록이 생기면 시간순으로 모입니다." action={{ label: '메모 작성', href: '/notes' }} />
           ) : (
             <ul>
               {activity.map(a => {
@@ -205,7 +210,7 @@ export default async function Home() {
                     <div className="text-[14px] text-ink truncate">{a.text}</div>
                     <div className="text-[12px] text-ink-subtle">{a.kind} · {a.sub}</div>
                   </div>
-                  <span className="text-[12px] text-ink-subtle tabular-nums flex-shrink-0">{fmtDay(a.at)}</span>
+                  <span className="text-[12px] text-ink-subtle tabular-nums flex-shrink-0">{fmtRelative(a.at)}</span>
                 </>;
                 return (
                   <li key={a.id} className="border-t border-[var(--hairline-soft)] first:border-t-0">
@@ -225,10 +230,6 @@ export default async function Home() {
 
 const ACTIVITY_DOT: Record<string, string> = { 견적: 'var(--accent)', 계약: 'var(--success)', 노트: 'var(--status-sent)' };
 
-function fmtDay(iso: string): string {
-  return new Date(iso).toLocaleDateString('ko-KR', { month: '2-digit', day: '2-digit' });
-}
-
 function MonthlyChart({ data }: { data: { label: string; amount: number }[] }) {
   const max = Math.max(1, ...data.map(d => d.amount));
   const hasData = data.some(d => d.amount > 0);
@@ -245,16 +246,9 @@ function MonthlyChart({ data }: { data: { label: string; amount: number }[] }) {
       <div className="flex justify-between gap-3 mt-2">
         {data.map((d, i) => <span key={i} className="flex-1 text-center text-[11px] text-white/50">{d.label}</span>)}
       </div>
-      {!hasData && <div className="text-center text-[11px] text-white/50 mt-3">아직 수주(ACCEPTED) 견적이 없습니다.</div>}
+      {!hasData && <div className="text-center text-[11px] text-white/50 mt-3">아직 {label(QUOTE_STATUS, 'ACCEPTED')} 견적이 없습니다.</div>}
     </div>
   );
-}
-
-function ddayLabel(iso: string): { label: string; urgent: boolean } {
-  const days = Math.ceil((new Date(iso).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 86400000);
-  if (days === 0) return { label: 'D-DAY', urgent: true };
-  if (days < 0) return { label: `D+${-days}`, urgent: false };
-  return { label: `D-${days}`, urgent: days <= 7 };
 }
 
 function Delta({ v }: { v: number }) {

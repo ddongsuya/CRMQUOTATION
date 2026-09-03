@@ -1,31 +1,30 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Plus, Loader2, Trash2, Briefcase, Check } from 'lucide-react';
 import Icon, { type IconName } from '@/components/Icon';
 import { toast } from '@/lib/toast';
+import { NOTE_TYPE, label } from '@/lib/labels';
+import { toYmd, todayYmd, diffDays, fmtDateShort } from '@/lib/dates';
+import { EmptyState, LoadingState } from '@/components/ui/State';
 
 type Note = { id: number; type: string; title: string | null; body: string; occurredAt: string; contact: { company: { id: number; name: string }; name: string } | null; deal: { id: number; title: string } | null };
 type Task = { id: number; title: string; memo: string | null; dueAt: string | null; done: boolean; companyId: number | null; companyName: string | null; dealId: number | null; dealTitle: string | null };
 type TodayEv = { id: number; title: string; type: string; location: string | null; dealId: number | null; dealTitle: string | null; companyId: number | null; companyName: string | null };
 
-const TYPE: Record<string, { label: string; cls: string; dot: string }> = {
-  MEETING: { label: '미팅', cls: 'bg-brand-100 text-brand-700', dot: 'bg-brand-500' },
-  CALL: { label: '통화', cls: 'tone-sent', dot: 'bg-[var(--status-sent)]' },
-  MEMO: { label: '메모', cls: 'bg-slate-100 text-ink-muted', dot: 'bg-slate-400' },
+// 기록 유형 색 — 이 화면 고유 톤. 라벨은 lib/labels(NOTE_TYPE) 단일 소스.
+const NOTE_TONE: Record<string, { cls: string; dot: string }> = {
+  MEETING: { cls: 'bg-brand-100 text-brand-700', dot: 'bg-brand-500' },
+  CALL: { cls: 'tone-sent', dot: 'bg-[var(--status-sent)]' },
+  MEMO: { cls: 'bg-slate-100 text-ink-muted', dot: 'bg-slate-400' },
 };
-// 로컬(KST) 기준 날짜 키 — toISOString(UTC)을 쓰면 오전 9시 전까지 "오늘"이 어제로 판정되는 버그가 있었음
-const localYmd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-const today = () => localYmd(new Date());
-const dayKey = (d: Date) => localYmd(d);
+const NOTE_TYPES = Object.keys(NOTE_TYPE);
 
-// 긴급도: 지연/오늘/내일/이번주
+// 긴급도: 지연/오늘/내일/이번주 — 로컬 자정 기준(lib/dates.diffDays)
 function urgency(startAt: string): { key: string; label: string; cls: string; order: number } {
-  const t = new Date(); t.setHours(0, 0, 0, 0);
-  const s = new Date(startAt); s.setHours(0, 0, 0, 0);
-  const diff = Math.round((s.getTime() - t.getTime()) / 86400_000);
+  const diff = diffDays(startAt) ?? 0;
   if (diff < 0) return { key: 'overdue', label: '지연', cls: 'bg-red-100 text-red-700', order: 0 };
   if (diff === 0) return { key: 'today', label: '오늘', cls: 'bg-brand-100 text-brand-700', order: 1 };
   if (diff === 1) return { key: 'tomorrow', label: '내일', cls: 'tone-accent', order: 2 };
@@ -38,24 +37,30 @@ export default function NotebookPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [todayEvents, setTodayEvents] = useState<TodayEv[]>([]);
   const [weekDone, setWeekDone] = useState(0);
-  const [f, setF] = useState({ type: 'MEMO', title: '', body: '', occurredAt: today() });
+  const [f, setF] = useState({ type: 'MEMO', title: '', body: '', occurredAt: todayYmd() });
   const [adding, setAdding] = useState(false);
   const [saving, setSaving] = useState(false);
   const [quickTask, setQuickTask] = useState('');
-  const [quickDue, setQuickDue] = useState(today());
+  const [quickDue, setQuickDue] = useState(todayYmd());
+  const quickRef = useRef<HTMLInputElement>(null);   // 빈 상태의 "할 일 추가" → 입력창 포커스
 
   const loadNotes = () => fetch('/api/crm/notes').then(r => r.json()).then(d => setNotes(d.notes ?? [])).catch(() => setNotes([]));
   const loadTasks = () => fetch('/api/crm/notebook').then(r => r.json()).then(d => { setTasks(d.tasks ?? []); setTodayEvents(d.todayEvents ?? []); setWeekDone(d.weekDone ?? 0); }).catch(() => {});
   useEffect(() => { loadNotes(); loadTasks(); }, []);
 
   // 오늘의 포커스 = 기한이 오늘인 할 일 (완료 포함 — 진행률 표시)
-  const todayFocus = useMemo(() => tasks.filter(t => t.dueAt && dayKey(new Date(t.dueAt)) === today()), [tasks]);
+  const todayFocus = useMemo(() => { const t = todayYmd(); return tasks.filter(x => x.dueAt && toYmd(x.dueAt) === t); }, [tasks]);
   const focusDone = todayFocus.filter(t => t.done).length;
   // 팔로업 큐 = 오늘이 아닌 미완료 할 일 (지연 포함, 기한 없는 것은 뒤에)
-  const followups = useMemo(() => tasks
-    .filter(t => !t.done && !(t.dueAt && dayKey(new Date(t.dueAt)) === today()))
-    .sort((a, b) => (a.dueAt ? +new Date(a.dueAt) : Infinity) - (b.dueAt ? +new Date(b.dueAt) : Infinity))
-    .slice(0, 10), [tasks]);
+  const followups = useMemo(() => {
+    const t = todayYmd();
+    return tasks
+      .filter(x => !x.done && !(x.dueAt && toYmd(x.dueAt) === t))
+      .sort((a, b) => (a.dueAt ? +new Date(a.dueAt) : Infinity) - (b.dueAt ? +new Date(b.dueAt) : Infinity))
+      .slice(0, 10);
+  }, [tasks]);
+
+  const focusQuick = () => quickRef.current?.focus();
 
   const toggle = async (t: Task) => {
     setTasks(ts => ts.map(x => x.id === t.id ? { ...x, done: !x.done } : x));   // 낙관적 반영
@@ -83,7 +88,7 @@ export default function NotebookPage() {
     try {
       const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(f) });
       if (!res.ok) throw new Error((await res.json()).error ?? 'fail');
-      toast.success('메모가 저장되었습니다.'); setF({ type: 'MEMO', title: '', body: '', occurredAt: today() }); setAdding(false); loadNotes();
+      toast.success('메모가 저장되었습니다.'); setF({ type: 'MEMO', title: '', body: '', occurredAt: todayYmd() }); setAdding(false); loadNotes();
     } catch (e) { toast.error(`저장 실패: ${e instanceof Error ? e.message : '오류'}`); } finally { setSaving(false); }
   };
   const del = async (id: number) => { if (!confirm('이 메모를 삭제할까요?')) return; const res = await fetch(`/api/crm/notes/${id}`, { method: 'DELETE' }); if (res.ok) loadNotes(); };
@@ -112,12 +117,14 @@ export default function NotebookPage() {
             </div>
             {/* 빠른 할 일 추가 */}
             <div className="flex gap-1.5 mb-3">
-              <input className="input text-sm flex-1" placeholder="할 일 추가 (예: 아이큐어 번역의뢰서 영문본 재요청)" aria-label="할 일 추가" value={quickTask}
+              <input ref={quickRef} className="input text-sm flex-1" placeholder="할 일 추가 (예: 아이큐어 번역의뢰서 영문본 재요청)" aria-label="할 일 추가" value={quickTask}
                 onChange={e => setQuickTask(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addTask(); }} />
               <input type="date" className="input text-sm w-auto" title="기한" aria-label="기한" value={quickDue} onChange={e => setQuickDue(e.target.value)} />
               <button onClick={addTask} aria-label="할 일 추가" className="btn-primary text-sm shrink-0"><Plus className="w-4 h-4" /></button>
             </div>
-            {todayFocus.length === 0 ? <div className="py-3 text-center text-xs text-ink-subtle">오늘 기한인 할 일이 없습니다.</div> : (
+            {todayFocus.length === 0 ? (
+              <EmptyState compact title="오늘 기한인 할 일이 없습니다" action={{ label: '할 일 추가', onClick: () => { setQuickDue(todayYmd()); focusQuick(); } }} />
+            ) : (
               <ul className="space-y-1.5">
                 {todayFocus.map(t => (
                   <li key={t.id} className="flex items-center gap-2.5 group">
@@ -126,7 +133,7 @@ export default function NotebookPage() {
                     {(t.dealId || t.companyId) && (
                       <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-[11px] text-ink-subtle hover:text-brand-600 truncate max-w-[130px]">{t.dealTitle ?? t.companyName}</Link>
                     )}
-                    <button onClick={() => delTask(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+                    <button onClick={() => delTask(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3 h-3" /></button>
                   </li>
                 ))}
               </ul>
@@ -153,14 +160,16 @@ export default function NotebookPage() {
           {/* 팔로업 큐 — 오늘이 아닌 미완료 할 일 (지연 포함) */}
           <section className="card pt-5 px-[22px] pb-5">
             <h2 className="text-[22px] font-bold text-ink tracking-tight mb-3">팔로업 큐 <span className="text-[13px] font-normal text-ink-subtle">할 일</span></h2>
-            {followups.length === 0 ? <div className="py-4 text-center text-xs text-ink-subtle">예정된 팔로업이 없습니다. 위 입력창에서 할 일을 추가해 보세요.</div> : (
+            {followups.length === 0 ? (
+              <EmptyState compact title="예정된 팔로업이 없습니다" description="기한이 있는 할 일을 추가하면 지연·오늘·내일 순으로 이곳에 모입니다." action={{ label: '할 일 추가', onClick: focusQuick }} />
+            ) : (
               <ul className="divide-y divide-slate-100">
                 {followups.map(t => { const u = t.dueAt ? urgency(t.dueAt) : { label: '기한 없음', cls: 'bg-slate-100 text-ink-subtle' }; return (
                   <li key={t.id} className="flex items-center gap-2.5 py-2.5 group">
                     <button onClick={() => toggle(t)} role="checkbox" aria-checked={false} aria-label={`${t.title} 완료 처리`} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
                     <span className={clsx('pill shrink-0', u.cls)}>{u.label}</span>
-                    <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{t.title}</span><span className="block text-[11px] text-ink-subtle">{t.dueAt ? new Date(t.dueAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' }) : ''}{(t.dealTitle || t.companyName) ? `${t.dueAt ? ' · ' : ''}${t.dealTitle ?? t.companyName}` : ''}</span></span>
-                    <button onClick={() => delTask(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+                    <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{t.title}</span><span className="block text-[11px] text-ink-subtle">{t.dueAt ? fmtDateShort(t.dueAt) : ''}{(t.dealTitle || t.companyName) ? `${t.dueAt ? ' · ' : ''}${t.dealTitle ?? t.companyName}` : ''}</span></span>
+                    <button onClick={() => delTask(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3 h-3" /></button>
                     {(t.dealId || t.companyId) && <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-ink-subtle hover:text-brand-600"><Icon name="arrow-right" className="w-4 h-4" /></Link>}
                   </li>
                 ); })}
@@ -174,7 +183,7 @@ export default function NotebookPage() {
             {adding && (
               <div className="rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-2 mb-3">
                 <div className="flex gap-2 flex-wrap items-center">
-                  {Object.entries(TYPE).map(([k, v]) => <button key={k} onClick={() => setF(p => ({ ...p, type: k }))} aria-pressed={f.type === k} className={clsx('chip', f.type === k ? 'chip-active' : 'chip-inactive')}>{v.label}</button>)}
+                  {NOTE_TYPES.map(k => <button key={k} onClick={() => setF(p => ({ ...p, type: k }))} aria-pressed={f.type === k} className={clsx('chip', f.type === k ? 'chip-active' : 'chip-inactive')}>{label(NOTE_TYPE, k)}</button>)}
                   <input type="date" className="input text-sm ml-auto w-auto" aria-label="날짜" value={f.occurredAt} onChange={e => setF(p => ({ ...p, occurredAt: e.target.value }))} />
                 </div>
                 <input className="input w-full text-sm" value={f.title} onChange={e => setF(p => ({ ...p, title: e.target.value }))} placeholder="제목(선택)" aria-label="제목(선택)" />
@@ -182,16 +191,16 @@ export default function NotebookPage() {
                 <div className="flex justify-end gap-2"><button onClick={() => setAdding(false)} className="btn-ghost text-sm">취소</button><button onClick={add} disabled={saving} className="btn-primary text-sm">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />} 저장</button></div>
               </div>
             )}
-            {notes === null ? <div className="py-6 text-center text-xs text-ink-subtle"><Loader2 className="w-4 h-4 mx-auto animate-spin" /></div>
-              : notes.length === 0 ? <div className="py-6 text-center text-xs text-ink-subtle">메모가 없습니다.</div> : (
+            {notes === null ? <LoadingState compact label="메모 불러오는 중" />
+              : notes.length === 0 ? <EmptyState compact title="메모가 없습니다" description="미팅·통화 내용을 남겨두면 안건별로 다시 찾아볼 수 있습니다." action={{ label: '메모 작성', onClick: () => setAdding(true) }} /> : (
               <div className="grid sm:grid-cols-2 gap-2.5">
-                {notes.map(n => { const t = TYPE[n.type] ?? TYPE.MEMO; return (
+                {notes.map(n => { const t = NOTE_TONE[n.type] ?? NOTE_TONE.MEMO; return (
                   <div key={n.id} className="rounded-xl border border-slate-200 p-3 group">
                     <div className="flex items-center gap-2">
                       <span className={clsx('w-1.5 h-3.5 rounded-sm shrink-0', t.dot)} />
-                      {n.title ? <span className="text-sm font-semibold text-ink truncate flex-1">{n.title}</span> : <span className={clsx('pill', t.cls)}>{t.label}</span>}
-                      <span className="text-[10px] font-mono text-ink-subtle shrink-0">{n.occurredAt.slice(5, 10).replace('-', '.')}</span>
-                      <button onClick={() => del(n.id)} aria-label="메모 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+                      {n.title ? <span className="text-sm font-semibold text-ink truncate flex-1">{n.title}</span> : <span className={clsx('pill', t.cls)}>{label(NOTE_TYPE, n.type)}</span>}
+                      <span className="text-[10px] text-ink-subtle shrink-0 tabular-nums">{fmtDateShort(n.occurredAt)}</span>
+                      <button onClick={() => del(n.id)} aria-label="메모 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3 h-3" /></button>
                     </div>
                     <div className="text-[13px] text-ink-muted mt-1.5 whitespace-pre-wrap line-clamp-4">{n.body}</div>
                     {n.deal && <Link href={`/deals/${n.deal.id}`} className="inline-flex items-center gap-1 mt-2 text-[10px] text-ink-subtle hover:text-brand-600"><Briefcase className="w-2.5 h-2.5" />{n.deal.title}</Link>}
@@ -217,8 +226,8 @@ export default function NotebookPage() {
           <section className="card pt-4 px-4 pb-4">
             <div className="text-[15px] font-semibold text-ink mb-2.5">빠른 이동</div>
             <div className="space-y-0.5">
-              {([['/quotes', '견적 목록', 'list'], ['/customers', '고객 관리', 'users'], ['/gantt', '시험 일정', 'gantt'], ['/calendar', '캘린더', 'calendar']] as [string, string, IconName][]).map(([href, label, icon]) => (
-                <Link key={href} href={href} className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm text-ink-muted hover:bg-slate-100 hover:text-ink"><Icon name={icon} className="w-4 h-4 text-ink-subtle" />{label}<Icon name="arrow-right" className="w-3.5 h-3.5 ml-auto text-ink-subtle" /></Link>
+              {([['/quotes', '견적 목록', 'list'], ['/customers', '고객 관리', 'users'], ['/gantt', '시험 일정', 'gantt'], ['/calendar', '캘린더', 'calendar']] as [string, string, IconName][]).map(([href, text, icon]) => (
+                <Link key={href} href={href} className="flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm text-ink-muted hover:bg-slate-100 hover:text-ink"><Icon name={icon} className="w-4 h-4 text-ink-subtle" />{text}<Icon name="arrow-right" className="w-3.5 h-3.5 ml-auto text-ink-subtle" /></Link>
               ))}
             </div>
           </section>
@@ -231,7 +240,7 @@ export default function NotebookPage() {
                   <Link key={dl.id} href={`/deals/${dl.id}`} className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-ink-muted hover:bg-slate-100 hover:text-ink"><Briefcase className="w-3.5 h-3.5 text-ink-subtle" /><span className="truncate">{dl.title}</span></Link>
                 ))}
               </div>
-            ) : <div className="py-3 text-center text-xs text-ink-subtle">최근 활동이 없습니다.</div>}
+            ) : <EmptyState compact title="최근 활동이 없습니다" description="안건에 연결된 기록이 생기면 여기에 표시됩니다." />}
           </section>
         </div>
       </div>

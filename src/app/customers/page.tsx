@@ -1,12 +1,15 @@
 'use client';
 
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Loader2, Building2, X, Save, Sparkles, GanttChartSquare, ArrowRight, Mail, Phone } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { quoteStatus } from '@/lib/admin/status';
+import { QUOTE_STATUS, label, VAT_EXCL } from '@/lib/labels';
+import { fmtDateShort, toYmd, todayYmd } from '@/lib/dates';
+import { EmptyState, ErrorState, LoadingState } from '@/components/ui/State';
 
 type Company = {
   id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null;
@@ -19,12 +22,18 @@ const isDormant = (c: Company) => c.activeDeals === 0 && !c.isNewClient;
 
 export default function CustomersPage() {
   const [companies, setCompanies] = useState<Company[] | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [q, setQ] = useState('');
   const [seg, setSeg] = useState<Seg>('all');
   const [sel, setSel] = useState<number | null>(null);
 
-  const load = () => fetch('/api/crm/companies').then(r => r.json()).then(d => { const cs = d.companies ?? []; setCompanies(cs); setSel(s => s ?? cs[0]?.id ?? null); }).catch(() => setCompanies([]));
+  const load = () => {
+    setLoadError(null);
+    return fetch('/api/crm/companies').then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then(d => { const cs = d.companies ?? []; setCompanies(cs); setSel(s => s ?? cs[0]?.id ?? null); })
+      .catch(e => { setLoadError(e.message); setCompanies(c => c ?? []); });
+  };
   useEffect(() => { load(); }, []);
 
   const filtered = useMemo(() => (companies ?? []).filter(c => {
@@ -57,11 +66,12 @@ export default function CustomersPage() {
       </div>
 
       {companies === null ? (
-        <div className="card p-12 text-center text-ink-subtle text-sm">불러오는 중…</div>
+        <div className="card"><LoadingState label="고객사 불러오는 중" /></div>
+      ) : loadError && companies.length === 0 ? (
+        <div className="card"><ErrorState message={loadError} onRetry={load} /></div>
       ) : companies.length === 0 ? (
-        <div className="card p-12 text-center">
-          <div className="text-sm font-medium text-ink">아직 등록된 고객사가 없습니다.</div>
-          <button onClick={() => setCreating(true)} className="btn-ghost mt-3"><Icon name="plus" className="w-3.5 h-3.5" /> 첫 고객사 등록</button>
+        <div className="card">
+          <EmptyState title="아직 등록된 고객사가 없습니다" description="첫 고객사를 등록하면 견적·담당자·기록이 이곳에 모입니다." action={{ label: '고객사 추가', onClick: () => setCreating(true) }} />
         </div>
       ) : (
         <div className="grid lg:grid-cols-[340px_minmax(0,1fr)] gap-4">
@@ -95,12 +105,14 @@ export default function CustomersPage() {
                   </div>
                 </button>
               ))}
-              {filtered.length === 0 && <div className="p-6 text-center text-xs text-ink-subtle">해당 조건의 고객사가 없습니다.</div>}
+              {filtered.length === 0 && (
+                <EmptyState compact title="해당 조건의 고객사가 없습니다" action={{ label: '고객사 추가', onClick: () => setCreating(true) }} secondary={{ label: '검색 초기화', onClick: () => { setQ(''); setSeg('all'); } }} />
+              )}
             </div>
           </div>
 
           {/* 우: 상세 패널 */}
-          {sel ? <DetailPanel companyId={sel} /> : <div className="card p-12 text-center text-sm text-ink-subtle">고객사를 선택하세요.</div>}
+          {sel ? <DetailPanel companyId={sel} /> : <div className="card"><EmptyState compact title="고객사를 선택하세요" description="왼쪽 목록에서 고객사를 고르면 견적·담당자·활동이 열립니다." /></div>}
         </div>
       )}
 
@@ -115,18 +127,20 @@ function DetailPanel({ companyId }: { companyId: number }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<{ company: any; agg: Agg } | null>(null);
   const [scope, setScope] = useState<number | 'all'>('all'); // 'all'=회사 전체, number=담당자 스코프
-  const [loadError, setLoadError] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [tick, setTick] = useState(0);   // 다시 시도
+  const retry = useCallback(() => setTick(t => t + 1), []);
   useEffect(() => {
     let cancelled = false;   // 빠르게 다른 고객사를 클릭하면 이전 요청 응답은 버린다
-    setData(null); setScope('all'); setLoadError(false);
+    setData(null); setScope('all'); setLoadError(null);
     fetch(`/api/crm/companies/${companyId}`).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(d => { if (!cancelled) setData(d); })
-      .catch(e => { if (!cancelled) { setLoadError(true); console.error('[customers] detail load failed', e); } });
+      .catch(e => { if (!cancelled) { setLoadError(e instanceof Error ? e.message : String(e)); console.error('[customers] detail load failed', e); } });
     return () => { cancelled = true; };
-  }, [companyId]);
+  }, [companyId, tick]);
   if (!data) return loadError
-    ? <div role="alert" className="card p-12 text-center text-sm text-red-700">고객사 정보를 불러오지 못했습니다. 다시 선택하거나 새로고침해 주세요.</div>
-    : <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
+    ? <div className="card"><ErrorState message={`고객사 정보를 불러오지 못했습니다. (${loadError})`} onRetry={retry} /></div>
+    : <div className="card"><LoadingState label="고객사 정보 불러오는 중" /></div>;
   const { company: c, agg } = data;
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const contacts: any[] = c.contacts ?? [];
@@ -147,10 +161,11 @@ function DetailPanel({ companyId }: { companyId: number }) {
     activeStudies: scopedStudies.filter((s: any) => !s.reportDraftIssuedAt).length,
   };
   const wonRate = kpi.quoteAmount > 0 ? Math.round((kpi.wonAmount / kpi.quoteAmount) * 100) : 0;
-  const activeDeals = scopedDeals.filter((d: any) => d.status === 'ACTIVE');
-  const nextEvent = [...scopedEvents].filter((e: any) => !e.done && new Date(e.startAt) >= new Date(new Date().toDateString())).sort((a: any, b: any) => +new Date(a.startAt) - +new Date(b.startAt))[0];
+  const today = todayYmd();
+  const nextEvent = [...scopedEvents].filter((e: any) => !e.done && toYmd(e.startAt) >= today).sort((a: any, b: any) => +new Date(a.startAt) - +new Date(b.startAt))[0];
   const activeContact = scope === 'all' ? null : contacts.find(ct => ct.id === scope);
   /* eslint-enable @typescript-eslint/no-explicit-any */
+  const quoteHref = `/quote-v2?company=${encodeURIComponent(c.name)}`;
 
   return (
     <div className="space-y-4 min-w-0">
@@ -171,7 +186,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
               </div>
             </div>
             <div className="flex items-center gap-1.5 shrink-0">
-              <Link href={`/quote-v2?company=${encodeURIComponent(c.name)}`} className="btn-primary text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 이 고객으로 견적</Link>
+              <Link href={quoteHref} className="btn-primary text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 이 고객으로 견적</Link>
               <Link href={`/gantt?company=${c.id}`} className="btn-outline text-xs"><GanttChartSquare className="w-3.5 h-3.5" /> 시험 일정 보기</Link>
               <Link href={`/customers/${c.id}`} className="btn-ghost text-xs">전체 관리 <ArrowRight className="w-3.5 h-3.5" /></Link>
             </div>
@@ -202,11 +217,11 @@ function DetailPanel({ companyId }: { companyId: number }) {
       {/* KPI — 누적수주 블랙 반전(#000) · 진행딜 · 견적 · 수주율 (시안 순서) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="rounded-[12px] bg-ink px-[22px] py-5 text-white">
-          <div className="text-[13px] font-medium text-white/85">누적 수주 <span className="text-white/50 font-normal">· VAT 별도</span></div>
+          <div className="text-[13px] font-medium text-white/85">누적 수주 <span className="text-white/50 font-normal">· {VAT_EXCL}</span></div>
           <div className="text-stat tabular-nums mt-2.5">{fmtM(kpi.wonAmount)}</div>
         </div>
         <Kpi label="진행 딜" value={`${kpi.activeDeals}`} unit="건" sub={`전체 ${kpi.dealCount}`} />
-        <Kpi label="견적" value={`${kpi.quoteCount}`} unit="건" sub={`${fmtM(kpi.quoteAmount)} · VAT 별도`} />
+        <Kpi label="견적" value={`${kpi.quoteCount}`} unit="건" sub={`${fmtM(kpi.quoteAmount)} · ${VAT_EXCL}`} />
         <Kpi label="수주율" value={`${wonRate}%`} sub={`진행 시험 ${kpi.activeStudies ?? 0}`} />
       </div>
 
@@ -214,30 +229,27 @@ function DetailPanel({ companyId }: { companyId: number }) {
       <div className="grid xl:grid-cols-[1fr_300px] gap-4">
         <div className="space-y-4 min-w-0">
           {/* 최근 견적 */}
-          <Card title="최근 견적 · VAT 별도" count={scopedQuotes.length}>
-            {scopedQuotes.length === 0 ? <Empty>견적 이력이 없습니다.</Empty> : <div>
-              {scopedQuotes.slice(0, 5).map((qq: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-                const st = quoteStatus(qq.status);
-                return (
-                  <Link key={qq.id} href={`/quote/print?id=${qq.id}`} className="flex items-center gap-2.5 py-2.5 border-t border-[var(--hairline-soft)] first:border-t-0 -mx-1 px-1 rounded hover:bg-slate-100">
-                    <span className="font-mono text-[13px] text-brand-600 w-24 flex-shrink-0 truncate">{qq.quoteNumber}</span>
-                    {qq.supersededAt && <span className="pill bg-slate-200 text-ink-subtle flex-shrink-0">변경 전</span>}
-                    <span className="flex-1 min-w-0 text-[13px] text-ink-muted truncate">{qq.modality || qq.dealTitle}</span>
-                    <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body flex-shrink-0"><span className="w-1.5 h-1.5 rounded-full" style={{ background: st.color }} />{st.label}</span>
-                    <span className="text-[15px] font-bold text-ink tabular-nums w-20 text-right flex-shrink-0">{fmtM(qq.supplyTotal ?? 0)}</span>
-                  </Link>
-                );
-              })}
+          <Card title={`최근 견적 · ${VAT_EXCL}`} count={scopedQuotes.length}>
+            {scopedQuotes.length === 0 ? <EmptyState compact title="견적 이력이 없습니다" action={{ label: '이 고객으로 견적', href: quoteHref }} /> : <div>
+              {scopedQuotes.slice(0, 5).map((qq: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                <Link key={qq.id} href={`/quote/print?id=${qq.id}`} className="flex items-center gap-2.5 py-2.5 border-t border-[var(--hairline-soft)] first:border-t-0 -mx-1 px-1 rounded hover:bg-slate-100">
+                  <span className="font-mono text-[13px] text-brand-600 w-24 flex-shrink-0 truncate">{qq.quoteNumber}</span>
+                  {qq.supersededAt && <span className="pill bg-slate-200 text-ink-subtle flex-shrink-0">변경 전</span>}
+                  <span className="flex-1 min-w-0 text-[13px] text-ink-muted truncate">{qq.modality || qq.dealTitle}</span>
+                  <span className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-ink-body flex-shrink-0"><span className="w-1.5 h-1.5 rounded-full" style={{ background: quoteStatus(qq.status).color }} />{label(QUOTE_STATUS, qq.status)}</span>
+                  <span className="text-[15px] font-bold text-ink tabular-nums w-20 text-right flex-shrink-0">{fmtM(qq.supplyTotal ?? 0)}</span>
+                </Link>
+              ))}
             </div>}
           </Card>
           {/* 활동 (스코프 반영) */}
           <Card title="활동" count={scopedNotes.length}>
-            {scopedNotes.length === 0 ? <Empty>기록된 활동이 없습니다.</Empty> : (
+            {scopedNotes.length === 0 ? <EmptyState compact title="기록된 활동이 없습니다" action={{ label: '기록 추가', href: `/customers/${c.id}` }} /> : (
               <ul className="space-y-3">
                 {(scopedNotes.slice(0, 5)).map((n: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
                   <li key={n.id} className="relative pl-4 border-l-2 border-slate-200">
                     <span className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-brand-500" />
-                    <div className="text-[11px] text-ink-subtle">{new Date(n.occurredAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric' })}{(n.dealTitle || n.contactName) ? ` · ${n.dealTitle ?? n.contactName}` : ''}</div>
+                    <div className="text-[11px] text-ink-subtle">{fmtDateShort(n.occurredAt)}{(n.dealTitle || n.contactName) ? ` · ${n.dealTitle ?? n.contactName}` : ''}</div>
                     {n.title && <div className="text-sm font-medium text-ink">{n.title}</div>}
                     <div className="text-sm text-ink-muted line-clamp-2">{n.body}</div>
                   </li>
@@ -250,7 +262,7 @@ function DetailPanel({ companyId }: { companyId: number }) {
         <div className="space-y-4">
           {/* 담당자 — 클릭 시 그 담당자로 스코프 */}
           <Card title="담당자" count={contacts.length}>
-            {contacts.length === 0 ? <Empty>등록된 담당자가 없습니다.</Empty> : <div className="space-y-1">
+            {contacts.length === 0 ? <EmptyState compact title="등록된 담당자가 없습니다" action={{ label: '담당자 추가', href: `/customers/${c.id}` }} /> : <div className="space-y-1">
               {contacts.map((ct: any) => ( // eslint-disable-line @typescript-eslint/no-explicit-any
                 <button key={ct.id} onClick={() => setScope(scope === ct.id ? 'all' : ct.id)} aria-pressed={scope === ct.id} className={clsx('w-full flex items-center gap-2 text-left rounded-lg px-2 py-1.5 transition-colors', scope === ct.id ? 'bg-brand-50 ring-1 ring-brand-200' : 'hover:bg-slate-50')}>
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-100 text-ink text-xs font-semibold shrink-0">{ct.name.charAt(0)}</span>
@@ -265,8 +277,8 @@ function DetailPanel({ companyId }: { companyId: number }) {
             <div className="text-[13px] text-white/60 mb-1.5 flex items-center gap-1.5"><Icon name="calendar" className="w-3.5 h-3.5" /> 다음 팔로업</div>
             {nextEvent ? <>
               <div className="text-[15px] font-semibold">{nextEvent.title}</div>
-              <div className="text-[12px] text-white/60 mt-1">{new Date(nextEvent.startAt).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })}{(nextEvent.dealTitle || nextEvent.contactName) ? ` · ${nextEvent.dealTitle ?? nextEvent.contactName}` : ''}</div>
-            </> : <div className="text-sm text-white/50">예정된 팔로업이 없습니다.</div>}
+              <div className="text-[12px] text-white/60 mt-1">{fmtDateShort(nextEvent.startAt)}{(nextEvent.dealTitle || nextEvent.contactName) ? ` · ${nextEvent.dealTitle ?? nextEvent.contactName}` : ''}</div>
+            </> : <div className="text-sm text-white/50">예정된 팔로업이 없습니다. <Link href="/calendar" className="underline hover:text-white">일정 추가</Link></div>}
           </div>
         </div>
       </div>
@@ -291,9 +303,8 @@ function Kpi({ label, value, unit, sub }: { label: string; value: string; unit?:
 function Card({ title, count, children }: { title: string; count?: number; children: React.ReactNode }) {
   return <section className="card p-[22px]"><div className="flex items-baseline gap-1.5 mb-3"><h3 className="text-[15px] font-semibold text-ink">{title}</h3>{count != null && <span className="text-[12px] text-ink-subtle tabular-nums">{count}</span>}</div>{children}</section>;
 }
-function Empty({ children }: { children: React.ReactNode }) { return <div className="py-6 text-center text-xs text-ink-subtle">{children}</div>; }
 
-// 견적 상태 라벨·색은 lib/admin/status.ts 단일 소스(quoteStatus) 사용 — REVIEWED 포함.
+// 견적 상태 라벨은 lib/labels(QUOTE_STATUS), 상태점 색은 lib/admin/status(quoteStatus) — REVIEWED 포함.
 
 function CompanyModal({ onClose, onSaved }: { onClose: () => void; onSaved: (id?: number) => void }) {
   const [f, setF] = useState({ name: '', bizRegNo: '', industry: '', address: '', memo: '', isNewClient: true });

@@ -6,12 +6,12 @@ import FollowupCard from '@/components/admin/FollowupCard';
 import { fmtWon, splitWon, fmtPct, fmtInt } from '@/lib/admin/format';
 import AdminHeader from '@/components/admin/AdminHeader';
 import { Sparkline, BarSpark, ProgressBar, GroupedBars, DonutGauge, Donut, HBars, Funnel, Heatmap } from '@/components/admin/charts';
+import { DEAL_STAGE, ROLE, label } from '@/lib/labels';
+import { EmptyState } from '@/components/ui/State';
 
 export const dynamic = 'force-dynamic';
 
 const MONTHS_KO = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-const STAGE_KO: Record<string, string> = { INQUIRY: '문의', QUOTE: '견적', INTAKE: '접수', CONTRACT: '계약', STUDY: '시험', INVOICE: '청구', DONE: '완료' };
-const ROLE_KO: Record<string, string> = { ADMIN: '본부장', CENTER_LEAD: '센터장', TEAM_LEAD: '팀장', MEMBER: '구성원', admin: '관리자' };
 
 type SP = { scope?: string; centerId?: string; userId?: string; period?: string };
 
@@ -177,7 +177,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
         </div>
         <div className="card card-pad">
           <h2 className="text-[15px] font-semibold text-ink mb-4">산업별 분포</h2>
-          {data.byIndustry.length ? <HBars items={data.byIndustry.map((r) => ({ label: r.industry, value: r.amount }))} fmt={fmtWon} /> : <Empty />}
+          {data.byIndustry.length ? <HBars items={data.byIndustry.map((r) => ({ label: r.industry, value: r.amount }))} fmt={fmtWon} /> : <EmptyState compact title="데이터 없음" description="고객사에 업종을 입력하면 산업별 분포가 채워집니다." />}
         </div>
       </div>
 
@@ -185,7 +185,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         <div className="card card-pad">
           <h2 className="text-[15px] font-semibold text-ink mb-4">파이프라인 퍼널</h2>
-          <Funnel stages={data.funnel.map((s) => ({ label: STAGE_KO[s.stage] ?? s.stage, value: s.count }))} />
+          <Funnel stages={data.funnel.map((s) => ({ label: label(DEAL_STAGE, s.stage), value: s.count }))} />
         </div>
         <div className="card card-pad">
           <div className="flex items-center justify-between mb-4">
@@ -228,7 +228,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: S
               {data.memberSummary.map((m) => (
                 <tr key={m.userId} className="table-row">
                   <td className="py-2.5 text-[13px] text-ink font-medium">{m.name}<span className="block text-[11px] text-ink-subtle font-normal">{m.center}</span></td>
-                  <td className="py-2.5 text-[13px] text-ink-body">{ROLE_KO[m.role] ?? '구성원'}</td>
+                  <td className="py-2.5 text-[13px] text-ink-body">{ROLE[m.role] ?? label(ROLE, 'MEMBER')}</td>
                   <td className="py-2.5 text-[13px] text-ink-body text-right tabular-nums">{m.count}</td>
                   <td className="py-2.5 text-[13px] text-ink font-semibold text-right tabular-nums">{fmtWon(m.won)}</td>
                   <td className="py-2.5 text-[13px] text-ink-body text-right tabular-nums">{fmtPct(m.winRate, 0)}</td>
@@ -266,5 +266,3 @@ function Legend({ items }: { items: { name: string; color: string }[] }) {
     </div>
   );
 }
-
-function Empty() { return <div className="py-8 text-center text-[13px] text-ink-subtle">데이터 없음</div>; }

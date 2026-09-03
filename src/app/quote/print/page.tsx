@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Printer } from 'lucide-react';
+import { Printer, Send, FileSignature, Loader2, GitBranch } from 'lucide-react';
 import Link from 'next/link';
+import clsx from 'clsx';
 import Icon from '@/components/Icon';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useWizard } from '@/lib/store';
 import { toast } from '@/lib/toast';
+import { QUOTE_STATUS, label, tone } from '@/lib/labels';
+import { LoadingState } from '@/components/ui/State';
 import PrintLayout, { type PrintData } from './_components/PrintLayout';
 import { buildEfficacyPrintData, linesFromQuoteItems } from '@/lib/efficacy-engine/print-data';
 import type { EffState } from '@/app/quote-efficacy/_lib/state';
@@ -25,12 +28,18 @@ export default function PrintPageWrapper() {
   return <Suspense fallback={null}><PrintPage /></Suspense>;
 }
 
+/** DB 견적의 액션 바에 필요한 최소 정보 — 상태 전이·계약 전환 후 반영용 */
+type QuoteMeta = { id: number; quoteNumber: string; status: string; dealId: number | null; studyType: string | null };
+
 function PrintPage() {
   const s = useWizard();
+  const router = useRouter();
   const params = useSearchParams();
   const quoteId = params.get('id');
   const [data, setData] = useState<PrintData | null>(null);
-  const [editHref, setEditHref] = useState<string | null>(null);   // 시험 유형별 위저드로 되돌아가 수정
+  const [quote, setQuote] = useState<QuoteMeta | null>(null);   // DB 견적일 때만
+  const [editHref, setEditHref] = useState<string | null>(null);   // 시험 유형별 위저드로 되돌아가 수정(=변경견적)
+  const [busy, setBusy] = useState<'send' | 'contract' | null>(null);
   // 모바일 화면 미리보기 — A4(210mm) 페이지를 화면폭에 맞춰 축소(인쇄 시엔 원본 유지)
   const innerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -58,6 +67,8 @@ function PrintPage() {
         try {
           const qRes = await fetch(`/api/quotes/${quoteId}`).then(r => r.json());
           const q = qRes.quote;
+          if (!q) throw new Error(qRes.error ?? '견적을 찾을 수 없습니다.');
+          setQuote({ id: q.id, quoteNumber: q.quoteNumber, status: q.status, dealId: q.dealId ?? null, studyType: q.studyType ?? null });
           let plan: Record<string, unknown> = {};
           try { plan = JSON.parse(q.planJson ?? '{}'); } catch { /* noop */ }
 
@@ -198,25 +209,78 @@ function PrintPage() {
   }, [quoteId, s.selections, s.excipientCount, s.priceStandard, s.discountRate, s.currency, s.exchangeRate,
       s.projectName, s.substanceName, s.modality, s.customerCompany, s.customerName, s.customerEmail]);
 
+  /** 발송 완료 — status→SENT (+ sentAt 자동, 팔로업 기준일). 성공 시 바의 상태칩만 갱신. */
+  const markSent = async () => {
+    if (!quote) return;
+    setBusy('send');
+    try {
+      const r = await fetch(`/api/admin/quotes/${quote.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ status: 'SENT' }) });
+      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error ?? `HTTP ${r.status}`);
+      setQuote(q => q ? { ...q, status: 'SENT' } : q);
+      toast.success('발송 완료로 기록했습니다 — 팔로업 추적이 시작됩니다.');
+    } catch (e) { toast.error(`발송 처리 실패: ${e instanceof Error ? e.message : '오류'}`); }
+    finally { setBusy(null); }
+  };
+  /** 수주 · 계약 전환 — 안건·계약·시험 생성(멱등) 후 안건 상세로. */
+  const toContract = async () => {
+    if (!quote) return;
+    if (!confirm('이 견적을 수주 처리하고 계약으로 전환할까요?\n안건·계약·시험 일정이 만들어집니다.')) return;
+    setBusy('contract');
+    try {
+      const r = await fetch(`/api/crm/quotes/${quote.id}/to-contract`, { method: 'POST' });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error ?? `HTTP ${r.status}`);
+      toast.success(d.already ? '이미 전환된 안건으로 이동합니다.' : '수주 · 계약 전환 완료 — 안건으로 이동합니다.');
+      if (d.dealId) router.push(`/deals/${d.dealId}`);
+      else setQuote(q => q ? { ...q, status: 'ACCEPTED' } : q);
+    } catch (e) { toast.error(`계약 전환 실패: ${e instanceof Error ? e.message : '오류'}`); }
+    finally { setBusy(null); }
+  };
+
   if (!data) {
-    return (
-      <div className="text-center py-20 text-ink-muted text-sm">
-        견적서 준비 중…
-      </div>
-    );
+    return <LoadingState label="견적서 준비 중" />;
   }
+
+  const canSend = !!quote && (quote.status === 'DRAFT' || quote.status === 'ISSUED');
+  const canContract = !!quote && quote.status !== 'ACCEPTED' && quote.status !== 'REJECTED';
 
   return (
     <>
-      <div className="fixed top-4 right-4 z-50 no-print flex items-center gap-2">
-        <Link href="/" className="btn-ghost"><Icon name="chevron-left" className="w-4 h-4" /> <span className="hidden sm:inline">대시보드</span></Link>
-        <Link href="/quotes" className="btn-ghost"><Icon name="list" className="w-4 h-4" /> <span className="hidden sm:inline">견적 목록</span></Link>
-        {editHref && (
-          <Link href={editHref} className="btn-ghost"><Icon name="notebook" className="w-4 h-4" /> <span className="hidden sm:inline">수정</span></Link>
-        )}
-        <button onClick={() => window.print()} className="btn-primary">
-          <Printer className="w-4 h-4" /> <span className="hidden sm:inline">인쇄 / PDF 저장</span><span className="sm:hidden">인쇄</span>
-        </button>
+      {/* 액션 바 — 화면 전용(no-print). DB 견적이면 상태칩 + 발송/전환/변경견적, 위저드 미리보기면 인쇄만. */}
+      <div className="sticky top-0 z-50 no-print border-b border-[var(--hairline-soft)] bg-[var(--card)]/95 backdrop-blur-sm">
+        <div className="mx-auto max-w-[1100px] px-3 sm:px-4 py-2 flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1">
+            <Link href="/" className="btn-ghost"><Icon name="chevron-left" className="w-4 h-4" /> <span className="hidden sm:inline">대시보드</span></Link>
+            <Link href="/quotes" className="btn-ghost"><Icon name="list" className="w-4 h-4" /> <span className="hidden sm:inline">견적 목록</span></Link>
+          </div>
+          {quote && (
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="font-mono text-[12.5px] text-ink-muted truncate">{quote.quoteNumber}</span>
+              <span className={clsx('pill', tone(QUOTE_STATUS, quote.status))}>{label(QUOTE_STATUS, quote.status)}</span>
+            </div>
+          )}
+          <div className="ml-auto flex items-center gap-1.5 flex-wrap justify-end">
+            {quote && canSend && (
+              <button onClick={markSent} disabled={busy != null} className="btn-outline text-sm">
+                {busy === 'send' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />} <span className="hidden sm:inline">발송 완료</span><span className="sm:hidden">발송</span>
+              </button>
+            )}
+            {quote && canContract && (
+              <button onClick={toContract} disabled={busy != null} className="btn-outline text-sm">
+                {busy === 'contract' ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileSignature className="w-4 h-4" />} <span className="hidden sm:inline">수주 · 계약 전환</span><span className="sm:hidden">계약</span>
+              </button>
+            )}
+            {quote && quote.status === 'ACCEPTED' && quote.dealId && (
+              <Link href={`/deals/${quote.dealId}`} className="btn-outline text-sm"><Icon name="arrow-right" className="w-4 h-4" /> <span className="hidden sm:inline">안건 보기</span><span className="sm:hidden">안건</span></Link>
+            )}
+            {quote && editHref && (
+              <Link href={editHref} className="btn-ghost text-sm"><GitBranch className="w-4 h-4" /> <span className="hidden sm:inline">변경견적 만들기</span><span className="sm:hidden">변경</span></Link>
+            )}
+            <button onClick={() => window.print()} className="btn-primary text-sm">
+              <Printer className="w-4 h-4" /> <span className="hidden sm:inline">인쇄 / PDF</span><span className="sm:hidden">인쇄</span>
+            </button>
+          </div>
+        </div>
       </div>
       <div className="print-scale-outer" style={scaledH ? { height: scaledH } : undefined}>
         <div ref={innerRef} className="print-scale-inner" style={scale < 1 ? { transform: `scale(${scale})`, transformOrigin: 'top left', width: `${A4_PX}px` } : undefined}>

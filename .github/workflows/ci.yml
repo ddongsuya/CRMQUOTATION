@@ -37,7 +37,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 로컬(Windows)과 동일한 Node 24 — 테스트가 .ts 모듈을 직접 require 하며 Node 22.18+/24 의 타입 스트리핑에 의존
+          node-version: 24
           cache: npm
 
       - name: Install

@@ -12,7 +12,10 @@
 
 ## 2. CI (`.github/workflows/ci.yml`)
 
-push(main)·PR 마다 lint → 단위 테스트 → 회귀 테스트 → 타입 검사 → `next build` → 마이그레이션 드리프트 검사.
+push(main)·PR 마다 lint → 타입 검사 → 단위 테스트 → 회귀 테스트 → Postgres 컨테이너에 `migrate deploy` → 드리프트 검사 → `next build`.
+
+- CI 의 Node 는 **24** (로컬과 동일). `company-match.test.js` 가 `.ts` 를 직접 require 하며 Node 22.18+ 의 타입 스트리핑에 의존하므로 Node 20 에서는 실패한다(첫 CI 실행이 이 이유로 실패했음).
+- 실행 결과는 https://github.com/ddongsuya/CRMQUOTATION/actions 에서 확인.
 
 **Vercel 배포 차단(사람이 할 일)**: GitHub 의 required status check 를 켜면 main 직접 push 도 막히므로, 현재 "main 에 push → 바로 배포" 흐름을 유지하려면 다음 중 하나를 고른다.
 1. 그대로 두고 CI 실패 메일을 신호로 삼는다(지금 상태).

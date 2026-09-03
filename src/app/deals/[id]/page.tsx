@@ -4,11 +4,17 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import clsx from 'clsx';
-import { GanttChartSquare, Loader2, Trash2, TrendingDown, TrendingUp } from 'lucide-react';
+import { GanttChartSquare, Loader2, Trash2, TrendingDown, TrendingUp, RotateCcw, XCircle } from 'lucide-react';
 import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { quoteStatus } from '@/lib/admin/status';
 import { supplyTotal } from '@/lib/money';
+import {
+  QUOTE_STATUS, DEAL_STAGE, DEAL_STAGE_ORDER, DEAL_STATUS, LOST_REASONS,
+  CONTRACT_STATUS, CONTRACT_STATUS_ORDER, PAYMENT_KIND, NOTE_TYPE, label, tone, VAT_EXCL,
+} from '@/lib/labels';
+import { fmtDate, fmtDateShort, toYmd, todayYmd } from '@/lib/dates';
+import { EmptyState, ErrorState, LoadingState } from '@/components/ui/State';
 
 type Quote = { id: number; quoteNumber: string; grandTotal: number | null; totalAfterDiscount: number | null; currency: string; status: string; sentAt: string | null; accepted: boolean | null; createdAt: string };
 type PaymentTerm = { id: number; seq: number; kind: string; ratio: number | null; amount: number | null; condition: string | null; dueAt: string | null; paidAt: string | null };
@@ -23,37 +29,33 @@ type Deal = {
   quotes: Quote[]; contract: Contract | null; studies: Study[]; changeQuotes: ChangeQuote[]; notes: Note[];
 };
 
-const STAGES = [
-  { k: 'INQUIRY', label: '문의접수' }, { k: 'QUOTE', label: '견적' }, { k: 'INTAKE', label: '시험접수' },
-  { k: 'CONTRACT', label: '계약' }, { k: 'STUDY', label: '시험진행' }, { k: 'INVOICE', label: '세금계산서' }, { k: 'DONE', label: '완료' },
-];
-const won = (s: string) => STAGES.findIndex(x => x.k === s);
+const stageIdx = (s: string) => DEAL_STAGE_ORDER.findIndex(k => k === s);
 const fmtMoney = (n: number | null, cur = 'KRW') => n == null ? '-' : (cur === 'USD' ? '$' : '₩') + n.toLocaleString();
-const fmtDate = (d: string | null) => d ? new Date(d).toISOString().slice(0, 10) : '';
 
 export default function DealDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [deal, setDeal] = useState<Deal | null>(null);
-  const [loadError, setLoadError] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const reqSeq = useRef(0);   // 빠른 화면 전환 시 늦게 도착한 이전 응답이 현재 딜을 덮어쓰지 않게
   const load = useCallback(() => {
     const my = ++reqSeq.current;
-    setLoadError(false);
+    setLoadError(null);
     return fetch(`/api/crm/deals/${id}`).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(d => { if (my === reqSeq.current) setDeal(d.deal ?? null); })
-      .catch(e => { if (my === reqSeq.current) { setLoadError(true); console.error('[deal] load failed', e); } });
+      .catch(e => { if (my === reqSeq.current) { setLoadError(e instanceof Error ? e.message : String(e)); console.error('[deal] load failed', e); } });
   }, [id]);
   useEffect(() => { load(); }, [load]);
 
-  const patchDeal = async (data: Record<string, unknown>) => {
+  const patchDeal = async (data: Record<string, unknown>): Promise<boolean> => {
     const res = await fetch(`/api/crm/deals/${id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) });
-    if (res.ok) load(); else toast.error('수정 실패');
+    if (res.ok) { load(); return true; }
+    toast.error('수정 실패'); return false;
   };
 
   if (!deal) return loadError
-    ? <div role="alert" className="card p-12 text-center text-sm text-red-700">안건을 불러오지 못했습니다. <button onClick={load} className="btn-ghost text-sm ml-2">다시 시도</button></div>
-    : <div className="card p-12 text-center text-ink-subtle text-sm"><Loader2 className="w-5 h-5 mx-auto mb-2 animate-spin" /> 불러오는 중…</div>;
-  const curIdx = won(deal.stage);
+    ? <div className="card"><ErrorState message={`안건을 불러오지 못했습니다. (${loadError})`} onRetry={load} /></div>
+    : <div className="card"><LoadingState label="안건 불러오는 중" /></div>;
+  const curIdx = stageIdx(deal.stage);
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -73,28 +75,16 @@ export default function DealDetailPage() {
             </div>
             {deal.clinicalDesign && <div className="text-xs text-ink-subtle mt-2 whitespace-pre-wrap">{deal.clinicalDesign}</div>}
           </div>
-          <div className="flex items-center gap-1.5">
-            {deal.status === 'ACTIVE' ? (
-              <>
-                <button onClick={() => patchDeal({ status: 'WON' })} className="btn-outline text-xs">수주</button>
-                <button onClick={() => { const r = prompt('진행 불가 사유:'); if (r != null) patchDeal({ status: 'LOST', lostReason: r }); }} className="btn-ghost text-xs text-red-600">중단</button>
-              </>
-            ) : (
-              <span className="pill bg-slate-100 text-ink-body">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: deal.status === 'WON' ? 'var(--success)' : 'var(--error)' }} />
-                {deal.status === 'WON' ? '수주' : `중단${deal.lostReason ? ` · ${deal.lostReason}` : ''}`}
-              </span>
-            )}
-          </div>
+          <DealStatusActions deal={deal} patch={patchDeal} />
         </div>
 
         {/* 단계 스테퍼 (클릭 시 단계 설정) */}
         <div className="mt-4 flex items-center gap-1 overflow-x-auto pb-1">
-          {STAGES.map((s, i) => (
-            <button key={s.k} onClick={() => patchDeal({ stage: s.k })} aria-pressed={i === curIdx}
+          {DEAL_STAGE_ORDER.map((k, i) => (
+            <button key={k} onClick={() => patchDeal({ stage: k })} aria-pressed={i === curIdx}
               className={clsx('flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors',
                 i < curIdx ? 'bg-brand-50 text-brand-600' : i === curIdx ? 'bg-brand-600 text-white' : 'text-ink-subtle hover:bg-slate-100')}>
-              {i < curIdx ? <Icon name="check" className="w-3 h-3" /> : <span className="w-4 text-center">{i + 1}</span>}{s.label}
+              {i < curIdx ? <Icon name="check" className="w-3 h-3" /> : <span className="w-4 text-center">{i + 1}</span>}{label(DEAL_STAGE, k)}
             </button>
           ))}
         </div>
@@ -110,12 +100,73 @@ export default function DealDetailPage() {
   );
 }
 
+// ─── 안건 상태 — 수주 / 실주 처리(사유 선택) / 다시 진행 ───
+function DealStatusActions({ deal, patch }: { deal: Deal; patch: (d: Record<string, unknown>) => Promise<boolean> }) {
+  const [lostOpen, setLostOpen] = useState(false);
+  const [reason, setReason] = useState<string>(LOST_REASONS[0]);
+  const [detail, setDetail] = useState('');
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { if (deal.status !== 'ACTIVE') setLostOpen(false); }, [deal.status]);
+
+  const confirmLost = async () => {
+    setBusy(true);
+    const d = detail.trim();
+    const ok = await patch({ status: 'LOST', lostReason: d ? `${reason} — ${d}` : reason });
+    setBusy(false);
+    if (ok) { toast.success('실주 처리되었습니다.'); setLostOpen(false); setDetail(''); }
+  };
+  const reopen = async () => {
+    setBusy(true);
+    const ok = await patch({ status: 'ACTIVE', lostReason: null });
+    setBusy(false);
+    if (ok) toast.success('안건을 다시 진행합니다.');
+  };
+
+  if (deal.status === 'ACTIVE') {
+    return (
+      <div className="flex flex-col items-end gap-2">
+        <div className="flex items-center gap-1.5">
+          <span className={clsx('pill', tone(DEAL_STATUS, deal.status))}>{label(DEAL_STATUS, deal.status)}</span>
+          <button onClick={() => patch({ status: 'WON' })} className="btn-outline text-xs">수주</button>
+          <button onClick={() => setLostOpen(v => !v)} aria-expanded={lostOpen} className="btn-ghost text-xs text-red-600"><XCircle className="w-3.5 h-3.5" /> 실주 처리</button>
+        </div>
+        {lostOpen && (
+          <div role="group" aria-label="실주 처리" className="w-full sm:w-[320px] rounded-[12px] border border-red-200 bg-red-50/40 p-3 space-y-2">
+            <div className="text-[12px] font-semibold text-ink">실주 사유</div>
+            <select className="input w-full text-sm" aria-label="실주 사유" value={reason} onChange={e => setReason(e.target.value)}>
+              {LOST_REASONS.map(r => <option key={r} value={r}>{r}</option>)}
+            </select>
+            <input className="input w-full text-sm" aria-label="상세(선택)" placeholder="상세(선택) — 예: 경쟁사 A, 20% 저가" value={detail} onChange={e => setDetail(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') confirmLost(); }} />
+            <div className="flex justify-end gap-1.5">
+              <button onClick={() => setLostOpen(false)} className="btn-ghost text-xs">취소</button>
+              <button onClick={confirmLost} disabled={busy} className="btn-primary text-xs bg-red-600 hover:bg-red-700 border-red-600">{busy ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null} 실주 확정</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-1.5 flex-wrap justify-end">
+      <span className={clsx('pill inline-flex items-center gap-1', tone(DEAL_STATUS, deal.status))}>
+        {label(DEAL_STATUS, deal.status)}
+        {deal.status === 'LOST' && deal.lostReason && <span className="font-normal opacity-80">· {deal.lostReason}</span>}
+      </span>
+      {deal.status === 'LOST' && (
+        <button onClick={reopen} disabled={busy} className="btn-ghost text-xs">{busy ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RotateCcw className="w-3.5 h-3.5" />} 다시 진행</button>
+      )}
+    </div>
+  );
+}
+
 // ─── 할 일 — 이 안건의 액션 아이템 (일정과 구분) ───
 function SectionTasks({ dealId }: { dealId: number }) {
   type T = { id: number; title: string; dueAt: string | null; done: boolean };
   const [tasks, setTasks] = useState<T[]>([]);
   const [title, setTitle] = useState('');
   const [dueAt, setDueAt] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
   const load = useCallback(() => { fetch(`/api/crm/tasks?dealId=${dealId}`).then(r => r.json()).then(d => setTasks(d.tasks ?? [])).catch(() => {}); }, [dealId]);
   useEffect(() => { load(); }, [load]);
   const add = async () => {
@@ -129,18 +180,18 @@ function SectionTasks({ dealId }: { dealId: number }) {
   return (
     <Card title={`할 일 ${open.length}건`}>
       <div className="flex gap-1.5 mb-2">
-        <input className="input text-sm flex-1" placeholder="할 일 추가…" aria-label="할 일 추가" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
+        <input ref={inputRef} className="input text-sm flex-1" placeholder="할 일 추가…" aria-label="할 일 추가" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
         <input type="date" className="input text-sm w-auto" title="기한(선택)" aria-label="기한(선택)" value={dueAt} onChange={e => setDueAt(e.target.value)} />
         <button onClick={add} aria-label="할 일 추가" className="btn-primary text-sm shrink-0"><Icon name="plus" className="w-4 h-4" /></button>
       </div>
-      {tasks.length === 0 ? <div className="text-xs text-ink-subtle py-1">할 일 없음.</div> : (
+      {tasks.length === 0 ? <EmptyState compact title="할 일이 없습니다" action={{ label: '할 일 추가', onClick: () => inputRef.current?.focus() }} /> : (
         <ul className="space-y-1">
           {tasks.map(t => (
             <li key={t.id} className={clsx('flex items-center gap-2 group', t.done && 'opacity-50')}>
               <button onClick={() => toggle(t)} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Icon name="check" className="w-2.5 h-2.5" />}</button>
               <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
-              {t.dueAt && <span className="text-[11px] text-ink-subtle tabular-nums shrink-0">{t.dueAt.slice(5, 10).replace('-', '/')}</span>}
-              <button onClick={() => del(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
+              {t.dueAt && <span className="text-[11px] text-ink-subtle tabular-nums shrink-0">{fmtDateShort(t.dueAt)}</span>}
+              <button onClick={() => del(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3 h-3" /></button>
             </li>
           ))}
         </ul>
@@ -149,40 +200,40 @@ function SectionTasks({ dealId }: { dealId: number }) {
   );
 }
 
+const NOTE_TYPES = Object.keys(NOTE_TYPE);
+
 function SectionNotes({ deal, reload }: { deal: Deal; reload: () => void }) {
-  const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };   // 로컬 기준 (UTC면 오전 9시 전 어제로 나옴)
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState({ type: 'MEETING', body: '', occurredAt: today() });
+  const [f, setF] = useState({ type: 'MEETING', body: '', occurredAt: todayYmd() });
   const add = async () => {
     if (!f.body.trim()) { toast.error('내용을 입력하세요.'); return; }
     const res = await fetch('/api/crm/notes', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...f, occurredAt: f.occurredAt || undefined, dealId: deal.id, contactId: deal.contact.id }) });
-    if (res.ok) { setF({ type: 'MEETING', body: '', occurredAt: today() }); setOpen(false); reload(); } else toast.error('실패');
+    if (res.ok) { setF({ type: 'MEETING', body: '', occurredAt: todayYmd() }); setOpen(false); reload(); } else toast.error('실패');
   };
   const del = async (id: number) => { const res = await fetch(`/api/crm/notes/${id}`, { method: 'DELETE' }); if (res.ok) reload(); };
-  const TLABEL: Record<string, string> = { MEETING: '미팅', CALL: '통화', MEMO: '메모' };
   return (
     <Card title={`기록 ${deal.notes.length}건`}
       action={<button onClick={() => setOpen(v => !v)} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 기록 추가</button>}>
       {open && (
         <div className="space-y-2 mb-3">
           <div className="flex items-center gap-1.5 flex-wrap">
-            {['MEETING', 'CALL', 'MEMO'].map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} aria-pressed={f.type === t} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{TLABEL[t]}</button>)}
+            {NOTE_TYPES.map(t => <button key={t} onClick={() => setF(p => ({ ...p, type: t }))} aria-pressed={f.type === t} className={clsx('chip', f.type === t ? 'chip-active' : 'chip-inactive')}>{label(NOTE_TYPE, t)}</button>)}
             <input type="date" className="input text-sm ml-auto w-auto" title="대화·미팅 날짜" aria-label="대화·미팅 날짜" value={f.occurredAt} onChange={e => setF(p => ({ ...p, occurredAt: e.target.value }))} />
           </div>
           <textarea className="input w-full min-h-[70px]" value={f.body} onChange={e => setF(p => ({ ...p, body: e.target.value }))} placeholder="미팅·상담 내용…" aria-label="기록 내용" autoFocus />
           <div className="flex justify-end"><button onClick={add} className="btn-primary text-sm">저장</button></div>
         </div>
       )}
-      {deal.notes.length === 0 ? <div className="text-xs text-ink-subtle py-1">기록 없음.</div> : (
+      {deal.notes.length === 0 ? <EmptyState compact title="기록이 없습니다" description="미팅·통화 내용을 남겨두면 이 안건의 이력이 됩니다." action={{ label: '기록 추가', onClick: () => setOpen(true) }} /> : (
         <ul className="space-y-2">
           {deal.notes.map(n => (
             <li key={n.id} className="flex items-start gap-2 group">
-              <span className="pill bg-slate-100 text-ink-muted flex-shrink-0 mt-0.5">{TLABEL[n.type] ?? '메모'}</span>
+              <span className="pill bg-slate-100 text-ink-muted flex-shrink-0 mt-0.5">{label(NOTE_TYPE, n.type, label(NOTE_TYPE, 'MEMO'))}</span>
               <div className="flex-1 min-w-0">
                 <div className="text-sm text-ink-muted whitespace-pre-wrap">{n.body}</div>
-                <div className="text-[11px] text-ink-subtle mt-0.5">{n.occurredAt.slice(0, 10)}</div>
+                <div className="text-[11px] text-ink-subtle mt-0.5 tabular-nums">{fmtDate(n.occurredAt)}</div>
               </div>
-              <button onClick={() => del(n.id)} aria-label="기록 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100"><Trash2 className="w-3.5 h-3.5" /></button>
+              <button onClick={() => del(n.id)} aria-label="기록 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3.5 h-3.5" /></button>
             </li>
           ))}
         </ul>
@@ -204,20 +255,21 @@ function Card({ title, action, children }: { title: string; action?: React.React
 }
 
 function SectionQuotes({ deal }: { deal: Deal }) {
+  const newHref = `/quote-v2?dealId=${deal.id}`;
   return (
     <Card title={`견적서 ${deal.quotes.length}건`}
-      action={<Link href={`/quote-v2?dealId=${deal.id}`} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 이 안건으로 견적 작성</Link>}>
-      {deal.quotes.length === 0 ? <div className="text-xs text-ink-subtle py-1">아직 견적이 없습니다.</div> : (
+      action={<Link href={newHref} className="btn-ghost text-xs"><Icon name="plus" className="w-3.5 h-3.5" /> 이 안건으로 견적 작성</Link>}>
+      {deal.quotes.length === 0 ? <EmptyState compact title="아직 견적이 없습니다" action={{ label: '이 안건으로 견적 작성', href: newHref }} /> : (
         <ul className="divide-y divide-slate-300">
           {deal.quotes.map(q => {
-            const st = quoteStatus(q.status);
             const supply = supplyTotal(q);
             return (
             <li key={q.id}>
               <Link href={`/quote/print?id=${q.id}`} className="flex items-center gap-3 py-2 hover:bg-slate-50 -mx-1 px-1 rounded-lg">
                 <span className="text-xs text-ink-subtle font-mono w-32 truncate">{q.quoteNumber}</span>
-                <span className="flex-1 text-sm font-semibold text-ink tabular-nums">{fmtMoney(supply, q.currency)} <span className="text-[10px] font-normal text-ink-subtle">VAT 별도</span></span>
-                <span className="pill bg-slate-100 text-ink-body"><span className="w-1.5 h-1.5 rounded-full" style={{ background: st.color }} />{st.label}</span>
+                <span className="flex-1 text-sm font-semibold text-ink tabular-nums">{fmtMoney(supply, q.currency)} <span className="text-[10px] font-normal text-ink-subtle">{VAT_EXCL}</span></span>
+                <span className="text-[11px] text-ink-subtle tabular-nums hidden sm:inline">{fmtDate(q.createdAt)}</span>
+                <span className="pill bg-slate-100 text-ink-body"><span className="w-1.5 h-1.5 rounded-full" style={{ background: quoteStatus(q.status).color }} />{label(QUOTE_STATUS, q.status)}</span>
               </Link>
             </li>
             );
@@ -227,8 +279,6 @@ function SectionQuotes({ deal }: { deal: Deal }) {
     </Card>
   );
 }
-
-const KIND_LABEL: Record<string, string> = { ADVANCE: '선금', INTERIM: '중도금', BALANCE: '잔금' };
 
 function SectionContract({ deal, reload }: { deal: Deal; reload: () => void }) {
   const c = deal.contract;
@@ -248,7 +298,8 @@ function SectionContract({ deal, reload }: { deal: Deal; reload: () => void }) {
 
   if (!c) return (
     <Card title="계약">
-      <button onClick={start} disabled={busy} className="btn-ghost text-xs">{busy ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Icon name="plus" className="w-3.5 h-3.5" />} 계약 시작 (견적 기반)</button>
+      <EmptyState compact title="아직 계약이 없습니다" description="견적을 기반으로 계약을 시작하면 기본 지급조건(선금50/잔금50)이 만들어집니다."
+        action={{ label: busy ? '생성 중…' : '계약 시작 (견적 기반)', onClick: start }} />
     </Card>
   );
 
@@ -257,7 +308,7 @@ function SectionContract({ deal, reload }: { deal: Deal; reload: () => void }) {
       <div className="grid sm:grid-cols-2 gap-3">
         <Labeled label="상태">
           <select className="input w-full text-sm" value={c.status} onChange={e => patch({ status: e.target.value })}>
-            {([['DRAFT', '초안'], ['SENT', '송부'], ['REVIEWED', '검토'], ['APPROVED', '승인'], ['SIGNED', '체결']] as const).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+            {CONTRACT_STATUS_ORDER.map(v => <option key={v} value={v}>{label(CONTRACT_STATUS, v)}</option>)}
           </select>
         </Labeled>
         <Labeled label="계약번호"><input className="input w-full text-sm" defaultValue={c.contractNumber ?? ''} onBlur={e => e.target.value !== (c.contractNumber ?? '') && patch({ contractNumber: e.target.value })} placeholder="사업지원팀 부여" /></Labeled>
@@ -276,7 +327,7 @@ function PaymentTermsEditor({ contractId, terms, reload }: { contractId: number;
   type Row = { kind: string; ratio: string; condition: string; dueAt: string; paidAt: string };
   const toRow = (t: PaymentTerm): Row => ({
     kind: t.kind, ratio: t.ratio != null ? String(Math.round(t.ratio * 100)) : '',
-    condition: t.condition ?? '', dueAt: fmtDate(t.dueAt), paidAt: fmtDate(t.paidAt),
+    condition: t.condition ?? '', dueAt: toYmd(t.dueAt), paidAt: toYmd(t.paidAt),
   });
   const [rows, setRows] = useState<Row[]>(terms.map(toRow));
   const [dirty, setDirty] = useState(false);
@@ -315,7 +366,7 @@ function PaymentTermsEditor({ contractId, terms, reload }: { contractId: number;
         </div>
       </div>
       {rows.length === 0 ? (
-        <p className="text-xs text-ink-subtle py-1">지급 회차가 없습니다. 기본 회차를 생성하거나 직접 추가하세요.</p>
+        <EmptyState compact title="지급 회차가 없습니다" action={{ label: '기본 회차 생성 (선금50/잔금50)', onClick: () => addRow(DEFAULT_ROWS) }} secondary={{ label: '직접 추가', onClick: () => addRow() }} />
       ) : (
         <div className="space-y-1.5">
           {/* 헤더 (sm↑) */}
@@ -325,7 +376,7 @@ function PaymentTermsEditor({ contractId, terms, reload }: { contractId: number;
           {rows.map((r, i) => (
             <div key={i} className="grid grid-cols-2 sm:grid-cols-[90px_70px_1fr_130px_130px_28px] gap-1.5 items-center rounded-lg border border-slate-100 sm:border-0 p-2 sm:p-0">
               <select className="input text-sm" aria-label="회차 구분" value={r.kind} onChange={e => set(i, 'kind', e.target.value)}>
-                {Object.entries(KIND_LABEL).map(([k, l]) => <option key={k} value={k}>{l}</option>)}
+                {Object.keys(PAYMENT_KIND).map(k => <option key={k} value={k}>{label(PAYMENT_KIND, k)}</option>)}
               </select>
               <input type="number" min={0} max={100} className="input text-sm" placeholder="%" aria-label="비율 %" value={r.ratio} onChange={e => set(i, 'ratio', e.target.value)} />
               <input className="input text-sm col-span-2 sm:col-span-1" placeholder="조건 (예: 계약 체결 시)" aria-label="조건" value={r.condition} onChange={e => set(i, 'condition', e.target.value)} />
@@ -369,7 +420,9 @@ function SectionStudies({ deal, reload }: { deal: Deal; reload: () => void }) {
           <button onClick={add} className="btn-primary text-sm">추가</button>
         </div>
       )}
-      {deal.studies.length === 0 ? <div className="text-xs text-ink-subtle py-1">등록된 시험이 없습니다. (시험관리팀 접수 후 시험번호별 추가)</div> : (
+      {deal.studies.length === 0 ? (
+        <EmptyState compact title="등록된 시험이 없습니다" description="시험관리팀 접수 후 시험번호별로 추가하세요. 견적을 계약 전환하면 자동으로 배치됩니다." action={{ label: '시험 추가', onClick: () => setAdding(true) }} />
+      ) : (
         <div className="space-y-3">
           {deal.studies.map(s => (
             <div key={s.id} className="rounded-[12px] border border-slate-200 p-3">
@@ -417,13 +470,14 @@ function SectionChangeQuotes({ deal, reload }: { deal: Deal; reload: () => void 
           <button onClick={add} className="btn-primary text-sm">추가</button>
         </div>
       )}
-      {deal.changeQuotes.length === 0 ? <div className="text-xs text-ink-subtle py-1">변경 내역 없음.</div> : (
+      {deal.changeQuotes.length === 0 ? <EmptyState compact title="변경 내역이 없습니다" action={{ label: '감가/추가금 추가', onClick: () => setOpen(true) }} /> : (
         <ul className="space-y-1.5">
           {deal.changeQuotes.map(c => (
             <li key={c.id} className="flex items-center gap-2 text-sm">
               {c.kind === 'DEDUCT' ? <TrendingDown className="w-4 h-4" style={{ color: 'var(--error)' }} /> : <TrendingUp className="w-4 h-4" style={{ color: 'var(--success)' }} />}
               <span className="font-semibold tabular-nums" style={{ color: c.kind === 'DEDUCT' ? 'var(--error)' : 'var(--success)' }}>{c.kind === 'DEDUCT' ? '-' : '+'}₩{c.amount.toLocaleString()}</span>
               <span className="flex-1 text-ink-muted truncate">{c.reason}</span>
+              <span className="text-[11px] text-ink-subtle tabular-nums hidden sm:inline">{fmtDateShort(c.createdAt)}</span>
               <button onClick={() => del(c.id)} aria-label="변경 내역 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600"><Trash2 className="w-3.5 h-3.5" /></button>
             </li>
           ))}
@@ -438,11 +492,13 @@ function Labeled({ label, children }: { label: string; children: React.ReactNode
 }
 function DateField({ label, value, onChange, hint }: { label: string; value: string | null; onChange: (v: string) => void; hint?: string }) {
   // blur 시점에만 저장 — 타이핑 중간값(빈 문자열)이 날짜를 지워버리는 것을 방지. key 로 reload 후 표시 동기화.
+  // 입력값은 로컬 yyyy-mm-dd(toYmd) — toISOString 은 UTC 라 하루가 밀린다.
+  const ymd = toYmd(value);
   return (
     <label className="block">
       <span className="label mb-0.5">{label}{hint && <span className="text-[10px] font-normal text-ink-subtle ml-1">— {hint}</span>}</span>
-      <input key={value ?? ''} type="date" className="input w-full text-sm" defaultValue={fmtDate(value)}
-        onBlur={e => e.target.value !== fmtDate(value) && onChange(e.target.value)} />
+      <input key={value ?? ''} type="date" className="input w-full text-sm" defaultValue={ymd}
+        onBlur={e => e.target.value !== ymd && onChange(e.target.value)} />
     </label>
   );
 }
