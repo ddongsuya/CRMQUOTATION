@@ -13,7 +13,7 @@ export type Deal = {
   quotes: Quote[]; contract: Contract | null; studies: Study[]; notes: Note[]; events: EventT[];
 };
 export type Contact = { id: number; name: string; email: string | null; phone: string | null; position: string | null; memo: string | null; deals: Deal[] };
-export type TaskT = { id: number; title: string; memo: string | null; dueAt: string | null; done: boolean; contact: { id: number; name: string } | null; deal: { id: number; title: string } | null };
+export type TaskT = { id: number; title: string; memo: string | null; category: string; dueAt: string | null; done: boolean; contact: { id: number; name: string } | null; deal: { id: number; title: string } | null; actions: { id: number; body: string; at: string }[] };
 export type Company = { id: number; name: string; bizRegNo: string | null; industry: string | null; address: string | null; isNewClient: boolean; memo: string | null; contacts: Contact[] };
 
 export type DealMeta = { dealId: number; dealTitle: string; modality: string | null; stage: string };

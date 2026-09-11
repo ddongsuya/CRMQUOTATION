@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Bell, AlertTriangle, CalendarClock } from 'lucide-react';
-import { EVENT_TYPE, tone } from '@/lib/labels';
+import { EVENT_TYPE, tone, TASK_CATEGORY, label } from '@/lib/labels';
 import { diffDays, fmtDateShort } from '@/lib/dates';
 import { EmptyState, ErrorState, LoadingState } from '@/components/ui/State';
 
-type Item = { date: string; kind: string; type: string; title: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; quoteId?: number; taskId?: number; contact?: string; eventId?: number; done?: boolean };
+type Item = { date: string; kind: string; type: string; title: string; category?: string; dealId?: number; dealTitle?: string; company?: string; companyId?: number; quoteId?: number; taskId?: number; contact?: string; eventId?: number; done?: boolean };
 
 export default function DashboardAlarms() {
   const [items, setItems] = useState<Item[] | null>(null);
@@ -66,7 +66,7 @@ function Row({ it, dd }: { it: Item; dd: number }) {
       <span className={clsx('w-2 h-2 rounded-full flex-shrink-0', tone(EVENT_TYPE, it.type, 'bg-slate-400'))} />
       <div className="flex-1 min-w-0">
         <div className="text-sm text-ink truncate">{it.title}</div>
-        {(it.company || it.dealTitle) && <div className="text-[11px] text-ink-subtle truncate">{[it.company, it.dealTitle].filter(Boolean).join(' · ')}</div>}
+        {(it.company || it.dealTitle || (it.kind === 'task' && it.category)) && <div className="text-[11px] text-ink-subtle truncate">{[it.kind === 'task' && it.category ? label(TASK_CATEGORY, it.category) : null, it.company, it.dealTitle].filter(Boolean).join(' · ')}</div>}
       </div>
       <div className="text-right flex-shrink-0">
         <div className="text-xs text-ink-muted tabular-nums">{fmtDateShort(it.date)}</div>

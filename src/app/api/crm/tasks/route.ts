@@ -1,6 +1,6 @@
 /**
  * GET  /api/crm/tasks?companyId=&dealId=&done=  — 내 할 일 목록 (미완료 우선, 기한 오름차순)
- * POST /api/crm/tasks                            — 할 일 생성 { title, memo?, dueAt?, companyId?, contactId?, dealId? }
+ * POST /api/crm/tasks                            — 할 일 생성 { title, category?, memo?, dueAt?, companyId?, contactId?, dealId? }
  *
  * 할 일(Task) = 일정(약속)과 구분되는 액션 아이템 — 완료 체크가 본질, 기한은 선택.
  */
@@ -31,6 +31,7 @@ async function _GET(req: Request) {
       company: { select: { id: true, name: true } },
       contact: { select: { id: true, name: true } },
       deal: { select: { id: true, title: true } },
+      actions: { orderBy: { at: 'desc' }, take: 20, select: { id: true, body: true, at: true } },
     },
     orderBy: [{ done: 'asc' }, { dueAt: { sort: 'asc', nulls: 'last' } }, { createdAt: 'desc' }],
     take: 300,
@@ -61,6 +62,7 @@ async function _POST(req: Request) {
     data: {
       ownerId, title: b.title,
       memo: b.memo,
+      category: b.category,
       dueAt: b.dueAt,
       companyId, contactId: b.contactId, dealId: b.dealId,
     },

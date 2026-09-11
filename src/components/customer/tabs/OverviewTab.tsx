@@ -12,6 +12,8 @@ import { SectionCard, Empty, DealLine, dday, noteTone } from '../shared';
 import ActivityTimeline from '../ActivityTimeline';
 import type { Agg, Company, Contact, GoTo, Tab, TaskT } from '../types';
 
+import { CategoryChip } from '@/components/crm/TaskBits';
+import { fmtDateShort } from '@/lib/dates';
 export default function OverviewTab({ agg, company, tasks, reload, onGo, onAddContact, onEditContact }: {
   agg: Agg | null; company: Company; tasks: TaskT[]; reload: () => void;
   onGo: GoTo;
@@ -71,7 +73,11 @@ export default function OverviewTab({ agg, company, tasks, reload, onGo, onAddCo
               return (
                 <li key={t.id} className="flex items-center gap-2.5 py-2">
                   <button onClick={() => toggleTask(t)} role="checkbox" aria-checked={false} aria-label={`${t.title} 완료 처리`} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
-                  <button onClick={() => onGo('할 일', { editId: t.id })} className="flex-1 min-w-0 text-left text-sm text-ink truncate hover:text-brand-600">{t.title}</button>
+                  <CategoryChip c={t.category} />
+                  <button onClick={() => onGo('할 일', { editId: t.id })} className="flex-1 min-w-0 text-left hover:text-brand-600">
+                    <span className="block text-sm text-ink truncate">{t.title}</span>
+                    {t.actions?.[0] && <span className="block text-[11px] text-ink-subtle truncate">최근 액션 · {fmtDateShort(t.actions[0].at)} {t.actions[0].body}</span>}
+                  </button>
                   {(t.deal || t.contact) && <span className="text-[11px] text-ink-subtle truncate max-w-[120px]">{t.deal?.title ?? t.contact?.name}</span>}
                   {dd && <span className={clsx('pill flex-shrink-0', dd.cls)}>{dd.label}</span>}
                 </li>

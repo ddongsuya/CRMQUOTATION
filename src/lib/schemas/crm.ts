@@ -190,9 +190,12 @@ export const eventPatchSchema = z.object({
 });
 
 // ── 할 일 ────────────────────────────────────────────────────────────────────
+export const TASK_CATEGORIES = ['MEETING', 'REPLY', 'DISCUSS', 'CONTACT', 'MATERIAL', 'INTERNAL', 'ETC'] as const;
+const taskCategory = z.enum(TASK_CATEGORIES, { errorMap: () => ({ message: '할 일 분류가 올바르지 않습니다.' }) });
 export const taskCreateSchema = z.object({
   title: reqText('할 일 내용을 입력하세요.'),
   memo: optText,
+  category: taskCategory.default('ETC'),
   dueAt: optDate,
   companyId: linkIdNull,
   contactId: linkIdNull,
@@ -201,11 +204,22 @@ export const taskCreateSchema = z.object({
 export const taskPatchSchema = z.object({
   title: patchReqText('내용은 비울 수 없습니다.'),
   memo: patchText,
+  category: taskCategory.optional(),
   dueAt: patchDate,
   done: patchBool,
   companyId: linkIdOpt,
   contactId: linkIdOpt,
   dealId: linkIdOpt,
+});
+
+// 할 일 액션 기록
+export const taskActionCreateSchema = z.object({
+  body: reqText('액션 내용을 입력하세요.'),
+  at: optDate,
+});
+export const taskActionPatchSchema = z.object({
+  body: patchReqText('액션 내용은 비울 수 없습니다.'),
+  at: patchDate,
 });
 
 // ── 계약 ─────────────────────────────────────────────────────────────────────

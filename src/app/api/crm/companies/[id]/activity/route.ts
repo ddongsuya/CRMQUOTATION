@@ -42,7 +42,7 @@ async function _GET(req: Request, { params }: { params: { id: string } }) {
     prisma.calendarEvent.findMany({ where: { ownerId: { in: owners }, OR: [{ contactId: { in: contactIds } }, { dealId: { in: dealIds } }] }, orderBy: { startAt: 'desc' }, take: limit,
       select: { id: true, type: true, title: true, startAt: true, done: true, location: true, dealId: true, contactId: true } }),
     prisma.task.findMany({ where: { ownerId: { in: owners }, OR: [{ companyId: id }, { contactId: { in: contactIds } }, { dealId: { in: dealIds } }] }, orderBy: { updatedAt: 'desc' }, take: limit,
-      select: { id: true, title: true, dueAt: true, done: true, doneAt: true, createdAt: true, dealId: true } }),
+      select: { id: true, title: true, category: true, dueAt: true, done: true, doneAt: true, createdAt: true, dealId: true, actions: { orderBy: { at: 'desc' }, take: 10, select: { id: true, body: true, at: true } } } }),
     prisma.quote.findMany({ where: { AND: [{ OR: [{ userId: { in: owners } }, { userId: null }] }, { OR: [{ companyId: id }, { dealId: { in: dealIds } }] }] }, orderBy: { updatedAt: 'desc' }, take: limit,
       select: { id: true, quoteNumber: true, projectName: true, status: true, createdAt: true, issuedAt: true, sentAt: true, supersededAt: true, revisedFromId: true, dealId: true, totalAfterDiscount: true, grandTotal: true } }),
     prisma.contract.findMany({ where: { dealId: { in: dealIds } }, select: { id: true, dealId: true, status: true, createdAt: true, draftSentAt: true, approvedAt: true, signedAt: true, contractNumber: true } }),
@@ -58,7 +58,10 @@ async function _GET(req: Request, { params }: { params: { id: string } }) {
   for (const n of notes) push({ at: n.occurredAt.toISOString(), kind: 'note', type: n.type, title: n.title || n.body.slice(0, 80), detail: n.title ? n.body.slice(0, 160) : null, refId: n.id, dealId: n.dealId,
     href: n.dealId ? `/deals/${n.dealId}` : undefined });
   for (const e of events) push({ at: e.startAt.toISOString(), kind: 'event', type: e.type, title: e.title, detail: [e.location, e.contactId ? contactName.get(e.contactId) : null].filter(Boolean).join(' · ') || null, refId: e.id, dealId: e.dealId, done: e.done });
-  for (const t of tasks) push({ at: (t.done && t.doneAt ? t.doneAt : t.dueAt ?? t.createdAt).toISOString(), kind: 'task', type: t.done ? 'DONE' : 'OPEN', title: t.title, refId: t.id, dealId: t.dealId, done: t.done });
+  for (const t of tasks) {
+    push({ at: (t.done && t.doneAt ? t.doneAt : t.dueAt ?? t.createdAt).toISOString(), kind: 'task', type: t.done ? 'DONE' : 'OPEN', title: t.title, detail: t.category !== 'ETC' ? t.category : null, refId: t.id, dealId: t.dealId, done: t.done });
+    for (const a of t.actions) push({ at: a.at.toISOString(), kind: 'task', type: 'ACTION', title: `액션 · ${a.body}`, detail: t.title, refId: t.id, dealId: t.dealId, done: t.done });
+  }
 
   for (const q of quotes) {
     const amt = q.totalAfterDiscount ?? (q.grandTotal != null ? Math.round(q.grandTotal / 1.1) : null);

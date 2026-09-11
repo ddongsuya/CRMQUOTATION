@@ -23,6 +23,7 @@ async function _GET() {
     include: {
       company: { select: { id: true, name: true } },
       deal: { select: { id: true, title: true } },
+      actions: { orderBy: { at: 'desc' }, take: 20, select: { id: true, body: true, at: true } },
     },
     orderBy: [{ dueAt: { sort: 'asc', nulls: 'last' } }, { createdAt: 'desc' }],
     take: 200,
@@ -41,7 +42,8 @@ async function _GET() {
 
   return NextResponse.json({
     tasks: tasks.map(t => ({
-      id: t.id, title: t.title, memo: t.memo, dueAt: t.dueAt?.toISOString() ?? null, done: t.done,
+      id: t.id, title: t.title, memo: t.memo, category: t.category, dueAt: t.dueAt?.toISOString() ?? null, done: t.done,
+      actions: t.actions.map(a => ({ id: a.id, body: a.body, at: a.at.toISOString() })),
       companyId: t.companyId, companyName: t.company?.name ?? null,
       dealId: t.dealId, dealTitle: t.deal?.title ?? null,
     })),

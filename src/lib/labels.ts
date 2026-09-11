@@ -68,6 +68,18 @@ export const EVENT_TYPE_LONG: Record<string, string> = {
   MEETING: '미팅/일정', TASK: '할 일(기한)', DEADLINE: '마감(잔금 등)', MILESTONE: '보고서(안) 발행', REMINDER: '팔로업',
 };
 
+/** 할 일(Task.category) — 이 할 일이 무엇을 위한 것인지 */
+export const TASK_CATEGORY: Record<string, Entry> = {
+  MEETING: t('미팅', 'bg-brand-100 text-brand-700'),
+  REPLY: t('답변·회신', 'tone-blue'),
+  DISCUSS: t('논의', 'bg-amber-100 text-amber-800'),
+  CONTACT: t('연락', 'tone-sent'),
+  MATERIAL: t('자료 준비', 'bg-emerald-100 text-emerald-700'),
+  INTERNAL: t('내부 업무', 'bg-slate-200 text-ink-muted'),
+  ETC: t('기타', 'bg-slate-100 text-ink-subtle'),
+};
+export const TASK_CATEGORY_ORDER = ['MEETING', 'REPLY', 'DISCUSS', 'CONTACT', 'MATERIAL', 'INTERNAL', 'ETC'] as const;
+
 /** 기록(Note.type) */
 export const NOTE_TYPE: Record<string, string> = { MEETING: '미팅', CALL: '통화', MEMO: '메모' };
 

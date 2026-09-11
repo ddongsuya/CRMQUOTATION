@@ -14,6 +14,7 @@ import { DEAL_STAGE } from '@/lib/labels';
 import { diffDays } from '@/lib/dates';
 import type { Agg, ContactOpt, DealOpt } from './types';
 
+import { CategorySelect } from '@/components/crm/TaskBits';
 export const fmtWon = (n: number | null | undefined) => `₩${(n ?? 0).toLocaleString()}`;
 export const fmtWonM = (n: number) => (n >= 1_000_000 ? `₩${(n / 1_000_000).toFixed(1)}M` : `₩${n.toLocaleString()}`);
 
@@ -120,12 +121,13 @@ export function Modal({ title, onClose, children, footer }: { title: string; onC
 export type NudgeCtx = { companyId: number; dealId?: number; contactId?: number };
 export function NextActionNudge({ ctx, onAdded, onDismiss }: { ctx: NudgeCtx; onAdded: () => void; onDismiss: () => void }) {
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('REPLY');
   const [busy, setBusy] = useState(false);
   const inputId = useId();
   const add = async () => {
     if (!title.trim()) { toast.error('할 일 내용을 입력하세요.'); return; }
     setBusy(true);
-    const body = { title: title.trim(), dueAt: null, companyId: ctx.companyId, ...(ctx.dealId ? { dealId: ctx.dealId } : ctx.contactId ? { contactId: ctx.contactId } : {}) };
+    const body = { title: title.trim(), category, dueAt: null, companyId: ctx.companyId, ...(ctx.dealId ? { dealId: ctx.dealId } : ctx.contactId ? { contactId: ctx.contactId } : {}) };
     const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
     setBusy(false);
     if (res.ok) { toast.success('할 일 추가됨'); setTitle(''); onAdded(); onDismiss(); } else toast.error('추가 실패');
@@ -136,6 +138,7 @@ export function NextActionNudge({ ctx, onAdded, onDismiss }: { ctx: NudgeCtx; on
       <label htmlFor={inputId} className="text-[13px] font-medium text-ink shrink-0">다음 할 일을 정해 둘까요?</label>
       <input id={inputId} className="input text-sm flex-1 min-w-[180px]" placeholder="예: 견적서 회신 확인 전화" value={title}
         onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} autoFocus />
+      <CategorySelect value={category} onChange={setCategory} />
       <button onClick={add} disabled={busy} className="btn-primary text-sm shrink-0">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Icon name="plus" className="w-4 h-4" />} 할 일 추가</button>
       <button onClick={onDismiss} aria-label="닫기" className="p-1 rounded text-ink-subtle hover:text-ink shrink-0"><X className="w-4 h-4" /></button>
     </div>

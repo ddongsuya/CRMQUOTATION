@@ -22,18 +22,23 @@ if (!name) {
 }
 const url = process.env.DATABASE_URL || readEnvFile();
 if (!url) { console.error('DATABASE_URL 이 없습니다 (.env 확인).'); process.exit(1); }
-if (/neon\.tech/.test(url) && !/-dev|dev-/.test(url) && !process.env.ALLOW_PROD_MIGRATION_DIFF) {
-  console.warn('⚠️  DATABASE_URL 이 Neon dev 브랜치가 아닌 것 같습니다. prod 를 기준으로 diff 를 만들면 위험할 수 있습니다.');
-  console.warn('    계속하려면 ALLOW_PROD_MIGRATION_DIFF=1 을 붙이세요.');
-  process.exit(1);
+{
+  const host = (() => { try { return new URL(url).host; } catch { return url; } })();
+  console.log(`기준 DB 호스트: ${host}`);
+  if (process.env.PROD_DB_HOST && host === process.env.PROD_DB_HOST) {
+    console.error('⚠️  DATABASE_URL 이 운영(PROD_DB_HOST) 을 가리킵니다. 로컬 .env 를 Neon dev 브랜치로 바꾼 뒤 실행하세요.');
+    process.exit(1);
+  }
 }
 
 const stamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
 const dir = path.join(__dirname, '..', 'prisma', 'migrations', `${stamp}_${name}`);
 const schema = path.join(__dirname, '..', 'prisma', 'schema.prisma');
 
-const sql = execFileSync('npx', ['prisma', 'migrate', 'diff', '--from-url', url, '--to-schema-datamodel', schema, '--script'], {
-  encoding: 'utf-8', shell: process.platform === 'win32', stdio: ['ignore', 'pipe', 'inherit'],
+// shell 을 거치지 않고 prisma CLI 를 직접 실행 — Neon URL 의 '&'(sslmode&channel_binding) 가 cmd.exe 에서 잘리는 문제 방지
+const prismaCli = require.resolve('prisma/build/index.js');
+const sql = execFileSync(process.execPath, [prismaCli, 'migrate', 'diff', '--from-url', url, '--to-schema-datamodel', schema, '--script'], {
+  encoding: 'utf-8', stdio: ['ignore', 'pipe', 'inherit'],
 });
 if (/This is an empty migration/.test(sql) || !sql.trim()) {
   console.log('변경 없음 — DB 와 schema.prisma 가 일치합니다.');

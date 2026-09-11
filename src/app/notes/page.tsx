@@ -10,8 +10,9 @@ import { NOTE_TYPE, label } from '@/lib/labels';
 import { toYmd, todayYmd, diffDays, fmtDateShort } from '@/lib/dates';
 import { EmptyState, LoadingState } from '@/components/ui/State';
 
+import { CategorySelect, CategoryChip, TaskActions } from '@/components/crm/TaskBits';
 type Note = { id: number; type: string; title: string | null; body: string; occurredAt: string; contact: { company: { id: number; name: string }; name: string } | null; deal: { id: number; title: string } | null };
-type Task = { id: number; title: string; memo: string | null; dueAt: string | null; done: boolean; companyId: number | null; companyName: string | null; dealId: number | null; dealTitle: string | null };
+type Task = { id: number; title: string; memo: string | null; category: string; dueAt: string | null; done: boolean; companyId: number | null; companyName: string | null; dealId: number | null; dealTitle: string | null; actions: { id: number; body: string; at: string }[] };
 type TodayEv = { id: number; title: string; type: string; location: string | null; dealId: number | null; dealTitle: string | null; companyId: number | null; companyName: string | null };
 
 // 기록 유형 색 — 이 화면 고유 톤. 라벨은 lib/labels(NOTE_TYPE) 단일 소스.
@@ -42,6 +43,7 @@ export default function NotebookPage() {
   const [saving, setSaving] = useState(false);
   const [quickTask, setQuickTask] = useState('');
   const [quickDue, setQuickDue] = useState(todayYmd());
+  const [quickCat, setQuickCat] = useState('ETC');
   const quickRef = useRef<HTMLInputElement>(null);   // 빈 상태의 "할 일 추가" → 입력창 포커스
 
   const loadNotes = () => fetch('/api/crm/notes').then(r => r.json()).then(d => setNotes(d.notes ?? [])).catch(() => setNotes([]));
@@ -79,7 +81,7 @@ export default function NotebookPage() {
   };
   const addTask = async () => {
     if (!quickTask.trim()) return;
-    const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ title: quickTask, dueAt: quickDue || null }) });
+    const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ title: quickTask, category: quickCat, dueAt: quickDue || null }) });
     if (res.ok) { setQuickTask(''); loadTasks(); } else toast.error('추가 실패');
   };
   const add = async () => {
@@ -119,6 +121,7 @@ export default function NotebookPage() {
             <div className="flex gap-1.5 mb-3">
               <input ref={quickRef} className="input text-sm flex-1" placeholder="할 일 추가 (예: 아이큐어 번역의뢰서 영문본 재요청)" aria-label="할 일 추가" value={quickTask}
                 onChange={e => setQuickTask(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addTask(); }} />
+              <CategorySelect value={quickCat} onChange={setQuickCat} />
               <input type="date" className="input text-sm w-auto" title="기한" aria-label="기한" value={quickDue} onChange={e => setQuickDue(e.target.value)} />
               <button onClick={addTask} aria-label="할 일 추가" className="btn-primary text-sm shrink-0"><Plus className="w-4 h-4" /></button>
             </div>
@@ -127,9 +130,10 @@ export default function NotebookPage() {
             ) : (
               <ul className="space-y-1.5">
                 {todayFocus.map(t => (
-                  <li key={t.id} className="flex items-center gap-2.5 group">
-                    <button onClick={() => toggle(t)} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Check className="w-3 h-3" />}</button>
-                    <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
+                  <li key={t.id} className="flex items-start gap-2.5 group">
+                    <button onClick={() => toggle(t)} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('mt-0.5 w-[18px] h-[18px] rounded-md border flex items-center justify-center shrink-0 transition-colors', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Check className="w-3 h-3" />}</button>
+                    <CategoryChip c={t.category} />
+                    <span className="flex-1 min-w-0"><span className={clsx('block text-sm truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span><TaskActions taskId={t.id} actions={t.actions ?? []} onChange={loadTasks} compact /></span>
                     {(t.dealId || t.companyId) && (
                       <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-[11px] text-ink-subtle hover:text-brand-600 truncate max-w-[130px]">{t.dealTitle ?? t.companyName}</Link>
                     )}
@@ -165,10 +169,11 @@ export default function NotebookPage() {
             ) : (
               <ul className="divide-y divide-slate-100">
                 {followups.map(t => { const u = t.dueAt ? urgency(t.dueAt) : { label: '기한 없음', cls: 'bg-slate-100 text-ink-subtle' }; return (
-                  <li key={t.id} className="flex items-center gap-2.5 py-2.5 group">
-                    <button onClick={() => toggle(t)} role="checkbox" aria-checked={false} aria-label={`${t.title} 완료 처리`} className="w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
+                  <li key={t.id} className="flex items-start gap-2.5 py-2.5 group">
+                    <button onClick={() => toggle(t)} role="checkbox" aria-checked={false} aria-label={`${t.title} 완료 처리`} className="mt-0.5 w-[18px] h-[18px] rounded-md border border-slate-300 hover:border-brand-400 flex items-center justify-center shrink-0" title="완료 처리" />
                     <span className={clsx('pill shrink-0', u.cls)}>{u.label}</span>
-                    <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{t.title}</span><span className="block text-[11px] text-ink-subtle">{t.dueAt ? fmtDateShort(t.dueAt) : ''}{(t.dealTitle || t.companyName) ? `${t.dueAt ? ' · ' : ''}${t.dealTitle ?? t.companyName}` : ''}</span></span>
+                    <CategoryChip c={t.category} />
+                    <span className="flex-1 min-w-0"><span className="block text-sm text-ink truncate">{t.title}</span><span className="block text-[11px] text-ink-subtle">{t.dueAt ? fmtDateShort(t.dueAt) : ''}{(t.dealTitle || t.companyName) ? `${t.dueAt ? ' · ' : ''}${t.dealTitle ?? t.companyName}` : ''}</span><TaskActions taskId={t.id} actions={t.actions ?? []} onChange={loadTasks} compact /></span>
                     <button onClick={() => delTask(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3 h-3" /></button>
                     {(t.dealId || t.companyId) && <Link href={t.dealId ? `/deals/${t.dealId}` : `/customers/${t.companyId}`} className="text-ink-subtle hover:text-brand-600"><Icon name="arrow-right" className="w-4 h-4" /></Link>}
                   </li>

@@ -6,11 +6,11 @@ import clsx from 'clsx';
 import { ChevronLeft, ChevronRight, Plus, Loader2, X, Save, ArrowRight, GanttChartSquare, Pencil, Trash2, Check } from 'lucide-react';
 import { toast } from '@/lib/toast';
 import EventDetailFields from '@/components/crm/EventDetailFields';
-import { EVENT_TYPE, EVENT_TYPE_LONG, label, tone } from '@/lib/labels';
+import { EVENT_TYPE, EVENT_TYPE_LONG, label, tone, TASK_CATEGORY } from '@/lib/labels';
 import { toYmd, todayYmd, fmtDateShort, fmtDateLong } from '@/lib/dates';
 import { EmptyState, LoadingState } from '@/components/ui/State';
 
-type Item = { date: string; kind: 'event' | 'milestone' | 'task'; type: string; title: string; taskId?: number; dealId?: number; dealTitle?: string; company?: string; companyId?: number; contactId?: number; quoteId?: number; eventId?: number; done?: boolean; location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null };
+type Item = { date: string; kind: 'event' | 'milestone' | 'task'; type: string; title: string; taskId?: number; dealId?: number; dealTitle?: string; company?: string; companyId?: number; contactId?: number; quoteId?: number; eventId?: number; done?: boolean; category?: string; location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null };
 
 // 유형 점 색 — lib/labels(EVENT_TYPE) tone 단일 소스 (대시보드 알람과 동일)
 const dot = (type: string) => tone(EVENT_TYPE, type, 'bg-slate-400');
@@ -185,6 +185,7 @@ function AgendaPanel({ date, items, onAdd, onEdit, onReload }: { date: string; i
                   <div className={clsx('text-sm text-ink', it.done && 'line-through')}>{it.title}</div>
                   <div className="text-[11px] text-ink-subtle flex items-center gap-1.5 mt-0.5">
                     <span>{label(EVENT_TYPE, it.type)}</span>
+                    {it.kind === 'task' && it.category && <><span className="text-ink-subtle/40">·</span><span>{label(TASK_CATEGORY, it.category)}</span></>}
                     {it.company && <><span className="text-ink-subtle/40">·</span><span className="truncate">{it.company}</span></>}
                     {it.location && <><span className="text-ink-subtle/40">·</span><span className="truncate">{it.location}</span></>}
                   </div>

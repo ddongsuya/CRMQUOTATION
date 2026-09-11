@@ -16,6 +16,7 @@ import {
 import { fmtDate, fmtDateShort, toYmd, todayYmd } from '@/lib/dates';
 import { EmptyState, ErrorState, LoadingState } from '@/components/ui/State';
 
+import { CategorySelect, CategoryChip, TaskActions } from '@/components/crm/TaskBits';
 type Quote = { id: number; quoteNumber: string; grandTotal: number | null; totalAfterDiscount: number | null; currency: string; status: string; sentAt: string | null; accepted: boolean | null; createdAt: string };
 type PaymentTerm = { id: number; seq: number; kind: string; ratio: number | null; amount: number | null; condition: string | null; dueAt: string | null; paidAt: string | null };
 type Contract = { id: number; status: string; contractNumber: string | null; costEstimateSentAt: string | null; draftSentAt: string | null; approvedAt: string | null; signedAt: string | null; paymentTerms: PaymentTerm[] };
@@ -162,36 +163,42 @@ function DealStatusActions({ deal, patch }: { deal: Deal; patch: (d: Record<stri
 
 // ─── 할 일 — 이 안건의 액션 아이템 (일정과 구분) ───
 function SectionTasks({ dealId }: { dealId: number }) {
-  type T = { id: number; title: string; dueAt: string | null; done: boolean };
+  type T = { id: number; title: string; category: string; dueAt: string | null; done: boolean; actions?: { id: number; body: string; at: string }[] };
   const [tasks, setTasks] = useState<T[]>([]);
   const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('ETC');
   const [dueAt, setDueAt] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const load = useCallback(() => { fetch(`/api/crm/tasks?dealId=${dealId}`).then(r => r.json()).then(d => setTasks(d.tasks ?? [])).catch(() => {}); }, [dealId]);
   useEffect(() => { load(); }, [load]);
   const add = async () => {
     if (!title.trim()) return;
-    const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ title, dueAt: dueAt || null, dealId }) });
+    const res = await fetch('/api/crm/tasks', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ title, category, dueAt: dueAt || null, dealId }) });
     if (res.ok) { setTitle(''); load(); } else toast.error('추가 실패');
   };
-  const toggle = async (t: T) => { await fetch(`/api/crm/tasks/${t.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ done: !t.done }) }); load(); };
+  const patch = async (id: number, data: Record<string, unknown>) => { const r = await fetch(`/api/crm/tasks/${id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) }); if (r.ok) load(); else toast.error('수정 실패'); };
   const del = async (id: number) => { await fetch(`/api/crm/tasks/${id}`, { method: 'DELETE' }); load(); };
   const open = tasks.filter(t => !t.done);
   return (
     <Card title={`할 일 ${open.length}건`}>
-      <div className="flex gap-1.5 mb-2">
-        <input ref={inputRef} className="input text-sm flex-1" placeholder="할 일 추가…" aria-label="할 일 추가" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
+      <div className="flex flex-wrap gap-1.5 mb-2">
+        <input ref={inputRef} className="input text-sm flex-1 min-w-[160px]" placeholder="할 일 추가…" aria-label="할 일 추가" value={title} onChange={e => setTitle(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} />
+        <CategorySelect value={category} onChange={setCategory} />
         <input type="date" className="input text-sm w-auto" title="기한(선택)" aria-label="기한(선택)" value={dueAt} onChange={e => setDueAt(e.target.value)} />
         <button onClick={add} aria-label="할 일 추가" className="btn-primary text-sm shrink-0"><Icon name="plus" className="w-4 h-4" /></button>
       </div>
       {tasks.length === 0 ? <EmptyState compact title="할 일이 없습니다" action={{ label: '할 일 추가', onClick: () => inputRef.current?.focus() }} /> : (
         <ul className="space-y-1">
           {tasks.map(t => (
-            <li key={t.id} className={clsx('flex items-center gap-2 group', t.done && 'opacity-50')}>
-              <button onClick={() => toggle(t)} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Icon name="check" className="w-2.5 h-2.5" />}</button>
-              <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
-              {t.dueAt && <span className="text-[11px] text-ink-subtle tabular-nums shrink-0">{fmtDateShort(t.dueAt)}</span>}
-              <button onClick={() => del(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3 h-3" /></button>
+            <li key={t.id} className={clsx('group', t.done && 'opacity-50')}>
+              <div className="flex items-center gap-2">
+                <button onClick={() => patch(t.id, { done: !t.done })} role="checkbox" aria-checked={t.done} aria-label={`${t.title} 완료`} className={clsx('w-[16px] h-[16px] rounded border flex items-center justify-center shrink-0', t.done ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-300 hover:border-brand-400')}>{t.done && <Icon name="check" className="w-2.5 h-2.5" />}</button>
+                <CategoryChip c={t.category} onChange={v => patch(t.id, { category: v })} />
+                <span className={clsx('flex-1 text-sm min-w-0 truncate', t.done ? 'line-through text-ink-subtle' : 'text-ink')}>{t.title}</span>
+                {t.dueAt && <span className="text-[11px] text-ink-subtle tabular-nums shrink-0">{fmtDateShort(t.dueAt)}</span>}
+                <button onClick={() => del(t.id)} aria-label="할 일 삭제" className="p-1 rounded text-ink-subtle hover:text-red-600 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"><Trash2 className="w-3 h-3" /></button>
+              </div>
+              <div className="pl-[24px]"><TaskActions taskId={t.id} actions={t.actions ?? []} onChange={load} compact /></div>
             </li>
           ))}
         </ul>

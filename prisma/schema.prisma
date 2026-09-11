@@ -450,9 +450,11 @@ model Task {
   dealId    Int?
   title     String
   memo      String?
+  category  String    @default("ETC")            // MEETING·REPLY·DISCUSS·CONTACT·MATERIAL·INTERNAL·ETC (lib/labels TASK_CATEGORY)
   dueAt     DateTime?                          // 기한 (선택 — 없으면 기한 없는 할 일)
   done      Boolean   @default(false)
   doneAt    DateTime?
+  actions   TaskAction[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
@@ -461,6 +463,18 @@ model Task {
   @@index([contactId])
   @@index([dealId])
   @@index([ownerId, done, dueAt])   // 개인 기록·아젠다: 미완료 우선 + 기한 정렬
+}
+
+// 할 일에 대해 취한 액션 기록 — "전화함(부재중)", "자료 송부", "회신 받음" 처럼 시간순으로 쌓인다.
+model TaskAction {
+  id        Int      @id @default(autoincrement())
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId    Int
+  body      String
+  at        DateTime @default(now())             // 액션 시점(사용자 지정 가능)
+  createdAt DateTime @default(now())
+
+  @@index([taskId, at])
 }
 
 model CalendarEvent {

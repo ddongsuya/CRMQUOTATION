@@ -16,6 +16,7 @@ type Item = {
   taskId?: number;
   dealId?: number; dealTitle?: string; company?: string; companyId?: number; contact?: string; contactId?: number;
   quoteId?: number; eventId?: number; done?: boolean;
+  category?: string;                                   // 할 일 분류 (kind=task)
   // 수동 일정 편집 프리필용 (캘린더·고객상세 공용)
   location?: string | null; attendeesClient?: string | null; attendeesInternal?: string | null; requests?: string | null;
 };
@@ -58,7 +59,7 @@ async function _GET(req: Request) {
     items.push({
       date: t.dueAt!.toISOString(), kind: 'task', type: 'TASK', title: t.title,
       dealId: t.deal?.id, dealTitle: t.deal?.title, company: t.company?.name, companyId: t.company?.id,
-      taskId: t.id, done: t.done,
+      taskId: t.id, done: t.done, category: t.category,
     });
   }
 
