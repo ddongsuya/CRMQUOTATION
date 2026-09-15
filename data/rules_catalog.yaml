@@ -45,9 +45,10 @@ catalog_meta:
   source_files: 14
   source_records_scanned: 613
   candidates_audited: 665              # 작업 1 결과: 안내문 41 + special 76 + extras 188 + method 360
-  total_rules_extracted: 33            # v1.0의 19 + v1.1의 14
+  total_rules_extracted: 34            # v1.0의 19 + v1.1의 14 + v1.2 수기 1(PF-004)
   rules_v1_0: 19                       # status: draft
   rules_v1_1_audit: 14                 # status: draft_audit
+  rules_v1_2_manual: 1                 # 2026-09-15 영업 실무 규칙(DRF 약식 TK) — status: draft
   total_candidates_excluded: 22
   needs_review_by: ["센터장", "팀장"]
   audit_coverage_summary:
@@ -97,6 +98,84 @@ pricing_formulas:
       설치류에는 별도 공식이 있을 가능성 (자료에는 없음).
     source_quote: "비설치류 채혈까지만 진행의 경우\n  총 채혈 포인트 X 30000원 + 500만원으로 계산"
     source_location: "안내문·푸터 / 의약품 / 경구피하근육(MFDS) R116, 경구피하근육(OECD) R118, 정맥경피(MFDS) R116, 정맥경피(OECD) R118"
+
+
+  - id: PF-004
+    description_ko: "DRF 독성동태(약식·non-GLP) 산출 공식 — 동물·사육·채혈·분석·QC검량선·보고서 합계 × (1 + 영업이익 10%)"
+    formula: "(animals_spare * animal_unit + animals_spare * housing_unit_per_day * housing_days + samples * bleeding_unit + samples * analysis_unit + qc_calibration_fixed + report_fixed) * (1 + margin)"
+    formula_human: |
+      샘플 수 = 회차 × ( 시험군 채혈 point × 군당 마리수 × 시험군 수 + 대조군 채혈 point(기본 3) × 군당 마리수 × 1 )
+      동물 수 = 군당 마리수 × 전체 군수 × (1 + 여유 10%), 올림
+      사육 일수 = DRF 투여 기간 + 순화 기간(설치류 1주 · 비설치류 2주)
+      금액 = ( 동물 구입 + 사육 + 채혈 + 분석 + QC·검량선 + 보고서 ) × 1.1, 만 원 단위 절사
+      · 비설치류는 DRF 동물을 그대로 쓰므로 동물 구입·사육비를 받지 않는다
+      · 약식(non-GLP): Full Validation·ISR 없이 QC·검량선만 확인, 정식 보고서 미발행
+    variables:
+      - name: samples
+        type: number
+        source: "plan.drfTk (points · sessions · groupMode) × DRF 군구성"
+        description_ko: "총 채혈 포인트(= 분석 샘플 수)"
+      - name: animals_spare
+        type: number
+        source: "군당 마리수 × 군수 × (1 + spare_ratio)"
+        description_ko: "여유분 포함 동물 수"
+      - name: housing_days
+        type: number
+        source: "DRF 주차 × 7 + acclimation_days"
+        description_ko: "사육 일수(순화 포함)"
+    parameters:
+      margin: 0.10                       # 영업이익
+      spare_ratio: 0.10                  # 동물 여유분
+      rounding_krw: 10000                # 최종 금액 만 원 단위 절사 (견적서 26-07-DL-0122-4 관행)
+      control_points: 3                  # 대조군 채혈 point
+      bleeding_unit: 30000               # 채혈비 / 샘플
+      analysis_unit: 70000               # 분석비 / 샘플 (LC/MS/MS)
+      qc_calibration_fixed: 5000000      # QC + 검량선 설정
+      report_fixed: 1000000              # 약식 보고서
+      rodent:
+        animal_unit: 25000               # 구입비 / 마리
+        housing_unit_per_day: 3000
+        acclimation_days: 7
+        animals_per_sex_per_group: 6     # 위성군 (point당 암수 3마리씩 교차채혈)
+        cross_bleeding: true             # point당 채혈 마리수 = 군당 12마리의 절반(6) — 견적서 "6 point × 6마리 × 4군"
+        charge_animals: true
+        charge_housing: true
+      non_rodent:
+        animal_unit: null                # DRF 동물 공용 — 미과금
+        housing_unit_per_day: 30000
+        acclimation_days: 14
+        animals_per_sex_per_group: 1
+        cross_bleeding: false            # 전 개체 채혈 — 견적서 "6 point × 2마리 × 4군"
+        charge_animals: false
+        charge_housing: false
+      sessions:
+        "2": ["1일차", "마지막일"]
+        "3": ["1일차", "4주차", "마지막일"]
+      default_test_groups: 4             # DRF 표준 군구성: 대조군 1 + 시험군 4
+    applies_to:
+      category: "독성동태(TK)"
+      sub_type: "drf_abbreviated"        # DRF 에 붙는 약식 TK (엔진: compose.composeDrfTkLines → 라인 id _drftk_*)
+      file_type: "pharmaceutical_toxicology"
+    applies_to_sheets:
+      - "경구피하근육(MFDS)"
+      - "경구피하근육(OECD)"
+      - "정맥경피(MFDS)"
+      - "정맥경피(OECD)"
+    version: "1.0"
+    status: "draft"
+    confidence: "high"
+    extracted_at: "2026-09-15"
+    effective_date: null
+    needs_review_by: ["센터장", "팀장"]
+    review_notes: |
+      영업(임정모) 구두 규칙 + 발행 견적서 26-07-DL-0122-4 대조로 확정.
+      · 비설치류 라인 18,480,000 = (108×30,000 + 108×70,000 + 5,000,000 + 1,000,000) × 1.1 — 정확히 재현.
+      · 설치류 라인 64,960,000 은 동물비 오타(1,650,000 → 16,500,000) 상태의 값. 정상 산출은 48,620,000
+        (= (1,650,000 + 4,158,000 + 9,720,000 + 22,680,000 + 5,000,000 + 1,000,000) × 1.1 = 48,628,800 → 만 원 절사).
+      · 조직병리 옵션(DRF 조직병리 +7,000,000 정액?)은 영업이 규칙을 다시 정리할 때까지 보류.
+      · 3회 채혈의 "4주차" 시점은 2주 DRF 에서는 의미가 없으므로 UI 에서 2주 DRF 는 2회를 기본으로 한다.
+    source_quote: "TK 구성 단가는 설치류는 보통 20000원(→25,000 정정), 설치류 사육비는 1일 2000원(→3,000·순화 1주 포함 21일 정정), 채혈비용은 샘플 1개당 30000원, 분석 비용은 1개당 70000원 보고서 비용은 100만원 QC+검량선 비용은 500만원 … 시험군: 채혈포인트 X 군당 동물 수 X 군수 + 대조군: 설정된 채혈포인트 X 군당 동물 수 X 군수 … 2회 채혈은 1일차와 마지막일 이고 3회채혈은 1일차 4주차 마지막일 … 영업이익 10% 더한 금액 … 비설치류에서는 DRF 동물을 그대로 사용"
+    source_location: "영업 실무 설명(2026-09-15) + 발행 견적서 견적서_매직불릿테라퓨틱스_MFDS_IND Package_DE법 추가_DRF TK·조직병리 반영_260907.pdf 4번·10번 항목"
 
 
 # ═════════════════════════════════════════════════════════════════════════════

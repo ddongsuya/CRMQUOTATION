@@ -109,7 +109,7 @@ function PrintPage() {
             const det = await fetch('/api/quote-v2/details', {
               method: 'POST', headers: { 'content-type': 'application/json' },
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              body: JSON.stringify({ ids: (q.items as any[]).map(it => it.testItemKey) }),
+              body: JSON.stringify({ ids: (q.items as any[]).map(it => it.testItemKey), plan }),
             }).then(r => r.json()).catch(() => ({ details: [] }));
             setData({
               meta: { quoteNo: q.quoteNumber, issuedAt: q.issuedAt ? new Date(q.issuedAt) : new Date(q.createdAt), validUntilDays: 60 },

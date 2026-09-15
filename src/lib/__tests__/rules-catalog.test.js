@@ -29,7 +29,7 @@ test('rules_catalog.yaml 이 YAML 로 파싱된다', () => {
   assert.equal(c.catalog_meta.version, '1.1', '버전이 1.1 아님');
 });
 
-test('rules_catalog 의 총 룰 수 = 33', () => {
+test('rules_catalog 의 총 룰 수 = 34', () => {
   const c = yaml.load(fs.readFileSync(catalogPath, 'utf8'));
   const sections = [
     'pricing_formulas', 'pricing_formulas_v1_1_audit',
@@ -40,7 +40,7 @@ test('rules_catalog 의 총 룰 수 = 33', () => {
   ];
   let total = 0;
   for (const s of sections) total += (c[s] || []).length;
-  assert.equal(total, 33, `룰 총합 33 != ${total}`);
+  assert.equal(total, 34, `룰 총합 34 != ${total}`);
 });
 
 test('모든 룰에 필수 메타데이터 (id/description_ko/status/confidence/source_quote/source_location) 가 있다', () => {
@@ -82,7 +82,7 @@ test('룰 ID 가 고유하다', () => {
       ids.add(rule.id);
     }
   }
-  assert.equal(ids.size, 33);
+  assert.equal(ids.size, 34);
 });
 
 test('review_questions.yaml 이 22개 질문을 가진다', () => {

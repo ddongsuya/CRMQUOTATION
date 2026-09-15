@@ -402,6 +402,7 @@
 }
 .print-doc .detail-block.notice .detail-block-label { color: var(--brand-deep); }
 .print-doc .detail-text {
+  white-space: pre-line;   /* 산출 근거·군구성 줄바꿈 유지 (DRF 약식 TK 등) */
   font-size: 11px;
   color: var(--ink-muted);
   margin: 0;

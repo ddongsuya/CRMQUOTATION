@@ -47,6 +47,11 @@ const COVERAGE = {
     evidence: 'PF-002 와 동일 메커니즘 (priceTiers)',
     recommended_action: 'PF-002 와 동일',
   },
+  'PF-004': {
+    status: 'implemented_in_code',
+    evidence: 'quote-engine/drf-tk.ts computeDrfTk (파라미터는 카탈로그 PF-004.parameters 에서 로드) + compose.composeDrfTkLines → 라인 _drftk_*. 위저드 3단계 "DRF 독성동태(약식)" 입력. drf-tk.test.js 골든값(설치류 48,620,000 · 비설치류 18,480,000).',
+    recommended_action: '단가 변경 시 rules_catalog.yaml PF-004.parameters 만 수정(코드 수정 불필요). 조직병리 옵션은 별도 룰로 추가 예정.',
+  },
 
   // ─── PrerequisiteRule ────────────────────────────────────────────────
   'PR-001': {

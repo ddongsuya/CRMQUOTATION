@@ -6,7 +6,7 @@
 import { NextResponse } from 'next/server';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { loadMaster, loadRules } from '@/lib/quote-engine/master';
-import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/quote-engine/compose';
+import { composeFromPlan, composeComputedLines, type ComposePlan } from '@/lib/quote-engine/compose';
 import { getItem } from '@/lib/quote-engine/master';
 import type { QuoteInput, LineItem } from '@/lib/quote-engine/types';
 
@@ -69,7 +69,7 @@ async function _POST(req: Request) {
     selectedItems = composed.map(c => ({ id: c.id }));
     // 함량분석·조제물분석(R2/R8) 자동 산출
     const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
-    extraLines = composeAnalysisLines(plan, masterItems);
+    extraLines = composeComputedLines(plan, masterItems);
   }
   if (selectedItems.length === 0) return NextResponse.json({ error: '구성된 시험이 없습니다 (조건을 확인하세요)', composed }, { status: 422 });
 

@@ -73,6 +73,11 @@ if val == null:
 - OECD 빈칸: 절대 자동 채우지 말 것 → missing_info로 사용자에게 되묻기.
 - 복합제: (componentCount × analysisMethod)로 행 선택 후 위 규칙.
 
+### 5.1 산출형 라인 — DRF 독성동태(약식) PF-004 (2026-09-15)
+
+마스터 항목이 아니라 **plan 파라미터로 계산되는 라인**(`_drftk_{species}_{N}w`). 단가·비율은 `data/rules_catalog.yaml` PF-004 `parameters` 가 유일한 원천이고, 계산은 `src/lib/quote-engine/drf-tk.ts`(순수 함수), 라인 생성은 `compose.composeDrfTkLines`, 인쇄 상세는 `/api/quote-v2/details` 가 저장된 plan 으로 재구성한다.
+샘플 수 = 회차 × (시험군 point × 군당 마리수 × 시험군 수 + 대조군 3 point × 군당 마리수). 금액 = (동물+사육+채혈+분석+QC·검량선+보고서) × 1.1, 만 원 절사. 비설치류는 DRF 동물 공용이라 동물·사육 미과금. 골든값: `src/lib/__tests__/drf-tk.test.js`.
+
 ## 6. 8단계 파이프라인 (POC 유지)
 filter(후보) → select(선택항목 확정) → WV(면제) → SB(대체) → CG(조건부군) → PR(선행·문서) →
 AD(추가옵션) → PF(가격공식·외삽) → GR(메타: 60일만료·VAT·기간정의) → 합계 + missing_info

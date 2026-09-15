@@ -6,6 +6,7 @@ import Icon from '@/components/Icon';
 import { toast } from '@/lib/toast';
 import { saveStatus } from '@/lib/save-status';
 import CustomerFields, { EMPTY_CUSTOMER, type CustomerInfo } from '@/components/quote/CustomerFields';
+import { DRF_TK_DEFAULT_PLAN, type DrfTkPlan } from '@/lib/quote-engine/drf-tk';
 
 const DURATIONS = [
   { key: 'SINGLE', label: '단회' }, { key: 'W4', label: '4주' }, { key: 'W13', label: '13주' },
@@ -76,6 +77,7 @@ export default function QuoteV2Page() {
   const [species, setSpecies] = useState({ rodent: true, nonRodent: true });
   const [addons, setAddons] = useState<Record<string, boolean>>({ drf: true, recovery: true, tk: true, genotox: true });
   const [tk, setTk] = useState({ points: 8, sessions: 2, sampleOnly: false });
+  const [drfTk, setDrfTk] = useState<DrfTkPlan>(DRF_TK_DEFAULT_PLAN);   // DRF 약식 TK (PF-004)
   const [comboCount, setComboCount] = useState(2);
   const [comboAnal, setComboAnal] = useState<'개별' | '동시'>('개별');
   const [excipient, setExcipient] = useState(1);
@@ -147,6 +149,7 @@ export default function QuoteV2Page() {
   const buildPlan = () => ({
     durations: [...durations], species, addons,
     tk: { points: tk.points, sampleOnly: tk.sampleOnly, sessions: tk.sessions },
+    drfTk: addons.drf ? drfTk : undefined,
     componentCount: isCombo ? comboCount : undefined, comboAnalysis: isCombo ? comboAnal : undefined,
     excipientCount: excipient, submissionTarget,
     vaccineGroups: category === '백신' ? vaccineGroups : undefined,
@@ -155,13 +158,13 @@ export default function QuoteV2Page() {
   // 위저드 상태 스냅샷 ↔ 복원 (브라우저 보관용). 서버 견적(planJson)과는 별개의 임시 저장.
   const snapshot = (): Record<string, unknown> => ({
     step, category, catGroup, standard, route, durations: [...durations], species, addons, tk, comboCount, comboAnal, excipient,
-    submissionTarget, vaccineGroups, healthSubtype, conds, reqAddons, currency, discountRate, exchangeRate, picked: [...picked],
+    submissionTarget, vaccineGroups, healthSubtype, conds, reqAddons, currency, discountRate, exchangeRate, picked: [...picked], drfTk,
     cust, dealId, savedId, savedNo, qtyOverrides, removedIds, addonTargets, addonPrices, extraIds, priceOv,
   });
   const applySnapshot = (st: Record<string, unknown>) => {
     const g = <T,>(k: string, d: T): T => (st[k] === undefined || st[k] === null ? d : (st[k] as T));
     setCategory(g('category', category)); setCatGroup(g('catGroup', null as string | null)); setStandard(g('standard', standard)); setRoute(g('route', route));
-    setDurations(new Set(g<string[]>('durations', [...durations]))); setSpecies(g('species', species)); setAddons(g('addons', addons)); setTk(g('tk', tk));
+    setDurations(new Set(g<string[]>('durations', [...durations]))); setSpecies(g('species', species)); setAddons(g('addons', addons)); setTk(g('tk', tk)); setDrfTk({ ...DRF_TK_DEFAULT_PLAN, ...g('drfTk', drfTk) });
     setComboCount(g('comboCount', comboCount)); setComboAnal(g('comboAnal', comboAnal)); setExcipient(g('excipient', excipient));
     setSubmissionTarget(g('submissionTarget', submissionTarget)); setVaccineGroups(g('vaccineGroups', vaccineGroups)); setHealthSubtype(g('healthSubtype', healthSubtype));
     setConds(g('conds', {})); setReqAddons(g('reqAddons', {})); setCurrency(g('currency', 'KRW')); setDiscountRate(Math.min(g('discountRate', 0), 0.5)); setExchangeRate(g('exchangeRate', 1400));
@@ -213,6 +216,7 @@ export default function QuoteV2Page() {
       if (pj.species) setSpecies(pj.species);
       if (pj.addons) setAddons(pj.addons);
       if (pj.tk) setTk({ points: pj.tk.points ?? 8, sessions: pj.tk.sessions ?? 2, sampleOnly: !!pj.tk.sampleOnly });
+      if (pj.drfTk) setDrfTk({ ...DRF_TK_DEFAULT_PLAN, ...pj.drfTk });
       if (pj.componentCount) setComboCount(pj.componentCount);
       if (pj.comboAnalysis) setComboAnal(pj.comboAnalysis);
       if (pj.excipientCount != null) setExcipient(pj.excipientCount);
@@ -556,6 +560,29 @@ export default function QuoteV2Page() {
                     <span>채혈 포인트</span>{[6, 8].map(p => <Chip key={p} on={tk.points === p} onClick={() => setTk(t => ({ ...t, points: p }))}>{p}pt</Chip>)}
                     <span className="ml-2">회차</span>{[2, 3].map(s => <Chip key={s} on={tk.sessions === s} onClick={() => setTk(t => ({ ...t, sessions: s }))}>{s}회</Chip>)}
                     <Chip on={tk.sampleOnly} onClick={() => setTk(t => ({ ...t, sampleOnly: !t.sampleOnly }))}>채혈만</Chip>
+                  </div></Field>
+                )}
+                {addons.drf && (
+                  <Field label="DRF 독성동태 (약식 · non-GLP)"><div className="space-y-1.5 text-xs">
+                    <div className="flex flex-wrap gap-1.5 items-center">
+                      <Chip on={drfTk.enabled} onClick={() => setDrfTk(d => ({ ...d, enabled: !d.enabled }))}>DRF에 TK 추가</Chip>
+                      {drfTk.enabled && <>
+                        <span className="ml-1 text-ink-muted">군</span>
+                        {([['ALL', 'DRF 전군'], ['CONTROL_HIGH', '대조군+최고용량군'], ['CUSTOM', '직접']] as const).map(([k, l]) => <Chip key={k} on={drfTk.groupMode === k} onClick={() => setDrfTk(d => ({ ...d, groupMode: k }))}>{l}</Chip>)}
+                        {drfTk.groupMode === 'CUSTOM' && <input type="number" min={1} max={8} aria-label="시험군 수" className="input w-16 h-7 text-xs py-0" value={drfTk.customTestGroups ?? 4} onChange={e => setDrfTk(d => ({ ...d, customTestGroups: Math.max(1, Number(e.target.value) || 1) }))} />}
+                        <span className="ml-1 text-ink-muted">포인트</span>{[6, 8].map(p => <Chip key={p} on={drfTk.points === p} onClick={() => setDrfTk(d => ({ ...d, points: p }))}>{p}pt</Chip>)}
+                        <span className="ml-1 text-ink-muted">회차</span>{[2, 3].map(n => <Chip key={n} on={drfTk.sessions === n} onClick={() => setDrfTk(d => ({ ...d, sessions: n }))}>{n}회</Chip>)}
+                      </>}
+                    </div>
+                    {drfTk.enabled && (
+                      <div className="flex flex-wrap gap-1.5 items-center">
+                        <span className="text-ink-muted">과금 항목</span>
+                        {([['animals', '동물'], ['housing', '사육'], ['bleeding', '채혈'], ['analysis', '분석'], ['qc', 'QC·검량선'], ['report', '보고서']] as const).map(([k, l]) => (
+                          <Chip key={k} on={drfTk.include?.[k] !== false} onClick={() => setDrfTk(d => ({ ...d, include: { ...(d.include ?? {}), [k]: d.include?.[k] === false } }))}>{l}</Chip>
+                        ))}
+                        <span className="text-ink-subtle">비설치류는 DRF 동물 공용이라 동물·사육 미과금. 금액 = 합계 × 1.1(영업이익), 만 원 절사</span>
+                      </div>
+                    )}
                   </div></Field>
                 )}
               </>}

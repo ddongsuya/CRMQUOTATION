@@ -5,7 +5,8 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { getItem } from '@/lib/quote-engine/master';
+import { getItem, loadRules } from '@/lib/quote-engine/master';
+import { computeDrfTk, drfWeeksFor, assertDrfTkParams, isDrfTkLineId, drfTkLineId, type DrfTkPlan } from '@/lib/quote-engine/drf-tk';
 
 import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
@@ -28,8 +29,23 @@ function guidelineMap(): Record<string, any> {
 }
 
 async function _POST(req: Request) {
-  const body = (await req.json().catch(() => null)) as { ids?: string[] } | null;
+  const body = (await req.json().catch(() => null)) as { ids?: string[]; plan?: { durations?: string[]; species?: { rodent: boolean; nonRodent: boolean }; addons?: Record<string, boolean>; drfTk?: DrfTkPlan } } | null;
   const ids = body?.ids ?? [];
+  // DRF 약식 TK(_drftk_*) 는 마스터 항목이 아니라 산출 라인 — 저장된 plan 으로 상세를 재구성한다.
+  const drfExtra: Array<Record<string, unknown>> = [];
+  const pl = body?.plan;
+  if (pl?.drfTk?.enabled && pl.addons?.drf && ids.some(isDrfTkLineId)) {
+    try {
+      const rule = ((loadRules()['pricing_formulas'] as Array<Record<string, unknown>>) ?? []).find(r => r.id === 'PF-004');
+      const params = assertDrfTkParams(rule?.parameters);
+      for (const w of drfWeeksFor(pl.durations ?? [])) for (const sp of (['rodent', 'nonRodent'] as const)) {
+        if (!(sp === 'rodent' ? pl.species?.rodent : pl.species?.nonRodent)) continue;
+        const key = drfTkLineId(sp, w); if (!ids.includes(key)) continue;
+        const r = computeDrfTk(sp, w, pl.drfTk, params);
+        drfExtra.push({ key, category: 'TK(독성동태)', species: sp === 'rodent' ? '설치류' : '비설치류', groupComposition: r.groupComposition, dosingPeriod: `${w}주 (DRF)`, studyWeeks: w, detail: r.detail, notice: r.notice, guidelineCodes: ['ICH S3A'] });
+      }
+    } catch (e) { console.error('[details] drf-tk', e); }
+  }
   const GL = guidelineMap();
   const details = ids.map(id => {
     const it = getItem(id);
@@ -50,6 +66,7 @@ async function _POST(req: Request) {
       detail: it.detail ?? null, notice: it.notice ?? null, guideline,
     };
   }).filter(Boolean);
+  details.push(...(drfExtra as typeof details));
   return NextResponse.json({ details });
 }
 

@@ -7,7 +7,7 @@ import { prisma } from '@/lib/prisma';
 import { createQuoteWithNumber, createRevisionWithNumber, QUOTE_TX_OPTS } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
-import { composeFromPlan, composeAnalysisLines, type ComposePlan } from '@/lib/quote-engine/compose';
+import { composeFromPlan, composeComputedLines, type ComposePlan } from '@/lib/quote-engine/compose';
 import { getItem } from '@/lib/quote-engine/master';
 import type { LineItem } from '@/lib/quote-engine/types';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
@@ -43,7 +43,7 @@ async function _POST(req: Request) {
     const composed = composeFromPlan(plan);
     selectedItems = composed.map(c => ({ id: c.id }));
     const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
-    extraLines = composeAnalysisLines(plan, masterItems);
+    extraLines = composeComputedLines(plan, masterItems);
     planForSnapshot = plan;
   } else {
     selectedItems = (b.selectedItemIds ?? []).map(id => ({ id }));

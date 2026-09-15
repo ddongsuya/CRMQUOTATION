@@ -4,7 +4,8 @@
  * 결과를 evaluateQuote 의 selectedItems 로 넘긴다.
  */
 import type { MasterItem, Standard, LineItem } from './types';
-import { itemsByCategory } from './master';
+import { itemsByCategory, loadRules } from './master';
+import { computeDrfTk, drfTkLineId, drfWeeksFor, assertDrfTkParams, type DrfTkPlan, type DrfTkSpecies } from './drf-tk';
 
 export type ComposePlan = {
   modality: string;                 // category
@@ -14,6 +15,7 @@ export type ComposePlan = {
   species: { rodent: boolean; nonRodent: boolean };
   addons: Record<string, boolean>;  // drf · recovery · tk · genotox · safetyPharm
   tk?: { points?: number; sampleOnly?: boolean; sessions?: number };
+  drfTk?: DrfTkPlan;                // DRF 에 붙는 약식 TK (PF-004) — addons.drf 일 때만 의미
   componentCount?: number;          // 복합제 종수
   comboAnalysis?: '개별' | '동시';  // 복합제 분석방식
   subtype?: string;
@@ -223,4 +225,41 @@ export function composeFromPlan(plan: ComposePlan): { id: string; testName: stri
   // 중복 제거
   const seen = new Set<string>();
   return picked.filter(it => (seen.has(it.id) ? false : seen.add(it.id))).map(it => ({ id: it.id, testName: it.testName }));
+}
+
+// ── DRF 독성동태(약식) — PF-004 파라미터는 룰 카탈로그에서 읽는다 (코드 인라인 금지) ──
+function drfTkParams() {
+  const R = loadRules();
+  const rules = (R['pricing_formulas'] as Array<Record<string, unknown>>) ?? [];
+  const r = rules.find(x => x.id === 'PF-004');
+  if (!r) throw new Error('PF-004 룰이 rules_catalog.v1.json 에 없습니다.');
+  return assertDrfTkParams(r.parameters);
+}
+
+/** DRF 옵션이 켜져 있고 drfTk.enabled 면 종별·DRF 주차별 약식 TK 라인을 산출한다. */
+export function composeDrfTkLines(plan: ComposePlan): LineItem[] {
+  if (!plan.addons?.drf || !plan.drfTk?.enabled) return [];
+  if (plan.modality === '복합제' || plan.modality === '백신' || plan.modality === '세포치료제') return [];
+  const params = drfTkParams();
+  const species: DrfTkSpecies[] = [];
+  if (plan.species.rodent) species.push('rodent');
+  if (plan.species.nonRodent) species.push('nonRodent');
+  const lines: LineItem[] = [];
+  for (const w of drfWeeksFor(plan.durations)) {
+    for (const sp of species) {
+      const r = computeDrfTk(sp, w, plan.drfTk, params);
+      lines.push({
+        id: drfTkLineId(sp, w), testName: r.testName, route: plan.route, testClass: 'TK(독성동태)',
+        unitPrice: r.total, quantity: 1, amount: r.total,
+        appliedRules: ['PF-004 DRF 약식 TK'],
+        notes: [`총 ${r.samples} point · ${r.groupComposition} · 소계 ${r.subtotal.toLocaleString()} × 1.${Math.round(r.margin * 100)}`],
+      });
+    }
+  }
+  return lines;
+}
+
+/** 계산 산출 라인 전체(함량·조제물분석 + DRF 약식 TK) — 평가·저장 라우트 공용 진입점. */
+export function composeComputedLines(plan: ComposePlan, composed: MasterItem[]): LineItem[] {
+  return [...composeAnalysisLines(plan, composed), ...composeDrfTkLines(plan)];
 }
