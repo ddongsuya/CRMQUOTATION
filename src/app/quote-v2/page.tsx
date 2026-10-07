@@ -202,10 +202,11 @@ export default function QuoteV2Page() {
     (async () => {
       const d = await fetch(`/api/quotes/${qid}`).then(r => r.json()).catch(() => null);
       const q = d?.quote;
-      if (!q) { toast.error('견적을 불러오지 못했습니다.'); return; }
+      // 복원 실패 시 플래그를 반드시 내린다 — true 로 남으면 자동 보관이 영영 멈춘다.
+      if (!q) { restoringRef.current = false; toast.error('견적을 불러오지 못했습니다.'); return; }
       let pj: any = {};
       try { pj = JSON.parse(q.planJson ?? '{}'); } catch { /* noop */ }
-      if (q.studyType === 'efficacy' || pj.engine !== 'v2') { toast.error('이 견적은 독성 위저드에서 수정할 수 없습니다.'); return; }
+      if (q.studyType === 'efficacy' || pj.engine !== 'v2') { restoringRef.current = false; toast.error('이 견적은 독성 위저드에서 수정할 수 없습니다.'); return; }
       if (q.supersededAt) toast.error('이 견적은 변경견적서로 대체된 이전 버전입니다 — 저장하면 이 버전 기준의 새 변경본이 생성됩니다.');
 
       if (pj.modality) setCategory(pj.modality);
@@ -258,7 +259,11 @@ export default function QuoteV2Page() {
       setSavedId(q.id); setSavedNo(q.quoteNumber);
       setStep(4);
       setRestorePending(true);
-    })();
+    })().catch(() => {
+      // 상태 적용 중 예외(손상된 planJson 등) — 복원 플래그를 내려 자동 보관·재생성이 계속 동작하게 한다.
+      restoringRef.current = false;
+      toast.error('견적을 불러오는 중 오류가 발생했습니다.');
+    });
     // ?id= 복원은 마운트 시 1회만 — category 는 초기값과의 비교용이라 의존성에서 의도적으로 제외
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -284,8 +289,16 @@ export default function QuoteV2Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restorePending, picked, isBattery]);
 
+  // 견적 재구성 요청 순번 + 진행 중 요청 취소 — 입력을 빠르게 바꾸면 요청이 겹치는데,
+  // 늦게 도착한 옛 응답이 최신 응답을 덮어써 화면 견적이 입력과 어긋났다. 최신 요청의 응답만 반영한다.
+  const genSeqRef = useRef(0);
+  const genAbortRef = useRef<AbortController | null>(null);
   const generate = async () => {
     // savedId 는 유지 — 한 번 저장한 견적은 이후 저장 시 같은 견적을 갱신(수정 흐름). savedNo 만 지워 "미저장 변경" 표시.
+    const seq = ++genSeqRef.current;
+    genAbortRef.current?.abort();
+    const ac = new AbortController();
+    genAbortRef.current = ac;
     setLoading(true); setSavedNo(null);
     try {
       const edits = { quantityOverrides: qtyOverrides, removedIds, addonTargets, addonPriceOverrides: addonPrices, extraItemIds: extraIds, unitPriceOverrides: priceOv };
@@ -294,13 +307,21 @@ export default function QuoteV2Page() {
         : { category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined, ...edits };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify(body), signal: ac.signal,
       });
       const d = await res.json().catch(() => ({}));
+      if (seq !== genSeqRef.current) return;   // 그사이 더 새 요청이 나갔다 — 이 응답은 버린다
       if (!res.ok || d.error) { toast.error(d.error ?? '견적 구성에 실패했습니다.'); setQuote(null); setComposed([]); return; }
       setQuote(d.quote ?? null);
       setComposed(d.composed?.length ? d.composed : (isBattery ? [...picked].map(id => ({ id, testName: null })) : []));
-    } finally { setLoading(false); }
+    } catch (e) {
+      // 새 요청이 이전 요청을 취소한 경우는 정상 흐름 — 사용자에게 알리지 않는다.
+      if (seq !== genSeqRef.current || (e instanceof DOMException && e.name === 'AbortError')) return;
+      toast.error('견적 구성 중 네트워크 오류가 발생했습니다.');
+    } finally {
+      // 최신 요청만 로딩 표시를 끈다 — 옛 요청이 끝나며 진행 중인 최신 요청의 스피너를 끄지 않게.
+      if (seq === genSeqRef.current) setLoading(false);
+    }
   };
 
   // 4단계 이후 계획·조건·부형제·옵션 등 견적에 영향을 주는 상태가 바뀌면 자동 재구성 (이미 견적이 있을 때만).
