@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { visibleOwnerIds } from '@/lib/current-user';
+import { kstDayStart, kstWeekStart } from '@/lib/kst';
 
 import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
@@ -15,8 +16,9 @@ export const dynamic = 'force-dynamic';
 async function _GET() {
   const owners = await visibleOwnerIds();
   const now = new Date();
-  const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const dayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  // '오늘'·'이번 주'는 KST 기준 — 서버(UTC)의 로컬 시각으로 자르면 KST 0~9시엔 전날 일정이 '오늘'로 나왔다.
+  const dayStart = kstDayStart(now);
+  const dayEnd = kstDayStart(now, 1);
 
   const tasks = await prisma.task.findMany({
     where: { ownerId: { in: owners }, OR: [{ done: false }, { doneAt: { gte: new Date(now.getTime() - 14 * 86400_000) } }] },
@@ -36,8 +38,7 @@ async function _GET() {
   });
 
   // 이번 주(월~) 완료한 할 일 수
-  const day = now.getDay(); const mondayOffset = (day + 6) % 7;
-  const weekStart = new Date(now); weekStart.setHours(0, 0, 0, 0); weekStart.setDate(now.getDate() - mondayOffset);
+  const weekStart = kstWeekStart(now);
   const weekDone = await prisma.task.count({ where: { ownerId: { in: owners }, done: true, doneAt: { gte: weekStart } } });
 
   return NextResponse.json({
