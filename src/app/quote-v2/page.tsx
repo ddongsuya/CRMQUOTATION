@@ -899,9 +899,11 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
   const sym = currency === 'USD' ? '$' : '₩';
   const f = (n: number) => `${sym}${conv(n).toLocaleString(undefined, { maximumFractionDigits: currency === 'USD' ? 2 : 0 })}`;
   const subtotal = quote?.totals.subtotalKrw ?? 0;
-  const discountAmt = subtotal * discountRate;
-  const afterDiscount = subtotal - discountAmt;
-  const vat = afterDiscount * 0.1;
+  // 저장 API 와 같은 규칙(레거시 computeTotals, KRW 정수 반올림) — 화면 합계와 저장된 견적서 합계가 1원도 어긋나지 않게.
+  const afterDiscountRaw = subtotal - subtotal * discountRate;
+  const discountAmt = Math.round(subtotal * discountRate);
+  const afterDiscount = Math.round(afterDiscountRaw);
+  const vat = Math.round(afterDiscountRaw * 0.1);
   const grand = afterDiscount + vat;
   const lineCount = quote?.lineItems.length ?? 0;
   const autoCount = Math.max(0, lineCount - selectedCount);

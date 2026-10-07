@@ -10,6 +10,7 @@ import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { composeFromPlan, composeDrfTkLines, type ComposePlan } from '@/lib/quote-engine/compose';
 import type { LineItem, AnalysisPlan } from '@/lib/quote-engine/types';
 import { findUnpricedLines, unpricedErrorMessage } from '@/lib/quote-engine/unpriced';
+import { computeTotals } from '@/engine/pricing';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { ownsQuote } from '@/lib/crm-guards';
 
@@ -74,7 +75,10 @@ async function _POST(req: Request) {
 
   const subtotal = quote.totals.subtotalKrw;
   const discountRate = Math.min(Math.max(b.discountRate ?? 0, 0), 0.5);   // 할인 상한 50% (사용자 정책)
-  const afterDiscount = subtotal * (1 - discountRate);
+  // 할인·VAT 는 레거시 엔진(src/engine/pricing computeTotals)과 같은 규칙으로 원 단위 정수 반올림.
+  //  예전엔 subtotal × (1 − 할인율) 부동소수를 그대로 저장해 견적서·집계에 소수 원이 섞였다.
+  //  v2 견적은 금액을 원화로 저장하고 환율은 별도 컬럼이므로 통화는 항상 KRW 로 계산한다(인쇄 시 환산).
+  const totals = computeTotals([{ subtotal }], discountRate, 'KRW');
   const itemRows = quote.lineItems.map((li, i) => ({
     testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route as string | null, category: b.category,
     tag: [...li.appliedRules, ...(li.isPrereq ? ['선행'] : [])].join(',') || null,
@@ -116,7 +120,7 @@ async function _POST(req: Request) {
     planJson,
     excipientCount: (b.plan?.excipientCount) ?? 0,
     currency: b.currency ?? 'KRW', exchangeRate: b.currency === 'USD' ? (b.exchangeRate ?? 1400) : null, discountRate,
-    totalBeforeDiscount: subtotal, totalAfterDiscount: afterDiscount, vatAmount: afterDiscount * 0.1, grandTotal: afterDiscount * 1.1,
+    totalBeforeDiscount: totals.totalBeforeDiscount, totalAfterDiscount: totals.totalAfterDiscount, vatAmount: totals.vatAmount, grandTotal: totals.grandTotal,
     ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
   });
 
