@@ -3,6 +3,7 @@
  *
  *  E3: 함량분석·조제물분석(R2/R8)은 step4 편집(삭제·수량·수동추가) 반영 후의 최종 라인으로 산출돼야 한다.
  *      예전엔 자동 구성 직후 값으로 고정돼, 유전독성을 지워도 조제물분석-유전독성 1,000만이 남았다.
+ *  E1: 가격 미정(unitPrice=null) 라인은 findUnpricedLines 가 잡아 저장 API 가 거절한다(₩0 발행 방지).
  *
  * engine.ts 는 확장자 없는 상대 import 를 써서 node 타입 스트리핑으로는 못 읽는다 →
  * 이미 설치돼 있는 jiti(tailwindcss 의존성, package-lock 고정)로 TS 를 그대로 로드한다.
@@ -19,6 +20,7 @@ const { evaluateQuote } = jiti(path.join(ROOT, 'src/lib/quote-engine/engine.ts')
 const { composeFromPlan, composeDrfTkLines } = jiti(path.join(ROOT, 'src/lib/quote-engine/compose.ts'));
 const { composeAnalysisLines } = jiti(path.join(ROOT, 'src/lib/quote-engine/analysis.ts'));
 const { getItem } = jiti(path.join(ROOT, 'src/lib/quote-engine/master.ts'));
+const { findUnpricedLines, unpricedErrorMessage } = jiti(path.join(ROOT, 'src/lib/quote-engine/unpriced.ts'));
 
 const ALL_ADDONS = { drf: true, recovery: true, tk: true, genotox: true, safetyPharm: true };
 
@@ -99,4 +101,43 @@ test('E3 룰 자동 추가 동반 라인(SB-001 카테터 → 조제물 분석 m
   assert.ok(med34 && med34.isPrereq, 'SB-001 동반 조제물분석이 선행 라인으로 추가돼야 한다');
   assert.equal(hamCount(q), 18);
   assert.ok(line(q, '_prep_in_vivo'));
+  // med-34 는 '견적 시마다 계산' 항목이라 단가 null — 예전엔 ₩0 으로 저장됐다. 이제 E1 이 저장을 막는다.
+  assert.ok(findUnpricedLines(q).some(u => u.id === 'med-34'));
+});
+
+// ── E1 ────────────────────────────────────────────────────────────────
+
+const DRUG_OECD_26W = {
+  modality: '의약품', standard: 'OECD', route: '경구', durations: ['SINGLE', 'W26'],
+  species: { rodent: true, nonRodent: true }, addons: ALL_ADDONS,
+};
+
+test('E1 OECD 가격 빈칸 → unitPrice null + missing_info, MFDS 로 폴백하지 않는다', () => {
+  const q = evalPlan(DRUG_OECD_26W);
+  const ids = findUnpricedLines(q).map(u => u.id).sort();
+  assert.deepEqual(ids, ['med-25', 'med-91']);
+  for (const id of ids) {
+    assert.equal(line(q, id).unitPrice, null, `${id}: MFDS 가격으로 채우면 안 된다`);
+    assert.ok(q.missingInfo.some(m => m.id === id), `${id}: missing_info 필요`);
+  }
+  const msg = unpricedErrorMessage(findUnpricedLines(q));
+  assert.match(msg, /2건/);
+  assert.ok(msg.includes(line(q, 'med-91').testName));
+});
+
+test('E1 단가 직접 입력 또는 삭제하면 미정 해소 (missing_info 도 함께 사라짐)', () => {
+  const ov = evalPlan(DRUG_OECD_26W, { unitPriceOverrides: { 'med-91': 300_000_000, 'med-25': 25_000_000 } });
+  assert.deepEqual(findUnpricedLines(ov), []);
+  assert.ok(!ov.missingInfo.some(m => m.id === 'med-91' || m.id === 'med-25'));
+  const rm = evalPlan(DRUG_OECD_26W, { removedIds: ['med-91', 'med-25'] });
+  assert.deepEqual(findUnpricedLines(rm), []);
+  assert.ok(!rm.missingInfo.some(m => m.id === 'med-91' || m.id === 'med-25'), '삭제한 라인의 경고가 남으면 저장이 엉뚱하게 막힌다');
+});
+
+test('E1 협의 단가 미입력 옵션도 미정으로 잡는다', () => {
+  const list = findUnpricedLines({
+    lineItems: [{ id: 'a', testName: 'A', route: '경구', unitPrice: 100, quantity: 1, amount: 100, appliedRules: [], notes: [] }],
+    addons: [{ ruleId: 'AD-009', name: '옵션X', price: 0, optional: true, priceMissing: true }],
+  });
+  assert.deepEqual(list.map(u => u.kind), ['addon']);
 });

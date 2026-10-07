@@ -9,6 +9,7 @@ import { currentUserId } from '@/lib/current-user';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { composeFromPlan, composeDrfTkLines, type ComposePlan } from '@/lib/quote-engine/compose';
 import type { LineItem, AnalysisPlan } from '@/lib/quote-engine/types';
+import { findUnpricedLines, unpricedErrorMessage } from '@/lib/quote-engine/unpriced';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { ownsQuote } from '@/lib/crm-guards';
 
@@ -60,12 +61,24 @@ async function _POST(req: Request) {
     extraItemIds: b.extraItemIds, unitPriceOverrides: b.unitPriceOverrides,
   });
 
+  // 가격 미정 라인이 있으면 임시 저장·발행 모두 거절한다.
+  //  · 예전엔 `unitPrice ?? 0` 으로 저장해 ₩0 라인이 낀 견적이 ISSUED 로 나갈 수 있었다.
+  //  · DRAFT 도 막는 이유: QuoteItem.unitPrice 는 NOT NULL 이라 저장하려면 0 으로 바꿔야 하고(조용한 0원 변환),
+  //    DRAFT 도 견적서 인쇄가 가능하며 관리자 화면에서 ISSUED 로 상태만 바꿀 수 있어 결국 0원 견적이 나갈 수 있다.
+  //    작성 중인 내용은 위저드의 브라우저 자동 보관이 지키므로, 서버에는 가격이 확정된 견적만 둔다.
+  //  · 단가를 직접 입력(unitPriceOverrides)하거나 항목을 삭제하면 엔진이 해소하므로 통과한다.
+  const unpriced = findUnpricedLines(quote);
+  if (unpriced.length) {
+    return NextResponse.json({ error: unpricedErrorMessage(unpriced), unpriced, missingInfo: quote.missingInfo }, { status: 422 });
+  }
+
   const subtotal = quote.totals.subtotalKrw;
   const discountRate = Math.min(Math.max(b.discountRate ?? 0, 0), 0.5);   // 할인 상한 50% (사용자 정책)
   const afterDiscount = subtotal * (1 - discountRate);
   const itemRows = quote.lineItems.map((li, i) => ({
     testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route as string | null, category: b.category,
     tag: [...li.appliedRules, ...(li.isPrereq ? ['선행'] : [])].join(',') || null,
+    // 위에서 가격 미정 라인을 거절했으므로 여기의 null 은 없다 (?? 0 은 타입 좁히기용)
     unitPrice: li.unitPrice ?? 0, quantity: li.quantity, subtotal: li.amount ?? 0,
     source: li.isPrereq ? 'auto' : 'engine', priority: null, displayOrder: i,
   }));

@@ -7,6 +7,7 @@ import { toast } from '@/lib/toast';
 import { saveStatus } from '@/lib/save-status';
 import CustomerFields, { EMPTY_CUSTOMER, type CustomerInfo } from '@/components/quote/CustomerFields';
 import { DRF_TK_DEFAULT_PLAN, type DrfTkPlan } from '@/lib/quote-engine/drf-tk';
+import { findUnpricedLines, type UnpricedEntry } from '@/lib/quote-engine/unpriced';
 
 const DURATIONS = [
   { key: 'SINGLE', label: '단회' }, { key: 'W4', label: '4주' }, { key: 'W13', label: '13주' },
@@ -377,8 +378,13 @@ export default function QuoteV2Page() {
     } finally { setSaving(false); }
   };
 
+  // 단가 미정 라인(OECD 가격 빈칸 등) — 서버가 저장을 거절하므로 화면에서도 같은 기준으로 미리 막고 알린다.
+  const unpriced: UnpricedEntry[] = quote ? findUnpricedLines(quote) : [];
+  const blocked = unpriced.length > 0;
+
   // 견적 완성 — 발행 저장 후 견적서(표지·견적명세·항목별 상세)로 이동
   const completeQuote = async () => {
+    if (blocked) { toast.error('단가가 정해지지 않은 항목이 있습니다. 단가를 입력하거나 항목을 삭제해 주세요.'); return; }
     const id = await saveQuote(true);
     if (id) { clearDraft(draftKeyFor(editIdRef.current)); touchedRef.current = false; window.location.href = `/quote/print?id=${id}`; }
     else toast.error('견적 저장에 실패했습니다. 다시 시도해 주세요.');
@@ -623,6 +629,28 @@ export default function QuoteV2Page() {
               <div className="flex items-center justify-end">
                 <button type="button" onClick={() => setStep(3)} className="btn-ghost"><Icon name="chevron-left" className="w-3.5 h-3.5" /> 계획 다시 구성</button>
               </div>
+              {/* 확인 필요(missing_info) — 엔진이 자동 결정하지 못한 항목. 단가 미정은 해결 전까지 저장·발행 불가. */}
+              {quote && (blocked || quote.missingInfo?.length > 0) && (
+                <div role="alert" className="rounded-[12px] border border-amber-300 bg-amber-50 px-3.5 py-3 space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-[13px] font-semibold text-amber-900">
+                    <AlertTriangle className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> 확인이 필요한 항목
+                  </div>
+                  {blocked && (
+                    <p className="text-[12px] text-amber-900">
+                      단가 미정 {unpriced.length}건 — 금액을 클릭해 단가를 직접 입력하거나 항목을 삭제해야 저장·발행할 수 있습니다.
+                    </p>
+                  )}
+                  <ul className="list-disc pl-5 text-[12px] text-amber-900 space-y-0.5">
+                    {(quote.missingInfo ?? []).map((m: { id?: string; level: string; message: string }, i: number) => (
+                      <li key={`${m.id ?? 'm'}-${i}`}>{m.level === 'blocker' ? '[필수] ' : ''}{m.message}</li>
+                    ))}
+                    {/* missing_info 에 안 잡히는 단가 미정(선행 자동추가 라인 등)도 빠짐없이 표시 */}
+                    {unpriced.filter(u => !(quote.missingInfo ?? []).some((m: { id?: string }) => m.id === u.id)).map(u => (
+                      <li key={`u-${u.id}`}>{u.name}: 단가 미정</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {/* 구성 항목 — testClass 그룹 + 수량 스텝퍼 + 삭제 */}
               {/* eslint-disable @typescript-eslint/no-explicit-any */}
               {quote && quote.lineItems?.length > 0 && (() => {
@@ -666,7 +694,7 @@ export default function QuoteV2Page() {
                                   <button type="button" onClick={() => setEditingPriceId(li.id)}
                                     className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0 w-24 text-right hover:text-brand-600 hover:underline decoration-dotted underline-offset-2"
                                     title="클릭해서 단가 수정 (군구성·동물수·투여횟수 변경 등 프리셋 이탈 시)">
-                                    {won(li.amount)}
+                                    {li.unitPrice == null ? <span className="text-[12px] font-semibold" style={{ color: 'var(--error)' }}>단가 미정</span> : won(li.amount)}
                                   </button>
                                 )}
                                 <button type="button"
@@ -810,7 +838,7 @@ export default function QuoteV2Page() {
             <span className="text-[11px] text-ink-subtle font-medium tabular-nums">{step} / {STEPS.length}</span>
             {step < STEPS.length
               ? <button onClick={() => setStep(s => s + 1)} disabled={!canNext()} className="btn-primary">다음 <ChevronRight className="w-4 h-4" /></button>
-              : <button onClick={completeQuote} disabled={saving || !quote} className="inline-flex items-center justify-center gap-2 h-10 px-[18px] rounded-full text-white font-semibold text-[14px] whitespace-nowrap transition-colors disabled:opacity-50" style={{ background: 'var(--success)' }}>
+              : <button onClick={completeQuote} disabled={saving || !quote || blocked} title={blocked ? '단가 미정 항목을 먼저 해결하세요' : undefined} className="inline-flex items-center justify-center gap-2 h-10 px-[18px] rounded-full text-white font-semibold text-[14px] whitespace-nowrap transition-colors disabled:opacity-50" style={{ background: 'var(--success)' }}>
                   {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Icon name="check" className="w-4 h-4" />} 견적 완성 <ChevronRight className="w-4 h-4" />
                 </button>}
           </footer>
@@ -825,6 +853,7 @@ export default function QuoteV2Page() {
             discountRate={discountRate} currency={currency} exchangeRate={exchangeRate}
             selectedCount={isBattery ? picked.size : composed.length}
             onSaveDraft={() => saveQuote(false)} onComplete={completeQuote} saving={saving}
+            unpriced={unpriced}
           />
         </div>
       </div>
@@ -860,11 +889,12 @@ function Row({ label, value, muted }: { label: string; value: string; muted?: bo
 }
 
 // 우측 실시간 견적 패널 — 시안: 항상 표시. 구성 전엔 placeholder, 구성 후 라인·합계.
-function LivePanel({ quote, composedCount, projectName, company, modality, standard, discountRate, currency, exchangeRate, selectedCount, onSaveDraft, onComplete, saving }: {
+function LivePanel({ quote, composedCount, projectName, company, modality, standard, discountRate, currency, exchangeRate, selectedCount, onSaveDraft, onComplete, saving, unpriced = [] }: {
   quote: Quote | null; composedCount: number; projectName: string; company: string; modality: string; standard: 'MFDS' | 'OECD';
   discountRate: number; currency: 'KRW' | 'USD'; exchangeRate: number; selectedCount: number;
-  onSaveDraft?: () => void; onComplete?: () => void; saving?: boolean;
+  onSaveDraft?: () => void; onComplete?: () => void; saving?: boolean; unpriced?: UnpricedEntry[];
 }) {
+  const blocked = unpriced.length > 0;
   const conv = (n: number) => currency === 'USD' ? n / exchangeRate : n;
   const sym = currency === 'USD' ? '$' : '₩';
   const f = (n: number) => `${sym}${conv(n).toLocaleString(undefined, { maximumFractionDigits: currency === 'USD' ? 2 : 0 })}`;
@@ -907,7 +937,9 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
                   <div className="text-[13px] text-ink">{li.testName}{li.isPrereq && <span className="tag ml-1.5">선행</span>}</div>
                   {meta && <div className="text-[11px] text-ink-subtle mt-0.5 break-keep">{meta}</div>}
                 </div>
-                <div className="text-[13px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">{f(li.amount ?? 0)}</div>
+                <div className="text-[13px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">
+                  {li.unitPrice == null ? <span className="text-[11px] font-semibold" style={{ color: 'var(--error)' }}>단가 미정</span> : f(li.amount ?? 0)}
+                </div>
               </div>
             );
           })}
@@ -942,10 +974,15 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
         </div>
       </div>
 
-      {/* 저장 · 발행 */}
+      {/* 저장 · 발행 — 단가 미정 항목이 있으면 서버가 거절하므로(0원 저장 방지) 두 버튼 모두 막고 이유를 보인다 */}
+      {blocked && (
+        <p role="alert" className="text-[12px] font-medium" style={{ color: 'var(--error)' }}>
+          단가 미정 {unpriced.length}건 — 단가 입력 또는 항목 삭제 후 저장·발행할 수 있습니다.
+        </p>
+      )}
       <div className="grid grid-cols-2 gap-2">
-        <button onClick={onSaveDraft} disabled={saving} className="btn-outline justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시 저장</button>
-        <button onClick={onComplete} disabled={saving || !quote} className="btn-primary justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />} PDF 발행</button>
+        <button onClick={onSaveDraft} disabled={saving || blocked} className="btn-outline justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시 저장</button>
+        <button onClick={onComplete} disabled={saving || !quote || blocked} className="btn-primary justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />} PDF 발행</button>
       </div>
       {/* 푸터 */}
       <div className="flex items-center gap-1.5 text-[11px] text-ink-subtle border-t border-[var(--hairline-soft)] pt-3">
