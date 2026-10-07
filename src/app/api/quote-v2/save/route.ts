@@ -7,9 +7,8 @@ import { prisma } from '@/lib/prisma';
 import { createQuoteWithNumber, createRevisionWithNumber, QUOTE_TX_OPTS } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
-import { composeFromPlan, composeComputedLines, type ComposePlan } from '@/lib/quote-engine/compose';
-import { getItem } from '@/lib/quote-engine/master';
-import type { LineItem } from '@/lib/quote-engine/types';
+import { composeFromPlan, composeDrfTkLines, type ComposePlan } from '@/lib/quote-engine/compose';
+import type { LineItem, AnalysisPlan } from '@/lib/quote-engine/types';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { ownsQuote } from '@/lib/crm-guards';
 
@@ -37,13 +36,16 @@ async function _POST(req: Request) {
   // 배터리형(체크리스트): 선택 id 직접 / 파라메트릭: plan 자동구성
   let selectedItems: { id: string }[];
   let extraLines: LineItem[] = [];
+  let analysisPlan: AnalysisPlan | undefined;
   let planForSnapshot: ComposePlan | { modality: string; selectedItemIds: string[] };
   if (b.plan) {
     const plan = { ...b.plan, modality: b.category, standard: std, route };
     const composed = composeFromPlan(plan);
     selectedItems = composed.map(c => ({ id: c.id }));
-    const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
-    extraLines = composeComputedLines(plan, masterItems);
+    // DRF 약식 TK(PF-004)만 미리 산출. 함량·조제물분석(R2/R8)은 엔진이 step4 편집(삭제·수량·수동추가)
+    // 반영 후 최종 라인으로 산출한다 — 여기서 미리 계산하면 편집이 반영되지 않아 미리보기·저장 모두 틀린다.
+    extraLines = composeDrfTkLines(plan);
+    analysisPlan = { modality: plan.modality, route: plan.route, excipientCount: plan.excipientCount };
     planForSnapshot = plan;
   } else {
     selectedItems = (b.selectedItemIds ?? []).map(id => ({ id }));
@@ -51,7 +53,7 @@ async function _POST(req: Request) {
   }
   const quote = evaluateQuote({
     category: b.category, standard: std, route,
-    selectedItems, extraLines,
+    selectedItems, extraLines, analysisPlan,
     customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {}, combinationCount: b.combinationCount,
     quantityOverrides: b.quantityOverrides, removedIds: b.removedIds,
     addonTargets: b.addonTargets, addonPriceOverrides: b.addonPriceOverrides,

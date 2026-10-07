@@ -6,6 +6,7 @@
  */
 import type { QuoteInput, Quote, LineItem } from './types';
 import { getItem } from './master';
+import { composeAnalysisLines, type AnalysisSelection } from './analysis';
 import { resolvePrice } from './pricing';
 import { runRuleStages, type RuleState } from './rules';
 import { sortLines } from './ordering';
@@ -46,7 +47,8 @@ export function evaluateQuote(input: QuoteInput): Quote {
     s.lineItems.push(li);
   }
 
-  // ── 계산 산출 라인(함량분석·조제물분석 R2/R8) — 마스터 항목 아님, 가격 산출됨 ──
+  // ── 계산 산출 라인(DRF 약식 TK 등) — 마스터 항목 아님, 가격 산출됨 ──
+  //    함량·조제물분석은 여기서 받지 않는다 — 아래에서 step4 편집 반영 후 최종 라인으로 산출.
   for (const li of input.extraLines ?? []) {
     s.lineItems.push(li);
     s.ruleLog.push({ step: 'analysis', msg: `${li.appliedRules.join(',')}: ${li.testName} (${(li.unitPrice ?? 0).toLocaleString()})` });
@@ -63,13 +65,12 @@ export function evaluateQuote(input: QuoteInput): Quote {
   ];
   s.ruleLog.push({ step: 'GR', msg: 'GR-001~003 메타룰 적용' });
 
-  // ── 선행추가 라인 병합(플래그) + 정립 순서 정렬 + 합계 ──
-  let lineItems = sortLines([...s.lineItems, ...s.prerequisitesAdded.map(li => ({ ...li, isPrereq: true }))]);
+  // ── 선행추가 라인 병합(플래그) → step4 편집 → 분석 라인 산출 → 정립 순서 정렬 → 합계 ──
   // step4 수량·삭제·단가 오버라이드 적용 (미리보기·저장 공통)
   const removed = new Set(input.removedIds ?? []);
   const qov = input.quantityOverrides ?? {};
   const pov = input.unitPriceOverrides ?? {};
-  lineItems = lineItems
+  const applyEdits = (lines: LineItem[]): LineItem[] => lines
     .filter(li => !removed.has(li.id))
     .map(li => {
       const p = pov[li.id];
@@ -78,8 +79,22 @@ export function evaluateQuote(input: QuoteInput): Quote {
         : li;
     })
     .map(li => { const q = qov[li.id]; return (q != null && q >= 1) ? { ...li, quantity: q, amount: li.unitPrice != null ? li.unitPrice * q : null } : li; });
-  // 단가를 직접 지정한 라인의 가격 미정 경고는 해소된 것으로 처리 (OECD null 등)
-  s.missingInfo = s.missingInfo.filter(m => m.id == null || pov[m.id] == null);
+  const edited = applyEdits([...s.lineItems, ...s.prerequisitesAdded.map(li => ({ ...li, isPrereq: true }))]);
+
+  // 함량분석·조제물분석(R2/R8) — 편집이 끝난 최종 마스터 라인 기준으로 산출해야 실제 수행 시험과 일치한다.
+  // (삭제한 유전독성의 조제물분석이 남거나, 수량 2로 늘린 본시험의 함량분석이 1건분으로 남는 문제 방지)
+  // 분석 라인 자체도 사용자가 삭제·단가/수량 조정할 수 있으므로 같은 편집을 한 번 더 적용한다.
+  let analysisLines: LineItem[] = [];
+  if (input.analysisPlan) {
+    const selected: AnalysisSelection[] = [];
+    for (const li of edited) { const it = getItem(li.id); if (it) selected.push({ item: it, quantity: li.quantity, autoAdded: !!li.isPrereq }); }
+    analysisLines = applyEdits(composeAnalysisLines(input.analysisPlan, selected));
+    for (const li of analysisLines) s.ruleLog.push({ step: 'analysis', msg: `${li.appliedRules.join(',')}: ${li.testName} (${(li.unitPrice ?? 0).toLocaleString()})` });
+  }
+  const lineItems = sortLines([...analysisLines, ...edited]);
+  // 단가를 직접 지정했거나 삭제한 라인의 경고는 해소된 것으로 처리 (OECD null 등)
+  //   삭제한 라인의 '가격 미정' 경고가 남아 있으면 화면이 계속 확인을 요구하고 저장 판정이 어긋난다.
+  s.missingInfo = s.missingInfo.filter(m => m.id == null || (pov[m.id] == null && !removed.has(m.id)));
   const lineItemsKrw = lineItems.reduce((sum, li) => sum + (li.amount ?? 0), 0);
   const addonsKrw = s.addons.reduce((sum, a) => sum + a.price, 0);
 

@@ -6,9 +6,8 @@
 import { NextResponse } from 'next/server';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
 import { loadMaster, loadRules } from '@/lib/quote-engine/master';
-import { composeFromPlan, composeComputedLines, type ComposePlan } from '@/lib/quote-engine/compose';
-import { getItem } from '@/lib/quote-engine/master';
-import type { QuoteInput, LineItem } from '@/lib/quote-engine/types';
+import { composeFromPlan, composeDrfTkLines, type ComposePlan } from '@/lib/quote-engine/compose';
+import type { QuoteInput, LineItem, AnalysisPlan } from '@/lib/quote-engine/types';
 
 import { withErrorHandling } from '@/lib/api-handler';
 export const dynamic = 'force-dynamic';
@@ -63,19 +62,21 @@ async function _POST(req: Request) {
   let composed: { id: string; testName: string | null }[] = [];
   let selectedItems = body.selectedItems ?? [];
   let extraLines: LineItem[] = [];
+  let analysisPlan: AnalysisPlan | undefined;
   if (body.plan) {
     const plan = { ...body.plan, modality: body.category, standard: body.standard ?? 'MFDS', route: body.route ?? '경구' };
     composed = composeFromPlan(plan);
     selectedItems = composed.map(c => ({ id: c.id }));
-    // 함량분석·조제물분석(R2/R8) 자동 산출
-    const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
-    extraLines = composeComputedLines(plan, masterItems);
+    // DRF 약식 TK(PF-004)만 미리 산출. 함량·조제물분석(R2/R8)은 엔진이 step4 편집(삭제·수량·수동추가)
+    // 반영 후 최종 라인으로 산출한다 — 여기서 미리 계산하면 편집이 반영되지 않아 미리보기·저장 모두 틀린다.
+    extraLines = composeDrfTkLines(plan);
+    analysisPlan = { modality: plan.modality, route: plan.route, excipientCount: plan.excipientCount };
   }
   if (selectedItems.length === 0) return NextResponse.json({ error: '구성된 시험이 없습니다 (조건을 확인하세요)', composed }, { status: 422 });
 
   const quote = evaluateQuote({
     category: body.category, standard: body.standard ?? 'MFDS', route: body.route ?? '경구',
-    submissionTarget: body.submissionTarget, selectedItems, extraLines,
+    submissionTarget: body.submissionTarget, selectedItems, extraLines, analysisPlan,
     customerConditions: body.customerConditions ?? {}, requestedAddons: body.requestedAddons ?? {},
     combinationCount: body.combinationCount,
     quantityOverrides: body.quantityOverrides, removedIds: body.removedIds,
