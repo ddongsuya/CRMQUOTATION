@@ -258,7 +258,7 @@ function GuidelineCard({ g, admin }: { g: Guideline; admin: AdminCtx }) {
             <a href={`/catalog?q=${encodeURIComponent(g.related_tests?.[0] ?? g.category ?? g.code)}`} className="inline-flex items-center gap-1.5 text-xs text-brand-600 hover:underline">
               관련 시험 항목 보기 <ExternalLink className="w-3.5 h-3.5 rotate-90" />
             </a>
-            {g.official_url && (
+            {g.official_url && /^https?:\/\//i.test(g.official_url) && (
               <a href={g.official_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-xs text-ink-muted hover:underline">
                 <ExternalLink className="w-3.5 h-3.5" /> 공식 원문 보기
               </a>
