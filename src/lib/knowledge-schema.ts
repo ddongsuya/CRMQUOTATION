@@ -19,7 +19,8 @@ export const guidelineSchema = z.object({
   title_en: optStr,
   category: str.min(1, 'category(분류)는 필수입니다'),
   version: optStr,
-  official_url: optStr,
+  // http(s) 만 허용 — javascript: 링크가 저장되면 가이드라인 화면에서 클릭 한 번으로 스크립트가 실행된다(저장형 XSS).
+  official_url: optStr.refine((v) => v == null || v === '' || /^https?:\/\//i.test(v), 'official_url 은 http:// 또는 https:// 로 시작해야 합니다'),
   confidence: optStr,
   purpose: optStr,
   // checklist: 자유형 객체(요구사항 키-값). 중첩 허용.

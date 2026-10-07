@@ -7,9 +7,10 @@ import { prisma } from '@/lib/prisma';
 import { createQuoteWithNumber, createRevisionWithNumber, QUOTE_TX_OPTS } from '@/lib/quote-number';
 import { currentUserId } from '@/lib/current-user';
 import { evaluateQuote } from '@/lib/quote-engine/engine';
-import { composeFromPlan, composeComputedLines, type ComposePlan } from '@/lib/quote-engine/compose';
-import { getItem } from '@/lib/quote-engine/master';
-import type { LineItem } from '@/lib/quote-engine/types';
+import { composeFromPlan, composeDrfTkLines, type ComposePlan } from '@/lib/quote-engine/compose';
+import type { LineItem, AnalysisPlan } from '@/lib/quote-engine/types';
+import { findUnpricedLines, unpricedErrorMessage } from '@/lib/quote-engine/unpriced';
+import { computeTotals } from '@/engine/pricing';
 import { findOrCreateCompanyWithContact } from '@/lib/admin/company-match';
 import { ownsQuote } from '@/lib/crm-guards';
 
@@ -37,13 +38,16 @@ async function _POST(req: Request) {
   // 배터리형(체크리스트): 선택 id 직접 / 파라메트릭: plan 자동구성
   let selectedItems: { id: string }[];
   let extraLines: LineItem[] = [];
+  let analysisPlan: AnalysisPlan | undefined;
   let planForSnapshot: ComposePlan | { modality: string; selectedItemIds: string[] };
   if (b.plan) {
     const plan = { ...b.plan, modality: b.category, standard: std, route };
     const composed = composeFromPlan(plan);
     selectedItems = composed.map(c => ({ id: c.id }));
-    const masterItems = composed.map(c => getItem(c.id)).filter((x): x is NonNullable<typeof x> => !!x);
-    extraLines = composeComputedLines(plan, masterItems);
+    // DRF 약식 TK(PF-004)만 미리 산출. 함량·조제물분석(R2/R8)은 엔진이 step4 편집(삭제·수량·수동추가)
+    // 반영 후 최종 라인으로 산출한다 — 여기서 미리 계산하면 편집이 반영되지 않아 미리보기·저장 모두 틀린다.
+    extraLines = composeDrfTkLines(plan);
+    analysisPlan = { modality: plan.modality, route: plan.route, excipientCount: plan.excipientCount };
     planForSnapshot = plan;
   } else {
     selectedItems = (b.selectedItemIds ?? []).map(id => ({ id }));
@@ -51,19 +55,34 @@ async function _POST(req: Request) {
   }
   const quote = evaluateQuote({
     category: b.category, standard: std, route,
-    selectedItems, extraLines,
+    selectedItems, extraLines, analysisPlan,
     customerConditions: b.customerConditions ?? {}, requestedAddons: b.requestedAddons ?? {}, combinationCount: b.combinationCount,
     quantityOverrides: b.quantityOverrides, removedIds: b.removedIds,
     addonTargets: b.addonTargets, addonPriceOverrides: b.addonPriceOverrides,
     extraItemIds: b.extraItemIds, unitPriceOverrides: b.unitPriceOverrides,
   });
 
+  // 가격 미정 라인이 있으면 임시 저장·발행 모두 거절한다.
+  //  · 예전엔 `unitPrice ?? 0` 으로 저장해 ₩0 라인이 낀 견적이 ISSUED 로 나갈 수 있었다.
+  //  · DRAFT 도 막는 이유: QuoteItem.unitPrice 는 NOT NULL 이라 저장하려면 0 으로 바꿔야 하고(조용한 0원 변환),
+  //    DRAFT 도 견적서 인쇄가 가능하며 관리자 화면에서 ISSUED 로 상태만 바꿀 수 있어 결국 0원 견적이 나갈 수 있다.
+  //    작성 중인 내용은 위저드의 브라우저 자동 보관이 지키므로, 서버에는 가격이 확정된 견적만 둔다.
+  //  · 단가를 직접 입력(unitPriceOverrides)하거나 항목을 삭제하면 엔진이 해소하므로 통과한다.
+  const unpriced = findUnpricedLines(quote);
+  if (unpriced.length) {
+    return NextResponse.json({ error: unpricedErrorMessage(unpriced), unpriced, missingInfo: quote.missingInfo }, { status: 422 });
+  }
+
   const subtotal = quote.totals.subtotalKrw;
   const discountRate = Math.min(Math.max(b.discountRate ?? 0, 0), 0.5);   // 할인 상한 50% (사용자 정책)
-  const afterDiscount = subtotal * (1 - discountRate);
+  // 할인·VAT 는 레거시 엔진(src/engine/pricing computeTotals)과 같은 규칙으로 원 단위 정수 반올림.
+  //  예전엔 subtotal × (1 − 할인율) 부동소수를 그대로 저장해 견적서·집계에 소수 원이 섞였다.
+  //  v2 견적은 금액을 원화로 저장하고 환율은 별도 컬럼이므로 통화는 항상 KRW 로 계산한다(인쇄 시 환산).
+  const totals = computeTotals([{ subtotal }], discountRate, 'KRW');
   const itemRows = quote.lineItems.map((li, i) => ({
     testItemKey: li.id, testNameSnapshot: li.testName, adminRouteSnap: li.route as string | null, category: b.category,
     tag: [...li.appliedRules, ...(li.isPrereq ? ['선행'] : [])].join(',') || null,
+    // 위에서 가격 미정 라인을 거절했으므로 여기의 null 은 없다 (?? 0 은 타입 좁히기용)
     unitPrice: li.unitPrice ?? 0, quantity: li.quantity, subtotal: li.amount ?? 0,
     source: li.isPrereq ? 'auto' : 'engine', priority: null, displayOrder: i,
   }));
@@ -101,7 +120,7 @@ async function _POST(req: Request) {
     planJson,
     excipientCount: (b.plan?.excipientCount) ?? 0,
     currency: b.currency ?? 'KRW', exchangeRate: b.currency === 'USD' ? (b.exchangeRate ?? 1400) : null, discountRate,
-    totalBeforeDiscount: subtotal, totalAfterDiscount: afterDiscount, vatAmount: afterDiscount * 0.1, grandTotal: afterDiscount * 1.1,
+    totalBeforeDiscount: totals.totalBeforeDiscount, totalAfterDiscount: totals.totalAfterDiscount, vatAmount: totals.vatAmount, grandTotal: totals.grandTotal,
     ...(b.issueNow ? { status: 'ISSUED', issuedAt: new Date(), validUntil: new Date(Date.now() + 60 * 86400_000) } : {}),
   });
 

@@ -7,6 +7,7 @@ import { toast } from '@/lib/toast';
 import { saveStatus } from '@/lib/save-status';
 import CustomerFields, { EMPTY_CUSTOMER, type CustomerInfo } from '@/components/quote/CustomerFields';
 import { DRF_TK_DEFAULT_PLAN, type DrfTkPlan } from '@/lib/quote-engine/drf-tk';
+import { findUnpricedLines, type UnpricedEntry } from '@/lib/quote-engine/unpriced';
 
 const DURATIONS = [
   { key: 'SINGLE', label: '단회' }, { key: 'W4', label: '4주' }, { key: 'W13', label: '13주' },
@@ -201,10 +202,11 @@ export default function QuoteV2Page() {
     (async () => {
       const d = await fetch(`/api/quotes/${qid}`).then(r => r.json()).catch(() => null);
       const q = d?.quote;
-      if (!q) { toast.error('견적을 불러오지 못했습니다.'); return; }
+      // 복원 실패 시 플래그를 반드시 내린다 — true 로 남으면 자동 보관이 영영 멈춘다.
+      if (!q) { restoringRef.current = false; toast.error('견적을 불러오지 못했습니다.'); return; }
       let pj: any = {};
       try { pj = JSON.parse(q.planJson ?? '{}'); } catch { /* noop */ }
-      if (q.studyType === 'efficacy' || pj.engine !== 'v2') { toast.error('이 견적은 독성 위저드에서 수정할 수 없습니다.'); return; }
+      if (q.studyType === 'efficacy' || pj.engine !== 'v2') { restoringRef.current = false; toast.error('이 견적은 독성 위저드에서 수정할 수 없습니다.'); return; }
       if (q.supersededAt) toast.error('이 견적은 변경견적서로 대체된 이전 버전입니다 — 저장하면 이 버전 기준의 새 변경본이 생성됩니다.');
 
       if (pj.modality) setCategory(pj.modality);
@@ -257,7 +259,11 @@ export default function QuoteV2Page() {
       setSavedId(q.id); setSavedNo(q.quoteNumber);
       setStep(4);
       setRestorePending(true);
-    })();
+    })().catch(() => {
+      // 상태 적용 중 예외(손상된 planJson 등) — 복원 플래그를 내려 자동 보관·재생성이 계속 동작하게 한다.
+      restoringRef.current = false;
+      toast.error('견적을 불러오는 중 오류가 발생했습니다.');
+    });
     // ?id= 복원은 마운트 시 1회만 — category 는 초기값과의 비교용이라 의존성에서 의도적으로 제외
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -283,8 +289,16 @@ export default function QuoteV2Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restorePending, picked, isBattery]);
 
+  // 견적 재구성 요청 순번 + 진행 중 요청 취소 — 입력을 빠르게 바꾸면 요청이 겹치는데,
+  // 늦게 도착한 옛 응답이 최신 응답을 덮어써 화면 견적이 입력과 어긋났다. 최신 요청의 응답만 반영한다.
+  const genSeqRef = useRef(0);
+  const genAbortRef = useRef<AbortController | null>(null);
   const generate = async () => {
     // savedId 는 유지 — 한 번 저장한 견적은 이후 저장 시 같은 견적을 갱신(수정 흐름). savedNo 만 지워 "미저장 변경" 표시.
+    const seq = ++genSeqRef.current;
+    genAbortRef.current?.abort();
+    const ac = new AbortController();
+    genAbortRef.current = ac;
     setLoading(true); setSavedNo(null);
     try {
       const edits = { quantityOverrides: qtyOverrides, removedIds, addonTargets, addonPriceOverrides: addonPrices, extraItemIds: extraIds, unitPriceOverrides: priceOv };
@@ -293,13 +307,21 @@ export default function QuoteV2Page() {
         : { category, standard, route, plan: buildPlan(), customerConditions: conds, requestedAddons: reqAddons, combinationCount: isCombo ? comboCount : undefined, ...edits };
       const res = await fetch('/api/quote-v2', {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify(body), signal: ac.signal,
       });
       const d = await res.json().catch(() => ({}));
+      if (seq !== genSeqRef.current) return;   // 그사이 더 새 요청이 나갔다 — 이 응답은 버린다
       if (!res.ok || d.error) { toast.error(d.error ?? '견적 구성에 실패했습니다.'); setQuote(null); setComposed([]); return; }
       setQuote(d.quote ?? null);
       setComposed(d.composed?.length ? d.composed : (isBattery ? [...picked].map(id => ({ id, testName: null })) : []));
-    } finally { setLoading(false); }
+    } catch (e) {
+      // 새 요청이 이전 요청을 취소한 경우는 정상 흐름 — 사용자에게 알리지 않는다.
+      if (seq !== genSeqRef.current || (e instanceof DOMException && e.name === 'AbortError')) return;
+      toast.error('견적 구성 중 네트워크 오류가 발생했습니다.');
+    } finally {
+      // 최신 요청만 로딩 표시를 끈다 — 옛 요청이 끝나며 진행 중인 최신 요청의 스피너를 끄지 않게.
+      if (seq === genSeqRef.current) setLoading(false);
+    }
   };
 
   // 4단계 이후 계획·조건·부형제·옵션 등 견적에 영향을 주는 상태가 바뀌면 자동 재구성 (이미 견적이 있을 때만).
@@ -377,8 +399,13 @@ export default function QuoteV2Page() {
     } finally { setSaving(false); }
   };
 
+  // 단가 미정 라인(OECD 가격 빈칸 등) — 서버가 저장을 거절하므로 화면에서도 같은 기준으로 미리 막고 알린다.
+  const unpriced: UnpricedEntry[] = quote ? findUnpricedLines(quote) : [];
+  const blocked = unpriced.length > 0;
+
   // 견적 완성 — 발행 저장 후 견적서(표지·견적명세·항목별 상세)로 이동
   const completeQuote = async () => {
+    if (blocked) { toast.error('단가가 정해지지 않은 항목이 있습니다. 단가를 입력하거나 항목을 삭제해 주세요.'); return; }
     const id = await saveQuote(true);
     if (id) { clearDraft(draftKeyFor(editIdRef.current)); touchedRef.current = false; window.location.href = `/quote/print?id=${id}`; }
     else toast.error('견적 저장에 실패했습니다. 다시 시도해 주세요.');
@@ -623,6 +650,28 @@ export default function QuoteV2Page() {
               <div className="flex items-center justify-end">
                 <button type="button" onClick={() => setStep(3)} className="btn-ghost"><Icon name="chevron-left" className="w-3.5 h-3.5" /> 계획 다시 구성</button>
               </div>
+              {/* 확인 필요(missing_info) — 엔진이 자동 결정하지 못한 항목. 단가 미정은 해결 전까지 저장·발행 불가. */}
+              {quote && (blocked || quote.missingInfo?.length > 0) && (
+                <div role="alert" className="rounded-[12px] border border-amber-300 bg-amber-50 px-3.5 py-3 space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-[13px] font-semibold text-amber-900">
+                    <AlertTriangle className="w-4 h-4 flex-shrink-0" aria-hidden="true" /> 확인이 필요한 항목
+                  </div>
+                  {blocked && (
+                    <p className="text-[12px] text-amber-900">
+                      단가 미정 {unpriced.length}건 — 금액을 클릭해 단가를 직접 입력하거나 항목을 삭제해야 저장·발행할 수 있습니다.
+                    </p>
+                  )}
+                  <ul className="list-disc pl-5 text-[12px] text-amber-900 space-y-0.5">
+                    {(quote.missingInfo ?? []).map((m: { id?: string; level: string; message: string }, i: number) => (
+                      <li key={`${m.id ?? 'm'}-${i}`}>{m.level === 'blocker' ? '[필수] ' : ''}{m.message}</li>
+                    ))}
+                    {/* missing_info 에 안 잡히는 단가 미정(선행 자동추가 라인 등)도 빠짐없이 표시 */}
+                    {unpriced.filter(u => !(quote.missingInfo ?? []).some((m: { id?: string }) => m.id === u.id)).map(u => (
+                      <li key={`u-${u.id}`}>{u.name}: 단가 미정</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {/* 구성 항목 — testClass 그룹 + 수량 스텝퍼 + 삭제 */}
               {/* eslint-disable @typescript-eslint/no-explicit-any */}
               {quote && quote.lineItems?.length > 0 && (() => {
@@ -666,7 +715,7 @@ export default function QuoteV2Page() {
                                   <button type="button" onClick={() => setEditingPriceId(li.id)}
                                     className="text-[14px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0 w-24 text-right hover:text-brand-600 hover:underline decoration-dotted underline-offset-2"
                                     title="클릭해서 단가 수정 (군구성·동물수·투여횟수 변경 등 프리셋 이탈 시)">
-                                    {won(li.amount)}
+                                    {li.unitPrice == null ? <span className="text-[12px] font-semibold" style={{ color: 'var(--error)' }}>단가 미정</span> : won(li.amount)}
                                   </button>
                                 )}
                                 <button type="button"
@@ -810,7 +859,7 @@ export default function QuoteV2Page() {
             <span className="text-[11px] text-ink-subtle font-medium tabular-nums">{step} / {STEPS.length}</span>
             {step < STEPS.length
               ? <button onClick={() => setStep(s => s + 1)} disabled={!canNext()} className="btn-primary">다음 <ChevronRight className="w-4 h-4" /></button>
-              : <button onClick={completeQuote} disabled={saving || !quote} className="inline-flex items-center justify-center gap-2 h-10 px-[18px] rounded-full text-white font-semibold text-[14px] whitespace-nowrap transition-colors disabled:opacity-50" style={{ background: 'var(--success)' }}>
+              : <button onClick={completeQuote} disabled={saving || !quote || blocked} title={blocked ? '단가 미정 항목을 먼저 해결하세요' : undefined} className="inline-flex items-center justify-center gap-2 h-10 px-[18px] rounded-full text-white font-semibold text-[14px] whitespace-nowrap transition-colors disabled:opacity-50" style={{ background: 'var(--success)' }}>
                   {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Icon name="check" className="w-4 h-4" />} 견적 완성 <ChevronRight className="w-4 h-4" />
                 </button>}
           </footer>
@@ -825,6 +874,7 @@ export default function QuoteV2Page() {
             discountRate={discountRate} currency={currency} exchangeRate={exchangeRate}
             selectedCount={isBattery ? picked.size : composed.length}
             onSaveDraft={() => saveQuote(false)} onComplete={completeQuote} saving={saving}
+            unpriced={unpriced}
           />
         </div>
       </div>
@@ -860,18 +910,21 @@ function Row({ label, value, muted }: { label: string; value: string; muted?: bo
 }
 
 // 우측 실시간 견적 패널 — 시안: 항상 표시. 구성 전엔 placeholder, 구성 후 라인·합계.
-function LivePanel({ quote, composedCount, projectName, company, modality, standard, discountRate, currency, exchangeRate, selectedCount, onSaveDraft, onComplete, saving }: {
+function LivePanel({ quote, composedCount, projectName, company, modality, standard, discountRate, currency, exchangeRate, selectedCount, onSaveDraft, onComplete, saving, unpriced = [] }: {
   quote: Quote | null; composedCount: number; projectName: string; company: string; modality: string; standard: 'MFDS' | 'OECD';
   discountRate: number; currency: 'KRW' | 'USD'; exchangeRate: number; selectedCount: number;
-  onSaveDraft?: () => void; onComplete?: () => void; saving?: boolean;
+  onSaveDraft?: () => void; onComplete?: () => void; saving?: boolean; unpriced?: UnpricedEntry[];
 }) {
+  const blocked = unpriced.length > 0;
   const conv = (n: number) => currency === 'USD' ? n / exchangeRate : n;
   const sym = currency === 'USD' ? '$' : '₩';
   const f = (n: number) => `${sym}${conv(n).toLocaleString(undefined, { maximumFractionDigits: currency === 'USD' ? 2 : 0 })}`;
   const subtotal = quote?.totals.subtotalKrw ?? 0;
-  const discountAmt = subtotal * discountRate;
-  const afterDiscount = subtotal - discountAmt;
-  const vat = afterDiscount * 0.1;
+  // 저장 API 와 같은 규칙(레거시 computeTotals, KRW 정수 반올림) — 화면 합계와 저장된 견적서 합계가 1원도 어긋나지 않게.
+  const afterDiscountRaw = subtotal - subtotal * discountRate;
+  const discountAmt = Math.round(subtotal * discountRate);
+  const afterDiscount = Math.round(afterDiscountRaw);
+  const vat = Math.round(afterDiscountRaw * 0.1);
   const grand = afterDiscount + vat;
   const lineCount = quote?.lineItems.length ?? 0;
   const autoCount = Math.max(0, lineCount - selectedCount);
@@ -907,7 +960,9 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
                   <div className="text-[13px] text-ink">{li.testName}{li.isPrereq && <span className="tag ml-1.5">선행</span>}</div>
                   {meta && <div className="text-[11px] text-ink-subtle mt-0.5 break-keep">{meta}</div>}
                 </div>
-                <div className="text-[13px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">{f(li.amount ?? 0)}</div>
+                <div className="text-[13px] font-medium text-ink tabular-nums whitespace-nowrap flex-shrink-0">
+                  {li.unitPrice == null ? <span className="text-[11px] font-semibold" style={{ color: 'var(--error)' }}>단가 미정</span> : f(li.amount ?? 0)}
+                </div>
               </div>
             );
           })}
@@ -942,10 +997,15 @@ function LivePanel({ quote, composedCount, projectName, company, modality, stand
         </div>
       </div>
 
-      {/* 저장 · 발행 */}
+      {/* 저장 · 발행 — 단가 미정 항목이 있으면 서버가 거절하므로(0원 저장 방지) 두 버튼 모두 막고 이유를 보인다 */}
+      {blocked && (
+        <p role="alert" className="text-[12px] font-medium" style={{ color: 'var(--error)' }}>
+          단가 미정 {unpriced.length}건 — 단가 입력 또는 항목 삭제 후 저장·발행할 수 있습니다.
+        </p>
+      )}
       <div className="grid grid-cols-2 gap-2">
-        <button onClick={onSaveDraft} disabled={saving} className="btn-outline justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시 저장</button>
-        <button onClick={onComplete} disabled={saving || !quote} className="btn-primary justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />} PDF 발행</button>
+        <button onClick={onSaveDraft} disabled={saving || blocked} className="btn-outline justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null} 임시 저장</button>
+        <button onClick={onComplete} disabled={saving || !quote || blocked} className="btn-primary justify-center">{saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />} PDF 발행</button>
       </div>
       {/* 푸터 */}
       <div className="flex items-center gap-1.5 text-[11px] text-ink-subtle border-t border-[var(--hairline-soft)] pt-3">

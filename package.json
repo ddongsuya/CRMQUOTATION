@@ -25,7 +25,8 @@
     "db:deploy": "prisma migrate deploy",
     "db:status": "prisma migrate status",
     "typecheck": "tsc --noEmit",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "user:set-password": "node scripts/set-password.js"
   },
   "prisma": {
     "seed": "ts-node --transpile-only prisma/seed.ts"
@@ -40,7 +41,7 @@
     "exceljs": "^4.4.0",
     "js-yaml": "^4.1.1",
     "lucide-react": "^1.11.0",
-    "next": "14.2.15",
+    "next": "^14.2.35",
     "next-auth": "^4.24.14",
     "pdf-parse": "^2.4.5",
     "react": "18.3.1",

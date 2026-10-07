@@ -44,7 +44,10 @@ export type QuoteInput = {
   customerConditions?: Record<string, boolean>;   // WV/SB/CG 트리거 토글
   requestedAddons?: Record<string, boolean>;      // AD(optional) 채택 여부
   combinationCount?: number;        // 복합제 종수
-  extraLines?: LineItem[];          // 계산 산출 라인(함량분석·조제물분석 R2/R8) — 마스터 항목 아님
+  extraLines?: LineItem[];          // 계산 산출 라인(DRF 약식 TK PF-004 등) — 마스터 항목 아님
+  // 함량분석·조제물분석(R2/R8) 산출 조건. 있으면 엔진이 step4 편집(삭제·수량·수동추가) 반영 후의
+  // 최종 라인으로 분석 라인을 계산한다 — 미리 계산해 extraLines 로 넘기면 편집이 반영되지 않기 때문.
+  analysisPlan?: AnalysisPlan;
   quantityOverrides?: Record<string, number>;   // step4 수량 조정 (라인 id → 수량)
   removedIds?: string[];            // step4 삭제한 라인 id
   extraItemIds?: string[];          // step4 수동 추가 항목 (자동 구성 외 마스터 항목)
@@ -52,6 +55,9 @@ export type QuoteInput = {
   addonTargets?: Record<string, string[]>;        // 애드온 key → 적용 대상 라인 id 목록 (미지정 시 견적 전체 1회)
   addonPriceOverrides?: Record<string, number>;   // 애드온 key → 협의 단가(1건당) — 룰 가격 null 시 사용자 입력
 };
+
+/** 함량·조제물분석 산출에 필요한 플랜 일부 (ComposePlan 의 부분집합) */
+export type AnalysisPlan = { modality: string; route: string; excipientCount?: number };
 
 export type LineItem = {
   id: string;

@@ -46,8 +46,11 @@ async function _PATCH(req: Request, { params }: { params: { id: string } }) {
   const b = parsed.data;   // 키 없음 → undefined(Prisma 가 무시)
   const deal = await prisma.deal.update({ where: { id }, data: b });
   // 수주 처리 시 대표 견적(미거절 중 최대 금액)을 ACCEPTED 로 동기화 — 고객 KPI 누적 수주의 근거.
+  // 변경견적서로 대체된 이전 차수(supersededAt != null)는 후보·'이미 수주' 판정 모두에서 제외한다.
+  //  · 이전 차수가 더 비싸면 그 견적이 수주로 잡혀 실제 계약 금액(최신본)과 어긋났다.
+  //  · 이전 차수가 ACCEPTED 여도 최신본은 아직 수주 처리되지 않은 것이다.
   if (b.status === 'WON') {
-    const quotes = await prisma.quote.findMany({ where: { dealId: id }, select: { id: true, status: true, grandTotal: true } });
+    const quotes = await prisma.quote.findMany({ where: { dealId: id, supersededAt: null }, select: { id: true, status: true, grandTotal: true } });
     if (quotes.length && !quotes.some(q => q.status === 'ACCEPTED')) {
       const top = quotes.filter(q => q.status !== 'REJECTED').sort((a, b) => (b.grandTotal ?? 0) - (a.grandTotal ?? 0))[0];
       if (top) await prisma.quote.update({ where: { id: top.id }, data: { status: 'ACCEPTED', trackingNote: '수주 처리' } });

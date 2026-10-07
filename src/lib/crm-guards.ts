@@ -1,10 +1,12 @@
 /**
  * CRM 소유권 가드 — 라우트가 id 로 조회/변경하기 전에 "내(조회 가능 범위) 것"인지 확인한다.
  * 인증(C1)을 켜는 순간 IDOR 이 되지 않도록, DEMO 단계에서도 동일한 검사를 통과시킨다.
- * userId 가 null 인 구형 임포트 견적은 소유자 없음으로 보고 허용한다.
+ * userId 가 null 인 구형 임포트 견적은 관리자만 접근할 수 있다.
  */
 import { prisma } from './prisma';
 import { visibleOwnerIds } from './current-user';
+import { getCurrentUser } from './admin/view';
+import { isAdminRole } from './admin/roles';
 
 /** 경로 파라미터 id → 양의 정수만 허용 (NaN·소수·음수는 400 대상) */
 export function parseId(raw: string): number | null {
@@ -30,7 +32,10 @@ export async function ownsCompany(id: number, owners?: number[]): Promise<boolea
 export async function ownsQuote(id: number, owners?: number[]): Promise<boolean> {
   const o = owners ?? await visibleOwnerIds();
   const q = await prisma.quote.findUnique({ where: { id }, select: { userId: true } });
-  return !!q && (q.userId == null || o.includes(q.userId));
+  if (!q) return false;
+  // 소유자 없는(구형 임포트·담당자 매핑 실패) 견적은 관리자만 다룬다 — 누구나 열면 id 순회로 삭제·복제가 가능했다.
+  if (q.userId == null) return isAdminRole((await getCurrentUser()).role);
+  return o.includes(q.userId);
 }
 
 /**

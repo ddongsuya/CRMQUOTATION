@@ -5,6 +5,7 @@ import Toaster from '@/components/Toaster';
 import { loadData } from '@/lib/data';
 import { ensureHydrated } from '@/lib/hydrate';
 import { getViewMode } from '@/lib/admin/view';
+import { currentUserIdOrNull } from '@/lib/current-user';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -18,7 +19,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const modalities = new Set<string>();
   for (const it of testItems) for (const m of it.modalityPool) modalities.add(m);
   const stats = { items: testItems.length, presets: presets.length, blocks: blocks.length, modalities: modalities.size };
-  const { actualIsAdmin } = await getViewMode();
+  // 로그인 화면은 세션 없이도 렌더돼야 하므로, 비로그인이면 관리자 메뉴만 숨긴다.
+  const actualIsAdmin = (await currentUserIdOrNull()) != null ? (await getViewMode()).actualIsAdmin : false;
 
   return (
     <html lang="ko">

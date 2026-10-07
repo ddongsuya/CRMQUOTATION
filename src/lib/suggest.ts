@@ -510,7 +510,8 @@ export function suggestFromPlan({ modality, plan, priceStandard, excipientCount 
     if (sa !== sb) return sa - sb;
     const wa = a.item.studyWeeks ?? 0, wb = b.item.studyWeeks ?? 0;
     if (wa !== wb) return wa - wb;
-    return a.item.testName.localeCompare(b.item.testName);
+    // 로케일을 명시 — 미지정이면 실행 환경(서버 ICU·LANG) 기본 로케일을 따라 한글·영문 순서가 달라져 회귀 스냅샷(API04·API05)이 환경마다 흔들린다.
+    return a.item.testName.localeCompare(b.item.testName, 'ko');
   });
 
   const hits = sorted.map(h => ({

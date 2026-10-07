@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
+import { kstYearMonth } from './kst';
 
 /**
  * 견적번호 체계 (회사 실무 규칙):
@@ -30,11 +31,7 @@ export function revisionBase(quoteNumber: string): string {
 /** 견적 저장류 인터랙티브 트랜잭션 옵션 — Neon 콜드스타트 지연 + 다건 쓰기로 기본 5초(P2028)를 넘길 수 있어 30초. */
 export const QUOTE_TX_OPTS = { timeout: 30_000, maxWait: 10_000 } as const;
 
-/** 번호 접두사는 한국시간(KST) 기준 — 서버가 UTC(Vercel)여도 0~9시 저장분이 전달 번호로 찍히지 않게. */
-function kstYearMonth(now: Date): { yy: string; mm: string } {
-  const kst = new Date(now.getTime() + 9 * 3600_000);
-  return { yy: String(kst.getUTCFullYear() % 100).padStart(2, '0'), mm: String(kst.getUTCMonth() + 1).padStart(2, '0') };
-}
+// 번호 접두사는 한국시간(KST) 기준 — 서버가 UTC(Vercel)여도 0~9시 저장분이 전달 번호로 찍히지 않게 (공용 헬퍼 ./kst).
 
 /** 다음 신규 견적번호 — 해당 사용자코드의 최대 발행번호 + 1. */
 export async function nextQuoteNumber(userId: number | null | undefined, now = new Date()): Promise<string> {

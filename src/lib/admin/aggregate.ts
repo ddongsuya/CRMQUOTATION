@@ -12,6 +12,7 @@
  * 스코프(README §0): 전체(전사)·센터·개인. 서버 파라미터 scope/centerId/userId 매핑.
  */
 import { prisma } from '../prisma';
+import { kstWeekStart } from '../kst';
 
 export type Scope =
   | { kind: 'all' }
@@ -254,11 +255,9 @@ export async function getDashboardData(scope: Scope, periodKey: string) {
  */
 export async function getActivityHeatmap(scope: Scope, refDate: Date, weeks = 12) {
   const uids = await scopeUserIds(scope);
-  const start = new Date(refDate);
-  start.setHours(0, 0, 0, 0);
-  // 이번 주 월요일 기준으로 정렬
-  const dow = (start.getDay() + 6) % 7; // 월=0
-  const gridStart = new Date(start.getTime() - (dow + (weeks - 1) * 7) * 86400000);
+  // 이번 주 월요일 00:00(KST) 기준으로 정렬 — 서버(UTC) 로컬 시각으로 자르면 칸 경계가 KST 09시가 되어
+  // 0~9시 활동이 전날·전 요일 칸에 찍혔다. 경계를 KST 자정으로 잡으면 아래 place() 의 일수 계산이 그대로 KST 날짜가 된다.
+  const gridStart = new Date(kstWeekStart(refDate).getTime() - (weeks - 1) * 7 * 86400000);
 
   const [notes, events] = await Promise.all([
     prisma.note.findMany({ where: { ownerId: { in: uids }, occurredAt: { gte: gridStart } }, select: { occurredAt: true } }),
